@@ -1,0 +1,32 @@
+{
+  "id": 415,
+  "name": "RSI 볼륨 하이브리드 전략 - 개선형",
+  "kind": "custom",
+  "verified": {
+    "backtestId": 2744,
+    "return": 5.91,
+    "mdd": 13.57,
+    "trades": 40,
+    "vsBuyHold": "lose",
+    "benchRet": 37.66,
+    "benchBasis": "price",
+    "gapPct": 0,
+    "tFrom": 1670428800,
+    "tTo": 1677625200,
+    "approxNotes": [
+      "봉 내 순서는 관례(양봉 O→L→H→C·음봉 O→H→L→C) — 실순서 미상 · 봉 중 거래량 null · MDD 는 봉 마감 기준",
+      "[유동성/전무] 시장가 주문 2건은 **한 주도 체결되지 않았습니다**. 부분체결이 아니라 전무라, 그 시점의 진입·청산은 **일어나지 않았습니다.**",
+      "거래량은 봉 마감에만 확정 — 봉 중 평가에서 ctx.vol/volumes 가 null 이라 거래량 조건이 걸러졌을 수 있음(봉 중에도 쓰려면 ctx.volPrev·ctx.avgVol)"
+    ],
+    "spec": {
+      "ex": "binance",
+      "sym": "BTC",
+      "interval": "1h",
+      "bars": 2000,
+      "end": 1677628800
+    }
+  },
+  "config": null,
+  "updatedAt": "2026-09-09T18:46:41.751Z",
+  "publishedBy": "scripts/publish-strategies.mjs"
+}

@@ -1,0 +1,33 @@
+{
+  "id": 407,
+  "name": "거래량 기반 추세 추적 전략",
+  "kind": "custom",
+  "verified": {
+    "backtestId": 2671,
+    "return": -10.34,
+    "mdd": 33.56,
+    "trades": 206,
+    "vsBuyHold": "lose",
+    "benchRet": 59.78,
+    "benchBasis": "price",
+    "gapPct": 0,
+    "tFrom": 1672797600,
+    "tTo": 1679997600,
+    "approxNotes": [
+      "봉 내 순서는 관례(양봉 O→L→H→C·음봉 O→H→L→C) — 실순서 미상 · 봉 중 거래량 null · MDD 는 봉 마감 기준",
+      "[유동성/전무] 시장가 주문 3건은 **한 주도 체결되지 않았습니다**. 부분체결이 아니라 전무라, 그 시점의 진입·청산은 **일어나지 않았습니다.**",
+      "거래량은 봉 마감에만 확정 — 봉 중 평가에서 ctx.vol/volumes 가 null 이라 거래량 조건이 걸러졌을 수 있음(봉 중에도 쓰려면 ctx.volPrev·ctx.avgVol)",
+      "[정지봉] 거래량 0 · 시가=고가=저가=종가인 봉이 1개 있습니다. 그 구간에서는 변동성·ATR·MDD 가 0 으로 눌려 **위험 지표가 실제보다 낙관적**으로 나옵니다."
+    ],
+    "spec": {
+      "ex": "binance",
+      "sym": "BTCUSDT",
+      "interval": "1h",
+      "bars": 2000,
+      "end": 1680000000
+    }
+  },
+  "config": null,
+  "updatedAt": "2026-09-09T13:44:24.419Z",
+  "publishedBy": "scripts/publish-strategies.mjs"
+}

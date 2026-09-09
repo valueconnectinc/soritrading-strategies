@@ -1,0 +1,28 @@
+{
+  "id": 382,
+  "name": "RSI와 SMA 기반 전략",
+  "kind": "custom",
+  "verified": {
+    "backtestId": 2496,
+    "return": -19.02,
+    "mdd": 23.82,
+    "trades": 4,
+    "vsBuyHold": "unmeasured",
+    "gapPct": 0,
+    "tFrom": 1649340000,
+    "tTo": 1656536400,
+    "approxNotes": [
+      "봉 내 순서는 관례(양봉 O→L→H→C·음봉 O→H→L→C) — 실순서 미상 · 봉 중 거래량 null · MDD 는 봉 마감 기준"
+    ],
+    "spec": {
+      "ex": "binance",
+      "sym": "BTCUSDT",
+      "interval": "1h",
+      "bars": 2000,
+      "end": 1656537600
+    }
+  },
+  "config": null,
+  "updatedAt": "2026-09-09T01:21:41.784Z",
+  "publishedBy": "scripts/publish-strategies.mjs"
+}

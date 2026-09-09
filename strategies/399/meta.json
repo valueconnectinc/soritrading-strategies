@@ -1,0 +1,28 @@
+{
+  "id": 399,
+  "name": "RSI 기반 스윙 전략",
+  "kind": "custom",
+  "verified": {
+    "backtestId": 2641,
+    "return": -0.81,
+    "mdd": 8.05,
+    "trades": 13,
+    "vsBuyHold": "unmeasured",
+    "gapPct": 0,
+    "tFrom": 1665331200,
+    "tTo": 1672527600,
+    "approxNotes": [
+      "봉 내 순서는 관례(양봉 O→L→H→C·음봉 O→H→L→C) — 실순서 미상 · 봉 중 거래량 null · MDD 는 봉 마감 기준"
+    ],
+    "spec": {
+      "ex": "binance",
+      "sym": "BTCUSDT",
+      "interval": "1h",
+      "bars": 2000,
+      "end": 1672531200
+    }
+  },
+  "config": null,
+  "updatedAt": "2026-09-09T13:31:38.918Z",
+  "publishedBy": "scripts/publish-strategies.mjs"
+}
