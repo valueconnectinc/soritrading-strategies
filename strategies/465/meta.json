@@ -1,0 +1,29 @@
+{
+  "id": 465,
+  "name": "모멘텀 및 볼린저 밴드 기반 진입 전략",
+  "kind": "custom",
+  "verified": {
+    "backtestId": 3034,
+    "return": -32.5,
+    "mdd": 32.54,
+    "trades": 352,
+    "vsBuyHold": "unmeasured",
+    "gapPct": 0,
+    "tFrom": 1665331200,
+    "tTo": 1672527600,
+    "approxNotes": [
+      "봉 내 순서는 관례(양봉 O→L→H→C·음봉 O→H→L→C) — 실순서 미상 · 봉 중 거래량 null · MDD 는 봉 마감 기준",
+      "[유동성/전무] 시장가 주문 4건은 **한 주도 체결되지 않았습니다**. 부분체결이 아니라 전무라, 그 시점의 진입·청산은 **일어나지 않았습니다.**"
+    ],
+    "spec": {
+      "ex": "binance",
+      "sym": "BTCUSDT",
+      "interval": "1h",
+      "bars": 2000,
+      "end": 1672531200
+    }
+  },
+  "config": null,
+  "updatedAt": "2026-09-09T21:06:57.109Z",
+  "publishedBy": "scripts/publish-strategies.mjs"
+}

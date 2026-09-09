@@ -1,0 +1,28 @@
+{
+  "id": 451,
+  "name": "볼린저 밴드와 RSI를 기반으로 한 단순 전략",
+  "kind": "custom",
+  "verified": {
+    "backtestId": 2944,
+    "return": 34.52,
+    "mdd": 7.04,
+    "trades": 52,
+    "vsBuyHold": "unmeasured",
+    "gapPct": 0,
+    "tFrom": 1668009600,
+    "tTo": 1675206000,
+    "approxNotes": [
+      "봉 내 순서는 관례(양봉 O→L→H→C·음봉 O→H→L→C) — 실순서 미상 · 봉 중 거래량 null · MDD 는 봉 마감 기준"
+    ],
+    "spec": {
+      "ex": "binance",
+      "sym": "BTC",
+      "interval": "1h",
+      "bars": 2000,
+      "end": 1675209600
+    }
+  },
+  "config": null,
+  "updatedAt": "2026-09-09T20:29:27.672Z",
+  "publishedBy": "scripts/publish-strategies.mjs"
+}
