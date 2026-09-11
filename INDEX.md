@@ -2,6 +2,7 @@
 
 Every strategy whose backtest **finished and actually traded** is published here (`status=done` and `trades>0`).
 Nothing is filtered out by return — the ones that lost money are part of the record.
+Entries stay after a strategy is removed from our own workspace — this is a log, and deleting the record would leave only the survivors.
 
 **★ marks a strategy that out-returned buy & hold over the same window** — 5 of 35 right now.
 `—` means the comparison **could not be made**: the engine does not compute a benchmark for multi-symbol, futures, or multi-leg runs. That is *unknown*, not *lost*, and it is 16 of them right now.
