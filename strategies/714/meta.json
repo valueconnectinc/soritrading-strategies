@@ -1,0 +1,30 @@
+{
+  "id": 714,
+  "name": "External Data RSI Strategy",
+  "kind": "custom",
+  "verified": {
+    "backtestId": 4312,
+    "return": 11.37,
+    "mdd": 5.62,
+    "trades": 6,
+    "vsBuyHold": "win",
+    "benchRet": 8.44,
+    "benchBasis": "price",
+    "gapPct": 0,
+    "tFrom": 1683986400,
+    "tTo": 1691182800,
+    "approxNotes": [
+      "봉 내 순서는 관례(양봉 O→L→H→C·음봉 O→H→L→C) — 실순서 미상 · 봉 중 거래량 null · MDD 는 봉 마감 기준"
+    ],
+    "spec": {
+      "ex": "binanceusdm",
+      "sym": "BTCUSDT",
+      "interval": "1h",
+      "bars": 2000,
+      "end": 1691184000
+    }
+  },
+  "config": null,
+  "updatedAt": "2026-09-11T12:11:23.980Z",
+  "publishedBy": "scripts/publish-strategies.mjs"
+}

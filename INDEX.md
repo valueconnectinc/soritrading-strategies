@@ -1,30 +1,47 @@
-# 검증된 전략
+# Verified strategies
 
-백테스트가 **체결까지 난 채로 완료된** 전략을 모두 올립니다(`status=done` 그리고 `trades>0`).
-수익률로 거르지 않습니다 — 진 전략도 기록입니다.
+Every strategy whose backtest **finished and actually traded** is published here (`status=done` and `trades>0`).
+Nothing is filtered out by return — the ones that lost money are part of the record.
 
-**★ = 같은 구간 매수보유(buy&hold)보다 수익률이 높았던 전략**입니다. 지금 18개 중 2개.
-`—` 는 **비교를 못 한 것**입니다(다종목·선물·legs 는 엔진이 벤치마크를 재지 않습니다). 진 것이 아니라 모르는 것이고, 지금 16개입니다.
+**★ marks a strategy that out-returned buy & hold over the same window** — 5 of 35 right now.
+`—` means the comparison **could not be made**: the engine does not compute a benchmark for multi-symbol, futures, or multi-leg runs. That is *unknown*, not *lost*, and it is 16 of them right now.
 
-수치는 발행 시점의 마지막 검증 백테스트 기준이며, 과거 성과일 뿐 미래 수익을 약속하지 않습니다.
+Every figure comes from the last verifying backtest at publish time. These are past results over historical data. Nothing here is promised or assured about the future, and none of it is investment advice.
 
-| | ID | 이름 | 수익률 | 매수보유 | MDD | 거래 | 갱신 |
+| | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
-| ★ | [488](strategies/488/) | 워밍업 무시 전략 | +13.18% | +9.64% | +2.69% | 9 | 2026-09-09 |
-| ★ | [484](strategies/484/) | RSI와 MACD를 이용한 하이브리드 전략 | -3.77% | -15.19% | +7.62% | 7 | 2026-09-09 |
-| — | [481](strategies/481/) | MACD + RSI 하이브리드 전략 | +24.51% | — | +21.74% | 6 | 2026-09-09 |
-| — | [476](strategies/476/) | RSI_Stochastic_진입_전략 | +2.07% | — | +7.18% | 99 | 2026-09-09 |
-| — | [475](strategies/475/) | 이동평균선 기반 폭발 전략 | -12.11% | — | +25.92% | 158 | 2026-09-09 |
-| — | [466](strategies/466/) | 볼린저 밴드 + RSI 조합 전략 | +24.07% | — | +20.83% | 2 | 2026-09-09 |
-| — | [465](strategies/465/) | 모멘텀 및 볼린저 밴드 기반 진입 전략 | -32.50% | — | +32.54% | 352 | 2026-09-09 |
-| — | [462](strategies/462/) | 볼린저밴드 기반 진입 전략 | -15.99% | — | +28.18% | 65 | 2026-09-09 |
-| — | [460](strategies/460/) | MACD + RSI 조합 전략 | +2.76% | — | +11.38% | 24 | 2026-09-09 |
-| — | [458](strategies/458/) | MACD_이동평균선_크로스전략 | -5.34% | — | +11.47% | 1 | 2026-09-09 |
-| — | [457](strategies/457/) | 볼린저 bands_RSI_진입전략 | +5.72% | — | +25.72% | 51 | 2026-09-09 |
-| — | [456](strategies/456/) | 단순 이동평균선 크로스 전략 | -21.39% | — | +29.04% | 31 | 2026-09-09 |
-| — | [453](strategies/453/) | 단순한 RSI 기반 전략 | -19.84% | — | +29.13% | 63 | 2026-09-09 |
-| — | [451](strategies/451/) | 볼린저 밴드와 RSI를 기반으로 한 단순 전략 | +34.52% | — | +7.04% | 52 | 2026-09-09 |
-| — | [447](strategies/447/) | Bollinger Bands 기반 평균회복 전략 (변형) | -6.92% | — | +14.85% | 9 | 2026-09-09 |
-| — | [445](strategies/445/) | 볼린저밴드 및 RSI 기반 평균회복 전략 - 개선版 | +1.45% | — | +11.74% | 146 | 2026-09-09 |
-| — | [444](strategies/444/) | MACD 기반 트레이딩 전략 | +1.45% | — | +11.74% | 146 | 2026-09-09 |
-| — | [441](strategies/441/) | Moving Average Crossover Strategy | +14.50% | — | +9.91% | 58 | 2026-09-09 |
+| ★ | [714](strategies/714/) | External Data RSI Strategy | +11.37% | +8.44% | +5.62% | 6 | 2026-09-11 |
+| ★ | [713](strategies/713/) | RSI Mean Reversion Strategy BNBUSDT 1h Improved | +1.82% | -0.32% | +15.65% | 40 | 2026-09-11 |
+|  | [712](strategies/712/) | RSI-Based Mean Reversion Strategy | -16.57% | -5.78% | +29.90% | 37 | 2026-09-11 |
+| — | [710](strategies/710/) | Momentum Filter with RSI and Volume | +33.82% | — | +6.66% | 2 | 2026-09-11 |
+| — | [709](strategies/709/) | Mean Reversion with ATR and Volume Filter | -13.19% | — | +16.88% | 59 | 2026-09-11 |
+| — | [708](strategies/708/) | RSI Crossover with Volume Filter | +4.50% | — | +10.10% | 82 | 2026-09-11 |
+| — | [704](strategies/704/) | Volume Spike Detection Strategy | -46.67% | — | +47.54% | 393 | 2026-09-11 |
+| — | [703](strategies/703/) | Trend Following with Moving Average Crossover | -11.65% | — | +22.00% | 155 | 2026-09-11 |
+| — | [702](strategies/702/) | Momentum Breakout with ATR Filter | -29.39% | — | +37.13% | 319 | 2026-09-11 |
+| — | [700](strategies/700/) | MACD Crossover with Volume Filter | +53.31% | — | +18.85% | 37 | 2026-09-11 |
+| — | [698](strategies/698/) | Bollinger Band Mean Reversion Strategy | +5.63% | — | +15.96% | 161 | 2026-09-11 |
+|  | [696](strategies/696/) | Macro Regime Filtered Multi-Asset Mean Reversion | +28.02% | +101.04% | +9.68% | 62 | 2026-09-11 |
+| ★ | [694](strategies/694/) | RSI Overshoot Strategy | +26.77% | -11.74% | +24.83% | 193 | 2026-09-11 |
+| — | [693](strategies/693/) | Bollinger Band Mean Reversion with Volume Filter | -54.46% | — | +56.78% | 673 | 2026-09-11 |
+| — | [692](strategies/692/) | Bollinger Band Breakout Strategy | +46.95% | — | +40.00% | 216 | 2026-09-11 |
+| — | [690](strategies/690/) | MACD Trend Filter Strategy | -69.79% | — | +70.66% | 894 | 2026-09-11 |
+| — | [689](strategies/689/) | Volume-Weighted Trend Following Strategy | -53.96% | — | +54.07% | 490 | 2026-09-11 |
+| — | [688](strategies/688/) | Multi-Asset MACD RSI with External Macro Indicator | -77.26% | — | +78.15% | 1059 | 2026-09-11 |
+|  | [687](strategies/687/) | MACD RSI Trend Strategy | -1.60% | +48.30% | +17.11% | 464 | 2026-09-11 |
+| — | [686](strategies/686/) | Volume Breakout Strategy | -29.67% | — | +30.74% | 149 | 2026-09-11 |
+| — | [685](strategies/685/) | MACD-RSI Composite Signal Strategy | -14.52% | — | +25.70% | 237 | 2026-09-11 |
+|  | [684](strategies/684/) | Average True Range Breakout Strategy | +58.96% | +60.87% | +21.69% | 1 | 2026-09-11 |
+|  | [683](strategies/683/) | MACD and RSI Trend Strategy | -42.41% | -15.18% | +43.28% | 124 | 2026-09-11 |
+|  | [682](strategies/682/) | Mean Reversion Strategy with Bollinger Bands | +16.04% | +68.35% | +15.07% | 211 | 2026-09-11 |
+|  | [681](strategies/681/) | Enhanced MACD with RSI Confirmation | -45.16% | +68.35% | +49.64% | 588 | 2026-09-11 |
+|  | [680](strategies/680/) | MACD Crossover with RSI Filter Strategy | +34.55% | +38.73% | +11.05% | 9 | 2026-09-11 |
+|  | [678](strategies/678/) | Simple RSI Mean Reversion | -27.58% | -12.19% | +28.98% | 246 | 2026-09-11 |
+|  | [677](strategies/677/) | MACD Crossover with Volume Filter | -23.44% | +70.34% | +32.04% | 229 | 2026-09-11 |
+|  | [676](strategies/676/) | Volatility-based Mean Reversion with Trend Filter | -43.34% | +37.67% | +43.34% | 324 | 2026-09-11 |
+| ★ | [675](strategies/675/) | Simple Mean Reversion Strategy | -1.94% | -15.18% | +1.94% | 10 | 2026-09-11 |
+|  | [674](strategies/674/) | Trend Following with ATR Filter | -4.67% | +50.05% | +7.02% | 24 | 2026-09-11 |
+|  | [671](strategies/671/) | MACD Crossover Strategy | -10.38% | -1.24% | +14.27% | 176 | 2026-09-11 |
+| ★ | [670](strategies/670/) | Fear Greed Index Based Strategy | -3.63% | -15.18% | +16.66% | 9 | 2026-09-11 |
+|  | [669](strategies/669/) | Trend Confirmation Mean Reversion with ATR Filter | +23.97% | +26.98% | +19.33% | 91 | 2026-09-11 |
+| — | [668](strategies/668/) | Multi-Timeframe Mean Reversion with Macro Filter | -26.70% | — | +31.73% | 630 | 2026-09-11 |

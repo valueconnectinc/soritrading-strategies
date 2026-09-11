@@ -1,0 +1,30 @@
+{
+  "id": 696,
+  "name": "Macro Regime Filtered Multi-Asset Mean Reversion",
+  "kind": "custom",
+  "verified": {
+    "backtestId": 4189,
+    "return": 28.02,
+    "mdd": 9.68,
+    "trades": 62,
+    "vsBuyHold": "lose",
+    "benchRet": 101.04,
+    "benchBasis": "price",
+    "gapPct": 0,
+    "tFrom": 1702800000,
+    "tTo": 1709996400,
+    "approxNotes": [
+      "봉 내 순서는 관례(양봉 O→L→H→C·음봉 O→H→L→C) — 실순서 미상 · 봉 중 거래량 null · MDD 는 봉 마감 기준"
+    ],
+    "spec": {
+      "ex": "binanceusdm",
+      "sym": "BNBUSDT",
+      "interval": "1h",
+      "bars": 2000,
+      "end": 1710000000
+    }
+  },
+  "config": null,
+  "updatedAt": "2026-09-11T11:27:27.469Z",
+  "publishedBy": "scripts/publish-strategies.mjs"
+}

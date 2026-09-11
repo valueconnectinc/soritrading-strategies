@@ -1,0 +1,30 @@
+{
+  "id": 689,
+  "name": "Volume-Weighted Trend Following Strategy",
+  "kind": "custom",
+  "verified": {
+    "backtestId": 4147,
+    "return": -53.96,
+    "mdd": 54.07,
+    "trades": 490,
+    "vsBuyHold": "unmeasured",
+    "gapPct": 0,
+    "tFrom": 1711209600,
+    "tTo": 1718406000,
+    "approxNotes": [
+      "거래량은 봉 마감에만 확정 — 봉 중 평가에서 ctx.vol/volumes 가 null 이라 거래량 조건이 걸러졌을 수 있음(봉 중에도 쓰려면 ctx.volPrev·ctx.avgVol)",
+      "[생존 편향] 이 유니버스는 **지금 거래되는 종목**만입니다. 구간 중(또는 그 전에) 상장폐지된 종목은 **처음부터 들어 있지 않습니다** — 망한 종목이 빠져 있어 수익률이 **실제보다 좋게** 나옵니다. 스캐너·랭킹 전략일수록 그 차이가 큽니다."
+    ],
+    "spec": {
+      "ex": "binanceusdm",
+      "sym": "BTCUSDT",
+      "interval": "1h",
+      "bars": 2000,
+      "end": 1718409600,
+      "syms": 2
+    }
+  },
+  "config": null,
+  "updatedAt": "2026-09-11T11:11:00.358Z",
+  "publishedBy": "scripts/publish-strategies.mjs"
+}

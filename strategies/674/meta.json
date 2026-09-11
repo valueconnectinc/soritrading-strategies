@@ -1,0 +1,30 @@
+{
+  "id": 674,
+  "name": "Trend Following with ATR Filter",
+  "kind": "custom",
+  "verified": {
+    "backtestId": 4063,
+    "return": -4.67,
+    "mdd": 7.02,
+    "trades": 24,
+    "vsBuyHold": "lose",
+    "benchRet": 50.05,
+    "benchBasis": "price",
+    "gapPct": 0,
+    "tFrom": 1694332800,
+    "tTo": 1701529200,
+    "approxNotes": [
+      "봉 내 순서는 관례(양봉 O→L→H→C·음봉 O→H→L→C) — 실순서 미상 · 봉 중 거래량 null · MDD 는 봉 마감 기준"
+    ],
+    "spec": {
+      "ex": "binanceusdm",
+      "sym": "BTCUSDT",
+      "interval": "1h",
+      "bars": 2000,
+      "end": 1701532800
+    }
+  },
+  "config": null,
+  "updatedAt": "2026-09-11T10:33:24.112Z",
+  "publishedBy": "scripts/publish-strategies.mjs"
+}

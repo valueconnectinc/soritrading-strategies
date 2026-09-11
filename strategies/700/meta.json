@@ -1,0 +1,29 @@
+{
+  "id": 700,
+  "name": "MACD Crossover with Volume Filter",
+  "kind": "custom",
+  "verified": {
+    "backtestId": 4214,
+    "return": 53.31,
+    "mdd": 18.85,
+    "trades": 37,
+    "vsBuyHold": "unmeasured",
+    "gapPct": 0,
+    "tFrom": 1707332400,
+    "tTo": 1714528800,
+    "approxNotes": [
+      "봉 내 순서는 관례(양봉 O→L→H→C·음봉 O→H→L→C) — 실순서 미상 · 봉 중 거래량 null · MDD 는 봉 마감 기준",
+      "거래량은 봉 마감에만 확정 — 봉 중 평가에서 ctx.vol/volumes 가 null 이라 거래량 조건이 걸러졌을 수 있음(봉 중에도 쓰려면 ctx.volPrev·ctx.avgVol)"
+    ],
+    "spec": {
+      "ex": "binanceusdm",
+      "sym": "BNBUSDT",
+      "interval": "1h",
+      "bars": 2000,
+      "end": 1714531200
+    }
+  },
+  "config": null,
+  "updatedAt": "2026-09-11T11:36:28.997Z",
+  "publishedBy": "scripts/publish-strategies.mjs"
+}

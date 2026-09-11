@@ -1,0 +1,28 @@
+{
+  "id": 710,
+  "name": "Momentum Filter with RSI and Volume",
+  "kind": "custom",
+  "verified": {
+    "backtestId": 4288,
+    "return": 33.82,
+    "mdd": 6.66,
+    "trades": 2,
+    "vsBuyHold": "unmeasured",
+    "gapPct": 0,
+    "tFrom": 1692388800,
+    "tTo": 1701385200,
+    "approxNotes": [
+      "봉 내 순서는 관례(양봉 O→L→H→C·음봉 O→H→L→C) — 실순서 미상 · 봉 중 거래량 null · MDD 는 봉 마감 기준"
+    ],
+    "spec": {
+      "ex": "binanceusdm",
+      "sym": "BTCUSDT",
+      "interval": "1h",
+      "bars": 2500,
+      "end": 1701388800
+    }
+  },
+  "config": null,
+  "updatedAt": "2026-09-11T12:03:26.358Z",
+  "publishedBy": "scripts/publish-strategies.mjs"
+}

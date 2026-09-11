@@ -1,0 +1,30 @@
+{
+  "id": 688,
+  "name": "Multi-Asset MACD RSI with External Macro Indicator",
+  "kind": "custom",
+  "verified": {
+    "backtestId": 4143,
+    "return": -77.26,
+    "mdd": 78.15,
+    "trades": 1059,
+    "vsBuyHold": "unmeasured",
+    "gapPct": 0,
+    "tFrom": 1711209600,
+    "tTo": 1718406000,
+    "approxNotes": [
+      "[유동성/전무] 시장가 주문 1708건은 **한 주도 체결되지 않았습니다**. 부분체결이 아니라 전무라, 그 시점의 진입·청산은 **일어나지 않았습니다.**",
+      "[생존 편향] 이 유니버스는 **지금 거래되는 종목**만입니다. 구간 중(또는 그 전에) 상장폐지된 종목은 **처음부터 들어 있지 않습니다** — 망한 종목이 빠져 있어 수익률이 **실제보다 좋게** 나옵니다. 스캐너·랭킹 전략일수록 그 차이가 큽니다."
+    ],
+    "spec": {
+      "ex": "binanceusdm",
+      "sym": "BTCUSDT",
+      "interval": "1h",
+      "bars": 2000,
+      "end": 1718409600,
+      "syms": 2
+    }
+  },
+  "config": null,
+  "updatedAt": "2026-09-11T11:09:29.123Z",
+  "publishedBy": "scripts/publish-strategies.mjs"
+}

@@ -1,0 +1,30 @@
+{
+  "id": 676,
+  "name": "Volatility-based Mean Reversion with Trend Filter",
+  "kind": "custom",
+  "verified": {
+    "backtestId": 4079,
+    "return": -43.34,
+    "mdd": 43.34,
+    "trades": 324,
+    "vsBuyHold": "lose",
+    "benchRet": 37.67,
+    "benchBasis": "price",
+    "gapPct": 0,
+    "tFrom": 1670428800,
+    "tTo": 1677625200,
+    "approxNotes": [
+      "봉 내 순서는 관례(양봉 O→L→H→C·음봉 O→H→L→C) — 실순서 미상 · 봉 중 거래량 null · MDD 는 봉 마감 기준"
+    ],
+    "spec": {
+      "ex": "binanceusdm",
+      "sym": "BTCUSDT",
+      "interval": "1h",
+      "bars": 2000,
+      "end": 1677628800
+    }
+  },
+  "config": null,
+  "updatedAt": "2026-09-11T10:41:53.818Z",
+  "publishedBy": "scripts/publish-strategies.mjs"
+}

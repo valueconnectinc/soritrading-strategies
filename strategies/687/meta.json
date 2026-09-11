@@ -1,0 +1,31 @@
+{
+  "id": 687,
+  "name": "MACD RSI Trend Strategy",
+  "kind": "custom",
+  "verified": {
+    "backtestId": 4139,
+    "return": -1.6,
+    "mdd": 17.11,
+    "trades": 464,
+    "vsBuyHold": "lose",
+    "benchRet": 48.3,
+    "benchBasis": "price",
+    "gapPct": 0,
+    "tFrom": 1697745600,
+    "tTo": 1706742000,
+    "approxNotes": [
+      "봉 내 순서는 관례(양봉 O→L→H→C·음봉 O→H→L→C) — 실순서 미상 · 봉 중 거래량 null · MDD 는 봉 마감 기준",
+      "[유동성/전무] 시장가 주문 699건은 **한 주도 체결되지 않았습니다**. 부분체결이 아니라 전무라, 그 시점의 진입·청산은 **일어나지 않았습니다.**"
+    ],
+    "spec": {
+      "ex": "binanceusdm",
+      "sym": "BTCUSDT",
+      "interval": "1h",
+      "bars": 2500,
+      "end": 1706745600
+    }
+  },
+  "config": null,
+  "updatedAt": "2026-09-11T11:07:34.318Z",
+  "publishedBy": "scripts/publish-strategies.mjs"
+}
