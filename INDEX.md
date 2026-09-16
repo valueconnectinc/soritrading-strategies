@@ -11,7 +11,7 @@ Every figure comes from the last verifying backtest at publish time. These are p
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
-| — | [866](strategies/866/) | BTC Bollinger Band Mean Reversion Strategy | +128.04% | — | +77.24% | 12 | 2026-09-16 |
+| — | [866](strategies/866/) | BTC Bollinger Band Mean Reversion Strategy | +2312.09% | — | +39.59% | 1014 | 2026-09-16 |
 | — | [863](strategies/863/) | BTC RSI Divergence Strategy Enhanced | +90.06% | — | +77.24% | 9 | 2026-09-16 |
 | — | [862](strategies/862/) | BTC MACD Crossover Strategy | +340.86% | — | +77.24% | 9 | 2026-09-16 |
 |  | [861](strategies/861/) | BTC Fear & Greed Index Strategy | -39.07% | +90.20% | +70.17% | 9 | 2026-09-16 |
