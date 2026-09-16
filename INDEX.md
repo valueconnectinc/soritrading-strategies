@@ -11,7 +11,7 @@ Every figure comes from the last verifying backtest at publish time. These are p
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
-| — | [961](strategies/961/) | MACD + Bollinger Bands Mean Reversion | +54.41% | — | +8.55% | 9 | 2026-09-16 |
+| — | [961](strategies/961/) | MACD + Bollinger Bands Mean Reversion | +0.05% | — | +0.00% | 3 | 2026-09-16 |
 | ★ | [960](strategies/960/) | Mean Reversion Strategy | +32.41% | +10.66% | +15.07% | 302 | 2026-09-16 |
 |  | [959](strategies/959/) | Enhanced Bollinger Band + Momentum Strategy | +14.37% | +69.88% | +25.60% | 220 | 2026-09-16 |
 |  | [958](strategies/958/) | RSI-based Mean Reversion Strategy | -28.01% | -15.18% | +28.01% | 206 | 2026-09-16 |
