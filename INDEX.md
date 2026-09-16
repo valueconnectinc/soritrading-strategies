@@ -11,7 +11,7 @@ Every figure comes from the last verifying backtest at publish time. These are p
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
-|  | [887](strategies/887/) | Bollinger RSI Hybrid Strategy | +28.73% | +64.19% | +5.75% | 50 | 2026-09-16 |
+|  | [887](strategies/887/) | Bollinger RSI Hybrid Strategy | -41.79% | +58.31% | +46.90% | 660 | 2026-09-16 |
 | — | [886](strategies/886/) | Enhanced Bollinger Band Mean Reversion Strategy | -10.38% | — | +26.13% | 128 | 2026-09-16 |
 | — | [885](strategies/885/) | MACD Crossover with RSI Filter | -1.98% | — | +26.25% | 249 | 2026-09-16 |
 | — | [883](strategies/883/) | Multi-Timeframe MACD Strategy | -0.92% | — | +16.32% | 211 | 2026-09-16 |

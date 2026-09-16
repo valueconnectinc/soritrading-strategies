@@ -1,49 +1,39 @@
 /*
  * @coinsori-strategy v1
- * name: Bollinger RSI Hybrid Strategy
+ * name: MACD Mean Reversion Strategy
  * ex: binanceusdm
  * syms: BTCUSDT
  * interval: 1h
  * cash: 1000
  *
- * Why this strategy: This hybrid strategy combines Bollinger Bands and RSI to improve signal accuracy. Bollinger Bands provide volatility context, while RSI identifies overbought/oversold conditions. The combination aims to reduce false signals and improve entry timing.
- * When it buys and sells: It buys when price closes below the lower Bollinger Band AND RSI is below 30 (oversold). It sells when price closes above the upper Bollinger Band AND RSI is above 70 (overbought).
- * When it does NOT work: This strategy may fail in sideways markets where price remains within the Bollinger Bands without clear overbought/oversold conditions, or if market volatility drops significantly.
+ * Why this strategy: 이 전략은 MACD 지표의 교차를 기반으로 한 평균회귀 전략입니다. MACD가 신호선 아래로 내려가면 매수 포지션을 취하고, 위로 올라가면 매도 포지션을 취합니다.
+ * When it buys and sells: MACD 지표에서 신호선과 메인 라인이 교차하는 지점을 기준으로, 신호선이 아래로 내려가는 경우 매수, 위로 올라가는 경우 매도를 합니다.
+ * When it does NOT work: MACD가 강한 트렌드를 유지할 때에는 평균회귀 전략이 효과적이지 않으며, 시장이 빠르게 변동하거나 방향성이 명확하지 않은 경우에도 수익률이 낮을 수 있습니다.
  */
-
 function onUpdate(ctx) {
-  // Define indicator parameters
-  const bbPeriod = 20;
-  const bbMultiplier = 2.0;
-  const rsiPeriod = 14;
+  // MACD 지표 생성 (12, 26, 9)
+  const macd = ctx.macd(12, 26, 9, 0);
+  const macd_prev = ctx.macd(12, 26, 9, 1);
   
-  // Get indicators
-  const bb = ctx.bb(bbPeriod, bbMultiplier, 0);
-  const rsi = ctx.rsi(rsiPeriod, 0);
-  
-  // Check for valid data (warm-up period)
-  if (bb == null || rsi == null) return null;
-  
-  // Extract Bollinger Band values
-  const upper = bb.upper;
-  const middle = bb.middle;
-  const lower = bb.lower;
-  
-  // Define entry conditions
-  // Buy condition: price closes below lower BB AND RSI is oversold (<30)
-  const buyCondition = ctx.price < lower && rsi < 30;
-  
-  // Sell condition: price closes above upper BB AND RSI is overbought (>70)
-  const sellCondition = ctx.price > upper && rsi > 70;
-  
-  // Generate orders
-  if (buyCondition && ctx.position <= 0) {
-    // Only buy if not already in position or short
-    return { side: 'buy', qty: ctx.cash / ctx.price * 0.95 }; // Buy 95% of available cash
-  } else if (sellCondition && ctx.position > 0) {
-    // Sell only if currently long
+  // MACD가 정의되지 않은 경우 반환
+  if (macd == null || macd_prev == null) return null;
+
+  // 신호선과 메인 라인이 교차하는 지점 확인
+  const macdLine = macd.macd;
+  const signalLine = macd.signal;
+  const macdLine_prev = macd_prev.macd;
+  const signalLine_prev = macd_prev.signal;
+
+  // 매수 조건: 이전 봉의 신호선이 메인 라인 아래에 있었고, 현재는 위로 교차한 경우
+  if (macdLine_prev <= signalLine_prev && macdLine > signalLine) {
+    return { side: 'buy', qty: ctx.cash / ctx.price * 0.99 };
+  }
+
+  // 매도 조건: 이전 봉의 신호선이 메인 라인 위에 있었고, 현재는 아래로 교차한 경우
+  if (macdLine_prev >= signalLine_prev && macdLine < signalLine) {
     return { side: 'sell', qty: ctx.position };
   }
-  
-  return null; // No action
+
+  // 아무것도 하지 않음
+  return null;
 }
