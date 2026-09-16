@@ -1,70 +1,40 @@
 /*
  * @coinsori-strategy v1
- * name: Mean Reversion Pair Trading Strategy
+ * name: Simple BB Mean Reversion Strategy
  * ex: binanceusdm
- * syms: BTCUSDT, ETHUSDT
+ * syms: BTCUSDT
  * interval: 1h
  * cash: 1000
 
- * Why this strategy: This strategy exploits mean reversion in the price spread between two correlated assets (BTC and ETH). When the spread deviates significantly from its historical average, it suggests a temporary mispricing which can be traded against.
- * When it buys and sells: It buys when the spread is below its moving average (indicating ETH is stronger than BTC), and sells when the spread is above its moving average (indicating BTC is stronger than ETH).
- * When it does NOT work: This strategy fails during trending markets or periods of high correlation volatility where the spread does not revert to the mean quickly. It also underperforms in very low volatility environments.
+ * Why this strategy: This strategy uses Bollinger Bands to identify mean reversion opportunities in a single asset (BTC). When the price moves beyond the upper or lower band, it suggests that the price may revert to the middle band.
+ * When it buys and sells: It buys when the price crosses below the lower band, and sells when the price crosses above the upper band.
+ * When it does NOT work: This strategy fails in strong trending markets where prices remain at extreme levels for extended periods. It also struggles during high volatility periods where the bands are too wide and false signals occur frequently.
  */
 
 function onUpdate(ctx) {
   // Define constants
-  const SPREAD_WINDOW = 20;
-  const ENTRY_THRESHOLD = 2; // Standard deviations from mean
-  const EXIT_THRESHOLD = 1;  // Standard deviations from mean
-  const POSITION_SIZE = 0.95;
+  const BB_WINDOW = 20;
+  const BB_MULT = 2;
 
-  // Get the prices of both assets
-  const btcPrice = ctx.price;
-  const ethPrice = ctx.ref(1).price;
+  // Get current price
+  const price = ctx.price;
   
-  // Check if we have enough data for both assets
-  if (btcPrice == null || ethPrice == null) return null;
+  if (price == null) return null;
 
-  // Calculate the spread between the two assets
-  const spread = btcPrice - ethPrice;
-
-  // Use Bollinger Bands to determine entry and exit points
-  const bb = ctx.bb(SPREAD_WINDOW, 2, 0);
+  // Calculate Bollinger Bands
+  const bb = ctx.bb(BB_WINDOW, BB_MULT, 0);
   if (bb == null || bb.upper == null || bb.lower == null) return null;
 
   const upperBand = bb.upper;
   const lowerBand = bb.lower;
-
-  // Determine entry signals based on the spread
-  if (spread < lowerBand) { // Spread is below lower band, buy BTC sell ETH
-    // Ensure we are not already in a position
-    if (ctx.position == 0) {
-      return [
-        { side: 'buy', qty: ctx.cash / btcPrice * POSITION_SIZE },   // Buy BTC
-        { side: 'sell', qty: ctx.cash / ethPrice * POSITION_SIZE }     // Sell ETH
-      ];
-    }
-  } else if (spread > upperBand) { // Spread is above upper band, buy ETH sell BTC
-    if (ctx.position == 0) {
-      return [
-        { side: 'buy', qty: ctx.cash / ethPrice * POSITION_SIZE },   // Buy ETH
-        { side: 'sell', qty: ctx.cash / btcPrice * POSITION_SIZE }     // Sell BTC
-      ];
-    }
+  
+  // Simple mean reversion strategy based on BB bands
+  if (price < lowerBand) { // Price is below lower band, buy
+    return { side: 'buy', qty: ctx.cash / price * 0.99 };
+  } else if (price > upperBand) { // Price is above upper band, sell
+    return { side: 'sell', qty: ctx.position };
   }
-
-  // If we are already in a position and spread is returning towards mean, exit
-  if (ctx.position > 0) {
-    // Check if we are getting closer to the mean
-    const spreadSma = ctx.sma(SPREAD_WINDOW, 0);
-    if (spreadSma == null) return null;
-    
-    // For exit condition, we check if the spread is approaching the mean
-    if (Math.abs(spread - spreadSma) < Math.abs(spreadSma * EXIT_THRESHOLD)) {
-      return { side: 'sell', qty: ctx.position }; // Close the position
-    }
-  }
-
+  
   // Return null if no action is needed
   return null;
 }
