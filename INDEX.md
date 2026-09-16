@@ -11,7 +11,7 @@ Every figure comes from the last verifying backtest at publish time. These are p
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
-| — | [832](strategies/832/) | RSI Mean Reversion with Macro Filter | +9.19% | — | +4.32% | 36 | 2026-09-16 |
+| — | [832](strategies/832/) | RSI Mean Reversion with Macro Filter | -0.59% | — | +3.64% | 4 | 2026-09-16 |
 | ★ | [714](strategies/714/) | External Data RSI Strategy | +11.37% | +8.44% | +5.62% | 6 | 2026-09-11 |
 | ★ | [713](strategies/713/) | RSI Mean Reversion Strategy BNBUSDT 1h Improved | +1.82% | -0.32% | +15.65% | 40 | 2026-09-11 |
 |  | [712](strategies/712/) | RSI-Based Mean Reversion Strategy | -16.57% | -5.78% | +29.90% | 37 | 2026-09-11 |
