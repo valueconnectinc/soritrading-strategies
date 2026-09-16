@@ -1,0 +1,30 @@
+{
+  "id": 950,
+  "name": "BTC Trend Filter Strategy",
+  "kind": "custom",
+  "verified": {
+    "backtestId": 5007,
+    "return": -100,
+    "mdd": 100,
+    "trades": 3878,
+    "vsBuyHold": "lose",
+    "benchRet": 53.56,
+    "benchBasis": "price",
+    "gapPct": 0,
+    "tFrom": 1686009600,
+    "tTo": 1701558000,
+    "approxNotes": [
+      "봉 내 순서는 관례(양봉 O→L→H→C·음봉 O→H→L→C) — 실순서 미상 · 봉 중 거래량 null · MDD 는 봉 마감 기준"
+    ],
+    "spec": {
+      "ex": "binance",
+      "sym": "BTC",
+      "interval": "1h",
+      "bars": 4320,
+      "end": 1701561600
+    }
+  },
+  "config": null,
+  "updatedAt": "2026-09-16T06:56:21.026Z",
+  "publishedBy": "scripts/publish-strategies.mjs"
+}
