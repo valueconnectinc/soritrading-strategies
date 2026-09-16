@@ -1,47 +1,40 @@
 /*
  * @coinsori-strategy v1
- * name: OI and Funding Rate Based Strategy
+ * name: RSI-Based Strategy with External Data
  * ex: binanceusdm
  * syms: BTCUSDT
  * interval: 1h
  * cash: 1000
  *
- * Why this strategy: This strategy uses Open Interest (OI) and funding rate data to identify trends in the market. It aims to enter long positions when OI is increasing and funding rates are negative, indicating bullish sentiment. Conversely, it enters short positions when OI is decreasing and funding rates are positive, indicating bearish sentiment.
- * When it buys and sells: It buys when OI is rising and funding rate is negative, and sells when OI is falling and funding rate is positive.
- * When it does NOT work: This strategy may fail during periods of low volatility or when OI data is not reliable due to irregular trading patterns or lack of liquidity.
+ * Why this strategy: The strategy uses external RSI data from a database to guide entry signals, 
+ * helping to avoid buying at overbought or selling at oversold conditions.
+ * When it buys and sells: It buys when the external RSI is below 30 (oversold) and sells when above 70 (overbought).
+ * When it does NOT work: The strategy may fail in a strong trending market where RSI does not give meaningful signals.
  */
+
 function onUpdate(ctx) {
-  // Read OI data from the external dataset (key: 'funding_rate')
-  const oi = ctx.data('funding_rate');
+  // Reading data from external dataset
+  const rsiData = ctx.data('fear_greed_index');
   
-  // Check if we have enough data to proceed
-  if (oi == null || oi.length < 2) return null;
+  // Guard clause for external data
+  if (rsiData == null) return null;
   
-  // Get the latest and previous OI values
-  const currentOi = oi[oi.length - 1];
-  const previousOi = oi[oi.length - 2];
+  // Define thresholds for RSI
+  const oversold = 30;
+  const overbought = 70;
   
-  // Read funding rate data from the external dataset (key: 'funding_rate')
-  const funding = ctx.data('funding_rate');
+  // Get current RSI value
+  const rsi = rsiData;
   
-  if (funding == null || funding.length < 2) return null;
-  
-  // Get the latest and previous funding rates
-  const currentFunding = funding[funding.length - 1];
-  const previousFunding = funding[funding.length - 2];
-  
-  // Check for conditions to enter a long position:
-  // OI is increasing and funding rate is negative (indicating bullish sentiment)
-  if (currentOi > previousOi && currentFunding < 0) {
+  // Buy condition: RSI below oversold threshold
+  if (rsi < oversold && ctx.position <= 0) {
     return { side: 'buy', qty: ctx.cash / ctx.price * 0.99 };
   }
   
-  // Check for conditions to enter a short position:
-  // OI is decreasing and funding rate is positive (indicating bearish sentiment)
-  if (currentOi < previousOi && currentFunding > 0) {
-    return { side: 'sell', qty: ctx.position };
+  // Sell condition: RSI above overbought threshold
+  if (rsi > overbought && ctx.position > 0) {
+      return { side: 'sell', qty: ctx.position };
   }
   
-  // No trade signal
   return null;
 }
