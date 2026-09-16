@@ -1,0 +1,29 @@
+{
+  "id": 901,
+  "name": "Multi-Asset Mean Reversion with Volatility Filter",
+  "kind": "custom",
+  "verified": {
+    "backtestId": 4684,
+    "return": -92.74,
+    "mdd": 92.74,
+    "trades": 4920,
+    "vsBuyHold": "unmeasured",
+    "gapPct": 0,
+    "tFrom": 1702022400,
+    "tTo": 1709218800,
+    "approxNotes": [
+      "[생존 편향] 이 유니버스는 **지금 거래되는 종목**만입니다. 구간 중(또는 그 전에) 상장폐지된 종목은 **처음부터 들어 있지 않습니다** — 망한 종목이 빠져 있어 수익률이 **실제보다 좋게** 나옵니다. 스캐너·랭킹 전략일수록 그 차이가 큽니다."
+    ],
+    "spec": {
+      "ex": "binanceusdm",
+      "sym": "BTCUSDT",
+      "interval": "1h",
+      "bars": 2000,
+      "end": 1709222400,
+      "syms": 3
+    }
+  },
+  "config": null,
+  "updatedAt": "2026-09-16T04:37:46.262Z",
+  "publishedBy": "scripts/publish-strategies.mjs"
+}

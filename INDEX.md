@@ -4,13 +4,14 @@ Every strategy whose backtest **finished and actually traded** is published here
 Nothing is filtered out by return — the ones that lost money are part of the record.
 Entries stay after a strategy is removed from our own workspace — this is a log, and deleting the record would leave only the survivors.
 
-**★ marks a strategy that out-returned buy & hold over the same window** — 9 of 128 right now.
-`—` means the comparison **could not be made**: the engine does not compute a benchmark for multi-symbol, futures, or multi-leg runs. That is *unknown*, not *lost*, and it is 72 of them right now.
+**★ marks a strategy that out-returned buy & hold over the same window** — 9 of 129 right now.
+`—` means the comparison **could not be made**: the engine does not compute a benchmark for multi-symbol, futures, or multi-leg runs. That is *unknown*, not *lost*, and it is 73 of them right now.
 
 Every figure comes from the last verifying backtest at publish time. These are past results over historical data. Nothing here is promised or assured about the future, and none of it is investment advice.
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
+| — | [901](strategies/901/) | Multi-Asset Mean Reversion with Volatility Filter | -92.74% | — | +92.74% | 4920 | 2026-09-16 |
 |  | [900](strategies/900/) | RSI + ATR Volatility Filter Mean Reversion | +18.66% | +39.55% | +5.02% | 205 | 2026-09-16 |
 |  | [898](strategies/898/) | Enhanced Mean Reversion with Volatility Filter | +38.69% | +63.03% | +14.59% | 48 | 2026-09-16 |
 | ★ | [897](strategies/897/) | Mean Reversion with ATR Filter | +38.98% | +36.30% | +6.24% | 77 | 2026-09-16 |
