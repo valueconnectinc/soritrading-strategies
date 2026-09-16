@@ -1,54 +1,54 @@
 /*
  * @coinsori-strategy v1
- * name: Mean Reversion Strategy with ATR Filter
+ * name: Mean Reversion with ATR Filter Improved
  * ex: binanceusdm
  * syms: BTCUSDT
  * interval: 1h
- * cash: 10000
+ * cash: 1000
  *
- * Why this strategy: This strategy exploits mean reversion in Bitcoin price movements,
- *   using Bollinger Bands and ATR to identify overbought/oversold conditions while
- *   filtering out low-volatility periods that are unsuitable for mean reversion.
- *
- * When it buys and sells: Buys when the price touches the lower Bollinger Band
- *   and ATR indicates sufficient volatility. Sells when the price touches the upper
- *   Bollinger Band with adequate volatility.
- *
- * When it does NOT work: This strategy may underperform in strong trending markets,
- *   where price keeps moving in one direction without retracing to the mean. Also,
- *   during extremely volatile periods, large price movements can cause frequent
- *   false signals or whipsaws.
+ * Why this strategy: This strategy exploits mean reversion in cryptocurrency prices, using ATR to filter out low-volatility periods where price movements are less predictable. It identifies overbought and oversold zones with RSI and enters trades when prices revert to the mean.
+ * When it buys and sells: The strategy buys when RSI drops below 30 (oversold) and sells when RSI rises above 70 (overbought). ATR filters out low volatility periods, making entries more reliable.
+ * When it does NOT work: This strategy may fail during strong trending markets where prices move consistently in one direction, ignoring mean reversion. It is also vulnerable to sudden market shocks that break the established patterns.
  */
+
 function onUpdate(ctx) {
-  const { price, position, cash } = ctx;
+  // Calculate RSI and ATR
+  const rsi = ctx.rsi(14);
+  const atr = ctx.atr(14);
+  
+  // Guard against null values
+  if (rsi == null || atr == null) return null;
+  
+  // ATR threshold for volatility filtering (we use 2x the average ATR as a filter)
+  const atrThreshold = ctx.avgVol(14) * 2;  // Use average volume over 14 periods to estimate a baseline
 
-  // Calculate indicators
-  const bb = ctx.bb(20, 2); // Bollinger Bands with 20-period SMA and 2 standard deviations
-  const atr14 = ctx.atr(14);
-
-  if (bb == null || atr14 == null) return null;
-
-  const upperBand = bb.upper;
-  const lowerBand = bb.lower;
-  const sma20 = bb.sma;
-
-  // Define volatility threshold to filter low-volatility periods
-  const volatilityFilter = 0.015; // 1.5% minimum volatility threshold
-
-  // Calculate current volatility as ATR relative to price
-  const currentVolatility = atr14 / price;
-
-  // Buy condition: Price touches lower band with sufficient volatility
-  if (price <= lowerBand && currentVolatility > volatilityFilter && position === 0) {
-    const qty = cash / price * 0.95; // Risk 5% of cash per trade
-    return { side: 'buy', qty };
+  // Only enter trades when volatility is above threshold
+  if (atr < atrThreshold) {
+    return null;
   }
 
-  // Sell condition: Price touches upper band with sufficient volatility or position is open
-  if ((price >= upperBand && currentVolatility > volatilityFilter) || (position > 0 && price > sma20)) {
-    return { side: 'sell', qty: position };
+  // If position is already open, check for exit conditions
+  if (ctx.position !== 0) {
+    // Exit long positions when RSI rises above 70
+    if (ctx.position > 0 && rsi > 70) {
+      return { side: 'sell', qty: ctx.position };
+    }
+    // Exit short positions when RSI falls below 30
+    if (ctx.position < 0 && rsi < 30) {
+      return { side: 'buy', qty: Math.abs(ctx.position) };
+    }
+    return null;
   }
 
-  // No action if conditions are not met
+  // Enter long trades when RSI is below 30 and ATR is above the threshold
+  if (rsi < 30) {
+    return { side: 'buy', qty: ctx.cash / ctx.price * 0.99 }; // Use 99% of cash to buy
+  }
+
+  // Enter short trades when RSI is above 70 and ATR is above the threshold
+  if (rsi > 70) {
+    return { side: 'sell', qty: ctx.cash / ctx.price * 0.99 }; // Use 99% of cash to sell
+  }
+
   return null;
 }
