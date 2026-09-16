@@ -1,0 +1,31 @@
+{
+  "id": 974,
+  "name": "Multi-Asset Mean Reversion Strategy",
+  "kind": "custom",
+  "verified": {
+    "backtestId": 5199,
+    "return": 85.21,
+    "mdd": 74.35,
+    "trades": 6,
+    "vsBuyHold": "unmeasured",
+    "gapPct": 0,
+    "tFrom": 1567962000,
+    "tTo": 1656612000,
+    "approxNotes": [
+      "기간 종료 시 미청산 포지션 2종목 — 이 수익률은 **평가액**을 포함합니다. 퇴출 수수료·거래세를 안 냈고, 마지막 봉 가격에 실제로 팔 수 있다는 보장도 없습니다(얇은 호가·상장폐지). exec.endLiquidate 로 마지막 봉 청산을 켤 수 있습니다",
+      "[정지봉] 거래량 0 · 시가=고가=저가=종가인 봉이 5개(최장 연속 2개) 있습니다. 그 구간에서는 변동성·ATR·MDD 가 0 으로 눌려 **위험 지표가 실제보다 낙관적**으로 나옵니다.",
+      "[생존 편향] 이 유니버스는 **지금 거래되는 종목**만입니다. 구간 중(또는 그 전에) 상장폐지된 종목은 **처음부터 들어 있지 않습니다** — 망한 종목이 빠져 있어 수익률이 **실제보다 좋게** 나옵니다. 스캐너·랭킹 전략일수록 그 차이가 큽니다."
+    ],
+    "spec": {
+      "ex": "binanceusdm",
+      "sym": "BTCUSDT",
+      "interval": "1h",
+      "bars": 25920,
+      "end": 1656614400,
+      "syms": 3
+    }
+  },
+  "config": null,
+  "updatedAt": "2026-09-16T08:18:05.199Z",
+  "publishedBy": "scripts/publish-strategies.mjs"
+}
