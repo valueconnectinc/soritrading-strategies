@@ -1,0 +1,30 @@
+{
+  "id": 903,
+  "name": "MACD Trend Filter Mean Reversion",
+  "kind": "custom",
+  "verified": {
+    "backtestId": 4692,
+    "return": -0.84,
+    "mdd": 3.04,
+    "trades": 60,
+    "vsBuyHold": "win",
+    "benchRet": -3.17,
+    "benchBasis": "price",
+    "gapPct": 0,
+    "tFrom": 1684004400,
+    "tTo": 1693332000,
+    "approxNotes": [
+      "봉 내 순서는 관례(양봉 O→L→H→C·음봉 O→H→L→C) — 실순서 미상 · 봉 중 거래량 null · MDD 는 봉 마감 기준"
+    ],
+    "spec": {
+      "ex": "binanceusdm",
+      "sym": "ETHUSDT",
+      "interval": "1h",
+      "bars": 2592,
+      "end": 1693334400
+    }
+  },
+  "config": null,
+  "updatedAt": "2026-09-16T04:39:55.044Z",
+  "publishedBy": "scripts/publish-strategies.mjs"
+}
