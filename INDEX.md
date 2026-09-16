@@ -4,13 +4,14 @@ Every strategy whose backtest **finished and actually traded** is published here
 Nothing is filtered out by return — the ones that lost money are part of the record.
 Entries stay after a strategy is removed from our own workspace — this is a log, and deleting the record would leave only the survivors.
 
-**★ marks a strategy that out-returned buy & hold over the same window** — 13 of 157 right now.
+**★ marks a strategy that out-returned buy & hold over the same window** — 13 of 158 right now.
 `—` means the comparison **could not be made**: the engine does not compute a benchmark for multi-symbol, futures, or multi-leg runs. That is *unknown*, not *lost*, and it is 87 of them right now.
 
 Every figure comes from the last verifying backtest at publish time. These are past results over historical data. Nothing here is promised or assured about the future, and none of it is investment advice.
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
+|  | [949](strategies/949/) | Simple Price Trend Strategy | -62.49% | -0.44% | +62.49% | 1239 | 2026-09-16 |
 |  | [947](strategies/947/) | RSI Momentum Strategy | -39.80% | -37.12% | +41.60% | 76 | 2026-09-16 |
 |  | [946](strategies/946/) | Simple Moving Average Crossover Strategy | -34.55% | -9.17% | +34.89% | 173 | 2026-09-16 |
 | — | [944](strategies/944/) | MACD-RSI Mean Reversion Strategy - Enhanced | +0.00% | — | +0.00% | 7 | 2026-09-16 |
