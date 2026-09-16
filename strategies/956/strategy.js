@@ -1,40 +1,63 @@
 /*
  * @coinsori-strategy v1
- * name: MACD with RSI Filter
+ * name: Simple RSI Strategy
  * ex: binance
  * syms: BTC
  * interval: 1h
  * cash: 1000
- *
- * Why this strategy: This strategy combines MACD and RSI to filter trade entries. It aims to improve upon a simple RSI strategy by using MACD for trend confirmation.
- * When it buys and sells: Buys when MACD line crosses above signal line and RSI is below 30 (oversold). Sells when MACD line crosses below signal line and RSI is above 70 (overbought).
- * When it does NOT work: This strategy may not perform well in a flat or choppy market, where MACD signals are unreliable or RSI stays neutral.
+
+ * Why this strategy: This is a simple RSI-based strategy that buys when the RSI falls below 30 (oversold) and sells when it rises above 70 (overbought). It's designed to capture short-term price movements in a trending market.
+ * When it buys and sells: The strategy buys when RSI is below 30, indicating an oversold condition, and sells when RSI is above 70, signaling an overbought condition. It uses a simple take-profit and stop-loss mechanism to manage risk.
+ * When it does NOT work: This strategy may not work during strong trending markets where RSI might remain in the oversold or overbought zones for extended periods, leading to false signals. Additionally, in ranging markets, RSI can give frequent buy/sell signals that may not result in profitable trades.
  */
 
 function onUpdate(ctx) {
-    // Get MACD values
-    const macd = ctx.macd(12, 26, 9);
-    const macdPrev = ctx.macd(12, 26, 9, 1);  // Previous MACD value
+  // Get the RSI indicator
+  const rsi = ctx.rsi(14);
+  
+  // If we don't have RSI data yet, return null to wait
+  if (rsi == null) return null;
 
-    // Get RSI values
-    const rsi = ctx.rsi(14);
-    const rsiPrev = ctx.rsi(14, 1);
-
-    // Guard: Ensure MACD and RSI are available
-    if (macd == null || macdPrev == null || rsi == null || rsiPrev == null) {
-        return null;  // Wait for more data
+  // Define RSI thresholds
+  const oversold = 30;
+  const overbought = 70;
+  
+  // Entry and exit conditions based on RSI values
+  
+  // Buy condition: RSI crosses below oversold threshold
+  if (ctx.position === 0 && rsi < oversold) {
+    return { 
+      side: 'buy', 
+      qty: ctx.cash / ctx.price * 0.99 // Use 99% of available cash
+    };
+  }
+  
+  // Sell condition: RSI crosses above overbought threshold
+  if (ctx.position === 0 && rsi > overbought) {
+    return { 
+      side: 'sell', 
+      qty: ctx.cash / ctx.price * 0.99 // Use 99% of available cash
+    };
+  }
+  
+  // Close position if it's profitable (e.g., RSI crosses back toward the middle)
+  if (ctx.position !== 0) {
+    // Example take-profit and stop-loss conditions based on RSI crossover
+    if (ctx.position > 0 && rsi > 50) { // Take profit for long
+      return { 
+        side: 'sell',
+        qty: Math.abs(ctx.position)
+      };
     }
-
-    // Buy condition: MACD crossover with RSI below 30 (oversold)
-    if (macdPrev.macd <= macdPrev.signal && macd.macd > macd.signal && rsi < 30) {
-        return { side: 'buy', qty: ctx.cash / ctx.price * 0.99 };
+    
+    if (ctx.position < 0 && rsi < 50) { // Take profit for short  
+      return { 
+        side: 'buy',
+        qty: Math.abs(ctx.position)
+      };
     }
+  }
 
-    // Sell condition: MACD crossover with RSI above 70 (overbought)
-    if (macdPrev.macd >= macdPrev.signal && macd.macd < macd.signal && rsi > 70) {
-        return { side: 'sell', qty: ctx.position }; // Close position
-    }
-
-    // No action needed
-    return null;
+  // No action needed
+  return null;
 }

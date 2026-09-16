@@ -11,7 +11,7 @@ Every figure comes from the last verifying backtest at publish time. These are p
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
-| — | [956](strategies/956/) | MACD with RSI Filter | -12.85% | — | +19.55% | 18 | 2026-09-16 |
+| — | [956](strategies/956/) | MACD with RSI Filter | -14.74% | — | +43.37% | 280 | 2026-09-16 |
 | — | [955](strategies/955/) | Macro Filtered MACD-RSI Strategy | -6.64% | — | +18.64% | 163 | 2026-09-16 |
 | — | [954](strategies/954/) | MACD-RSI Multi Filter Strategy | -11.11% | — | +23.44% | 64 | 2026-09-16 |
 | ★ | [953](strategies/953/) | Dual Trend Filter Strategy | -0.60% | -15.19% | +4.69% | 28 | 2026-09-16 |
