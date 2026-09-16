@@ -1,43 +1,40 @@
 /*
  * @coinsori-strategy v1
- * name: MACD Trend Filter Strategy
+ * name: SMA RSI Mean Reversion Strategy
  * ex: binanceusdm
  * syms: BTCUSDT
  * interval: 1h
  * cash: 1000
  *
- * Why this strategy: The strategy uses the MACD (Moving Average Convergence Divergence) indicator to filter trades based on trend direction. It enters long positions only when the MACD signal is above its value, indicating an uptrend, and exits when the trend turns bearish.
- * When it buys and sells: Buys when MACD line crosses above signal line (bullish crossover). Sells when MACD line crosses below signal line (bearish crossover).
- * When it does NOT work: This strategy may not perform well in ranging or flat markets where MACD signals are unreliable, leading to frequent whipsaws and losses.
+ * This strategy attempts to profit from mean-reverting behavior of BTCUSDT price
+ * by using simple moving average and RSI indicators. It buys when price drops below
+ * the SMA and RSI < 30, and sells when price goes above SMA and RSI > 70.
+ * Why this strategy: The idea is that in most market conditions, prices tend to revert
+ * to their mean — this approach tries to capture those reversion opportunities.
+ * When it buys and sells: Buys after sustained price drop below SMA with oversold RSI,
+ * and sells when price surges above SMA with overbought RSI.
+ * When it does NOT work: In strong trends, especially during explosive run-up or crash-downs,
+ * this strategy will likely incur losses due to frequent whipsaws.
  */
 
 function onUpdate(ctx) {
-  // Parameters for MACD
-  const fastLength = 12;
-  const slowLength = 26;
-  const signalLength = 9;
+  // Calculate indicators
+  const sma = ctx.sma(20);
+  const rsi = ctx.rsi(14);
+  const price = ctx.price;
 
-  // Retrieve MACD values
-  const macdLine = ctx.macd(fastLength, slowLength, signalLength);
+  // Guard against null values (warm-up period)
+  if (sma == null || rsi == null) return null;
 
-  // Ensure sufficient data before making decisions
-  if (macdLine == null || macdLine.signal == null) return null;
-
-  // Check position status
-  const pos = ctx.position;
-
-  // Buy condition: MACD line crosses above signal line
-  if (macdLine.macd > macdLine.signal && pos <= 0) {
-    // Enter long position with 99% of available cash
-    return { side: 'buy', qty: ctx.cash / ctx.price * 0.99 };
+  // Buy condition: Price below SMA and RSI < 30 (oversold)
+  if (price < sma && rsi < 30) {
+    return { side: 'buy', qty: ctx.cash / price * 0.99 };
   }
 
-  // Sell condition: MACD line crosses below signal line
-  if (macdLine.macd < macdLine.signal && pos > 0) {
-    // Close existing long position
-    return { side: 'sell', qty: pos };
+  // Sell condition: Price above SMA and RSI > 70 (overbought)
+  if (price > sma && rsi > 70) {
+    return { side: 'sell', qty: ctx.position };
   }
 
-  // No action
   return null;
 }
