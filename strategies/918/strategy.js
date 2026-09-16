@@ -1,6 +1,6 @@
 /*
  * @coinsori-strategy v1
- * name: BBand Mean Reversion Strategy Improved
+ * name: BBand Mean Reversion Strategy Improved v2
  * ex: binanceusdm
  * syms: BTCUSDT
  * interval: 1h
