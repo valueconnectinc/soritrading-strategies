@@ -1,0 +1,32 @@
+{
+  "id": 912,
+  "name": "MACD Crossover with Volume Filter",
+  "kind": "custom",
+  "verified": {
+    "backtestId": 4732,
+    "return": -36.26,
+    "mdd": 36.81,
+    "trades": 429,
+    "vsBuyHold": "lose",
+    "benchRet": -15.18,
+    "benchBasis": "price",
+    "gapPct": 0,
+    "tFrom": 1665331200,
+    "tTo": 1672527600,
+    "approxNotes": [
+      "봉 내 순서는 관례(양봉 O→L→H→C·음봉 O→H→L→C) — 실순서 미상 · 봉 중 거래량 null · MDD 는 봉 마감 기준",
+      "[유동성/전무] 시장가 주문 65건은 **한 주도 체결되지 않았습니다**. 부분체결이 아니라 전무라, 그 시점의 진입·청산은 **일어나지 않았습니다.**",
+      "거래량은 봉 마감에만 확정 — 봉 중 평가에서 ctx.vol/volumes 가 null 이라 거래량 조건이 걸러졌을 수 있음(봉 중에도 쓰려면 ctx.volPrev·ctx.avgVol)"
+    ],
+    "spec": {
+      "ex": "binanceusdm",
+      "sym": "BTCUSDT",
+      "interval": "1h",
+      "bars": 2000,
+      "end": 1672531200
+    }
+  },
+  "config": null,
+  "updatedAt": "2026-09-16T04:53:11.126Z",
+  "publishedBy": "scripts/publish-strategies.mjs"
+}
