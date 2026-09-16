@@ -1,50 +1,40 @@
 /*
  * @coinsori-strategy v1
- * name: Improved Mean Reversion with Filters
+ * name: Improved Mean Reversion with Macro Filter
  * ex: binanceusdm
  * syms: BTCUSDT
  * interval: 1h
  * cash: 1000
  *
- * Why this strategy: This is an improved version of the mean reversion strategy that incorporates additional filters to reduce false signals. The strategy uses a combination of EMA crossovers, RSI, and Bollinger Bands to confirm mean-reverting behavior.
- * When it buys and sells: It enters a long position when price crosses below the lower Bollinger Band and the 50 EMA is below the 200 EMA. It exits when price reaches the upper Bollinger Band or RSI overbought level.
- * When it does NOT work: In strong trending markets, this strategy may generate false signals as it tries to reverse a trend that continues in the same direction.
+ * Why this strategy: This strategy enhances the traditional mean reversion by incorporating macroeconomic indicators to filter trade signals. It aims to reduce false signals during volatile market conditions.
+ * When it buys and sells: The strategy enters long positions when BTC price crosses above the upper Bollinger Band, and exits when it crosses below the lower Bollinger Band, but only in periods where the macro indicator shows a stable market environment.
+ * When it does NOT work: This strategy may underperform during strong trending markets or when macro indicators fail to capture sudden regime changes. It also may not perform well if the selected macro indicator is not a good proxy for market stability.
  */
 function onUpdate(ctx) {
-  // Calculate required indicators
-  const ema50 = ctx.ema(50, 0);
-  const ema200 = ctx.ema(200, 0);
-  const prev_ema50 = ctx.ema(50, 1);
-  const prev_ema200 = ctx.ema(200, 1);
-  const bb = ctx.bb(20, 2, 0);
-  const rsi = ctx.rsi(14, 0);
-  const prev_rsi = ctx.rsi(14, 1);
+  // Fetching required indicators
+  const bb = ctx.bb(20, 2, 0); // Bollinger Bands with 20 period and 2 standard deviations
+  const sma = ctx.sma(50, 0);  // 50-period Simple Moving Average
+  const price = ctx.price;
   
-  // Check for valid indicator data
-  if (ema50 == null || ema200 == null || prev_ema50 == null || prev_ema200 == null || bb == null || rsi == null || prev_rsi == null) return null;
+  // Fetch macro data (this strategy uses fear and greed index)
+  const fearGreed = ctx.data('fear_greed');
   
-  // Buy condition: Price below lower Bollinger Band + EMA50 below EMA200
-  const belowLowerBand = ctx.price < bb.lower;
-  const emaTrendDown = prev_ema50 < prev_ema200 && ema50 > ema200;
-  
-  // Sell condition: Price above upper Bollinger Band or RSI overbought
-  const aboveUpperBand = ctx.price > bb.upper;
-  const rsiOversold = prev_rsi >= 70 && rsi < 70;
-  const rsiOverbought = prev_rsi <= 30 && rsi > 30;
-  
-  if (belowLowerBand && emaTrendDown) {
-    return { side: 'buy', qty: ctx.cash / ctx.price * 0.99 };
+  // Check if indicators are valid
+  if (bb == null || sma == null || fearGreed == null) return null;
+
+  // Macro filter: Only trade when fear/greed index is between 30 and 70 (neutral market)
+  const macroFilter = fearGreed > 30 && fearGreed < 70;
+
+  // Check for entry conditions
+  if (price > bb.upper && macroFilter) {
+    return { side: 'buy', qty: ctx.cash / price * 0.99 };
   }
-  
-  // Close position on upper band or RSI oversold
-  if ((aboveUpperBand || rsiOverbought) && ctx.position > 0) {
+
+  // Check for exit conditions
+  if (price < bb.lower) {
     return { side: 'sell', qty: ctx.position };
   }
-  
-  // Close position on RSI oversold
-  if (rsiOversold && ctx.position > 0) {
-    return { side: 'sell', qty: ctx.position };
-  }
-  
+
+  // No action if no condition is met
   return null;
 }
