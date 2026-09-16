@@ -11,7 +11,7 @@ Every figure comes from the last verifying backtest at publish time. These are p
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
-| — | [926](strategies/926/) | Multi-Asset Mean Reversion Strategy | +616.72% | — | +71.61% | 33 | 2026-09-16 |
+| — | [926](strategies/926/) | Multi-Asset Mean Reversion Strategy | +448.69% | — | +71.61% | 37 | 2026-09-16 |
 |  | [924](strategies/924/) | Breakout Strategy with RSI Filter | -31.45% | -1.80% | +38.71% | 114 | 2026-09-16 |
 | — | [922](strategies/922/) | Mean Reversion with Volume Filter and MACD | -17.11% | — | +26.50% | 47 | 2026-09-16 |
 |  | [920](strategies/920/) | MACD Trend Filter Strategy | +35.99% | +320.76% | +69.44% | 7 | 2026-09-16 |
