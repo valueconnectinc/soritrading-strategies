@@ -11,7 +11,7 @@ Every figure comes from the last verifying backtest at publish time. These are p
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
-| — | [965](strategies/965/) | RSI Divergence Finder | -21.62% | — | +29.84% | 179 | 2026-09-16 |
+| — | [965](strategies/965/) | RSI Divergence Finder | -52.51% | — | +52.51% | 304 | 2026-09-16 |
 |  | [964](strategies/964/) | MACD Crossover with Volume Filter | -25.14% | +137.05% | +37.73% | 466 | 2026-09-16 |
 |  | [963](strategies/963/) | Multi-asset Mean Reversion Strategy (BTC & ETH) | +71.06% | +137.05% | +15.58% | 245 | 2026-09-16 |
 | — | [962](strategies/962/) | Multi-Asset Mean Reversion with Volatility Filter | -46.47% | — | +51.63% | 222 | 2026-09-16 |
