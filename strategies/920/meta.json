@@ -1,0 +1,28 @@
+{
+  "id": 920,
+  "name": "MACD Trend Filter Strategy",
+  "kind": "custom",
+  "verified": {
+    "backtestId": 4871,
+    "return": -100,
+    "mdd": 100,
+    "trades": 7352,
+    "vsBuyHold": "unmeasured",
+    "gapPct": 0,
+    "tFrom": 1586851200,
+    "tTo": 1680159600,
+    "approxNotes": [
+      "봉 내 순서는 관례(양봉 O→L→H→C·음봉 O→H→L→C) — 실순서 미상 · 봉 중 거래량 null · MDD 는 봉 마감 기준"
+    ],
+    "spec": {
+      "ex": "binanceusdm",
+      "sym": "BTCUSDT",
+      "interval": "1h",
+      "bars": 25920,
+      "end": 1680163200
+    }
+  },
+  "config": null,
+  "updatedAt": "2026-09-16T05:48:36.059Z",
+  "publishedBy": "scripts/publish-strategies.mjs"
+}
