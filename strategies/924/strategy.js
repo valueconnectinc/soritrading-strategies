@@ -12,25 +12,27 @@
  */
 
 function onUpdate(ctx) {
-  // 3개의 자산에 대해 수익률 계산
+  // 현재 자산의 최근 24시간 가격 데이터를 조회하기 위함
   const asset1 = ctx.syms[0];
   const asset2 = ctx.syms[1];
-  
-  // 시가를 가져오는 방식 변경 - 직접 가격 조회 대신 사용자의 ctx.price 메서드 대신, candles 데이터를 쓰는 방식으로 바꿈
+
+  // 가격 정보를 직접 조회하여 수익률 계산
   const closes1 = ctx.closes(asset1);
   const closes2 = ctx.closes(asset2);
-  
+
   if (closes1 == null || closes2 == null) {
     return null;
   }
   
-  // 최근 24시간 가격 데이터로 수익률 계산(288개 신호)
+  // 최근 24시간의 가격 데이터 사용 (60분 * 24 = 1440개)
+  const period = 288; // 288 * 5분 = 24시간
   const returns1 = [];
   const returns2 = [];
-  
-  for (let i = 0; i < 288; i++) {
+
+  for (let i = 0; i < period; i++) {
     const ago = i;
     if (closes1[ago] != null && closes2[ago] != null) {
+      // 현재 가격과 과거 가격 비교하여 수익률 계산
       returns1.push((ctx.price(asset1, 0) / closes1[ago] - 1));
       returns2.push((ctx.price(asset2, 0) / closes2[ago] - 1));
     }
@@ -47,7 +49,7 @@ function onUpdate(ctx) {
   // 자산 간 비교를 위해 각 자산의 수익률 차이 계산
   const diff = avgReturn1 - avgReturn2;
   
-  // 자산 선정 및 매매 판단 로직
+  // 매매 판단 로직
   if (avgReturn1 > avgReturn2 && pos1 === 0 && pos2 > 0) {
     // asset1이 더 높은 수익률을 기록하고, 현재는 asset2에 포지션이 있을 경우 sell asset2 buy asset1
     return [
