@@ -1,29 +1,37 @@
 /*
  * @coinsori-strategy v1
- * name: Simple Mean Reversion Strategy
+ * name: Bollinger Band Mean Reversion
  * ex: binance
  * syms: BTCUSDT
  * interval: 1h
  * cash: 1000
  *
- * Why this strategy: The strategy exploits price mean reversion using Bollinger Bands. When price touches lower band, it buys; when it touches upper band, it sells.
- * When it buys and sells: It buys when price touches lower Bollinger Band (indicating oversold), and sells when it touches upper Bollinger Band (indicating overbought).
- * When it does NOT work: This strategy may fail in strong trending markets where price continues moving in one direction without retracing to bands.
+ * This strategy uses Bollinger Bands to detect mean reversion opportunities. When the price touches the lower band,
+ * it's a buy signal; when it touches the upper band, it's a sell signal.
+ * It buys when price touches the lower band and sells when it touches the upper band.
+ * It does not work well in strong trending markets where price stays consistently above or below the bands.
  */
+
 function onUpdate(ctx) {
-  // Get Bollinger Bands values
-  const bb = ctx.bb(20, 2, 0); 
+  // 获取布林带指标
+  const bb = ctx.bb(20, 2); // 20 period, 2 standard deviations
   if (bb == null) return null;
 
-  // Check for buy condition - price touches lower band
-  if (ctx.price <= bb.lower) {
-    return { side: 'buy', qty: ctx.cash / ctx.price * 0.99 };
+  // 获取当前价格和布林带值
+  const price = ctx.price;
+  const lowerBand = bb.lower;
+  const upperBand = bb.upper;
+
+  // 买入信号：价格触及下轨
+  if (price <= lowerBand && ctx.position === 0) {
+    return { side: 'buy', qty: ctx.cash / price * 0.99 };
   }
-  
-  // Check for sell condition - price touches upper band
-  if (ctx.price >= bb.upper) {
+
+  // 卖出信号：价格触及上轨
+  if (price >= upperBand && ctx.position > 0) {
     return { side: 'sell', qty: ctx.position };
   }
 
+  // 持有仓位不操作
   return null;
 }
