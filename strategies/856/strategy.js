@@ -1,42 +1,52 @@
 /*
  * @coinsori-strategy v1
- * name: Combining Multiple Indicators for Trading Signals
+ * name: Macro Regime Filter Strategy
  * ex: binanceusdm
  * syms: BTCUSDT
  * interval: 1h
  * cash: 1000
- *
- * Why this strategy: This strategy combines multiple technical indicators (SMA, RSI, MACD) to generate more reliable buy and sell signals. By using multiple filters, we aim to reduce false signals commonly seen with single indicator strategies.
- * When it buys and sells: The strategy buys when SMA crossover occurs (5-day above 20-day), RSI is below 40 (oversold), and MACD is bullish. It sells when SMA crossover occurs (5-day below 20-day), RSI is above 60 (overbought), and MACD is bearish.
- * When it does NOT work: This strategy may fail during very strong trending markets where price moves rapidly without retracing, or in ranging markets where multiple indicators do not align consistently.
+
+ * Why this strategy: The strategy leverages macroeconomic indicators to determine market regimes (bullish, neutral, bearish) and adjusts trading behavior accordingly — buying during bullish periods and selling/avoiding during bearish periods.
+ * When it buys and sells: It buys when the market regime is bullish, and sells or holds position when the regime is neutral or bearish. This aims to avoid losses during downturns.
+ * When it does NOT work: The strategy may fail if macroeconomic signals are delayed or incorrect, leading to missed opportunities or trades at inopportune times. It also underperforms in very volatile markets where regime change signals are unclear.
  */
 
 function onUpdate(ctx) {
-  // Get indicators
-  const sma5 = ctx.sma(5);
-  const sma20 = ctx.sma(20);
-  const rsi = ctx.rsi(14);
-  const macd = ctx.macd(12, 26, 9);
+  // Fetch macro indicators
+  const dxy = ctx.macro('dxy');             // Dollar Index
+  const gold = ctx.macro('gold');           // Gold price
+  const ust10y = ctx.macro('ust10y');       // US 10Y Treasury Yield
 
-  // Guard against null values
-  if (sma5 == null || sma20 == null || rsi == null || macd == null) return null;
+  // Guard against null values from macro data
+  if (dxy == null || gold == null || ust10y == null) return null;
 
-  // Get MACD values
-  const macdLine = macd.macd;
-  const signalLine = macd.signal;
+  // Define regime conditions based on macro indicators
+  let regime = 'neutral';  // Default to neutral regime
 
-  // Buy condition: SMA crossover (bullish) + RSI oversold (<40) + MACD bullish
-  if (sma5 > sma20 && rsi < 40 && macdLine > signalLine) {
-    return { side: 'buy', qty: ctx.cash / ctx.price * 0.99 };
+  // Bullish regime: DXY low, Gold stable or rising, US 10Y Yield decreasing
+  if (dxy < 100 && gold >= 1800 && ust10y < 4.0) {
+    regime = 'bullish';
+  }
+  // Bearish regime: DXY high, Gold falling, US 10Y Yield increasing
+  else if (dxy > 105 && gold < 1700 && ust10y > 4.5) {
+    regime = 'bearish';
   }
 
-  // Sell condition: SMA crossover (bearish) + RSI overbought (>60) + MACD bearish
-  if (sma5 < sma20 && rsi > 60 && macdLine < signalLine) {
-    // Only sell if we have a position
+  // Log the current regime for monitoring
+  ctx.log(`Current Market Regime: ${regime}`);
+
+  // Trading logic based on market regime
+  if (regime === 'bullish') {
+    // Buy when the regime is bullish
+    return { side: 'buy', qty: ctx.cash / ctx.price * 0.99 };
+  } else if (regime === 'bearish') {
+    // Sell to close position when regime is bearish
     if (ctx.position > 0) {
       return { side: 'sell', qty: ctx.position };
     }
+    return null;  // Do nothing if no open position
   }
 
+  // For neutral regime, do nothing
   return null;
 }
