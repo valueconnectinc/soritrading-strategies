@@ -1,42 +1,60 @@
 /*
  * @coinsori-strategy v1
- * name: Simplified Mean Reversion with Bollinger Bands Only
+ * name: Bollinger Band Mean Reversion Strategy
  * ex: binanceusdm
  * syms: BTCUSDT
  * interval: 1h
  * cash: 1000
  *
- * Why this strategy: This simplified version focuses purely on Bollinger Band mean reversion without additional filters. It aims to capture the core mean reversion behavior while avoiding over-complication that may be causing poor performance.
- * When it buys and sells: It buys when price touches the lower Bollinger Band, and sells when price touches the upper Bollinger Band. The strategy assumes that price will revert to the mean after touching the bands.
- * When it does NOT work: This strategy may fail during strong trending markets where the price consistently moves outside the Bollinger Bands for extended periods. It also underperforms in choppy or range-bound markets without clear mean-reversion opportunities.
+ * This strategy uses Bollinger Bands to identify overbought and oversold conditions for mean reversion trading.
+ * It buys when the price touches the lower band and sells when it touches the upper band.
+ * The strategy aims to capture volatility-driven price movements within a defined range.
+ *
+ * When it buys: The price touches the lower Bollinger Band, suggesting an oversold condition and a potential buy signal.
+ * When it sells: The price touches the upper Bollinger Band, suggesting an overbought condition and a potential sell signal.
+ * When it does NOT work: During strong trending markets or periods of low volatility where the price remains consistently in one direction.
  */
+
 function onUpdate(ctx) {
-    // Get indicators
-    const bb = ctx.bb(20, 2); // Bollinger Bands with 20 period and 2 standard deviations
+  // Bollinger Band parameters
+  const bbPeriod = 20;  // Period for the Bollinger Bands
+  const bbMultiplier = 2;  // Multiplier for the standard deviation
+
+  // Get the current Bollinger Band values
+  const bb = ctx.bb(bbPeriod, bbMultiplier, 0);  // Current (closed) bar
+  if (bb == null) return null;
+
+  // Check if we are already in a position
+  if (ctx.position != 0) {
+    // If we have a position, check for exit conditions
+    // Exit if we're close to the middle band (mean reversion)
+    const currentPrice = ctx.price;
+    const middleBand = bb.middle;
     
-    // Guard against null values
-    if (bb == null) return null;
+    // Define thresholds for exiting - close to middle band
+    const exitThreshold = 0.01;  // 1% threshold
     
-    let order = null;
-    
-    // Buy condition: Price touches lower Bollinger Band
-    if (ctx.price <= bb.lower) {
-        // Only enter if we don't already have a position
-        if (ctx.position === 0) {
-            // Buy with 99% of available cash
-            const qty = ctx.cash / ctx.price * 0.99;
-            
-            order = { side: 'buy', qty: qty };
-        }
+    if (Math.abs(currentPrice - middleBand) / middleBand < exitThreshold) {
+      return { side: 'sell', qty: ctx.position };  // Close the position
     }
     
-    // Sell condition: Price touches upper Bollinger Band
-    if (ctx.price >= bb.upper) {
-        // Only close position if we have an existing long position
-        if (ctx.position > 0) {
-            order = { side: 'sell', qty: ctx.position };
-        }
-    }
-    
-    return order;
+    return null;  // No action if not exiting
+  }
+
+  // If no open position, check for entry conditions
+  const currentPrice = ctx.price;
+  const upperBand = bb.upper;
+  const lowerBand = bb.lower;
+  
+  // Buy when price touches (or goes below) the lower band
+  if (currentPrice <= lowerBand) {
+    return { side: 'buy', qty: ctx.cash / ctx.price * 0.99 };  // Enter long position
+  }
+
+  // Sell when price touches (or goes above) the upper band
+  if (currentPrice >= upperBand) {
+    return { side: 'sell', qty: ctx.position };  // Close any existing position (if any)
+  }
+
+  return null;  // No action
 }
