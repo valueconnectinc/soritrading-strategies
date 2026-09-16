@@ -11,7 +11,7 @@ Every figure comes from the last verifying backtest at publish time. These are p
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
-| — | [944](strategies/944/) | MACD-RSI Mean Reversion Strategy - Enhanced | +0.00% | — | +0.00% | 34 | 2026-09-16 |
+| — | [944](strategies/944/) | MACD-RSI Mean Reversion Strategy - Enhanced | +0.00% | — | +0.00% | 7 | 2026-09-16 |
 | ★ | [943](strategies/943/) | Simple Bollinger Band Mean Reversion Strategy | +73.64% | +62.99% | +10.60% | 2 | 2026-09-16 |
 | — | [936](strategies/936/) | RSI-Based Mean Reversion with Volume Filter | -21.13% | — | +32.64% | 94 | 2026-09-16 |
 | — | [935](strategies/935/) | Multi-Asset MACD with Macro Sentiment Filter | -75.11% | — | +75.55% | 784 | 2026-09-16 |
