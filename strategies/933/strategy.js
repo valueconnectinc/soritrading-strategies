@@ -1,47 +1,36 @@
 /*
  * @coinsori-strategy v1
- * name: RSI + MACD Strategy with External Data
+ * name: Simple Moving Average Crossover Strategy
  * ex: binanceusdm
  * syms: BTCUSDT
  * interval: 1h
  * cash: 1000
  *
- * Why this strategy: Combines RSI from external data with MACD for better entry signals. 
- * This improves the accuracy of trade entries by using multiple indicators.
- * When it buys and sells: Buys when RSI is below 30 and MACD crosses above signal line. Sells when RSI is above 70 and MACD crosses below signal line.
- * When it does NOT work: The strategy may fail in choppy or ranging markets where the MACD doesn't provide clear signals, or if RSI data is not representative.
+ * Why this strategy: This strategy uses a simple moving average crossover to identify trend changes in Bitcoin. It's designed to capture long-term trends by entering positions when a short-term SMA crosses above a long-term SMA.
+ * When it buys and sells: The strategy buys when a 10-period SMA crosses above a 50-period SMA, and sells when the 10-period SMA crosses below the 50-period SMA. These crossovers indicate potential trend changes in price behavior.
+ * When it does NOT work: This strategy may fail during ranging market conditions where there are no clear trends, leading to frequent whipsaws and potential losses. It also doesn't account for volatility or volume filtering which could help reduce noise in the signals.
  */
-
 function onUpdate(ctx) {
-  // Reading data from external dataset
-  const rsiData = ctx.data('fear_greed_index');
+  // Calculate SMAs
+  const sma10 = ctx.sma(10, 0);
+  const sma50 = ctx.sma(50, 0);
   
-  // Guard clause for external data
-  if (rsiData == null) return null;
+  // Previous SMAs for crossover detection
+  const sma10_1 = ctx.sma(10, 1);
+  const sma50_1 = ctx.sma(50, 1);
   
-  // Calculate MACD indicators
-  const macd = ctx.macd(12, 26, 9, 0);
-  const macdPrev = ctx.macd(12, 26, 9, 1);
-  const macdSignal = macd ? macd.signal : null;
-  const macdSignalPrev = macdPrev ? macdPrev.signal : null;
+  // Guard against null values
+  if (sma10 == null || sma50 == null || sma10_1 == null || sma50_1 == null) {
+    return null;
+  }
   
-  // Guard clause for MACD
-  if (macd == null || macdSignal == null || macdPrev == null || macdSignalPrev == null) return null;
-  
-  // Define thresholds for RSI
-  const oversold = 30;
-  const overbought = 70;
-  
-  // Get current RSI value
-  const rsi = rsiData;
-  
-  // Buy condition: RSI below oversold and MACD crosses above signal line
-  if (rsi < oversold && macdPrev.macd <= macdSignalPrev && macd.macd > macdSignal) {
+  // Buy condition: 10-period SMA crosses above 50-period SMA
+  if (sma10_1 <= sma50_1 && sma10 > sma50) {
     return { side: 'buy', qty: ctx.cash / ctx.price * 0.99 };
   }
   
-  // Sell condition: RSI above overbought and MACD crosses below signal line
-  if (rsi > overbought && macdPrev.macd >= macdSignalPrev && macd.macd < macdSignal) {
+  // Sell condition: 10-period SMA crosses below 50-period SMA
+  if (sma10_1 >= sma50_1 && sma10 < sma50) {
     return { side: 'sell', qty: ctx.position };
   }
   
