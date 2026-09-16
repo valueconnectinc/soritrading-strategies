@@ -1,54 +1,55 @@
 /*
  * @coinsori-strategy v1
- * name: Volatility Filtered Bollinger Band Mean Reversion Strategy
+ * name: Improved Bollinger Band Strategy with Multi-Filter
  * ex: binanceusdm
  * syms: BTCUSDT
  * interval: 1h
  * cash: 1000
  *
- * Why this strategy: Adds a volatility filter using ATR to avoid entering trades when the market is too volatile, which can cause significant drawdowns. This aims to improve risk-adjusted returns by reducing exposure to high-volatility periods.
- * When it buys and sells: It buys when price touches lower Bollinger Band and ATR is below a threshold, or if ATR has decreased significantly from a previous period. It sells when price touches upper Bollinger Band and ATR is below the threshold or ATR has decreased.
- * When it does NOT work: It may fail during low-volatility periods where the ATR filter prevents timely entry into profitable mean-reverting opportunities, reducing overall profitability.
+ * Why this strategy: This strategy combines multiple filters (BB, MACD, RSI) to improve entry accuracy and reduce false signals. It reduces the risk of entering during volatile or unclear trends.
+ * When it buys and sells: The strategy enters a long position when price crosses above the upper BB band, MACD signal line turns positive, and RSI is below 70. It exits when price crosses below the lower BB band or when RSI exceeds 30.
+ * When it does NOT work: This strategy struggles during strong trending markets where BB bands do not contract properly, and when the combination of filters produces too few signals.
  */
 
 function onUpdate(ctx) {
-  // --- Input Parameters ---
-  const bbPeriod = 20;
-  const bbMultiplier = 2.0;
-  const atrPeriod = 14;
-  const volatilityThreshold = 50; // Threshold for ATR in USDT
+    // Fetch indicators
+    const bb = ctx.bb(20, 2); // Bollinger Bands (20-period, 2 std dev)
+    const macd = ctx.macd(12, 26, 9); // MACD (12,26,9)
+    const rsi = ctx.rsi(14); // RSI (14-period)
 
-  // === Bollinger Band Calculation ===
-  const bb = ctx.bb(bbPeriod, bbMultiplier);
-  if (bb == null) return null;
+    // Guard against null indicators
+    if (bb == null || macd == null || rsi == null) return null;
 
-  const bbUpper = bb.upper;
-  const bbLower = bb.lower;
-  const bbMiddle = bb.middle;
+    // Previous values (ago=1)
+    const bb_prev = ctx.bb(20, 2, 1);
+    const macd_prev = ctx.macd(12, 26, 9, 1);
+    const rsi_prev = ctx.rsi(14, 1);
 
-  // === ATR Calculation ===
-  const atr = ctx.atr(atrPeriod, 1);
-  const atrPrev = ctx.atr(atrPeriod, 2);
+    // Guard against null previous values
+    if (bb_prev == null || macd_prev == null || rsi_prev == null) return null;
 
-  if (atr == null || atrPrev == null) return null;
+    const price = ctx.price;
+    const position = ctx.position;
 
-  // --- Signal Conditions ---
-  const price = ctx.price;
+    // Initialize order object
+    let order = null;
 
-  // Buy condition: Price touches lower BB and ATR is low
-  const buyCondition = price <= bbLower && atr < volatilityThreshold;
+    // Buy condition: price crosses above upper BB, MACD signal turns positive, RSI below 70
+    if (price > bb.upper && price < bb_prev.upper && macd.macd > macd.signal && macd_prev.macd <= macd_prev.signal && rsi < 70) {
+        // Only enter if not already in position
+        if (position <= 0) {
+            return { side: 'buy', qty: ctx.cash / price * 0.95 }; // Buy with 95% of available cash
+        }
+    }
 
-  // Sell condition: Price touches upper BB and ATR is low
-  const sellCondition = price >= bbUpper && atr < volatilityThreshold;
+    // Sell condition: price crosses below lower BB or RSI climbs above 30  
+    if (price < bb.lower && price > bb_prev.lower || rsi > 30) {
+        // Only exit if in a long position
+        if (position > 0) {
+            return { side: 'sell', qty: position };
+        }
+    }
 
-  // === Trade Execution ===
-  if (buyCondition && ctx.position <= 0) {
-    return { side: 'buy', qty: ctx.cash / ctx.price * 0.99 };
-  }
-
-  if (sellCondition && ctx.position > 0) {
-    return { side: 'sell', qty: ctx.position };
-  }
-
-  return null;
+    // Return null if no trade signal
+    return null;
 }
