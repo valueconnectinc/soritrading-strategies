@@ -1,43 +1,78 @@
 /*
  * @coinsori-strategy v1
- * name: Moving Average Crossover with Volume Filter
+ * name: Funding Rate Sentiment Strategy
  * ex: binanceusdm
  * syms: BTCUSDT
  * interval: 1h
  * cash: 1000
  *
- * Why this strategy: This strategy leverages the crossover of short-term and long-term moving averages to identify trend changes, filtering trades based on volume to ensure higher confidence in the signal. It is designed to capture trending movements while reducing false signals in low-volume periods.
- * When it buys and sells: The strategy enters a long position when the 10-period SMA crosses above the 50-period SMA and the current volume exceeds the average volume over the last 20 periods. It exits the position when the 10-period SMA crosses below the 50-period SMA.
- * When it does NOT work: This strategy may underperform in highly volatile or ranging markets where price movements are inconsistent, or when volume filters are too restrictive, missing profitable opportunities.
+ * Why this strategy: This strategy uses funding rate trends to identify when the market is likely to move in a certain direction. When the funding rate is consistently negative (indicating longs are paying shorts), it suggests a bearish sentiment, and vice versa for bullish.
+ * When it buys and sells: It enters long positions when funding rates are positive and show an increasing trend, and short positions when funding rates are negative and show a decreasing trend. It exits positions based on profit targets or stop losses.
+ * When it does NOT work: The strategy may fail during periods of low volatility or in markets where funding rates do not accurately reflect market sentiment.
  */
 
 function onUpdate(ctx) {
-  // Get moving averages
-  const smaShort = ctx.sma(10);
-  const smaLong = ctx.sma(50);
+  // Get the last 5 funding rate values
+  const fundingRates = [];
+  for (let i = 0; i < 5; i++) {
+    const fr = ctx.data('fundingRate');
+    if (fr == null || fr.length < 1) return null;
+    fundingRates.push(fr[fr.length - 1 - i]);
+  }
+
+  // Calculate the average of recent funding rates
+  let avgFunding = 0;
+  for (let i = 0; i < fundingRates.length; i++) {
+    avgFunding += fundingRates[i];
+  }
+  avgFunding /= fundingRates.length;
+
+  // Get the trend of the last few funding rate values
+  const recentTrend = fundingRates[fundingRates.length - 1] > fundingRates[0];
+
+  // Check if we are in a long position
+  const isInLong = ctx.position > 0;
+  const isInShort = ctx.position < 0;
+
+  // Calculate stop loss and take profit levels based on ATR
+  const atr = ctx.atr(14);
+  if (atr == null) return null;
   
-  // Get current and previous values for crossover detection
-  const smaShort1 = ctx.sma(10, 1);
-  const smaLong1 = ctx.sma(50, 1);
+  const stopLossDistance = atr * 1.5; // 1.5x ATR for stop loss
+  const takeProfitDistance = atr * 2; // 2x ATR for take profit
   
-  // Get volume data
-  const vol = ctx.vol;
-  const avgVol = ctx.avgVol(20);
+  // Exit position if stop loss or take profit is hit
+  if (isInLong || isInShort) {
+    if (isInLong && ctx.price <= ctx.entryPx - stopLossDistance) {
+      return { side: 'sell', qty: ctx.position };
+    }
+    if (isInShort && ctx.price >= ctx.entryPx + stopLossDistance) {
+      return { side: 'buy', qty: Math.abs(ctx.position) };
+    }
+    if (isInLong && ctx.price >= ctx.entryPx + takeProfitDistance) {
+      return { side: 'sell', qty: ctx.position };
+    }
+    if (isInShort && ctx.price <= ctx.entryPx - takeProfitDistance) {
+      return { side: 'buy', qty: Math.abs(ctx.position) };
+    }
+  }
+
+  // Entry conditions
+  let order = null;
   
-  // Check if all required indicators are available
-  if (smaShort == null || smaLong == null || smaShort1 == null || smaLong1 == null || vol == null || avgVol == null) {
-    return null;
+  // Buy condition: positive average funding rate with increasing trend
+  if (avgFunding > 0 && recentTrend) {
+    if (!isInLong && !isInShort) {
+      order = { side: 'buy', qty: ctx.cash / ctx.price * 0.99 };
+    }
   }
   
-  // Buy condition: SMA short crosses above SMA long, volume is above average
-  if (smaShort1 <= smaLong1 && smaShort > smaLong && vol > avgVol) {
-    return { side: 'buy', qty: ctx.cash / ctx.price * 0.99 };
+  // Sell condition: negative average funding rate with decreasing trend
+  if (avgFunding < 0 && !recentTrend) {
+    if (!isInLong && !isInShort) {
+      order = { side: 'sell', qty: ctx.cash / ctx.price * 0.99 };
+    }
   }
-  
-  // Sell condition: SMA short crosses below SMA long
-  if (smaShort1 >= smaLong1 && smaShort < smaLong) {
-    return { side: 'sell', qty: ctx.position };
-  }
-  
-  return null;
+
+  return order;
 }
