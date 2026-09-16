@@ -1,0 +1,29 @@
+{
+  "id": 841,
+  "name": "RSI Mean Reversion with Volatility Filter",
+  "kind": "custom",
+  "verified": {
+    "backtestId": 4385,
+    "return": -3.64,
+    "mdd": 23.6,
+    "trades": 59,
+    "vsBuyHold": "unmeasured",
+    "gapPct": 0,
+    "tFrom": 1633795200,
+    "tTo": 1640991600,
+    "approxNotes": [
+      "봉 내 순서는 관례(양봉 O→L→H→C·음봉 O→H→L→C) — 실순서 미상 · 봉 중 거래량 null · MDD 는 봉 마감 기준",
+      "[유동성/전무] 시장가 주문 29건은 **한 주도 체결되지 않았습니다**. 부분체결이 아니라 전무라, 그 시점의 진입·청산은 **일어나지 않았습니다.**"
+    ],
+    "spec": {
+      "ex": "binanceusdm",
+      "sym": "BTCUSDT",
+      "interval": "1h",
+      "bars": 2000,
+      "end": 1640995200
+    }
+  },
+  "config": null,
+  "updatedAt": "2026-09-16T02:37:27.282Z",
+  "publishedBy": "scripts/publish-strategies.mjs"
+}
