@@ -1,53 +1,54 @@
 /*
  * @coinsori-strategy v1
- * name: RSI Mean Reversion with Volatility Filter
+ * name: MACD Trend Following with ATR Stop Loss
  * ex: binanceusdm
  * syms: BTCUSDT
  * interval: 1h
  * cash: 1000
  *
- * This strategy combines RSI mean reversion with a volatility filter to avoid trading during high volatility periods. It enters long when RSI is below 30 and exits when RSI crosses above 70.
- * The strategy buys on oversold conditions but avoids entering during times of high price fluctuation.
- * It may underperform in strong trending markets where the price does not revert to the mean, and could miss significant trends by waiting for volatility to decrease.
+ * Why this strategy: This strategy follows the momentum using MACD crossovers and uses ATR to dynamically adjust stop-losses, aiming to capture strong trends while controlling risk.
+ * When it buys and sells: It buys on MACD bullish crossover and sells on bearish crossover. It manages risk with ATR-based trailing stop loss.
+ * When it does NOT work: This strategy fails in ranging markets with frequent trend reversals or during very low volatility periods where tight stops may prematurely exit positions.
  */
+
 function onUpdate(ctx) {
-  // === INDICATORS ===
-  const rsi = ctx.rsi(14, 0);
-  const rsiPrev = ctx.rsi(14, 1);
-  const atr = ctx.atr(14, 0);
-  const vol = ctx.vol;
+    // === INDICATORS ===
+    const macd = ctx.macd(12, 26, 9, 0); // Current MACD
+    const macdPrev = ctx.macd(12, 26, 9, 1); // Previous MACD
+    if (macd == null || macdPrev == null || macd.signal == null || macdPrev.signal == null) return null;
+    
+    // === ATR for stop loss ===
+    const atr = ctx.atr(14, 0);
+    if (atr == null) return null;
 
-  // === GUARD AGAINST NULL VALUES ===
-  if (rsi == null || rsiPrev == null || atr == null || vol == null) {
-    return null;
-  }
+    // === ENTRY AND EXIT CONDITIONS ===
+    // Check for MACD crossover to enter long position
+    let orders = [];
 
-  // === VOLATILITY FILTER ===
-  // Only trade when volatility is below a threshold (e.g., average volume * 2)
-  const avgVol = ctx.avgVol(20);
-  if (avgVol == null) return null;
-
-  if (vol < avgVol * 0.5) {
-    // === LONG POSITION LOGIC ===
-    // Buy when RSI drops below 30 (oversold condition)
-    if (rsiPrev <= 30 && rsi > 30) {
-      const qty = ctx.cash / ctx.price * 0.99;
-      return {
-        side: 'buy',
-        qty: qty,
-        type: 'market'
-      };
+    if (macdPrev.macd <= macdPrev.signal && macd.macd > macd.signal && ctx.position === 0) {
+        // Buy signal: MACD line crosses above signal line
+        orders.push({
+            side: 'buy',
+            qty: ctx.cash / ctx.price * 0.95 // Use 95% of cash to allow for fees  
+        });
+    } else if (macdPrev.macd >= macdPrev.signal && macd.macd < macd.signal && ctx.position > 0) {
+        // Sell signal: MACD line crosses below signal line
+        orders.push({
+            side: 'sell',
+            qty: ctx.position
+        });
     }
 
-    // === EXIT LOGIC ===
-    // Sell when RSI crosses above 70 (overbought condition)
-    if (rsiPrev <= 70 && rsi > 70) {
-      return {
-        side: 'sell',
-        qty: ctx.position
-      };
+     // === ATR-Based Stop Loss Management ===
+    if (ctx.position > 0) {
+        const stopPrice = ctx.price - atr * 1.5; // 1.5x ATR stop loss
+        if (ctx.price <= stopPrice) {
+            orders.push({
+                side: 'sell',
+                qty: ctx.position
+            });
+        }
     }
-  }
 
-  return null;
+    return orders.length > 0 ? orders : null;
 }

@@ -3,27 +3,28 @@
   "name": "Multi-Asset Pair Strategy",
   "kind": "custom",
   "verified": {
-    "backtestId": 4466,
-    "return": -35.14,
-    "mdd": 39.39,
-    "trades": 22,
-    "vsBuyHold": "unmeasured",
+    "backtestId": 4470,
+    "return": -65.67,
+    "mdd": 65.98,
+    "trades": 298,
+    "vsBuyHold": "lose",
+    "benchRet": -15.18,
+    "benchBasis": "price",
     "gapPct": 0,
-    "tFrom": 1654808400,
-    "tTo": 1662004800,
+    "tFrom": 1665331200,
+    "tTo": 1672527600,
     "approxNotes": [
-      "봉 내 순서는 관례(양봉 O→L→H→C·음봉 O→H→L→C) — 실순서 미상 · 봉 중 거래량 null · MDD 는 봉 마감 기준",
-      "거래량은 봉 마감에만 확정 — 봉 중 평가에서 ctx.vol/volumes 가 null 이라 거래량 조건이 걸러졌을 수 있음(봉 중에도 쓰려면 ctx.volPrev·ctx.avgVol)"
+      "봉 내 순서는 관례(양봉 O→L→H→C·음봉 O→H→L→C) — 실순서 미상 · 봉 중 거래량 null · MDD 는 봉 마감 기준"
     ],
     "spec": {
       "ex": "binanceusdm",
       "sym": "BTCUSDT",
       "interval": "1h",
       "bars": 2000,
-      "end": 1662008400
+      "end": 1672531200
     }
   },
   "config": null,
-  "updatedAt": "2026-09-16T03:08:20.645Z",
+  "updatedAt": "2026-09-16T03:10:11.132Z",
   "publishedBy": "scripts/publish-strategies.mjs"
 }
