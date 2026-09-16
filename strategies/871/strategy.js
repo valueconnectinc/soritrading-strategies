@@ -13,7 +13,6 @@
 function onUpdate(ctx) {
   // Define parameters
   const period = 20;
-  const assetList = ['BTCUSDT', 'ETHUSDT', 'ADAUSDT'];
   
   // Ensure we only execute logic on bar close
   if (!ctx.state.prevBar) {
@@ -27,6 +26,9 @@ function onUpdate(ctx) {
   // Build orders array
   const orders = [];
   
+  // Get the list of symbols to trade from the strategy definition.
+  const assetList = ['BTCUSDT', 'ETHUSDT', 'ADAUSDT'];
+  
   for (let i = 0; i < assetList.length; i++) {
     const sym = assetList[i];
     
@@ -37,13 +39,14 @@ function onUpdate(ctx) {
     const sma = ctx.sma(period); // 20-period SMA
     const price = ctx.price(sym);
     
-    // Guard against null values
+    // Guard against null values  
     if (sma == null || price == null) continue;
     
     // Entry condition: price crosses below SMA (mean reversion)
     const prevClose = closes[closes.length - 2];
     const prevSma = ctx.sma(period, 1); // 20-period SMA from previous bar
     if (prevClose >= prevSma && price < sma) {
+      // Calculate quantity based on cash and price
       const qty = ctx.cash / ctx.price(sym) * 0.33; // Split capital among assets
       orders.push({
         side: 'buy',
@@ -53,10 +56,11 @@ function onUpdate(ctx) {
     }
     
     // Exit condition (optional): price crosses back above SMA
-    if (ctx.position > 0 && ctx.price(sym) > sma && ctx.pos(sym) > 0) {
+    const position = ctx.pos(sym);
+    if (position > 0 && ctx.price(sym) > sma) {
       orders.push({
         side: 'sell',
-        qty: ctx.position,
+        qty: position,
         sym: sym
       });
     }
