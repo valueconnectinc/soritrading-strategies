@@ -39,6 +39,7 @@ function onUpdate(ctx) {
   // Entry condition:
   // - Price crosses below the lower Bollinger Band
   // - RSI is below 30 (oversold)
+  // - Add a filter to ensure price is not too low (optional safety measure)
   const entryCondition1 = ctx.closes[1] >= bb.lower && price < bb.lower;
   const entryCondition2 = rsi < 30;
 
