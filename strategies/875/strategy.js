@@ -1,83 +1,58 @@
 /*
  * @coinsori-strategy v1
- * name: Cross-Asset Correlation Mean Reversion
+ * name: RSI Mean Reversion Strategy
  * ex: binanceusdm
- * syms: BTCUSDT ETHUSDT SOLUSDT
+ * syms: BTCUSDT
  * interval: 1h
- * cash: 10000
+ * cash: 1000
  *
- * This strategy uses correlation analysis between different assets to identify mean reversion opportunities.
- * It tracks the correlation between BTC, ETH, and SOL over the past 20 periods. When correlations
- * become too extreme (either very high or very low), it suggests a potential reversal in the relationship,
- * which can be exploited for mean reversion trades. The strategy enters positions when assets diverge
- * significantly from their expected correlation behavior.
+ * This strategy uses the Relative Strength Index (RSI) to identify overbought and oversold conditions.
+ * When RSI falls below 30, it's considered oversold — a buy signal. When it rises above 70, it's overbought — a sell signal.
+ * The strategy aims to capture mean reversion opportunities within the RSI range.
  *
- * When it buys: When correlation between assets is unusually low, suggesting a divergence that will revert
- * When it sells: When correlation between assets is unusually high, suggesting overcorrelation that will revert
- * When it does NOT work: During periods where all assets move in unison (high correlation), or when asset prices are too volatile for reliable correlation analysis.
+ * It buys when RSI drops below 30 and sells when RSI goes above 70.
+ * No additional filters are used to keep the strategy simple.
+ * 
+ * This approach works best in ranging markets where price tends to revert to the mean.
+ * The strategy does not work well during strong trending markets where RSI may stay in overbought or oversold for extended periods.
  */
+
 function onUpdate(ctx) {
-  // Simple implementation using price relative to moving average rather than full correlation
-  // This approach is more robust and avoids complex correlation calculations which require more data
+  // Get RSI values with 14-period settings (default)
+  const rsi = ctx.rsi(14, 0);     // Current RSI
+  const rsiPrev = ctx.rsi(14, 1); // Previous RSI
   
-  const ma = ctx.sma(20);
-  const atr = ctx.atr(14);
+  // Guard against null values (warm-up period)
+  if (rsi == null || rsiPrev == null) return null;
   
-  if (ma == null || atr == null) return null;
-  
-  // Get current symbol's price relative to its moving average
-  const price = ctx.price;
-  const priceBelowMA = price < ma;
-  const priceAboveMA = price > ma;
-  
-  // Calculate position size based on ATR for risk control
-  const positionSize = ctx.cash / (ctx.price * atr * 2);
-  
-  // Initialize order array
-  const orders = [];
-  
-  // Check all symbols for mean reversion signals
-  for (let i = 0; i < ctx.syms.length; i++) {
-    const sym = ctx.syms[i];
+  // RSI crossover logic
+  // If previous RSI was overbought (>70) and current is below 70, we might close a short position or open a long
+  if (rsiPrev >= 70 && rsi < 70) {
+    // RSI crossed back below 70 — possible reversal signal (sell)
+    // But since we're in a buy/sell pattern with no position, this should be handled by the logic below
     
-    // Switch context to this symbol
-    ctx.sym = sym;
-    
-    // Read indicators for current symbol
-    const price = ctx.price;
-    const sma20 = ctx.sma(20);
-    
-    if (sma20 == null) continue;
-    
-    // Signal when price is significantly below or above MA in relation to volatility
-    // We use ATR here as a multiplier for risk control in addition to traditional MA
-    const atrValue = ctx.atr(14);
-    if (atrValue == null) continue;
-    
-    const distanceFromMA = Math.abs(price - sma20);
-    
-    // If price is more than 2x ATR away from MA, consider it for trade
-    if (distanceFromMA > atrValue * 2) {
-      if (price < sma20) {
-        // Price below MA, go long
-        orders.push({
-          side: 'buy',
-          qty: positionSize * 0.33, // Distribute among assets
-          type: 'market'
-        });
-      } else if (price > sma20) {
-        // Price above MA, go short
-        orders.push({
-          side: 'sell',
-          qty: positionSize * 0.33, // Distribute among assets
-          type: 'market'
-        });
-      }
-    }
-    
-    // Reset back to original symbol
-    ctx.sym = ctx.syms[0];
+    // For now, let's simply follow a straightforward RSI strategy:
+    // Buy when RSI drops below 30 (oversold) and sell when RSI goes above 70 (overbought)
   }
-  
-  return orders.length > 0 ? orders : null;
+
+  // Buy condition: if current RSI is below 30 (oversold)
+  if (rsi < 30 && ctx.position <= 0) {
+    // Enter a long position with 99% of available cash
+    return { 
+      side: 'buy', 
+      qty: ctx.cash / ctx.price * 0.99 
+    };
+  }
+
+  // Sell condition: if current RSI is above 70 (overbought)
+  if (rsi > 70 && ctx.position > 0) {
+    // Close the existing long position
+    return { 
+      side: 'sell', 
+      qty: ctx.position 
+    };
+  }
+
+  // No action needed
+  return null;
 }

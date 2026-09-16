@@ -11,7 +11,7 @@ Every figure comes from the last verifying backtest at publish time. These are p
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
-| — | [875](strategies/875/) | Cross-Asset Correlation Mean Reversion | -68.92% | — | +77.90% | 5 | 2026-09-16 |
+| — | [875](strategies/875/) | Cross-Asset Correlation Mean Reversion | -8.88% | — | +14.16% | 63 | 2026-09-16 |
 | — | [873](strategies/873/) | Multi-Asset Mean Reversion with Macro Filter | +63.96% | — | +23.03% | 160 | 2026-09-16 |
 |  | [872](strategies/872/) | AI 전략 | -21.62% | -15.18% | +28.60% | 138 | 2026-09-16 |
 |  | [871](strategies/871/) | Trend Following with ATR Stop | -15.18% | -15.18% | +18.74% | 147 | 2026-09-16 |
