@@ -4,13 +4,14 @@ Every strategy whose backtest **finished and actually traded** is published here
 Nothing is filtered out by return — the ones that lost money are part of the record.
 Entries stay after a strategy is removed from our own workspace — this is a log, and deleting the record would leave only the survivors.
 
-**★ marks a strategy that out-returned buy & hold over the same window** — 16 of 169 right now.
-`—` means the comparison **could not be made**: the engine does not compute a benchmark for multi-symbol, futures, or multi-leg runs. That is *unknown*, not *lost*, and it is 89 of them right now.
+**★ marks a strategy that out-returned buy & hold over the same window** — 16 of 170 right now.
+`—` means the comparison **could not be made**: the engine does not compute a benchmark for multi-symbol, futures, or multi-leg runs. That is *unknown*, not *lost*, and it is 90 of them right now.
 
 Every figure comes from the last verifying backtest at publish time. These are past results over historical data. Nothing here is promised or assured about the future, and none of it is investment advice.
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
+| — | [961](strategies/961/) | MACD + Bollinger Bands Mean Reversion | +54.41% | — | +8.55% | 9 | 2026-09-16 |
 | ★ | [960](strategies/960/) | Mean Reversion Strategy | +32.41% | +10.66% | +15.07% | 302 | 2026-09-16 |
 |  | [959](strategies/959/) | Enhanced Bollinger Band + Momentum Strategy | +14.37% | +69.88% | +25.60% | 220 | 2026-09-16 |
 |  | [958](strategies/958/) | RSI-based Mean Reversion Strategy | -28.01% | -15.18% | +28.01% | 206 | 2026-09-16 |
