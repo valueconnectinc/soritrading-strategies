@@ -11,7 +11,7 @@ Every figure comes from the last verifying backtest at publish time. These are p
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
-|  | [891](strategies/891/) | RSI + ATR Volatility Filter Strategy | +134.41% | +340.42% | +53.91% | 1574 | 2026-09-16 |
+|  | [891](strategies/891/) | RSI + ATR Volatility Filter Strategy | +89.73% | +225.92% | +53.91% | 1567 | 2026-09-16 |
 |  | [890](strategies/890/) | MACD + Volume Filter Strategy | -68.34% | +90.20% | +78.37% | 1084 | 2026-09-16 |
 |  | [889](strategies/889/) | Bollinger Band + RSI Mean Reversion Strategy | +0.79% | +134.18% | +57.94% | 244 | 2026-09-16 |
 |  | [888](strategies/888/) | RSI Divergence Strategy | -0.15% | +58.31% | +0.46% | 6 | 2026-09-16 |
