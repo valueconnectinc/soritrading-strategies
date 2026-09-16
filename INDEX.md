@@ -4,13 +4,14 @@ Every strategy whose backtest **finished and actually traded** is published here
 Nothing is filtered out by return — the ones that lost money are part of the record.
 Entries stay after a strategy is removed from our own workspace — this is a log, and deleting the record would leave only the survivors.
 
-**★ marks a strategy that out-returned buy & hold over the same window** — 8 of 75 right now.
-`—` means the comparison **could not be made**: the engine does not compute a benchmark for multi-symbol, futures, or multi-leg runs. That is *unknown*, not *lost*, and it is 44 of them right now.
+**★ marks a strategy that out-returned buy & hold over the same window** — 8 of 76 right now.
+`—` means the comparison **could not be made**: the engine does not compute a benchmark for multi-symbol, futures, or multi-leg runs. That is *unknown*, not *lost*, and it is 45 of them right now.
 
 Every figure comes from the last verifying backtest at publish time. These are past results over historical data. Nothing here is promised or assured about the future, and none of it is investment advice.
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
+| — | [832](strategies/832/) | RSI Mean Reversion with Macro Filter | +0.55% | — | +3.98% | 12 | 2026-09-16 |
 | ★ | [714](strategies/714/) | External Data RSI Strategy | +11.37% | +8.44% | +5.62% | 6 | 2026-09-11 |
 | ★ | [713](strategies/713/) | RSI Mean Reversion Strategy BNBUSDT 1h Improved | +1.82% | -0.32% | +15.65% | 40 | 2026-09-11 |
 |  | [712](strategies/712/) | RSI-Based Mean Reversion Strategy | -16.57% | -5.78% | +29.90% | 37 | 2026-09-11 |
