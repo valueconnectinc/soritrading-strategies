@@ -4,13 +4,14 @@ Every strategy whose backtest **finished and actually traded** is published here
 Nothing is filtered out by return — the ones that lost money are part of the record.
 Entries stay after a strategy is removed from our own workspace — this is a log, and deleting the record would leave only the survivors.
 
-**★ marks a strategy that out-returned buy & hold over the same window** — 13 of 160 right now.
+**★ marks a strategy that out-returned buy & hold over the same window** — 14 of 161 right now.
 `—` means the comparison **could not be made**: the engine does not compute a benchmark for multi-symbol, futures, or multi-leg runs. That is *unknown*, not *lost*, and it is 87 of them right now.
 
 Every figure comes from the last verifying backtest at publish time. These are past results over historical data. Nothing here is promised or assured about the future, and none of it is investment advice.
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
+| ★ | [952](strategies/952/) | Bollinger Band Mean Reversion with ATR Filter | -2.23% | -15.19% | +25.93% | 83 | 2026-09-16 |
 |  | [951](strategies/951/) | BTC Breakout Strategy | -76.87% | -10.34% | +76.87% | 482 | 2026-09-16 |
 |  | [950](strategies/950/) | BTC Trend Filter Strategy | -100.00% | +53.56% | +100.00% | 3878 | 2026-09-16 |
 |  | [949](strategies/949/) | Simple Price Trend Strategy | -62.49% | -0.44% | +62.49% | 1239 | 2026-09-16 |
