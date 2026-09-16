@@ -4,13 +4,14 @@ Every strategy whose backtest **finished and actually traded** is published here
 Nothing is filtered out by return — the ones that lost money are part of the record.
 Entries stay after a strategy is removed from our own workspace — this is a log, and deleting the record would leave only the survivors.
 
-**★ marks a strategy that out-returned buy & hold over the same window** — 8 of 97 right now.
-`—` means the comparison **could not be made**: the engine does not compute a benchmark for multi-symbol, futures, or multi-leg runs. That is *unknown*, not *lost*, and it is 56 of them right now.
+**★ marks a strategy that out-returned buy & hold over the same window** — 8 of 98 right now.
+`—` means the comparison **could not be made**: the engine does not compute a benchmark for multi-symbol, futures, or multi-leg runs. That is *unknown*, not *lost*, and it is 57 of them right now.
 
 Every figure comes from the last verifying backtest at publish time. These are past results over historical data. Nothing here is promised or assured about the future, and none of it is investment advice.
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
+| — | [863](strategies/863/) | BTC RSI Divergence Strategy Enhanced | +90.06% | — | +77.24% | 9 | 2026-09-16 |
 | — | [862](strategies/862/) | BTC MACD Crossover Strategy | +340.86% | — | +77.24% | 9 | 2026-09-16 |
 |  | [861](strategies/861/) | BTC Fear & Greed Index Strategy | -39.07% | +90.20% | +70.17% | 9 | 2026-09-16 |
 |  | [859](strategies/859/) | RSI Mean Reversion with Volatility Filter | -6.67% | -1.80% | +14.89% | 35 | 2026-09-16 |
