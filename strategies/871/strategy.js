@@ -1,19 +1,21 @@
 /*
  * @coinsori-strategy v1
- * name: Volume-Weighted Mean Reversion Strategy
+ * name: MACD Momentum Filter Strategy
  * ex: binanceusdm
  * syms: BTCUSDT
  * interval: 1h
  * cash: 10000
  *
- * Why this strategy: This strategy combines volume and mean reversion to identify high-confidence entry points. It looks for price movements that occur in conjunction with unusually high trading volumes, which often signal a strong reversal.
- * When it buys and sells: The strategy enters long positions when the price crosses below the 20-period SMA, and volume is above the average.
- * When it does NOT work: This approach may fail during strong trending markets where volumes remain consistently high and price moves in a single direction for extended periods, potentially leading to false signals.
+ * Why this strategy: This strategy uses the MACD indicator as a momentum filter to avoid entering trades during periods of weak momentum. It combines a simple moving average crossover with MACD confirmation.
+ * When it buys and sells: The strategy enters long when the price crosses above the SMA and the MACD histogram is positive, and exits when the MACD histogram turns negative.
+ * When it does NOT work: This approach may fail in choppy markets where MACD signals are unreliable, or during strong trending periods where momentum filters prevent profitable entries.
  */
 function onUpdate(ctx) {
   // Define parameters
   const smaPeriod = 20;
-  const volumeThreshold = 1.5; // Multiplier for average volume
+  const macdFast = 12;
+  const macdSlow = 26;
+  const macdSignal = 9;
   
   // Ensure we only execute logic on bar close
   if (!ctx.state.prevBar) {
@@ -24,28 +26,33 @@ function onUpdate(ctx) {
     ctx.state.prevBar = ctx.i;
   }
   
-  // Fetch historical prices and calculate SMAs
+  // Fetch historical prices and calculate indicators
   const closes = ctx.closes;
   if (closes == null || closes.length < smaPeriod) return null;
   
   const sma = ctx.sma(smaPeriod);
   const price = ctx.price;
-  const volume = ctx.vol;
-  const avgVol = ctx.avgVol(20);
   
   // Guard against null values  
-  if (sma == null || price == null || volume == null || avgVol == null) return null;
+  if (sma == null || price == null) return null;
   
-  // Entry condition: price crosses below SMA and volume is above average
+  // Calculate MACD
+  const macd = ctx.macd(macdFast, macdSlow, macdSignal);
+  
+  // Guard against null values
+  if (macd == null || macd.histogram == null) return null;
+
+  // Entry condition: price crosses above SMA and MACD histogram is positive
   const prevClose = closes[closes.length - 2];
   const prevSma = ctx.sma(smaPeriod, 1);
-  if (prevClose >= prevSma && price < sma && volume > avgVol * volumeThreshold) {
+  
+  if (prevClose <= prevSma && price > sma && macd.histogram > 0) {
     const qty = ctx.cash / ctx.price * 0.99;
     return { side: 'buy', qty: qty };
   }
   
-  // Exit condition: close position when price crosses back above SMA
-  if (ctx.position > 0 && price > sma) {
+  // Exit condition: close position when MACD histogram turns negative
+  if (ctx.position > 0 && macd.histogram < 0) {
     return { side: 'sell', qty: ctx.position };
   }
 
