@@ -11,7 +11,7 @@ Every figure comes from the last verifying backtest at publish time. These are p
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
-| — | [836](strategies/836/) | Bollinger Band Mean Reversion with Volume Filter | -50.34% | — | +72.37% | 62 | 2026-09-16 |
+| — | [836](strategies/836/) | Bollinger Band Mean Reversion with Volume Filter | -15.42% | — | +27.02% | 6 | 2026-09-16 |
 | — | [835](strategies/835/) | RSI Mean Reversion with Volatility Filter | -20.80% | — | +28.57% | 97 | 2026-09-16 |
 | — | [833](strategies/833/) | MACD Crossover with Volume Filter | -11.24% | — | +20.45% | 52 | 2026-09-16 |
 | — | [832](strategies/832/) | RSI Mean Reversion with Macro Filter | -0.59% | — | +3.64% | 4 | 2026-09-16 |
