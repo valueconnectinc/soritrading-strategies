@@ -1,0 +1,30 @@
+{
+  "id": 894,
+  "name": "Volatility Trend Filter Strategy",
+  "kind": "custom",
+  "verified": {
+    "backtestId": 4643,
+    "return": 4.23,
+    "mdd": 2.92,
+    "trades": 2,
+    "vsBuyHold": "lose",
+    "benchRet": 54.48,
+    "benchBasis": "price",
+    "gapPct": 0,
+    "tFrom": 1696867200,
+    "tTo": 1704063600,
+    "approxNotes": [
+      "봉 내 순서는 관례(양봉 O→L→H→C·음봉 O→H→L→C) — 실순서 미상 · 봉 중 거래량 null · MDD 는 봉 마감 기준"
+    ],
+    "spec": {
+      "ex": "binanceusdm",
+      "sym": "BTCUSDT",
+      "interval": "1h",
+      "bars": 2000,
+      "end": 1704067200
+    }
+  },
+  "config": null,
+  "updatedAt": "2026-09-16T04:22:03.952Z",
+  "publishedBy": "scripts/publish-strategies.mjs"
+}
