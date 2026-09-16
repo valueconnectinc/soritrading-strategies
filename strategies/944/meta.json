@@ -3,10 +3,10 @@
   "name": "MACD-RSI Mean Reversion Strategy - Enhanced",
   "kind": "custom",
   "verified": {
-    "backtestId": 4981,
+    "backtestId": 4984,
     "return": 0,
     "mdd": 0,
-    "trades": 24,
+    "trades": 34,
     "vsBuyHold": "unmeasured",
     "gapPct": 0,
     "tFrom": 1665331200,
@@ -24,6 +24,6 @@
     }
   },
   "config": null,
-  "updatedAt": "2026-09-16T06:45:11.202Z",
+  "updatedAt": "2026-09-16T06:46:35.455Z",
   "publishedBy": "scripts/publish-strategies.mjs"
 }
