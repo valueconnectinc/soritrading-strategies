@@ -4,13 +4,14 @@ Every strategy whose backtest **finished and actually traded** is published here
 Nothing is filtered out by return — the ones that lost money are part of the record.
 Entries stay after a strategy is removed from our own workspace — this is a log, and deleting the record would leave only the survivors.
 
-**★ marks a strategy that out-returned buy & hold over the same window** — 8 of 84 right now.
+**★ marks a strategy that out-returned buy & hold over the same window** — 8 of 85 right now.
 `—` means the comparison **could not be made**: the engine does not compute a benchmark for multi-symbol, futures, or multi-leg runs. That is *unknown*, not *lost*, and it is 52 of them right now.
 
 Every figure comes from the last verifying backtest at publish time. These are past results over historical data. Nothing here is promised or assured about the future, and none of it is investment advice.
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
+|  | [845](strategies/845/) | Market Maker Sentiment Strategy | -47.58% | -47.17% | +50.32% | 3 | 2026-09-16 |
 |  | [843](strategies/843/) | Fear-Greed Index Mean Reversion Strategy | +8.01% | +33.54% | +17.82% | 8 | 2026-09-16 |
 | — | [842](strategies/842/) | Moving Average Crossover with Volume Filter | +3.46% | — | +11.44% | 20 | 2026-09-16 |
 | — | [841](strategies/841/) | RSI Mean Reversion with Volatility Filter | -3.64% | — | +23.60% | 59 | 2026-09-16 |
