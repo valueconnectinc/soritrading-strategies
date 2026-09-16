@@ -16,26 +16,31 @@ function onUpdate(ctx) {
   const asset1 = ctx.syms[0];
   const asset2 = ctx.syms[1];
   
-  // 각 자산의 최근 24시간 수익률 계산 (5분 간격으로 최근 288개 신호)
+  // 시가를 가져오는 방식 변경 - 직접 가격 조회 대신 사용자의 ctx.price 메서드 대신, candles 데이터를 쓰는 방식으로 바꿈
+  const closes1 = ctx.closes(asset1);
+  const closes2 = ctx.closes(asset2);
+  
+  if (closes1 == null || closes2 == null) {
+    return null;
+  }
+  
+  // 최근 24시간 가격 데이터로 수익률 계산(288개 신호)
   const returns1 = [];
   const returns2 = [];
   
   for (let i = 0; i < 288; i++) {
     const ago = i;
-    const price1 = ctx.price(asset1, ago);
-    const price2 = ctx.price(asset2, ago);
-    
-    if (price1 != null && price2 != null) {
-      returns1.push((ctx.price(asset1, 0) / price1 - 1));
-      returns2.push((ctx.price(asset2, 0) / price2 - 1));
+    if (closes1[ago] != null && closes2[ago] != null) {
+      returns1.push((ctx.price(asset1, 0) / closes1[ago] - 1));
+      returns2.push((ctx.price(asset2, 0) / closes2[ago] - 1));
     }
   }
   
   // 각 자산의 평균 수익률 계산
-  const avgReturn1 = returns1.reduce((a, b) => a + b, 0) / returns1.length;
-  const avgReturn2 = returns2.reduce((a, b) => a + b, 0) / returns2.length;
+  const avgReturn1 = returns1.reduce((a, b) => a + b, 0) / (returns1.length || 1);
+  const avgReturn2 = returns2.reduce((a, b) => a + b, 0) / (returns2.length || 1);
   
-  // 현재 포지션 및 자산 상태
+  // 현재 포지션 상태
   const pos1 = ctx.pos(asset1);
   const pos2 = ctx.pos(asset2);
   
