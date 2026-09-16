@@ -3,28 +3,29 @@
   "name": "RSI-based Mean Reversion Strategy",
   "kind": "custom",
   "verified": {
-    "backtestId": 5067,
-    "return": 19.07,
-    "mdd": 4.91,
-    "trades": 12,
-    "vsBuyHold": "lose",
-    "benchRet": 54.3,
+    "backtestId": 5070,
+    "return": 29.97,
+    "mdd": 6.65,
+    "trades": 1,
+    "vsBuyHold": "win",
+    "benchRet": 17.37,
     "benchBasis": "price",
     "gapPct": 0,
-    "tFrom": 1696867200,
-    "tTo": 1704063600,
+    "tFrom": 1691596800,
+    "tTo": 1698793200,
     "approxNotes": [
-      "봉 내 순서는 관례(양봉 O→L→H→C·음봉 O→H→L→C) — 실순서 미상 · 봉 중 거래량 null · MDD 는 봉 마감 기준"
+      "봉 내 순서는 관례(양봉 O→L→H→C·음봉 O→H→L→C) — 실순서 미상 · 봉 중 거래량 null · MDD 는 봉 마감 기준",
+      "기간 종료 시 미청산 포지션 1종목 (총자산의 99.38%) — 이 수익률은 **평가액**을 포함합니다. 퇴출 수수료·거래세를 안 냈고, 마지막 봉 가격에 실제로 팔 수 있다는 보장도 없습니다(얇은 호가·상장폐지). exec.endLiquidate 로 마지막 봉 청산을 켤 수 있습니다"
     ],
     "spec": {
       "ex": "binance",
       "sym": "BTC",
       "interval": "1h",
       "bars": 2000,
-      "end": 1704067200
+      "end": 1698796800
     }
   },
   "config": null,
-  "updatedAt": "2026-09-16T07:15:38.977Z",
+  "updatedAt": "2026-09-16T07:16:33.368Z",
   "publishedBy": "scripts/publish-strategies.mjs"
 }

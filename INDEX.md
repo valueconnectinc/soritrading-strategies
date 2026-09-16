@@ -4,14 +4,14 @@ Every strategy whose backtest **finished and actually traded** is published here
 Nothing is filtered out by return — the ones that lost money are part of the record.
 Entries stay after a strategy is removed from our own workspace — this is a log, and deleting the record would leave only the survivors.
 
-**★ marks a strategy that out-returned buy & hold over the same window** — 15 of 167 right now.
+**★ marks a strategy that out-returned buy & hold over the same window** — 16 of 167 right now.
 `—` means the comparison **could not be made**: the engine does not compute a benchmark for multi-symbol, futures, or multi-leg runs. That is *unknown*, not *lost*, and it is 89 of them right now.
 
 Every figure comes from the last verifying backtest at publish time. These are past results over historical data. Nothing here is promised or assured about the future, and none of it is investment advice.
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
-|  | [958](strategies/958/) | RSI-based Mean Reversion Strategy | +19.07% | +54.30% | +4.91% | 12 | 2026-09-16 |
+| ★ | [958](strategies/958/) | RSI-based Mean Reversion Strategy | +29.97% | +17.37% | +6.65% | 1 | 2026-09-16 |
 |  | [957](strategies/957/) | MACD Trend Following Strategy | -52.75% | +55.34% | +53.96% | 497 | 2026-09-16 |
 |  | [956](strategies/956/) | MACD with RSI Filter | -28.19% | -15.19% | +30.46% | 211 | 2026-09-16 |
 | — | [955](strategies/955/) | Macro Filtered MACD-RSI Strategy | -6.64% | — | +18.64% | 163 | 2026-09-16 |

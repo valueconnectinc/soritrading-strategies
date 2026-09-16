@@ -24,12 +24,17 @@ function onUpdate(ctx) {
   const buyCondition = macd.macd > macd.signal && rsi < 30;
   const sellCondition = macd.macd < macd.signal && rsi > 70;
   
+  // Additional filter: Only enter if there's a clear trend (e.g., price above 20-day SMA)
+  const sma20 = ctx.sma(20);
+  if (sma20 == null) return null;
+  const trendFilter = ctx.price > sma20;  
+  
   // Entry logic
-  if (buyCondition && ctx.position <= 0) {
+  if (buyCondition && trendFilter && ctx.position <= 0) {
     return { side: 'buy', qty: ctx.cash / ctx.price * 0.99 };
   }
   
-  if (sellCondition && ctx.position > 0) {
+  if (sellCondition && !trendFilter && ctx.position > 0) {
     return { side: 'sell', qty: ctx.position };
   }
   
