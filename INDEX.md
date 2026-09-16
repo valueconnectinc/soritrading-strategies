@@ -4,13 +4,14 @@ Every strategy whose backtest **finished and actually traded** is published here
 Nothing is filtered out by return — the ones that lost money are part of the record.
 Entries stay after a strategy is removed from our own workspace — this is a log, and deleting the record would leave only the survivors.
 
-**★ marks a strategy that out-returned buy & hold over the same window** — 8 of 121 right now.
-`—` means the comparison **could not be made**: the engine does not compute a benchmark for multi-symbol, futures, or multi-leg runs. That is *unknown*, not *lost*, and it is 70 of them right now.
+**★ marks a strategy that out-returned buy & hold over the same window** — 8 of 122 right now.
+`—` means the comparison **could not be made**: the engine does not compute a benchmark for multi-symbol, futures, or multi-leg runs. That is *unknown*, not *lost*, and it is 71 of them right now.
 
 Every figure comes from the last verifying backtest at publish time. These are past results over historical data. Nothing here is promised or assured about the future, and none of it is investment advice.
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
+| — | [892](strategies/892/) | RSI + ATR Volatility Filter Strategy Improved | +14.87% | — | +5.60% | 92 | 2026-09-16 |
 |  | [891](strategies/891/) | RSI + ATR Volatility Filter Strategy | +89.73% | +225.92% | +53.91% | 1567 | 2026-09-16 |
 |  | [890](strategies/890/) | MACD + Volume Filter Strategy | -68.34% | +90.20% | +78.37% | 1084 | 2026-09-16 |
 |  | [889](strategies/889/) | Bollinger Band + RSI Mean Reversion Strategy | +0.79% | +134.18% | +57.94% | 244 | 2026-09-16 |
