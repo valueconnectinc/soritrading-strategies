@@ -1,44 +1,40 @@
 /*
  * @coinsori-strategy v1
- * name: Mean Reversion Strategy
+ * name: Simple Mean Reversion with SMA and Bollinger Bands
  * ex: binanceusdm
  * syms: BTCUSDT
  * interval: 1h
  * cash: 1000
  *
- * Why this strategy: This strategy is based on mean reversion theory which assumes that asset prices tend to return to their average levels over time. It's particularly effective in ranging markets.
- * When it buys and sells: The strategy buys when the price is significantly below the moving average, indicating overselling, and sells when it is significantly above the moving average, indicating overbought conditions.
- * When it does NOT work: In strong trending markets where prices continue to move in one direction for extended periods, this strategy may generate false signals and result in losses.
+ * Why this strategy: This strategy leverages the concept of mean reversion by using simple moving averages and Bollinger Bands to identify overbought and oversold conditions. When the price crosses below the lower Bollinger Band, it is considered oversold and a buy signal is generated. Likewise, when the price crosses above the upper Bollinger Band, it is considered overbought and a sell signal is generated.
+ * When it buys and sells: The strategy buys when the price crosses below the lower Bollinger Band and sells when the price crosses above the upper Bollinger Band.
+ * When it does NOT work: This strategy may not perform well in strongly trending markets where prices can remain at extremes for extended periods, leading to frequent false signals.
  */
-
 function onUpdate(ctx) {
-  const period = 20; // SMA period
-  const devMultiplier = 2; // Standard deviation multiplier for BB bands
+  // Define parameters
+  const smaLength = 20;
+  const bbLength = 20;
+  const bbMultiplier = 2;
 
-  // Get the moving average and Bollinger Bands
-  const sma = ctx.sma(period);
-  const bb = ctx.bb(period, devMultiplier);
+  // Calculate SMA and Bollinger Bands
+  const sma = ctx.sma(smaLength);
+  const bb = ctx.bb(bbLength, bbMultiplier);
 
-  if (sma == null || bb == null || bb.upper == null || bb.lower == null) {
+  // Check for valid data
+  if (sma == null || bb == null || bb.lower == null || bb.upper == null) {
     return null;
   }
 
-  // Calculate the current price relative to the moving average and Bollinger Bands
-  const price = ctx.price;
-  const upperBand = bb.upper;
-  const lowerBand = bb.lower;
-
-  // Check if price is below the lower band (oversold condition)
-  if (price < lowerBand) {
-    // Buy signal when price drops below the lower band
+  // Buy condition: Price crosses below the lower Bollinger Band
+  if (ctx.price < bb.lower) {
     return { side: 'buy', qty: ctx.cash / ctx.price * 0.99 };
   }
 
-  // Check if price is above the upper band (overbought condition)
-  if (price > upperBand) {
-    // Sell signal when price goes above the upper band
+  // Sell condition: Price crosses above the upper Bollinger Band
+  if (ctx.price > bb.upper) {
     return { side: 'sell', qty: ctx.position };
   }
 
+  // No action otherwise
   return null;
 }
