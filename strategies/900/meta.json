@@ -3,29 +3,29 @@
   "name": "RSI + ATR Volatility Filter Mean Reversion",
   "kind": "custom",
   "verified": {
-    "backtestId": 4675,
-    "return": -66.69,
-    "mdd": 87.64,
-    "trades": 1063,
-    "vsBuyHold": "unmeasured",
+    "backtestId": 4678,
+    "return": 10.9,
+    "mdd": 7,
+    "trades": 336,
+    "vsBuyHold": "lose",
+    "benchRet": 39.55,
+    "benchBasis": "price",
     "gapPct": 0,
-    "tFrom": 1586908800,
-    "tTo": 1680217200,
+    "tFrom": 1695067200,
+    "tTo": 1704063600,
     "approxNotes": [
       "봉 내 순서는 관례(양봉 O→L→H→C·음봉 O→H→L→C) — 실순서 미상 · 봉 중 거래량 null · MDD 는 봉 마감 기준",
-      "[유동성/전무] 시장가 주문 202건은 **한 주도 체결되지 않았습니다**. 부분체결이 아니라 전무라, 그 시점의 진입·청산은 **일어나지 않았습니다.**",
-      "기간 종료 시 미청산 포지션 1종목 — 이 수익률은 **평가액**을 포함합니다. 퇴출 수수료·거래세를 안 냈고, 마지막 봉 가격에 실제로 팔 수 있다는 보장도 없습니다(얇은 호가·상장폐지). exec.endLiquidate 로 마지막 봉 청산을 켤 수 있습니다",
-      "거래량은 봉 마감에만 확정 — 봉 중 평가에서 ctx.vol/volumes 가 null 이라 거래량 조건이 걸러졌을 수 있음(봉 중에도 쓰려면 ctx.volPrev·ctx.avgVol)"
+      "[유동성/전무] 시장가 주문 140건은 **한 주도 체결되지 않았습니다**. 부분체결이 아니라 전무라, 그 시점의 진입·청산은 **일어나지 않았습니다.**"
     ],
     "spec": {
       "ex": "binanceusdm",
       "sym": "ETHUSDT",
       "interval": "1h",
-      "bars": 25920,
-      "end": 1680220800
+      "bars": 2500,
+      "end": 1704067200
     }
   },
   "config": null,
-  "updatedAt": "2026-09-16T04:32:48.522Z",
+  "updatedAt": "2026-09-16T04:35:10.556Z",
   "publishedBy": "scripts/publish-strategies.mjs"
 }
