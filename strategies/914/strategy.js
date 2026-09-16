@@ -1,63 +1,70 @@
 /*
  * @coinsori-strategy v1
- * name: MACD Trend Filter Mean Reversion Strategy
+ * name: MA Crossover with Bollinger Band Mean Reversion
  * ex: binanceusdm
  * syms: BTCUSDT
  * interval: 1h
  * cash: 1000
  *
- * This strategy combines MACD trend filtering with mean reversion logic to trade during downtrends.
- * It enters long positions when price is near the lower Bollinger Band and MACD shows bullish crossover,
- * while exiting short positions (if any) or entering longs if market conditions match.
- * The trend filter helps reduce false signals in strong uptrends, focusing on mean reversion opportunities
- * during downtrends. It does not work well in strong uptrends where there are no mean reversion
- * opportunities.
+ * This strategy combines moving average crossover with Bollinger Band mean reversion.
+ * It enters long when fast MA crosses above slow MA and price is at or below lower BB band,
+ * and exits when price crosses above upper BB band. The MACD trend filter helps avoid
+ * entering during strong uptrends.
+ *
+ * When it buys: Enters long when MA crossover occurs and price is at/below lower BB band.
+ * When it sells: Exits position when price crosses above upper BB band.
+ * When it does NOT work: Fails in strong trending markets where mean reversion logic doesn't apply.
  */
+
 function onUpdate(ctx) {
-  const { price, position } = ctx;
-
-  // Fetch indicator values
-  const macd = ctx.macd(12, 26, 9, 0);
-  const macdPrev = ctx.macd(12, 26, 9, 1);
-  const bb = ctx.bb(20, 2.0, 0); // Bollinger Bands with 20-period SMA and 2.0 std deviation
-  const bbPrev = ctx.bb(20, 2.0, 1);  
-  const rsi = ctx.rsi(14, 0);
-  const rsiPrev = ctx.rsi(14, 1);
-
+  // Moving averages
+  const fastMA = ctx.sma(20);
+  const slowMA = ctx.sma(50);
+  
+  // Bollinger Bands
+  const bb = ctx.bb(20, 2);
+  
+  // MACD for trend filter
+  const macd = ctx.macd(12, 26, 9);
+  
   // Guard against null values
-  if (macd == null || macdPrev == null || bb == null || bbPrev == null || rsi == null || rsiPrev == null) {
-    return null;
+  if (fastMA == null || slowMA == null || bb == null || macd == null) return null;
+  
+  // Check for crossover (fast MA crossing above slow MA)
+  const prevFastMA = ctx.sma(20, 1);
+  const prevSlowMA = ctx.sma(50, 1);
+  
+  if (prevFastMA == null || prevSlowMA == null) return null;
+  
+  const crossover = prevFastMA <= prevSlowMA && fastMA > slowMA;
+  
+  // Trend filter: only enter if MACD signal is not strong bullish
+  const macdSignal = macd.signal;
+  if (macdSignal == null) return null;
+
+  // Avoid entering during strong uptrend
+  const trendFilter = macdSignal < 0; // MACD signal below zero indicates bearish trend
+
+  // Entry conditions: MA crossover + price at/below lower BB band + trend filter
+  const entryCondition = crossover && (ctx.price <= bb.lower) && trendFilter;
+  
+  // Exit condition: price crosses above upper BB band
+  const prevPrice = ctx.price;
+  const currentPrice = ctx.price;
+  
+  if (prevPrice == null || currentPrice == null) return null;
+  
+  const exitCondition = prevPrice <= bb.upper && currentPrice > bb.upper;
+
+  // Position handling
+  if (ctx.position > 0 && exitCondition) {
+    return { side: 'sell', qty: ctx.position }; // Close position
   }
-
-  // --- TREND FILTER ---
-  // If the MACD is in a positive trend, do NOT enter positions — only trade during downtrend
-  const isInPositiveTrend = macd.macd > 0 && macdPrev.macd > 0;
-
-  // Signal: Buy when price nears lower Bollinger Band and RSI is low (oversold)
-  const isBuySignal = price <= bb.lower &&
-                      rsi < 30 &&
-                      rsiPrev >= rsi; // RSI is rising (indicating reversal)
-
-  // Signal: Sell when price nears upper Bollinger Band and RSI is high (overbought)
-  const isSellSignal = price >= bb.upper &&
-                       rsi > 70 &&
-                       rsiPrev <= rsi; // RSI is falling (indicating reversal)
-
-  // --- ENTRY LOGIC ---
-  if (isInPositiveTrend) {
-    // In strong uptrend, we do not want to go long
-    return null;
+  
+  if (entryCondition && ctx.position === 0) {
+    return { side: 'buy', qty: ctx.cash / ctx.price * 0.95 }; // Enter long with 95% cash
   }
-
-  if (isBuySignal && position === 0) {
-    // Enter a long position only when no existing position
-    return { side: 'buy', qty: ctx.cash / price * 0.99 };
-  }
-
-  if (isSellSignal && position > 0) {
-    // Exit long position if it's a sell signal
-    return { side: 'sell', qty: position };
-  }
-
+  
+  // Do nothing
   return null;
 }
