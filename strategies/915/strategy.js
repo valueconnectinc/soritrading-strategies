@@ -1,44 +1,41 @@
 /*
  * @coinsori-strategy v1
- * name: RSI Mean Reversion Strategy
+ * name: BB_RSI_Mean_Reversion_Strategy
  * ex: binanceusdm
  * syms: BTCUSDT
  * interval: 1h
  * cash: 1000
  *
- * Why this strategy: This strategy enhances the mean reversion concept with RSI (Relative Strength Index) to better identify overbought and oversold conditions. It aims to reduce false signals by combining price deviation from SMA with RSI readings.
- * When it buys and sells: The strategy buys when the price deviates significantly below the SMA AND RSI is in oversold territory (<30). It sells when price deviates significantly above the SMA AND RSI is in overbought territory (>70).
- * When it does NOT work: This strategy may not perform well in strong trending markets where RSI remains in overbought/oversold zones for an extended time, ignoring mean reversion.
+ * Why this strategy: This strategy combines Bollinger Band and RSI to identify mean reversion opportunities. The Bollinger Band is used to detect when the price is at extreme levels, and the RSI adds a momentum filter to avoid trades in strong trends.
+ * When it buys and sells: It buys when the price touches the lower Bollinger Band and RSI is below 30 (oversold), and sells when price touches the upper Bollinger Band and RSI is above 70 (overbought).
+ * When it does NOT work: This strategy may fail in strong trending markets where prices do not revert to the mean, leading to frequent whipsaws.
  */
 
 function onUpdate(ctx) {
-  // Use a 20-period simple moving average
-  const sma = ctx.sma(20);
-  
-  // Use a 14-period RSI
+  // Get indicators
+  const bb = ctx.bb(20, 2); // Bollinger Bands with 20-period SMA and 2 std dev
   const rsi = ctx.rsi(14);
-  
-  // Get the current price
-  const price = ctx.price;
-  
+
   // Guard against null values
-  if (sma == null || rsi == null) return null;
+  if (bb == null || rsi == null) return null;
 
-  // Calculate the percentage difference between price and SMA
-  const diffPercent = (price - sma) / sma;
+  const lowerBand = bb.lower;
+  const upperBand = bb.upper;
+  const middleBand = bb.middle;
 
-  // Buy when price is significantly below the SMA AND RSI is oversold (<30)
-  if (diffPercent < -0.02 && rsi < 30) {
-    // Return a buy order for 99% of available cash
-    return { side: 'buy', qty: ctx.cash / price * 0.99 };
+  // Check if we are in a position to trade
+  if (ctx.position === 0) {
+    // Buy condition: price touches lower BB and RSI is below 30 (oversold)
+    if (ctx.price <= lowerBand && rsi < 30) {
+      return { side: 'buy', qty: ctx.cash / ctx.price * 0.99 };
+    }
+  } else {
+    // Sell condition: price touches upper BB and RSI is above 70 (overbought)
+    if (ctx.price >= upperBand && rsi > 70) {
+      return { side: 'sell', qty: ctx.position };
+    }
   }
 
-  // Sell when price is significantly above the SMA AND RSI is overbought (>70)
-  if (diffPercent > 0.02 && rsi > 70) {
-    // Return a sell order for the current position
-    return { side: 'sell', qty: ctx.position };
-  }
-
-  // Do nothing otherwise
+  // No trade
   return null;
 }
