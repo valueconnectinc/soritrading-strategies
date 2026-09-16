@@ -3,27 +3,29 @@
   "name": "Mean Reversion Strategy",
   "kind": "custom",
   "verified": {
-    "backtestId": 5082,
-    "return": 30.92,
+    "backtestId": 5085,
+    "return": 32.41,
     "mdd": 15.07,
-    "trades": 230,
-    "vsBuyHold": "unmeasured",
+    "trades": 302,
+    "vsBuyHold": "win",
+    "benchRet": 10.66,
+    "benchBasis": "price",
     "gapPct": 0,
-    "tFrom": 1676268000,
-    "tTo": 1683464400,
+    "tFrom": 1676577600,
+    "tTo": 1685574000,
     "approxNotes": [
       "봉 내 순서는 관례(양봉 O→L→H→C·음봉 O→H→L→C) — 실순서 미상 · 봉 중 거래량 null · MDD 는 봉 마감 기준",
-      "[유동성/전무] 시장가 주문 285건은 **한 주도 체결되지 않았습니다**. 부분체결이 아니라 전무라, 그 시점의 진입·청산은 **일어나지 않았습니다.**"
+      "[유동성/전무] 시장가 주문 361건은 **한 주도 체결되지 않았습니다**. 부분체결이 아니라 전무라, 그 시점의 진입·청산은 **일어나지 않았습니다.**"
     ],
     "spec": {
       "ex": "binanceusdm",
       "sym": "BTCUSDT",
       "interval": "1h",
-      "bars": 2000,
-      "end": 1683465600
+      "bars": 2500,
+      "end": 1685577600
     }
   },
   "config": null,
-  "updatedAt": "2026-09-16T07:22:52.202Z",
+  "updatedAt": "2026-09-16T07:25:07.721Z",
   "publishedBy": "scripts/publish-strategies.mjs"
 }
