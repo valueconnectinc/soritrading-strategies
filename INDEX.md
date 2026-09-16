@@ -11,7 +11,7 @@ Every figure comes from the last verifying backtest at publish time. These are p
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
-|  | [849](strategies/849/) | Simple Moving Average Crossover | -18.09% | +35.45% | +18.71% | 213 | 2026-09-16 |
+|  | [849](strategies/849/) | Simple Moving Average Crossover | -25.19% | -15.18% | +26.31% | 182 | 2026-09-16 |
 |  | [848](strategies/848/) | Bollinger Band Mean Reversion | +7.35% | +23.92% | +13.15% | 17 | 2026-09-16 |
 | — | [846](strategies/846/) | MACD Crossover with Volume Filter | -16.16% | — | +17.89% | 94 | 2026-09-16 |
 |  | [845](strategies/845/) | Market Maker Sentiment Strategy | -47.58% | -47.17% | +50.32% | 3 | 2026-09-16 |
