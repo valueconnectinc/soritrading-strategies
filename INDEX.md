@@ -12,6 +12,7 @@ Every figure comes from the last verifying backtest at publish time. These are p
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
 | ★ | [1000](strategies/1000/) | MACD RSI Mean Reversion Strategy | -9.19% | -16.11% | +14.08% | 21 | 2026-09-16 |
+| — | [972](strategies/972/) | Momentum Filter with ATR | +128.43% | — | +77.15% | 1 | 2026-09-16 |
 | — | [999](strategies/999/) | MACD + BB Reversal Strategy | +14.35% | — | +15.07% | 206 | 2026-09-16 |
 | ★ | [998](strategies/998/) | BB + RSI Filter Strategy | +5.13% | -15.18% | +25.91% | 49 | 2026-09-16 |
 | — | [997](strategies/997/) | Mean Reversion with Trend Filter Strategy | +43.66% | — | +71.91% | 46 | 2026-09-16 |
@@ -28,7 +29,6 @@ Every figure comes from the last verifying backtest at publish time. These are p
 | — | [976](strategies/976/) | BBand Trend Filter Mean Reversion Strategy | +293.65% | — | +77.19% | 1 | 2026-09-16 |
 | — | [974](strategies/974/) | Multi-Asset Mean Reversion Strategy | +85.21% | — | +74.35% | 6 | 2026-09-16 |
 | — | [973](strategies/973/) | Improved Bollinger Band Mean Reversion Strategy | +93.18% | — | +77.18% | 1 | 2026-09-16 |
-| — | [972](strategies/972/) | Momentum Filter with ATR | +128.43% | — | +77.15% | 1 | 2026-09-16 |
 | — | [971](strategies/971/) | Mean Reversion with Volatility Filter | +11.71% | — | +13.05% | 134 | 2026-09-16 |
 |  | [970](strategies/970/) | Bollinger Band Mean Reversion Strategy | +3.28% | +6.31% | +1.22% | 4 | 2026-09-16 |
 | — | [969](strategies/969/) | MACD and RSI Trend Filter Strategy | -42.57% | — | +43.46% | 269 | 2026-09-16 |
