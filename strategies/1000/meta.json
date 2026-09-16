@@ -3,30 +3,28 @@
   "name": "MACD RSI Mean Reversion Strategy",
   "kind": "custom",
   "verified": {
-    "backtestId": 5328,
-    "return": -6.14,
-    "mdd": 17.17,
-    "trades": 25,
+    "backtestId": 5341,
+    "return": 25.52,
+    "mdd": 8.14,
+    "trades": 62,
     "vsBuyHold": "lose",
-    "benchRet": -2.09,
+    "benchRet": 73.83,
     "benchBasis": "price",
     "gapPct": 0,
-    "tFrom": 1683835200,
-    "tTo": 1692831600,
+    "tFrom": 1696003200,
+    "tTo": 1704999600,
     "approxNotes": [
-      "봉 내 순서는 관례(양봉 O→L→H→C·음봉 O→H→L→C) — 실순서 미상 · 봉 중 거래량 null · MDD 는 봉 마감 기준",
-      "[유동성/전무] 시장가 주문 3건은 **한 주도 체결되지 않았습니다**. 부분체결이 아니라 전무라, 그 시점의 진입·청산은 **일어나지 않았습니다.**",
-      "기간 종료 시 미청산 포지션 1종목 (총자산의 100%) — 이 수익률은 **평가액**을 포함합니다. 퇴출 수수료·거래세를 안 냈고, 마지막 봉 가격에 실제로 팔 수 있다는 보장도 없습니다(얇은 호가·상장폐지). exec.endLiquidate 로 마지막 봉 청산을 켤 수 있습니다"
+      "봉 내 순서는 관례(양봉 O→L→H→C·음봉 O→H→L→C) — 실순서 미상 · 봉 중 거래량 null · MDD 는 봉 마감 기준"
     ],
     "spec": {
       "ex": "binanceusdm",
       "sym": "BTCUSDT",
       "interval": "1h",
       "bars": 2500,
-      "end": 1692835200
+      "end": 1705000000
     }
   },
   "config": null,
-  "updatedAt": "2026-09-16T10:01:21.772Z",
+  "updatedAt": "2026-09-16T10:02:43.983Z",
   "publishedBy": "scripts/publish-strategies.mjs"
 }
