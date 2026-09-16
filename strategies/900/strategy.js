@@ -1,59 +1,62 @@
 /*
  * @coinsori-strategy v1
- * name: RSI + ATR Volatility Filter Mean Reversion
+ * name: Bollinger Band Mean Reversion with Volume and Volatility Filter
  * ex: binanceusdm
- * syms: BTCUSDT
+ * syms: ETHUSDT
  * interval: 1h
  * cash: 1000
  *
- * Why this strategy: This strategy uses RSI and ATR to filter mean reversion trades.
- * It enters when RSI shows oversold/overbought conditions but only if the volatility (ATR) 
- * is above a certain threshold, to avoid entering during low-volatility periods where
- * mean reversion might not be effective.
- * When it buys and sells: Buys when RSI < 30 (oversold) and ATR > threshold. Sells when RSI > 70 (overbought).
- * When it does NOT work: This strategy may fail in trending markets where mean reversion is less effective,
- * or if the volatility filter is too strict, preventing any trades.
+ * Why this strategy: The strategy uses Bollinger Bands to identify overbought/oversold conditions, 
+ * combined with volume and volatility filters to reduce false signals and improve performance.
+ * When it buys and sells: It buys when price touches the lower band and volume is above average, 
+ * and sells when price touches the upper band and volume is above average. 
+ * When it does NOT work: This strategy may fail in strong trending markets where prices move
+ * consistently in one direction, making oversold/overbought conditions less reliable.
  */
 
 function onUpdate(ctx) {
-  // Parameters
-  const rsiLength = 14;
-  const atrLength = 14;
-  const volatilityThreshold = 30; // ATR threshold to determine high volatility
+  // Bollinger Band parameters
+  const bbPeriod = 20;
+  const bbMultiplier = 2.0;
   
-  // Indicators
-  const rsi = ctx.rsi(rsiLength, 0);
-  const rsi_prev = ctx.rsi(rsiLength, 1);
+  // Volume filter parameters
+  const volPeriod = 20;
   
-  const atr = ctx.atr(atrLength, 0);
-  const atr_prev = ctx.atr(atrLength, 1);
-
-  // Guard against null values
-  if (!rsi || !rsi_prev || !atr || !atr_prev) {
-    return null;
+  // Volatility filter parameter (ATR)
+  const atrPeriod = 14;
+  
+  // Get Bollinger Band values
+  const bb = ctx.bb(bbPeriod, bbMultiplier);
+  if (bb == null) return null;
+  
+  // Get volume and average volume
+  const vol = ctx.vol;
+  const avgVol = ctx.avgVol(volPeriod);
+  if (vol == null || avgVol == null) return null;
+  
+  // Get ATR for volatility filter
+  const atr = ctx.atr(atrPeriod);
+  if (atr == null) return null;
+  
+  // Define volatility threshold (e.g., 1.5 times average ATR)
+  const volThreshold = avgVol * 1.5;
+  
+  // Check if current price is touching the upper or lower Bollinger Band
+  const price = ctx.price;
+  const upperBand = bb.upper;
+  const lowerBand = bb.lower;
+  
+  // Buy condition: price touches lower band and volume is above threshold
+  if (price <= lowerBand && vol >= volThreshold) {
+    return { side: 'buy', qty: ctx.cash / price * 0.99 };
   }
-
-  // Volatility condition: ATR must be above threshold to consider trade
-  const isHighVolatility = atr > volatilityThreshold;
-
-  // RSI conditions
-  const isOversold = rsi < 30;
-  const isOverbought = rsi > 70;
   
-  // Previous RSI for crossovers
-  const isRsiBullishCrossover = (rsi_prev <= 30 && rsi > 30);
-  const isRsiBearishCrossover = (rsi_prev >= 70 && rsi < 70);
-
-  // Buy condition:
-  // RSI oversold AND high volatility
-  if (isOversold && isHighVolatility) {
-    return { side: 'buy', qty: ctx.cash / ctx.price * 0.99 };
-  }
-
-  // Sell condition:
-  // RSI overbought AND (not necessarily high volatility since we are exiting)
-  if (isOverbought && isRsiBearishCrossover) {
-    return { side: 'sell', qty: ctx.position };
+  // Sell condition: price touches upper band and volume is above threshold
+  if (price >= upperBand && vol >= volThreshold) {
+    // Close position if exists
+    if (ctx.position > 0) {
+      return { side: 'sell', qty: ctx.position };
+    }
   }
   
   return null;
