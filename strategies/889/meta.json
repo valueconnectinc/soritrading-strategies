@@ -3,7 +3,7 @@
   "name": "Bollinger Band + RSI Mean Reversion Strategy",
   "kind": "custom",
   "verified": {
-    "backtestId": 4615,
+    "backtestId": 4619,
     "return": 0.79,
     "mdd": 57.94,
     "trades": 244,
