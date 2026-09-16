@@ -1,0 +1,30 @@
+{
+  "id": 887,
+  "name": "Bollinger RSI Hybrid Strategy",
+  "kind": "custom",
+  "verified": {
+    "backtestId": 4597,
+    "return": 28.73,
+    "mdd": 5.75,
+    "trades": 50,
+    "vsBuyHold": "lose",
+    "benchRet": 64.19,
+    "benchBasis": "price",
+    "gapPct": 0,
+    "tFrom": 1695452400,
+    "tTo": 1704448800,
+    "approxNotes": [
+      "봉 내 순서는 관례(양봉 O→L→H→C·음봉 O→H→L→C) — 실순서 미상 · 봉 중 거래량 null · MDD 는 봉 마감 기준"
+    ],
+    "spec": {
+      "ex": "binanceusdm",
+      "sym": "BTCUSDT",
+      "interval": "1h",
+      "bars": 2500,
+      "end": 1704451200
+    }
+  },
+  "config": null,
+  "updatedAt": "2026-09-16T04:05:43.439Z",
+  "publishedBy": "scripts/publish-strategies.mjs"
+}
