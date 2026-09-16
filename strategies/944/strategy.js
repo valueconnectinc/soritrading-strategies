@@ -1,50 +1,46 @@
 /*
  * @coinsori-strategy v1
- * name: MACD-RSI Mean Reversion Strategy - Enhanced
+ * name: MACD-RSI Mean Reversion Strategy with Volatility Filter - Improved
  * ex: bybit
  * syms: BTC
  * interval: 1h
  * cash: 1000
  *
- * This strategy uses MACD and RSI to identify mean reversion opportunities.
- * It buys when RSI is below 30 (oversold) and MACD line crosses above signal line.
- * It sells when RSI is above 70 (overbought) and MACD line crosses below signal line.
- * The strategy includes additional filters to avoid trading in strong trends or low volatility periods.
- *
- * When it buys: The RSI is below 30 and MACD line crosses above the signal line, and volatility is above a threshold
- * When it sells: The RSI is above 70 and MACD line crosses below the signal line, and volatility is above a threshold
- * When it does NOT work: During strong trending markets or in low volatility periods where mean reversion fails to occur.
+ * This strategy is an improved version of the previous MACD-RSI mean reversion approach, incorporating a volatility filter based on ATR. It aims to reduce false signals and improve performance by filtering out trades in low-volatility conditions.
+ * The strategy buys when MACD crosses above its signal line while RSI is below 30 (oversold), and sells when MACD crosses below its signal line while RSI is above 70 (overbought).
+ * It avoids trading in low volatility periods to improve trade quality.
+ * This strategy does not work well during very flat market conditions or when there is a lack of clear momentum.
  */
 
 function onUpdate(ctx) {
-  // Get indicator values with ago parameter for previous bars
-  const macd1 = ctx.macd(12, 26, 9, 1);
-  const macd2 = ctx.macd(12, 26, 9, 2);
-  const rsi1 = ctx.rsi(14, 1);
-  const rsi2 = ctx.rsi(14, 2);
-  const atr = ctx.atr(14, 1);
+  // Indicator values
+  const macd = ctx.macd(12, 26, 9, 0);
+  const macdPrev = ctx.macd(12, 26, 9, 1);
+  const rsi = ctx.rsi(14, 0);
+  const rsiPrev = ctx.rsi(14, 1);
+  const atr = ctx.atr(14, 0);
 
-  // Guard against null values
-  if (macd1 == null || macd2 == null || rsi1 == null || rsi2 == null || atr == null) {
+  // Volatility filter: if ATR is below a certain threshold, do not trade
+  const volatilityThreshold = 100;  // Adjust based on coin price level (e.g., for BTC)
+  if (atr == null || atr < volatilityThreshold) {
     return null;
   }
 
-  // Volatility threshold: use ATR to filter low-volatility periods
-  const volatilityThreshold = ctx.avgVol(20) * 0.5; // half of average volume
+  // Buy condition: MACD crosses above signal line and RSI is oversold (<30)
+  if (macdPrev == null || macd.signal == null || macdPrev.signal == null) return null;
+  
+  const buyCondition = (macdPrev.signal > macdPrev.macd) && (macd.signal < macd.macd) && (rsi < 30);
+  
+  // Sell condition: MACD crosses below signal line and RSI is overbought (>70)
+  const sellCondition = (macdPrev.signal < macdPrev.macd) && (macd.signal > macd.macd) && (rsi > 70);
 
-  // BUY CONDITIONS (RSI < 30 and MACD crosses above signal line, and high volatility)
-  const buyCondition = rsi2 < 30 && rsi1 >= 30 && macd2.macd <= macd2.signal && macd1.macd > macd1.signal && ctx.vol > volatilityThreshold;
-
-  // SELL CONDITIONS (RSI > 70 and MACD crosses below signal line, and high volatility)
-  const sellCondition = rsi2 > 70 && rsi1 <= 70 && macd2.macd >= macd2.signal && macd1.macd < macd1.signal && ctx.vol > volatilityThreshold;
-
-  // Return buy or sell order if conditions are met
   if (buyCondition) {
     return { side: 'buy', qty: ctx.cash / ctx.price * 0.99 };
-  } else if (sellCondition) {
+  }
+
+  if (sellCondition && ctx.position > 0) {
     return { side: 'sell', qty: ctx.position };
   }
 
-  // Do nothing otherwise
   return null;
 }
