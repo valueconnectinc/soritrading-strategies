@@ -11,7 +11,7 @@ Every figure comes from the last verifying backtest at publish time. These are p
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
-| ★ | [915](strategies/915/) | Simple MA Crossover Strategy | +17.49% | -11.67% | +12.66% | 82 | 2026-09-16 |
+| ★ | [915](strategies/915/) | Simple MA Crossover Strategy | +27.74% | +15.21% | +12.90% | 66 | 2026-09-16 |
 | ★ | [914](strategies/914/) | MACD Trend Filter Mean Reversion Strategy | +924.86% | +362.11% | +58.26% | 200 | 2026-09-16 |
 | — | [913](strategies/913/) | RSI-based Mean Reversion Strategy | +14.77% | — | +8.55% | 2 | 2026-09-16 |
 | — | [912](strategies/912/) | MACD Crossover with Volume Filter | -5.23% | — | +24.21% | 249 | 2026-09-16 |

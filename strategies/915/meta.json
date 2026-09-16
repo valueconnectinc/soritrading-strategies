@@ -3,29 +3,29 @@
   "name": "Simple MA Crossover Strategy",
   "kind": "custom",
   "verified": {
-    "backtestId": 4786,
-    "return": 17.49,
-    "mdd": 12.66,
-    "trades": 82,
+    "backtestId": 4790,
+    "return": 27.74,
+    "mdd": 12.9,
+    "trades": 66,
     "vsBuyHold": "win",
-    "benchRet": -11.67,
+    "benchRet": 15.21,
     "benchBasis": "price",
     "gapPct": 0,
-    "tFrom": 1712602800,
-    "tTo": 1719799200,
+    "tFrom": 1699596000,
+    "tTo": 1706792400,
     "approxNotes": [
       "봉 내 순서는 관례(양봉 O→L→H→C·음봉 O→H→L→C) — 실순서 미상 · 봉 중 거래량 null · MDD 는 봉 마감 기준",
-      "[유동성/전무] 시장가 주문 323건은 **한 주도 체결되지 않았습니다**. 부분체결이 아니라 전무라, 그 시점의 진입·청산은 **일어나지 않았습니다.**"
+      "[유동성/전무] 시장가 주문 80건은 **한 주도 체결되지 않았습니다**. 부분체결이 아니라 전무라, 그 시점의 진입·청산은 **일어나지 않았습니다.**"
     ],
     "spec": {
       "ex": "binanceusdm",
       "sym": "BTCUSDT",
       "interval": "1h",
       "bars": 2000,
-      "end": 1719801600
+      "end": 1706793600
     }
   },
   "config": null,
-  "updatedAt": "2026-09-16T05:10:17.579Z",
+  "updatedAt": "2026-09-16T05:11:13.012Z",
   "publishedBy": "scripts/publish-strategies.mjs"
 }
