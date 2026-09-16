@@ -1,6 +1,6 @@
 /*
  * @coinsori-strategy v1
- * name: BBand Mean Reversion Strategy Improved v2
+ * name: BBand Mean Reversion Strategy Simple
  * ex: binanceusdm
  * syms: BTCUSDT
  * interval: 1h
@@ -19,18 +19,14 @@ function onUpdate(ctx) {
   const bb = ctx.bb(bbLength, bbMultiplier, 0);
   if (bb == null) return null;
   
-  // Get the previous Bollinger Band values
-  const bbPrev = ctx.bb(bbLength, bbMultiplier, 1);
-  if (bbPrev == null) return null;
-
-  // Check if price crosses from below to above the lower band (buy condition)
-  if (ctx.price < bb.lower && ctx.price > bb.upper && ctx.position === 0) {
+  // Buy when price is at or below the lower band (oversold condition)
+  if (ctx.price <= bb.lower && ctx.position === 0) {
     const qty = ctx.cash / ctx.price * 0.99;
     return { side: 'buy', qty };
   }
   
-  // Check if price crosses from above to below the upper band (sell condition)
-  if (ctx.price > bb.upper && ctx.price < bb.lower && ctx.position > 0) {
+  // Sell when price is at or above the upper band (overbought condition)
+  if (ctx.price >= bb.upper && ctx.position > 0) {
     return { side: 'sell', qty: ctx.position };
   }
 
