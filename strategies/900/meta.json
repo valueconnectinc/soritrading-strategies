@@ -3,10 +3,10 @@
   "name": "RSI + ATR Volatility Filter Mean Reversion",
   "kind": "custom",
   "verified": {
-    "backtestId": 4678,
-    "return": 10.9,
-    "mdd": 7,
-    "trades": 336,
+    "backtestId": 4681,
+    "return": 18.66,
+    "mdd": 5.02,
+    "trades": 205,
     "vsBuyHold": "lose",
     "benchRet": 39.55,
     "benchBasis": "price",
@@ -15,7 +15,7 @@
     "tTo": 1704063600,
     "approxNotes": [
       "봉 내 순서는 관례(양봉 O→L→H→C·음봉 O→H→L→C) — 실순서 미상 · 봉 중 거래량 null · MDD 는 봉 마감 기준",
-      "[유동성/전무] 시장가 주문 140건은 **한 주도 체결되지 않았습니다**. 부분체결이 아니라 전무라, 그 시점의 진입·청산은 **일어나지 않았습니다.**"
+      "[유동성/전무] 시장가 주문 52건은 **한 주도 체결되지 않았습니다**. 부분체결이 아니라 전무라, 그 시점의 진입·청산은 **일어나지 않았습니다.**"
     ],
     "spec": {
       "ex": "binanceusdm",
@@ -26,6 +26,6 @@
     }
   },
   "config": null,
-  "updatedAt": "2026-09-16T04:35:10.556Z",
+  "updatedAt": "2026-09-16T04:36:49.164Z",
   "publishedBy": "scripts/publish-strategies.mjs"
 }

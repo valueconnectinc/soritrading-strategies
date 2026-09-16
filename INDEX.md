@@ -11,7 +11,7 @@ Every figure comes from the last verifying backtest at publish time. These are p
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
-|  | [900](strategies/900/) | RSI + ATR Volatility Filter Mean Reversion | +10.90% | +39.55% | +7.00% | 336 | 2026-09-16 |
+|  | [900](strategies/900/) | RSI + ATR Volatility Filter Mean Reversion | +18.66% | +39.55% | +5.02% | 205 | 2026-09-16 |
 |  | [898](strategies/898/) | Enhanced Mean Reversion with Volatility Filter | +38.69% | +63.03% | +14.59% | 48 | 2026-09-16 |
 | ★ | [897](strategies/897/) | Mean Reversion with ATR Filter | +38.98% | +36.30% | +6.24% | 77 | 2026-09-16 |
 |  | [895](strategies/895/) | Mean Reversion Strategy with ATR Filter | +7.14% | +17.05% | +10.25% | 3 | 2026-09-16 |
