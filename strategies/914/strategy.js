@@ -42,9 +42,9 @@ function onUpdate(ctx) {
   const macdSignal = macd.signal;
   if (macdSignal == null) return null;
 
-  // Avoid entering during strong uptrend
-  const trendFilter = macdSignal < 0; // MACD signal below zero indicates bearish trend
-
+  // Avoid entering during strong uptrend - use more lenient trend filter
+  const trendFilter = macdSignal < 0.5; // MACD signal below 0.5 indicates bearish or neutral trend
+  
   // Entry conditions: MA crossover + price at/below lower BB band + trend filter
   const entryCondition = crossover && (ctx.price <= bb.lower) && trendFilter;
   
