@@ -1,0 +1,30 @@
+{
+  "id": 951,
+  "name": "BTC Breakout Strategy",
+  "kind": "custom",
+  "verified": {
+    "backtestId": 5013,
+    "return": -76.87,
+    "mdd": 76.87,
+    "trades": 482,
+    "vsBuyHold": "lose",
+    "benchRet": -10.34,
+    "benchBasis": "price",
+    "gapPct": 0,
+    "tFrom": 1657375200,
+    "tTo": 1664571600,
+    "approxNotes": [
+      "봉 내 순서는 관례(양봉 O→L→H→C·음봉 O→H→L→C) — 실순서 미상 · 봉 중 거래량 null · MDD 는 봉 마감 기준"
+    ],
+    "spec": {
+      "ex": "binance",
+      "sym": "BTC",
+      "interval": "1h",
+      "bars": 2000,
+      "end": 1664572800
+    }
+  },
+  "config": null,
+  "updatedAt": "2026-09-16T06:59:05.218Z",
+  "publishedBy": "scripts/publish-strategies.mjs"
+}
