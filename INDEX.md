@@ -11,7 +11,7 @@ Every figure comes from the last verifying backtest at publish time. These are p
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
-| — | [966](strategies/966/) | Macro Trend Following Strategy | -100.00% | — | +100.00% | 9736 | 2026-09-16 |
+| — | [966](strategies/966/) | Macro Trend Following Strategy | -100.00% | — | +100.00% | 10006 | 2026-09-16 |
 | — | [965](strategies/965/) | RSI Divergence Finder | -52.51% | — | +52.51% | 304 | 2026-09-16 |
 |  | [964](strategies/964/) | MACD Crossover with Volume Filter | -25.14% | +137.05% | +37.73% | 466 | 2026-09-16 |
 |  | [963](strategies/963/) | Multi-asset Mean Reversion Strategy (BTC & ETH) | +71.06% | +137.05% | +15.58% | 245 | 2026-09-16 |
