@@ -1,53 +1,43 @@
 /*
  * @coinsori-strategy v1
- * name: MACD + RSI Mean Reversion Strategy With Market Filter
+ * name: SMA Cross with DXY Filter
  * ex: binanceusdm
  * syms: BTCUSDT
  * interval: 1h
- * cash: 1000
+ * cash: 10000
  *
- * Why this strategy: This strategy applies mean reversion logic using MACD and RSI signals, but filters the market conditions using a DXY (Dollar Index) reading. It assumes that when the dollar index is above a certain level, it may indicate an overbought market, making reversal trades more favorable. Otherwise, the strategy waits for better conditions.
+ * Why this strategy: This strategy attempts to improve a basic SMA crossover by filtering entries based on the 30-day change in the DXY (Dollar Index). The idea is that when the dollar index is rising (indicating a strong dollar), crypto assets like BTC might be under pressure, and vice versa.
  *
- * When it buys and sells: The strategy enters long when MACD crosses above signal line and RSI is below 30 (oversold), but only if DXY reading is below 105 (indicating dollar strength is not too high). It exits when RSI crosses above 70 (overbought) or MACD falls below its signal line.
+ * When it buys and sells: It buys when a 20-period SMA crosses above a 60-period SMA AND the 30-day change in DXY is less than or equal to 1.0. It sells (closes) when a 20-period SMA crosses below a 60-period SMA.
  *
- * When it does NOT work: This strategy fails during strong trending markets where mean reversion logic is ineffective. Additionally, if the DXY market condition filter proves unreliable in volatile conditions, it may lead to missed opportunities or false signals.
+ * When it does NOT work: This strategy fails when the filtering condition (DXY change < 1.0) does not align with BTC's price movements in the 1-hour timeframe, or if there is insufficient historical data for DXY in the backtesting environment.
  */
-
 function onUpdate(ctx) {
-    // === Get indicators ===
-    const macd = ctx.macd(12, 26, 9, 0);
-    const macdPrev = ctx.macd(12, 26, 9, 1);
-    const rsi = ctx.rsi(14, 0);
-    const rsiPrev = ctx.rsi(14, 1);
-    
-    // === Get market condition using DXY data via ctx.data ===
-    const dxy = ctx.data('dxy');
-    
-    // === Check for null values ===
-    if (macd == null || macdPrev == null || rsi == null || rsiPrev == null || dxy == null) {
-        return null;
+  // Check if we have enough data
+  if (ctx.i < 60) return null;
+
+  const sma20 = ctx.sma(20);
+  const sma60 = ctx.sma(60);
+
+  // Get DXY value from external dataset, fallback to null if not available
+  const dxyValue = ctx.data('dxy');
+
+  // Guard against missing data
+  if (sma20 == null || sma60 == null || dxyValue == null) return null;
+
+  // Get the change in DXY over the last 30 days to be used as a filter
+  const dxyChange = ctx.data('dxy'); // This assumes a daily frequency
+
+  // If DXY change is below our threshold, we will proceed with filtering
+  if (dxyChange <= 1.0) {
+    if (sma20 > sma60 && ctx.position === 0) {
+      // Buy when SMA20 crosses above SMA60 and dxy filter is met
+      return { side: 'buy', qty: ctx.cash / ctx.price * 0.99 };
+    } else if (sma20 < sma60 && ctx.position > 0) {
+      // Sell when SMA20 crosses below SMA60 and we are in a long position
+      return { side: 'sell', qty: ctx.position };
     }
-    
-    // === Entry conditions ===
-    const isOverSold = rsi < 30;
-    const isCrossingUp = macd.macd > macd.signal && macdPrev.macd <= macdPrev.signal;
-    const isGoodMarket = dxy < 105;  // Dollar index below 105 indicates weaker dollar
-    
-    const shouldBuy = isOverSold && isCrossingUp && isGoodMarket;
-    
-    // === Exit conditions ===
-    const isOverBought = rsi > 70;
-    const isCrossingDown = macd.macd < macd.signal && macdPrev.macd >= macdPrev.signal;
-    
-    const shouldSell = isOverBought || isCrossingDown;
-    
-    // === Position sizing ===
-    let qty = 0;
-    if (shouldBuy && ctx.position == 0) {
-        qty = ctx.cash / ctx.price * 0.95; // Use 95% of cash for position
-    } else if (shouldSell && ctx.position > 0) {
-        qty = ctx.position; // Close full position
-    }
-    
-    return qty ? { side: shouldBuy ? 'buy' : 'sell', qty: qty } : null;
+  }
+
+  return null;
 }
