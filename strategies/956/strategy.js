@@ -1,58 +1,56 @@
 /*
  * @coinsori-strategy v1
- * name: Simple RSI Strategy
+ * name: MACD with RSI Filter
  * ex: binance
  * syms: BTC
  * interval: 1h
  * cash: 1000
 
- * Why this strategy: This is a simple RSI-based strategy that buys when the RSI falls below 30 (oversold) and sells when it rises above 70 (overbought). It's designed to capture short-term price movements in a trending market.
- * When it buys and sells: The strategy buys when RSI is below 30, indicating an oversold condition, and sells when RSI is above 70, signaling an overbought condition. It uses a simple take-profit and stop-loss mechanism to manage risk.
- * When it does NOT work: This strategy may not work during strong trending markets where RSI might remain in the oversold or overbought zones for extended periods, leading to false signals. Additionally, in ranging markets, RSI can give frequent buy/sell signals that may not result in profitable trades.
+ * Why this strategy: This strategy combines MACD and RSI indicators to reduce false signals. It uses MACD for trend identification and RSI as a filter to confirm overbought/oversold conditions. The strategy enters a long position when the MACD line crosses above the signal line, while the RSI is below 50 (indicating an oversold condition), and exits when the MACD line crosses below the signal line or RSI exceeds 50.
+ * When it buys and sells: It buys when MACD crosses above signal and RSI < 50, sell when MACD crosses below signal or RSI > 50. This combination aims to filter out some false signals that could occur with a single indicator.
+ * When it does NOT work: The strategy might not perform well in highly volatile markets where both indicators frequently send conflicting signals. It also assumes that MACD and RSI work well together, which may not always be true, especially in trending or ranging markets.
  */
 
 function onUpdate(ctx) {
-  // Get the RSI indicator
+  // Get MACD values
+  const macd = ctx.macd(12, 26, 9);
+  
+  // If we don't have MACD data yet, return null to wait
+  if (macd == null || macd.macd == null || macd.signal == null) return null;
+
+  // Get RSI value
   const rsi = ctx.rsi(14);
   
   // If we don't have RSI data yet, return null to wait
   if (rsi == null) return null;
 
-  // Define RSI thresholds
-  const oversold = 30;
-  const overbought = 70;
+  // Entry and exit conditions based on MACD and RSI
   
-  // Entry and exit conditions based on RSI values
-  
-  // Buy condition: RSI crosses below oversold threshold
-  if (ctx.position === 0 && rsi < oversold) {
+  // Buy condition: MACD line crosses above signal line AND RSI is below 50 (oversold)
+  if (ctx.position === 0 && macd.macd > macd.signal && rsi < 50) {
     return { 
       side: 'buy', 
       qty: ctx.cash / ctx.price * 0.99 // Use 99% of available cash
     };
   }
   
-  // Sell condition: RSI crosses above overbought threshold
-  if (ctx.position === 0 && rsi > overbought) {
+  // Sell condition: MACD line crosses below signal line OR RSI is above 50 (overbought)
+  if (ctx.position === 0 && macd.macd < macd.signal || rsi > 50) {
     return { 
       side: 'sell', 
       qty: ctx.cash / ctx.price * 0.99 // Use 99% of available cash
     };
   }
   
-  // Close position if it's profitable (e.g., RSI crosses back toward the middle)
+  // Close position if it's profitable or if condition no longer holds
   if (ctx.position !== 0) {
-    // Example take-profit and stop-loss conditions based on RSI crossover
-    if (ctx.position > 0 && rsi > 50) { // Take profit for long
-      return { 
-        side: 'sell',
-        qty: Math.abs(ctx.position)
-      };
-    }
+    const profit = ctx.position > 0 ? 
+      (macd.macd < macd.signal || rsi > 50) : // For long positions, exit on MACD cross below signal OR RSI above 50
+      (macd.macd > macd.signal || rsi < 50); // For short positions, exit on MACD cross above signal OR RSI below 50
     
-    if (ctx.position < 0 && rsi < 50) { // Take profit for short  
+    if (profit && Math.abs(ctx.position) > 0) {
       return { 
-        side: 'buy',
+        side: ctx.position > 0 ? 'sell' : 'buy',
         qty: Math.abs(ctx.position)
       };
     }
