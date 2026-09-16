@@ -1,33 +1,55 @@
 /*
  * @coinsori-strategy v1
- * name: Simple Moving Average Crossover
+ * name: Volatility Swing Trading Strategy
  * ex: binanceusdm
  * syms: ETHUSDT
  * interval: 1h
  * cash: 1000
  *
- * Why this strategy: This is a classic mean reversion strategy based on moving average crossovers. It uses two moving averages to identify trend changes and enters trades when they cross.
- * When it buys and sells: It goes long when the short-term moving average crosses above the long-term moving average. It exits the position when the short-term moving average crosses below the long-term moving average.
- * When it does NOT work: This strategy can suffer from lag in trend detection, especially in ranging or low-volatility markets. It may also generate false signals during market consolidation periods.
+ * Why this strategy: This strategy uses volatility (ATR) to identify potential swing trade opportunities. When volatility increases significantly, it indicates a strong move is likely, and we enter a position with the expectation of capturing that move.
+ * When it buys and sells: It buys when price breaks above a recent high and ATR value rises significantly. It sells when price breaks below a recent low and ATR value rises significantly.
+ * When it does NOT work: This strategy struggles in ranging or low volatility markets, where there are no clear swing trade opportunities, potentially leading to frequent losses from false breakouts.
  */
 
 function onUpdate(ctx) {
-  // Calculate moving averages
-  const fastSma = ctx.sma(10);   // Short-term SMA
-  const slowSma = ctx.sma(30);   // Long-term SMA
+  // Get the indicators
+  const atr = ctx.atr(14, 0);
+  const prevAtr = ctx.atr(14, 1);
 
-  // Check if enough data is available
-  if (fastSma == null || slowSma == null) return null;
+  const price = ctx.price;
+  const prevPrice = ctx.closes[1];
 
-  // Buy when fast SMA crosses above slow SMA (bullish crossover)
-  if (fastSma > slowSma && ctx.position <= 0) {
-    return { side: 'buy', qty: ctx.cash / ctx.price * 0.99 };
+  // Get recent highs and lows for swing trading logic
+  const high_10 = ctx.high(10, 0);
+  const low_10 = ctx.low(10, 0);
+  const prevHigh_10 = ctx.high(10, 1);
+  const prevLow_10 = ctx.low(10, 1);
+
+  // Initialize return object
+  let order = null;
+
+  // Make sure we have all required values to proceed
+  if (!atr || !prevAtr || !high_10 || !low_10 || !prevHigh_10 || !prevLow_10) {
+    return null;
   }
 
-  // Sell when fast SMA crosses below slow SMA (bearish crossover)
-  if (fastSma < slowSma && ctx.position > 0) {
-    return { side: 'sell', qty: ctx.position };
+  // Volatility threshold for breakout conditions (adjustable)
+  const volThreshold = prevAtr * 1.5;
+
+  // Breakout logic
+  // Buy condition: price breaks above recent high and ATR is significantly higher
+  if (price > high_10 && prevPrice <= prevHigh_10 &&
+      atr > volThreshold) {
+    
+    order = { side: 'buy', qty: ctx.cash / ctx.price * 0.99 };
   }
 
-  return null;
+  // Sell condition: price breaks below recent low and ATR is significantly higher
+  if (price < low_10 && prevPrice >= prevLow_10 &&
+      atr > volThreshold) {
+    
+    order = { side: 'sell', qty: ctx.position };
+  }
+
+  return order;
 }
