@@ -1,0 +1,28 @@
+{
+  "id": 924,
+  "name": "Breakout Strategy with RSI Filter",
+  "kind": "custom",
+  "verified": {
+    "backtestId": 4893,
+    "return": -31.45,
+    "mdd": 38.71,
+    "trades": 114,
+    "vsBuyHold": "unmeasured",
+    "gapPct": 0,
+    "tFrom": 1686355200,
+    "tTo": 1693551600,
+    "approxNotes": [
+      "봉 내 순서는 관례(양봉 O→L→H→C·음봉 O→H→L→C) — 실순서 미상 · 봉 중 거래량 null · MDD 는 봉 마감 기준"
+    ],
+    "spec": {
+      "ex": "binanceusdm",
+      "sym": "BTCUSDT",
+      "interval": "1h",
+      "bars": 2000,
+      "end": 1693555200
+    }
+  },
+  "config": null,
+  "updatedAt": "2026-09-16T06:00:51.936Z",
+  "publishedBy": "scripts/publish-strategies.mjs"
+}
