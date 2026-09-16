@@ -1,18 +1,18 @@
 /*
  * @coinsori-strategy v1
- * name: BB-MACD Hybrid Strategy
+ * name: BB-MACD Hybrid Strategy v2
  * ex: binanceusdm
  * syms: BTCUSDT
  * interval: 1h
  * cash: 10000
  *
  * Why this strategy:
- * This hybrid strategy combines Bollinger Bands for mean reversion signals and MACD for trend filtering.
- * It aims to capture mean-reverting movements while avoiding trades during strong trends that might lead to drawdowns.
+ * This updated hybrid strategy uses Bollinger Bands for mean reversion signals and MACD for trend filtering.
+ * It aims to improve execution compared to the previous version by making conditions more responsive.
  *
  * When it buys and sells:
- * Buys when price touches lower BB band and MACD is positive (indicating bullish trend).
- * Sells when price touches upper BB band and MACD is negative (indicating bearish trend).
+ * Buys when price touches lower BB band and MACD trend is bullish (crosses above signal line).
+ * Sells when price touches upper BB band and MACD trend is bearish (crosses below signal line).
  * Exits positions if the trend changes or if profit targets are hit.
  *
  * When it does NOT work:
@@ -38,17 +38,26 @@ function onUpdate(ctx) {
   // Check MACD values (MACD line and signal line)
   const macdLine = macd.macd;
   const signalLine = macd.signal;
-  
+
   // Guard clause for valid MACD data
   if (macdLine == null || signalLine == null) {
+    return null;
+  }
+
+  // Historical MACD values for trend detection (previous bar data)
+  const prevMacd = ctx.macd(12, 26, 9, 1); // Previous bar's MACD
+  const prevSignal = ctx.macd(12, 26, 9, 1)?.signal; // Previous bar's signal
+
+  // Guard clause for previous MACD data
+  if (prevMacd == null || prevSignal == null) {
     return null;
   }
 
   // Position management
   const position = ctx.position;
 
-  // Buy condition: price touches lower BB and MACD is positive (bullish)
-  if (price <= lowerBand && macdLine > signalLine) {
+  // Buy condition: price touches lower BB and MACD is positive and trends upward
+  if (price <= lowerBand && macdLine > signalLine && prevMacd <= prevSignal) {
     // Check if already in a long position
     if (position > 0) return null; // Already long, no action
 
@@ -57,8 +66,8 @@ function onUpdate(ctx) {
     return { side: 'buy', qty: qty };
   }
 
-  // Sell condition: price touches upper BB and MACD is negative (bearish)
-  if (price >= upperBand && macdLine < signalLine) {
+  // Sell condition: price touches upper BB and MACD is negative and trends downward
+  if (price >= upperBand && macdLine < signalLine && prevMacd >= prevSignal) {
     // Check if already in a short position
     if (position < 0) return null; // Already short, no action
 
