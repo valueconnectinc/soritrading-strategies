@@ -15,17 +15,13 @@ function onUpdate(ctx) {
   // Get indicators
   const bb = ctx.bb(20, 2); // Bollinger Bands with 20-period MA and 2 std devs
   const rsi = ctx.rsi(14);  // RSI with 14-period
-  const sma = ctx.sma(50);  // 50-period SMA for trend filter
 
   // Early exit if indicators are not ready
-  if (bb == null || rsi == null || sma == null) return null;
+  if (bb == null || rsi == null) return null;
 
   // Get current price and position
   const price = ctx.price;
   const position = ctx.position;
-
-  // Trend filter: only trade when price is above 50-period SMA (bullish trend)
-  const inBullTrend = price > sma;
 
   // If currently in a long position
   if (position > 0) {
@@ -43,11 +39,10 @@ function onUpdate(ctx) {
   // Entry condition:
   // - Price crosses below the lower Bollinger Band
   // - RSI is below 30 (oversold)
-  // - In a bullish trend
   const entryCondition1 = ctx.closes[1] >= bb.lower && price < bb.lower;
   const entryCondition2 = rsi < 30;
 
-  if (entryCondition1 && entryCondition2 && inBullTrend) {
+  if (entryCondition1 && entryCondition2) {
     return { side: 'buy', qty: ctx.cash / price * 0.99 };
   }
 

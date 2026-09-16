@@ -11,7 +11,7 @@ Every figure comes from the last verifying backtest at publish time. These are p
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
-|  | [889](strategies/889/) | Bollinger Band + RSI Mean Reversion Strategy | -0.90% | +134.18% | +2.95% | 7 | 2026-09-16 |
+|  | [889](strategies/889/) | Bollinger Band + RSI Mean Reversion Strategy | +4.62% | +340.42% | +2.60% | 7 | 2026-09-16 |
 |  | [888](strategies/888/) | RSI Divergence Strategy | -0.15% | +58.31% | +0.46% | 6 | 2026-09-16 |
 |  | [887](strategies/887/) | Bollinger RSI Hybrid Strategy | -41.79% | +58.31% | +46.90% | 660 | 2026-09-16 |
 | — | [886](strategies/886/) | Enhanced Bollinger Band Mean Reversion Strategy | -10.38% | — | +26.13% | 128 | 2026-09-16 |
