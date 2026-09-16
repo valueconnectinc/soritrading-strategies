@@ -4,13 +4,14 @@ Every strategy whose backtest **finished and actually traded** is published here
 Nothing is filtered out by return — the ones that lost money are part of the record.
 Entries stay after a strategy is removed from our own workspace — this is a log, and deleting the record would leave only the survivors.
 
-**★ marks a strategy that out-returned buy & hold over the same window** — 16 of 173 right now.
+**★ marks a strategy that out-returned buy & hold over the same window** — 16 of 174 right now.
 `—` means the comparison **could not be made**: the engine does not compute a benchmark for multi-symbol, futures, or multi-leg runs. That is *unknown*, not *lost*, and it is 91 of them right now.
 
 Every figure comes from the last verifying backtest at publish time. These are past results over historical data. Nothing here is promised or assured about the future, and none of it is investment advice.
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
+|  | [965](strategies/965/) | RSI Divergence Finder | +1.01% | +137.05% | +13.55% | 2 | 2026-09-16 |
 |  | [964](strategies/964/) | MACD Crossover with Volume Filter | -25.14% | +137.05% | +37.73% | 466 | 2026-09-16 |
 |  | [963](strategies/963/) | Multi-asset Mean Reversion Strategy (BTC & ETH) | +71.06% | +137.05% | +15.58% | 245 | 2026-09-16 |
 | — | [962](strategies/962/) | Multi-Asset Mean Reversion with Volatility Filter | -46.47% | — | +51.63% | 222 | 2026-09-16 |

@@ -1,0 +1,30 @@
+{
+  "id": 965,
+  "name": "RSI Divergence Finder",
+  "kind": "custom",
+  "verified": {
+    "backtestId": 5121,
+    "return": 1.01,
+    "mdd": 13.55,
+    "trades": 2,
+    "vsBuyHold": "lose",
+    "benchRet": 137.05,
+    "benchBasis": "price",
+    "gapPct": 0,
+    "tFrom": 1691074800,
+    "tTo": 1712671200,
+    "approxNotes": [
+      "봉 내 순서는 관례(양봉 O→L→H→C·음봉 O→H→L→C) — 실순서 미상 · 봉 중 거래량 null · MDD 는 봉 마감 기준"
+    ],
+    "spec": {
+      "ex": "binance",
+      "sym": "BTCUSDT",
+      "interval": "1h",
+      "bars": 6000,
+      "end": 1712673600
+    }
+  },
+  "config": null,
+  "updatedAt": "2026-09-16T07:41:05.376Z",
+  "publishedBy": "scripts/publish-strategies.mjs"
+}
