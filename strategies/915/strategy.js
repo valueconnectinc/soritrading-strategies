@@ -1,94 +1,41 @@
 /*
  * @coinsori-strategy v1
- * name: BB-MACD Hybrid Strategy v3
+ * name: Mean Reversion Strategy
  * ex: binanceusdm
  * syms: BTCUSDT
  * interval: 1h
- * cash: 10000
+ * cash: 1000
  *
- * Why this strategy:
- * This simplified hybrid strategy uses Bollinger Bands for mean reversion signals and MACD for trend filtering.
- * It's designed to be more responsive than previous versions to market changes.
- *
- * When it buys and sells:
- * Buys when price touches lower BB band and MACD shows bullish momentum (crossing above signal line).
- * Sells when price touches upper BB band and MACD shows bearish momentum (crossing below signal line).
- * Uses simple trend confirmation from previous bar's MACD to avoid false signals.
- *
- * When it does NOT work:
- * This strategy fails during strong, sustained trends where mean reversion is not effective,
- * and in low-volatility periods where Bollinger Bands do not provide clear signals.
+ * Why this strategy: This strategy is based on the concept of mean reversion in cryptocurrency markets. It assumes that price tends to return to its average level over time, and attempts to exploit short-term deviations from this average.
+ * When it buys and sells: The strategy buys when the price deviates significantly below the moving average (indicating overselling) and sells when it deviates significantly above the average (indicating overbuying).
+ * When it does NOT work: This strategy may not work in strongly trending markets where prices continue to move in one direction for an extended period, ignoring mean reversion.
  */
+
 function onUpdate(ctx) {
-  // Get indicator values
-  const bb = ctx.bb(20, 2); // 20-period BB with 2 std devs
-  const macd = ctx.macd(12, 26, 9); // MACD with standard settings
-
-  // Check if indicators are valid (not null)
-  if (bb == null || macd == null || bb.upper == null || bb.middle == null || bb.lower == null) {
-    return null;
-  }
-
-  // Calculate price levels for signals
+  // Use a 20-period simple moving average
+  const sma = ctx.sma(20);
+  
+  // Get the current price and the 20-period SMA
   const price = ctx.price;
-  const upperBand = bb.upper;
-  const lowerBand = bb.lower;
+  
+  // Guard against null values
+  if (sma == null) return null;
 
-  // Check MACD values (MACD line and signal line)
-  const macdLine = macd.macd;
-  const signalLine = macd.signal;
+  // Calculate the percentage difference between price and SMA
+  const diffPercent = (price - sma) / sma;
 
-  // Guard clause for valid MACD data
-  if (macdLine == null || signalLine == null) {
-    return null;
+  // Buy when price is significantly below the SMA (e.g., -2%)
+  if (diffPercent < -0.02) {
+    // Return a buy order for 99% of available cash
+    return { side: 'buy', qty: ctx.cash / price * 0.99 };
   }
 
-  // Historical MACD values for trend detection (previous bar data)
-  const prevMacd = ctx.macd(12, 26, 9, 1); // Previous bar's MACD
-  const prevSignal = ctx.macd(12, 26, 9, 1)?.signal; // Previous bar's signal
-
-  // Guard clause for previous MACD data
-  if (prevMacd == null || prevSignal == null) {
-    return null;
+  // Sell when price is significantly above the SMA (e.g., +2%)
+  if (diffPercent > 0.02) {
+    // Return a sell order for the current position
+    return { side: 'sell', qty: ctx.position };
   }
 
-  // Position management
-  const position = ctx.position;
-
-  // Buy condition: price touches lower BB and crosses above signal line (bullish crossover)
-  if (price <= lowerBand && macdLine > signalLine && prevMacd <= prevSignal) {
-    // Check if already in a long position
-    if (position > 0) return null; // Already long, no action
-
-    // Calculate quantity to buy (99% of available cash)
-    const qty = ctx.cash / price * 0.99;
-    return { side: 'buy', qty: qty };
-  }
-
-  // Sell condition: price touches upper BB and crosses below signal line (bearish crossover)
-  if (price >= upperBand && macdLine < signalLine && prevMacd >= prevSignal) {
-    // Check if already in a short position
-    if (position < 0) return null; // Already short, no action
-
-    // Calculate quantity to sell (close the entire position)
-    const qty = Math.abs(position);
-    return { side: 'sell', qty: qty };
-  }
-
-  // Exit condition: if currently long and price crosses above middle BB
-  if (position > 0 && price >= bb.middle) {
-    // Close the long position
-    const qty = position;
-    return { side: 'sell', qty: qty };
-  }
-
-  // Exit condition: if currently short and price crosses below middle BB
-  if (position < 0 && price <= bb.middle) {
-    // Close the short position
-    const qty = Math.abs(position);
-    return { side: 'buy', qty: qty };
-  }
-
-  // No action otherwise
+  // Do nothing otherwise
   return null;
 }
