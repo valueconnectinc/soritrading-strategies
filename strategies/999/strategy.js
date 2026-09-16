@@ -22,6 +22,7 @@ function onUpdate(ctx) {
   const btcPrice = ctx.price;
   const ethPrice = ctx.ref(1).price;
   
+  // Check if we have enough data for both assets
   if (btcPrice == null || ethPrice == null) return null;
 
   // Calculate the spread between the two assets
@@ -58,8 +59,8 @@ function onUpdate(ctx) {
     const spreadSma = ctx.sma(SPREAD_WINDOW, 0);
     if (spreadSma == null) return null;
     
-    if ((spread > lowerBand && spread < upperBand) || 
-        (Math.abs(spread - spreadSma) < Math.abs(spreadSma * EXIT_THRESHOLD))) {
+    // For exit condition, we check if the spread is approaching the mean
+    if (Math.abs(spread - spreadSma) < Math.abs(spreadSma * EXIT_THRESHOLD)) {
       return { side: 'sell', qty: ctx.position }; // Close the position
     }
   }
