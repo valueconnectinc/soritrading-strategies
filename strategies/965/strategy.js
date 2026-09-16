@@ -1,50 +1,34 @@
 /*
  * @coinsori-strategy v1
- * name: RSI Divergence Finder
+ * name: Simple Moving Average Crossover
  * ex: binance
  * syms: BTCUSDT
  * interval: 1h
  * cash: 1000
  *
- * This strategy identifies trade opportunities based on RSI divergence.
- * It buys when RSI shows bullish divergence and price is in oversold zone.
- * It sells when RSI shows bearish divergence and price is in overbought zone.
- * It does not work well during strong trends where divergence is rare.
+ * Why this strategy: This strategy uses a simple moving average crossover to identify trend changes. It is straightforward, easy to understand, and suitable for volatile markets.
+ * When it buys and sells: It buys when the short-term SMA crosses above the long-term SMA and sells when the short-term SMA crosses below the long-term SMA.
+ * When it does NOT work: This strategy may not perform well in ranging markets where there is no clear trend, leading to frequent false signals.
  */
 
 function onUpdate(ctx) {
-  // 获取RSI指标
-  const rsi = ctx.rsi(14);
-  if (rsi == null) return null;
+  // Calculate SMAs
+  const smaFast = ctx.sma(10); // 10-period SMA
+  const smaSlow = ctx.sma(30); // 30-period SMA
 
-  // 获取价格数据
-  const price = ctx.price;
-  const closes = ctx.closes;
+  // Wait for both SMAs to be calculated
+  if (smaFast == null || smaSlow == null) return null;
 
-  // 检查RSI是否在超卖区域（<30）
-  if (rsi < 30 && ctx.position === 0) {
-    // 买入信号：价格创新低，但RSI没有创新低（看涨背离）
-    const prevClose = closes[1];
-    const prevRsi = ctx.rsi(14, 1); // 前一个周期的RSI
-    if (prevClose != null && prevRsi != null) {
-      if (price < prevClose && rsi > prevRsi) {
-        return { side: 'buy', qty: ctx.cash / price * 0.99 };
-      }
-    }
+  // Buy when fast SMA crosses above slow SMA
+  if (smaFast > smaSlow && ctx.position === 0) {
+    return { side: 'buy', qty: ctx.cash / ctx.price * 0.99 };
+  }
+  
+  // Sell when fast SMA crosses below slow SMA and we have an open position
+  if (smaFast < smaSlow && ctx.position > 0) {
+    return { side: 'sell', qty: ctx.position };
   }
 
-  // 检查RSI是否在超买区域（>70）
-  if (rsi > 70 && ctx.position > 0) {
-    // 卖出信号：价格创新高，但RSI没有创新高（看跌背离）
-    const prevClose = closes[1];
-    const prevRsi = ctx.rsi(14, 1); // 前一个周期的RSI
-    if (prevClose != null && prevRsi != null) {
-      if (price > prevClose && rsi < prevRsi) {
-        return { side: 'sell', qty: ctx.position };
-      }
-    }
-  }
-
-  // 持有仓位不操作
+  // No action needed
   return null;
 }
