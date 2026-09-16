@@ -11,7 +11,7 @@ Every figure comes from the last verifying backtest at publish time. These are p
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
-| — | [963](strategies/963/) | Multi-asset Mean Reversion Strategy (BTC & ETH) | -1.52% | — | +6.29% | 74 | 2026-09-16 |
+| — | [963](strategies/963/) | Multi-asset Mean Reversion Strategy (BTC & ETH) | +1.98% | — | +6.36% | 145 | 2026-09-16 |
 | — | [962](strategies/962/) | Multi-Asset Mean Reversion with Volatility Filter | -46.47% | — | +51.63% | 222 | 2026-09-16 |
 | — | [961](strategies/961/) | MACD + Bollinger Bands Mean Reversion | -19.66% | — | +29.99% | 223 | 2026-09-16 |
 | ★ | [960](strategies/960/) | Mean Reversion Strategy | +32.41% | +10.66% | +15.07% | 302 | 2026-09-16 |
