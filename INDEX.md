@@ -11,7 +11,7 @@ Every figure comes from the last verifying backtest at publish time. These are p
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
-| — | [858](strategies/858/) | Multi-Asset Pair Strategy | -13.35% | — | +27.05% | 6 | 2026-09-16 |
+| — | [858](strategies/858/) | Multi-Asset Pair Strategy | -35.14% | — | +39.39% | 22 | 2026-09-16 |
 |  | [856](strategies/856/) | Combining Multiple Indicators for Trading Signals | -18.63% | -15.18% | +26.75% | 20 | 2026-09-16 |
 |  | [854](strategies/854/) | Mean Reversion with RSI and Volume Filter | +0.52% | +70.34% | +20.11% | 61 | 2026-09-16 |
 | — | [852](strategies/852/) | External Data Strategy | -13.16% | — | +27.05% | 6 | 2026-09-16 |
