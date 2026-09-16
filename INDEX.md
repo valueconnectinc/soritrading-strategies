@@ -5,13 +5,13 @@ Nothing is filtered out by return — the ones that lost money are part of the r
 Entries stay after a strategy is removed from our own workspace — this is a log, and deleting the record would leave only the survivors.
 
 **★ marks a strategy that out-returned buy & hold over the same window** — 8 of 101 right now.
-`—` means the comparison **could not be made**: the engine does not compute a benchmark for multi-symbol, futures, or multi-leg runs. That is *unknown*, not *lost*, and it is 58 of them right now.
+`—` means the comparison **could not be made**: the engine does not compute a benchmark for multi-symbol, futures, or multi-leg runs. That is *unknown*, not *lost*, and it is 59 of them right now.
 
 Every figure comes from the last verifying backtest at publish time. These are past results over historical data. Nothing here is promised or assured about the future, and none of it is investment advice.
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
-|  | [868](strategies/868/) | BTC RSI Mean Reversion Strategy | +18.60% | +37.67% | +10.92% | 143 | 2026-09-16 |
+| — | [868](strategies/868/) | BTC RSI Mean Reversion Strategy | -61.69% | — | +79.97% | 722 | 2026-09-16 |
 |  | [867](strategies/867/) | BTC MACD Trend Following Strategy | -67.46% | -15.18% | +67.77% | 716 | 2026-09-16 |
 | — | [866](strategies/866/) | BTC Bollinger Band Mean Reversion Strategy | +2312.09% | — | +39.59% | 1014 | 2026-09-16 |
 | — | [863](strategies/863/) | BTC RSI Divergence Strategy Enhanced | +90.06% | — | +77.24% | 9 | 2026-09-16 |
