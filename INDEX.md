@@ -4,13 +4,14 @@ Every strategy whose backtest **finished and actually traded** is published here
 Nothing is filtered out by return — the ones that lost money are part of the record.
 Entries stay after a strategy is removed from our own workspace — this is a log, and deleting the record would leave only the survivors.
 
-**★ marks a strategy that out-returned buy & hold over the same window** — 16 of 183 right now.
-`—` means the comparison **could not be made**: the engine does not compute a benchmark for multi-symbol, futures, or multi-leg runs. That is *unknown*, not *lost*, and it is 100 of them right now.
+**★ marks a strategy that out-returned buy & hold over the same window** — 16 of 184 right now.
+`—` means the comparison **could not be made**: the engine does not compute a benchmark for multi-symbol, futures, or multi-leg runs. That is *unknown*, not *lost*, and it is 101 of them right now.
 
 Every figure comes from the last verifying backtest at publish time. These are past results over historical data. Nothing here is promised or assured about the future, and none of it is investment advice.
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
+| — | [976](strategies/976/) | BBand Trend Filter Mean Reversion Strategy | +293.65% | — | +77.19% | 1 | 2026-09-16 |
 | — | [974](strategies/974/) | Multi-Asset Mean Reversion Strategy | +85.21% | — | +74.35% | 6 | 2026-09-16 |
 | — | [973](strategies/973/) | Improved Bollinger Band Mean Reversion Strategy | +93.18% | — | +77.18% | 1 | 2026-09-16 |
 | — | [972](strategies/972/) | Momentum Filter with ATR | +128.43% | — | +77.15% | 1 | 2026-09-16 |
