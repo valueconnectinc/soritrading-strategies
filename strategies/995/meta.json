@@ -1,0 +1,29 @@
+{
+  "id": 995,
+  "name": "Enhanced Bollinger Band + RSI Mean Reversion Strategy",
+  "kind": "custom",
+  "verified": {
+    "backtestId": 5285,
+    "return": 87,
+    "mdd": 56.55,
+    "trades": 456,
+    "vsBuyHold": "unmeasured",
+    "gapPct": 0,
+    "tFrom": 1567962000,
+    "tTo": 1640973600,
+    "approxNotes": [
+      "봉 내 순서는 관례(양봉 O→L→H→C·음봉 O→H→L→C) — 실순서 미상 · 봉 중 거래량 null · MDD 는 봉 마감 기준",
+      "[정지봉] 거래량 0 · 시가=고가=저가=종가인 봉이 3개(최장 연속 2개) 있습니다. 그 구간에서는 변동성·ATR·MDD 가 0 으로 눌려 **위험 지표가 실제보다 낙관적**으로 나옵니다."
+    ],
+    "spec": {
+      "ex": "binanceusdm",
+      "sym": "BTCUSDT",
+      "interval": "1h",
+      "bars": 25920,
+      "end": 1640976000
+    }
+  },
+  "config": null,
+  "updatedAt": "2026-09-16T09:42:19.908Z",
+  "publishedBy": "scripts/publish-strategies.mjs"
+}
