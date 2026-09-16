@@ -11,7 +11,7 @@ Every figure comes from the last verifying backtest at publish time. These are p
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
-| — | [862](strategies/862/) | BTC MACD Crossover Strategy | +90.67% | — | +77.24% | 9 | 2026-09-16 |
+| — | [862](strategies/862/) | BTC MACD Crossover Strategy | +340.86% | — | +77.24% | 9 | 2026-09-16 |
 |  | [861](strategies/861/) | BTC Fear & Greed Index Strategy | -39.07% | +90.20% | +70.17% | 9 | 2026-09-16 |
 |  | [859](strategies/859/) | RSI Mean Reversion with Volatility Filter | -6.67% | -1.80% | +14.89% | 35 | 2026-09-16 |
 |  | [858](strategies/858/) | Multi-Asset Pair Strategy | -65.67% | -15.18% | +65.98% | 298 | 2026-09-16 |
