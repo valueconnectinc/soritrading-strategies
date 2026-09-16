@@ -1,39 +1,51 @@
 /*
  * @coinsori-strategy v1
- * name: SMA RSI Mean Reversion Strategy
+ * name: Improved SMA RSI Mean Reversion Strategy
  * ex: binanceusdm
  * syms: BTCUSDT
  * interval: 1h
  * cash: 1000
  *
- * This strategy attempts to profit from mean-reverting behavior of BTCUSDT price
- * by using simple moving average and RSI indicators. It buys when price drops below
- * the SMA and RSI < 30, and sells when price goes above SMA and RSI > 70.
- * Why this strategy: The idea is that in most market conditions, prices tend to revert
- * to their mean — this approach tries to capture those reversion opportunities.
- * When it buys and sells: Buys after sustained price drop below SMA with oversold RSI,
- * and sells when price surges above SMA with overbought RSI.
- * When it does NOT work: In strong trends, especially during explosive run-up or crash-downs,
- * this strategy will likely incur losses due to frequent whipsaws.
+ * Why this strategy: This strategy improves on the basic SMA/RSI mean reversion by adding volume and macro filters to reduce false signals.
+ * When it buys and sells: It buys when price is below SMA and RSI is oversold, with high volume and bullish macro trends. It sells when price is above SMA and RSI is overbought, with high volume and bearish macro trends.
+ * When it does NOT work: In strong trending markets, the strategy may miss opportunities or get stopped out due to false signals from poor filtering.
  */
 
 function onUpdate(ctx) {
-  // Calculate indicators
+  // === INDICATORS AND DATA ===
   const sma = ctx.sma(20);
   const rsi = ctx.rsi(14);
-  const price = ctx.price;
+  const vol = ctx.vol;
+  const avgVol = ctx.avgVol(20);
 
-  // Guard against null values (warm-up period)
-  if (sma == null || rsi == null) return null;
+  // === FETCH MACRO DATA ===
+  const fearGreed = ctx.data('fear_greed');
 
-  // Buy condition: Price below SMA and RSI < 30 (oversold)
-  if (price < sma && rsi < 30) {
-    return { side: 'buy', qty: ctx.cash / price * 0.99 };
+  // === FILTERS ===
+  if (sma == null || rsi == null || vol == null || avgVol == null || fearGreed == null) {
+    return null;
   }
 
-  // Sell condition: Price above SMA and RSI > 70 (overbought)
-  if (price > sma && rsi > 70) {
-    return { side: 'sell', qty: ctx.position };
+  // Volume filter: only trade when volume is above average
+  const volumeFilter = vol > avgVol * 1.2;
+
+  // Fear and Greed index filter:
+  // - Buy when index is below 30 (fear)
+  // - Sell when index is above 70 (greed)
+  const fearFilter = fearGreed < 30;
+  const greedFilter = fearGreed > 70;
+
+  // === TRADING LOGIC ===
+  if (ctx.position == 0) {
+    // Not in a position, check for buy signal
+    if (ctx.price < sma && rsi < 30 && volumeFilter && fearFilter) {
+      return { side: 'buy', qty: ctx.cash / ctx.price * 0.99 };
+    }
+  } else {
+    // In a position, check for sell signal
+    if (ctx.price > sma && rsi > 70 && volumeFilter && greedFilter) {
+      return { side: 'sell', qty: ctx.position };
+    }
   }
 
   return null;
