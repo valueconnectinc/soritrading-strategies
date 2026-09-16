@@ -11,7 +11,7 @@ Every figure comes from the last verifying backtest at publish time. These are p
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
-| — | [996](strategies/996/) | Volatility Filtered Bollinger Band Mean Reversion Strategy | -26.60% | — | +62.58% | 168 | 2026-09-16 |
+| — | [996](strategies/996/) | Volatility Filtered Bollinger Band Mean Reversion Strategy | -4.55% | — | +4.55% | 16 | 2026-09-16 |
 | — | [995](strategies/995/) | Enhanced Bollinger Band + RSI Mean Reversion Strategy | +87.00% | — | +56.55% | 456 | 2026-09-16 |
 | — | [994](strategies/994/) | Multi-asset Mean Reversion Strategy | +588.49% | — | +48.58% | 81 | 2026-09-16 |
 | — | [993](strategies/993/) | MACD RSI Hybrid Strategy | -21.39% | — | +29.04% | 31 | 2026-09-16 |
