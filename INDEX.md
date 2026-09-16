@@ -4,13 +4,14 @@ Every strategy whose backtest **finished and actually traded** is published here
 Nothing is filtered out by return — the ones that lost money are part of the record.
 Entries stay after a strategy is removed from our own workspace — this is a log, and deleting the record would leave only the survivors.
 
-**★ marks a strategy that out-returned buy & hold over the same window** — 12 of 153 right now.
+**★ marks a strategy that out-returned buy & hold over the same window** — 13 of 154 right now.
 `—` means the comparison **could not be made**: the engine does not compute a benchmark for multi-symbol, futures, or multi-leg runs. That is *unknown*, not *lost*, and it is 86 of them right now.
 
 Every figure comes from the last verifying backtest at publish time. These are past results over historical data. Nothing here is promised or assured about the future, and none of it is investment advice.
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
+| ★ | [943](strategies/943/) | Simple Bollinger Band Mean Reversion Strategy | +73.64% | +62.99% | +10.60% | 2 | 2026-09-16 |
 | — | [936](strategies/936/) | RSI-Based Mean Reversion with Volume Filter | -21.13% | — | +32.64% | 94 | 2026-09-16 |
 | — | [935](strategies/935/) | Multi-Asset MACD with Macro Sentiment Filter | -75.11% | — | +75.55% | 784 | 2026-09-16 |
 | — | [934](strategies/934/) | Volume and RSI Filtered Moving Average Crossover Strategy | -20.13% | — | +39.25% | 15 | 2026-09-16 |
