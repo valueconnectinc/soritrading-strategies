@@ -1,43 +1,48 @@
 /*
  * @coinsori-strategy v1
- * name: MACD RSI Combination Strategy
- * ex: binance
- * syms: BTC
+ * name: Bollinger Band + Momentum Strategy
+ * ex: binanceusdm
+ * syms: BTCUSDT
  * interval: 1h
  * cash: 1000
- *
- * Why this strategy: Combines the trend-following strength of MACD with the mean-reversion signal of RSI to create a balanced approach that adapts to changing market conditions. It aims to enter trades when both indicators support the same direction, reducing false signals.
- * When it buys and sells: Buys when MACD line crosses above signal line AND RSI is below 30 (oversold), and sells when MACD line crosses below signal line AND RSI is above 70 (overbought).
- * When it does NOT work: This strategy may underperform in ranging markets where neither the trend nor the momentum is clear, leading to missed opportunities or unnecessary trades.
+
+ * Why this strategy: This strategy combines Bollinger Bands for volatility detection and a momentum indicator to identify entry points. It aims to capture strong price movements when the asset is breaking out of a volatile range.
+ * When it buys and sells: The strategy buys when price breaks above the upper Bollinger Band, indicating a strong upward momentum. It sells when price breaks below the lower Bollinger Band, signaling a downward momentum.
+ * When it does NOT work: This strategy may fail during sideways markets where price remains within the Bollinger Bands for long periods. In such regimes, frequent false signals and whipsaws can lead to significant drawdowns.
  */
+
 function onUpdate(ctx) {
-  // Get required indicators
-  const macd = ctx.macd(12, 26, 9);
-  const rsi = ctx.rsi(14);
-  
-  // Guard against null values (warm-up period)
-  if (macd == null || rsi == null || macd.macd == null || macd.signal == null) {
-    return null;
-  }
-  
+  // Bollinger Band parameters
+  const bbLength = 20;
+  const bbMult = 2;
+
+  // Momentum indicator length
+  const momentumLength = 10;
+
+  // Get Bollinger Bands values
+  const bb = ctx.bb(bbLength, bbMult, 0);
+  if (bb == null) return null;
+
+  const upperBB = bb.upper;
+  const lowerBB = bb.lower;
+  const middleBB = bb.middle;
+
+  // Get momentum value
+  const momentum = ctx.change(momentumLength, 0);
+  if (momentum == null) return null;
+
   // Define entry conditions
-  const buyCondition = macd.macd > macd.signal && rsi < 30;
-  const sellCondition = macd.macd < macd.signal && rsi > 70;
-  
-  // Additional filter: Only enter if there's a clear trend (e.g., price above 20-day SMA)
-  const sma20 = ctx.sma(20);
-  if (sma20 == null) return null;
-  const trendFilter = ctx.price > sma20;  
-  
-  // Entry logic
-  if (buyCondition && trendFilter && ctx.position <= 0) {
+  const price = ctx.price;
+
+  // Buy when price breaks above upper Bollinger Band with strong momentum
+  if (price > upperBB && momentum > 0) {
     return { side: 'buy', qty: ctx.cash / ctx.price * 0.99 };
   }
-  
-  if (sellCondition && !trendFilter && ctx.position > 0) {
+
+  // Sell when price breaks below lower Bollinger Band with strong momentum
+  if (price < lowerBB && momentum < 0) {
     return { side: 'sell', qty: ctx.position };
   }
-  
-  // No action
+
   return null;
 }
