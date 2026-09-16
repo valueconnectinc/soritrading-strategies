@@ -11,7 +11,7 @@ Every figure comes from the last verifying backtest at publish time. These are p
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
-|  | [958](strategies/958/) | RSI-based Mean Reversion Strategy | +0.78% | +55.34% | +9.95% | 44 | 2026-09-16 |
+|  | [958](strategies/958/) | RSI-based Mean Reversion Strategy | +19.07% | +54.30% | +4.91% | 12 | 2026-09-16 |
 |  | [957](strategies/957/) | MACD Trend Following Strategy | -52.75% | +55.34% | +53.96% | 497 | 2026-09-16 |
 |  | [956](strategies/956/) | MACD with RSI Filter | -28.19% | -15.19% | +30.46% | 211 | 2026-09-16 |
 | — | [955](strategies/955/) | Macro Filtered MACD-RSI Strategy | -6.64% | — | +18.64% | 163 | 2026-09-16 |

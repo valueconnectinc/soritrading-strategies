@@ -1,37 +1,38 @@
 /*
  * @coinsori-strategy v1
- * name: RSI-based Mean Reversion Strategy
+ * name: MACD RSI Combination Strategy
  * ex: binance
  * syms: BTC
  * interval: 1h
  * cash: 1000
  *
- * This strategy uses the Relative Strength Index (RSI) to identify overbought and oversold conditions.
- * When RSI crosses below 30 (oversold), it's a buy signal.
- * When RSI crosses above 70 (overbought), it's a sell signal.
- * It aims to capitalize on mean reversion in price movements.
+ * Why this strategy: Combines the trend-following strength of MACD with the mean-reversion signal of RSI to create a balanced approach that adapts to changing market conditions. It aims to enter trades when both indicators support the same direction, reducing false signals.
+ * When it buys and sells: Buys when MACD line crosses above signal line AND RSI is below 30 (oversold), and sells when MACD line crosses below signal line AND RSI is above 70 (overbought).
+ * When it does NOT work: This strategy may underperform in ranging markets where neither the trend nor the momentum is clear, leading to missed opportunities or unnecessary trades.
  */
-
 function onUpdate(ctx) {
-  // Get the RSI value
-  const rsi = ctx.rsi(14);                    // 14-period RSI
+  // Get required indicators
+  const macd = ctx.macd(12, 26, 9);
+  const rsi = ctx.rsi(14);
   
-  // Check if we have enough data to calculate RSI
-  if (rsi == null) return null;
+  // Guard against null values (warm-up period)
+  if (macd == null || rsi == null || macd.macd == null || macd.signal == null) {
+    return null;
+  }
   
-  // Check if we are currently holding a position
-  const hasPosition = ctx.position > 0;
+  // Define entry conditions
+  const buyCondition = macd.macd > macd.signal && rsi < 30;
+  const sellCondition = macd.macd < macd.signal && rsi > 70;
   
-  // Buy condition: RSI crosses below 30 (oversold)
-  if (!hasPosition && rsi < 30) {
+  // Entry logic
+  if (buyCondition && ctx.position <= 0) {
     return { side: 'buy', qty: ctx.cash / ctx.price * 0.99 };
   }
   
-  // Sell condition: RSI crosses above 70 (overbought)
-  if (hasPosition && rsi > 70) {
+  if (sellCondition && ctx.position > 0) {
     return { side: 'sell', qty: ctx.position };
   }
   
-  // Do nothing if conditions are not met
+  // No action
   return null;
 }
