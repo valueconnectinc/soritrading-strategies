@@ -11,7 +11,7 @@ Every figure comes from the last verifying backtest at publish time. These are p
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
-|  | [871](strategies/871/) | Trend Following with ATR Stop | +34.45% | +35.45% | +9.48% | 1 | 2026-09-16 |
+|  | [871](strategies/871/) | Trend Following with ATR Stop | -15.18% | -15.18% | +18.74% | 147 | 2026-09-16 |
 |  | [870](strategies/870/) | MACD Momentum Filter Strategy | +9.47% | +24.13% | +18.58% | 125 | 2026-09-16 |
 | — | [869](strategies/869/) | AI 전략 | -55.24% | — | +82.53% | 618 | 2026-09-16 |
 | — | [868](strategies/868/) | BTC RSI Mean Reversion Strategy | -61.69% | — | +79.97% | 722 | 2026-09-16 |
