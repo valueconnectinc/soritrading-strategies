@@ -1,0 +1,31 @@
+{
+  "id": 910,
+  "name": "Trend Following with RSI Filter",
+  "kind": "custom",
+  "verified": {
+    "backtestId": 4724,
+    "return": -83.94,
+    "mdd": 83.94,
+    "trades": 1008,
+    "vsBuyHold": "lose",
+    "benchRet": -56.2,
+    "benchBasis": "price",
+    "gapPct": 0,
+    "tFrom": 1649415600,
+    "tTo": 1656612000,
+    "approxNotes": [
+      "봉 내 순서는 관례(양봉 O→L→H→C·음봉 O→H→L→C) — 실순서 미상 · 봉 중 거래량 null · MDD 는 봉 마감 기준",
+      "[유동성/전무] 시장가 주문 1355건은 **한 주도 체결되지 않았습니다**. 부분체결이 아니라 전무라, 그 시점의 진입·청산은 **일어나지 않았습니다.**"
+    ],
+    "spec": {
+      "ex": "binanceusdm",
+      "sym": "BTCUSDT",
+      "interval": "1h",
+      "bars": 2000,
+      "end": 1656614400
+    }
+  },
+  "config": null,
+  "updatedAt": "2026-09-16T04:51:11.503Z",
+  "publishedBy": "scripts/publish-strategies.mjs"
+}

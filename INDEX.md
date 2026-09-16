@@ -4,13 +4,14 @@ Every strategy whose backtest **finished and actually traded** is published here
 Nothing is filtered out by return — the ones that lost money are part of the record.
 Entries stay after a strategy is removed from our own workspace — this is a log, and deleting the record would leave only the survivors.
 
-**★ marks a strategy that out-returned buy & hold over the same window** — 10 of 133 right now.
+**★ marks a strategy that out-returned buy & hold over the same window** — 10 of 134 right now.
 `—` means the comparison **could not be made**: the engine does not compute a benchmark for multi-symbol, futures, or multi-leg runs. That is *unknown*, not *lost*, and it is 73 of them right now.
 
 Every figure comes from the last verifying backtest at publish time. These are past results over historical data. Nothing here is promised or assured about the future, and none of it is investment advice.
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
+|  | [910](strategies/910/) | Trend Following with RSI Filter | -83.94% | -56.20% | +83.94% | 1008 | 2026-09-16 |
 |  | [908](strategies/908/) | Simple Moving Average Crossover | -21.44% | +44.54% | +30.68% | 162 | 2026-09-16 |
 |  | [907](strategies/907/) | Volatility breakout with ATR filter | -51.10% | +44.54% | +51.10% | 138 | 2026-09-16 |
 |  | [905](strategies/905/) | Momentum and Volume Filter Strategy | -35.91% | -3.17% | +36.72% | 341 | 2026-09-16 |
