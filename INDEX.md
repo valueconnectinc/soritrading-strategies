@@ -11,7 +11,7 @@ Every figure comes from the last verifying backtest at publish time. These are p
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
-| — | [1022](strategies/1022/) | BTC FearGreed Momentum | -4.72% | — | +4.72% | 2 | 2026-09-17 |
+| — | [1022](strategies/1022/) | BTC FearGreed Momentum | -46.09% | — | +61.53% | 151 | 2026-09-17 |
 | ★ | [1000](strategies/1000/) | MACD RSI Mean Reversion Strategy | -9.19% | -16.11% | +14.08% | 21 | 2026-09-16 |
 | — | [972](strategies/972/) | Momentum Filter with ATR | +128.43% | — | +77.15% | 1 | 2026-09-16 |
 | — | [999](strategies/999/) | MACD + BB Reversal Strategy | +14.35% | — | +15.07% | 206 | 2026-09-16 |

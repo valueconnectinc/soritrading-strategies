@@ -1,76 +1,87 @@
 /*
  * @coinsori-strategy v1
- * name: BTC FearGreed Momentum
+ * name: BTC EMA Momentum ATR Stop
  * ex: binance
  * syms: BTCUSDT
  * interval: 4h
  * cash: 10000
  *
- * Why this strategy: BTC price momentum and Fear & Greed sentiment tend to agree —
- * when RSI confirms price trend AND the crowd shifts from fear to greed, the move
- * has follow-through. The macro filter avoids buying when sentiment is already
- * extremely bullish (F&G > 70) or deeply fearful (F&G < 30).
+ * Why this strategy: EMA crossover captures medium-term trend shifts reliably
+ * on BTC 4H. ATR-based stop-loss limits downside in fast drops. The fast EMA
+ * filter avoids buying when the market is still in a downtrend.
  *
- * When it buys and sells: Buys when RSI crosses above 50, price is above SMA50,
- * and Fear & Greed index also crosses above 50 within the last 2 bars (all three
- * must align). Sells when RSI crosses below 50 OR Fear & Greed drops below 30.
+ * When it buys and sells: Buys when fast EMA(9) crosses above slow EMA(21),
+ * price is above SMA50 for trend confirmation, and RSI > 50 for momentum.
+ * Sells on EMA death cross OR when price hits the ATR stop-loss from entry.
  *
- * When it does NOT work: Crashes fast during news-driven flash drops (the 4H bar
- * is too coarse to react quickly). Also underperforms in choppy low-volume markets
- * where RSI oscillates around 50 without establishing a trend.
+ * When it does NOT work: Sideways chop causes whipsaws (EMA crosses flip
+ * frequently in low-volatility ranges). Also underperforms in long bear
+ * trends where the bounce never sustains above SMA50.
  */
 
 function onUpdate(ctx) {
     const state = ctx.state;
 
-    // Snapshot on every new bar — this is the only safe way to track "previous bar"
-    // values across all modes (backtest, paper, live). ctx.state persists between ticks.
+    // Snapshot previous bar values on each new bar
     if (state.lastBarI !== ctx.i) {
-        state.prevRsi = state.rsi;
-        state.prevFg  = state.fg;
+        state.prevFast = state.fast;
+        state.prevSlow = state.slow;
+        state.prevRsi  = state.rsi;
         state.lastBarI = ctx.i;
     }
 
-    // Read current values
-    state.rsi = ctx.rsi(14);
-    state.fg  = ctx.data('fg');
+    // Current indicators
+    state.fast = ctx.ema(9);
+    state.slow = ctx.ema(21);
+    state.rsi  = ctx.rsi(14);
 
-    const rsi    = state.rsi;
-    const fg     = state.fg;
-    const prevRsi = state.prevRsi;
-    const prevFg  = state.prevFg;
+    const fast    = state.fast;
+    const slow    = state.slow;
+    const rsi     = state.rsi;
+    const prevFast = state.prevFast;
+    const prevSlow = state.prevSlow;
+    const prevRsi  = state.prevRsi;
 
-    // Indicators
+    // Longer filters
     const sma50 = ctx.sma(50);
+    const atr   = ctx.atr(14);
 
-    // Guard: all values must be known before we decide anything
-    if (rsi == null || prevRsi == null || sma50 == null || fg == null || prevFg == null) return null;
-    if (ctx.i < 60) return null;  // warm-up: SMA50 needs ~50 bars + RSI buffer
+    // Guard: need all values
+    if (fast == null || slow == null || prevFast == null || prevSlow == null ||
+        rsi == null || prevRsi == null || sma50 == null || atr == null) return null;
+    if (ctx.i < 60) return null;  // warm-up
 
-    // ── Entry conditions ──────────────────────────────────────────
-    // 1. RSI crosses from ≤50 to >50  →  bullish momentum confirmation
-    const rsiCrossUp  = prevRsi <= 50 && rsi > 50;
-    // 2. Price above its 50-bar SMA   →  trend is already up
-    const trendUp     = ctx.price > sma50;
-    // 3. Fear & Greed crossed above 50 (within last bar) → sentiment shift
-    const fgCrossUp   = prevFg <= 50 && fg > 50;
+    // ── Entry: EMA golden cross + trend + momentum alignment ─────────
+    // 1. Fast EMA crosses above slow EMA  →  trend shift to bullish
+    const emaCrossUp   = prevFast <= prevSlow && fast > slow;
+    // 2. Price above SMA50               →  in confirmed uptrend
+    const trendConfirm = ctx.price > sma50;
+    // 3. RSI > 50                        →  momentum is bullish
+    const momentumOk    = rsi > 50;
 
     if (!ctx.position) {
-        // No position — enter only when ALL three fire together
-        if (rsiCrossUp && trendUp && fgCrossUp) {
+        if (emaCrossUp && trendConfirm && momentumOk) {
             const qty = (ctx.cash / ctx.price) * 0.95;
             return { side: 'buy', qty: qty };
         }
     } else {
-        // ── Exit condition 1: RSI crosses back below 50 (momentum fading) ──
-        const rsiCrossDown = prevRsi >= 50 && rsi < 50;
-        if (rsiCrossDown) {
+        // ── Exit 1: EMA death cross (slow crosses above fast) ───────
+        const emaCrossDown = prevFast >= prevSlow && fast < slow;
+        if (emaCrossDown) {
             return { side: 'sell', qty: ctx.position };
         }
 
-        // ── Exit condition 2: Fear & Greed drops below 30 (panic / extreme fear) ──
-        // Fires even if RSI hasn't crossed — protects capital in sudden drops
-        if (fg < 30) {
+        // ── Exit 2: ATR stop-loss — 2.5× ATR below entry price ──────
+        // Protects capital in fast drops; 2.5× gives breathing room
+        const stopPx = state.entryPx - 2.5 * atr;
+        if (ctx.price <= stopPx) {
+            return { side: 'sell', qty: ctx.position };
+        }
+
+        // ── Exit 3: RSI drops below 40 (momentum weakening) ─────────
+        // Secondary safety net — exit before death cross in bad momentum
+        const rsiCrossDown = prevRsi >= 40 && rsi < 40;
+        if (rsiCrossDown) {
             return { side: 'sell', qty: ctx.position };
         }
     }
