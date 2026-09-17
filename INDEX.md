@@ -11,7 +11,7 @@ Every figure comes from the last verifying backtest at publish time. These are p
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
-|  | [1087](strategies/1087/) | Supertrend Volatility Adaptive ETH 4h | +15.53% | +54.98% | +8.85% | 24 | 2026-09-17 |
+|  | [1087](strategies/1087/) | Supertrend Volatility Adaptive ETH 4h | +19.48% | +28.17% | +8.85% | 12 | 2026-09-17 |
 | — | [1086](strategies/1086/) | EMA-9/21 Crossover + EMA-100 Trend Filter ETH 4h | -21.43% | — | +22.90% | 21 | 2026-09-17 |
 | — | [1085](strategies/1085/) | EMA-9/21 Crossover Simple ETH 4h | -34.51% | — | +37.48% | 47 | 2026-09-17 |
 |  | [1083](strategies/1083/) | ATR Volatility Breakout + RSI Momentum ETH 4h | -17.23% | +6.72% | +17.29% | 12 | 2026-09-17 |
