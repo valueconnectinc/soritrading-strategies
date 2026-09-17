@@ -4,13 +4,14 @@ Every strategy whose backtest **finished and actually traded** is published here
 Nothing is filtered out by return — the ones that lost money are part of the record.
 Entries stay after a strategy is removed from our own workspace — this is a log, and deleting the record would leave only the survivors.
 
-**★ marks a strategy that out-returned buy & hold over the same window** — 21 of 207 right now.
+**★ marks a strategy that out-returned buy & hold over the same window** — 22 of 208 right now.
 `—` means the comparison **could not be made**: the engine does not compute a benchmark for multi-symbol, futures, or multi-leg runs. That is *unknown*, not *lost*, and it is 110 of them right now.
 
 Every figure comes from the last verifying backtest at publish time. These are past results over historical data. Nothing here is promised or assured about the future, and none of it is investment advice.
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
+| ★ | [1036](strategies/1036/) | EMA Fast No-DXY | -14.46% | -18.55% | +15.18% | 10 | 2026-09-17 |
 |  | [1035](strategies/1035/) | DXY-Regime EMA Daily | +16.17% | +67.50% | +15.75% | 17 | 2026-09-17 |
 |  | [1034](strategies/1034/) | EMA Trend-Following Daily | -2.52% | +10.57% | +3.22% | 3 | 2026-09-17 |
 |  | [1033](strategies/1033/) | BB Mean Reversion Daily | -11.94% | +10.57% | +21.60% | 6 | 2026-09-17 |
