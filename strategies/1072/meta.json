@@ -3,7 +3,7 @@
   "name": "RSI-14 Simple Daily BTC",
   "kind": "custom",
   "verified": {
-    "backtestId": 5645,
+    "backtestId": 5653,
     "return": 12.89,
     "mdd": 11.67,
     "trades": 7,
@@ -19,7 +19,7 @@
       "ex": "binance",
       "sym": "BTCUSDT",
       "interval": "1h",
-      "bars": 300,
+      "bars": 500,
       "end": 20250601
     }
   },
