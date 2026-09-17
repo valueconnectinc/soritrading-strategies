@@ -1,61 +1,61 @@
 /*
  * @coinsori-strategy v1
- * name: RSI Momentum 4H
+ * name: RSI Momentum 4H v2
  * ex: binance
  * syms: BTCUSDT
  * interval: 4h
  * cash: 10000
  *
- * RSI momentum pullback strategy on 4H BTC. When RSI drops below 40 in an uptrend
- * (price above EMA-50), the market is oversold within the trend — a buy signal.
- * When RSI climbs above 65 or price drops below EMA-50, take profit or exit.
- * Works best in trending markets; loses in choppy, directionless conditions.
+ * RSI momentum pullback strategy on 4H BTC. When RSI drops below 35 in an uptrend
+ * (price above EMA-50), the market is deeply oversold within the trend — a buy signal.
+ * Exits: RSI above 70, or 3×ATR profit target, or trailing stop below peak minus 2×ATR.
+ * Loses in choppy, range-bound markets where RSI oscillates without trend.
  */
 
 function onUpdate(ctx) {
-  // Trend filter: price must be above EMA-50 to consider longs
   const ema50 = ctx.ema(50);
   if (ema50 == null) return null;
 
-  // RSI momentum — lower threshold (40) catches deeper pullbacks safely
   const rsi = ctx.rsi(14);
   if (rsi == null) return null;
 
-  // ATR for stop-loss sizing
   const atr = ctx.atr(14);
   if (atr == null) return null;
 
   const price = ctx.price;
   const pos = ctx.position;
 
-  // === ENTRY: price in uptrend AND RSI deeply oversold ===
-  // RSI below 40 = oversold within trend; above EMA confirms the trend
-  if (pos <= 0 && price > ema50 && rsi < 40) {
-    // Risk 1.5% of cash per trade; stop = entry - 1.5 * ATR
+  // === ENTRY: deep pullback in uptrend ===
+  if (pos <= 0 && price > ema50 && rsi < 35) {
     const riskAmt = ctx.cash * 0.015;
     const stopDist = atr * 1.5;
     const qty = riskAmt / stopDist;
-    return {
-      side: 'buy',
-      qty: qty,
-      type: 'limit',
-      price: price,            // market buy at current price
-    };
+    return { side: 'buy', qty: qty };
   }
 
-  // === EXIT: RSI overbought OR trend reversal ===
+  // === TRAILING STOP: track peak price ===
   if (pos > 0) {
-    // Take profit: RSI above 65 (momentum exhausted)
-    if (rsi > 65) {
-      return { side: 'sell', qty: pos };
-    }
-    // Stop loss: price dropped below EMA-50 (trend broken)
-    if (price < ema50) {
-      return { side: 'sell', qty: pos };
-    }
-    // Trailing stop: price fell 2.5 * ATR from peak (hard stop)
+    // Initialize or update peak
+    const peak = ctx.state.peak || ctx.entryPx || price;
+    if (price > peak) ctx.state.peak = price;
+
     const entryPx = ctx.entryPx;
-    if (entryPx != null && price < entryPx - atr * 2.5) {
+    if (entryPx == null) return null;
+
+    const currPeak = ctx.state.peak || price;
+
+    // Stop-loss: price fell 2.5×ATR from peak
+    if (price < currPeak - atr * 2.5) {
+      return { side: 'sell', qty: pos };
+    }
+
+    // Profit target: price gained 3×ATR from entry
+    if (price >= entryPx + atr * 3) {
+      return { side: 'sell', qty: pos };
+    }
+
+    // RSI overbought exit
+    if (rsi > 70) {
       return { side: 'sell', qty: pos };
     }
   }
