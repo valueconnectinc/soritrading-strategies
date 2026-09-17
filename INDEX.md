@@ -4,13 +4,15 @@ Every strategy whose backtest **finished and actually traded** is published here
 Nothing is filtered out by return — the ones that lost money are part of the record.
 Entries stay after a strategy is removed from our own workspace — this is a log, and deleting the record would leave only the survivors.
 
-**★ marks a strategy that out-returned buy & hold over the same window** — 26 of 228 right now.
+**★ marks a strategy that out-returned buy & hold over the same window** — 26 of 230 right now.
 `—` means the comparison **could not be made**: the engine does not compute a benchmark for multi-symbol, futures, or multi-leg runs. That is *unknown*, not *lost*, and it is 117 of them right now.
 
 Every figure comes from the last verifying backtest at publish time. These are past results over historical data. Nothing here is promised or assured about the future, and none of it is investment advice.
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
+|  | [1075](strategies/1075/) | EMA-20 Trend No-Stop 1h | -19.15% | +28.23% | +23.88% | 121 | 2026-09-17 |
+|  | [1074](strategies/1074/) | BB Trend-Follow 1h BTC | +25.23% | +28.23% | +7.66% | 1 | 2026-09-17 |
 |  | [1073](strategies/1073/) | EMA-9/21 Crossover 1h BTC | -16.94% | +28.23% | +23.30% | 115 | 2026-09-17 |
 |  | [1072](strategies/1072/) | RSI-14 Simple Daily BTC | +5.63% | +18.84% | +3.59% | 32 | 2026-09-17 |
 | — | [1071](strategies/1071/) | SMA-20 Trend RSI Pullback Daily | -7.19% | — | +12.94% | 6 | 2026-09-17 |
