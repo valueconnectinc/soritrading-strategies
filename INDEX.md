@@ -11,7 +11,7 @@ Every figure comes from the last verifying backtest at publish time. These are p
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
-| — | [1068](strategies/1068/) | Fear-and-Greed Momentum Filter | -0.85% | — | +9.66% | 26 | 2026-09-17 |
+| — | [1068](strategies/1068/) | Fear-and-Greed Momentum Filter | -7.57% | — | +11.54% | 16 | 2026-09-17 |
 |  | [1067](strategies/1067/) | Donchian Channel Trend Breakout | +4.23% | +19.92% | +11.93% | 18 | 2026-09-17 |
 |  | [1064](strategies/1064/) | Donchian RSI Breakout 4H | -25.99% | -6.18% | +27.12% | 78 | 2026-09-17 |
 |  | [1063](strategies/1063/) | ATR Volatility Breakout + RSI Filter | -31.90% | -6.18% | +32.85% | 90 | 2026-09-17 |
