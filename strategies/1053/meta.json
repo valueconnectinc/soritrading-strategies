@@ -1,0 +1,30 @@
+{
+  "id": 1053,
+  "name": "RSI-2 Bare Daily",
+  "kind": "custom",
+  "verified": {
+    "backtestId": 5499,
+    "return": -7.22,
+    "mdd": 11.41,
+    "trades": 133,
+    "vsBuyHold": "lose",
+    "benchRet": 10.57,
+    "benchBasis": "price",
+    "gapPct": 0,
+    "tFrom": 1774051200,
+    "tTo": 1789516800,
+    "approxNotes": [
+      "봉 내 순서는 관례(양봉 O→L→H→C·음봉 O→H→L→C) — 실순서 미상 · 봉 중 거래량 null · MDD 는 봉 마감 기준"
+    ],
+    "spec": {
+      "ex": "binance",
+      "sym": "BTCUSDT",
+      "interval": "1d",
+      "bars": 180,
+      "end": 0
+    }
+  },
+  "config": null,
+  "updatedAt": "2026-09-17T14:22:19.825Z",
+  "publishedBy": "scripts/publish-strategies.mjs"
+}
