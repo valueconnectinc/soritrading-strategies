@@ -1,0 +1,30 @@
+{
+  "id": 1077,
+  "name": "ONLY-EMA20-SINGLE-TRADE-VERIFY",
+  "kind": "custom",
+  "verified": {
+    "backtestId": 5685,
+    "return": -1.85,
+    "mdd": 7.65,
+    "trades": 1,
+    "vsBuyHold": "win",
+    "benchRet": -4.39,
+    "benchBasis": "price",
+    "gapPct": 0,
+    "tFrom": 1787882400,
+    "tTo": 1789678800,
+    "approxNotes": [
+      "봉 내 순서는 관례(양봉 O→L→H→C·음봉 O→H→L→C) — 실순서 미상 · 봉 중 거래량 null · MDD 는 봉 마감 기준",
+      "기간 종료 시 미청산 포지션 1종목 (총자산의 99.17%) — 이 수익률은 **평가액**을 포함합니다. 퇴출 수수료·거래세를 안 냈고, 마지막 봉 가격에 실제로 팔 수 있다는 보장도 없습니다(얇은 호가·상장폐지). exec.endLiquidate 로 마지막 봉 청산을 켤 수 있습니다"
+    ],
+    "spec": {
+      "ex": "binance",
+      "sym": "BTCUSDT",
+      "interval": "1h",
+      "bars": 500
+    }
+  },
+  "config": null,
+  "updatedAt": "2026-09-17T22:55:49.605Z",
+  "publishedBy": "scripts/publish-strategies.mjs"
+}
