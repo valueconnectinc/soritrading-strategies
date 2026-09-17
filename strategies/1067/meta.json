@@ -3,13 +3,15 @@
   "name": "Donchian Channel Trend Breakout",
   "kind": "custom",
   "verified": {
-    "backtestId": 5596,
-    "return": 8.77,
-    "mdd": 12.41,
+    "backtestId": 5603,
+    "return": 4.23,
+    "mdd": 11.93,
     "trades": 18,
-    "vsBuyHold": "unmeasured",
+    "vsBuyHold": "lose",
+    "benchRet": 19.92,
+    "benchBasis": "price",
     "gapPct": 0,
-    "tFrom": 1775246400,
+    "tFrom": 1783886400,
     "tTo": 1789632000,
     "approxNotes": [
       "봉 내 순서는 관례(양봉 O→L→H→C·음봉 O→H→L→C) — 실순서 미상 · 봉 중 거래량 null · MDD 는 봉 마감 기준"
@@ -18,7 +20,7 @@
       "ex": "binanceusdm",
       "sym": "BTCUSDT",
       "interval": "4h",
-      "bars": 1000
+      "bars": 400
     }
   },
   "config": null,
