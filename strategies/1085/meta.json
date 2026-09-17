@@ -3,7 +3,7 @@
   "name": "EMA-9/21 Crossover Simple ETH 4h",
   "kind": "custom",
   "verified": {
-    "backtestId": 5730,
+    "backtestId": 5736,
     "return": -34.51,
     "mdd": 37.48,
     "trades": 47,
@@ -19,8 +19,8 @@
       "ex": "binance",
       "sym": "ETHUSDT",
       "interval": "4h",
-      "bars": 500,
-      "end": 175000
+      "bars": 300,
+      "end": 172000
     }
   },
   "config": null,
