@@ -3,15 +3,15 @@
   "name": "SMA-50 Buy-the-Dip 1h",
   "kind": "custom",
   "verified": {
-    "backtestId": 5676,
-    "return": -7.94,
-    "mdd": 9.02,
-    "trades": 17,
+    "backtestId": 5681,
+    "return": -6.57,
+    "mdd": 16.91,
+    "trades": 97,
     "vsBuyHold": "lose",
-    "benchRet": -4.02,
+    "benchRet": 28.23,
     "benchBasis": "price",
     "gapPct": 0,
-    "tFrom": 1788602400,
+    "tFrom": 1782482400,
     "tTo": 1789678800,
     "approxNotes": [
       "봉 내 순서는 관례(양봉 O→L→H→C·음봉 O→H→L→C) — 실순서 미상 · 봉 중 거래량 null · MDD 는 봉 마감 기준",
@@ -21,7 +21,7 @@
       "ex": "binance",
       "sym": "BTCUSDT",
       "interval": "1h",
-      "bars": 300
+      "bars": 2000
     }
   },
   "config": null,

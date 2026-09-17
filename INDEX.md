@@ -11,7 +11,7 @@ Every figure comes from the last verifying backtest at publish time. These are p
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
-|  | [1076](strategies/1076/) | SMA-50 Buy-the-Dip 1h | -7.94% | -4.02% | +9.02% | 17 | 2026-09-17 |
+|  | [1076](strategies/1076/) | SMA-50 Buy-the-Dip 1h | -6.57% | +28.23% | +16.91% | 97 | 2026-09-17 |
 |  | [1075](strategies/1075/) | EMA-20 Trend No-Stop 1h | -19.15% | +28.23% | +23.88% | 121 | 2026-09-17 |
 |  | [1074](strategies/1074/) | BB Trend-Follow 1h BTC | +25.23% | +28.23% | +7.66% | 1 | 2026-09-17 |
 |  | [1073](strategies/1073/) | EMA-9/21 Crossover 1h BTC | -16.94% | +28.23% | +23.30% | 115 | 2026-09-17 |
