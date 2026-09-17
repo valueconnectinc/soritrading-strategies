@@ -4,13 +4,14 @@ Every strategy whose backtest **finished and actually traded** is published here
 Nothing is filtered out by return — the ones that lost money are part of the record.
 Entries stay after a strategy is removed from our own workspace — this is a log, and deleting the record would leave only the survivors.
 
-**★ marks a strategy that out-returned buy & hold over the same window** — 26 of 218 right now.
+**★ marks a strategy that out-returned buy & hold over the same window** — 26 of 219 right now.
 `—` means the comparison **could not be made**: the engine does not compute a benchmark for multi-symbol, futures, or multi-leg runs. That is *unknown*, not *lost*, and it is 112 of them right now.
 
 Every figure comes from the last verifying backtest at publish time. These are past results over historical data. Nothing here is promised or assured about the future, and none of it is investment advice.
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
+|  | [1060](strategies/1060/) | Volatility Breakout 4H v2 | -0.25% | +25.11% | +5.95% | 23 | 2026-09-17 |
 | — | [1058](strategies/1058/) | EMA Crossover 1d | +75.08% | — | +52.97% | 1 | 2026-09-17 |
 |  | [1054](strategies/1054/) | MACD Trend Follower | -2.28% | +43.45% | +17.43% | 1 | 2026-09-17 |
 |  | [1053](strategies/1053/) | RSI-2 Bare Daily | -7.22% | +10.57% | +11.41% | 133 | 2026-09-17 |
