@@ -3,7 +3,7 @@
   "name": "EMA-9/21 Crossover + EMA-100 Trend Filter ETH 4h",
   "kind": "custom",
   "verified": {
-    "backtestId": 5744,
+    "backtestId": 5758,
     "return": -21.43,
     "mdd": 22.9,
     "trades": 21,
@@ -20,7 +20,7 @@
       "sym": "ETHUSDT",
       "interval": "4h",
       "bars": 300,
-      "end": 179000
+      "end": 173500
     }
   },
   "config": null,
