@@ -1,0 +1,29 @@
+{
+  "id": 1029,
+  "name": "Pure EMA Crossover Daily",
+  "kind": "custom",
+  "verified": {
+    "backtestId": 5392,
+    "return": -9.24,
+    "mdd": 23.87,
+    "trades": 14,
+    "vsBuyHold": "win",
+    "benchRet": -19.56,
+    "benchBasis": "price",
+    "gapPct": 0,
+    "tFrom": 1746403200,
+    "tTo": 1789516800,
+    "approxNotes": [
+      "봉 내 순서는 관례(양봉 O→L→H→C·음봉 O→H→L→C) — 실순서 미상 · 봉 중 거래량 null · MDD 는 봉 마감 기준"
+    ],
+    "spec": {
+      "ex": "binance",
+      "sym": "BTCUSDT",
+      "interval": "1d",
+      "bars": 500
+    }
+  },
+  "config": null,
+  "updatedAt": "2026-09-17T07:39:27.106Z",
+  "publishedBy": "scripts/publish-strategies.mjs"
+}
