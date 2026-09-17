@@ -1,78 +1,64 @@
 /*
  * @coinsori-strategy v1
- * name: ATR Volatility Breakout 4H
+ * name: EMA Crossover + ATR Stop 4H
  * ex: binanceusdm
  * syms: BTCUSDT
  * interval: 4h
  * cash: 10000
  *
- * Why this strategy: BTC's 4H chart often chops in tight ranges before explosive breakouts.
- * Price breaking above a 20-bar high captures momentum after consolidation.
- * When it buys and sells: Buy when price closes above 20-bar high (breakout confirmation).
- * Sell when price hits 2.5x ATR trailing stop below the high, or after 30 bars in position.
- * When it does NOT work: Fails in slow grinding trends where price slowly grinds up without
- * big candles — the breakout signal fires late and the move is already exhausted.
+ * Why this strategy: EMA crossovers catch medium-term trends on BTC's 4H chart.
+ * The fast EMA crossing above the slow EMA signals momentum shifting bullish.
+ * When it buys and sells: Buy when EMA(9) crosses above EMA(21). Sell when
+ * EMA(9) crosses back below EMA(21) OR price hits 2x ATR stop-loss.
+ * When it does NOT work: Choppy markets cause repeated EMA crosses with no
+ * sustained trend, burning through small losses — the strategy whipsaws.
  */
 function onUpdate(ctx) {
-    // Need enough bars for ATR(14) and 20-bar high
+    // Need at least 21 bars for EMA(21)
+    const emaFast = ctx.ema(9);
+    const emaSlow = ctx.ema(21);
+    if (emaFast == null || emaSlow == null) return null;
+
     const atr = ctx.atr(14);
     if (atr == null) return null;
 
-    const hi20 = ctx.high(20);
-    if (hi20 == null) return null;
-
-    // --- ENTRY: price breaks above 20-bar high ---
+    // ── ENTRY: EMA(9) crosses above EMA(21) ──
     if (ctx.position <= 0) {
-        if (ctx.price > hi20) {
-            // Stop-loss: 2x ATR below entry
-            const stopPx = ctx.price - 2 * atr;
+        const emaFastPrev = ctx.ema(9, 1);
+        const emaSlowPrev = ctx.ema(21, 1);
+        if (emaFastPrev == null || emaSlowPrev == null) return null;
+
+        // Bullish crossover: fast was below/equal slow, now above
+        if (emaFastPrev <= emaSlowPrev && emaFast > emaSlow) {
             return {
                 side: 'buy',
-                qty: ctx.cash / ctx.price * 0.99,
-                trigger: {
-                    side: 'sell',
-                    type: 'stop',
-                    price: stopPx,
-                    qty: 0  // close full position
-                }
+                qty: ctx.cash / ctx.price * 0.99
             };
         }
         return null;
     }
 
-    // --- EXIT: trailing stop 2.5x ATR below high since entry ---
-    // Track the highest price seen since entry
-    const trailStop = ctx.price - 2.5 * atr;
+    // ── IN POSITION: exit on bearish crossover OR ATR stop ──
+    const emaFastPrev = ctx.ema(9, 1);
+    const emaSlowPrev = ctx.ema(21, 1);
+    if (emaFastPrev == null || emaSlowPrev == null) return null;
 
-    // Time-based exit: close after 30 bars (5 days on 4H)
-    // ctx.i is current bar index; we need to track entry bar
-    // We store it in a closure-like approach using a static-like trick
-    // Actually, we can use ctx.entryPx to infer rough time in market
-    // For a clean exit: use a simple time counter via a persistent trick
-    // Since we can't use global vars reliably, we approximate with price-based exit
-    // If in profit > 3x ATR, tighten stop to lock in gains
-
-    const entryDist = ctx.price - ctx.entryPx;
-    const riskAmount = 2 * atr;
-
-    // If profit exceeds 3x risk, move stop to breakeven + half ATR
-    if (entryDist > 3 * riskAmount) {
-        const newStop = ctx.entryPx + 0.5 * atr;
+    // Bearish crossover: fast was above/equal slow, now below
+    if (emaFastPrev >= emaSlowPrev && emaFast < emaSlow) {
         return {
             side: 'sell',
-            qty: ctx.position,
-            type: 'stop',
-            price: newStop,
-            trigger: null
+            qty: ctx.position
         };
     }
 
-    // Normal trailing stop: 2.5x ATR below high
-    return {
-        side: 'sell',
-        qty: ctx.position,
-        type: 'stop',
-        price: trailStop,
-        trigger: null
-    };
+    // ATR stop-loss: 2x ATR below entry price
+    const stopPx = ctx.entryPx - 2 * atr;
+    if (ctx.price <= stopPx) {
+        return {
+            side: 'sell',
+            qty: ctx.position
+        };
+    }
+
+    return null;
 }
