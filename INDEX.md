@@ -5,13 +5,13 @@ Nothing is filtered out by return — the ones that lost money are part of the r
 Entries stay after a strategy is removed from our own workspace — this is a log, and deleting the record would leave only the survivors.
 
 **★ marks a strategy that out-returned buy & hold over the same window** — 26 of 227 right now.
-`—` means the comparison **could not be made**: the engine does not compute a benchmark for multi-symbol, futures, or multi-leg runs. That is *unknown*, not *lost*, and it is 118 of them right now.
+`—` means the comparison **could not be made**: the engine does not compute a benchmark for multi-symbol, futures, or multi-leg runs. That is *unknown*, not *lost*, and it is 117 of them right now.
 
 Every figure comes from the last verifying backtest at publish time. These are past results over historical data. Nothing here is promised or assured about the future, and none of it is investment advice.
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
-| — | [1072](strategies/1072/) | RSI-14 Simple Daily BTC | +12.89% | — | +11.67% | 7 | 2026-09-17 |
+|  | [1072](strategies/1072/) | RSI-14 Simple Daily BTC | +5.63% | +18.84% | +3.59% | 32 | 2026-09-17 |
 | — | [1071](strategies/1071/) | SMA-20 Trend RSI Pullback Daily | -7.19% | — | +12.94% | 6 | 2026-09-17 |
 | — | [1069](strategies/1069/) | ATR Trailing Stop Momentum | -65.19% | — | +66.98% | 89 | 2026-09-17 |
 | — | [1068](strategies/1068/) | Fear-and-Greed Momentum Filter | -7.57% | — | +11.54% | 16 | 2026-09-17 |

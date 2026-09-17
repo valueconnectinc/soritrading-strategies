@@ -3,24 +3,24 @@
   "name": "RSI-14 Simple Daily BTC",
   "kind": "custom",
   "verified": {
-    "backtestId": 5653,
-    "return": 12.89,
-    "mdd": 11.67,
-    "trades": 7,
-    "vsBuyHold": "unmeasured",
+    "backtestId": 5659,
+    "return": 5.63,
+    "mdd": 3.59,
+    "trades": 32,
+    "vsBuyHold": "lose",
+    "benchRet": 18.84,
+    "benchBasis": "price",
     "gapPct": 0,
-    "tFrom": 0,
-    "tTo": 0,
+    "tFrom": 1786082400,
+    "tTo": 1789678800,
     "approxNotes": [
-      "봉 내 순서는 관례(양봉 O→L→H→C·음봉 O→H→L→C) — 실순서 미상 · 봉 중 거래량 null · MDD 는 봉 마감 기준",
-      "기간 종료 시 미청산 포지션 1종목 (총자산의 100%) — 이 수익률은 **평가액**을 포함합니다. 퇴출 수수료·거래세를 안 냈고, 마지막 봉 가격에 실제로 팔 수 있다는 보장도 없습니다(얇은 호가·상장폐지). exec.endLiquidate 로 마지막 봉 청산을 켤 수 있습니다"
+      "봉 내 순서는 관례(양봉 O→L→H→C·음봉 O→H→L→C) — 실순서 미상 · 봉 중 거래량 null · MDD 는 봉 마감 기준"
     ],
     "spec": {
       "ex": "binance",
       "sym": "BTCUSDT",
       "interval": "1h",
-      "bars": 500,
-      "end": 20250601
+      "bars": 1000
     }
   },
   "config": null,
