@@ -4,13 +4,14 @@ Every strategy whose backtest **finished and actually traded** is published here
 Nothing is filtered out by return — the ones that lost money are part of the record.
 Entries stay after a strategy is removed from our own workspace — this is a log, and deleting the record would leave only the survivors.
 
-**★ marks a strategy that out-returned buy & hold over the same window** — 28 of 234 right now.
+**★ marks a strategy that out-returned buy & hold over the same window** — 29 of 235 right now.
 `—` means the comparison **could not be made**: the engine does not compute a benchmark for multi-symbol, futures, or multi-leg runs. That is *unknown*, not *lost*, and it is 117 of them right now.
 
 Every figure comes from the last verifying backtest at publish time. These are past results over historical data. Nothing here is promised or assured about the future, and none of it is investment advice.
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
+| ★ | [1081](strategies/1081/) | ETH-4h EMA Death Cross Trailing Stop | +12.08% | -20.66% | +18.89% | 62 | 2026-09-17 |
 |  | [1079](strategies/1079/) | EMA-9/21 Crossover with ATR Stop | +0.29% | +28.57% | +1.44% | 2 | 2026-09-17 |
 | ★ | [1078](strategies/1078/) | EMA Death Cross Enhanced | +1.17% | -1.77% | +0.89% | 4 | 2026-09-17 |
 | ★ | [1077](strategies/1077/) | ONLY-EMA20-SINGLE-TRADE-VERIFY | -1.85% | -4.39% | +7.65% | 1 | 2026-09-17 |
