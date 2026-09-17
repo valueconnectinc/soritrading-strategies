@@ -1,0 +1,30 @@
+{
+  "id": 1033,
+  "name": "BB Mean Reversion Daily",
+  "kind": "custom",
+  "verified": {
+    "backtestId": 5411,
+    "return": -11.94,
+    "mdd": 21.6,
+    "trades": 6,
+    "vsBuyHold": "lose",
+    "benchRet": 10.57,
+    "benchBasis": "price",
+    "gapPct": 0,
+    "tFrom": 1774051200,
+    "tTo": 1789516800,
+    "approxNotes": [
+      "봉 내 순서는 관례(양봉 O→L→H→C·음봉 O→H→L→C) — 실순서 미상 · 봉 중 거래량 null · MDD 는 봉 마감 기준",
+      "거래량은 봉 마감에만 확정 — 봉 중 평가에서 ctx.vol/volumes 가 null 이라 거래량 조건이 걸러졌을 수 있음(봉 중에도 쓰려면 ctx.volPrev·ctx.avgVol)"
+    ],
+    "spec": {
+      "ex": "binance",
+      "sym": "BTCUSDT",
+      "interval": "1d",
+      "bars": 180
+    }
+  },
+  "config": null,
+  "updatedAt": "2026-09-17T07:53:47.162Z",
+  "publishedBy": "scripts/publish-strategies.mjs"
+}
