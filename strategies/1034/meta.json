@@ -3,15 +3,15 @@
   "name": "EMA Trend-Following Daily",
   "kind": "custom",
   "verified": {
-    "backtestId": 5415,
-    "return": -7.26,
-    "mdd": 22.1,
-    "trades": 13,
-    "vsBuyHold": "win",
-    "benchRet": -19.56,
+    "backtestId": 5419,
+    "return": -2.52,
+    "mdd": 3.22,
+    "trades": 3,
+    "vsBuyHold": "lose",
+    "benchRet": 10.57,
     "benchBasis": "price",
     "gapPct": 0,
-    "tFrom": 1746403200,
+    "tFrom": 1774051200,
     "tTo": 1789516800,
     "approxNotes": [
       "봉 내 순서는 관례(양봉 O→L→H→C·음봉 O→H→L→C) — 실순서 미상 · 봉 중 거래량 null · MDD 는 봉 마감 기준",
@@ -22,10 +22,11 @@
       "ex": "binance",
       "sym": "BTCUSDT",
       "interval": "1d",
-      "bars": 500
+      "bars": 180,
+      "end": 0
     }
   },
   "config": null,
-  "updatedAt": "2026-09-17T07:55:47.367Z",
+  "updatedAt": "2026-09-17T07:58:28.972Z",
   "publishedBy": "scripts/publish-strategies.mjs"
 }
