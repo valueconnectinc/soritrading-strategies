@@ -1,0 +1,28 @@
+{
+  "id": 1024,
+  "name": "FearGreed-Regime Momentum",
+  "kind": "custom",
+  "verified": {
+    "backtestId": 5360,
+    "return": 26.68,
+    "mdd": 34.5,
+    "trades": 44,
+    "vsBuyHold": "unmeasured",
+    "gapPct": 0.3,
+    "tFrom": 1514548800,
+    "tTo": 1577822400,
+    "approxNotes": [
+      "봉 내 순서는 관례(양봉 O→L→H→C·음봉 O→H→L→C) — 실순서 미상 · 봉 중 거래량 null · MDD 는 봉 마감 기준"
+    ],
+    "spec": {
+      "ex": "binance",
+      "sym": "BTCUSDT",
+      "interval": "4h",
+      "bars": 4380,
+      "end": 1577836800
+    }
+  },
+  "config": null,
+  "updatedAt": "2026-09-17T07:27:35.125Z",
+  "publishedBy": "scripts/publish-strategies.mjs"
+}
