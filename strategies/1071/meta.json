@@ -1,0 +1,28 @@
+{
+  "id": 1071,
+  "name": "SMA-20 Trend RSI Pullback Daily",
+  "kind": "custom",
+  "verified": {
+    "backtestId": 5634,
+    "return": -7.19,
+    "mdd": 12.94,
+    "trades": 6,
+    "vsBuyHold": "unmeasured",
+    "gapPct": 0,
+    "tFrom": 0,
+    "tTo": 0,
+    "approxNotes": [
+      "봉 내 순서는 관례(양봉 O→L→H→C·음봉 O→H→L→C) — 실순서 미상 · 봉 중 거래량 null · MDD 는 봉 마감 기준"
+    ],
+    "spec": {
+      "ex": "binance",
+      "sym": "ETHUSDT",
+      "interval": "1d",
+      "bars": 500,
+      "end": 20250401
+    }
+  },
+  "config": null,
+  "updatedAt": "2026-09-17T22:29:00.258Z",
+  "publishedBy": "scripts/publish-strategies.mjs"
+}
