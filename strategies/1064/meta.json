@@ -1,0 +1,29 @@
+{
+  "id": 1064,
+  "name": "Donchian RSI Breakout 4H",
+  "kind": "custom",
+  "verified": {
+    "backtestId": 5584,
+    "return": -25.99,
+    "mdd": 27.12,
+    "trades": 78,
+    "vsBuyHold": "lose",
+    "benchRet": -6.18,
+    "benchBasis": "price",
+    "gapPct": 0,
+    "tFrom": 1778126400,
+    "tTo": 1789632000,
+    "approxNotes": [
+      "봉 내 순서는 관례(양봉 O→L→H→C·음봉 O→H→L→C) — 실순서 미상 · 봉 중 거래량 null · MDD 는 봉 마감 기준"
+    ],
+    "spec": {
+      "ex": "binance",
+      "sym": "BTCUSDT",
+      "interval": "4h",
+      "bars": 800
+    }
+  },
+  "config": null,
+  "updatedAt": "2026-09-17T14:55:51.375Z",
+  "publishedBy": "scripts/publish-strategies.mjs"
+}
