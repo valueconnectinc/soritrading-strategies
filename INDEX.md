@@ -4,13 +4,14 @@ Every strategy whose backtest **finished and actually traded** is published here
 Nothing is filtered out by return — the ones that lost money are part of the record.
 Entries stay after a strategy is removed from our own workspace — this is a log, and deleting the record would leave only the survivors.
 
-**★ marks a strategy that out-returned buy & hold over the same window** — 29 of 236 right now.
+**★ marks a strategy that out-returned buy & hold over the same window** — 29 of 237 right now.
 `—` means the comparison **could not be made**: the engine does not compute a benchmark for multi-symbol, futures, or multi-leg runs. That is *unknown*, not *lost*, and it is 117 of them right now.
 
 Every figure comes from the last verifying backtest at publish time. These are past results over historical data. Nothing here is promised or assured about the future, and none of it is investment advice.
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
+|  | [1083](strategies/1083/) | ATR Volatility Breakout + RSI Momentum ETH 4h | -17.23% | +6.72% | +17.29% | 12 | 2026-09-17 |
 |  | [1082](strategies/1082/) | BB Mean Reversion + RSI Filter ETH 4h | -8.30% | +19.24% | +26.16% | 33 | 2026-09-17 |
 | ★ | [1081](strategies/1081/) | ETH-4h EMA Death Cross Trailing Stop | +12.08% | -20.66% | +18.89% | 62 | 2026-09-17 |
 |  | [1079](strategies/1079/) | EMA-9/21 Crossover with ATR Stop | +0.29% | +28.57% | +1.44% | 2 | 2026-09-17 |
