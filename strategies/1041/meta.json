@@ -1,0 +1,30 @@
+{
+  "id": 1041,
+  "name": "EMA-21 Trend ATR Stop 4H",
+  "kind": "custom",
+  "verified": {
+    "backtestId": 5451,
+    "return": -55.95,
+    "mdd": 58.39,
+    "trades": 108,
+    "vsBuyHold": "lose",
+    "benchRet": 59.79,
+    "benchBasis": "price",
+    "gapPct": 0,
+    "tFrom": 1609444800,
+    "tTo": 1640980800,
+    "approxNotes": [
+      "봉 내 순서는 관례(양봉 O→L→H→C·음봉 O→H→L→C) — 실순서 미상 · 봉 중 거래량 null · MDD 는 봉 마감 기준"
+    ],
+    "spec": {
+      "ex": "binance",
+      "sym": "BTCUSDT",
+      "interval": "4h",
+      "bars": 2191,
+      "end": 1640995200
+    }
+  },
+  "config": null,
+  "updatedAt": "2026-09-17T13:47:49.587Z",
+  "publishedBy": "scripts/publish-strategies.mjs"
+}
