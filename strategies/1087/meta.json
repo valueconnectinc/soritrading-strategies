@@ -3,15 +3,15 @@
   "name": "Supertrend Volatility Adaptive ETH 4h",
   "kind": "custom",
   "verified": {
-    "backtestId": 5779,
-    "return": 30.61,
-    "mdd": 13.97,
-    "trades": 50,
+    "backtestId": 5783,
+    "return": -30.79,
+    "mdd": 46.6,
+    "trades": 94,
     "vsBuyHold": "win",
-    "benchRet": 26.25,
+    "benchRet": -38.45,
     "benchBasis": "price",
     "gapPct": 0,
-    "tFrom": 1772395200,
+    "tFrom": 1760875200,
     "tTo": 1789660800,
     "approxNotes": [
       "봉 내 순서는 관례(양봉 O→L→H→C·음봉 O→H→L→C) — 실순서 미상 · 봉 중 거래량 null · MDD 는 봉 마감 기준",
@@ -21,11 +21,11 @@
       "ex": "binance",
       "sym": "ETHUSDT",
       "interval": "4h",
-      "bars": 1200,
+      "bars": 2000,
       "end": 0
     }
   },
   "config": null,
-  "updatedAt": "2026-09-17T23:48:57.951Z",
+  "updatedAt": "2026-09-17T23:51:27.526Z",
   "publishedBy": "scripts/publish-strategies.mjs"
 }

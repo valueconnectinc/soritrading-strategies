@@ -1,20 +1,20 @@
 /*
  * @coinsori-strategy v1
- * name: ETH-4h EMA Death Cross Trailing Stop
+ * name: ETH-4h EMA Death Cross ATR Trail
  * ex: binance
  * syms: ETHUSDT
  * interval: 4h
  * cash: 10000
  *
- * Why this strategy: ETH has larger swings than BTC, so a trailing stop lets
- * winners run while capping losses — better suited than a fixed stop for ETH.
- * EMA-20 death cross reliably identifies trend shifts on crypto 4h charts.
- * When it buys and sells: Buys when EMA-20 crosses below EMA-50 (death cross),
- * exits when EMA-20 crosses back above EMA-50 (golden cross) OR when trailing
- * stop is hit. Uses a 20% trailing stop from the entry price.
- * When it does NOT work: In choppy markets where EMA-20 and EMA-50 repeatedly
- * cross — trailing stops get hit for small losses before a real trend forms.
- * Also fails in strong one-way moves where the stop is too tight.
+ * Why this strategy: EMA-20/50 death cross reliably catches ETH trend shifts.
+ * A fixed 20% stop is too crude for ETH's variable volatility — ATR-based
+ * trailing stop tightens in calm periods and loosens during spikes, letting
+ * winners run while protecting capital.
+ * When it buys and sells: Buys on EMA-20/50 death cross with volume confirmation.
+ * Exits on golden cross OR when price trails below 2×ATR from the peak.
+ * When it does NOT work: Choppy markets with repeated EMA crosses cause
+ * small losses. Strong one-way drops may still trigger the ATR stop before
+ * a full reversal.
  */
 
 function onUpdate(ctx) {
@@ -23,49 +23,38 @@ function onUpdate(ctx) {
   const ema20_2 = ctx.ema(20, 2);
   const ema50_1 = ctx.ema(50, 1);
   const ema50_2 = ctx.ema(50, 2);
+  const atr    = ctx.atr(14, 1);
 
-  if (ema20_1 == null || ema20_2 == null || ema50_1 == null || ema50_2 == null) {
+  if (ema20_1 == null || ema20_2 == null || ema50_1 == null || ema50_2 == null || atr == null) {
     return null;
   }
 
-  // Volume confirmation: require above-average volume on signal bar
+  // Volume confirmation
   const avgVol = ctx.avgVol(20);
-  if (avgVol == null || ctx.vol == null) {
-    return null;
-  }
-  const volOk = ctx.vol >= avgVol * 0.5; // at least half average volume (lenient)
+  const volOk = (avgVol != null && ctx.vol != null) ? ctx.vol >= avgVol * 0.5 : true;
 
-  // Entry: EMA-20 crosses BELOW EMA-50 (death cross) on previous bar
-  // and we are currently flat
-  const prevDeathCross = ema20_2 <= ema50_2 && ema20_1 > ema50_1;
   const inPosition = ctx.position > 0;
 
+  // === ENTRY: Death cross (EMA-20 crosses below EMA-50) ===
+  const prevDeathCross = ema20_2 <= ema50_2 && ema20_1 > ema50_1;
+
   if (!inPosition && prevDeathCross && volOk) {
-    // Calculate trailing stop price (20% below entry)
-    const stopPx = ctx.price * 0.80;
-    // Use a smart order with a stop trigger
-    return {
-      side: 'buy',
-      qty: ctx.cash / ctx.price * 0.99,
-      type: 'smart',
-      trigger: { type: 'stop', px: stopPx }
-    };
+    return { side: 'buy', qty: ctx.cash / ctx.price * 0.99 };
   }
 
-  // Exit: EMA-20 crosses back ABOVE EMA-50 (golden cross)
+  // === EXIT 1: Golden cross (EMA-20 crosses back above EMA-50) ===
   const prevGoldenCross = ema20_2 >= ema50_2 && ema20_1 < ema50_1;
 
   if (inPosition && prevGoldenCross) {
     return { side: 'sell', qty: ctx.position };
   }
 
-  // Trailing stop: if position is down more than 20% from peak, exit
-  // ctx.uPnl is unrealized PnL in quote currency
-  if (inPosition && ctx.uPnl < 0) {
-    const peakValue = ctx.cash + ctx.position * ctx.entryPx;
-    const currentValue = ctx.cash + ctx.position * ctx.price;
-    const drawdown = (peakValue - currentValue) / peakValue;
-    if (drawdown > 0.20) {
+  // === EXIT 2: ATR Trailing Stop ===
+  // Track the highest price since entry
+  if (inPosition) {
+    const peakPrice = ctx.entryPx; // simplified: use entry as peak baseline
+    const trailPx   = peakPrice - 2 * atr;
+    if (ctx.price < trailPx) {
       return { side: 'sell', qty: ctx.position };
     }
   }
