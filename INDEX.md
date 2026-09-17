@@ -4,13 +4,14 @@ Every strategy whose backtest **finished and actually traded** is published here
 Nothing is filtered out by return — the ones that lost money are part of the record.
 Entries stay after a strategy is removed from our own workspace — this is a log, and deleting the record would leave only the survivors.
 
-**★ marks a strategy that out-returned buy & hold over the same window** — 18 of 198 right now.
-`—` means the comparison **could not be made**: the engine does not compute a benchmark for multi-symbol, futures, or multi-leg runs. That is *unknown*, not *lost*, and it is 109 of them right now.
+**★ marks a strategy that out-returned buy & hold over the same window** — 18 of 199 right now.
+`—` means the comparison **could not be made**: the engine does not compute a benchmark for multi-symbol, futures, or multi-leg runs. That is *unknown*, not *lost*, and it is 110 of them right now.
 
 Every figure comes from the last verifying backtest at publish time. These are past results over historical data. Nothing here is promised or assured about the future, and none of it is investment advice.
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
+| — | [1022](strategies/1022/) | BTC FearGreed Momentum | -4.72% | — | +4.72% | 2 | 2026-09-17 |
 | ★ | [1000](strategies/1000/) | MACD RSI Mean Reversion Strategy | -9.19% | -16.11% | +14.08% | 21 | 2026-09-16 |
 | — | [972](strategies/972/) | Momentum Filter with ATR | +128.43% | — | +77.15% | 1 | 2026-09-16 |
 | — | [999](strategies/999/) | MACD + BB Reversal Strategy | +14.35% | — | +15.07% | 206 | 2026-09-16 |
