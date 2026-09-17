@@ -4,13 +4,14 @@ Every strategy whose backtest **finished and actually traded** is published here
 Nothing is filtered out by return — the ones that lost money are part of the record.
 Entries stay after a strategy is removed from our own workspace — this is a log, and deleting the record would leave only the survivors.
 
-**★ marks a strategy that out-returned buy & hold over the same window** — 24 of 213 right now.
+**★ marks a strategy that out-returned buy & hold over the same window** — 25 of 214 right now.
 `—` means the comparison **could not be made**: the engine does not compute a benchmark for multi-symbol, futures, or multi-leg runs. That is *unknown*, not *lost*, and it is 111 of them right now.
 
 Every figure comes from the last verifying backtest at publish time. These are past results over historical data. Nothing here is promised or assured about the future, and none of it is investment advice.
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
+| ★ | [1050](strategies/1050/) | RSI-2 Tight Thresholds Daily | +11.82% | -14.05% | +3.53% | 18 | 2026-09-17 |
 |  | [1049](strategies/1049/) | SMA-20 Trend Follow Daily | +10.46% | +10.57% | +15.02% | 3 | 2026-09-17 |
 | ★ | [1044](strategies/1044/) | Wide ATR EMA Trend Daily v2 | +8.27% | -34.56% | +11.22% | 8 | 2026-09-17 |
 | ★ | [1043](strategies/1043/) | Tight ATR EMA Trend Daily | +8.33% | -34.56% | +3.81% | 2 | 2026-09-17 |
