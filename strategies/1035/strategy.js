@@ -1,23 +1,22 @@
 /*
  * @coinsori-strategy v1
- * name: DXY-Regime EMA Fast
+ * name: DXY-Regime EMA TP
  * ex: binance
  * syms: BTCUSDT
  * interval: 1d
  * cash: 10000
  *
  * Trend-following on daily BTC filtered by US Dollar Index (DXY) regime.
- * Uses faster EMA(5,13) instead of (9,21) — the previous window showed zero
- * crosses in 200-bar windows, so this catches signals more frequently.
- * DXY 5-day decline confirms capital rotation into risk assets.
- * Exits on death cross, ATR trail stop, or trend break.
- * Fails when BTC decouples from the dollar (e.g. ETF inflows, macro shocks).
+ * EMA(5,13) golden cross + DXY 5-day weakening filter + ATR-based take-profit.
+ * The previous version (EMA5,13 + DXY) underperformed benchmarks in bull runs
+ * because death-cross exits are too slow. Adding a 4×ATR take-profit target
+ * locks in gains during strong trends before the lagging cross fires.
+ * Fails when BTC makes parabolic moves that reverse before the TP is hit.
  */
 
 function onUpdate(ctx) {
     const s = ctx.state;
 
-    // ── Indicators ──────────────────────────────────────────────
     const ema5  = ctx.ema(5);
     const ema13 = ctx.ema(13);
     const ema50 = ctx.ema(50);
@@ -40,13 +39,12 @@ function onUpdate(ctx) {
         s.dxyWarm    = false;
     }
 
-    // ── Bar-change guard (prev values only update once per bar) ──
+    // ── Bar-change guard ───────────────────────────────────────
     if (s.lastBarI !== ctx.i) {
         s.prevEma5  = s.ema5;
         s.prevEma13 = s.ema13;
         s.lastBarI  = ctx.i;
 
-        // DXY: rolling 5-bar window for 5-day change
         if (dxy != null && typeof dxy === 'number') {
             s.dxyHist.push(dxy);
             if (s.dxyHist.length > 5) s.dxyHist.shift();
@@ -56,8 +54,7 @@ function onUpdate(ctx) {
     s.ema5  = ema5;
     s.ema13 = ema13;
 
-    // ── DXY regime: dollar must be declining over past 5 days ──
-    // Fallback to true if DXY unavailable (do not block on missing macro data)
+    // ── DXY regime ─────────────────────────────────────────────
     let dxyOk = true;
     if (s.dxyWarm && s.dxyHist.length >= 5) {
         const dxyNow  = s.dxyHist[s.dxyHist.length - 1];
@@ -67,7 +64,7 @@ function onUpdate(ctx) {
             : true;
     }
 
-    // ── Entry: EMA(5,13) golden cross above EMA50 + DXY confirm ──
+    // ── Entry ──────────────────────────────────────────────────
     if (!ctx.position) {
         const crossUp = (s.prevEma5 != null && s.prevEma13 != null)
             && (s.prevEma5 <= s.prevEma13)
@@ -83,15 +80,29 @@ function onUpdate(ctx) {
             return { side: 'buy', qty: (ctx.cash / ctx.price) * 0.98 };
         }
     }
-    // ── Exit: death cross, trend break, or ATR stop ─────────────
+    // ── Exit ───────────────────────────────────────────────────
     else {
         const crossDown = (s.prevEma5 != null && s.prevEma13 != null)
             && (s.prevEma5 >= s.prevEma13)
             && (s.ema5 < s.ema13);
-        const stopPx      = (s.entryPx || ctx.price) - 2.5 * atr;
         const trendBroken = ctx.price < ema50;
         const holdMin     = (ctx.i - s.entryBar) >= 2;
 
+        // ATR-based stop and take-profit
+        const stopPx = (s.entryPx || ctx.price) - 2.5 * atr;
+        // Take-profit: lock in when profit exceeds 4× ATR
+        const tpPx   = (s.entryPx || ctx.price) + 4.0 * atr;
+
+        if (ctx.price <= stopPx) {
+            ctx.log('STOP pnl='
+                + (((ctx.price - s.entryPx) / s.entryPx) * 100).toFixed(1) + '%');
+            s.entryPx = null; return { side: 'sell', qty: ctx.position };
+        }
+        if (ctx.price >= tpPx) {
+            ctx.log('TAKEPROFIT pnl='
+                + (((ctx.price - s.entryPx) / s.entryPx) * 100).toFixed(1) + '%');
+            s.entryPx = null; return { side: 'sell', qty: ctx.position };
+        }
         if (crossDown && holdMin) {
             ctx.log('SELL crossDown pnl='
                 + (((ctx.price - s.entryPx) / s.entryPx) * 100).toFixed(1) + '%');
@@ -99,11 +110,6 @@ function onUpdate(ctx) {
         }
         if (trendBroken && holdMin) {
             ctx.log('SELL trendBroken pnl='
-                + (((ctx.price - s.entryPx) / s.entryPx) * 100).toFixed(1) + '%');
-            s.entryPx = null; return { side: 'sell', qty: ctx.position };
-        }
-        if (ctx.price <= stopPx) {
-            ctx.log('STOP pnl='
                 + (((ctx.price - s.entryPx) / s.entryPx) * 100).toFixed(1) + '%');
             s.entryPx = null; return { side: 'sell', qty: ctx.position };
         }
