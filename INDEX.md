@@ -11,7 +11,7 @@ Every figure comes from the last verifying backtest at publish time. These are p
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
-| — | [1042](strategies/1042/) | BB RSI Mean Reversion Daily | +117.19% | — | +13.57% | 25 | 2026-09-17 |
+| — | [1042](strategies/1042/) | BB RSI Mean Reversion Daily | +17.68% | — | +48.47% | 11 | 2026-09-17 |
 |  | [1041](strategies/1041/) | EMA-21 Trend ATR Stop 4H | -55.95% | +59.79% | +58.39% | 108 | 2026-09-17 |
 | ★ | [1036](strategies/1036/) | EMA Fast No-DXY | -14.46% | -18.55% | +15.18% | 10 | 2026-09-17 |
 |  | [1035](strategies/1035/) | DXY-Regime EMA Daily | +16.17% | +67.50% | +15.75% | 17 | 2026-09-17 |
