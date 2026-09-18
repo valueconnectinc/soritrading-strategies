@@ -1,0 +1,28 @@
+{
+  "id": 1219,
+  "name": "BB RSI Mean Reversion v5 — ETHUSDT 4H",
+  "kind": "custom",
+  "verified": {
+    "backtestId": 6484,
+    "return": 1.13,
+    "mdd": 5.37,
+    "trades": 8,
+    "vsBuyHold": "unmeasured",
+    "gapPct": 0,
+    "tFrom": 0,
+    "tTo": 0,
+    "approxNotes": [
+      "봉 내 순서는 관례(양봉 O→L→H→C·음봉 O→H→L→C) — 실순서 미상 · 봉 중 거래량 null · MDD 는 봉 마감 기준"
+    ],
+    "spec": {
+      "ex": "binance",
+      "sym": "BTCUSDT",
+      "interval": "4h",
+      "bars": 1000,
+      "end": 1000
+    }
+  },
+  "config": null,
+  "updatedAt": "2026-09-18T12:25:03.817Z",
+  "publishedBy": "scripts/publish-strategies.mjs"
+}
