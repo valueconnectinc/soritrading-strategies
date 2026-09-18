@@ -1,0 +1,29 @@
+{
+  "id": 1110,
+  "name": "EMA Cross 20/60 Plain",
+  "kind": "custom",
+  "verified": {
+    "backtestId": 5926,
+    "return": -21.68,
+    "mdd": 27.98,
+    "trades": 16,
+    "vsBuyHold": "lose",
+    "benchRet": -21.08,
+    "benchBasis": "price",
+    "gapPct": 0,
+    "tFrom": 1746489600,
+    "tTo": 1789603200,
+    "approxNotes": [
+      "봉 내 순서는 관례(양봉 O→L→H→C·음봉 O→H→L→C) — 실순서 미상 · 봉 중 거래량 null · MDD 는 봉 마감 기준"
+    ],
+    "spec": {
+      "ex": "binance",
+      "sym": "BTCUSDT",
+      "interval": "1d",
+      "bars": 500
+    }
+  },
+  "config": null,
+  "updatedAt": "2026-09-18T05:20:17.307Z",
+  "publishedBy": "scripts/publish-strategies.mjs"
+}
