@@ -1,67 +1,65 @@
 /*
  * @coinsori-strategy v1
- * name: RSI Bollinger Mean Reversion
+ * name: EMA9/21 Trend Following
  * ex: binance
  * syms: BTCUSDT
  * interval: 4h
  * cash: 10000
  *
- * Buys when RSI drops below 35 and price touches the lower Bollinger Band (oversold
- * mean-reversion setup). Sells when RSI rises above 60 or price reaches the middle
- * band (classic mean-reversion take-profit). Uses ATR-based stop loss.
- * When it does NOT work: choppy, range-bound markets where RSI oscillates without
- * a clean oversold bounce — the strategy whipsaws and fees erode the position.
+ * Buys when EMA9 crosses above EMA21 (uptrend confirmed) and holds until EMA9
+ * crosses back below EMA21 (trend reversal). RSI filter avoids false crossovers
+ * in choppy markets.
+ * When it does NOT work: choppy, directionless markets where EMAs criss-cross
+ * repeatedly — generates whipsaws and small losses that compound via fees.
  */
 function onUpdate(ctx) {
-    // Warm-up guards: need at least 50 bars for BB and RSI to be valid
+    // Warm-up: need at least 50 bars for EMAs and RSI
     if (ctx.i < 50) return null;
 
-    const rsi = ctx.rsi(14);
-    const bb = ctx.bb(20, 2);
-    const atr = ctx.atr(14);
+    const ema9  = ctx.ema(9);
+    const ema21 = ctx.ema(21);
+    const rsi   = ctx.rsi(14);
+    const atr   = ctx.atr(14);
 
-    // All indicators must exist (warm-up guard)
-    if (rsi == null || bb == null || atr == null) return null;
-    if (bb.lower == null || bb.mid == null || bb.upper == null) return null;
+    if (ema9 == null || ema21 == null || rsi == null || atr == null) return null;
+
+    // Previous bar values for crossover detection
+    const ema9_1  = ctx.ema(9,  1);
+    const ema21_1 = ctx.ema(21, 1);
+    if (ema9_1 == null || ema21_1 == null) return null;
 
     const price = ctx.price;
-    const ema50 = ctx.ema(50);
-    if (ema50 == null) return null;
+    const noPos = ctx.position === 0;
 
-    // --- ENTRY LOGIC: RSI oversold + price at/near lower BB ---
-    // RSI < 35 = deeply oversold; price <= lower band = mean-reversion trigger
-    // EMA50 rising = broad uptrend bias (reduces catching falling knives)
-    const rsiOversold = rsi < 35;
-    const atLowerBB = price <= bb.lower * 1.005; // 0.5% tolerance
-    const emaRising = ctx.ema(50, 1) != null && ctx.ema(50, 1) < ema50;
-    const noPosition = ctx.position === 0;
+    // ── BUY: EMA9 crosses ABOVE EMA21 (bullish crossover)
+    // RSI filter: only enter when RSI > 50 (confirming upward momentum)
+    // Avoid chop: require RSI rising on this bar (momentum building)
+    const rsiRising = ctx.rsi(14, 1) != null && ctx.rsi(14, 1) < rsi;
+    const bullCross = ema9_1 <= ema21_1 && ema9 > ema21;
+    const rsiConfirm = rsi > 50;
 
-    if (noPosition && rsiOversold && atLowerBB && emaRising) {
-        // ATR-based stop: 2x ATR below entry, capped at 8% of price
-        const stopLoss = price - Math.min(atr * 2, price * 0.08);
+    if (noPos && bullCross && rsiConfirm && rsiRising) {
+        // Stop loss: 2× ATR below entry, capped at 5%
+        const stopPx = price - Math.min(atr * 2, price * 0.05);
         return {
             side: 'buy',
             qty: ctx.cash / price * 0.99,
-            stopLoss: stopLoss
+            stopLoss: stopPx
         };
     }
 
-    // --- EXIT LOGIC: position open ---
+    // ── SELL: EMA9 crosses BELOW EMA21 (bearish crossover) OR RSI drops below 40
     if (ctx.position > 0) {
-        const entryPrice = ctx.entryPx;
+        const bearCross = ema9_1 >= ema21_1 && ema9 < ema21;
+        const rsiWeak = rsi < 40;
 
-        // Take profit: RSI mean-reverted (crossed above 60) OR price reached middle BB
-        const rsiReverted = rsi > 60;
-        const atMidBB = price >= bb.mid * 0.998;
-        const profitTarget = price >= entryPrice * 1.05; // 5% profit lock
-
-        if (rsiReverted || atMidBB || profitTarget) {
+        if (bearCross || rsiWeak) {
             return { side: 'sell', qty: ctx.position };
         }
 
-        // Stop loss: hard stop (ATR-based, set at order time; also check here)
-        const stopPx = price - Math.min(atr * 2, price * 0.08);
-        if (price <= stopPx) {
+        // Trailing stop: if price drops 3% from peak, exit
+        const peak = ctx.entryPx; // simplified: use entry as reference
+        if (price <= peak * 0.97) {
             return { side: 'sell', qty: ctx.position };
         }
     }
