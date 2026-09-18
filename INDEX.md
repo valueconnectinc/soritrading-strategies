@@ -4,13 +4,14 @@ Every strategy whose backtest **finished and actually traded** is published here
 Nothing is filtered out by return — the ones that lost money are part of the record.
 Entries stay after a strategy is removed from our own workspace — this is a log, and deleting the record would leave only the survivors.
 
-**★ marks a strategy that out-returned buy & hold over the same window** — 38 of 271 right now.
-`—` means the comparison **could not be made**: the engine does not compute a benchmark for multi-symbol, futures, or multi-leg runs. That is *unknown*, not *lost*, and it is 123 of them right now.
+**★ marks a strategy that out-returned buy & hold over the same window** — 38 of 272 right now.
+`—` means the comparison **could not be made**: the engine does not compute a benchmark for multi-symbol, futures, or multi-leg runs. That is *unknown*, not *lost*, and it is 124 of them right now.
 
 Every figure comes from the last verifying backtest at publish time. These are past results over historical data. Nothing here is promised or assured about the future, and none of it is investment advice.
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
+| — | [1132](strategies/1132/) | Bollinger Mean Reversion + Volume | +3.22% | — | +3.47% | 12 | 2026-09-18 |
 | — | [1130](strategies/1130/) | Bollinger Mean Reversion | +17.99% | — | +6.14% | 35 | 2026-09-18 |
 | — | [1129](strategies/1129/) | Ichimoku Cloud Trend | -6.19% | — | +19.77% | 41 | 2026-09-18 |
 | — | [1127](strategies/1127/) | EMA-RSI Momentum | -59.70% | — | +60.36% | 301 | 2026-09-18 |
