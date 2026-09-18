@@ -11,7 +11,7 @@ Every figure comes from the last verifying backtest at publish time. These are p
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
-| — | [1210](strategies/1210/) | AI 전략 | -5.83% | — | +11.67% | 2 | 2026-09-18 |
+| — | [1210](strategies/1210/) | AI 전략 | -19.93% | — | +23.63% | 8 | 2026-09-18 |
 | — | [1209](strategies/1209/) | Dual Oscillator + EMA200 + ATR Gate | +46.48% | — | +13.05% | 24 | 2026-09-18 |
 | — | [1208](strategies/1208/) | Dual Oscillator + ATR Volatility Filter | +45.62% | — | +31.23% | 108 | 2026-09-18 |
 | — | [1207](strategies/1207/) | Direct Dual Oscillator" | -67.24% | — | +70.67% | 590 | 2026-09-18 |
