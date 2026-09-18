@@ -4,14 +4,14 @@ Every strategy whose backtest **finished and actually traded** is published here
 Nothing is filtered out by return — the ones that lost money are part of the record.
 Entries stay after a strategy is removed from our own workspace — this is a log, and deleting the record would leave only the survivors.
 
-**★ marks a strategy that out-returned buy & hold over the same window** — 50 of 317 right now.
-`—` means the comparison **could not be made**: the engine does not compute a benchmark for multi-symbol, futures, or multi-leg runs. That is *unknown*, not *lost*, and it is 141 of them right now.
+**★ marks a strategy that out-returned buy & hold over the same window** — 49 of 317 right now.
+`—` means the comparison **could not be made**: the engine does not compute a benchmark for multi-symbol, futures, or multi-leg runs. That is *unknown*, not *lost*, and it is 142 of them right now.
 
 Every figure comes from the last verifying backtest at publish time. These are past results over historical data. Nothing here is promised or assured about the future, and none of it is investment advice.
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
-| ★ | [1207](strategies/1207/) | Direct Dual Oscillator" | +19.02% | -19.81% | +31.68% | 98 | 2026-09-18 |
+| — | [1207](strategies/1207/) | Direct Dual Oscillator" | -67.24% | — | +70.67% | 590 | 2026-09-18 |
 |  | [1203](strategies/1203/) | AI 전략 | -65.30% | -38.17% | +67.32% | 123 | 2026-09-18 |
 |  | [1200](strategies/1200/) | Supertrend ATR Bands — BTCUSDT 4H | -16.75% | +29.01% | +25.18% | 51 | 2026-09-18 |
 | ★ | [1193](strategies/1193/) | RSI Band Mean Reversion | -2.81% | -14.28% | +29.83% | 94 | 2026-09-18 |
