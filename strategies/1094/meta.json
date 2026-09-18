@@ -1,0 +1,30 @@
+{
+  "id": 1094,
+  "name": "MACD Trend ATR Stop Daily",
+  "kind": "custom",
+  "verified": {
+    "backtestId": 5839,
+    "return": 105.06,
+    "mdd": 44.44,
+    "trades": 263,
+    "vsBuyHold": "lose",
+    "benchRet": 1055.16,
+    "benchBasis": "price",
+    "gapPct": 0,
+    "tFrom": 1530489600,
+    "tTo": 1789603200,
+    "approxNotes": [
+      "봉 내 순서는 관례(양봉 O→L→H→C·음봉 O→H→L→C) — 실순서 미상 · 봉 중 거래량 null · MDD 는 봉 마감 기준"
+    ],
+    "spec": {
+      "ex": "binance",
+      "sym": "BTCUSDT",
+      "interval": "1d",
+      "bars": 3000,
+      "end": 0
+    }
+  },
+  "config": null,
+  "updatedAt": "2026-09-18T04:00:03.397Z",
+  "publishedBy": "scripts/publish-strategies.mjs"
+}
