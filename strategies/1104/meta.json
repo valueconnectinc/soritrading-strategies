@@ -1,0 +1,31 @@
+{
+  "id": 1104,
+  "name": "RSI-2 Mean Reversion Daily + OI",
+  "kind": "custom",
+  "verified": {
+    "backtestId": 5903,
+    "return": -36.33,
+    "mdd": 36.33,
+    "trades": 126,
+    "vsBuyHold": "lose",
+    "benchRet": 39.56,
+    "benchBasis": "price",
+    "gapPct": 0,
+    "tFrom": 1664064000,
+    "tTo": 1695513600,
+    "approxNotes": [
+      "봉 내 순서는 관례(양봉 O→L→H→C·음봉 O→H→L→C) — 실순서 미상 · 봉 중 거래량 null · MDD 는 봉 마감 기준",
+      "미결제약정·강제청산은 백테스트에 이력이 없어 항상 null — 이 전략은 백테스트로 검증되지 않는다(모의투자로 확인)"
+    ],
+    "spec": {
+      "ex": "binance",
+      "sym": "BTCUSDT",
+      "interval": "1d",
+      "bars": 365,
+      "end": 1695600000
+    }
+  },
+  "config": null,
+  "updatedAt": "2026-09-18T04:56:10.677Z",
+  "publishedBy": "scripts/publish-strategies.mjs"
+}
