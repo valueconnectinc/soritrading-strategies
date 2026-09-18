@@ -1,0 +1,27 @@
+{
+  "id": 1136,
+  "name": "EMA Cross + Donchian Breakout",
+  "kind": "custom",
+  "verified": {
+    "backtestId": 6020,
+    "return": -10.31,
+    "mdd": 18.61,
+    "trades": 38,
+    "vsBuyHold": "unmeasured",
+    "gapPct": 0,
+    "tFrom": 1768104000,
+    "tTo": 1789689600,
+    "approxNotes": [
+      "봉 내 순서는 관례(양봉 O→L→H→C·음봉 O→H→L→C) — 실순서 미상 · 봉 중 거래량 null · MDD 는 봉 마감 기준"
+    ],
+    "spec": {
+      "ex": "binance",
+      "sym": "ETHUSDT",
+      "interval": "4h",
+      "bars": 1500
+    }
+  },
+  "config": null,
+  "updatedAt": "2026-09-18T06:09:13.866Z",
+  "publishedBy": "scripts/publish-strategies.mjs"
+}
