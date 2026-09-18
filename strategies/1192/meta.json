@@ -1,0 +1,30 @@
+{
+  "id": 1192,
+  "name": "BB RSI Trend-Filtered Mean Reversion",
+  "kind": "custom",
+  "verified": {
+    "backtestId": 6321,
+    "return": 35.38,
+    "mdd": 4.48,
+    "trades": 34,
+    "vsBuyHold": "lose",
+    "benchRet": 40.68,
+    "benchBasis": "price",
+    "gapPct": 0,
+    "tFrom": 1746518400,
+    "tTo": 1789704000,
+    "approxNotes": [
+      "봉 내 순서는 관례(양봉 O→L→H→C·음봉 O→H→L→C) — 실순서 미상 · 봉 중 거래량 null · MDD 는 봉 마감 기준"
+    ],
+    "spec": {
+      "ex": "binance",
+      "sym": "ETHUSDT",
+      "interval": "4h",
+      "bars": 3000,
+      "end": 0
+    }
+  },
+  "config": null,
+  "updatedAt": "2026-09-18T10:34:11.328Z",
+  "publishedBy": "scripts/publish-strategies.mjs"
+}
