@@ -1,0 +1,30 @@
+{
+  "id": 1186,
+  "name": "RSI Mean Reversion with DXY Macro Filter",
+  "kind": "custom",
+  "verified": {
+    "backtestId": 6293,
+    "return": -4.2,
+    "mdd": 5,
+    "trades": 20,
+    "vsBuyHold": "win",
+    "benchRet": -14.28,
+    "benchBasis": "price",
+    "gapPct": 0,
+    "tFrom": 1768118400,
+    "tTo": 1789704000,
+    "approxNotes": [
+      "봉 내 순서는 관례(양봉 O→L→H→C·음봉 O→H→L→C) — 실순서 미상 · 봉 중 거래량 null · MDD 는 봉 마감 기준"
+    ],
+    "spec": {
+      "ex": "binance",
+      "sym": "BTCUSDT",
+      "interval": "4h",
+      "bars": 1500,
+      "end": 0
+    }
+  },
+  "config": null,
+  "updatedAt": "2026-09-18T10:20:05.014Z",
+  "publishedBy": "scripts/publish-strategies.mjs"
+}
