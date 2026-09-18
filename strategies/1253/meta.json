@@ -1,0 +1,29 @@
+{
+  "id": 1253,
+  "name": "EMA Pullback Mean Reversion — BTCUSDT 4H",
+  "kind": "custom",
+  "verified": {
+    "backtestId": 6731,
+    "return": 4.37,
+    "mdd": 2.81,
+    "trades": 36,
+    "vsBuyHold": "lose",
+    "benchRet": 20.6,
+    "benchBasis": "price",
+    "gapPct": 0,
+    "tFrom": 1785412800,
+    "tTo": 1789718400,
+    "approxNotes": [
+      "봉 내 순서는 관례(양봉 O→L→H→C·음봉 O→H→L→C) — 실순서 미상 · 봉 중 거래량 null · MDD 는 봉 마감 기준"
+    ],
+    "spec": {
+      "ex": "binance",
+      "sym": "BTCUSDT",
+      "interval": "4h",
+      "bars": 300
+    }
+  },
+  "config": null,
+  "updatedAt": "2026-09-18T14:33:39.406Z",
+  "publishedBy": "scripts/publish-strategies.mjs"
+}
