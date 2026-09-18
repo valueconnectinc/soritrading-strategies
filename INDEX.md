@@ -4,13 +4,14 @@ Every strategy whose backtest **finished and actually traded** is published here
 Nothing is filtered out by return — the ones that lost money are part of the record.
 Entries stay after a strategy is removed from our own workspace — this is a log, and deleting the record would leave only the survivors.
 
-**★ marks a strategy that out-returned buy & hold over the same window** — 29 of 241 right now.
+**★ marks a strategy that out-returned buy & hold over the same window** — 29 of 242 right now.
 `—` means the comparison **could not be made**: the engine does not compute a benchmark for multi-symbol, futures, or multi-leg runs. That is *unknown*, not *lost*, and it is 119 of them right now.
 
 Every figure comes from the last verifying backtest at publish time. These are past results over historical data. Nothing here is promised or assured about the future, and none of it is investment advice.
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
+|  | [1090](strategies/1090/) | Fear & Greed Regime Filter + RSI Mean Reversion | +12.97% | +36.58% | +21.64% | 2 | 2026-09-18 |
 |  | [1088](strategies/1088/) | RSI-30 Oversold Mean Reversion ETH 4h | +8.09% | +29.86% | +0.92% | 5 | 2026-09-18 |
 |  | [1087](strategies/1087/) | Supertrend Volatility Adaptive ETH 4h | -6.25% | +29.86% | +7.65% | 8 | 2026-09-17 |
 | — | [1086](strategies/1086/) | EMA-9/21 Crossover + EMA-100 Trend Filter ETH 4h | -21.43% | — | +22.90% | 21 | 2026-09-17 |
