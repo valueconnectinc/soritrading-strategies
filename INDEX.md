@@ -11,7 +11,7 @@ Every figure comes from the last verifying backtest at publish time. These are p
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
-|  | [1242](strategies/1242/) | Bollinger Band Mean Reversion — BTCUSDT 1H | +10.16% | +11.88% | +18.12% | 250 | 2026-09-18 |
+|  | [1242](strategies/1242/) | Bollinger Band Mean Reversion — BTCUSDT 1H | +22.08% | +45.36% | +6.32% | 28 | 2026-09-18 |
 | — | [1241](strategies/1241/) | SMA Crossover + Volume Filter — BTCUSDT 4H | -3.58% | — | +3.58% | 4 | 2026-09-18 |
 | — | [1239](strategies/1239/) | SMA Crossover BTC 1D with DXY Filter | +10.50% | — | +8.74% | 6 | 2026-09-18 |
 |  | [1233](strategies/1233/) | RSI Momentum Tight 40/60 — Multi 1H | -6.74% | -4.87% | +15.38% | 8 | 2026-09-18 |
