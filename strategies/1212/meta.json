@@ -3,7 +3,7 @@
   "name": "EMA9/21 Trend Crossover — BTCUSDT 4H",
   "kind": "custom",
   "verified": {
-    "backtestId": 6438,
+    "backtestId": 6439,
     "return": -40.61,
     "mdd": 42.59,
     "trades": 49,
@@ -17,7 +17,7 @@
     ],
     "spec": {
       "ex": "binance",
-      "sym": "ETHUSDT",
+      "sym": "BNBUSDT",
       "interval": "4h",
       "bars": 2000,
       "end": 700
