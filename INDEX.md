@@ -5,13 +5,13 @@ Nothing is filtered out by return — the ones that lost money are part of the r
 Entries stay after a strategy is removed from our own workspace — this is a log, and deleting the record would leave only the survivors.
 
 **★ marks a strategy that out-returned buy & hold over the same window** — 49 of 325 right now.
-`—` means the comparison **could not be made**: the engine does not compute a benchmark for multi-symbol, futures, or multi-leg runs. That is *unknown*, not *lost*, and it is 147 of them right now.
+`—` means the comparison **could not be made**: the engine does not compute a benchmark for multi-symbol, futures, or multi-leg runs. That is *unknown*, not *lost*, and it is 148 of them right now.
 
 Every figure comes from the last verifying backtest at publish time. These are past results over historical data. Nothing here is promised or assured about the future, and none of it is investment advice.
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
-|  | [1219](strategies/1219/) | BB RSI Mean Reversion v5 — ETHUSDT 4H | +0.74% | +58.17% | +1.74% | 2 | 2026-09-18 |
+| — | [1219](strategies/1219/) | BB RSI Mean Reversion v5 — ETHUSDT 4H | +1.13% | — | +5.37% | 8 | 2026-09-18 |
 |  | [1218](strategies/1218/) | BB RSI Mean Reversion v4 | +20.90% | +29.59% | +4.09% | 102 | 2026-09-18 |
 |  | [1216](strategies/1216/) | BB RSI Mean Reversion | +15.40% | +22.15% | +4.09% | 82 | 2026-09-18 |
 | — | [1212](strategies/1212/) | EMA9/21 Trend Crossover — BTCUSDT 4H | -40.61% | — | +42.59% | 49 | 2026-09-18 |
