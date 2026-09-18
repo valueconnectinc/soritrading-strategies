@@ -11,7 +11,7 @@ Every figure comes from the last verifying backtest at publish time. These are p
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
-|  | [1216](strategies/1216/) | BB RSI Mean Reversion | +1.13% | +22.14% | +0.69% | 6 | 2026-09-18 |
+|  | [1216](strategies/1216/) | BB RSI Mean Reversion | +15.40% | +22.15% | +4.09% | 82 | 2026-09-18 |
 | — | [1212](strategies/1212/) | EMA9/21 Trend Crossover — BTCUSDT 4H | -40.61% | — | +42.59% | 49 | 2026-09-18 |
 | — | [1211](strategies/1211/) | BB+RSI Mean Reversion — BTCUSDT 4H | -16.03% | — | +20.84% | 12 | 2026-09-18 |
 | — | [1210](strategies/1210/) | AI 전략 | -19.93% | — | +23.63% | 8 | 2026-09-18 |
