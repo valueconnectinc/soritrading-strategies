@@ -3,15 +3,15 @@
   "name": "BB RSI Mean Reversion v4",
   "kind": "custom",
   "verified": {
-    "backtestId": 6463,
-    "return": 15.4,
+    "backtestId": 6467,
+    "return": 20.9,
     "mdd": 4.09,
-    "trades": 82,
+    "trades": 102,
     "vsBuyHold": "lose",
-    "benchRet": 22.15,
+    "benchRet": 29.59,
     "benchBasis": "price",
     "gapPct": 0,
-    "tFrom": 1784332800,
+    "tFrom": 1782532800,
     "tTo": 1789729200,
     "approxNotes": [
       "봉 내 순서는 관례(양봉 O→L→H→C·음봉 O→H→L→C) — 실순서 미상 · 봉 중 거래량 null · MDD 는 봉 마감 기준"
@@ -20,7 +20,7 @@
       "ex": "binanceusdm",
       "sym": "BTCUSDT",
       "interval": "1h",
-      "bars": 1500,
+      "bars": 2000,
       "end": 0
     }
   },
