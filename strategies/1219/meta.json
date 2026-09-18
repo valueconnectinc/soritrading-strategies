@@ -3,23 +3,25 @@
   "name": "BB RSI Mean Reversion v5 — ETHUSDT 4H",
   "kind": "custom",
   "verified": {
-    "backtestId": 6510,
-    "return": 1.13,
-    "mdd": 5.37,
-    "trades": 8,
-    "vsBuyHold": "unmeasured",
+    "backtestId": 6515,
+    "return": 12.74,
+    "mdd": 1.34,
+    "trades": 4,
+    "vsBuyHold": "lose",
+    "benchRet": 41.65,
+    "benchBasis": "price",
     "gapPct": 0,
-    "tFrom": 0,
-    "tTo": 0,
+    "tFrom": 1785412800,
+    "tTo": 1789718400,
     "approxNotes": [
-      "봉 내 순서는 관례(양봉 O→L→H→C·음봉 O→H→L→C) — 실순서 미상 · 봉 중 거래량 null · MDD 는 봉 마감 기준"
+      "봉 내 순서는 관례(양봉 O→L→H→C·음봉 O→H→L→C) — 실순서 미상 · 봉 중 거래량 null · MDD 는 봉 마감 기준",
+      "거래량은 봉 마감에만 확정 — 봉 중 평가에서 ctx.vol/volumes 가 null 이라 거래량 조건이 걸러졌을 수 있음(봉 중에도 쓰려면 ctx.volPrev·ctx.avgVol)"
     ],
     "spec": {
       "ex": "binance",
-      "sym": "DOGEUSDT",
+      "sym": "SOLUSDT",
       "interval": "4h",
-      "bars": 500,
-      "end": 300
+      "bars": 300
     }
   },
   "config": null,
