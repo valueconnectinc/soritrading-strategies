@@ -4,13 +4,14 @@ Every strategy whose backtest **finished and actually traded** is published here
 Nothing is filtered out by return — the ones that lost money are part of the record.
 Entries stay after a strategy is removed from our own workspace — this is a log, and deleting the record would leave only the survivors.
 
-**★ marks a strategy that out-returned buy & hold over the same window** — 33 of 251 right now.
+**★ marks a strategy that out-returned buy & hold over the same window** — 33 of 252 right now.
 `—` means the comparison **could not be made**: the engine does not compute a benchmark for multi-symbol, futures, or multi-leg runs. That is *unknown*, not *lost*, and it is 119 of them right now.
 
 Every figure comes from the last verifying backtest at publish time. These are past results over historical data. Nothing here is promised or assured about the future, and none of it is investment advice.
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
+|  | [1101](strategies/1101/) | Dual-Engine RSI + ATR Regime Filter v5 | -7.82% | +42.83% | +17.43% | 19 | 2026-09-18 |
 |  | [1100](strategies/1100/) | SuperTrend Momentum + ATR Trail Stop | -18.46% | +7.72% | +35.96% | 39 | 2026-09-18 |
 | ★ | [1099](strategies/1099/) | RSI-30 Oversold ATR Stop 1D | +22.26% | +7.72% | +19.27% | 38 | 2026-09-18 |
 |  | [1098](strategies/1098/) | SuperTrend Momentum 4H | +15.74% | +102.95% | +36.96% | 37 | 2026-09-18 |
