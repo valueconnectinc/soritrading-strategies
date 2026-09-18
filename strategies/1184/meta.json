@@ -1,0 +1,30 @@
+{
+  "id": 1184,
+  "name": "EMA9/21 Crossover + RSI Confirm — BTCUSDT 4H v2",
+  "kind": "custom",
+  "verified": {
+    "backtestId": 6287,
+    "return": -65.08,
+    "mdd": 68.44,
+    "trades": 168,
+    "vsBuyHold": "lose",
+    "benchRet": -18.03,
+    "benchBasis": "price",
+    "gapPct": 0,
+    "tFrom": 1746504000,
+    "tTo": 1789689600,
+    "approxNotes": [
+      "봉 내 순서는 관례(양봉 O→L→H→C·음봉 O→H→L→C) — 실순서 미상 · 봉 중 거래량 null · MDD 는 봉 마감 기준"
+    ],
+    "spec": {
+      "ex": "binance",
+      "sym": "BTCUSDT",
+      "interval": "4h",
+      "bars": 3000,
+      "end": 1789704000
+    }
+  },
+  "config": null,
+  "updatedAt": "2026-09-18T10:04:01.638Z",
+  "publishedBy": "scripts/publish-strategies.mjs"
+}
