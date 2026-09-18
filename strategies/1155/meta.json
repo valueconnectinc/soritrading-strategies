@@ -3,24 +3,24 @@
   "name": "RSI Oversold + EMA200 Filter 4H",
   "kind": "custom",
   "verified": {
-    "backtestId": 6116,
-    "return": 0.02,
-    "mdd": 3.34,
-    "trades": 14,
-    "vsBuyHold": "lose",
-    "benchRet": 20.03,
+    "backtestId": 6119,
+    "return": 27.51,
+    "mdd": 1.87,
+    "trades": 18,
+    "vsBuyHold": "win",
+    "benchRet": 17.83,
     "benchBasis": "price",
     "gapPct": 0,
-    "tFrom": 1786118400,
-    "tTo": 1789714800,
+    "tFrom": 1779206400,
+    "tTo": 1789704000,
     "approxNotes": [
       "봉 내 순서는 관례(양봉 O→L→H→C·음봉 O→H→L→C) — 실순서 미상 · 봉 중 거래량 null · MDD 는 봉 마감 기준"
     ],
     "spec": {
       "ex": "binance",
-      "sym": "BTCUSDT",
-      "interval": "1h",
-      "bars": 1000
+      "sym": "ETHUSDT",
+      "interval": "4h",
+      "bars": 730
     }
   },
   "config": null,

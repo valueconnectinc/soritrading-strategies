@@ -4,14 +4,14 @@ Every strategy whose backtest **finished and actually traded** is published here
 Nothing is filtered out by return — the ones that lost money are part of the record.
 Entries stay after a strategy is removed from our own workspace — this is a log, and deleting the record would leave only the survivors.
 
-**★ marks a strategy that out-returned buy & hold over the same window** — 41 of 286 right now.
+**★ marks a strategy that out-returned buy & hold over the same window** — 42 of 286 right now.
 `—` means the comparison **could not be made**: the engine does not compute a benchmark for multi-symbol, futures, or multi-leg runs. That is *unknown*, not *lost*, and it is 133 of them right now.
 
 Every figure comes from the last verifying backtest at publish time. These are past results over historical data. Nothing here is promised or assured about the future, and none of it is investment advice.
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
-|  | [1155](strategies/1155/) | RSI Oversold + EMA200 Filter 4H | +0.02% | +20.03% | +3.34% | 14 | 2026-09-18 |
+| ★ | [1155](strategies/1155/) | RSI Oversold + EMA200 Filter 4H | +27.51% | +17.83% | +1.87% | 18 | 2026-09-18 |
 | ★ | [1152](strategies/1152/) | ATR Channel Breakout + Volume Surge | -22.59% | -25.18% | +23.04% | 34 | 2026-09-18 |
 | ★ | [1150](strategies/1150/) | EMA Cross + Fear-Greed Trend | -13.04% | -25.18% | +14.82% | 31 | 2026-09-18 |
 | ★ | [1149](strategies/1149/) | BB Mean Reversion + Fear-Greed | -5.58% | -25.18% | +9.40% | 8 | 2026-09-18 |
