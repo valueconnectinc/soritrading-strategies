@@ -1,0 +1,28 @@
+{
+  "id": 1239,
+  "name": "SMA Crossover BTC 1D with DXY Filter",
+  "kind": "custom",
+  "verified": {
+    "backtestId": 6613,
+    "return": 10.5,
+    "mdd": 8.74,
+    "trades": 6,
+    "vsBuyHold": "unmeasured",
+    "gapPct": 0,
+    "tFrom": 0,
+    "tTo": 0,
+    "approxNotes": [
+      "봉 내 순서는 관례(양봉 O→L→H→C·음봉 O→H→L→C) — 실순서 미상 · 봉 중 거래량 null · MDD 는 봉 마감 기준"
+    ],
+    "spec": {
+      "ex": "binance",
+      "sym": "BTCUSDT",
+      "interval": "1d",
+      "bars": 300,
+      "end": 700
+    }
+  },
+  "config": null,
+  "updatedAt": "2026-09-18T13:21:00.842Z",
+  "publishedBy": "scripts/publish-strategies.mjs"
+}

@@ -4,13 +4,14 @@ Every strategy whose backtest **finished and actually traded** is published here
 Nothing is filtered out by return — the ones that lost money are part of the record.
 Entries stay after a strategy is removed from our own workspace — this is a log, and deleting the record would leave only the survivors.
 
-**★ marks a strategy that out-returned buy & hold over the same window** — 49 of 331 right now.
-`—` means the comparison **could not be made**: the engine does not compute a benchmark for multi-symbol, futures, or multi-leg runs. That is *unknown*, not *lost*, and it is 148 of them right now.
+**★ marks a strategy that out-returned buy & hold over the same window** — 49 of 332 right now.
+`—` means the comparison **could not be made**: the engine does not compute a benchmark for multi-symbol, futures, or multi-leg runs. That is *unknown*, not *lost*, and it is 149 of them right now.
 
 Every figure comes from the last verifying backtest at publish time. These are past results over historical data. Nothing here is promised or assured about the future, and none of it is investment advice.
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
+| — | [1239](strategies/1239/) | SMA Crossover BTC 1D with DXY Filter | +10.50% | — | +8.74% | 6 | 2026-09-18 |
 |  | [1233](strategies/1233/) | RSI Momentum Tight 40/60 — Multi 1H | -6.74% | -4.87% | +15.38% | 8 | 2026-09-18 |
 |  | [1231](strategies/1231/) | AI 전략 | -2.20% | +0.65% | +4.19% | 4 | 2026-09-18 |
 |  | [1227](strategies/1227/) | Stochastic Momentum v5 | -13.81% | +41.65% | +24.27% | 113 | 2026-09-18 |
