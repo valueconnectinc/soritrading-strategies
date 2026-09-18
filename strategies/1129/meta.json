@@ -1,0 +1,28 @@
+{
+  "id": 1129,
+  "name": "Ichimoku Cloud Trend",
+  "kind": "custom",
+  "verified": {
+    "backtestId": 5991,
+    "return": -6.19,
+    "mdd": 19.77,
+    "trades": 41,
+    "vsBuyHold": "unmeasured",
+    "gapPct": 0,
+    "tFrom": 1778184000,
+    "tTo": 1789689600,
+    "approxNotes": [
+      "봉 내 순서는 관례(양봉 O→L→H→C·음봉 O→H→L→C) — 실순서 미상 · 봉 중 거래량 null · MDD 는 봉 마감 기준"
+    ],
+    "spec": {
+      "ex": "binance",
+      "sym": "BTCUSDT",
+      "interval": "4h",
+      "bars": 800,
+      "end": 0
+    }
+  },
+  "config": null,
+  "updatedAt": "2026-09-18T05:53:29.368Z",
+  "publishedBy": "scripts/publish-strategies.mjs"
+}
