@@ -3,12 +3,12 @@
   "name": "Bollinger Band Mean Reversion — BTCUSDT 1H",
   "kind": "custom",
   "verified": {
-    "backtestId": 6638,
-    "return": 3.36,
-    "mdd": 2.42,
-    "trades": 12,
+    "backtestId": 6644,
+    "return": 5.88,
+    "mdd": 4.4,
+    "trades": 20,
     "vsBuyHold": "lose",
-    "benchRet": 14.81,
+    "benchRet": 26.7,
     "benchBasis": "price",
     "gapPct": 0,
     "tFrom": 1771736400,
@@ -18,7 +18,7 @@
     ],
     "spec": {
       "ex": "binance",
-      "sym": "BTCUSDT",
+      "sym": "ETHUSDT",
       "interval": "1h",
       "bars": 5000
     }
