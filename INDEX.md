@@ -4,13 +4,14 @@ Every strategy whose backtest **finished and actually traded** is published here
 Nothing is filtered out by return — the ones that lost money are part of the record.
 Entries stay after a strategy is removed from our own workspace — this is a log, and deleting the record would leave only the survivors.
 
-**★ marks a strategy that out-returned buy & hold over the same window** — 49 of 334 right now.
-`—` means the comparison **could not be made**: the engine does not compute a benchmark for multi-symbol, futures, or multi-leg runs. That is *unknown*, not *lost*, and it is 150 of them right now.
+**★ marks a strategy that out-returned buy & hold over the same window** — 49 of 335 right now.
+`—` means the comparison **could not be made**: the engine does not compute a benchmark for multi-symbol, futures, or multi-leg runs. That is *unknown*, not *lost*, and it is 151 of them right now.
 
 Every figure comes from the last verifying backtest at publish time. These are past results over historical data. Nothing here is promised or assured about the future, and none of it is investment advice.
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
+| — | [1245](strategies/1245/) | RSI Only Diagnostic — BTCUSDT 1H | -35.29% | — | +37.06% | 34 | 2026-09-18 |
 |  | [1242](strategies/1242/) | Bollinger Band Mean Reversion — BTCUSDT 1H | +202.41% | +1683.33% | +47.43% | 34 | 2026-09-18 |
 | — | [1241](strategies/1241/) | SMA Crossover + Volume Filter — BTCUSDT 4H | -3.58% | — | +3.58% | 4 | 2026-09-18 |
 | — | [1239](strategies/1239/) | SMA Crossover BTC 1D with DXY Filter | +10.50% | — | +8.74% | 6 | 2026-09-18 |

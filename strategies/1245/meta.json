@@ -1,0 +1,28 @@
+{
+  "id": 1245,
+  "name": "RSI Only Diagnostic — BTCUSDT 1H",
+  "kind": "custom",
+  "verified": {
+    "backtestId": 6704,
+    "return": -35.29,
+    "mdd": 37.06,
+    "trades": 34,
+    "vsBuyHold": "unmeasured",
+    "gapPct": 0,
+    "tFrom": 0,
+    "tTo": 0,
+    "approxNotes": [
+      "봉 내 순서는 관례(양봉 O→L→H→C·음봉 O→H→L→C) — 실순서 미상 · 봉 중 거래량 null · MDD 는 봉 마감 기준"
+    ],
+    "spec": {
+      "ex": "binance",
+      "sym": "BTCUSDT",
+      "interval": "1h",
+      "bars": 3000,
+      "end": 1000
+    }
+  },
+  "config": null,
+  "updatedAt": "2026-09-18T14:15:28.453Z",
+  "publishedBy": "scripts/publish-strategies.mjs"
+}
