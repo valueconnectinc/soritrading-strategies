@@ -3,13 +3,15 @@
   "name": "VWAP + BB Mean Reversion — SOLUSDT 4H",
   "kind": "custom",
   "verified": {
-    "backtestId": 6525,
-    "return": -1.06,
-    "mdd": 2.26,
-    "trades": 4,
-    "vsBuyHold": "unmeasured",
+    "backtestId": 6529,
+    "return": 27.91,
+    "mdd": 7.03,
+    "trades": 6,
+    "vsBuyHold": "lose",
+    "benchRet": 41.65,
+    "benchBasis": "price",
     "gapPct": 0,
-    "tFrom": 1781092800,
+    "tFrom": 1785412800,
     "tTo": 1789718400,
     "approxNotes": [
       "봉 내 순서는 관례(양봉 O→L→H→C·음봉 O→H→L→C) — 실순서 미상 · 봉 중 거래량 null · MDD 는 봉 마감 기준",
@@ -19,11 +21,10 @@
       "ex": "binance",
       "sym": "SOLUSDT",
       "interval": "4h",
-      "bars": 600,
-      "end": 0
+      "bars": 300
     }
   },
   "config": null,
-  "updatedAt": "2026-09-18T12:41:36.981Z",
+  "updatedAt": "2026-09-18T12:46:18.095Z",
   "publishedBy": "scripts/publish-strategies.mjs"
 }

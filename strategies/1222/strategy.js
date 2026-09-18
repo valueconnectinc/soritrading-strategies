@@ -1,74 +1,68 @@
 /*
  * @coinsori-strategy v1
- * name: VWAP + BB Mean Reversion — SOLUSDT 4H
+ * name: EMA Crossover Momentum
  * ex: binance
  * syms: SOLUSDT
  * interval: 4h
  * cash: 10000
  *
- * Volume-weighted mean reversion for altcoins: buy when price is significantly
- * below VWAP (institutional accumulation zone) AND touches lower BB AND RSI
- * is oversold. The VWAP deviation adds a layer of "fair value" awareness that
- * pure BB strategies lack — we only buy when price is BOTH cheap vs VWAP
- * AND oversold vs recent range.
- * Sell when price returns to VWAP OR upper BB OR RSI overbought.
- * When it does NOT work: in strong downtrends where VWAP itself is falling,
- * price below VWAP keeps triggering entries into a continuing slide.
- * Also relies on VWAP being computed over a meaningful anchor window.
+ * Trend-following strategy using EMA 9/21 crossover with RSI and ATR filters.
+ * Buys when fast EMA crosses above slow EMA with RSI in a healthy range and
+ * volatility is rising (confirming a real trend, not just a noise spike).
+ * Sells when the fast EMA crosses back below, or when RSI goes overbought.
+ * When it does NOT work: choppy, range-bound markets where crossovers
+ * whipsaw and ATR stays flat — the strategy takes small losses repeatedly.
  */
 
 function onUpdate(ctx) {
-  const rsi = ctx.rsi(14);
-  const bb  = ctx.bb(20, 2);
-  const ema200 = ctx.ema(200);
-  const avgVol = ctx.avgVol(20);
-  const atr = ctx.atr(14);
+    // Warm-up guard: need at least 21 bars for EMA21
+    const ema9 = ctx.ema(9);
+    const ema21 = ctx.ema(21);
+    if (ema9 == null || ema21 == null) return null;
 
-  if (rsi == null || bb == null || ema200 == null) return null;
-  if (bb.mid == null) return null;
+    // ATR for trend confirmation (rising ATR = trending, not ranging)
+    const atr = ctx.atr(14);
+    const atr1 = ctx.atr(14, 1);
+    if (atr == null || atr1 == null) return null;
+    const atrRising = atr > atr1; // volatility expanding = trending
 
-  const price = ctx.price;
-  const { lower, mid, upper } = bb;
+    // RSI for momentum health — avoid buying when RSI is too hot (>70, overbought)
+    const rsi = ctx.rsi(14);
+    if (rsi == null) return null;
 
-  // VWAP approximation: use EMA(9) of typical price as a proxy
-  // ctx doesn't have native VWAP, so we use close EMA as a stand-in
-  const vwapProxy = ctx.ema(9);
-  if (vwapProxy == null) return null;
+    // Previous bar closed values for crossover detection
+    const ema9_1 = ctx.ema(9, 1);
+    const ema21_1 = ctx.ema(21, 1);
+    if (ema9_1 == null || ema21_1 == null) return null;
 
-  // Deviation from VWAP proxy: how far below "fair value" is price?
-  const vwapDev = (vwapProxy - price) / vwapProxy; // positive = below fair value
+    // Volume filter: require above-average volume on signal bar
+    const vol = ctx.vol;
+    const avgVol = ctx.avgVol(20);
+    if (vol == null || avgVol == null) return null;
+    const volConfirm = vol > avgVol * 1.0; // at least average volume
 
-  // EMA200 must be rising — only long in confirmed uptrends (crash protection)
-  const ema200_1 = ctx.ema(200, 1);
-  const ema200Rising = ema200_1 != null && ema200_1 < ema200;
+    const hasPosition = ctx.position > 0;
 
-  // Volume must exceed its 20-bar average (filters low-quality snaps)
-  const volConfirm = (avgVol == null || ctx.vol >= avgVol);
-
-  // ATR rising = volatility expanding (good for mean reversion plays)
-  const atr_1 = ctx.atr(14, 1);
-  const atrRising = (atr_1 == null || atr >= atr_1);
-
-  if (ctx.position === 0) {
-    // Entry: below VWAP proxy (>2% below) + lower BB touch + RSI oversold + uptrend + volume + ATR expanding
-    const belowVwap = vwapDev > 0.02;
-    const atLower = price <= lower * 1.005; // within 0.5% of lower BB
-    const oversold = rsi < 35;
-
-    if (belowVwap && atLower && oversold && ema200Rising && volConfirm && atrRising) {
-      return { side: 'buy', qty: ctx.cash / price * 0.99 };
+    // BUY: EMA9 crosses ABOVE EMA21 (bullish golden cross)
+    // Confirm: RSI not overbought (< 70), ATR rising (trend confirmed), volume present
+    const bullishCross = ema21_1 >= ema9_1 && ema9 > ema21;
+    const notOverbought = rsi < 70;
+    if (bullishCross && notOverbought && atrRising && volConfirm) {
+        // Enter with 90% of available cash
+        const qty = (ctx.cash * 0.90) / ctx.price;
+        return { side: 'buy', qty: qty };
     }
-  } else {
-    // Exit: price at VWAP OR at middle BB OR RSI overbought OR upper BB
-    const atVwap = vwapDev < 0.005;
-    const atMid = price >= mid;
-    const overbought = rsi > 60;
-    const atUpper = price >= upper;
 
-    if (atVwap || atMid || overbought || atUpper) {
-      return { side: 'sell', qty: ctx.position };
+    // SELL: EMA9 crosses BELOW EMA21 (bearish death cross) — exit long
+    const bearishCross = ema21_1 >= ema9_1 && ema9 < ema21;
+    if (hasPosition && bearishCross) {
+        return { side: 'sell', qty: ctx.position };
     }
-  }
 
-  return null;
+    // STOP-LOSS: if RSI drops below 30 (deeply oversold), exit to avoid prolonged drawdown
+    if (hasPosition && rsi < 30) {
+        return { side: 'sell', qty: ctx.position };
+    }
+
+    return null;
 }

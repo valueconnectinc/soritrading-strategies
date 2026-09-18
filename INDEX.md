@@ -5,13 +5,13 @@ Nothing is filtered out by return — the ones that lost money are part of the r
 Entries stay after a strategy is removed from our own workspace — this is a log, and deleting the record would leave only the survivors.
 
 **★ marks a strategy that out-returned buy & hold over the same window** — 49 of 328 right now.
-`—` means the comparison **could not be made**: the engine does not compute a benchmark for multi-symbol, futures, or multi-leg runs. That is *unknown*, not *lost*, and it is 149 of them right now.
+`—` means the comparison **could not be made**: the engine does not compute a benchmark for multi-symbol, futures, or multi-leg runs. That is *unknown*, not *lost*, and it is 148 of them right now.
 
 Every figure comes from the last verifying backtest at publish time. These are past results over historical data. Nothing here is promised or assured about the future, and none of it is investment advice.
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
-| — | [1222](strategies/1222/) | VWAP + BB Mean Reversion — SOLUSDT 4H | -1.06% | — | +2.26% | 4 | 2026-09-18 |
+|  | [1222](strategies/1222/) | VWAP + BB Mean Reversion — SOLUSDT 4H | +27.91% | +41.65% | +7.03% | 6 | 2026-09-18 |
 | — | [1221](strategies/1221/) | ATR Adaptive EMA Crossover — DOGEUSDT 4H | -3.90% | — | +3.90% | 2 | 2026-09-18 |
 |  | [1220](strategies/1220/) | BB RSI EMA200 Mean Reversion — SOLUSDT 4H | +13.99% | +18.59% | +2.54% | 10 | 2026-09-18 |
 |  | [1219](strategies/1219/) | BB RSI Mean Reversion v5 — ETHUSDT 4H | +12.74% | +41.65% | +1.34% | 4 | 2026-09-18 |
