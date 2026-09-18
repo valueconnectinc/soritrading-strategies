@@ -1,0 +1,28 @@
+{
+  "id": 1208,
+  "name": "Dual Oscillator + ATR Volatility Filter",
+  "kind": "custom",
+  "verified": {
+    "backtestId": 6398,
+    "return": 45.62,
+    "mdd": 31.23,
+    "trades": 108,
+    "vsBuyHold": "unmeasured",
+    "gapPct": 0,
+    "tFrom": 1753718400,
+    "tTo": 1789704000,
+    "approxNotes": [
+      "봉 내 순서는 관례(양봉 O→L→H→C·음봉 O→H→L→C) — 실순서 미상 · 봉 중 거래량 null · MDD 는 봉 마감 기준"
+    ],
+    "spec": {
+      "ex": "binance",
+      "sym": "ETHUSDT",
+      "interval": "4h",
+      "bars": 2500,
+      "end": 0
+    }
+  },
+  "config": null,
+  "updatedAt": "2026-09-18T11:40:51.194Z",
+  "publishedBy": "scripts/publish-strategies.mjs"
+}

@@ -1,0 +1,28 @@
+{
+  "id": 1209,
+  "name": "Dual Oscillator + EMA200 + ATR Gate",
+  "kind": "custom",
+  "verified": {
+    "backtestId": 6401,
+    "return": 46.48,
+    "mdd": 13.05,
+    "trades": 24,
+    "vsBuyHold": "unmeasured",
+    "gapPct": 0,
+    "tFrom": 1760918400,
+    "tTo": 1789704000,
+    "approxNotes": [
+      "봉 내 순서는 관례(양봉 O→L→H→C·음봉 O→H→L→C) — 실순서 미상 · 봉 중 거래량 null · MDD 는 봉 마감 기준"
+    ],
+    "spec": {
+      "ex": "binance",
+      "sym": "ETHUSDT",
+      "interval": "4h",
+      "bars": 2000,
+      "end": 0
+    }
+  },
+  "config": null,
+  "updatedAt": "2026-09-18T11:41:44.848Z",
+  "publishedBy": "scripts/publish-strategies.mjs"
+}

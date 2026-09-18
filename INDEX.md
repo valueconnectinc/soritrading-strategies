@@ -4,13 +4,15 @@ Every strategy whose backtest **finished and actually traded** is published here
 Nothing is filtered out by return — the ones that lost money are part of the record.
 Entries stay after a strategy is removed from our own workspace — this is a log, and deleting the record would leave only the survivors.
 
-**★ marks a strategy that out-returned buy & hold over the same window** — 49 of 317 right now.
-`—` means the comparison **could not be made**: the engine does not compute a benchmark for multi-symbol, futures, or multi-leg runs. That is *unknown*, not *lost*, and it is 142 of them right now.
+**★ marks a strategy that out-returned buy & hold over the same window** — 49 of 319 right now.
+`—` means the comparison **could not be made**: the engine does not compute a benchmark for multi-symbol, futures, or multi-leg runs. That is *unknown*, not *lost*, and it is 144 of them right now.
 
 Every figure comes from the last verifying backtest at publish time. These are past results over historical data. Nothing here is promised or assured about the future, and none of it is investment advice.
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
+| — | [1209](strategies/1209/) | Dual Oscillator + EMA200 + ATR Gate | +46.48% | — | +13.05% | 24 | 2026-09-18 |
+| — | [1208](strategies/1208/) | Dual Oscillator + ATR Volatility Filter | +45.62% | — | +31.23% | 108 | 2026-09-18 |
 | — | [1207](strategies/1207/) | Direct Dual Oscillator" | -67.24% | — | +70.67% | 590 | 2026-09-18 |
 |  | [1203](strategies/1203/) | AI 전략 | -65.30% | -38.17% | +67.32% | 123 | 2026-09-18 |
 |  | [1200](strategies/1200/) | Supertrend ATR Bands — BTCUSDT 4H | -16.75% | +29.01% | +25.18% | 51 | 2026-09-18 |
