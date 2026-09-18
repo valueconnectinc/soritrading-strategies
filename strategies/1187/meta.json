@@ -1,0 +1,30 @@
+{
+  "id": 1187,
+  "name": "BB RSI EMA200 with DXY Macro Filter",
+  "kind": "custom",
+  "verified": {
+    "backtestId": 6296,
+    "return": -79.97,
+    "mdd": 80.1,
+    "trades": 762,
+    "vsBuyHold": "lose",
+    "benchRet": 797.49,
+    "benchBasis": "price",
+    "gapPct": 0,
+    "tFrom": 1573704000,
+    "tTo": 1789704000,
+    "approxNotes": [
+      "봉 내 순서는 관례(양봉 O→L→H→C·음봉 O→H→L→C) — 실순서 미상 · 봉 중 거래량 null · MDD 는 봉 마감 기준"
+    ],
+    "spec": {
+      "ex": "binance",
+      "sym": "BTCUSDT",
+      "interval": "4h",
+      "bars": 15000,
+      "end": 0
+    }
+  },
+  "config": null,
+  "updatedAt": "2026-09-18T10:21:02.784Z",
+  "publishedBy": "scripts/publish-strategies.mjs"
+}
