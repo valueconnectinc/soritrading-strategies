@@ -4,13 +4,14 @@ Every strategy whose backtest **finished and actually traded** is published here
 Nothing is filtered out by return — the ones that lost money are part of the record.
 Entries stay after a strategy is removed from our own workspace — this is a log, and deleting the record would leave only the survivors.
 
-**★ marks a strategy that out-returned buy & hold over the same window** — 34 of 258 right now.
+**★ marks a strategy that out-returned buy & hold over the same window** — 34 of 259 right now.
 `—` means the comparison **could not be made**: the engine does not compute a benchmark for multi-symbol, futures, or multi-leg runs. That is *unknown*, not *lost*, and it is 120 of them right now.
 
 Every figure comes from the last verifying backtest at publish time. These are past results over historical data. Nothing here is promised or assured about the future, and none of it is investment advice.
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
+|  | [1114](strategies/1114/) | SMA Cross Diagnostic 4H | +12.63% | +28.76% | +7.61% | 12 | 2026-09-18 |
 |  | [1110](strategies/1110/) | EMA Cross 20/60 Plain | -21.68% | -21.08% | +27.98% | 16 | 2026-09-18 |
 | ★ | [1109](strategies/1109/) | EMA Cross + Volume Confirm | -0.04% | -21.08% | +11.55% | 6 | 2026-09-18 |
 | — | [1107](strategies/1107/) | Bollinger Band Mean Reversion BTC 1D | -0.39% | — | +0.39% | 2 | 2026-09-18 |
