@@ -11,7 +11,7 @@ Every figure comes from the last verifying backtest at publish time. These are p
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
-| ★ | [1158](strategies/1158/) | Dual Oscillator Oversold + EMA200 Filter | -2.53% | -30.15% | +3.31% | 4 | 2026-09-18 |
+| ★ | [1158](strategies/1158/) | Dual Oscillator Oversold + EMA200 Filter | +4.28% | -30.15% | +2.76% | 10 | 2026-09-18 |
 |  | [1157](strategies/1157/) | RSI + Stochastic Dual Oversold + EMA200 Filter | +24.58% | +57.53% | +3.41% | 30 | 2026-09-18 |
 | ★ | [1156](strategies/1156/) | Stochastic Oversold + EMA200 Filter | +37.73% | +20.60% | +3.61% | 56 | 2026-09-18 |
 | ★ | [1155](strategies/1155/) | RSI Oversold + EMA200 Filter 4H | +27.51% | +17.83% | +1.87% | 18 | 2026-09-18 |
