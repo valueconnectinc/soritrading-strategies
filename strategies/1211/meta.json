@@ -1,0 +1,28 @@
+{
+  "id": 1211,
+  "name": "BB+RSI Mean Reversion — BTCUSDT 4H",
+  "kind": "custom",
+  "verified": {
+    "backtestId": 6428,
+    "return": -16.03,
+    "mdd": 20.84,
+    "trades": 12,
+    "vsBuyHold": "unmeasured",
+    "gapPct": 0,
+    "tFrom": 0,
+    "tTo": 0,
+    "approxNotes": [
+      "봉 내 순서는 관례(양봉 O→L→H→C·음봉 O→H→L→C) — 실순서 미상 · 봉 중 거래량 null · MDD 는 봉 마감 기준"
+    ],
+    "spec": {
+      "ex": "binance",
+      "sym": "BTCUSDT",
+      "interval": "4h",
+      "bars": 2000,
+      "end": 700
+    }
+  },
+  "config": null,
+  "updatedAt": "2026-09-18T11:55:35.076Z",
+  "publishedBy": "scripts/publish-strategies.mjs"
+}
