@@ -1,0 +1,31 @@
+{
+  "id": 1103,
+  "name": "RSI-2 Mean Reversion + ATR Regime + OI v7",
+  "kind": "custom",
+  "verified": {
+    "backtestId": 5891,
+    "return": -43.89,
+    "mdd": 43.89,
+    "trades": 254,
+    "vsBuyHold": "lose",
+    "benchRet": 28.76,
+    "benchBasis": "price",
+    "gapPct": 0,
+    "tFrom": 1782504000,
+    "tTo": 1789689600,
+    "approxNotes": [
+      "봉 내 순서는 관례(양봉 O→L→H→C·음봉 O→H→L→C) — 실순서 미상 · 봉 중 거래량 null · MDD 는 봉 마감 기준",
+      "미결제약정·강제청산은 백테스트에 이력이 없어 항상 null — 이 전략은 백테스트로 검증되지 않는다(모의투자로 확인)"
+    ],
+    "spec": {
+      "ex": "binance",
+      "sym": "BTCUSDT",
+      "interval": "4h",
+      "bars": 500,
+      "end": 0
+    }
+  },
+  "config": null,
+  "updatedAt": "2026-09-18T04:51:34.228Z",
+  "publishedBy": "scripts/publish-strategies.mjs"
+}
