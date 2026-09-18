@@ -4,13 +4,14 @@ Every strategy whose backtest **finished and actually traded** is published here
 Nothing is filtered out by return — the ones that lost money are part of the record.
 Entries stay after a strategy is removed from our own workspace — this is a log, and deleting the record would leave only the survivors.
 
-**★ marks a strategy that out-returned buy & hold over the same window** — 43 of 287 right now.
+**★ marks a strategy that out-returned buy & hold over the same window** — 44 of 288 right now.
 `—` means the comparison **could not be made**: the engine does not compute a benchmark for multi-symbol, futures, or multi-leg runs. That is *unknown*, not *lost*, and it is 133 of them right now.
 
 Every figure comes from the last verifying backtest at publish time. These are past results over historical data. Nothing here is promised or assured about the future, and none of it is investment advice.
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
+| ★ | [1157](strategies/1157/) | RSI + Stochastic Dual Oversold + EMA200 Filter | +43.48% | -19.81% | +4.20% | 52 | 2026-09-18 |
 | ★ | [1156](strategies/1156/) | Stochastic Oversold + EMA200 Filter | +37.73% | +20.60% | +3.61% | 56 | 2026-09-18 |
 | ★ | [1155](strategies/1155/) | RSI Oversold + EMA200 Filter 4H | +27.51% | +17.83% | +1.87% | 18 | 2026-09-18 |
 | ★ | [1152](strategies/1152/) | ATR Channel Breakout + Volume Surge | -22.59% | -25.18% | +23.04% | 34 | 2026-09-18 |

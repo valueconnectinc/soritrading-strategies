@@ -1,0 +1,30 @@
+{
+  "id": 1157,
+  "name": "RSI + Stochastic Dual Oversold + EMA200 Filter",
+  "kind": "custom",
+  "verified": {
+    "backtestId": 6128,
+    "return": 43.48,
+    "mdd": 4.2,
+    "trades": 52,
+    "vsBuyHold": "win",
+    "benchRet": -19.81,
+    "benchBasis": "price",
+    "gapPct": 0,
+    "tFrom": 1768118400,
+    "tTo": 1789704000,
+    "approxNotes": [
+      "봉 내 순서는 관례(양봉 O→L→H→C·음봉 O→H→L→C) — 실순서 미상 · 봉 중 거래량 null · MDD 는 봉 마감 기준"
+    ],
+    "spec": {
+      "ex": "binance",
+      "sym": "ETHUSDT",
+      "interval": "4h",
+      "bars": 1500,
+      "end": -4500
+    }
+  },
+  "config": null,
+  "updatedAt": "2026-09-18T08:18:39.283Z",
+  "publishedBy": "scripts/publish-strategies.mjs"
+}
