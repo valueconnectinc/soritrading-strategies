@@ -3,23 +3,23 @@
   "name": "Bollinger Band Mean Reversion — BTCUSDT 1H",
   "kind": "custom",
   "verified": {
-    "backtestId": 6644,
-    "return": 5.88,
-    "mdd": 4.4,
-    "trades": 20,
+    "backtestId": 6648,
+    "return": 202.41,
+    "mdd": 47.43,
+    "trades": 34,
     "vsBuyHold": "lose",
-    "benchRet": 26.7,
+    "benchRet": 1683.33,
     "benchBasis": "price",
     "gapPct": 0,
-    "tFrom": 1771736400,
-    "tTo": 1789732800,
+    "tFrom": 1502928000,
+    "tTo": 1789603200,
     "approxNotes": [
       "봉 내 순서는 관례(양봉 O→L→H→C·음봉 O→H→L→C) — 실순서 미상 · 봉 중 거래량 null · MDD 는 봉 마감 기준"
     ],
     "spec": {
       "ex": "binance",
-      "sym": "ETHUSDT",
-      "interval": "1h",
+      "sym": "BTCUSDT",
+      "interval": "1d",
       "bars": 5000
     }
   },
