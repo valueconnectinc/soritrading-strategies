@@ -4,13 +4,14 @@ Every strategy whose backtest **finished and actually traded** is published here
 Nothing is filtered out by return — the ones that lost money are part of the record.
 Entries stay after a strategy is removed from our own workspace — this is a log, and deleting the record would leave only the survivors.
 
-**★ marks a strategy that out-returned buy & hold over the same window** — 48 of 313 right now.
+**★ marks a strategy that out-returned buy & hold over the same window** — 49 of 314 right now.
 `—` means the comparison **could not be made**: the engine does not compute a benchmark for multi-symbol, futures, or multi-leg runs. That is *unknown*, not *lost*, and it is 141 of them right now.
 
 Every figure comes from the last verifying backtest at publish time. These are past results over historical data. Nothing here is promised or assured about the future, and none of it is investment advice.
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
+| ★ | [1193](strategies/1193/) | RSI Band Mean Reversion | -2.81% | -14.28% | +29.83% | 94 | 2026-09-18 |
 |  | [1192](strategies/1192/) | BB RSI Trend-Filtered Mean Reversion | +35.38% | +40.68% | +4.48% | 34 | 2026-09-18 |
 |  | [1190](strategies/1190/) | EMA Momentum RSI Confirmation | -39.66% | -38.17% | +44.81% | 86 | 2026-09-18 |
 | — | [1189](strategies/1189/) | BB RSI Mean Reversion with ATR Stop | +41.74% | — | +12.55% | 30 | 2026-09-18 |
