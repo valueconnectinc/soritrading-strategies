@@ -11,7 +11,7 @@ Every figure comes from the last verifying backtest at publish time. These are p
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
-|  | [1233](strategies/1233/) | RSI Momentum Tight 40/60 — Multi 1H | -2.89% | -0.63% | +5.64% | 8 | 2026-09-18 |
+|  | [1233](strategies/1233/) | RSI Momentum Tight 40/60 — Multi 1H | -6.74% | -4.87% | +15.38% | 8 | 2026-09-18 |
 |  | [1231](strategies/1231/) | AI 전략 | -2.20% | +0.65% | +4.19% | 4 | 2026-09-18 |
 |  | [1227](strategies/1227/) | Stochastic Momentum v5 | -13.81% | +41.65% | +24.27% | 113 | 2026-09-18 |
 |  | [1222](strategies/1222/) | VWAP + BB Mean Reversion — SOLUSDT 4H | +27.91% | +41.65% | +7.03% | 6 | 2026-09-18 |

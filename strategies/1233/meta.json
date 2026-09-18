@@ -3,12 +3,12 @@
   "name": "RSI Momentum Tight 40/60 — Multi 1H",
   "kind": "custom",
   "verified": {
-    "backtestId": 6598,
-    "return": -2.89,
-    "mdd": 5.64,
+    "backtestId": 6599,
+    "return": -6.74,
+    "mdd": 15.38,
     "trades": 8,
     "vsBuyHold": "lose",
-    "benchRet": -0.63,
+    "benchRet": -4.87,
     "benchBasis": "price",
     "gapPct": 0,
     "tFrom": 1789016400,
@@ -18,7 +18,7 @@
     ],
     "spec": {
       "ex": "binance",
-      "sym": "BTCUSDT",
+      "sym": "XRPUSDT",
       "interval": "1h",
       "bars": 200,
       "end": 0
