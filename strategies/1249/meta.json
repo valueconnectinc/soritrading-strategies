@@ -1,0 +1,29 @@
+{
+  "id": 1249,
+  "name": "Supertrend + RSI Double Gate — BTCUSDT 4H",
+  "kind": "custom",
+  "verified": {
+    "backtestId": 6725,
+    "return": -99.21,
+    "mdd": 99.21,
+    "trades": 2036,
+    "vsBuyHold": "lose",
+    "benchRet": 15.99,
+    "benchBasis": "price",
+    "gapPct": 0,
+    "tFrom": 1775332800,
+    "tTo": 1789718400,
+    "approxNotes": [
+      "봉 내 순서는 관례(양봉 O→L→H→C·음봉 O→H→L→C) — 실순서 미상 · 봉 중 거래량 null · MDD 는 봉 마감 기준"
+    ],
+    "spec": {
+      "ex": "binance",
+      "sym": "BTCUSDT",
+      "interval": "4h",
+      "bars": 1000
+    }
+  },
+  "config": null,
+  "updatedAt": "2026-09-18T14:26:41.753Z",
+  "publishedBy": "scripts/publish-strategies.mjs"
+}
