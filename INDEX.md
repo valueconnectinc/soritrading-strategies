@@ -4,13 +4,14 @@ Every strategy whose backtest **finished and actually traded** is published here
 Nothing is filtered out by return — the ones that lost money are part of the record.
 Entries stay after a strategy is removed from our own workspace — this is a log, and deleting the record would leave only the survivors.
 
-**★ marks a strategy that out-returned buy & hold over the same window** — 38 of 267 right now.
+**★ marks a strategy that out-returned buy & hold over the same window** — 38 of 268 right now.
 `—` means the comparison **could not be made**: the engine does not compute a benchmark for multi-symbol, futures, or multi-leg runs. That is *unknown*, not *lost*, and it is 120 of them right now.
 
 Every figure comes from the last verifying backtest at publish time. These are past results over historical data. Nothing here is promised or assured about the future, and none of it is investment advice.
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
+|  | [1124](strategies/1124/) | ETHUSDT 4H RSI Momentum | -73.80% | -19.90% | +74.38% | 225 | 2026-09-18 |
 | ★ | [1123](strategies/1123/) | BTCUSDT 4H Trend-Filtered Breakout | -4.82% | -17.76% | +18.88% | 47 | 2026-09-18 |
 |  | [1122](strategies/1122/) | BTCUSDT 4H BB Mean Reversion | -18.73% | -14.69% | +30.42% | 60 | 2026-09-18 |
 | ★ | [1121](strategies/1121/) | BTCUSDT 4H Squeeze Breakout | -7.97% | -18.03% | +12.09% | 35 | 2026-09-18 |
