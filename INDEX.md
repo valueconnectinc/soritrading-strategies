@@ -4,14 +4,14 @@ Every strategy whose backtest **finished and actually traded** is published here
 Nothing is filtered out by return — the ones that lost money are part of the record.
 Entries stay after a strategy is removed from our own workspace — this is a log, and deleting the record would leave only the survivors.
 
-**★ marks a strategy that out-returned buy & hold over the same window** — 44 of 292 right now.
+**★ marks a strategy that out-returned buy & hold over the same window** — 45 of 292 right now.
 `—` means the comparison **could not be made**: the engine does not compute a benchmark for multi-symbol, futures, or multi-leg runs. That is *unknown*, not *lost*, and it is 133 of them right now.
 
 Every figure comes from the last verifying backtest at publish time. These are past results over historical data. Nothing here is promised or assured about the future, and none of it is investment advice.
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
-|  | [1161](strategies/1161/) | EMA Crossover Trend — BTCUSDT 1d | -1.46% | +74.86% | +59.91% | 25 | 2026-09-18 |
+| ★ | [1161](strategies/1161/) | EMA Crossover Trend — BTCUSDT 1d | +99.83% | +83.81% | +43.76% | 26 | 2026-09-18 |
 |  | [1160](strategies/1160/) | RSI Mean Reversion — No Filter | -80.60% | +6.03% | +80.60% | 500 | 2026-09-18 |
 |  | [1159](strategies/1159/) | EMA200 Pullback — Trend Continuation | -24.48% | +37.00% | +24.48% | 80 | 2026-09-18 |
 | ★ | [1158](strategies/1158/) | Dual Oscillator Oversold + EMA200 Filter | +4.28% | -30.15% | +2.76% | 10 | 2026-09-18 |
