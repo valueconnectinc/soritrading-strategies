@@ -1,0 +1,30 @@
+{
+  "id": 1174,
+  "name": "SMA 20/60 Crossover Trend — BTCUSDT 1d",
+  "kind": "custom",
+  "verified": {
+    "backtestId": 6242,
+    "return": 23.62,
+    "mdd": 32.4,
+    "trades": 12,
+    "vsBuyHold": "lose",
+    "benchRet": 95,
+    "benchBasis": "price",
+    "gapPct": 0,
+    "tFrom": 1704153600,
+    "tTo": 1767139200,
+    "approxNotes": [
+      "봉 내 순서는 관례(양봉 O→L→H→C·음봉 O→H→L→C) — 실순서 미상 · 봉 중 거래량 null · MDD 는 봉 마감 기준"
+    ],
+    "spec": {
+      "ex": "binance",
+      "sym": "BTCUSDT",
+      "interval": "1d",
+      "bars": 730,
+      "end": 1767225600
+    }
+  },
+  "config": null,
+  "updatedAt": "2026-09-18T09:42:37.907Z",
+  "publishedBy": "scripts/publish-strategies.mjs"
+}
