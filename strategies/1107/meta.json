@@ -1,0 +1,27 @@
+{
+  "id": 1107,
+  "name": "Bollinger Band Mean Reversion BTC 1D",
+  "kind": "custom",
+  "verified": {
+    "backtestId": 5912,
+    "return": -0.39,
+    "mdd": 0.39,
+    "trades": 2,
+    "vsBuyHold": "unmeasured",
+    "gapPct": 0,
+    "tFrom": 1726617600,
+    "tTo": 1789603200,
+    "approxNotes": [
+      "봉 내 순서는 관례(양봉 O→L→H→C·음봉 O→H→L→C) — 실순서 미상 · 봉 중 거래량 null · MDD 는 봉 마감 기준"
+    ],
+    "spec": {
+      "ex": "binance",
+      "sym": "BTCUSDT",
+      "interval": "1d",
+      "bars": 730
+    }
+  },
+  "config": null,
+  "updatedAt": "2026-09-18T05:02:54.065Z",
+  "publishedBy": "scripts/publish-strategies.mjs"
+}
