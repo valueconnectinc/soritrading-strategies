@@ -1,0 +1,29 @@
+{
+  "id": 1188,
+  "name": "ATR Trailing Stop Mean Reversion",
+  "kind": "custom",
+  "verified": {
+    "backtestId": 6301,
+    "return": -2.18,
+    "mdd": 67.63,
+    "trades": 1,
+    "vsBuyHold": "unmeasured",
+    "gapPct": 0,
+    "tFrom": 1746518400,
+    "tTo": 1789704000,
+    "approxNotes": [
+      "봉 내 순서는 관례(양봉 O→L→H→C·음봉 O→H→L→C) — 실순서 미상 · 봉 중 거래량 null · MDD 는 봉 마감 기준",
+      "기간 종료 시 미청산 포지션 1종목 — 이 수익률은 **평가액**을 포함합니다. 퇴출 수수료·거래세를 안 냈고, 마지막 봉 가격에 실제로 팔 수 있다는 보장도 없습니다(얇은 호가·상장폐지). exec.endLiquidate 로 마지막 봉 청산을 켤 수 있습니다",
+      "ctx.data() 호출 11804건이 주입 없는 키였음 — 그 조건은 통째로 걸러졌다. 데이터셋을 에이전트에 등록했는지, 키 이름이 맞는지 확인(SIGNALS.md §8-e)"
+    ],
+    "spec": {
+      "ex": "binance",
+      "sym": "ETHUSDT",
+      "interval": "4h",
+      "bars": 3000
+    }
+  },
+  "config": null,
+  "updatedAt": "2026-09-18T10:22:56.172Z",
+  "publishedBy": "scripts/publish-strategies.mjs"
+}
