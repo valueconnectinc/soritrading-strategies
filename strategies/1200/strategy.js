@@ -1,46 +1,34 @@
 /*
  * @coinsori-strategy v1
- * name: EMA9/21 Trend Following
+ * name: Funding Rate Mean Reversion
  * ex: binance
  * syms: BTCUSDT
  * interval: 4h
  * cash: 10000
  *
- * Buys when EMA9 crosses above EMA21 (uptrend confirmed) and holds until EMA9
- * crosses back below EMA21 (trend reversal). RSI filter avoids false crossovers
- * in choppy markets.
- * When it does NOT work: choppy, directionless markets where EMAs criss-cross
- * repeatedly — generates whipsaws and small losses that compound via fees.
+ * Buys when funding rate is deeply negative (shorts paying longs = squeeze risk)
+ * and RSI confirms oversold. Sells when funding rate normalizes above 0.005%.
+ * When it does NOT work: in strong downtrends where funding stays negative and
+ * price continues falling — the "squeeze" never materialises and losses mount.
  */
 function onUpdate(ctx) {
-    // Warm-up: need at least 50 bars for EMAs and RSI
-    if (ctx.i < 50) return null;
+    if (ctx.i < 30) return null;
 
-    const ema9  = ctx.ema(9);
-    const ema21 = ctx.ema(21);
-    const rsi   = ctx.rsi(14);
-    const atr   = ctx.atr(14);
+    const rsi  = ctx.rsi(14);
+    const atr  = ctx.atr(14);
+    const funding = ctx.funding;
 
-    if (ema9 == null || ema21 == null || rsi == null || atr == null) return null;
+    if (rsi == null || atr == null || funding == null) return null;
 
-    // Previous bar values for crossover detection
-    const ema9_1  = ctx.ema(9,  1);
-    const ema21_1 = ctx.ema(21, 1);
-    if (ema9_1 == null || ema21_1 == null) return null;
+    const price     = ctx.price;
+    const noPos     = ctx.position === 0;
+    const fundThresh = -0.0001; // -0.01%: deeply negative funding
 
-    const price = ctx.price;
-    const noPos = ctx.position === 0;
-
-    // ── BUY: EMA9 crosses ABOVE EMA21 (bullish crossover)
-    // RSI filter: only enter when RSI > 50 (confirming upward momentum)
-    // Avoid chop: require RSI rising on this bar (momentum building)
-    const rsiRising = ctx.rsi(14, 1) != null && ctx.rsi(14, 1) < rsi;
-    const bullCross = ema9_1 <= ema21_1 && ema9 > ema21;
-    const rsiConfirm = rsi > 50;
-
-    if (noPos && bullCross && rsiConfirm && rsiRising) {
-        // Stop loss: 2× ATR below entry, capped at 5%
-        const stopPx = price - Math.min(atr * 2, price * 0.05);
+    // ── BUY: funding deeply negative + RSI oversold
+    // Negative funding = shorts paying longs → short squeeze risk
+    // RSI < 35 = price oversold → bounce likely
+    if (noPos && funding < fundThresh && rsi < 35) {
+        const stopPx = price - Math.min(atr * 2, price * 0.08);
         return {
             side: 'buy',
             qty: ctx.cash / price * 0.99,
@@ -48,18 +36,12 @@ function onUpdate(ctx) {
         };
     }
 
-    // ── SELL: EMA9 crosses BELOW EMA21 (bearish crossover) OR RSI drops below 40
+    // ── SELL: funding normalised (no longer deeply negative) OR RSI reached 60
     if (ctx.position > 0) {
-        const bearCross = ema9_1 >= ema21_1 && ema9 < ema21;
-        const rsiWeak = rsi < 40;
+        const fundNormalised = funding >= fundThresh;
+        const rsiReverted   = rsi > 60;
 
-        if (bearCross || rsiWeak) {
-            return { side: 'sell', qty: ctx.position };
-        }
-
-        // Trailing stop: if price drops 3% from peak, exit
-        const peak = ctx.entryPx; // simplified: use entry as reference
-        if (price <= peak * 0.97) {
+        if (fundNormalised || rsiReverted) {
             return { side: 'sell', qty: ctx.position };
         }
     }
