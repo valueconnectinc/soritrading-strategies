@@ -3,7 +3,7 @@
   "name": "SMA Crossover BTC 1D with DXY Filter",
   "kind": "custom",
   "verified": {
-    "backtestId": 6613,
+    "backtestId": 6615,
     "return": 10.5,
     "mdd": 8.74,
     "trades": 6,
@@ -17,7 +17,7 @@
     "spec": {
       "ex": "binance",
       "sym": "BTCUSDT",
-      "interval": "1d",
+      "interval": "4h",
       "bars": 300,
       "end": 700
     }
