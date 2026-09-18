@@ -1,0 +1,28 @@
+{
+  "id": 1143,
+  "name": "RSI Momentum + Fear & Greed Filter",
+  "kind": "custom",
+  "verified": {
+    "backtestId": 6056,
+    "return": -78.41,
+    "mdd": 78.42,
+    "trades": 198,
+    "vsBuyHold": "unmeasured",
+    "gapPct": 0,
+    "tFrom": 1690992000,
+    "tTo": 1719777600,
+    "approxNotes": [
+      "봉 내 순서는 관례(양봉 O→L→H→C·음봉 O→H→L→C) — 실순서 미상 · 봉 중 거래량 null · MDD 는 봉 마감 기준"
+    ],
+    "spec": {
+      "ex": "binance",
+      "sym": "BTCUSDT",
+      "interval": "4h",
+      "bars": 2000,
+      "end": 1719792000
+    }
+  },
+  "config": null,
+  "updatedAt": "2026-09-18T06:36:05.663Z",
+  "publishedBy": "scripts/publish-strategies.mjs"
+}
