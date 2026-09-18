@@ -1,0 +1,30 @@
+{
+  "id": 1233,
+  "name": "RSI Momentum Tight 40/60 — Multi 1H",
+  "kind": "custom",
+  "verified": {
+    "backtestId": 6598,
+    "return": -2.89,
+    "mdd": 5.64,
+    "trades": 8,
+    "vsBuyHold": "lose",
+    "benchRet": -0.63,
+    "benchBasis": "price",
+    "gapPct": 0,
+    "tFrom": 1789016400,
+    "tTo": 1789732800,
+    "approxNotes": [
+      "봉 내 순서는 관례(양봉 O→L→H→C·음봉 O→H→L→C) — 실순서 미상 · 봉 중 거래량 null · MDD 는 봉 마감 기준"
+    ],
+    "spec": {
+      "ex": "binance",
+      "sym": "BTCUSDT",
+      "interval": "1h",
+      "bars": 200,
+      "end": 0
+    }
+  },
+  "config": null,
+  "updatedAt": "2026-09-18T13:15:40.571Z",
+  "publishedBy": "scripts/publish-strategies.mjs"
+}
