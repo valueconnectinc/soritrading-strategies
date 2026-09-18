@@ -84,7 +84,6 @@ function onUpdate(ctx) {
 
     // ── Sell logic ───────────────────────────────────────────────────────────────
     // RSI crossed below 70 in bear trend — trend exhaustion exit
-    const rsiCrossDn70 = rsi2 >= 70 && rsi1 < 70 && rsi < 70;
     const trendExit = rsiCrossDn70 && bearTrend;
 
     // ATR-based hard stop — 1.5× ATR loss from entry

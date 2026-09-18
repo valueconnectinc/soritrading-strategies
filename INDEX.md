@@ -11,7 +11,7 @@ Every figure comes from the last verifying backtest at publish time. These are p
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
-|  | [1090](strategies/1090/) | Fear & Greed Regime Filter + RSI Mean Reversion | +12.97% | +36.58% | +21.64% | 2 | 2026-09-18 |
+|  | [1090](strategies/1090/) | Fear & Greed Regime Filter + RSI Mean Reversion | +4.21% | +59.79% | +23.22% | 37 | 2026-09-18 |
 |  | [1088](strategies/1088/) | RSI-30 Oversold Mean Reversion ETH 4h | +8.09% | +29.86% | +0.92% | 5 | 2026-09-18 |
 |  | [1087](strategies/1087/) | Supertrend Volatility Adaptive ETH 4h | -6.25% | +29.86% | +7.65% | 8 | 2026-09-17 |
 | — | [1086](strategies/1086/) | EMA-9/21 Crossover + EMA-100 Trend Filter ETH 4h | -21.43% | — | +22.90% | 21 | 2026-09-17 |
