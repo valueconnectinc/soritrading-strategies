@@ -1,0 +1,30 @@
+{
+  "id": 1099,
+  "name": "RSI-30 Oversold ATR Stop 1D",
+  "kind": "custom",
+  "verified": {
+    "backtestId": 5881,
+    "return": 22.26,
+    "mdd": 19.27,
+    "trades": 38,
+    "vsBuyHold": "win",
+    "benchRet": 7.72,
+    "benchBasis": "price",
+    "gapPct": 0,
+    "tFrom": 1732464000,
+    "tTo": 1746849600,
+    "approxNotes": [
+      "봉 내 순서는 관례(양봉 O→L→H→C·음봉 O→H→L→C) — 실순서 미상 · 봉 중 거래량 null · MDD 는 봉 마감 기준"
+    ],
+    "spec": {
+      "ex": "binance",
+      "sym": "BTCUSDT",
+      "interval": "4h",
+      "bars": 1000,
+      "end": 1746854400
+    }
+  },
+  "config": null,
+  "updatedAt": "2026-09-18T04:35:19.374Z",
+  "publishedBy": "scripts/publish-strategies.mjs"
+}
