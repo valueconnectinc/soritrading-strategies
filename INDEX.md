@@ -4,13 +4,14 @@ Every strategy whose backtest **finished and actually traded** is published here
 Nothing is filtered out by return — the ones that lost money are part of the record.
 Entries stay after a strategy is removed from our own workspace — this is a log, and deleting the record would leave only the survivors.
 
-**★ marks a strategy that out-returned buy & hold over the same window** — 31 of 247 right now.
+**★ marks a strategy that out-returned buy & hold over the same window** — 32 of 248 right now.
 `—` means the comparison **could not be made**: the engine does not compute a benchmark for multi-symbol, futures, or multi-leg runs. That is *unknown*, not *lost*, and it is 119 of them right now.
 
 Every figure comes from the last verifying backtest at publish time. These are past results over historical data. Nothing here is promised or assured about the future, and none of it is investment advice.
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
+| ★ | [1097](strategies/1097/) | EMA Crossover Momentum 4H | -2.80% | -28.77% | +11.51% | 24 | 2026-09-18 |
 |  | [1096](strategies/1096/) | BB RSI Mean Reversion Daily v4 | +5.54% | +288.10% | +34.71% | 34 | 2026-09-18 |
 |  | [1094](strategies/1094/) | MACD Trend ATR Stop Daily | +105.06% | +1055.16% | +44.44% | 263 | 2026-09-18 |
 |  | [1093](strategies/1093/) | RSI2 Mean Reversion ATR Stop | +4.00% | +27.89% | +2.13% | 333 | 2026-09-18 |
