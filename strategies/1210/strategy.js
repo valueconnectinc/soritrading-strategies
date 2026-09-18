@@ -1,37 +1,33 @@
 /*
  * @coinsori-strategy v1
- * name: Bollinger Bands + RSI Mean Reversion v2
+ * name: RSI Oversold Mean Reversion
  * ex: binance
  * syms: ETHUSDT
  * interval: 1h
  * cash: 10000
  *
- * Mean reversion on ETH: buy when RSI drops below 35 while price is at or
- * below the lower Bollinger Band. Sell when RSI rises above 65 or price
- * reaches the upper band.
- * When it underperforms: strong trending markets where RSI stays extended
- * and price rides the band without reverting.
+ * Simple mean reversion: buy when RSI drops below 35 (oversold), sell when
+ * RSI rises above 65 (overbought). No Bollinger Bands filter to keep
+ * signal frequency reasonable.
+ * When it underperforms: strong trends where RSI stays oversold for long
+ * periods and never reverts.
  */
 
 function onUpdate(ctx) {
-  const bb = ctx.bb(20, 2, 0);
   const rsi = ctx.rsi(14, 0);
-  if (bb == null || rsi == null) return null;
+  if (rsi == null) return null;
 
-  const { upper, middle, lower } = bb;
   const price = ctx.price;
   const pos = ctx.position;
 
-  // Entry: RSI oversold and price at or below lower BB — stretched enough to mean-revert
-  if (!pos && rsi < 35 && price <= lower) {
+  // Entry: RSI oversold — stretched enough to expect a bounce
+  if (!pos && rsi < 35) {
     return { side: 'buy', qty: ctx.cash / price * 0.99 };
   }
 
-  // Exit: RSI overbought OR price at/above upper BB
-  if (pos) {
-    if (rsi > 65 || price >= upper) {
-      return { side: 'sell', qty: pos };
-    }
+  // Exit: RSI overbought — mean has reverted
+  if (pos && rsi > 65) {
+    return { side: 'sell', qty: pos };
   }
 
   return null;
