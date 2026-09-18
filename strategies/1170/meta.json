@@ -1,0 +1,28 @@
+{
+  "id": 1170,
+  "name": "MACD Trend + EMA200 Filter — BTCUSDT 1d",
+  "kind": "custom",
+  "verified": {
+    "backtestId": 6226,
+    "return": -48.81,
+    "mdd": 49.97,
+    "trades": 40,
+    "vsBuyHold": "unmeasured",
+    "gapPct": 0,
+    "tFrom": 0,
+    "tTo": 0,
+    "approxNotes": [
+      "봉 내 순서는 관례(양봉 O→L→H→C·음봉 O→H→L→C) — 실순서 미상 · 봉 중 거래량 null · MDD 는 봉 마감 기준"
+    ],
+    "spec": {
+      "ex": "binance",
+      "sym": "BTCUSDT",
+      "interval": "1d",
+      "bars": 180,
+      "end": 720
+    }
+  },
+  "config": null,
+  "updatedAt": "2026-09-18T09:34:43.038Z",
+  "publishedBy": "scripts/publish-strategies.mjs"
+}
