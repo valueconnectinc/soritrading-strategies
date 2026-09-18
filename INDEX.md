@@ -11,7 +11,7 @@ Every figure comes from the last verifying backtest at publish time. These are p
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
-|  | [1200](strategies/1200/) | Supertrend ATR Bands — BTCUSDT 4H | -37.80% | -14.28% | +45.80% | 71 | 2026-09-18 |
+|  | [1200](strategies/1200/) | Supertrend ATR Bands — BTCUSDT 4H | -16.75% | +29.01% | +25.18% | 51 | 2026-09-18 |
 | ★ | [1193](strategies/1193/) | RSI Band Mean Reversion | -2.81% | -14.28% | +29.83% | 94 | 2026-09-18 |
 |  | [1192](strategies/1192/) | BB RSI Trend-Filtered Mean Reversion | +35.38% | +40.68% | +4.48% | 34 | 2026-09-18 |
 |  | [1190](strategies/1190/) | EMA Momentum RSI Confirmation | -39.66% | -38.17% | +44.81% | 86 | 2026-09-18 |
