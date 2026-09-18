@@ -11,7 +11,7 @@ Every figure comes from the last verifying backtest at publish time. These are p
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
-| — | [1189](strategies/1189/) | BB RSI Mean Reversion with ATR Stop | +3.19% | — | +21.27% | 40 | 2026-09-18 |
+| — | [1189](strategies/1189/) | BB RSI Mean Reversion with ATR Stop | +41.74% | — | +12.55% | 30 | 2026-09-18 |
 | — | [1188](strategies/1188/) | ATR Trailing Stop Mean Reversion | -2.18% | — | +67.63% | 1 | 2026-09-18 |
 |  | [1187](strategies/1187/) | BB RSI EMA200 with DXY Macro Filter | -79.97% | +797.49% | +80.10% | 762 | 2026-09-18 |
 | ★ | [1186](strategies/1186/) | RSI Mean Reversion with DXY Macro Filter | -4.20% | -14.28% | +5.00% | 20 | 2026-09-18 |

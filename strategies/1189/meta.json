@@ -3,23 +3,23 @@
   "name": "BB RSI Mean Reversion with ATR Stop",
   "kind": "custom",
   "verified": {
-    "backtestId": 6304,
-    "return": 3.19,
-    "mdd": 21.27,
-    "trades": 40,
+    "backtestId": 6306,
+    "return": 41.74,
+    "mdd": 12.55,
+    "trades": 30,
     "vsBuyHold": "unmeasured",
     "gapPct": 0,
-    "tFrom": 1760918400,
+    "tFrom": 1768118400,
     "tTo": 1789704000,
     "approxNotes": [
       "봉 내 순서는 관례(양봉 O→L→H→C·음봉 O→H→L→C) — 실순서 미상 · 봉 중 거래량 null · MDD 는 봉 마감 기준",
-      "ctx.data() 호출 7800건이 주입 없는 키였음 — 그 조건은 통째로 걸러졌다. 데이터셋을 에이전트에 등록했는지, 키 이름이 맞는지 확인(SIGNALS.md §8-e)"
+      "ctx.data() 호출 5800건이 주입 없는 키였음 — 그 조건은 통째로 걸러졌다. 데이터셋을 에이전트에 등록했는지, 키 이름이 맞는지 확인(SIGNALS.md §8-e)"
     ],
     "spec": {
       "ex": "binance",
-      "sym": "BTCUSDT",
+      "sym": "ETHUSDT",
       "interval": "4h",
-      "bars": 2000
+      "bars": 1500
     }
   },
   "config": null,
