@@ -3,16 +3,16 @@
   "name": "BB Mean Reversion + Fear-Greed",
   "kind": "custom",
   "verified": {
-    "backtestId": 6076,
-    "return": 3.14,
-    "mdd": 0.96,
-    "trades": 6,
-    "vsBuyHold": "lose",
-    "benchRet": 24.91,
+    "backtestId": 6077,
+    "return": -5.58,
+    "mdd": 9.4,
+    "trades": 8,
+    "vsBuyHold": "win",
+    "benchRet": -25.18,
     "benchBasis": "price",
     "gapPct": 0,
-    "tFrom": 1781798400,
-    "tTo": 1788994800,
+    "tFrom": 1767801600,
+    "tTo": 1774998000,
     "approxNotes": [
       "봉 내 순서는 관례(양봉 O→L→H→C·음봉 O→H→L→C) — 실순서 미상 · 봉 중 거래량 null · MDD 는 봉 마감 기준"
     ],
@@ -21,7 +21,7 @@
       "sym": "BTCUSDT",
       "interval": "1h",
       "bars": 2000,
-      "end": 1788998400
+      "end": 1775001600
     }
   },
   "config": null,
