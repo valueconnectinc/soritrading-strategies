@@ -11,7 +11,7 @@ Every figure comes from the last verifying backtest at publish time. These are p
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
-| — | [1137](strategies/1137/) | Mean Reversion + EMA200 Trend Filter | +32.53% | — | +6.65% | 64 | 2026-09-18 |
+| — | [1137](strategies/1137/) | Mean Reversion + EMA200 Trend Filter | -4.45% | — | +10.69% | 6 | 2026-09-18 |
 | — | [1136](strategies/1136/) | EMA Cross + Donchian Breakout | -10.31% | — | +18.61% | 38 | 2026-09-18 |
 | — | [1135](strategies/1135/) | EMA Crossover Momentum | -22.65% | — | +22.65% | 72 | 2026-09-18 |
 | — | [1134](strategies/1134/) | RSI Momentum Crossover | -77.61% | — | +78.49% | 183 | 2026-09-18 |

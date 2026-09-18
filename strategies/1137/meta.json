@@ -3,22 +3,23 @@
   "name": "Mean Reversion + EMA200 Trend Filter",
   "kind": "custom",
   "verified": {
-    "backtestId": 6022,
-    "return": 32.53,
-    "mdd": 6.65,
-    "trades": 64,
+    "backtestId": 6026,
+    "return": -4.45,
+    "mdd": 10.69,
+    "trades": 6,
     "vsBuyHold": "unmeasured",
     "gapPct": 0,
-    "tFrom": 1768104000,
-    "tTo": 1789689600,
+    "tFrom": 0,
+    "tTo": 0,
     "approxNotes": [
       "봉 내 순서는 관례(양봉 O→L→H→C·음봉 O→H→L→C) — 실순서 미상 · 봉 중 거래량 null · MDD 는 봉 마감 기준"
     ],
     "spec": {
       "ex": "binance",
-      "sym": "ETHUSDT",
+      "sym": "BTCUSDT",
       "interval": "4h",
-      "bars": 1500
+      "bars": 1500,
+      "end": 20240801
     }
   },
   "config": null,
