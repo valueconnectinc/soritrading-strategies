@@ -3,7 +3,7 @@
   "name": "Supertrend Volatility Adaptive ETH 4h",
   "kind": "custom",
   "verified": {
-    "backtestId": 5797,
+    "backtestId": 5799,
     "return": -6.25,
     "mdd": 7.65,
     "trades": 8,
