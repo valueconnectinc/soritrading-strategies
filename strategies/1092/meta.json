@@ -1,0 +1,31 @@
+{
+  "id": 1092,
+  "name": "OI Crash Detector + RSI Mean Reversion v3",
+  "kind": "custom",
+  "verified": {
+    "backtestId": 5824,
+    "return": -11.79,
+    "mdd": 28.87,
+    "trades": 18,
+    "vsBuyHold": "lose",
+    "benchRet": 59.79,
+    "benchBasis": "price",
+    "gapPct": 0,
+    "tFrom": 1609444800,
+    "tTo": 1640980800,
+    "approxNotes": [
+      "봉 내 순서는 관례(양봉 O→L→H→C·음봉 O→H→L→C) — 실순서 미상 · 봉 중 거래량 null · MDD 는 봉 마감 기준",
+      "미결제약정·강제청산은 백테스트에 이력이 없어 항상 null — 이 전략은 백테스트로 검증되지 않는다(모의투자로 확인)"
+    ],
+    "spec": {
+      "ex": "binance",
+      "sym": "BTCUSDT",
+      "interval": "4h",
+      "bars": 2191,
+      "end": 1640995200
+    }
+  },
+  "config": null,
+  "updatedAt": "2026-09-18T03:46:13.865Z",
+  "publishedBy": "scripts/publish-strategies.mjs"
+}
