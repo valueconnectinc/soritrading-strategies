@@ -3,7 +3,7 @@
   "name": "RSI + Stochastic Dual Oversold + EMA200 Filter",
   "kind": "custom",
   "verified": {
-    "backtestId": 6128,
+    "backtestId": 6134,
     "return": 43.48,
     "mdd": 4.2,
     "trades": 52,
@@ -21,7 +21,7 @@
       "sym": "ETHUSDT",
       "interval": "4h",
       "bars": 1500,
-      "end": -4500
+      "end": 0
     }
   },
   "config": null,
