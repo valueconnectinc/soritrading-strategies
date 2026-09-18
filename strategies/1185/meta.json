@@ -1,0 +1,30 @@
+{
+  "id": 1185,
+  "name": "EMA50 Trend Filter + EMA Crossover + ATR Stop — BTCUSDT 4H",
+  "kind": "custom",
+  "verified": {
+    "backtestId": 6290,
+    "return": -37.8,
+    "mdd": 37.89,
+    "trades": 78,
+    "vsBuyHold": "lose",
+    "benchRet": -28.77,
+    "benchBasis": "price",
+    "gapPct": 0,
+    "tFrom": 1760904000,
+    "tTo": 1789689600,
+    "approxNotes": [
+      "봉 내 순서는 관례(양봉 O→L→H→C·음봉 O→H→L→C) — 실순서 미상 · 봉 중 거래량 null · MDD 는 봉 마감 기준"
+    ],
+    "spec": {
+      "ex": "binance",
+      "sym": "BTCUSDT",
+      "interval": "4h",
+      "bars": 2000,
+      "end": 1789704000
+    }
+  },
+  "config": null,
+  "updatedAt": "2026-09-18T10:06:06.465Z",
+  "publishedBy": "scripts/publish-strategies.mjs"
+}
