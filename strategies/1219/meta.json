@@ -3,7 +3,7 @@
   "name": "BB RSI Mean Reversion v5 — ETHUSDT 4H",
   "kind": "custom",
   "verified": {
-    "backtestId": 6484,
+    "backtestId": 6494,
     "return": 1.13,
     "mdd": 5.37,
     "trades": 8,
@@ -18,8 +18,8 @@
       "ex": "binance",
       "sym": "BTCUSDT",
       "interval": "4h",
-      "bars": 1000,
-      "end": 1000
+      "bars": 600,
+      "end": 400
     }
   },
   "config": null,
