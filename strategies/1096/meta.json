@@ -3,10 +3,10 @@
   "name": "BB RSI Mean Reversion Daily v4",
   "kind": "custom",
   "verified": {
-    "backtestId": 5845,
-    "return": -56.25,
-    "mdd": 74.84,
-    "trades": 94,
+    "backtestId": 5848,
+    "return": 5.54,
+    "mdd": 34.71,
+    "trades": 34,
     "vsBuyHold": "lose",
     "benchRet": 288.1,
     "benchBasis": "price",
@@ -26,6 +26,6 @@
     }
   },
   "config": null,
-  "updatedAt": "2026-09-18T04:11:43.461Z",
+  "updatedAt": "2026-09-18T04:13:43.066Z",
   "publishedBy": "scripts/publish-strategies.mjs"
 }

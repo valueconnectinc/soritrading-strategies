@@ -11,7 +11,7 @@ Every figure comes from the last verifying backtest at publish time. These are p
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
-|  | [1096](strategies/1096/) | BB RSI Mean Reversion Daily v4 | -56.25% | +288.10% | +74.84% | 94 | 2026-09-18 |
+|  | [1096](strategies/1096/) | BB RSI Mean Reversion Daily v4 | +5.54% | +288.10% | +34.71% | 34 | 2026-09-18 |
 |  | [1094](strategies/1094/) | MACD Trend ATR Stop Daily | +105.06% | +1055.16% | +44.44% | 263 | 2026-09-18 |
 |  | [1093](strategies/1093/) | RSI2 Mean Reversion ATR Stop | +4.00% | +27.89% | +2.13% | 333 | 2026-09-18 |
 | ★ | [1092](strategies/1092/) | OI Crash Detector + RSI Mean Reversion v3 | +7.19% | -29.83% | +7.91% | 23 | 2026-09-18 |
