@@ -1,0 +1,29 @@
+{
+  "id": 1159,
+  "name": "EMA200 Pullback — Trend Continuation",
+  "kind": "custom",
+  "verified": {
+    "backtestId": 6174,
+    "return": -24.48,
+    "mdd": 24.48,
+    "trades": 80,
+    "vsBuyHold": "lose",
+    "benchRet": 37,
+    "benchBasis": "price",
+    "gapPct": 0,
+    "tFrom": 1616889600,
+    "tTo": 1789603200,
+    "approxNotes": [
+      "봉 내 순서는 관례(양봉 O→L→H→C·음봉 O→H→L→C) — 실순서 미상 · 봉 중 거래량 null · MDD 는 봉 마감 기준"
+    ],
+    "spec": {
+      "ex": "binance",
+      "sym": "BTCUSDT",
+      "interval": "1d",
+      "bars": 2000
+    }
+  },
+  "config": null,
+  "updatedAt": "2026-09-18T08:47:23.687Z",
+  "publishedBy": "scripts/publish-strategies.mjs"
+}
