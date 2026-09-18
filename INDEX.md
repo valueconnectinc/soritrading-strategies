@@ -11,7 +11,7 @@ Every figure comes from the last verifying backtest at publish time. These are p
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
-|  | [1103](strategies/1103/) | RSI-2 Mean Reversion + ATR Regime + OI v7 | -43.89% | +28.76% | +43.89% | 254 | 2026-09-18 |
+|  | [1103](strategies/1103/) | RSI-2 Mean Reversion + ATR Regime + OI v7 | -16.17% | +5.58% | +16.17% | 106 | 2026-09-18 |
 |  | [1101](strategies/1101/) | Dual-Engine RSI + ATR Regime Filter v5 | -7.82% | +42.83% | +17.43% | 19 | 2026-09-18 |
 |  | [1100](strategies/1100/) | SuperTrend Momentum + ATR Trail Stop | -18.46% | +7.72% | +35.96% | 39 | 2026-09-18 |
 | ★ | [1099](strategies/1099/) | RSI-30 Oversold ATR Stop 1D | +22.26% | +7.72% | +19.27% | 38 | 2026-09-18 |
