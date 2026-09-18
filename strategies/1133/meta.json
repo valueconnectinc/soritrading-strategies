@@ -3,7 +3,7 @@
   "name": "EMA Crossover Momentum",
   "kind": "custom",
   "verified": {
-    "backtestId": 6008,
+    "backtestId": 6010,
     "return": -49.25,
     "mdd": 50.81,
     "trades": 45,
@@ -20,7 +20,7 @@
       "sym": "ETHUSDT",
       "interval": "4h",
       "bars": 1500,
-      "end": 20240601
+      "end": 20240401
     }
   },
   "config": null,
