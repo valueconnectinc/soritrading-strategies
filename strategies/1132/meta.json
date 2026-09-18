@@ -3,7 +3,7 @@
   "name": "Bollinger Mean Reversion + Volume",
   "kind": "custom",
   "verified": {
-    "backtestId": 6000,
+    "backtestId": 6004,
     "return": 3.22,
     "mdd": 3.47,
     "trades": 12,
