@@ -1,0 +1,28 @@
+{
+  "id": 1260,
+  "name": "BB Squeeze + EMA200 Trend Filter",
+  "kind": "custom",
+  "verified": {
+    "backtestId": 6755,
+    "return": -3.88,
+    "mdd": 3.88,
+    "trades": 6,
+    "vsBuyHold": "unmeasured",
+    "gapPct": 0,
+    "tFrom": 1723550400,
+    "tTo": 1729296000,
+    "approxNotes": [
+      "봉 내 순서는 관례(양봉 O→L→H→C·음봉 O→H→L→C) — 실순서 미상 · 봉 중 거래량 null · MDD 는 봉 마감 기준"
+    ],
+    "spec": {
+      "ex": "binance",
+      "sym": "BTCUSDT",
+      "interval": "4h",
+      "bars": 400,
+      "end": 1729305600
+    }
+  },
+  "config": null,
+  "updatedAt": "2026-09-18T14:54:25.399Z",
+  "publishedBy": "scripts/publish-strategies.mjs"
+}
