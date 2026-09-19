@@ -1,6 +1,6 @@
 /*
  * @coinsori-strategy v1
- * name: BB RSI Volume Mean Reversion v6
+ * name: BB RSI Volume Mean Reversion v7
  * ex: binance
  * syms: SOLUSDT
  * interval: 4h
@@ -8,9 +8,10 @@
  *
  * Mean reversion on 4H SOLUSDT. Buys when RSI is oversold (<35),
  * price formally closes at or below the lower Bollinger Band, and
- * volume surges to 1.5x its 20-bar average (strong conviction behind the drop).
- * Sells when price reaches the middle BB or RSI climbs above 55 (softer
- * overbought threshold than 60 — takes profit earlier).
+ * volume is above its 20-bar average (confirming the drop is backed
+ * by real participation). Sells ONLY when RSI climbs above 65 —
+ * no premature exit at the middle band. This lets the full mean
+ * reversion unfold rather than cutting winners short.
  * Works best in range-bound and choppy markets; loses badly in strong
  * sustained one-directional moves where RSI stays extreme.
  */
@@ -36,25 +37,21 @@ function onUpdate(ctx) {
     const rsiOversold = rsi_1 < 35;
     // 2. Price at/below lower BB on confirmed bar (formal touch)
     const atLowerBand = close1 <= bb_1.lower;
-    // 3. Volume surge: 1.5x the 20-bar average (strong conviction)
-    const volSurge = ctx.vol >= avgVol * 1.5;
+    // 3. Volume above average (confirms the drop has conviction)
+    const volConfirm = ctx.vol > avgVol;
 
-    // ── Exit conditions ─────────────────────────────────────────────────
-    // Exit 1: price reached middle BB — mean reversion target hit
-    // Exit 2: RSI overbought (>55) — softer threshold than 60, exits earlier
-    const atMidBand  = price >= bb.mid;
-    const rsiHot     = rsi > 55;
+    // ── Exit condition ─────────────────────────────────────────────────
+    // RSI overbought (>65): mean reversion complete, take profit
+    const rsiHot = rsi > 65;
 
     // ── BUY ─────────────────────────────────────────────────────────────
-    if (ctx.position === 0 && rsiOversold && atLowerBand && volSurge) {
+    if (ctx.position === 0 && rsiOversold && atLowerBand && volConfirm) {
         return { side: 'buy', qty: ctx.cash / price * 0.99 };
     }
 
-    // ── SELL ────────────────────────────────────────────────────────────
-    if (ctx.position > 0) {
-        if (atMidBand || rsiHot) {
-            return { side: 'sell', qty: ctx.position };
-        }
+    // ── SELL ───────────────────────────────────────────────────────────
+    if (ctx.position > 0 && rsiHot) {
+        return { side: 'sell', qty: ctx.position };
     }
 
     return null;
