@@ -1,0 +1,30 @@
+{
+  "id": 1603,
+  "name": "RSI Mean Reversion",
+  "kind": "custom",
+  "verified": {
+    "backtestId": 7346,
+    "return": 1.12,
+    "mdd": 4.62,
+    "trades": 18,
+    "vsBuyHold": "lose",
+    "benchRet": 3.58,
+    "benchBasis": "price",
+    "gapPct": 0,
+    "tFrom": 1784394000,
+    "tTo": 1786190400,
+    "approxNotes": [
+      "봉 내 순서는 관례(양봉 O→L→H→C·음봉 O→H→L→C) — 실순서 미상 · 봉 중 거래량 null · MDD 는 봉 마감 기준"
+    ],
+    "spec": {
+      "ex": "binance",
+      "sym": "ETHUSDT",
+      "interval": "1h",
+      "bars": 500,
+      "end": 1786194000
+    }
+  },
+  "config": null,
+  "updatedAt": "2026-09-19T05:23:20.648Z",
+  "publishedBy": "scripts/publish-strategies.mjs"
+}
