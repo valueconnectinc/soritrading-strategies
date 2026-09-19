@@ -3,7 +3,7 @@
   "name": "Funding Rate + OI Sentiment Momentum",
   "kind": "custom",
   "verified": {
-    "backtestId": 6829,
+    "backtestId": 6831,
     "return": -6.02,
     "mdd": 6.02,
     "trades": 24,
