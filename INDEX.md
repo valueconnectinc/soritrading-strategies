@@ -4,13 +4,14 @@ Every strategy whose backtest **finished and actually traded** is published here
 Nothing is filtered out by return — the ones that lost money are part of the record.
 Entries stay after a strategy is removed from our own workspace — this is a log, and deleting the record would leave only the survivors.
 
-**★ marks a strategy that out-returned buy & hold over the same window** — 50 of 345 right now.
+**★ marks a strategy that out-returned buy & hold over the same window** — 50 of 346 right now.
 `—` means the comparison **could not be made**: the engine does not compute a benchmark for multi-symbol, futures, or multi-leg runs. That is *unknown*, not *lost*, and it is 156 of them right now.
 
 Every figure comes from the last verifying backtest at publish time. These are past results over historical data. Nothing here is promised or assured about the future, and none of it is investment advice.
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
+|  | [1439](strategies/1439/) | Donchian Breakout + EMA Trend Filter | -37.83% | -27.22% | +37.83% | 32 | 2026-09-19 |
 | — | [1438](strategies/1438/) | VWAP Mean Reversion + RSI | -17.86% | — | +20.49% | 116 | 2026-09-19 |
 | ★ | [1263](strategies/1263/) | VWAP Mean Reversion + Funding Filter | -9.50% | -21.08% | +36.11% | 1 | 2026-09-18 |
 | — | [1260](strategies/1260/) | BB Squeeze + EMA200 Trend Filter | -3.88% | — | +3.88% | 6 | 2026-09-18 |
