@@ -1,0 +1,30 @@
+{
+  "id": 1678,
+  "name": "DOGEUSDT EMA Crossover 4H",
+  "kind": "custom",
+  "verified": {
+    "backtestId": 7628,
+    "return": -46.27,
+    "mdd": 46.27,
+    "trades": 34,
+    "vsBuyHold": "lose",
+    "benchRet": -33.67,
+    "benchBasis": "price",
+    "gapPct": 0,
+    "tFrom": 1768204800,
+    "tTo": 1775390400,
+    "approxNotes": [
+      "봉 내 순서는 관례(양봉 O→L→H→C·음봉 O→H→L→C) — 실순서 미상 · 봉 중 거래량 null · MDD 는 봉 마감 기준"
+    ],
+    "spec": {
+      "ex": "binance",
+      "sym": "DOGEUSDT",
+      "interval": "4h",
+      "bars": 500,
+      "end": 1775404800
+    }
+  },
+  "config": null,
+  "updatedAt": "2026-09-19T10:14:30.263Z",
+  "publishedBy": "scripts/publish-strategies.mjs"
+}
