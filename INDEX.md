@@ -11,7 +11,7 @@ Every figure comes from the last verifying backtest at publish time. These are p
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
-| — | [1438](strategies/1438/) | VWAP Mean Reversion + RSI | -36.95% | — | +40.55% | 117 | 2026-09-19 |
+| — | [1438](strategies/1438/) | VWAP Mean Reversion + RSI | -17.86% | — | +20.49% | 116 | 2026-09-19 |
 | ★ | [1263](strategies/1263/) | VWAP Mean Reversion + Funding Filter | -9.50% | -21.08% | +36.11% | 1 | 2026-09-18 |
 | — | [1260](strategies/1260/) | BB Squeeze + EMA200 Trend Filter | -3.88% | — | +3.88% | 6 | 2026-09-18 |
 | — | [1259](strategies/1259/) | AI 전략 | -5.37% | — | +11.80% | 12 | 2026-09-18 |
