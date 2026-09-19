@@ -4,13 +4,14 @@ Every strategy whose backtest **finished and actually traded** is published here
 Nothing is filtered out by return — the ones that lost money are part of the record.
 Entries stay after a strategy is removed from our own workspace — this is a log, and deleting the record would leave only the survivors.
 
-**★ marks a strategy that out-returned buy & hold over the same window** — 102 of 489 right now.
+**★ marks a strategy that out-returned buy & hold over the same window** — 102 of 490 right now.
 `—` means the comparison **could not be made**: the engine does not compute a benchmark for multi-symbol, futures, or multi-leg runs. That is *unknown*, not *lost*, and it is 174 of them right now.
 
 Every figure comes from the last verifying backtest at publish time. These are past results over historical data. Nothing here is promised or assured about the future, and none of it is investment advice.
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
+|  | [1663](strategies/1663/) | Bollinger Bands Mean Reversion with RSI Filter | +19.53% | +34.72% | +7.43% | 2 | 2026-09-19 |
 |  | [1662](strategies/1662/) | Volume-Confirmed Trend Following | -17.21% | +34.72% | +19.31% | 58 | 2026-09-19 |
 |  | [1661](strategies/1661/) | Volume-Confirmed BB Mean Reversion | +5.07% | +34.72% | +4.62% | 16 | 2026-09-19 |
 | — | [1656](strategies/1656/) | RSI Momentum with SMA Trend Filter | -0.12% | — | +2.00% | 6 | 2026-09-19 |

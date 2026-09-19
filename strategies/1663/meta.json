@@ -1,0 +1,29 @@
+{
+  "id": 1663,
+  "name": "Bollinger Bands Mean Reversion with RSI Filter",
+  "kind": "custom",
+  "verified": {
+    "backtestId": 7573,
+    "return": 19.53,
+    "mdd": 7.43,
+    "trades": 2,
+    "vsBuyHold": "lose",
+    "benchRet": 34.72,
+    "benchBasis": "price",
+    "gapPct": 0,
+    "tFrom": 1782604800,
+    "tTo": 1789790400,
+    "approxNotes": [
+      "봉 내 순서는 관례(양봉 O→L→H→C·음봉 O→H→L→C) — 실순서 미상 · 봉 중 거래량 null · MDD 는 봉 마감 기준"
+    ],
+    "spec": {
+      "ex": "binance",
+      "sym": "BTCUSDT",
+      "interval": "4h",
+      "bars": 500
+    }
+  },
+  "config": null,
+  "updatedAt": "2026-09-19T09:51:26.219Z",
+  "publishedBy": "scripts/publish-strategies.mjs"
+}
