@@ -11,7 +11,7 @@ Every figure comes from the last verifying backtest at publish time. These are p
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
-| ★ | [1622](strategies/1622/) | AI 전략 | -1.92% | -11.69% | +9.66% | 10 | 2026-09-19 |
+| ★ | [1622](strategies/1622/) | AI 전략 | -23.83% | -43.16% | +38.93% | 30 | 2026-09-19 |
 | — | [1621](strategies/1621/) | Funding Rate Sentiment Long | -4.69% | — | +7.09% | 10 | 2026-09-19 |
 | ★ | [1619](strategies/1619/) | EMA20 Trend + RSI40 Pullback | -4.52% | -10.67% | +7.01% | 10 | 2026-09-19 |
 |  | [1618](strategies/1618/) | RSI Oversold Pullback | -61.95% | -43.50% | +61.95% | 256 | 2026-09-19 |
