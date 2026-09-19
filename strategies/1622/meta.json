@@ -3,7 +3,7 @@
   "name": "AI 전략",
   "kind": "custom",
   "verified": {
-    "backtestId": 7409,
+    "backtestId": 7412,
     "return": 17.26,
     "mdd": 3.62,
     "trades": 22,
@@ -21,7 +21,8 @@
       "ex": "binance",
       "sym": "SOLUSDT",
       "interval": "4h",
-      "bars": 500
+      "bars": 500,
+      "end": 1789804800
     }
   },
   "config": null,
