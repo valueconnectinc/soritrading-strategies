@@ -1,30 +1,41 @@
 /*
  * @coinsori-strategy v1
- * name: RSI Mean Reversion v2
+ * name: BB-ATR Volatility Breakout
  * ex: binance
  * syms: MATICUSDT
  * interval: 4h
  * cash: 10000
  *
- * Fades RSI extremes — buys oversold, sells overbought.
- * Uses faster RSI(7) with looser 35/65 thresholds for more trades.
- * No trend filter to keep entries responsive.
- * Works best in ranging markets; loses in prolonged one-directional moves.
+ * Buys when price breaks above the upper Bollinger Band (20,2) with above-average
+ * volume — catching momentum explosions. Sells when price falls back below the
+ * lower BB band or trails a 2×ATR protective stop. Position size is 25% of cash.
+ * Fails in choppy, low-volume markets — false breakouts erode gains.
  */
 
 function onUpdate(ctx) {
-    const rsi   = ctx.rsi(7);
-    if (rsi == null) return null;
+    const bb    = ctx.bb(20, 2);
+    const atr   = ctx.atr(14);
+    const vol   = ctx.vol;
+    const avgV  = ctx.avgVol(20);
 
-    // === CLOSE LONG: RSI overbought ===
-    if (ctx.position > 0 && rsi > 65) {
-        return { side: 'sell', qty: ctx.position };
+    if (bb == null || atr == null || vol == null || avgV == null) return null;
+
+    const upper  = bb.upper;
+    const lower  = bb.lower;
+    const price  = ctx.price;
+
+    // === CLOSE LONG: price fell below lower BB or hit ATR stop ===
+    if (ctx.position > 0) {
+        const trailStop = ctx.entryPx - 2 * atr;  // ATR-based trailing stop
+        if (price < lower || price < trailStop) {
+            return { side: 'sell', qty: ctx.position };
+        }
     }
 
-    // === ENTER LONG: RSI oversold ===
-    if (ctx.position === 0 && rsi < 35) {
-        // Use 30% of cash per trade
-        const qty = (ctx.cash * 0.30) / ctx.price;
+    // === ENTER LONG: breakout above upper BB on high volume ===
+    if (ctx.position === 0 && price > upper && vol > avgV * 1.2) {
+        // Volume confirms the move — avoid false breakouts
+        const qty = (ctx.cash * 0.25) / price;
         return { side: 'buy', qty: qty };
     }
 
