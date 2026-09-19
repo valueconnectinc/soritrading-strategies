@@ -11,7 +11,7 @@ Every figure comes from the last verifying backtest at publish time. These are p
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
-|  | [1527](strategies/1527/) | RSI Regime Filter | -37.94% | -27.22% | +37.94% | 160 | 2026-09-19 |
+|  | [1527](strategies/1527/) | RSI Regime Filter | -3.60% | +34.41% | +3.60% | 18 | 2026-09-19 |
 |  | [1524](strategies/1524/) | AI 전략 | -9.69% | -9.19% | +11.43% | 46 | 2026-09-19 |
 | ★ | [1523](strategies/1523/) | AI 전략 | -2.24% | -37.05% | +2.24% | 4 | 2026-09-19 |
 | ★ | [1521](strategies/1521/) | AI 전략 | -2.24% | -37.05% | +2.24% | 4 | 2026-09-19 |
