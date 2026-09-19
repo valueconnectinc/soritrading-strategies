@@ -1,53 +1,77 @@
 /*
  * @coinsori-strategy v1
- * name: VWAP Mean Reversion + RSI
+ * name: Donchian Channel Breakout + EMA Trend Filter — BTCUSDT 4H
  * ex: binance
  * syms: BTCUSDT
- * interval: 1h
+ * interval: 4h
  * cash: 10000
  *
- * Buys when price pulls back below VWAP (volume-weighted average price)
- * with RSI between 35–55 — the zone where price is cheap relative to
- * the day's average but not in panic-oversold territory. Sells when
- * price reverts back above VWAP or RSI reaches 65 (momentum exhausted).
- * A 3% hard stop prevents large drawdowns if the pullback deepens into
- * a genuine trend change.
- * When it does NOT work: in strong downtrending days where VWAP slopes
- * downward all day — every buy is below VWAP but price keeps falling,
- * RSI stays suppressed, and the strategy accumulates losing trades.
- * Also struggles in low-volume sessions where VWAP itself is noisy.
+ * Why this strategy: Donchian breakouts are a classic trend-following entry —
+ * price breaking above the 20-bar high signals institutional momentum. The EMA21
+ * trend filter avoids buying breakouts in a downtrend (counter-trend trades that
+ * fail). RSI confirmation filters out shake-outs. This combination is new to this
+ * job — EMA crossover and BB mean-reversion are tested, but pure breakout is not.
+ *
+ * When it buys and sells:
+ *   Buy: price closes above 20-bar high + EMA21 rising + RSI > 50
+ *   Sell: price closes below 20-bar low OR ATR trailing stop hit OR RSI < 35
+ *
+ * When it does NOT work: choppy markets where price pierces the channel
+ * boundary repeatedly (whipsaws). Also fails in slow grinding uptrends where
+ * price never breaks the channel decisively.
  */
+
 function onUpdate(ctx) {
   const pos   = ctx.position;
   const price = ctx.price;
 
-  // ── Warm-up ─────────────────────────────────────────────────────────
-  const rsi = ctx.rsi(14, 1);
-  if (rsi == null) return null;
+  // ── Warm-up guard ────────────────────────────────────────────────────
+  const atr    = ctx.atr(14);
+  const ema21  = ctx.ema(21);
+  const ema21_1 = ctx.ema(21, 1);
+  const rsi    = ctx.rsi(14);
+  if (atr == null || ema21 == null || ema21_1 == null || rsi == null) return null;
 
-  // ── VWAP proxy: 50-period EMA acts as a volume-smoothed anchor ───────
-  // True VWAP needs intraday data; EMA(50) on 1H captures the same idea
-  // of a rolling volume-weighted equilibrium over a full trading day
-  const vwap = ctx.ema(50, 1);
-  if (vwap == null) return null;
+  // ── Donchian 20-bar high/low (previous closed bar) ───────────────────
+  // ago=1 reads the CLOSED previous bar — safe for backtest and live
+  const dcHigh = ctx.high(20, 1);
+  const dcLow   = ctx.low(20, 1);
+  if (dcHigh == null || dcLow == null) return null;
 
-  // ── BUY: price below VWAP + RSI in reversion zone ────────────────────
-  if (pos === 0 && price < vwap && rsi >= 35 && rsi <= 55) {
-    ctx.log('BUY — below VWAP, RSI=' + rsi.toFixed(1) + ', VWAP=' + vwap.toFixed(2));
-    return { side: 'buy', qty: ctx.cash / price * 0.99 };
+  // ── Trend filter: EMA21 must be rising (bullish bias) ───────────────
+  const emaRising = ema21 > ema21_1;
+
+  // ── ATR trailing stop ───────────────────────────────────────────────
+  if (!ctx.state.entryPx) ctx.state.entryPx = 0;
+  if (!ctx.state.highest) ctx.state.highest = 0;
+
+  // ── BUY: breakout above 20-bar high + EMA rising + RSI confirming ──
+  if (pos === 0) {
+    const breakout  = price > dcHigh;
+    const rsiConfirm = rsi > 50;
+    if (breakout && emaRising && rsiConfirm) {
+      ctx.state.entryPx = price;
+      ctx.state.highest = price;
+      ctx.log('BUY breakout above ' + dcHigh.toFixed(1) + ' RSI=' + rsi.toFixed(1));
+      return { side: 'buy', qty: ctx.cash / price * 0.99 };
+    }
   }
 
-  // ── SELL: above VWAP OR RSI overbought OR hard stop ──────────────────
+  // ── HOLD: update trailing ATR stop ──────────────────────────────────
   if (pos > 0) {
-    const entryPx = ctx.entryPx;
-    const pnlPct  = (price - entryPx) / entryPx;
+    if (price > ctx.state.highest) ctx.state.highest = price;
+    const atrStop = ctx.state.highest - 2 * atr; // 2× ATR trailing stop
 
-    const aboveVwap = price > vwap;
-    const rsiOver   = rsi > 65;
-    const hardStop  = pnlPct <= -0.03;
+    // Exit triggers
+    const belowChannel = price < dcLow;
+    const rsiWeak      = rsi < 35;
+    const atrTrailing   = price < atrStop && atrStop > 0;
 
-    if (aboveVwap || rsiOver || hardStop) {
-      ctx.log('SELL — aboveVwap=' + aboveVwap + ' rsiOver=' + rsiOver + ' stop=' + hardStop + ' pnl=' + (pnlPct*100).toFixed(1) + '%');
+    if (belowChannel || rsiWeak || atrTrailing) {
+      ctx.state.entryPx = 0;
+      ctx.state.highest = 0;
+      const reason = belowChannel ? 'below-Donchian' : rsiWeak ? 'RSIweak' : 'ATRstop';
+      ctx.log('SELL ' + reason + ' price=' + price.toFixed(1) + ' stop=' + atrStop.toFixed(1));
       return { side: 'sell', qty: pos };
     }
   }
