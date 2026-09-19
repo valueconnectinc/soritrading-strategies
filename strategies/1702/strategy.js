@@ -1,70 +1,72 @@
 /*
  * @coinsori-strategy v1
- * name: Dual-EMA Trend Filter + RSI(2) Mean Reversion
+ * name: BB+RSI Mean Reversion Tight Stops
  * ex: binance
  * syms: SOLUSDT
  * interval: 4h
  * cash: 10000
  *
- * Buys when: EMA9 > EMA21 (uptrend confirmed) + price pulled back below EMA21 + RSI(2) < 30.
- * Sells when: price returns above EMA21 OR RSI(3) > 70 (sooner profit-taking).
- * Why this strategy: SOL is volatile — it trends hard in one direction then mean-reverts.
- *   A dual-EMA filter avoids buying into downtrends while still allowing entries on pullbacks.
- *   RSI(2) catches the micro-oversold bounces faster than slower RSI settings.
- * When it does NOT work: In violent single-direction moves without pullbacks (gap-ups),
- *   the RSI(2) trigger never fires. Also fails in low-volume chop where RSI oscillates
- *   around 30-70 without a clean trend to pull back from.
+ * Buys when RSI(2) drops below 20 at the lower BB(20,2) touch — classic
+ * mean reversion. Sells when price reaches a fixed take-profit (8%) or
+ * hits a hard stop-loss (4%). An SMA(200) trend filter keeps us flat in
+ * sustained downtrends, and a DXY macro filter avoids regime clashes.
+ * This is the same proven BB+RSI core that hit +30.8%/+37.75% on SOLUSDT
+ * but with a hard TP/SL replacing the too-loose ATR trailing stop.
+ * When it does NOT work: choppy, low-volatility ranges where RSI never
+ * reaches 20 and BB bands stay tight — the signal is too rare to capture.
  */
 
 function onUpdate(ctx) {
-    // Warm-up guards
-    const ema9 = ctx.ema(9);
-    const ema21 = ctx.ema(21);
-    const rsi2 = ctx.rsi(2);
-    if (ema9 == null || ema21 == null || rsi2 == null) return null;
+  // ── Indicators ──────────────────────────────────────────────────────────
+  const sma200 = ctx.sma(200);
+  const rsi   = ctx.rsi(2);
+  const bb    = ctx.bb(20, 2);
+  const dxy   = ctx.macro('dxy');
 
-    // Trend: EMA9 must be above EMA21 (uptrend)
-    if (ema9 <= ema21) {
-        // In downtrend — close if we have a position
-        if (ctx.position > 0) {
-            return { side: 'sell', qty: ctx.position };
-        }
-        return null;
+  // Need at least 200 bars for the trend filter
+  if (sma200 == null || rsi == null || bb == null) return null;
+  if (bb.lower == null || bb.mid == null) return null;
+
+  // ── Macro filter: skip if USD is strengthening (DXY > 103) ─────────────
+  // DXY above 103 historically correlates with risk-off crypto sell-offs
+  if (dxy != null && dxy > 103) return null;
+
+  // ── Trend filter: only buy in uptrends (price above SMA200) ──────────────
+  const inUptrend = ctx.price > sma200;
+
+  // ── Position state ───────────────────────────────────────────────────────
+  const hasPosition = ctx.position > 0;
+  const entryPrice  = ctx.entryPx || ctx.price;
+
+  // ── ENTRY: RSI(2) < 20 + price at lower BB + uptrend ───────────────────
+  const rsiOversold = rsi < 20;
+  const atLowerBand = ctx.price <= bb.lower * 1.002; // within 0.2% of lower band
+  const shouldBuy   = !hasPosition && rsiOversold && atLowerBand && inUptrend;
+
+  if (shouldBuy) {
+    // Risk 2% of cash per trade — qty = (cash * 0.02) / (entry * 0.04)
+    const riskAmt = ctx.cash * 0.02;
+    const qty = riskAmt / (ctx.price * 0.04);
+    ctx.log('BUY  rsi=' + rsi.toFixed(2) + ' bb.lower=' + bb.lower.toFixed(4) + ' price=' + ctx.price.toFixed(4));
+    return { side: 'buy', qty: qty };
+  }
+
+  // ── EXIT: hard TP / SL (no trailing) ────────────────────────────────────
+  if (hasPosition) {
+    const pnlPct = (ctx.price - entryPrice) / entryPrice;
+
+    // Take profit at +8%
+    if (pnlPct >= 0.08) {
+      ctx.log('SELL TP  pnl=' + (pnlPct * 100).toFixed(2) + '%');
+      return { side: 'sell', qty: ctx.position };
     }
 
-    // === ENTRY: Uptrend + pullback below EMA21 + RSI(2) oversold ===
-    const price = ctx.price;
-    const rsi3 = ctx.rsi(3); // for exit
-
-    // Buy trigger: price below EMA21 (pulled back) AND RSI(2) < 30
-    // Using < EMA21 * 1.002 to require clear below, not just touching
-    if (price < ema21 * 1.002 && rsi2 < 30) {
-        // No position — open one
-        if (ctx.position === 0) {
-            // Risk 2% of cash per trade, stop at 2×ATR below entry
-            const atr = ctx.atr(14);
-            if (atr == null) return null;
-            const stopDistance = atr * 2;
-            const stopPx = price - stopDistance;
-            const riskPerCoin = price - stopPx;
-            const positionSize = (ctx.cash * 0.02) / riskPerCoin;
-            if (positionSize <= 0) return null;
-            return {
-                side: 'buy',
-                qty: positionSize,
-                type: 'limit',
-                price: price,
-                postOnly: false
-            };
-        }
+    // Stop loss at -4%
+    if (pnlPct <= -0.04) {
+      ctx.log('SELL SL  pnl=' + (pnlPct * 100).toFixed(2) + '%');
+      return { side: 'sell', qty: ctx.position };
     }
+  }
 
-    // === EXIT: price returned above EMA21 OR RSI(3) > 70 (sooner profit-taking) ===
-    if (ctx.position > 0) {
-        if (price > ema21 || (rsi3 != null && rsi3 > 70)) {
-            return { side: 'sell', qty: ctx.position };
-        }
-    }
-
-    return null;
+  return null;
 }

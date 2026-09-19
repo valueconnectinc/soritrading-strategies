@@ -11,7 +11,7 @@ Every figure comes from the last verifying backtest at publish time. These are p
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
-| ★ | [1702](strategies/1702/) | Dual-EMA Trend + RSI(2) Pullback | -11.91% | -43.16% | +12.01% | 102 | 2026-09-19 |
+| ★ | [1702](strategies/1702/) | Dual-EMA Trend + RSI(2) Pullback | +2.69% | -23.80% | +1.82% | 1 | 2026-09-19 |
 |  | [1701](strategies/1701/) | Daily EMA50 Filter + 4H RSI(2) Pullback | -6.12% | +57.49% | +6.19% | 26 | 2026-09-19 |
 | ★ | [1698](strategies/1698/) | AI 전략 | -22.76% | -23.80% | +26.13% | 42 | 2026-09-19 |
 |  | [1695](strategies/1695/) | EMA200 Trend Filter + RSI/Volume Bounce | +5.28% | +57.49% | +2.89% | 4 | 2026-09-19 |
