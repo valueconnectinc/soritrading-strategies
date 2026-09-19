@@ -11,7 +11,7 @@ Every figure comes from the last verifying backtest at publish time. These are p
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
-| ★ | [1698](strategies/1698/) | AI 전략 | -3.46% | -23.80% | +3.46% | 10 | 2026-09-19 |
+| ★ | [1698](strategies/1698/) | AI 전략 | -22.76% | -23.80% | +26.13% | 42 | 2026-09-19 |
 |  | [1695](strategies/1695/) | EMA200 Trend Filter + RSI/Volume Bounce | +5.28% | +57.49% | +2.89% | 4 | 2026-09-19 |
 | ★ | [1694](strategies/1694/) | Volume Spike + RSI Wide TP | -5.73% | -11.69% | +26.58% | 20 | 2026-09-19 |
 | ★ | [1693](strategies/1693/) | Bollinger Squeeze v2 BTC | -3.77% | -10.88% | +18.97% | 24 | 2026-09-19 |
