@@ -1,0 +1,31 @@
+{
+  "id": 1462,
+  "name": "ATR Channel Breakout",
+  "kind": "custom",
+  "verified": {
+    "backtestId": 6880,
+    "return": -62.9,
+    "mdd": 62.9,
+    "trades": 262,
+    "vsBuyHold": "lose",
+    "benchRet": -44.17,
+    "benchBasis": "price",
+    "gapPct": 0,
+    "tFrom": 1768176000,
+    "tTo": 1775361600,
+    "approxNotes": [
+      "봉 내 순서는 관례(양봉 O→L→H→C·음봉 O→H→L→C) — 실순서 미상 · 봉 중 거래량 null · MDD 는 봉 마감 기준",
+      "smart→market"
+    ],
+    "spec": {
+      "ex": "binanceusdm",
+      "sym": "SOLUSDT",
+      "interval": "4h",
+      "bars": 500,
+      "end": 1775376000
+    }
+  },
+  "config": null,
+  "updatedAt": "2026-09-19T01:18:28.610Z",
+  "publishedBy": "scripts/publish-strategies.mjs"
+}
