@@ -4,13 +4,15 @@ Every strategy whose backtest **finished and actually traded** is published here
 Nothing is filtered out by return — the ones that lost money are part of the record.
 Entries stay after a strategy is removed from our own workspace — this is a log, and deleting the record would leave only the survivors.
 
-**★ marks a strategy that out-returned buy & hold over the same window** — 113 of 516 right now.
+**★ marks a strategy that out-returned buy & hold over the same window** — 113 of 518 right now.
 `—` means the comparison **could not be made**: the engine does not compute a benchmark for multi-symbol, futures, or multi-leg runs. That is *unknown*, not *lost*, and it is 174 of them right now.
 
 Every figure comes from the last verifying backtest at publish time. These are past results over historical data. Nothing here is promised or assured about the future, and none of it is investment advice.
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
+|  | [1714](strategies/1714/) | EMA Trend Following | -46.06% | +33.30% | +53.89% | 103 | 2026-09-19 |
+|  | [1713](strategies/1713/) | Bollinger Band Mean Reversion | +0.53% | +33.30% | +6.04% | 4 | 2026-09-19 |
 |  | [1712](strategies/1712/) | RSI Divergence Mean Reversion | +17.95% | +33.30% | +7.67% | 18 | 2026-09-19 |
 |  | [1711](strategies/1711/) | Volatility Contraction Breakout v2 | -0.49% | +33.30% | +0.49% | 2 | 2026-09-19 |
 | ★ | [1709](strategies/1709/) | Trend-Filtered BB/RSI Mean Reversion | -14.64% | -27.31% | +23.34% | 30 | 2026-09-19 |
