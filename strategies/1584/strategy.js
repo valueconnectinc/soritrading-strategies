@@ -1,54 +1,54 @@
 /*
  * @coinsori-strategy v1
- * name: RSI Mean Reversion + Vol Spike MATIC
+ * name: EMA Cross + Volume Filter MATIC
  * ex: binance
  * syms: MATICUSDT
  * interval: 4h
  * cash: 1000
  *
- * Classic mean reversion on MATIC: buys when RSI drops below 30 (oversold) AND
- * volume surges above 1.5x its 20-bar average — a confirmed oversold bounce setup.
- * Sells when RSI rises above 60 or price hits a 5% trailing stop from the entry high.
- * Bets on the bounce back to mean after panic selling.
- * Works when MATIC bounces after sharp corrections with volume participation.
- * Fails in prolonged downtrends where RSI stays low and bounces fizzle.
+ * Buys when the fast EMA crosses above the slow EMA, confirmed by above-average volume.
+ * Sells on the reverse EMA cross or if price drops 3% below the entry (tight stop).
+ * Simple trend-following: catches trending moves, avoids low-volume false breakouts.
+ * Works in trending markets with volume participation.
+ * Fails in choppy markets with whipsaw EMA crosses and low-volume breakouts.
  */
 function onUpdate(ctx) {
-  const rsiLen = 14;
+  const fastLen = 9;
+  const slowLen = 21;
   const volLen = 20;
-  const rsiOB = 30;    // oversold threshold for buy
-  const rsiSell = 60;  // overbought / mean for sell
-  const volMult = 1.5; // volume must be this multiple of avg to confirm
-  const trailPct = 0.05; // 5% trailing stop from session high
+  const volMult = 1.1; // volume must be this fraction above average
+  const stopLoss = 0.03; // 3% hard stop
 
-  const rsi = ctx.rsi(rsiLen);
+  const fast = ctx.ema(fastLen);
+  const slow = ctx.ema(slowLen);
   const avgVol = ctx.avgVol(volLen);
-  if (rsi == null || avgVol == null || avgVol === 0) return null;
+  if (fast == null || slow == null || avgVol == null || avgVol === 0) return null;
 
-  const volSpike = ctx.vol >= avgVol * volMult;
+  const volOk = ctx.vol >= avgVol * volMult;
+
+  // Crossovers: compare current vs previous bar
+  const f0 = fast, f1 = ctx.ema(fastLen, 1);
+  const s0 = slow, s1 = ctx.ema(slowLen, 1);
+  if (f1 == null || s1 == null) return null;
+
+  const bullCross = f1 <= s1 && f0 > s0;
+  const bearCross = f1 >= s1 && f0 < s0;
+
   const hasPos = ctx.position > 0;
 
   if (!hasPos) {
-    // Buy when oversold + volume confirmation
-    if (rsi < rsiOB && volSpike) {
+    if (bullCross && volOk) {
       ctx.state.entryPrice = ctx.price;
-      ctx.state.sessionHigh = ctx.price;
       return { side: 'buy', qty: ctx.cash / ctx.price * 0.99 };
     }
     return null;
   }
 
-  // Track session high after entry
-  if (ctx.price > ctx.state.sessionHigh) {
-    ctx.state.sessionHigh = ctx.price;
-  }
+  // Stop-loss: price fell 3% from entry
+  const entryPx = ctx.state.entryPrice || 0;
+  const hitStop = entryPx > 0 && ctx.price <= entryPx * (1 - stopLoss);
 
-  // Trailing stop
-  const trailPrice = ctx.state.sessionHigh * (1 - trailPct);
-  const hitTrail = ctx.price <= trailPrice;
-
-  // Sell: RSI mean reversion complete or trailing stop hit
-  if (rsi > rsiSell || hitTrail) {
+  if (bearCross || hitStop) {
     return { side: 'sell', qty: ctx.position };
   }
 
