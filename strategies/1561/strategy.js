@@ -1,51 +1,59 @@
 /*
  * @coinsori-strategy v1
- * name: RSI Oversold + Volume Mean Reversion — XRPUSDT 4H
+ * name: SMA Crossover + Volume + Wide ATR Take-Profit — BTCUSDT 4H
  * ex: binance
- * syms: XRPUSDT
+ * syms: BTCUSDT
  * interval: 4h
  * cash: 10000
  *
- * Why this strategy: XRP is a high-beta altcoin that drops sharply in bear
- * markets and recovers strongly — ideal for mean-reversion entries at extremes.
- * The RSI oversold + volume confirmation pattern has shown strong risk-reduction
- * on DOGEUSDT (beat bench by 20-26pp in bear windows, MDD 3-4× lower than market).
- * This applies the same logic to XRP, a different altcoin family.
- * When it buys and sells: Buys when RSI(14) drops below 30 and volume surges
- * above its 20-bar average (confirms conviction). Sells at RSI > 60 or price
- * reaches the 20-bar SMA (mean reversion target).
- * When it does NOT work: In prolonged bear markets where RSI stays oversold for
- * weeks — each buy gets stopped out before the bounce arrives, slowly draining
- * capital. Also fails in low-volume environments where volume confirmation is unreliable.
+ * Why this strategy: The original SMA(20,50) crossover (strategy 1241) beat
+ * the market 2/3 windows with low MDD. The fast EMA(8,21) + ATR×4 version
+ * (strategy 1560) also beat 3/3 windows but the tight ATR×4 take-profit
+ * capped gains in the bull window (lost 29pp vs bench). This version uses
+ * the original SMA(20,50) parameters with a wider ATR×6 take-profit — enough
+ * to let winners run but still locks in gains before the trend reverses.
+ * When it buys and sells: Same entry as 1241 (SMA golden cross + volume).
+ * Exits on SMA death cross OR when price reaches entry + 6× ATR.
+ * When it does NOT work: If the trend runs longer than 6× ATR (e.g., BTC
+ * enters a months-long bull run), the take-profit exits too early and
+ * misses the bulk of the move.
  */
 function onUpdate(ctx) {
-  const rsi   = ctx.rsi(14);
-  if (rsi == null) return null;
-
   const sma20 = ctx.sma(20);
-  if (sma20 == null) return null;
+  const sma50 = ctx.sma(50);
+  if (sma20 == null || sma50 == null) return null;
+
+  const sma20Prev = ctx.sma(20, 1);
+  const sma50Prev = ctx.sma(50, 1);
+  if (sma20Prev == null || sma50Prev == null) return null;
 
   const avgVol = ctx.avgVol(20);
   if (avgVol == null) return null;
-  const volSurge = ctx.vol > avgVol;
+  const volConfirm = ctx.vol > avgVol;
 
   const position = ctx.position;
   const price    = ctx.price;
 
-  // ── ENTRY: RSI oversold + volume surge ─────────────────────────────
+  // ── ENTRY: SMA golden cross + volume confirm ─────────────────────────
   if (!position) {
-    const rsiOversold = rsi < 30;
-    if (rsiOversold && volSurge) {
+    const crossUp = sma20Prev <= sma50Prev && sma20 > sma50;
+    if (crossUp && volConfirm) {
       return { side: 'buy', qty: ctx.cash / price * 0.99 };
     }
   }
 
-  // ── EXIT: RSI normalises OR price reaches SMA20 (mean target) ───────
+  // ── EXIT: SMA death cross OR ATR×6 take-profit ────────────────────────
   if (position) {
-    const rsiNormal   = rsi > 60;
-    const atMean      = price >= sma20;
+    const crossDown = sma20Prev >= sma50Prev && sma20 < sma50;
 
-    if (rsiNormal || atMean) {
+    const atr = ctx.atr(14);
+    let takeProfit = false;
+    if (atr != null && ctx.entryPx != null) {
+      // Wider ATR×6 take-profit — less aggressive than ×4
+      takeProfit = price >= ctx.entryPx + 6 * atr;
+    }
+
+    if (crossDown || takeProfit) {
       return { side: 'sell', qty: position };
     }
   }
