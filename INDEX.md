@@ -4,13 +4,14 @@ Every strategy whose backtest **finished and actually traded** is published here
 Nothing is filtered out by return — the ones that lost money are part of the record.
 Entries stay after a strategy is removed from our own workspace — this is a log, and deleting the record would leave only the survivors.
 
-**★ marks a strategy that out-returned buy & hold over the same window** — 112 of 512 right now.
+**★ marks a strategy that out-returned buy & hold over the same window** — 112 of 513 right now.
 `—` means the comparison **could not be made**: the engine does not compute a benchmark for multi-symbol, futures, or multi-leg runs. That is *unknown*, not *lost*, and it is 174 of them right now.
 
 Every figure comes from the last verifying backtest at publish time. These are past results over historical data. Nothing here is promised or assured about the future, and none of it is investment advice.
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
+|  | [1707](strategies/1707/) | BB RSI Mean Reversion ATR Gate | +4.34% | +10.82% | +6.29% | 18 | 2026-09-19 |
 | ★ | [1706](strategies/1706/) | Donchian Channel Breakout v2 | +1.84% | -11.69% | +10.28% | 1 | 2026-09-19 |
 | ★ | [1702](strategies/1702/) | Dual-EMA Trend + RSI(2) Pullback | +2.69% | -23.80% | +1.82% | 1 | 2026-09-19 |
 |  | [1701](strategies/1701/) | Daily EMA50 Filter + 4H RSI(2) Pullback | -6.12% | +57.49% | +6.19% | 26 | 2026-09-19 |
