@@ -1,0 +1,30 @@
+{
+  "id": 1638,
+  "name": "BTC RSI Oversold Bounce 1H",
+  "kind": "custom",
+  "verified": {
+    "backtestId": 7491,
+    "return": -12.38,
+    "mdd": 12.38,
+    "trades": 70,
+    "vsBuyHold": "win",
+    "benchRet": -25.88,
+    "benchBasis": "price",
+    "gapPct": 0,
+    "tFrom": 1768208400,
+    "tTo": 1775404800,
+    "approxNotes": [
+      "봉 내 순서는 관례(양봉 O→L→H→C·음봉 O→H→L→C) — 실순서 미상 · 봉 중 거래량 null · MDD 는 봉 마감 기준"
+    ],
+    "spec": {
+      "ex": "binance",
+      "sym": "BTCUSDT",
+      "interval": "1h",
+      "bars": 2000,
+      "end": 1775408400
+    }
+  },
+  "config": null,
+  "updatedAt": "2026-09-19T09:22:56.049Z",
+  "publishedBy": "scripts/publish-strategies.mjs"
+}
