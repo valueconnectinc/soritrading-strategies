@@ -3,16 +3,16 @@
   "name": "RSI BB + EMA Trend Filter",
   "kind": "custom",
   "verified": {
-    "backtestId": 6938,
-    "return": 1.78,
-    "mdd": 1.01,
-    "trades": 2,
-    "vsBuyHold": "win",
-    "benchRet": -44.16,
+    "backtestId": 6941,
+    "return": 6.24,
+    "mdd": 2.26,
+    "trades": 4,
+    "vsBuyHold": "lose",
+    "benchRet": 58.51,
     "benchBasis": "price",
     "gapPct": 0,
-    "tFrom": 1768176000,
-    "tTo": 1775361600,
+    "tFrom": 1782576000,
+    "tTo": 1789761600,
     "approxNotes": [
       "봉 내 순서는 관례(양봉 O→L→H→C·음봉 O→H→L→C) — 실순서 미상 · 봉 중 거래량 null · MDD 는 봉 마감 기준",
       "거래량은 봉 마감에만 확정 — 봉 중 평가에서 ctx.vol/volumes 가 null 이라 거래량 조건이 걸러졌을 수 있음(봉 중에도 쓰려면 ctx.volPrev·ctx.avgVol)"
@@ -22,7 +22,7 @@
       "sym": "SOLUSDT",
       "interval": "4h",
       "bars": 500,
-      "end": 1775376000
+      "end": 1789776000
     }
   },
   "config": null,
