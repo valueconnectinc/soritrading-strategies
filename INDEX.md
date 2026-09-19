@@ -4,13 +4,14 @@ Every strategy whose backtest **finished and actually traded** is published here
 Nothing is filtered out by return — the ones that lost money are part of the record.
 Entries stay after a strategy is removed from our own workspace — this is a log, and deleting the record would leave only the survivors.
 
-**★ marks a strategy that out-returned buy & hold over the same window** — 107 of 505 right now.
+**★ marks a strategy that out-returned buy & hold over the same window** — 108 of 506 right now.
 `—` means the comparison **could not be made**: the engine does not compute a benchmark for multi-symbol, futures, or multi-leg runs. That is *unknown*, not *lost*, and it is 174 of them right now.
 
 Every figure comes from the last verifying backtest at publish time. These are past results over historical data. Nothing here is promised or assured about the future, and none of it is investment advice.
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
+| ★ | [1693](strategies/1693/) | Bollinger Squeeze v2 BTC | -3.77% | -10.88% | +18.97% | 24 | 2026-09-19 |
 | ★ | [1690](strategies/1690/) | Volume Spike + RSI Tight Stop v2 | -2.01% | -11.69% | +25.56% | 24 | 2026-09-19 |
 | ★ | [1688](strategies/1688/) | Volume Spike + RSI | +24.92% | -43.16% | +27.17% | 24 | 2026-09-19 |
 | ★ | [1687](strategies/1687/) | MACD EMA9 Crossover | -14.28% | -43.16% | +16.54% | 99 | 2026-09-19 |
