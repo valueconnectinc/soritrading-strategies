@@ -1,0 +1,30 @@
+{
+  "id": 1640,
+  "name": "ETH EMA200 Regime + RSI Oversold 4H",
+  "kind": "custom",
+  "verified": {
+    "backtestId": 7497,
+    "return": -6.38,
+    "mdd": 6.38,
+    "trades": 20,
+    "vsBuyHold": "lose",
+    "benchRet": 66.78,
+    "benchBasis": "price",
+    "gapPct": 0,
+    "tFrom": 1782604800,
+    "tTo": 1789790400,
+    "approxNotes": [
+      "봉 내 순서는 관례(양봉 O→L→H→C·음봉 O→H→L→C) — 실순서 미상 · 봉 중 거래량 null · MDD 는 봉 마감 기준"
+    ],
+    "spec": {
+      "ex": "binance",
+      "sym": "ETHUSDT",
+      "interval": "4h",
+      "bars": 500,
+      "end": 1789804800
+    }
+  },
+  "config": null,
+  "updatedAt": "2026-09-19T09:25:25.664Z",
+  "publishedBy": "scripts/publish-strategies.mjs"
+}
