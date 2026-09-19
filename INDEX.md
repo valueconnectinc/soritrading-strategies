@@ -4,13 +4,14 @@ Every strategy whose backtest **finished and actually traded** is published here
 Nothing is filtered out by return — the ones that lost money are part of the record.
 Entries stay after a strategy is removed from our own workspace — this is a log, and deleting the record would leave only the survivors.
 
-**★ marks a strategy that out-returned buy & hold over the same window** — 53 of 353 right now.
+**★ marks a strategy that out-returned buy & hold over the same window** — 53 of 354 right now.
 `—` means the comparison **could not be made**: the engine does not compute a benchmark for multi-symbol, futures, or multi-leg runs. That is *unknown*, not *lost*, and it is 156 of them right now.
 
 Every figure comes from the last verifying backtest at publish time. These are past results over historical data. Nothing here is promised or assured about the future, and none of it is investment advice.
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
+|  | [1452](strategies/1452/) | Supertrend RSI Hybrid | -0.60% | +58.51% | +0.70% | 10 | 2026-09-19 |
 |  | [1450](strategies/1450/) | ATR Trend Pullback | -4.38% | +58.51% | +7.50% | 12 | 2026-09-19 |
 |  | [1448](strategies/1448/) | BB RSI Mean Reversion | +9.58% | +58.51% | +4.11% | 18 | 2026-09-19 |
 | ★ | [1446](strategies/1446/) | EMA 20/50 Trend + DXY Macro Filter — SOLUSDT 4H | -1.66% | -44.16% | +1.66% | 4 | 2026-09-19 |
