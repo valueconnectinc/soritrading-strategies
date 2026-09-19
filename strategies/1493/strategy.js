@@ -19,7 +19,7 @@
 function onUpdate(ctx) {
     // ATR-based trailing stop parameters
     const atrPeriod  = 14;   // ATR lookback — measures recent volatility
-    const atrMult    = 2.5;  // stop distance = 2.5 × ATR — wider than typical to avoid premature exits
+    const atrMult    = 3.0;  // stop distance = 3.0 × ATR — wider than 2.5 to let winners run longer
     const fastPeriod = 9;    // fast EMA — reacts quickly to price moves
     const slowPeriod = 21;   // slow EMA — defines the trend direction
 
@@ -54,7 +54,6 @@ function onUpdate(ctx) {
         const trailingStop = ctx.price - atrMult * atr;
 
         // If in profit, enforce trailing stop; if in loss, rely on death cross
-        // Using entryPx stored by the engine
         const inProfit = ctx.price > ctx.entryPx;
 
         if (deathCross) {
