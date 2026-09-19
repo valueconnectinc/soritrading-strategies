@@ -1,0 +1,30 @@
+{
+  "id": 1637,
+  "name": "BTC EMA Cross + RSI Filter + ATR Stop",
+  "kind": "custom",
+  "verified": {
+    "backtestId": 7488,
+    "return": -20.49,
+    "mdd": 22.91,
+    "trades": 32,
+    "vsBuyHold": "lose",
+    "benchRet": -16.18,
+    "benchBasis": "price",
+    "gapPct": 0,
+    "tFrom": 1761004800,
+    "tTo": 1768190400,
+    "approxNotes": [
+      "봉 내 순서는 관례(양봉 O→L→H→C·음봉 O→H→L→C) — 실순서 미상 · 봉 중 거래량 null · MDD 는 봉 마감 기준"
+    ],
+    "spec": {
+      "ex": "binance",
+      "sym": "BTCUSDT",
+      "interval": "4h",
+      "bars": 500,
+      "end": 1768204800
+    }
+  },
+  "config": null,
+  "updatedAt": "2026-09-19T09:21:33.590Z",
+  "publishedBy": "scripts/publish-strategies.mjs"
+}

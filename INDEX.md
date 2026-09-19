@@ -4,13 +4,14 @@ Every strategy whose backtest **finished and actually traded** is published here
 Nothing is filtered out by return — the ones that lost money are part of the record.
 Entries stay after a strategy is removed from our own workspace — this is a log, and deleting the record would leave only the survivors.
 
-**★ marks a strategy that out-returned buy & hold over the same window** — 101 of 470 right now.
+**★ marks a strategy that out-returned buy & hold over the same window** — 101 of 471 right now.
 `—` means the comparison **could not be made**: the engine does not compute a benchmark for multi-symbol, futures, or multi-leg runs. That is *unknown*, not *lost*, and it is 162 of them right now.
 
 Every figure comes from the last verifying backtest at publish time. These are past results over historical data. Nothing here is promised or assured about the future, and none of it is investment advice.
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
+|  | [1637](strategies/1637/) | BTC EMA Cross + RSI Filter + ATR Stop | -20.49% | -16.18% | +22.91% | 32 | 2026-09-19 |
 |  | [1635](strategies/1635/) | AI 전략 | -29.81% | -23.80% | +33.18% | 63 | 2026-09-19 |
 |  | [1633](strategies/1633/) | AI 전략 | -56.73% | -43.16% | +57.30% | 137 | 2026-09-19 |
 | ★ | [1632](strategies/1632/) | AI 전략 | -25.03% | -43.16% | +36.65% | 20 | 2026-09-19 |
