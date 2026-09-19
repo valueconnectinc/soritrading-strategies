@@ -11,7 +11,7 @@ Every figure comes from the last verifying backtest at publish time. These are p
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
-|  | [1492](strategies/1492/) | AI 전략 | +13.50% | +34.41% | +3.34% | 54 | 2026-09-19 |
+|  | [1492](strategies/1492/) | AI 전략 | -24.62% | -23.26% | +29.84% | 95 | 2026-09-19 |
 |  | [1487](strategies/1487/) | ATR Channel Breakout | +6.28% | +58.51% | +11.49% | 13 | 2026-09-19 |
 |  | [1486](strategies/1486/) | RSI BB Mean Reversion v3 (Trailing ATR) | +3.98% | +58.51% | +4.89% | 14 | 2026-09-19 |
 |  | [1484](strategies/1484/) | Stochastic RSI Hybrid | +6.00% | +58.51% | +6.13% | 8 | 2026-09-19 |
