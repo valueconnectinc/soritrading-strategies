@@ -3,10 +3,10 @@
   "name": "MACD Crossover Momentum",
   "kind": "custom",
   "verified": {
-    "backtestId": 7433,
-    "return": -26.63,
-    "mdd": 27.02,
-    "trades": 46,
+    "backtestId": 7436,
+    "return": -12.88,
+    "mdd": 21.72,
+    "trades": 28,
     "vsBuyHold": "win",
     "benchRet": -43.16,
     "benchBasis": "price",
@@ -25,6 +25,6 @@
     }
   },
   "config": null,
-  "updatedAt": "2026-09-19T08:59:40.729Z",
+  "updatedAt": "2026-09-19T09:02:43.565Z",
   "publishedBy": "scripts/publish-strategies.mjs"
 }

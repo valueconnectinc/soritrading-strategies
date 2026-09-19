@@ -11,7 +11,7 @@ Every figure comes from the last verifying backtest at publish time. These are p
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
-| ★ | [1624](strategies/1624/) | MACD Crossover Momentum | -26.63% | -43.16% | +27.02% | 46 | 2026-09-19 |
+| ★ | [1624](strategies/1624/) | MACD Crossover Momentum | -12.88% | -43.16% | +21.72% | 28 | 2026-09-19 |
 | ★ | [1623](strategies/1623/) | ATR Volatility Breakout | -40.97% | -43.16% | +40.97% | 100 | 2026-09-19 |
 | ★ | [1622](strategies/1622/) | AI 전략 | -23.83% | -43.16% | +38.93% | 30 | 2026-09-19 |
 | — | [1621](strategies/1621/) | Funding Rate Sentiment Long | -4.69% | — | +7.09% | 10 | 2026-09-19 |
