@@ -1,0 +1,28 @@
+{
+  "id": 1621,
+  "name": "Funding Rate Sentiment Long",
+  "kind": "custom",
+  "verified": {
+    "backtestId": 7397,
+    "return": -4.69,
+    "mdd": 7.09,
+    "trades": 10,
+    "vsBuyHold": "unmeasured",
+    "gapPct": 0,
+    "tFrom": 1775404800,
+    "tTo": 1782590400,
+    "approxNotes": [
+      "봉 내 순서는 관례(양봉 O→L→H→C·음봉 O→H→L→C) — 실순서 미상 · 봉 중 거래량 null · MDD 는 봉 마감 기준"
+    ],
+    "spec": {
+      "ex": "binance",
+      "sym": "SOLUSDT",
+      "interval": "4h",
+      "bars": 500,
+      "end": 1782604800
+    }
+  },
+  "config": null,
+  "updatedAt": "2026-09-19T08:19:48.015Z",
+  "publishedBy": "scripts/publish-strategies.mjs"
+}
