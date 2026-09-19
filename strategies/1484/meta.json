@@ -1,12 +1,12 @@
 {
-  "id": 1483,
-  "name": "RSI BB Mean Reversion v4 (Tighter Entry)",
+  "id": 1484,
+  "name": "Stochastic RSI Hybrid",
   "kind": "custom",
   "verified": {
-    "backtestId": 6959,
-    "return": 7.54,
-    "mdd": 5.49,
-    "trades": 6,
+    "backtestId": 6962,
+    "return": 6,
+    "mdd": 6.13,
+    "trades": 8,
     "vsBuyHold": "lose",
     "benchRet": 58.51,
     "benchBasis": "price",
@@ -26,6 +26,6 @@
     }
   },
   "config": null,
-  "updatedAt": "2026-09-19T02:16:23.595Z",
+  "updatedAt": "2026-09-19T02:18:12.733Z",
   "publishedBy": "scripts/publish-strategies.mjs"
 }
