@@ -4,13 +4,15 @@ Every strategy whose backtest **finished and actually traded** is published here
 Nothing is filtered out by return — the ones that lost money are part of the record.
 Entries stay after a strategy is removed from our own workspace — this is a log, and deleting the record would leave only the survivors.
 
-**★ marks a strategy that out-returned buy & hold over the same window** — 102 of 478 right now.
-`—` means the comparison **could not be made**: the engine does not compute a benchmark for multi-symbol, futures, or multi-leg runs. That is *unknown*, not *lost*, and it is 165 of them right now.
+**★ marks a strategy that out-returned buy & hold over the same window** — 102 of 480 right now.
+`—` means the comparison **could not be made**: the engine does not compute a benchmark for multi-symbol, futures, or multi-leg runs. That is *unknown*, not *lost*, and it is 167 of them right now.
 
 Every figure comes from the last verifying backtest at publish time. These are past results over historical data. Nothing here is promised or assured about the future, and none of it is investment advice.
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
+| — | [1648](strategies/1648/) | BB Mean Reversion + ATR Filter (BTCUSDT) | +3.78% | — | +8.43% | 48 | 2026-09-19 |
+| — | [1647](strategies/1647/) | BB Mean Reversion + ATR Volatility Filter (ETHUSDT) | -1.69% | — | +1.69% | 10 | 2026-09-19 |
 | — | [1646](strategies/1646/) | ATR Regime-Adaptive Hybrid | -9.31% | — | +16.54% | 46 | 2026-09-19 |
 | — | [1645](strategies/1645/) | BB Mean Reversion + Funding Rate Regime Filter | +7.57% | — | +1.74% | 8 | 2026-09-19 |
 | — | [1644](strategies/1644/) | BB Mean Reversion + ATR Filter ETH | +14.54% | — | +16.63% | 34 | 2026-09-19 |
