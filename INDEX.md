@@ -4,13 +4,14 @@ Every strategy whose backtest **finished and actually traded** is published here
 Nothing is filtered out by return — the ones that lost money are part of the record.
 Entries stay after a strategy is removed from our own workspace — this is a log, and deleting the record would leave only the survivors.
 
-**★ marks a strategy that out-returned buy & hold over the same window** — 76 of 422 right now.
+**★ marks a strategy that out-returned buy & hold over the same window** — 77 of 423 right now.
 `—` means the comparison **could not be made**: the engine does not compute a benchmark for multi-symbol, futures, or multi-leg runs. That is *unknown*, not *lost*, and it is 156 of them right now.
 
 Every figure comes from the last verifying backtest at publish time. These are past results over historical data. Nothing here is promised or assured about the future, and none of it is investment advice.
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
+| ★ | [1559](strategies/1559/) | EMA Crossover + Volume Confirmation | -9.32% | -27.50% | +10.81% | 6 | 2026-09-19 |
 |  | [1558](strategies/1558/) | MACD Crossover + RSI Trend Filter | -29.68% | -10.67% | +32.83% | 61 | 2026-09-19 |
 |  | [1557](strategies/1557/) | Bollinger Squeeze + Volume Surge | +66.27% | +69.92% | +19.21% | 1 | 2026-09-19 |
 |  | [1556](strategies/1556/) | RSI Oversold + Vol Filter — LINKUSDT 4H | +4.47% | +66.91% | +4.15% | 13 | 2026-09-19 |
