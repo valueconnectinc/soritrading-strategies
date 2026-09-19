@@ -5,13 +5,13 @@ Nothing is filtered out by return — the ones that lost money are part of the r
 Entries stay after a strategy is removed from our own workspace — this is a log, and deleting the record would leave only the survivors.
 
 **★ marks a strategy that out-returned buy & hold over the same window** — 92 of 460 right now.
-`—` means the comparison **could not be made**: the engine does not compute a benchmark for multi-symbol, futures, or multi-leg runs. That is *unknown*, not *lost*, and it is 163 of them right now.
+`—` means the comparison **could not be made**: the engine does not compute a benchmark for multi-symbol, futures, or multi-leg runs. That is *unknown*, not *lost*, and it is 162 of them right now.
 
 Every figure comes from the last verifying backtest at publish time. These are past results over historical data. Nothing here is promised or assured about the future, and none of it is investment advice.
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
-| — | [1622](strategies/1622/) | AI 전략 | -52.19% | — | +52.19% | 95 | 2026-09-19 |
+|  | [1622](strategies/1622/) | AI 전략 | +3.98% | +57.49% | +2.45% | 4 | 2026-09-19 |
 | — | [1621](strategies/1621/) | Funding Rate Sentiment Long | -4.69% | — | +7.09% | 10 | 2026-09-19 |
 | ★ | [1619](strategies/1619/) | EMA20 Trend + RSI40 Pullback | -4.52% | -10.67% | +7.01% | 10 | 2026-09-19 |
 |  | [1618](strategies/1618/) | RSI Oversold Pullback | -61.95% | -43.50% | +61.95% | 256 | 2026-09-19 |
