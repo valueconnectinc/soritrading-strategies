@@ -1,0 +1,30 @@
+{
+  "id": 1614,
+  "name": "Multi-Timeframe Trend Momentum",
+  "kind": "custom",
+  "verified": {
+    "backtestId": 7373,
+    "return": 1.27,
+    "mdd": 0,
+    "trades": 4,
+    "vsBuyHold": "lose",
+    "benchRet": 60.64,
+    "benchBasis": "price",
+    "gapPct": 0,
+    "tFrom": 1782590400,
+    "tTo": 1789776000,
+    "approxNotes": [
+      "봉 내 순서는 관례(양봉 O→L→H→C·음봉 O→H→L→C) — 실순서 미상 · 봉 중 거래량 null · MDD 는 봉 마감 기준"
+    ],
+    "spec": {
+      "ex": "binance",
+      "sym": "SOLUSDT",
+      "interval": "4h",
+      "bars": 500,
+      "end": 1789790400
+    }
+  },
+  "config": null,
+  "updatedAt": "2026-09-19T06:19:28.403Z",
+  "publishedBy": "scripts/publish-strategies.mjs"
+}
