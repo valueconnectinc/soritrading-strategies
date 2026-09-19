@@ -4,13 +4,14 @@ Every strategy whose backtest **finished and actually traded** is published here
 Nothing is filtered out by return — the ones that lost money are part of the record.
 Entries stay after a strategy is removed from our own workspace — this is a log, and deleting the record would leave only the survivors.
 
-**★ marks a strategy that out-returned buy & hold over the same window** — 102 of 485 right now.
-`—` means the comparison **could not be made**: the engine does not compute a benchmark for multi-symbol, futures, or multi-leg runs. That is *unknown*, not *lost*, and it is 172 of them right now.
+**★ marks a strategy that out-returned buy & hold over the same window** — 102 of 486 right now.
+`—` means the comparison **could not be made**: the engine does not compute a benchmark for multi-symbol, futures, or multi-leg runs. That is *unknown*, not *lost*, and it is 173 of them right now.
 
 Every figure comes from the last verifying backtest at publish time. These are past results over historical data. Nothing here is promised or assured about the future, and none of it is investment advice.
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
+| — | [1655](strategies/1655/) | RSI Momentum with EMA Trend Filter | +0.45% | — | +14.93% | 22 | 2026-09-19 |
 | — | [1654](strategies/1654/) | BB+ATR Mean Reversion Tight Stop (SOLUSDT) | +5.80% | — | +20.22% | 36 | 2026-09-19 |
 | — | [1653](strategies/1653/) | BB+ATR Mean Reversion (AVAXUSDT) | +30.80% | — | +23.40% | 36 | 2026-09-19 |
 | — | [1651](strategies/1651/) | RSI Momentum + SMA Trend Filter | +1.05% | — | +1.06% | 1 | 2026-09-19 |
