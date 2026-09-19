@@ -1,22 +1,23 @@
 /*
  * @coinsori-strategy v1
- * name: EMA Crossover + Volume + ATR Exit
+ * name: Fast EMA Crossover + Volume + ATR Take-Profit — BTCUSDT 4H
  * ex: binance
- * syms: AVAXUSDT
+ * syms: BTCUSDT
  * interval: 4h
- * cash: 1000
+ * cash: 10000
  *
- * Why this strategy: Builds on the promising EMA(8,21)+volume strategy (exp 371)
- * by adding a take-profit rule. The original lost in bull markets (window 3)
- * because the EMA exit is lagging — taking profits at a fixed ATR multiple
- * should lock in gains before the trend reverses.
- * When it buys and sells: Same entry as exp 371 (EMA crossover + volume surge).
- * Exits on EMA bear cross OR when price reaches entry + 3× ATR (take profit).
- * When it does NOT work: In choppy markets where price hits the ATR take-profit
- * repeatedly but then reverses — gives back small profits with many whipsaws.
+ * Why this strategy: Builds on strategy 1241 (SMA 20/50 crossover + volume)
+ * which beat the market in 2 of 3 walk-forward windows with low MDD (5.6%).
+ * This version uses faster EMAs (8,21) for more signals and adds an ATR-based
+ * take-profit to lock in gains before the trend reverses — the original
+ * lost 21pp vs bench in the bull window.
+ * When it buys and sells: Buys on EMA(8) crossing above EMA(21) with volume
+ * confirmation. Sells on bear cross OR when price reaches entry + 4× ATR (take profit).
+ * When it does NOT work: In volatile chop where price oscillates around the
+ * EMA bands — take-profit hits repeatedly but the next candle reverses, giving
+ * back small gains before a real trend arrives.
  */
 function onUpdate(ctx) {
-  // ── Warm-up ────────────────────────────────────────────────────────────────
   const ema8  = ctx.ema(8);
   const ema21 = ctx.ema(21);
   if (ema8 == null || ema21 == null) return null;
@@ -25,30 +26,36 @@ function onUpdate(ctx) {
   const e21p = ctx.ema(21, 1);
   if (e8p == null || e21p == null) return null;
 
-  // ── Volume ─────────────────────────────────────────────────────────────────
-  const volSMA = ctx.avgVol(20);
-  if (volSMA == null) return null;
-  const volSurge = ctx.vol > volSMA * 1.5;
+  // Volume confirmation: today's volume above its 20-bar average
+  const avgVol = ctx.avgVol(20);
+  if (avgVol == null) return null;
+  const volConfirm = ctx.vol > avgVol;
 
-  // ── Entry ───────────────────────────────────────────────────────────────────
-  const bullCross = e8p <= e21p && ema8 > ema21;
-  if (bullCross && volSurge && ctx.position === 0) {
-    return { side: 'buy', qty: ctx.cash / ctx.price * 0.99 };
+  const position = ctx.position;
+  const price    = ctx.price;
+
+  // ── ENTRY: fast EMA golden cross + volume confirm ──────────────────
+  if (!position) {
+    const crossUp = e8p <= e21p && ema8 > ema21;
+    if (crossUp && volConfirm) {
+      return { side: 'buy', qty: ctx.cash / price * 0.99 };
+    }
   }
 
-  // ── Exit conditions ────────────────────────────────────────────────────────
-  const bearCross = e8p >= e21p && ema8 < ema21;
+  // ── EXIT: EMA death cross OR ATR-based take-profit ──────────────────
+  if (position) {
+    const crossDown = e8p >= e21p && ema8 < ema21;
 
-  // Take profit: price moved entry + 3× ATR
-  const atr = ctx.atr(14);
-  let takeProfit = false;
-  if (atr != null && ctx.entryPx != null) {
-    takeProfit = ctx.price >= ctx.entryPx + 3 * atr;
-  }
+    // Take profit: price moved entry + 4× ATR
+    const atr = ctx.atr(14);
+    let takeProfit = false;
+    if (atr != null && ctx.entryPx != null) {
+      takeProfit = price >= ctx.entryPx + 4 * atr;
+    }
 
-  if (ctx.position > 0) {
-    if (bearCross) return { side: 'sell', qty: ctx.position };
-    if (takeProfit) return { side: 'sell', qty: ctx.position };
+    if (crossDown || takeProfit) {
+      return { side: 'sell', qty: position };
+    }
   }
 
   return null;
