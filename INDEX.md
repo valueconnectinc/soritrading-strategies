@@ -11,7 +11,7 @@ Every figure comes from the last verifying backtest at publish time. These are p
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
-| ★ | [1584](strategies/1584/) | RSI Mean Reversion + Vol Spike MATIC | -15.24% | -31.55% | +29.64% | 21 | 2026-09-19 |
+| ★ | [1584](strategies/1584/) | RSI Mean Reversion + Vol Spike MATIC | -36.57% | -39.61% | +36.94% | 36 | 2026-09-19 |
 | ★ | [1583](strategies/1583/) | AI 전략 | -8.83% | -31.93% | +8.83% | 12 | 2026-09-19 |
 | ★ | [1582](strategies/1582/) | AI 전략 | -17.77% | -31.93% | +17.77% | 18 | 2026-09-19 |
 | ★ | [1578](strategies/1578/) | BB-RSI Mean Reversion ATR Stop | -15.49% | -52.45% | +37.28% | 22 | 2026-09-19 |
