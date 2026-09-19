@@ -1,0 +1,30 @@
+{
+  "id": 1501,
+  "name": "EMA20 Trend Filter + RSI Momentum + Trailing Stop",
+  "kind": "custom",
+  "verified": {
+    "backtestId": 7010,
+    "return": -45.57,
+    "mdd": 45.57,
+    "trades": 34,
+    "vsBuyHold": "lose",
+    "benchRet": -44.16,
+    "benchBasis": "price",
+    "gapPct": 0,
+    "tFrom": 1768176000,
+    "tTo": 1775361600,
+    "approxNotes": [
+      "봉 내 순서는 관례(양봉 O→L→H→C·음봉 O→H→L→C) — 실순서 미상 · 봉 중 거래량 null · MDD 는 봉 마감 기준"
+    ],
+    "spec": {
+      "ex": "binance",
+      "sym": "SOLUSDT",
+      "interval": "4h",
+      "bars": 500,
+      "end": 1775376000
+    }
+  },
+  "config": null,
+  "updatedAt": "2026-09-19T02:53:09.494Z",
+  "publishedBy": "scripts/publish-strategies.mjs"
+}
