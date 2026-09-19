@@ -4,13 +4,14 @@ Every strategy whose backtest **finished and actually traded** is published here
 Nothing is filtered out by return — the ones that lost money are part of the record.
 Entries stay after a strategy is removed from our own workspace — this is a log, and deleting the record would leave only the survivors.
 
-**★ marks a strategy that out-returned buy & hold over the same window** — 102 of 475 right now.
-`—` means the comparison **could not be made**: the engine does not compute a benchmark for multi-symbol, futures, or multi-leg runs. That is *unknown*, not *lost*, and it is 162 of them right now.
+**★ marks a strategy that out-returned buy & hold over the same window** — 102 of 476 right now.
+`—` means the comparison **could not be made**: the engine does not compute a benchmark for multi-symbol, futures, or multi-leg runs. That is *unknown*, not *lost*, and it is 163 of them right now.
 
 Every figure comes from the last verifying backtest at publish time. These are past results over historical data. Nothing here is promised or assured about the future, and none of it is investment advice.
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
+| — | [1644](strategies/1644/) | BB Mean Reversion + ATR Filter ETH | +14.54% | — | +16.63% | 34 | 2026-09-19 |
 |  | [1643](strategies/1643/) | EMA200 Pullback Trend Following | -62.61% | +66.78% | +62.61% | 452 | 2026-09-19 |
 |  | [1642](strategies/1642/) | EMA200 Regime RSI Dual Direction | -32.55% | +66.78% | +32.55% | 164 | 2026-09-19 |
 |  | [1640](strategies/1640/) | ETH EMA200 Regime + RSI Oversold 4H | -6.38% | +66.78% | +6.38% | 20 | 2026-09-19 |
