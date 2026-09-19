@@ -11,7 +11,7 @@ Every figure comes from the last verifying backtest at publish time. These are p
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
-| ★ | [1560](strategies/1560/) | EMA Crossover + Volume + ATR Exit | -20.42% | -35.85% | +23.05% | 6 | 2026-09-19 |
+| ★ | [1560](strategies/1560/) | EMA Crossover + Volume + ATR Exit | -9.32% | -27.50% | +10.81% | 6 | 2026-09-19 |
 | ★ | [1559](strategies/1559/) | EMA Crossover + Volume Confirmation | -9.32% | -27.50% | +10.81% | 6 | 2026-09-19 |
 |  | [1558](strategies/1558/) | MACD Crossover + RSI Trend Filter | -29.68% | -10.67% | +32.83% | 61 | 2026-09-19 |
 |  | [1557](strategies/1557/) | Bollinger Squeeze + Volume Surge | +66.27% | +69.92% | +19.21% | 1 | 2026-09-19 |
