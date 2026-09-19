@@ -1,0 +1,30 @@
+{
+  "id": 1527,
+  "name": "RSI Regime Filter",
+  "kind": "custom",
+  "verified": {
+    "backtestId": 7109,
+    "return": -37.94,
+    "mdd": 37.94,
+    "trades": 160,
+    "vsBuyHold": "lose",
+    "benchRet": -27.22,
+    "benchBasis": "price",
+    "gapPct": 0,
+    "tFrom": 1768176000,
+    "tTo": 1775361600,
+    "approxNotes": [
+      "봉 내 순서는 관례(양봉 O→L→H→C·음봉 O→H→L→C) — 실순서 미상 · 봉 중 거래량 null · MDD 는 봉 마감 기준"
+    ],
+    "spec": {
+      "ex": "binance",
+      "sym": "BTCUSDT",
+      "interval": "4h",
+      "bars": 500,
+      "end": 1775376000
+    }
+  },
+  "config": null,
+  "updatedAt": "2026-09-19T03:30:53.095Z",
+  "publishedBy": "scripts/publish-strategies.mjs"
+}
