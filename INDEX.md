@@ -11,7 +11,7 @@ Every figure comes from the last verifying backtest at publish time. These are p
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
-| — | [1648](strategies/1648/) | BB Mean Reversion + ATR Filter (BTCUSDT) | +3.78% | — | +8.43% | 48 | 2026-09-19 |
+| — | [1648](strategies/1648/) | BB Mean Reversion + ATR Filter (BTCUSDT) | -17.36% | — | +25.13% | 32 | 2026-09-19 |
 | — | [1647](strategies/1647/) | BB Mean Reversion + ATR Volatility Filter (ETHUSDT) | -1.69% | — | +1.69% | 10 | 2026-09-19 |
 | — | [1646](strategies/1646/) | ATR Regime-Adaptive Hybrid | -9.31% | — | +16.54% | 46 | 2026-09-19 |
 | — | [1645](strategies/1645/) | BB Mean Reversion + Funding Rate Regime Filter | +7.57% | — | +1.74% | 8 | 2026-09-19 |

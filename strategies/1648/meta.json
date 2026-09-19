@@ -3,14 +3,14 @@
   "name": "BB Mean Reversion + ATR Filter (BTCUSDT)",
   "kind": "custom",
   "verified": {
-    "backtestId": 7523,
-    "return": 3.78,
-    "mdd": 8.43,
-    "trades": 48,
+    "backtestId": 7524,
+    "return": -17.36,
+    "mdd": 25.13,
+    "trades": 32,
     "vsBuyHold": "unmeasured",
     "gapPct": 0,
-    "tFrom": 1761004800,
-    "tTo": 1768190400,
+    "tFrom": 1775404800,
+    "tTo": 1782590400,
     "approxNotes": [
       "봉 내 순서는 관례(양봉 O→L→H→C·음봉 O→H→L→C) — 실순서 미상 · 봉 중 거래량 null · MDD 는 봉 마감 기준"
     ],
@@ -19,7 +19,7 @@
       "sym": "BTCUSDT",
       "interval": "4h",
       "bars": 500,
-      "end": 1768204800
+      "end": 1782604800
     }
   },
   "config": null,
