@@ -4,13 +4,14 @@ Every strategy whose backtest **finished and actually traded** is published here
 Nothing is filtered out by return — the ones that lost money are part of the record.
 Entries stay after a strategy is removed from our own workspace — this is a log, and deleting the record would leave only the survivors.
 
-**★ marks a strategy that out-returned buy & hold over the same window** — 98 of 465 right now.
+**★ marks a strategy that out-returned buy & hold over the same window** — 99 of 466 right now.
 `—` means the comparison **could not be made**: the engine does not compute a benchmark for multi-symbol, futures, or multi-leg runs. That is *unknown*, not *lost*, and it is 162 of them right now.
 
 Every figure comes from the last verifying backtest at publish time. These are past results over historical data. Nothing here is promised or assured about the future, and none of it is investment advice.
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
+| ★ | [1629](strategies/1629/) | EMA9/21 Crossover + Volume Spike | -13.02% | -43.16% | +16.95% | 14 | 2026-09-19 |
 | ★ | [1627](strategies/1627/) | AI 전략 | -12.57% | -43.16% | +14.11% | 14 | 2026-09-19 |
 | ★ | [1626](strategies/1626/) | AI 전략 | -1.00% | -43.16% | +1.00% | 2 | 2026-09-19 |
 | ★ | [1625](strategies/1625/) | EMA20 Trend + RSI40 + Volume | +1.77% | -11.69% | +3.46% | 6 | 2026-09-19 |
