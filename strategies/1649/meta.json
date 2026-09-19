@@ -1,0 +1,28 @@
+{
+  "id": 1649,
+  "name": "BB Mean Reversion + ATR Filter (SOLUSDT)",
+  "kind": "custom",
+  "verified": {
+    "backtestId": 7528,
+    "return": 9.73,
+    "mdd": 4.71,
+    "trades": 34,
+    "vsBuyHold": "unmeasured",
+    "gapPct": 0,
+    "tFrom": 1782604800,
+    "tTo": 1789790400,
+    "approxNotes": [
+      "봉 내 순서는 관례(양봉 O→L→H→C·음봉 O→H→L→C) — 실순서 미상 · 봉 중 거래량 null · MDD 는 봉 마감 기준"
+    ],
+    "spec": {
+      "ex": "binance",
+      "sym": "SOLUSDT",
+      "interval": "4h",
+      "bars": 500,
+      "end": 1789804800
+    }
+  },
+  "config": null,
+  "updatedAt": "2026-09-19T09:36:16.641Z",
+  "publishedBy": "scripts/publish-strategies.mjs"
+}
