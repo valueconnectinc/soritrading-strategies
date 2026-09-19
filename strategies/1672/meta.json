@@ -3,29 +3,29 @@
   "name": "BB ATR Mean Reversion NEARUSDT 4H",
   "kind": "custom",
   "verified": {
-    "backtestId": 7610,
-    "return": 4.7,
-    "mdd": 18.61,
-    "trades": 12,
-    "vsBuyHold": "win",
-    "benchRet": -25.91,
+    "backtestId": 7613,
+    "return": 39.23,
+    "mdd": 8.03,
+    "trades": 21,
+    "vsBuyHold": "lose",
+    "benchRet": 92.98,
     "benchBasis": "price",
     "gapPct": 0,
-    "tFrom": 1768204800,
-    "tTo": 1775390400,
+    "tFrom": 1782604800,
+    "tTo": 1789790400,
     "approxNotes": [
       "봉 내 순서는 관례(양봉 O→L→H→C·음봉 O→H→L→C) — 실순서 미상 · 봉 중 거래량 null · MDD 는 봉 마감 기준",
-      "거래량은 봉 마감에만 확정 — 봉 중 평가에서 ctx.vol/volumes 가 null 이라 거래량 조건이 걸러졌을 수 있음(봉 중에도 쓰려면 ctx.volPrev·ctx.avgVol)"
+      "[유동성/미체결] 시장가 주문 8건이 그 봉의 호가 두께를 넘어 일부만 체결됐습니다(전체 요청 금액의 13% 미체결, 남은 물량은 다음 봉으로). 진입·청산이 전략이 의도한 시점보다 늦습니다. ★ 원인은 둘 중 하나이고 이 수만으로는 못 가릅니다 — 종목이 얇거나, 주문이 한 봉이 소화할 수 있는 것보다 크거나. 주문 크기를 줄여 같은 구간을 다시 돌리면…"
     ],
     "spec": {
       "ex": "binance",
       "sym": "NEARUSDT",
       "interval": "4h",
       "bars": 500,
-      "end": 1775404800
+      "end": 1789804800
     }
   },
   "config": null,
-  "updatedAt": "2026-09-19T10:08:40.763Z",
+  "updatedAt": "2026-09-19T10:09:40.268Z",
   "publishedBy": "scripts/publish-strategies.mjs"
 }
