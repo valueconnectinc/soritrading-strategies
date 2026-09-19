@@ -4,13 +4,14 @@ Every strategy whose backtest **finished and actually traded** is published here
 Nothing is filtered out by return — the ones that lost money are part of the record.
 Entries stay after a strategy is removed from our own workspace — this is a log, and deleting the record would leave only the survivors.
 
-**★ marks a strategy that out-returned buy & hold over the same window** — 115 of 523 right now.
+**★ marks a strategy that out-returned buy & hold over the same window** — 115 of 524 right now.
 `—` means the comparison **could not be made**: the engine does not compute a benchmark for multi-symbol, futures, or multi-leg runs. That is *unknown*, not *lost*, and it is 174 of them right now.
 
 Every figure comes from the last verifying backtest at publish time. These are past results over historical data. Nothing here is promised or assured about the future, and none of it is investment advice.
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
+|  | [1720](strategies/1720/) | Volume Surge Mean Reversion | +0.56% | +6.13% | +5.56% | 6 | 2026-09-19 |
 |  | [1719](strategies/1719/) | ATR Momentum Breakout | -52.95% | -27.31% | +53.72% | 35 | 2026-09-19 |
 |  | [1718](strategies/1718/) | Volatility Regime Mean Reversion v2 | +15.92% | +33.30% | +7.92% | 23 | 2026-09-19 |
 | ★ | [1717](strategies/1717/) | Volatility Regime Mean Reversion | -3.84% | -27.31% | +4.60% | 3 | 2026-09-19 |
