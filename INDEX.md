@@ -4,13 +4,15 @@ Every strategy whose backtest **finished and actually traded** is published here
 Nothing is filtered out by return — the ones that lost money are part of the record.
 Entries stay after a strategy is removed from our own workspace — this is a log, and deleting the record would leave only the survivors.
 
-**★ marks a strategy that out-returned buy & hold over the same window** — 102 of 482 right now.
-`—` means the comparison **could not be made**: the engine does not compute a benchmark for multi-symbol, futures, or multi-leg runs. That is *unknown*, not *lost*, and it is 169 of them right now.
+**★ marks a strategy that out-returned buy & hold over the same window** — 102 of 484 right now.
+`—` means the comparison **could not be made**: the engine does not compute a benchmark for multi-symbol, futures, or multi-leg runs. That is *unknown*, not *lost*, and it is 171 of them right now.
 
 Every figure comes from the last verifying backtest at publish time. These are past results over historical data. Nothing here is promised or assured about the future, and none of it is investment advice.
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
+| — | [1653](strategies/1653/) | BB+ATR Mean Reversion (AVAXUSDT) | +30.80% | — | +23.40% | 36 | 2026-09-19 |
+| — | [1651](strategies/1651/) | RSI Momentum + SMA Trend Filter | +1.05% | — | +1.06% | 1 | 2026-09-19 |
 | — | [1650](strategies/1650/) | BB Mean Reversion + ATR + Gentle Trend Filter (ETHUSDT) | +4.93% | — | +2.16% | 12 | 2026-09-19 |
 | — | [1649](strategies/1649/) | BB Mean Reversion + ATR Filter (SOLUSDT) | +9.73% | — | +4.71% | 34 | 2026-09-19 |
 | — | [1648](strategies/1648/) | BB Mean Reversion + ATR Filter (BTCUSDT) | -17.36% | — | +25.13% | 32 | 2026-09-19 |

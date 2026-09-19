@@ -1,0 +1,28 @@
+{
+  "id": 1653,
+  "name": "BB+ATR Mean Reversion (AVAXUSDT)",
+  "kind": "custom",
+  "verified": {
+    "backtestId": 7541,
+    "return": 30.8,
+    "mdd": 23.4,
+    "trades": 36,
+    "vsBuyHold": "unmeasured",
+    "gapPct": 0,
+    "tFrom": 1761004800,
+    "tTo": 1768190400,
+    "approxNotes": [
+      "봉 내 순서는 관례(양봉 O→L→H→C·음봉 O→H→L→C) — 실순서 미상 · 봉 중 거래량 null · MDD 는 봉 마감 기준"
+    ],
+    "spec": {
+      "ex": "binance",
+      "sym": "SOLUSDT",
+      "interval": "4h",
+      "bars": 500,
+      "end": 1768204800
+    }
+  },
+  "config": null,
+  "updatedAt": "2026-09-19T09:39:46.355Z",
+  "publishedBy": "scripts/publish-strategies.mjs"
+}
