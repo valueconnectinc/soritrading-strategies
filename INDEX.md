@@ -4,13 +4,14 @@ Every strategy whose backtest **finished and actually traded** is published here
 Nothing is filtered out by return — the ones that lost money are part of the record.
 Entries stay after a strategy is removed from our own workspace — this is a log, and deleting the record would leave only the survivors.
 
-**★ marks a strategy that out-returned buy & hold over the same window** — 85 of 439 right now.
+**★ marks a strategy that out-returned buy & hold over the same window** — 86 of 440 right now.
 `—` means the comparison **could not be made**: the engine does not compute a benchmark for multi-symbol, futures, or multi-leg runs. That is *unknown*, not *lost*, and it is 161 of them right now.
 
 Every figure comes from the last verifying backtest at publish time. These are past results over historical data. Nothing here is promised or assured about the future, and none of it is investment advice.
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
+| ★ | [1592](strategies/1592/) | ATR Volatility Breakout | +2.43% | +0.11% | +4.72% | 7 | 2026-09-19 |
 | ★ | [1588](strategies/1588/) | BB-ATR Mean Reversion | -9.64% | -31.93% | +11.46% | 1 | 2026-09-19 |
 | ★ | [1587](strategies/1587/) | BB-ATR Volatility Breakout | -1.88% | -31.93% | +6.28% | 9 | 2026-09-19 |
 | — | [1586](strategies/1586/) | RSI Mean Reversion v2 | +15.22% | — | +6.69% | 68 | 2026-09-19 |
