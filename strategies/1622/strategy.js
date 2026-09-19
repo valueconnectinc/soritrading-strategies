@@ -1,6 +1,6 @@
 /*
  * @coinsori-strategy v1
- * name: BB RSI Volume Mean Reversion v3
+ * name: BB RSI Volume Mean Reversion v4
  * ex: binance
  * syms: SOLUSDT
  * interval: 4h
@@ -30,7 +30,8 @@ function onUpdate(ctx) {
 
     // ENTRY CONDITIONS (all must be true)
     const volConfirm = ctx.vol > avgVol;                       // volume above 20-bar average
-    const rsiOversold = rsi < 35 && rsi > rsi_1;              // RSI < 35 AND rising (confirming bounce)
+    // RSI oversold: just < 35, no rising requirement (bear markets pin RSI low)
+    const rsiOversold = rsi < 35;
     const atLowerBand = close1 <= bb_1.lower;                  // confirmed close at/below lower BB
 
     if (ctx.position === 0 && volConfirm && rsiOversold && atLowerBand) {
