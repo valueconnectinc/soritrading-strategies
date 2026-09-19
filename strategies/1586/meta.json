@@ -3,14 +3,14 @@
   "name": "RSI Mean Reversion v2",
   "kind": "custom",
   "verified": {
-    "backtestId": 7295,
-    "return": -9.17,
-    "mdd": 13.66,
-    "trades": 56,
+    "backtestId": 7298,
+    "return": 15.22,
+    "mdd": 6.69,
+    "trades": 68,
     "vsBuyHold": "unmeasured",
     "gapPct": 0,
-    "tFrom": 1718740800,
-    "tTo": 1725926400,
+    "tFrom": 1704067200,
+    "tTo": 1711915200,
     "approxNotes": [
       "봉 내 순서는 관례(양봉 O→L→H→C·음봉 O→H→L→C) — 실순서 미상 · 봉 중 거래량 null · MDD 는 봉 마감 기준"
     ],
@@ -18,11 +18,11 @@
       "ex": "binance",
       "sym": "MATICUSDT",
       "interval": "4h",
-      "bars": 500,
-      "end": 1782590400
+      "bars": 546,
+      "end": 1711929600
     }
   },
   "config": null,
-  "updatedAt": "2026-09-19T04:53:07.669Z",
+  "updatedAt": "2026-09-19T04:54:52.180Z",
   "publishedBy": "scripts/publish-strategies.mjs"
 }
