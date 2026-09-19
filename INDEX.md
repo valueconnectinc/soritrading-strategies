@@ -4,13 +4,14 @@ Every strategy whose backtest **finished and actually traded** is published here
 Nothing is filtered out by return — the ones that lost money are part of the record.
 Entries stay after a strategy is removed from our own workspace — this is a log, and deleting the record would leave only the survivors.
 
-**★ marks a strategy that out-returned buy & hold over the same window** — 83 of 435 right now.
-`—` means the comparison **could not be made**: the engine does not compute a benchmark for multi-symbol, futures, or multi-leg runs. That is *unknown*, not *lost*, and it is 159 of them right now.
+**★ marks a strategy that out-returned buy & hold over the same window** — 83 of 436 right now.
+`—` means the comparison **could not be made**: the engine does not compute a benchmark for multi-symbol, futures, or multi-leg runs. That is *unknown*, not *lost*, and it is 160 of them right now.
 
 Every figure comes from the last verifying backtest at publish time. These are past results over historical data. Nothing here is promised or assured about the future, and none of it is investment advice.
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
+| — | [1585](strategies/1585/) | RSI Mean Reversion | -25.03% | — | +29.29% | 1 | 2026-09-19 |
 | ★ | [1584](strategies/1584/) | RSI Mean Reversion + Vol Spike MATIC | -36.92% | -60.51% | +48.04% | 30 | 2026-09-19 |
 | ★ | [1583](strategies/1583/) | AI 전략 | -8.83% | -31.93% | +8.83% | 12 | 2026-09-19 |
 | ★ | [1582](strategies/1582/) | AI 전략 | -17.77% | -31.93% | +17.77% | 18 | 2026-09-19 |
