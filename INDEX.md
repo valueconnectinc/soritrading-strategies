@@ -11,7 +11,7 @@ Every figure comes from the last verifying backtest at publish time. These are p
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
-|  | [1633](strategies/1633/) | AI 전략 | -3.78% | +57.49% | +9.23% | 22 | 2026-09-19 |
+|  | [1633](strategies/1633/) | AI 전략 | -56.73% | -43.16% | +57.30% | 137 | 2026-09-19 |
 | ★ | [1632](strategies/1632/) | AI 전략 | -25.03% | -43.16% | +36.65% | 20 | 2026-09-19 |
 | ★ | [1631](strategies/1631/) | AI 전략 | -19.64% | -43.16% | +35.66% | 18 | 2026-09-19 |
 | ★ | [1629](strategies/1629/) | EMA9/21 Crossover + Volume Spike | -13.02% | -43.16% | +16.95% | 14 | 2026-09-19 |
