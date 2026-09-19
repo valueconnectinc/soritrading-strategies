@@ -1,0 +1,30 @@
+{
+  "id": 1539,
+  "name": "Supertrend RSI Hybrid — DOGEUSDT 4H",
+  "kind": "custom",
+  "verified": {
+    "backtestId": 7146,
+    "return": -0.39,
+    "mdd": 0.39,
+    "trades": 2,
+    "vsBuyHold": "win",
+    "benchRet": -15.61,
+    "benchBasis": "price",
+    "gapPct": 0,
+    "tFrom": 1775376000,
+    "tTo": 1782561600,
+    "approxNotes": [
+      "봉 내 순서는 관례(양봉 O→L→H→C·음봉 O→H→L→C) — 실순서 미상 · 봉 중 거래량 null · MDD 는 봉 마감 기준"
+    ],
+    "spec": {
+      "ex": "binance",
+      "sym": "DOGEUSDT",
+      "interval": "4h",
+      "bars": 500,
+      "end": 1782576000
+    }
+  },
+  "config": null,
+  "updatedAt": "2026-09-19T03:53:55.409Z",
+  "publishedBy": "scripts/publish-strategies.mjs"
+}
