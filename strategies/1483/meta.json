@@ -3,7 +3,7 @@
   "name": "RSI BB Mean Reversion v4 (Tighter Entry)",
   "kind": "custom",
   "verified": {
-    "backtestId": 6947,
+    "backtestId": 6956,
     "return": 7.54,
     "mdd": 5.49,
     "trades": 6,
