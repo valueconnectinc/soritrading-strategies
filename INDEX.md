@@ -4,13 +4,14 @@ Every strategy whose backtest **finished and actually traded** is published here
 Nothing is filtered out by return — the ones that lost money are part of the record.
 Entries stay after a strategy is removed from our own workspace — this is a log, and deleting the record would leave only the survivors.
 
-**★ marks a strategy that out-returned buy & hold over the same window** — 86 of 444 right now.
+**★ marks a strategy that out-returned buy & hold over the same window** — 86 of 445 right now.
 `—` means the comparison **could not be made**: the engine does not compute a benchmark for multi-symbol, futures, or multi-leg runs. That is *unknown*, not *lost*, and it is 161 of them right now.
 
 Every figure comes from the last verifying backtest at publish time. These are past results over historical data. Nothing here is promised or assured about the future, and none of it is investment advice.
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
+|  | [1598](strategies/1598/) | SOL EMA Signal | +23.55% | +37.00% | +9.25% | 31 | 2026-09-19 |
 |  | [1597](strategies/1597/) | SOL EMA Rider | -15.30% | +0.11% | +15.30% | 26 | 2026-09-19 |
 |  | [1596](strategies/1596/) | SOL EMA Momentum | -13.27% | +0.11% | +15.64% | 23 | 2026-09-19 |
 |  | [1595](strategies/1595/) | SOL Trend Rider v2 | -30.83% | +37.00% | +32.04% | 155 | 2026-09-19 |
