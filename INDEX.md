@@ -4,13 +4,14 @@ Every strategy whose backtest **finished and actually traded** is published here
 Nothing is filtered out by return — the ones that lost money are part of the record.
 Entries stay after a strategy is removed from our own workspace — this is a log, and deleting the record would leave only the survivors.
 
-**★ marks a strategy that out-returned buy & hold over the same window** — 89 of 453 right now.
+**★ marks a strategy that out-returned buy & hold over the same window** — 89 of 454 right now.
 `—` means the comparison **could not be made**: the engine does not compute a benchmark for multi-symbol, futures, or multi-leg runs. That is *unknown*, not *lost*, and it is 161 of them right now.
 
 Every figure comes from the last verifying backtest at publish time. These are past results over historical data. Nothing here is promised or assured about the future, and none of it is investment advice.
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
+|  | [1615](strategies/1615/) | BB Volatility Expansion Breakout | -27.63% | -10.67% | +27.63% | 25 | 2026-09-19 |
 |  | [1614](strategies/1614/) | Multi-Timeframe Trend Momentum | +1.27% | +60.64% | +0.00% | 4 | 2026-09-19 |
 |  | [1611](strategies/1611/) | AI 전략 | -20.43% | -10.59% | +27.93% | 1 | 2026-09-19 |
 | ★ | [1610](strategies/1610/) | AI 전략 | -0.47% | -10.59% | +0.47% | 2 | 2026-09-19 |
