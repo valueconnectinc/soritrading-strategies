@@ -46,11 +46,11 @@ function onUpdate(ctx) {
   const upper  = bb.upper;
   const mid    = (bb.upper + bb.lower) / 2;
 
-  // Volume filter: require above-average volume to confirm the signal
-  // Low volume on lower-band touch often means a weak bounce, not a real reversal
+  // Volume filter: require at least average volume to confirm the signal
+  // 1.0x = no bonus but filters out below-average quiet bars
   const avgVol = ctx.avgVol(20);
   const curVol = ctx.vol;
-  const volConfirm = avgVol != null && curVol != null && curVol > avgVol * 1.2;
+  const volConfirm = avgVol != null && curVol != null && curVol >= avgVol;
 
   // === ENTRY ===
   if (ctx.position === 0) {
@@ -67,7 +67,7 @@ function onUpdate(ctx) {
     // Mid-band exit: sell when price reverts to the middle band
     if (price >= mid) return { side: 'sell', qty: ctx.position };
 
-    // Stop-loss: 3× ATR below entry
+    // Stop-loss: 3x ATR below entry
     const entryPx = ctx.entryPx;
     if (entryPx != null && price <= entryPx * (1 - 3 * atr / entryPx)) {
       return { side: 'sell', qty: ctx.position };

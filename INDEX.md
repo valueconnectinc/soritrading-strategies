@@ -11,7 +11,7 @@ Every figure comes from the last verifying backtest at publish time. These are p
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
-| ★ | [1672](strategies/1672/) | BB ATR Mean Reversion NEARUSDT 4H | +4.18% | -22.73% | +11.39% | 4 | 2026-09-19 |
+| ★ | [1672](strategies/1672/) | BB ATR Mean Reversion NEARUSDT 4H | +4.70% | -25.91% | +18.61% | 12 | 2026-09-19 |
 |  | [1670](strategies/1670/) | RSI Momentum Recovery | -9.18% | -5.00% | +11.79% | 6 | 2026-09-19 |
 |  | [1669](strategies/1669/) | EMA Crossover + ATR Trailing Stop | -3.57% | +7.49% | +17.41% | 24 | 2026-09-19 |
 |  | [1668](strategies/1668/) | Daily EMA Filter + 4H Bollinger Breakout | -40.98% | -26.83% | +43.31% | 102 | 2026-09-19 |
