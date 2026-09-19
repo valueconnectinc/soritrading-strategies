@@ -3,16 +3,16 @@
   "name": "Stochastic Momentum + ATR",
   "kind": "custom",
   "verified": {
-    "backtestId": 6867,
-    "return": -21.38,
-    "mdd": 42.52,
-    "trades": 16,
-    "vsBuyHold": "win",
-    "benchRet": -44.16,
+    "backtestId": 6871,
+    "return": 6.1,
+    "mdd": 6.92,
+    "trades": 8,
+    "vsBuyHold": "lose",
+    "benchRet": 58.51,
     "benchBasis": "price",
     "gapPct": 0,
-    "tFrom": 1768176000,
-    "tTo": 1775361600,
+    "tFrom": 1782576000,
+    "tTo": 1789761600,
     "approxNotes": [
       "봉 내 순서는 관례(양봉 O→L→H→C·음봉 O→H→L→C) — 실순서 미상 · 봉 중 거래량 null · MDD 는 봉 마감 기준"
     ],
@@ -21,7 +21,7 @@
       "sym": "SOLUSDT",
       "interval": "4h",
       "bars": 500,
-      "end": 1775376000
+      "end": 1789776000
     }
   },
   "config": null,
