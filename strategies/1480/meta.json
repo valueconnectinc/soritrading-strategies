@@ -3,7 +3,7 @@
   "name": "RSI BB + EMA Trend Filter",
   "kind": "custom",
   "verified": {
-    "backtestId": 6933,
+    "backtestId": 6938,
     "return": 1.78,
     "mdd": 1.01,
     "trades": 2,
