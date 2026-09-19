@@ -4,13 +4,14 @@ Every strategy whose backtest **finished and actually traded** is published here
 Nothing is filtered out by return — the ones that lost money are part of the record.
 Entries stay after a strategy is removed from our own workspace — this is a log, and deleting the record would leave only the survivors.
 
-**★ marks a strategy that out-returned buy & hold over the same window** — 62 of 390 right now.
+**★ marks a strategy that out-returned buy & hold over the same window** — 63 of 391 right now.
 `—` means the comparison **could not be made**: the engine does not compute a benchmark for multi-symbol, futures, or multi-leg runs. That is *unknown*, not *lost*, and it is 156 of them right now.
 
 Every figure comes from the last verifying backtest at publish time. These are past results over historical data. Nothing here is promised or assured about the future, and none of it is investment advice.
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
+| ★ | [1509](strategies/1509/) | Volume Spike EMA RSI Pullback | -5.03% | -8.84% | +8.40% | 8 | 2026-09-19 |
 |  | [1508](strategies/1508/) | ATR Ratio Regime RSI Pullback | -0.82% | +58.51% | +0.82% | 2 | 2026-09-19 |
 |  | [1503](strategies/1503/) | EMA20 Simple Trend + ATR Stop | -36.29% | +58.51% | +42.63% | 249 | 2026-09-19 |
 |  | [1502](strategies/1502/) | EMA20 Trend + MACD Momentum + Volume | -12.10% | -8.84% | +12.10% | 20 | 2026-09-19 |
