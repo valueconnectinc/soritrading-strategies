@@ -11,7 +11,7 @@ Every figure comes from the last verifying backtest at publish time. These are p
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
-| ★ | [2165](strategies/2165/) | ETH Trend Pyramiding 4H | +48.21% | -30.03% | +46.84% | 123 | 2026-09-20 |
+| ★ | [2165](strategies/2165/) | ETH Trend Pyramiding 4H | +39.80% | -41.02% | +63.95% | 152 | 2026-09-20 |
 |  | [2164](strategies/2164/) | ETH Daily 200-SMA Trend Ride 1D | +190.03% | +501.57% | +49.06% | 21 | 2026-09-20 |
 | ★ | [2162](strategies/2162/) | ETH Uptrend RSI Dip-Buy 4H | +5.52% | -30.03% | +24.36% | 78 | 2026-09-20 |
 | ★ | [2161](strategies/2161/) | ETH OI-Sentiment Fade 4H | +33.87% | +32.19% | +48.52% | 115 | 2026-09-20 |

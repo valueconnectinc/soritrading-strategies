@@ -14,7 +14,7 @@
  * trend has clearly proven itself, capturing more of a sustained bull run.
  * When it buys and sells: enter long on a close above the 200-SMA at a small
  * ATR-sized size; then while in the position, if price stays far above the SMA
- * (strong persistent trend) add a further ATR-sized tranche, up to a cap. Sell
+ * (strong persistent trend) add further ATR-sized tranches, up to a cap. Sell
  * everything on a close below the 200-SMA.
  * When it does NOT work: in a choppy market that drifts far above the SMA and
  * then reverses, the added tranches turn a small whipsaw into a larger loss.
@@ -33,8 +33,8 @@ function onUpdate(ctx) {
   const atr = ctx.atr(14, 1);
   const cash = ctx.cash;
 
-  // risk 2% of equity per tranche, capped at full-account notional
-  const riskQty = (atr && atr > 0) ? (0.02 * cash) / atr : (cash / price) * 0.98;
+  // risk 3% of equity per tranche, capped at full-account notional
+  const riskQty = (atr && atr > 0) ? (0.03 * cash) / atr : (cash / price) * 0.98;
   const maxQty = (cash / price) * 0.98;
 
   if (pos <= 0) {
@@ -50,12 +50,12 @@ function onUpdate(ctx) {
     return { side: 'sell', qty: pos };
   }
 
-  // pyramiding: add while strongly above the SMA, up to 4 total tranches.
-  // cap notional at ~40% of account so we never over-leverage a single trend.
+  // pyramiding: add while strongly above the SMA. cap notional at 70% of
+  // account so we never fully over-leverage a single trend.
   const distPct = (closePrev - sma) / sma;
-  const maxPosNotional = 0.40 * (cash + pos * price);
+  const maxPosNotional = 0.70 * (cash + pos * price);
   const currentNotional = pos * price;
-  if (distPct > 0.15 && currentNotional < maxPosNotional) {
+  if (distPct > 0.10 && currentNotional < maxPosNotional) {
     const addQty = Math.min(riskQty, (maxPosNotional - currentNotional) / price);
     if (addQty > 0) return { side: 'buy', qty: addQty };
   }
