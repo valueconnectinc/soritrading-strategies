@@ -1,46 +1,49 @@
 /*
  * @coinsori-strategy v1
- * name: BTC Vol-Targeted Hold Weekly 1D
+ * name: BTC Vol-Targeted Hold Asym 1D
  * ex: binance
  * syms: BTCUSDT
  * interval: 1d
  * cash: 10000
  *
- * Why this strategy: the daily vol-targeted hold (ID 2194) proved it cuts BTC's
- * crash drawdowns dramatically (MDD ~37-44% vs BTC's typical 60%+), but it
- * rebalances almost every day -> ~4200 trades/window, heavy fee/slippage cost in
- * live. This version rebalances only once a week instead of every day, keeping
- * the same de-risking logic but cutting trade count ~7x.
- * When it buys and sells: hold BTC, and every 7 bars set the position so the
- * expected daily move (ATR) equals 2% of account value. Sell down in high-vol,
- * buy back in calm. Never fully flat.
- * When it does NOT work: weekly rebalancing lags a fast crash by up to a week
- * (de-risks later than daily), so a sudden cliff can still hurt; and like the
- * daily version it never beats buy-and-hold in a clean steady bull.
+ * Why this strategy: the daily vol-targeted hold (ID 2194) proved it cuts BTC
+ * crash drawdowns (MDD ~37-44% vs BTC's typical 60%+), but rebalances almost
+ * every day (~4200 trades/window) because it re-levers back up every time vol
+ * calms. This version makes rebalancing ASYMMETRIC: it de-risks immediately
+ * when volatility spikes (fast sell), but re-levers back up only slowly (a
+ * meaningful gap must open before buying). That keeps the crash protection
+ * while cutting most of the churny buy-back trades.
+ * When it buys and sells: hold BTC. Every day, if recent volatility (ATR) rose
+ * so the target position is below current, sell down right away. Only buy back
+ * when the target exceeds current by a wide margin. Never fully flat.
+ * When it does NOT work: in a choppy calm market it may sit under-invested for
+ * a while (slow to re-lever) so it lags a sudden clean bull; and it still never
+ * beats buy-and-hold in a steady uptrend.
  */
 function onUpdate(ctx) {
-  // rebalance only every 7 bars (weekly cadence) to cut churn vs daily
-  if (ctx.i % 7 !== 0) return null;
-
   const atr = ctx.atr(14, 1);
   const price = ctx.price;
   const cash = ctx.cash;
   const pos = ctx.position;
   if (atr == null || price == null || price <= 0) return null;
 
-  // target: daily ATR move should be ~2% of total account value
   const equity = cash + pos * price;
   const targetValue = (0.02 * equity) / (atr / price);
   const targetQty = targetValue / price;
   const curQty = pos;
 
   const diff = targetQty - curQty;
-  if (Math.abs(diff) < 0.0001 * curQty) return null;
-  if (diff > 0) {
+
+  // de-risk: sell immediately whenever we are above target (vol spiked)
+  if (diff < 0) {
+    return { side: 'sell', qty: Math.min(curQty, -diff) };
+  }
+  // re-lever: only buy back when the gap is wide (>15% of current position)
+  // so we do not churn on every small calm spell
+  if (diff > 0.15 * curQty) {
     const buyQty = Math.min(diff, (cash / price) * 0.98);
     if (buyQty <= 0) return null;
     return { side: 'buy', qty: buyQty };
-  } else {
-    return { side: 'sell', qty: Math.min(curQty, -diff) };
   }
+  return null;
 }
