@@ -4,13 +4,14 @@ Every strategy whose backtest **finished and actually traded** is published here
 Nothing is filtered out by return — the ones that lost money are part of the record.
 Entries stay after a strategy is removed from our own workspace — this is a log, and deleting the record would leave only the survivors.
 
-**★ marks a strategy that out-returned buy & hold over the same window** — 161 of 630 right now.
+**★ marks a strategy that out-returned buy & hold over the same window** — 161 of 631 right now.
 `—` means the comparison **could not be made**: the engine does not compute a benchmark for multi-symbol, futures, or multi-leg runs. That is *unknown*, not *lost*, and it is 177 of them right now.
 
 Every figure comes from the last verifying backtest at publish time. These are past results over historical data. Nothing here is promised or assured about the future, and none of it is investment advice.
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
+|  | [2110](strategies/2110/) | RSI Zone + Volume + DXY Macro Filter — XRPUSDT 4H | -7.27% | +190.96% | +10.15% | 16 | 2026-09-20 |
 |  | [2106](strategies/2106/) | ATR Ratio EMA Crossover — XRPUSDT 4H | -42.03% | +190.96% | +52.19% | 254 | 2026-09-20 |
 | ★ | [2102](strategies/2102/) | Bollinger Band Mean Reversion | +3251.29% | +190.96% | +51.98% | 261 | 2026-09-20 |
 |  | [2101](strategies/2101/) | EMA Cross RSI Filter | -53.93% | +190.96% | +71.46% | 101 | 2026-09-20 |
