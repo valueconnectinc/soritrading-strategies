@@ -11,7 +11,7 @@ Every figure comes from the last verifying backtest at publish time. These are p
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
-|  | [2106](strategies/2106/) | ATR Ratio EMA Crossover — XRPUSDT 4H | -32.76% | +180.61% | +41.33% | 318 | 2026-09-20 |
+|  | [2106](strategies/2106/) | ATR Ratio EMA Crossover — XRPUSDT 4H | -42.03% | +190.96% | +52.19% | 254 | 2026-09-20 |
 | ★ | [2102](strategies/2102/) | Bollinger Band Mean Reversion | +3251.29% | +190.96% | +51.98% | 261 | 2026-09-20 |
 |  | [2101](strategies/2101/) | EMA Cross RSI Filter | -53.93% | +190.96% | +71.46% | 101 | 2026-09-20 |
 |  | [2099](strategies/2099/) | ATR Ratio Regime — XRPUSDT 4H | +16.01% | +31.84% | +4.84% | 21 | 2026-09-20 |
