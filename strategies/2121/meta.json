@@ -3,7 +3,7 @@
   "name": "ATR Regime + EMA Trend",
   "kind": "custom",
   "verified": {
-    "backtestId": 8326,
+    "backtestId": 8329,
     "return": -1.82,
     "mdd": 4.28,
     "trades": 14,
