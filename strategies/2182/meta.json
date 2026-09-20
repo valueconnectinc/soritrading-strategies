@@ -3,16 +3,16 @@
   "name": "BTC ETH-Confirmed Hashrate 1D",
   "kind": "custom",
   "verified": {
-    "backtestId": 8710,
-    "return": -29.48,
-    "mdd": 40.12,
-    "trades": 4,
+    "backtestId": 8716,
+    "return": 46.59,
+    "mdd": 18.5,
+    "trades": 42,
     "vsBuyHold": "lose",
-    "benchRet": 52.01,
+    "benchRet": 427.47,
     "benchBasis": "price",
     "gapPct": 0,
-    "tFrom": 1502928000,
-    "tTo": 1530576000,
+    "tFrom": 1672531200,
+    "tTo": 1767139200,
     "approxNotes": [
       "봉 내 순서는 관례(양봉 O→L→H→C·음봉 O→H→L→C) — 실순서 미상 · 봉 중 거래량 null · MDD 는 봉 마감 기준"
     ],
@@ -20,8 +20,8 @@
       "ex": "binance",
       "sym": "BTCUSDT",
       "interval": "1d",
-      "bars": 1000,
-      "end": 1530662400
+      "bars": 1096,
+      "end": 1767225600
     }
   },
   "config": null,

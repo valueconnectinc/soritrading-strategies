@@ -11,7 +11,7 @@ Every figure comes from the last verifying backtest at publish time. These are p
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
-|  | [2182](strategies/2182/) | BTC ETH-Confirmed Hashrate 1D | -29.48% | +52.01% | +40.12% | 4 | 2026-09-20 |
+|  | [2182](strategies/2182/) | BTC ETH-Confirmed Hashrate 1D | +46.59% | +427.47% | +18.50% | 42 | 2026-09-20 |
 |  | [2180](strategies/2180/) | BTC Fed-Rate Regime Trend 1D | +256.46% | +774.99% | +28.76% | 37 | 2026-09-20 |
 |  | [2179](strategies/2179/) | BTC Hashrate + Trend Guard ATR-Exit 1D | +77.53% | +176.18% | +21.96% | 23 | 2026-09-20 |
 |  | [2178](strategies/2178/) | BTC Donchian Breakout ATR-Trailing 1D | -52.25% | +331.20% | +65.55% | 46 | 2026-09-20 |
