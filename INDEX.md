@@ -4,13 +4,14 @@ Every strategy whose backtest **finished and actually traded** is published here
 Nothing is filtered out by return — the ones that lost money are part of the record.
 Entries stay after a strategy is removed from our own workspace — this is a log, and deleting the record would leave only the survivors.
 
-**★ marks a strategy that out-returned buy & hold over the same window** — 171 of 673 right now.
+**★ marks a strategy that out-returned buy & hold over the same window** — 171 of 674 right now.
 `—` means the comparison **could not be made**: the engine does not compute a benchmark for multi-symbol, futures, or multi-leg runs. That is *unknown*, not *lost*, and it is 178 of them right now.
 
 Every figure comes from the last verifying backtest at publish time. These are past results over historical data. Nothing here is promised or assured about the future, and none of it is investment advice.
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
+|  | [2170](strategies/2170/) | BTC Fear-Greed Contrarian 1D | -4.28% | +774.99% | +36.97% | 8 | 2026-09-20 |
 | — | [2169](strategies/2169/) | AI 전략 | +765.43% | — | +61.49% | 107 | 2026-09-20 |
 |  | [2168](strategies/2168/) | ETH Daily Trend Strength-Scaled 1D (conservative) | -6.66% | +10.00% | +74.11% | 21 | 2026-09-20 |
 |  | [2167](strategies/2167/) | ETH Daily Trend Strength-Scaled 1D | +348.41% | +501.57% | +74.62% | 21 | 2026-09-20 |
