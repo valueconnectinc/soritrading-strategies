@@ -1,19 +1,23 @@
 /*
  * @coinsori-strategy v1
- * name: ETH Trend Hysteresis Band 0.5 4H
+ * name: ETH Long-Term Trend Ride Hysteresis 4H
  * ex: binance
  * syms: ETHUSDT
  * interval: 4h
  * cash: 10000
  *
- * Why this strategy: Tuning variant of the validated hysteresis dead-band trend
- * follower. A wider 0.5x ATR dead-band below the 200-SMA absorbs more sideways
- * chop (less whipsaw) but exits later in a genuine crash (gives back more of a
- * real breakdown). Tested head-to-head against 0.2 and 0.3.
+ * Why this strategy: Improvement on the validated ETH 200-SMA trend champion.
+ * The champion's one weakness is sideways/choppy markets where price oscillates
+ * around the 200-SMA: it buys on a cross up, sells on a cross down, then buys
+ * again — paying fees and losing to whipsaw. This version adds a hysteresis
+ * (dead-band) around the SMA: it stays long through minor dips below the SMA
+ * and only exits on a real breakdown, so normal chop around the SMA no longer
+ * triggers a sell-then-rebuy cycle.
  * When it buys and sells: buy on a 4h close above the 200-SMA; hold while price
- * stays within the band below the SMA; sell only on a close beyond the band.
- * When it does NOT work: the wider band exits later in a real crash and can stay
- * long too long in a grinding bear just below the SMA.
+ * stays within the dead-band below the SMA; sell only on a close beyond it.
+ * When it does NOT work: the dead-band means it exits later in a genuine crash
+ * (gives back a bit more of a real breakdown before leaving), and in a long
+ * grinding bear where price sits just below the SMA it can stay long too long.
  */
 function onUpdate(ctx) {
   const sma = ctx.sma(200, 1);
@@ -26,7 +30,7 @@ function onUpdate(ctx) {
   const price = ctx.price;
   const cash = ctx.cash;
 
-  const band = 0.5 * atr;  // wider band: absorbs more chop, exits later on crash
+  const band = 0.3 * atr;  // balanced: absorbs chop but still exits on real crash
   const exitLine = sma - band;
 
   if (pos <= 0) {
