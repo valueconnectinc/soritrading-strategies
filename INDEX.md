@@ -11,7 +11,7 @@ Every figure comes from the last verifying backtest at publish time. These are p
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
-|  | [2185](strategies/2185/) | BTC Hashrate ATR-Vol-Targeted 1D | +94.40% | +427.47% | +26.42% | 42 | 2026-09-20 |
+|  | [2185](strategies/2185/) | BTC Hashrate ATR-Vol-Targeted 1D | -42.70% | -13.59% | +51.27% | 18 | 2026-09-20 |
 |  | [2184](strategies/2184/) | BTC Active-Address Network Growth 1D | -28.30% | +52.01% | +35.62% | 56 | 2026-09-20 |
 |  | [2183](strategies/2183/) | BTC Hashrate Fixed-Size Baseline 1D | +64.62% | +427.47% | +22.80% | 42 | 2026-09-20 |
 |  | [2182](strategies/2182/) | BTC ETH-Confirmed Hashrate 1D | +46.59% | +427.47% | +18.50% | 42 | 2026-09-20 |
