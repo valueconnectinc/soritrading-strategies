@@ -1,0 +1,30 @@
+{
+  "id": 2086,
+  "name": "Multi-TF Trend Aligned BB RSI",
+  "kind": "custom",
+  "verified": {
+    "backtestId": 8210,
+    "return": 2.14,
+    "mdd": 25.79,
+    "trades": 22,
+    "vsBuyHold": "win",
+    "benchRet": -14.01,
+    "benchBasis": "price",
+    "gapPct": 0,
+    "tFrom": 1775476800,
+    "tTo": 1782662400,
+    "approxNotes": [
+      "봉 내 순서는 관례(양봉 O→L→H→C·음봉 O→H→L→C) — 실순서 미상 · 봉 중 거래량 null · MDD 는 봉 마감 기준"
+    ],
+    "spec": {
+      "ex": "binance",
+      "sym": "SOLUSDT",
+      "interval": "4h",
+      "bars": 500,
+      "end": 1782676800
+    }
+  },
+  "config": null,
+  "updatedAt": "2026-09-20T05:43:14.555Z",
+  "publishedBy": "scripts/publish-strategies.mjs"
+}
