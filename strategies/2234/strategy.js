@@ -1,43 +1,42 @@
 /*
  * @coinsori-strategy v1
- * name: ETH Dual-Oscillator Mean Reversion 4h
+ * name: DOGE BB-RSI Mean Reversion + Crash Guard 4H
  * ex: binance
- * syms: ETHUSDT
+ * syms: DOGEUSDT
  * interval: 4h
  * cash: 10000
  *
- * Why this strategy: The ledger shows plain BB+RSI mean-reversion FAILS on ETH
- * (its oversold dips are genuine breakdowns, not bounces). But a dual-oscillator
- * version — requiring BOTH RSI<35 AND Stochastic %K<25 — plus an EMA200 uptrend
- * filter is the strongest validated ETH approach (+43/+33/+20% across 3 windows,
- * MDD ~4%, beating the market by 63pp in the recent bear). Requiring two
- * independent oversold signals filters out false breakdowns that a single
- * oscillator catches, and the EMA200 filter keeps us out of a downtrend.
- * When it buys and sells: buy when RSI<35 AND Stochastic %K<25 AND price is
- * above the 200-bar EMA (only mean-revert inside an uptrend). Sell when RSI
- * recovers above 65 or price falls below the EMA200.
- * When it does NOT work: in a strong sustained bull the oscillators rarely go
- * oversold so it sits in cash and misses the melt-up; a genuine multi-week
- * downtrend that has not yet broken EMA200 can still catch a knife.
+ * Why this strategy: The BB+RSI mean-reversion dip-buy validated well on DOGE
+ * (2/3 windows beat market, strong recent-bear defense). Its one known weakness
+ * is catching falling knives in a violent crash — buying the lower band while
+ * price keeps falling. This version adds a trend guard (don't buy when price is
+ * far below the long mean) and a hard stop-loss to cap crash damage.
+ * When it buys and sells: buy when price touches the lower Bollinger band AND
+ * RSI is oversold AND price is still near/above the long-term SMA (so we only
+ * buy dips inside an intact range, not a collapse). Sell back at the middle band
+ * or when RSI turns overbought; stop out if price falls ~10% below entry.
+ * When it does NOT work: in a strong sustained bull the lower band is rarely
+ * touched so it sits in cash and misses the melt-up; the trend guard also makes
+ * it skip the first leg of a genuine bottom (dips below the long mean).
  */
 function onUpdate(ctx) {
+  const bb = ctx.bb(20, 2, 1);
   const rsi = ctx.rsi(14, 1);
-  const st = ctx.stoch(14, 3, 1);
-  const ema200 = ctx.ema(200, 1);
-  if (rsi == null || st == null || st.k == null || ema200 == null) return null;
+  const sma100 = ctx.sma(100, 1);
+  if (bb == null || rsi == null || sma100 == null) return null;
   const pos = ctx.position;
   const price = ctx.price;
   const cash = ctx.cash;
 
   if (pos <= 0) {
-    // dual oversold + uptrend filter
-    if (rsi < 35 && st.k < 25 && price > ema200) {
+    // only buy a dip if we are not already in a collapse (price crashed below the long mean)
+    if (price < bb.lower && rsi < 35 && price > sma100 * 0.97) {
       return { side: 'buy', qty: (cash / price) * 0.98 };
     }
     return null;
   } else {
-    // exit on RSI recovery or trend break
-    if (rsi > 65 || price < ema200) {
+    // exit at the mean / overbought, or stop out on a crash
+    if (price > bb.mid || rsi > 65 || price < ctx.entryPx * 0.90) {
       return { side: 'sell', qty: pos };
     }
     return null;
