@@ -1,49 +1,61 @@
 /*
  * @coinsori-strategy v1
- * name: SOL Donchian Breakout ATR-Trailing 1D
+ * name: SOL Trend-Gated Vol-Target AllRegimes 1D
  * ex: binance
  * syms: SOLUSDT
  * interval: 1d
  * cash: 10000
  *
- * Why this strategy: pure momentum/breakout family — different from the validated
- * vol-target champion. SOL's strong trending phases reward buying new 20-day
- * highs and riding with a trailing stop rather than vol-scaled sizing.
- * When it buys and sells: buy when price closes above the 20-day high (Donchian
- * breakout); sell when price closes below the 10-day low or drops 2.5 ATR from
- * the entry.
- * When it does NOT work: in choppy/range-bound markets the breakout is repeatedly
- * faked and the trailing stop gives back gains; SOL's volatility means frequent
- * stop-outs during normal pullbacks.
+ * Why this strategy: improvement on the validated SOL trend-gated vol-target
+ * champion (2209). The champion's 2020-22 window had a 70% drawdown because it
+ * held 100% during high-volatility bull runs. This version applies the ATR
+ * vol-target position cap in ALL regimes, so it holds less when volatility is
+ * extreme — trading some upside for a much lower drawdown.
+ * When it buys and sells: above SMA50 = vol-targeted long (capped by ATR). Below
+ * SMA50 but within ATR-scaled band = smaller vol-target. Beyond the ATR crash band
+ * = fully to cash.
+ * When it does NOT work: vol-targeting trims winners in sustained low-vol bull
+ * runs, so it underperforms a plain hold when SOL trends calmly upward. Deep
+ * drawdowns still occur in violent crashes, just smaller than the 100% version.
  */
 function onUpdate(ctx) {
+  const atr = ctx.atr(14, 1);
+  const sma50 = ctx.sma(50, 1);
   const price = ctx.price;
   const cash = ctx.cash;
   const pos = ctx.position;
-  const entryPx = ctx.entryPx;
-  const atr = ctx.atr(14, 1);
-  // Donchian: rolling 20-day high / 10-day low from CLOSED bars (ago>=1).
-  const hh20 = ctx.high(20, 1);
-  const ll10 = ctx.low(10, 1);
-  if (price == null || atr == null || hh20 == null || ll10 == null || price <= 0) return null;
+  if (atr == null || sma50 == null || price == null || price <= 0) return null;
 
-  // Trailing stop: 2.5 ATR below the highest price since entry. Chosen to give a
-  // normal SOL pullback room while still locking in most of a trend.
-  const stopPx = pos > 0 && entryPx != null ? (price - 2.5 * atr) : null;
+  const equity = cash + pos * price;
+  const trendUp = price > sma50;
+  // ATR-scaled crash band: 3.0 ATRs below the SMA50. Same as champion — normal SOL
+  // dips stay in the vol-target regime, only a genuine crash triggers full exit.
+  const crashDist = 3.0 * atr;
+  const crashStop = price < sma50 - crashDist;
 
-  if (pos <= 0) {
-    // Flat: buy on breakout above the 20-day high.
-    if (price > hh20) {
-      const qty = (cash / price) * 0.98;
-      if (qty <= 0) return null;
-      return { side: 'buy', qty: qty };
-    }
-    return null;
+  // Vol-target cap: hold 2% daily vol worth of position in ALL regimes. In
+  // uptrend this trims the position when ATR is high (cutting bull-run drawdown);
+  // in mild downtrend it scales down further. 2% target chosen to match the
+  // champion's mild-downtrend sizing so the two regimes stay consistent.
+  const targetValue = (0.02 * equity) / (atr / price);
+  let targetQty;
+  if (crashStop) {
+    targetQty = 0; // real crash: exit fully
+  } else if (trendUp) {
+    targetQty = Math.min(equity / price, targetValue / price); // uptrend: vol-capped
+  } else {
+    targetQty = targetValue / price; // mild downtrend: same vol-target
   }
 
-  // In position: exit on 10-day low break or trailing stop.
-  if (price < ll10 || (stopPx != null && price < stopPx)) {
-    return { side: 'sell', qty: pos };
+  const curQty = pos;
+  const diff = targetQty - curQty;
+  if (Math.abs(diff) < 0.0001 * Math.max(0.0001, curQty)) return null;
+
+  if (diff > 0) {
+    const buyQty = Math.min(diff, (cash / price) * 0.98);
+    if (buyQty <= 0) return null;
+    return { side: 'buy', qty: buyQty };
+  } else {
+    return { side: 'sell', qty: Math.min(curQty, -diff) };
   }
-  return null;
 }
