@@ -4,14 +4,15 @@ Every strategy whose backtest **finished and actually traded** is published here
 Nothing is filtered out by return — the ones that lost money are part of the record.
 Entries stay after a strategy is removed from our own workspace — this is a log, and deleting the record would leave only the survivors.
 
-**★ marks a strategy that out-returned buy & hold over the same window** — 200 of 752 right now.
+**★ marks a strategy that out-returned buy & hold over the same window** — 201 of 753 right now.
 `—` means the comparison **could not be made**: the engine does not compute a benchmark for multi-symbol, futures, or multi-leg runs. That is *unknown*, not *lost*, and it is 180 of them right now.
 
 Every figure comes from the last verifying backtest at publish time. These are past results over historical data. Nothing here is promised or assured about the future, and none of it is investment advice.
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
-| ★ | [2266](strategies/2266/) | BTC Trend-Gated Vol-Target TrendScaled 1D | +1469.14% | +38.31% | +30.58% | 3467 | 2026-09-20 |
+| ★ | [2267](strategies/2267/) | BTC Trend-Gated Vol-Target TrendScaled 1D | +3628.91% | +263.36% | +25.17% | 2412 | 2026-09-20 |
+| ★ | [2266](strategies/2266/) | BTC Trend-Gated Vol-Target TrendScaled 1D | +151.46% | +52.01% | +41.02% | 417 | 2026-09-20 |
 | ★ | [2264](strategies/2264/) | DOGE Trend-Gated Vol-Target CrashStop 1D | +2047.14% | +1298.52% | +39.45% | 991 | 2026-09-20 |
 |  | [2263](strategies/2263/) | BTC Donchian Breakout SMA200 Gate 1D | +161.75% | +232.94% | +28.71% | 19 | 2026-09-20 |
 | ★ | [2262](strategies/2262/) | DOGE Donchian Daily Breakout 55/30 | -3.67% | -62.05% | +20.25% | 3 | 2026-09-20 |

@@ -1,21 +1,17 @@
 /*
  * @coinsori-strategy v1
- * name: BTC Trend-Gated Vol-Target TrendScaled FearGreed 1D
+ * name: BTC Trend-Gated Vol-Target TrendScaled 1D
  * ex: binance
  * syms: BTCUSDT
  * interval: 1d
  * cash: 10000
  *
- * Why this strategy: our most validated family (SMA50 gate + ATR vol-target + ATR
- * crash stop + trend-strength scaling) already cut MDD from 60-85% to 30-54% while
- * beating buy-and-hold on DOGE/SOL/BTC. This adds a fear-greed regime overlay: in
- * extreme greed the market is most likely to top out, so we scale exposure down.
- * When it buys and sells: above SMA50 = fully invested; below SMA50 = position
- * scaled by closeness to SMA50; beyond the ATR crash band = cash. On top of that,
- * extreme greed (fear-greed > 82) cuts position to a fraction as a topping hedge.
- * When it does NOT work: fear-greed is slow/coarse on 1d, so the overlay can trim
- * into a strong continuation rally and lag the pure trend version's upside. It is
- * a drawdown-reducer, not a return-booster.
+ * Why this strategy: baseline for the fear-greed overlay test — same as the
+ * champion but WITHOUT the fear-greed regime scaler, so we can measure the
+ * overlay's true effect on identical windows.
+ * When it buys and sells: above SMA50 = fully invested; below SMA50 = scaled by
+ * closeness to SMA50; beyond ATR crash band = cash.
+ * When it does NOT work: deep drawdowns in violent bull corrections.
  */
 function onUpdate(ctx) {
   const atr = ctx.atr(14, 1);
@@ -39,13 +35,6 @@ function onUpdate(ctx) {
     const distFrac = 1 - (sma50 - price) / crashDist;
     const targetValue = (0.02 * equity) / (atr / price) * Math.max(0.1, distFrac);
     targetQty = targetValue / price;
-  }
-
-  // fear-greed regime overlay: scale down in extreme greed as a topping hedge
-  const fg = ctx.data('fear_greed');
-  if (fg != null && fg > 82) {
-    // extreme greed: cut exposure to 40% — tops are most likely here (judgement)
-    targetQty *= 0.4;
   }
 
   const curQty = pos;
