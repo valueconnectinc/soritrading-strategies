@@ -1,6 +1,6 @@
 /*
  * @coinsori-strategy v1
- * name: BTC Hashrate + Trend Guard ATR-Exit 1D
+ * name: BTC Hashrate Trend-Scaled Size 1D
  * ex: binance
  * syms: BTCUSDT
  * interval: 1d
@@ -8,24 +8,24 @@
  *
  * Why this strategy: Bitcoin's hash rate (miners' total computing power) is an
  * on-chain fundamental that leads price over long stretches, but it lags in a
- * crash. A 100-day price-trend guard protects the bear, and an ATR buffer on
- * the exit keeps it from whipsawing out of a choppy bull on shallow dips.
+ * crash. A 100-day price-trend guard protects the bear. The known weakness of
+ * a fixed-size version is that it trails buy-and-hold in a raging bull, so
+ * this version scales the position with trend strength: the further price is
+ * above its 100-day average, the more capital it commits.
  * When it buys and sells: buy when the 30-day smoothed hash rate is higher
- * than 60 days ago AND price is above its 100-day average. Sell when the hash
- * rate turns down OR price closes more than one ATR below the 100-day average
- * (a shallow dip no longer triggers an exit). After a whipsaw exit it
- * re-enters faster (price back above the 100-day average with only mildly
- * rising hash rate) so a choppy bull is not missed.
- * When it does NOT work: a 100-day average is still sensitive in deep chop;
- * halving events distort the hash-rate trend; it never beats buy-and-hold in
- * a raging bull. Requires the hashrate data feed to be online.
+ * than 60 days ago AND price is above its 100-day average. Position size grows
+ * from 40% to 95% of cash as price climbs from the average to 40% above it.
+ * Sell when the hash rate turns down or price closes below the 100-day average.
+ * When it does NOT work: a 100-day average is still sensitive, so deep chop
+ * can whipsaw it; halving events distort the hash-rate trend; and in a
+ * sideways market the larger trend-scaled size adds drawdown without much
+ * upside. Requires the hashrate data feed to be online.
  */
 function onUpdate(ctx) {
   const hr = ctx.data('hashrate_sma30');
   const sma = ctx.sma(100, 1);
-  const atr = ctx.atr(14, 1);
   const closePrev = ctx.closes[ctx.closes.length - 2];
-  if (hr == null || sma == null || atr == null || closePrev == null) return null;
+  if (hr == null || sma == null || closePrev == null) return null;
 
   const hist = ctx.state.hist || [];
   const prev60 = hist.length >= 60 ? hist[hist.length - 60] : null;
@@ -44,16 +44,17 @@ function onUpdate(ctx) {
     const hrMild = hr > prev60 * 1.005;
     const aboveSma = closePrev > sma;
     if (aboveSma && ((beenIn && hrMild) || (!beenIn && hrRising))) {
-      const qty = (cash / price) * 0.6;
+      // scale size by how far price is above its trend line: 40% at the
+      // average, ramping to 95% at +40% above it (strong trend = more capital)
+      const dist = (closePrev / sma) - 1;
+      const frac = Math.min(0.95, Math.max(0.4, 0.4 + dist * 1.375));
+      const qty = (cash / price) * frac;
       ctx.state.beenIn = true;
       return { side: 'buy', qty: qty };
     }
     return null;
   } else {
-    // exit only on a real breakdown: hashrate down, or price closing more
-    // than one ATR below the 100-day average (shallow dips are ignored)
-    const breakDown = closePrev < sma - atr;
-    if ((prev60 != null && hr < prev60 * 0.98) || breakDown) {
+    if ((prev60 != null && hr < prev60 * 0.98) || closePrev < sma) {
       return { side: 'sell', qty: pos };
     }
     return null;
