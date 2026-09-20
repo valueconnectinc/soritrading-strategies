@@ -1,25 +1,22 @@
 /*
  * @coinsori-strategy v1
- * name: ETH Trend-Gated Vol-Target 1D
+ * name: ETH Trend-Gated Vol-Target CrashStop 1D
  * ex: binance
  * syms: ETHUSDT
  * interval: 1d
  * cash: 10000
  *
- * Why this strategy: the pure vol-targeted ETH hold is proven but always keeps
- * some cash, so it underperforms buy-and-hold in strong bull runs. This version
- * adds a trend gate: when the price is above its 50-day average (uptrend) it
- * stays FULLY invested and captures the whole bull; only when the price is below
- * the average (downtrend) does it de-risk via the ATR vol-target. This targets
- * the known weakness (missing bulls) while keeping the known strength (cutting
- * crash drawdowns). Hysteresis around the gate was tested and made it worse, so
- * a clean SMA50 gate is retained.
- * When it buys and sells: if price > SMA50, hold full position. If price < SMA50,
- * size so the daily ATR move is ~2% of account value (smaller in vol). Rebalance
- * daily. Never short.
- * When it does NOT work: in a choppy sideways market where price oscillates
- * around the SMA50, the trend gate flips on/off, adding churn. It also still
- * falls in a crash (just less than hold).
+ * Why this strategy: the base trend-gated vol-target is validated but its known
+ * weakness is that it still falls hard in a crash (MDD 45-56%) because in a
+ * downtrend it only vol-targets to a 2% daily move instead of exiting. This adds
+ * a CRASH STOP: if price falls more than 12% below the 50-day average, go fully
+ * to cash. The idea is to cut the deepest drawdowns (where the vol-target still
+ * leaves meaningful exposure) while keeping the vol-target for mild downtrends.
+ * When it buys and sells: price > SMA50 = full position. price < SMA50 but within
+ * 12% = ATR vol-target (2% daily move). price < SMA50 * 0.88 = fully to cash.
+ * When it does NOT work: in a fast V-shaped recovery the crash-stop sells at the
+ * bottom and misses the bounce; in a slow grind down it may churn between
+ * vol-target and cash.
  */
 function onUpdate(ctx) {
   const atr = ctx.atr(14, 1);
@@ -31,14 +28,16 @@ function onUpdate(ctx) {
 
   const equity = cash + pos * price;
   const trendUp = price > sma50;
+  // crash threshold: 12% below the 50-day average (chosen so only deep crashes trigger it)
+  const crashStop = price < sma50 * 0.88;
 
   let targetQty;
-  if (trendUp) {
-    // uptrend: stay fully invested (fixes the 'always partly in cash' weakness)
-    targetQty = equity / price;
+  if (crashStop) {
+    targetQty = 0; // deep crash: exit fully
+  } else if (trendUp) {
+    targetQty = equity / price; // uptrend: stay fully invested
   } else {
-    // downtrend: de-risk via ATR vol-target (2% daily move)
-    const targetValue = (0.02 * equity) / (atr / price);
+    const targetValue = (0.02 * equity) / (atr / price); // mild downtrend: vol-target
     targetQty = targetValue / price;
   }
 
