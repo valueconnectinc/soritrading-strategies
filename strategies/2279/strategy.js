@@ -1,22 +1,19 @@
 /*
  * @coinsori-strategy v1
- * name: ETH Trend-Gated Fixed-Fraction 4H
+ * name: BTC Trend-Gated Vol-Target 1D
  * ex: binance
- * syms: ETHUSDT
- * interval: 4h
+ * syms: BTCUSDT
+ * interval: 1d
  * cash: 10000
  *
- * Why this strategy: the 4h vol-target champion beats hold but churns 7400-8500
- * trades from continuous vol-target rebalancing (the rebalance deadband failed —
- * delaying rebalancing held the wrong size during fast moves). This replaces the
- * continuous vol-target with a FIXED position fraction below the SMA50: instead of
- * scaling to a 2% vol-target every bar, it holds a constant 30% position in the
- * choppy below-SMA regime and 100% above it. No per-bar rebalancing, so churn
- * collapses while the bear-alpha structure is preserved.
- * When it buys and sells: above SMA50 = 100%; below SMA50 = fixed 30%; beyond the
- * ATR crash band = cash. Transitions only at those three regime boundaries.
- * When it does NOT work: the fixed 30% is too big in a violent melt-down and too
- * small in a strong choppy recovery; it may lag the vol-target's adaptive sizing.
+ * Why this strategy: the SMA50-gated vol-target with ATR crash stop is our most
+ * validated family, beating buy-and-hold in every walk-forward window on BTC/ETH/
+ * SOL/DOGE. This is the clean champion on its strongest home (1d), where MDD is
+ * ~21-25% and churn is far lower than on 4h.
+ * When it buys and sells: above SMA50 = fully invested; below = position scaled by
+ * closeness to SMA50; beyond the ATR crash band = cash.
+ * When it does NOT work: violent bull corrections give deep drawdowns, and a fast
+ * V-shaped recovery can sell near the bottom.
  */
 function onUpdate(ctx) {
   const atr = ctx.atr(14, 1);
@@ -28,20 +25,23 @@ function onUpdate(ctx) {
 
   const equity = cash + pos * price;
   const trendUp = price > sma50;
-  const crashStop = price < sma50 - 3.0 * atr;
+  const crashDist = 3.0 * atr;
+  const crashStop = price < sma50 - crashDist;
 
   let targetQty;
   if (crashStop) {
-    targetQty = 0;                 // crash: go to cash
+    targetQty = 0;
   } else if (trendUp) {
-    targetQty = equity / price;    // bull: fully invested
+    targetQty = equity / price;
   } else {
-    targetQty = 0.30 * equity / price;  // choppy below-SMA: fixed 30% (no vol-target churn)
+    const distFrac = 1 - (sma50 - price) / crashDist;
+    const targetValue = (0.02 * equity) / (atr / price) * Math.max(0.1, distFrac);
+    targetQty = targetValue / price;
   }
 
   const curQty = pos;
   const diff = targetQty - curQty;
-  if (Math.abs(diff) < 0.001 * Math.max(0.0001, curQty)) return null;
+  if (Math.abs(diff) < 0.0001 * Math.max(0.0001, curQty)) return null;
 
   if (diff > 0) {
     const buyQty = Math.min(diff, (cash / price) * 0.98);
