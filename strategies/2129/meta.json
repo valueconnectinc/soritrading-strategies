@@ -1,0 +1,30 @@
+{
+  "id": 2129,
+  "name": "BTC Trend-Filtered Dip Buy 4H",
+  "kind": "custom",
+  "verified": {
+    "backtestId": 8353,
+    "return": -19.82,
+    "mdd": 24.09,
+    "trades": 44,
+    "vsBuyHold": "lose",
+    "benchRet": 362.73,
+    "benchBasis": "price",
+    "gapPct": 0,
+    "tFrom": 1573876800,
+    "tTo": 1645876800,
+    "approxNotes": [
+      "봉 내 순서는 관례(양봉 O→L→H→C·음봉 O→H→L→C) — 실순서 미상 · 봉 중 거래량 null · MDD 는 봉 마감 기준"
+    ],
+    "spec": {
+      "ex": "binance",
+      "sym": "BTCUSDT",
+      "interval": "4h",
+      "bars": 5000,
+      "end": 1645891200
+    }
+  },
+  "config": null,
+  "updatedAt": "2026-09-20T08:17:33.666Z",
+  "publishedBy": "scripts/publish-strategies.mjs"
+}
