@@ -1,22 +1,22 @@
 /*
  * @coinsori-strategy v1
- * name: BTC Daily Donchian Trend Ride v3 (trend filter)
+ * name: BTC Daily Donchian Wider Exit 40
  * ex: binance
  * syms: BTCUSDT
  * interval: 1d
  * cash: 10000
  *
- * Why this strategy: the plain Donchian breakout (v2) was profitable in every
- * window but took deep drawdowns (43-58%) because it bought breakouts even in
- * choppy or falling markets. Adding a long-term trend filter should keep only
- * the trades that happen inside a confirmed uptrend)Skip the false breakouts.
- * When it buys and sells: buy with full cash only when the daily close breaks
- * above the 55-day high AND price is above the 200-day simple average (uptrend);
- * sell everything when the close breaks below the 30-day low.
- * When it does NOT work: the 200-day filter means it stays flat during long
- * bear markets and misses the first leg of a new bull run until the 200-day
- * average turns up. It still holds through pullbacks in a real trend, so
- * drawdown is not zero.
+ * Why this strategy: the core Donchian (55-day entry / 30-day exit) was
+ * profitable in every window but underperformed buy-and-hold in strong bulls
+ * because the 30-day exit exits too early on routine pullbacks, and then the
+ * 55-day entry waits a long time to get back in. Widening the exit to a 40-day
+ * low lets a real trend breathe through shallow pullbacks so we ride more of
+ * the move. Same 55-day breakout entry, full capital.
+ * When it buys and sells: buy with full cash when the daily close breaks above
+ * the 55-day high; sell everything when it breaks below the 40-day low.
+ * When it does NOT work: a wider exit means we give back more on sharp
+ * corrections and take deeper drawdowns in choppy markets. It still misses the
+ * very first leg of a new bull until a 55-day high is made.
  */
 function onUpdate(ctx) {
   const pos = ctx.position;
@@ -24,15 +24,11 @@ function onUpdate(ctx) {
 
   const entryHigh = ctx.high(55, 1);
   if (entryHigh == null) return null;
-  const exitLow = ctx.low(30, 1);
+  const exitLow = ctx.low(40, 1);
   if (exitLow == null) return null;
-  // trend filter: only long when price holds above the long-term average
-  const trend = ctx.sma(200, 1);
-  if (trend == null) return null;
 
   if (pos <= 0) {
-    // require confirmed uptrend to avoid buying in a downtrend (cuts MDD)
-    if (price > entryHigh && price > trend) {
+    if (price > entryHigh) {
       return { side: 'buy', qty: (ctx.cash / price) * 0.98 };
     }
     return null;
