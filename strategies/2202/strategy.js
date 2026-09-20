@@ -6,12 +6,11 @@
  * interval: 1d
  * cash: 10000
  *
- * Why this strategy: the base trend-gated vol-target is validated but its known
- * weakness is that it still falls hard in a crash (MDD 45-56%) because in a
- * downtrend it only vol-targets to a 2% daily move instead of exiting. This adds
- * a CRASH STOP: if price falls more than 12% below the 50-day average, go fully
- * to cash. The idea is to cut the deepest drawdowns (where the vol-target still
- * leaves meaningful exposure) while keeping the vol-target for mild downtrends.
+ * Why this strategy: the base trend-gated vol-target (full investment above the
+ * 50-day average, ATR vol-target below) is validated but still falls hard in a
+ * crash because a downtrend only vol-targets to a 2% daily move. This adds a
+ * CRASH STOP: if price falls more than 12% below the 50-day average, go fully to
+ * cash. This cuts the deepest drawdowns and redeploys cash on the bounce.
  * When it buys and sells: price > SMA50 = full position. price < SMA50 but within
  * 12% = ATR vol-target (2% daily move). price < SMA50 * 0.88 = fully to cash.
  * When it does NOT work: in a fast V-shaped recovery the crash-stop sells at the
