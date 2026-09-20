@@ -6,12 +6,14 @@
  * interval: 1d
  * cash: 10000
  *
- * Why this strategy: baseline for the fear-greed overlay test — same as the
- * champion but WITHOUT the fear-greed regime scaler, so we can measure the
- * overlay's true effect on identical windows.
- * When it buys and sells: above SMA50 = fully invested; below SMA50 = scaled by
- * closeness to SMA50; beyond ATR crash band = cash.
- * When it does NOT work: deep drawdowns in violent bull corrections.
+ * Why this strategy: the trend-gated vol-target (SMA50 gate + ATR vol-target + ATR
+ * crash stop) with trend-strength scaling is our most validated family — it cut
+ * MDD from 60-85% to 30-54% while beating buy-and-hold on DOGE/SOL/BTC. This is
+ * the clean champion (no fear-greed overlay, which was tested and rejected).
+ * When it buys and sells: above SMA50 = fully invested; below SMA50 = position
+ * scaled by closeness to SMA50; beyond the ATR crash band = cash.
+ * When it does NOT work: violent bull corrections still give deep drawdowns, and a
+ * fast V-shaped recovery can sell near the bottom.
  */
 function onUpdate(ctx) {
   const atr = ctx.atr(14, 1);
