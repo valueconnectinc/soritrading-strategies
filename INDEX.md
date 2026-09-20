@@ -4,13 +4,15 @@ Every strategy whose backtest **finished and actually traded** is published here
 Nothing is filtered out by return — the ones that lost money are part of the record.
 Entries stay after a strategy is removed from our own workspace — this is a log, and deleting the record would leave only the survivors.
 
-**★ marks a strategy that out-returned buy & hold over the same window** — 207 of 764 right now.
+**★ marks a strategy that out-returned buy & hold over the same window** — 208 of 766 right now.
 `—` means the comparison **could not be made**: the engine does not compute a benchmark for multi-symbol, futures, or multi-leg runs. That is *unknown*, not *lost*, and it is 180 of them right now.
 
 Every figure comes from the last verifying backtest at publish time. These are past results over historical data. Nothing here is promised or assured about the future, and none of it is investment advice.
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
+|  | [2282](strategies/2282/) | DOGE Donchian Daily Breakout 55/30 | +449.82% | +2562.56% | +70.67% | 20 | 2026-09-20 |
+| ★ | [2280](strategies/2280/) | LTC Trend-Gated Vol-Target TrendScaled 1D | -24.12% | -70.66% | +45.29% | 296 | 2026-09-20 |
 | ★ | [2279](strategies/2279/) | ETH Trend-Gated Fixed-Fraction 4H | +151.46% | +52.01% | +41.02% | 417 | 2026-09-20 |
 |  | [2278](strategies/2278/) | BTC Fear-Greed BullRegime Dip 1D | -30.10% | +232.94% | +32.78% | 42 | 2026-09-20 |
 |  | [2277](strategies/2277/) | BTC Fear-Greed Mean Reversion 1D | -8.38% | +52.01% | +25.96% | 5 | 2026-09-20 |
