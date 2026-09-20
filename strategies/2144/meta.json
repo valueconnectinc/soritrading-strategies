@@ -1,0 +1,30 @@
+{
+  "id": 2144,
+  "name": "ETH Trend ATR Trailing + Sized 4H",
+  "kind": "custom",
+  "verified": {
+    "backtestId": 8412,
+    "return": 37.81,
+    "mdd": 36.8,
+    "trades": 146,
+    "vsBuyHold": "win",
+    "benchRet": 31.06,
+    "benchBasis": "price",
+    "gapPct": 0,
+    "tFrom": 1645891200,
+    "tTo": 1717876800,
+    "approxNotes": [
+      "봉 내 순서는 관례(양봉 O→L→H→C·음봉 O→H→L→C) — 실순서 미상 · 봉 중 거래량 null · MDD 는 봉 마감 기준"
+    ],
+    "spec": {
+      "ex": "binance",
+      "sym": "ETHUSDT",
+      "interval": "4h",
+      "bars": 5000,
+      "end": 1717891200
+    }
+  },
+  "config": null,
+  "updatedAt": "2026-09-20T08:41:33.694Z",
+  "publishedBy": "scripts/publish-strategies.mjs"
+}
