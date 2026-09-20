@@ -4,13 +4,14 @@ Every strategy whose backtest **finished and actually traded** is published here
 Nothing is filtered out by return — the ones that lost money are part of the record.
 Entries stay after a strategy is removed from our own workspace — this is a log, and deleting the record would leave only the survivors.
 
-**★ marks a strategy that out-returned buy & hold over the same window** — 166 of 658 right now.
+**★ marks a strategy that out-returned buy & hold over the same window** — 166 of 659 right now.
 `—` means the comparison **could not be made**: the engine does not compute a benchmark for multi-symbol, futures, or multi-leg runs. That is *unknown*, not *lost*, and it is 177 of them right now.
 
 Every figure comes from the last verifying backtest at publish time. These are past results over historical data. Nothing here is promised or assured about the future, and none of it is investment advice.
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
+|  | [2154](strategies/2154/) | ETH 1H Volatility Breakout | +30.52% | +39.94% | +34.95% | 1 | 2026-09-20 |
 |  | [2153](strategies/2153/) | ETH 1H Mean Reversion Oversold Bounce | -23.29% | -6.12% | +27.73% | 86 | 2026-09-20 |
 |  | [2142](strategies/2142/) | ETH Slow Trend Ride + Volume Filter 4H | +493.35% | +1436.34% | +30.47% | 52 | 2026-09-20 |
 |  | [2146](strategies/2146/) | ETH Trend Strength-Scaled Size v2 4H | +789.61% | +1436.34% | +32.71% | 110 | 2026-09-20 |
