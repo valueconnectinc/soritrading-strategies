@@ -1,0 +1,30 @@
+{
+  "id": 2171,
+  "name": "BTC Fear-Dip Trend-Ride 1D",
+  "kind": "custom",
+  "verified": {
+    "backtestId": 8627,
+    "return": -0.18,
+    "mdd": 18.4,
+    "trades": 8,
+    "vsBuyHold": "win",
+    "benchRet": -26.82,
+    "benchBasis": "price",
+    "gapPct": 0,
+    "tFrom": 1617062400,
+    "tTo": 1703376000,
+    "approxNotes": [
+      "봉 내 순서는 관례(양봉 O→L→H→C·음봉 O→H→L→C) — 실순서 미상 · 봉 중 거래량 null · MDD 는 봉 마감 기준"
+    ],
+    "spec": {
+      "ex": "binance",
+      "sym": "BTCUSDT",
+      "interval": "1d",
+      "bars": 1000,
+      "end": 1703462400
+    }
+  },
+  "config": null,
+  "updatedAt": "2026-09-20T12:19:08.550Z",
+  "publishedBy": "scripts/publish-strategies.mjs"
+}
