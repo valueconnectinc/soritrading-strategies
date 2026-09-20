@@ -1,21 +1,22 @@
 /*
  * @coinsori-strategy v1
- * name: SOL Trend-Gated Vol-Target CrashStop 1D
+ * name: SOL Trend-Gated Vol-Target AdaptiveCrash 1D
  * ex: binance
  * syms: SOLUSDT
  * interval: 1d
  * cash: 10000
  *
- * Why this strategy: the validated ETH trend-gated vol-target crash-stop recipe is
- * applied to SOL as a different-asset diversification play (same robust trend
- * family, new market). Above the 50-day average it stays fully invested; below it
- * vol-targets to a 2% daily move; in a deep crash (>12% below the average) it goes
- * fully to cash to cut the deepest drawdowns.
- * When it buys and sells: price > SMA50 = full. price < SMA50 but within 12% = ATR
- * vol-target (2% daily). price < SMA50*0.88 = fully to cash.
- * When it does NOT work: SOL is far more volatile than ETH, so the fixed 12% crash
- * threshold and 2% vol-target may be too tight or too loose for its regime; in a
- * fast V-shaped recovery the crash-stop sells at the bottom and misses the bounce.
+ * Why this strategy: improvement on the validated SOL trend-gated vol-target
+ * champion. The original used a FIXED 12% crash threshold, which is too tight for
+ * SOL's high volatility (normal dips trigger the full exit and whipsaw) and too
+ * loose in fast crashes. This version scales the crash threshold with ATR so the
+ * exit adapts to the actual volatility regime.
+ * When it buys and sells: above SMA50 = fully invested. Below SMA50 but within an
+ * ATR-scaled band = ATR vol-target (2% daily). Beyond the ATR-scaled crash band =
+ * fully to cash.
+ * When it does NOT work: SOL's volatility still means deep drawdowns in violent
+ * bull corrections; a fast V-shaped recovery can sell near the bottom and miss the
+ * bounce. Adaptive threshold reduces but does not eliminate whipsaw.
  */
 function onUpdate(ctx) {
   const atr = ctx.atr(14, 1);
@@ -27,11 +28,15 @@ function onUpdate(ctx) {
 
   const equity = cash + pos * price;
   const trendUp = price > sma50;
-  const crashStop = price < sma50 * 0.88;
+  // ATR-scaled crash band: 3.0 ATRs below the SMA50. Chosen so normal SOL dips
+  // (1-2 ATR) stay in the vol-target regime and only a genuine crash (>3 ATR)
+  // triggers the full exit — replaces the fixed 12% that whipsawed in bull dips.
+  const crashDist = 3.0 * atr;
+  const crashStop = price < sma50 - crashDist;
 
   let targetQty;
   if (crashStop) {
-    targetQty = 0; // deep crash: exit fully
+    targetQty = 0; // real crash: exit fully
   } else if (trendUp) {
     targetQty = equity / price; // uptrend: stay fully invested
   } else {
