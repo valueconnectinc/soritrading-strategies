@@ -11,7 +11,7 @@ Every figure comes from the last verifying backtest at publish time. These are p
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
-| ★ | [2272](strategies/2272/) | ETH Trend-Gated Vol-Target TrendScaled 1D | +273.75% | +23.02% | +35.88% | 1718 | 2026-09-20 |
+| ★ | [2272](strategies/2272/) | ETH Trend-Gated Vol-Target TrendScaled 1D | +1796.51% | +288.71% | +44.16% | 1228 | 2026-09-20 |
 |  | [2271](strategies/2271/) | SOL Donchian Breakout 30/20 1D | +225.52% | +288.71% | +56.58% | 55 | 2026-09-20 |
 |  | [2270](strategies/2270/) | BTC Donchian Breakout TrendScaled 1D | +1.16% | +52.01% | +52.02% | 37 | 2026-09-20 |
 |  | [2269](strategies/2269/) | DOGE Trend-Gated Vol-Target TrendScaled 1D | -11.26% | +69.83% | +53.99% | 2182 | 2026-09-20 |
