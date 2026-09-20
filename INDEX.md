@@ -4,13 +4,14 @@ Every strategy whose backtest **finished and actually traded** is published here
 Nothing is filtered out by return — the ones that lost money are part of the record.
 Entries stay after a strategy is removed from our own workspace — this is a log, and deleting the record would leave only the survivors.
 
-**★ marks a strategy that out-returned buy & hold over the same window** — 139 of 592 right now.
+**★ marks a strategy that out-returned buy & hold over the same window** — 139 of 593 right now.
 `—` means the comparison **could not be made**: the engine does not compute a benchmark for multi-symbol, futures, or multi-leg runs. That is *unknown*, not *lost*, and it is 176 of them right now.
 
 Every figure comes from the last verifying backtest at publish time. These are past results over historical data. Nothing here is promised or assured about the future, and none of it is investment advice.
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
+|  | [2040](strategies/2040/) | RSI Mean Reversion 4H | +14.05% | +36.60% | +4.19% | 14 | 2026-09-20 |
 | ★ | [2038](strategies/2038/) | EMA Crossover + RSI Filter | -19.96% | -24.39% | +22.44% | 27 | 2026-09-20 |
 |  | [2037](strategies/2037/) | Funding-OI Macro Regime + RSI | +13.92% | +36.60% | +2.81% | 56 | 2026-09-20 |
 |  | [2036](strategies/2036/) | AI 전략 | +13.60% | +36.60% | +3.45% | 14 | 2026-09-20 |
