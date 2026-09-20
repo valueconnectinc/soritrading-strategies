@@ -4,14 +4,14 @@ Every strategy whose backtest **finished and actually traded** is published here
 Nothing is filtered out by return — the ones that lost money are part of the record.
 Entries stay after a strategy is removed from our own workspace — this is a log, and deleting the record would leave only the survivors.
 
-**★ marks a strategy that out-returned buy & hold over the same window** — 162 of 650 right now.
+**★ marks a strategy that out-returned buy & hold over the same window** — 163 of 650 right now.
 `—` means the comparison **could not be made**: the engine does not compute a benchmark for multi-symbol, futures, or multi-leg runs. That is *unknown*, not *lost*, and it is 177 of them right now.
 
 Every figure comes from the last verifying backtest at publish time. These are past results over historical data. Nothing here is promised or assured about the future, and none of it is investment advice.
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
-|  | [2141](strategies/2141/) | ETH Trend Ride with Trailing Exit 4H | -100.00% | +1436.34% | +100.00% | 3080 | 2026-09-20 |
+| ★ | [2141](strategies/2141/) | ETH Trend Ride with Trailing Exit 4H | +47.18% | -29.87% | +49.00% | 123 | 2026-09-20 |
 |  | [2140](strategies/2140/) | BTC Slow Trend Ride 4H | +32.06% | +73.86% | +76.27% | 186 | 2026-09-20 |
 |  | [2138](strategies/2138/) | Fear-Greed Contrarian 1D | -26.71% | +856.89% | +66.94% | 24 | 2026-09-20 |
 |  | [2135](strategies/2135/) | BTC Fear-Greed Contrarian 1D | -26.09% | +1245.03% | +73.48% | 4 | 2026-09-20 |
