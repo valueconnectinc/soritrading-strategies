@@ -11,7 +11,7 @@ Every figure comes from the last verifying backtest at publish time. These are p
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
-|  | [2282](strategies/2282/) | DOGE Donchian Daily Breakout 55/30 | +449.82% | +2562.56% | +70.67% | 20 | 2026-09-20 |
+|  | [2282](strategies/2282/) | DOGE Donchian Daily Breakout 55/30 | +711.96% | +881.10% | +33.50% | 10 | 2026-09-20 |
 | ★ | [2280](strategies/2280/) | LTC Trend-Gated Vol-Target TrendScaled 1D | -24.12% | -70.66% | +45.29% | 296 | 2026-09-20 |
 | ★ | [2279](strategies/2279/) | ETH Trend-Gated Fixed-Fraction 4H | +151.46% | +52.01% | +41.02% | 417 | 2026-09-20 |
 |  | [2278](strategies/2278/) | BTC Fear-Greed BullRegime Dip 1D | -30.10% | +232.94% | +32.78% | 42 | 2026-09-20 |
