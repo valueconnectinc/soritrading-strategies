@@ -4,13 +4,14 @@ Every strategy whose backtest **finished and actually traded** is published here
 Nothing is filtered out by return — the ones that lost money are part of the record.
 Entries stay after a strategy is removed from our own workspace — this is a log, and deleting the record would leave only the survivors.
 
-**★ marks a strategy that out-returned buy & hold over the same window** — 182 of 709 right now.
-`—` means the comparison **could not be made**: the engine does not compute a benchmark for multi-symbol, futures, or multi-leg runs. That is *unknown*, not *lost*, and it is 178 of them right now.
+**★ marks a strategy that out-returned buy & hold over the same window** — 182 of 710 right now.
+`—` means the comparison **could not be made**: the engine does not compute a benchmark for multi-symbol, futures, or multi-leg runs. That is *unknown*, not *lost*, and it is 179 of them right now.
 
 Every figure comes from the last verifying backtest at publish time. These are past results over historical data. Nothing here is promised or assured about the future, and none of it is investment advice.
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
+| — | [2213](strategies/2213/) | Crypto Basket Trend-Gated Vol-Target 1D | +631.58% | — | +59.39% | 2571 | 2026-09-20 |
 |  | [2212](strategies/2212/) | SOL Hashrate-Gated Trend 1D | +935.63% | +2503.00% | +62.03% | 1161 | 2026-09-20 |
 | ★ | [2211](strategies/2211/) | SOL Trend-Gated Vol-Target FearGreed Filter 1D | +158.32% | +1.05% | +40.01% | 2211 | 2026-09-20 |
 |  | [2210](strategies/2210/) | SOL Donchian Breakout ATR-Trailing 1D | +38.00% | +474.52% | +19.04% | 3 | 2026-09-20 |
