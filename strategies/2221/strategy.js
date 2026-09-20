@@ -1,46 +1,44 @@
 /*
  * @coinsori-strategy v1
- * name: ETH Daily Trend with Fast Re-entry
+ * name: ETH Daily Trend-Strength Ride 1D
  * ex: binance
  * syms: ETHUSDT
  * interval: 1d
  * cash: 10000
  *
- * Why this strategy: The ETH daily 200-SMA trend ride (2216) is our best
- * validated family, but its known weakness is re-entering late after a dip
- * (it waits for a full fresh 200-SMA cross). This variant keeps the same
- * 200-SMA exit but adds a faster 50-SMA re-entry: once we've been in and the
- * trend is still above the 200-SMA, a close back above the 50-SMA gets us back
- * in sooner, reducing the re-entry lag that costs bull gains.
- * When it buys and sells: initial long on a close crossing above the 200-SMA;
- * after that, re-enter on a close back above the 50-SMA while price stays above
- * the 200-SMA. Exit on a close below the 200-SMA. Position scales with trend.
- * When it does NOT work: the faster 50-SMA re-entry can jump back in on dead-cat
- * bounces within a developing bear, adding more trades and fees; in a choppy
- * range it re-enters too eagerly and whipsaws.
+ * Why this strategy: SOL's high drawdown (40-64%) is inherent and unfixable —
+ * every timing filter tried destroyed more return than it saved. ETH on the
+ * daily chart is structurally different: a 200-SMA trend gate with
+ * trend-strength-scaled sizing showed a much lower drawdown (30% recent window)
+ * while still beating buy-and-hold. This is a lower-risk family than SOL.
+ * When it buys and sells: long on a daily close above the 200-SMA, sell on a
+ * close below it. Position size scales with how far price is above the SMA
+ * (strong trend = bigger position, capped), so we under-deploy in weak chop and
+ * ride the full account in a clean bull.
+ * When it does NOT work: in sideways chop the 200-SMA whipsaws (buy late into
+ * rallies, sell late into dips); in a parabolic bull it exits on the first
+ * meaningful dip and re-enters late, so it underperforms buy-and-hold in the
+ * strongest melt-ups.
  */
 function onUpdate(ctx) {
   const sma = ctx.sma(200, 1);
   const smaP = ctx.sma(200, 2);
-  const ema50 = ctx.sma(50, 1);
-  const ema50P = ctx.sma(50, 2);
   const closePrev = ctx.closes[ctx.closes.length - 2];
   const closePrev2 = ctx.closes[ctx.closes.length - 3];
-  if (sma == null || smaP == null || ema50 == null || ema50P == null || closePrev == null || closePrev2 == null) return null;
+  if (sma == null || smaP == null || closePrev == null || closePrev2 == null) return null;
 
   const price = ctx.price;
   const pos = ctx.position;
   const cash = ctx.cash;
 
   if (pos <= 0) {
-    // initial entry: fresh close above the 200-SMA
-    // re-entry: close back above the 50-SMA while still above the 200-SMA
-    const freshCross = closePrev2 <= smaP && closePrev > sma;
-    const fastReentry = closePrev2 <= ema50P && closePrev > ema50 && closePrev > sma;
-    if (freshCross || fastReentry) {
+    // enter on a fresh close above the 200-SMA (crossover: prev below, now above)
+    if (closePrev2 <= smaP && closePrev > sma) {
       const atr = ctx.atr(14, 1);
       if (atr == null || atr <= 0) return { side: 'buy', qty: (cash / price) * 0.98 };
+      // trend strength = how far price is above the SMA, as a fraction
       const distPct = (closePrev - sma) / sma;
+      // risk scales from $300 (weak trend) up to $1500 (strong trend)
       const risk = 300 + Math.min(Math.max(distPct * 20000, 0), 1200);
       const riskQty = risk / atr;
       const maxQty = (cash / price) * 0.98;
