@@ -4,13 +4,14 @@ Every strategy whose backtest **finished and actually traded** is published here
 Nothing is filtered out by return — the ones that lost money are part of the record.
 Entries stay after a strategy is removed from our own workspace — this is a log, and deleting the record would leave only the survivors.
 
-**★ marks a strategy that out-returned buy & hold over the same window** — 146 of 602 right now.
+**★ marks a strategy that out-returned buy & hold over the same window** — 146 of 603 right now.
 `—` means the comparison **could not be made**: the engine does not compute a benchmark for multi-symbol, futures, or multi-leg runs. That is *unknown*, not *lost*, and it is 176 of them right now.
 
 Every figure comes from the last verifying backtest at publish time. These are past results over historical data. Nothing here is promised or assured about the future, and none of it is investment advice.
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
+|  | [2057](strategies/2057/) | Funding-Enhanced RSI/BB Mean Reversion | -30.01% | -27.72% | +38.05% | 144 | 2026-09-20 |
 | ★ | [2055](strategies/2055/) | Dual Oscillator Mean Reversion — EMA50 Filter | +2.71% | -27.72% | +4.35% | 4 | 2026-09-20 |
 | ★ | [2054](strategies/2054/) | Dual Oscillator Mean Reversion — EMA200 Filter | -1.93% | -31.09% | +4.20% | 4 | 2026-09-20 |
 | ★ | [2053](strategies/2053/) | MACD Trend Rider — ETHUSDT 4H | -12.41% | -31.09% | +18.79% | 29 | 2026-09-20 |
