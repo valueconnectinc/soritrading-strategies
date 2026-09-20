@@ -11,7 +11,7 @@ Every figure comes from the last verifying backtest at publish time. These are p
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
-|  | [2215](strategies/2215/) | SOL Trailing-Peak ProfitLock 1D | +30.86% | +5130.26% | +72.99% | 169 | 2026-09-20 |
+|  | [2215](strategies/2215/) | SOL Trailing-Peak ProfitLock 1D | +2837.61% | +5130.26% | +63.23% | 530 | 2026-09-20 |
 |  | [2214](strategies/2214/) | SOL Funding-Crowding CrashStop 1D | +3871.56% | +5130.26% | +63.69% | 687 | 2026-09-20 |
 | — | [2213](strategies/2213/) | Crypto Basket Trend-Gated Vol-Target 1D | +32.39% | — | +52.60% | 5281 | 2026-09-20 |
 |  | [2212](strategies/2212/) | SOL Hashrate-Gated Trend 1D | +935.63% | +2503.00% | +62.03% | 1161 | 2026-09-20 |
