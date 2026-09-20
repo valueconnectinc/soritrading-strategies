@@ -11,7 +11,7 @@ Every figure comes from the last verifying backtest at publish time. These are p
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
-|  | [2133](strategies/2133/) | ETH Slow Trend Ride 4H | +73.10% | +76.57% | +30.81% | 141 | 2026-09-20 |
+|  | [2133](strategies/2133/) | ETH Slow Trend Ride 4H | +213.00% | +362.73% | +54.76% | 148 | 2026-09-20 |
 |  | [2131](strategies/2131/) | BTC Slow Trend Ride 4H | +11.88% | +15.96% | +42.02% | 129 | 2026-09-20 |
 |  | [2130](strategies/2130/) | ETH Death-Cross Trend 4H | -0.24% | +1436.34% | +63.58% | 182 | 2026-09-20 |
 |  | [2129](strategies/2129/) | BTC Trend-Filtered Dip Buy 4H | -19.82% | +362.73% | +24.09% | 44 | 2026-09-20 |

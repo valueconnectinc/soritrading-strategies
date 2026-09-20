@@ -3,29 +3,28 @@
   "name": "ETH Slow Trend Ride 4H",
   "kind": "custom",
   "verified": {
-    "backtestId": 8367,
-    "return": 73.1,
-    "mdd": 30.81,
-    "trades": 141,
+    "backtestId": 8370,
+    "return": 213,
+    "mdd": 54.76,
+    "trades": 148,
     "vsBuyHold": "lose",
-    "benchRet": 76.57,
+    "benchRet": 362.73,
     "benchBasis": "price",
     "gapPct": 0,
-    "tFrom": 1645891200,
-    "tTo": 1717876800,
+    "tFrom": 1573876800,
+    "tTo": 1645876800,
     "approxNotes": [
-      "봉 내 순서는 관례(양봉 O→L→H→C·음봉 O→H→L→C) — 실순서 미상 · 봉 중 거래량 null · MDD 는 봉 마감 기준",
-      "기간 종료 시 미청산 포지션 1종목 (총자산의 98.4%) — 이 수익률은 **평가액**을 포함합니다. 퇴출 수수료·거래세를 안 냈고, 마지막 봉 가격에 실제로 팔 수 있다는 보장도 없습니다(얇은 호가·상장폐지). exec.endLiquidate 로 마지막 봉 청산을 켤 수 있습니다"
+      "봉 내 순서는 관례(양봉 O→L→H→C·음봉 O→H→L→C) — 실순서 미상 · 봉 중 거래량 null · MDD 는 봉 마감 기준"
     ],
     "spec": {
       "ex": "binance",
       "sym": "BTCUSDT",
       "interval": "4h",
       "bars": 5000,
-      "end": 1717891200
+      "end": 1645891200
     }
   },
   "config": null,
-  "updatedAt": "2026-09-20T08:20:21.313Z",
+  "updatedAt": "2026-09-20T08:21:32.793Z",
   "publishedBy": "scripts/publish-strategies.mjs"
 }
