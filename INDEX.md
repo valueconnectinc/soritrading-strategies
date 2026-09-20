@@ -11,7 +11,7 @@ Every figure comes from the last verifying backtest at publish time. These are p
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
-| ★ | [2198](strategies/2198/) | ETH Trend-Gated Vol-Target 1D | +102.46% | +23.02% | +46.31% | 2129 | 2026-09-20 |
+| ★ | [2198](strategies/2198/) | ETH Trend-Gated Vol-Target 1D | +148.33% | +15.91% | +45.10% | 2141 | 2026-09-20 |
 |  | [2197](strategies/2197/) | ETH Vol-Targeted Hold 1D | +21.92% | +23.02% | +38.47% | 211 | 2026-09-20 |
 |  | [2196](strategies/2196/) | XRP BB-RSI Mean Reversion Vol-Sized 4H | -27.39% | -26.85% | +56.28% | 134 | 2026-09-20 |
 | ★ | [2195](strategies/2195/) | XRP Adaptive Regime 4H | +9.96% | -26.85% | +47.18% | 208 | 2026-09-20 |
