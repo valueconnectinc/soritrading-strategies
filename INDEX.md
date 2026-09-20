@@ -4,13 +4,14 @@ Every strategy whose backtest **finished and actually traded** is published here
 Nothing is filtered out by return — the ones that lost money are part of the record.
 Entries stay after a strategy is removed from our own workspace — this is a log, and deleting the record would leave only the survivors.
 
-**★ marks a strategy that out-returned buy & hold over the same window** — 184 of 714 right now.
+**★ marks a strategy that out-returned buy & hold over the same window** — 185 of 715 right now.
 `—` means the comparison **could not be made**: the engine does not compute a benchmark for multi-symbol, futures, or multi-leg runs. That is *unknown*, not *lost*, and it is 179 of them right now.
 
 Every figure comes from the last verifying backtest at publish time. These are past results over historical data. Nothing here is promised or assured about the future, and none of it is investment advice.
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
+| ★ | [2219](strategies/2219/) | ETH Daily SMA Entry + Donchian Exit | +992.17% | +288.71% | +67.69% | 1 | 2026-09-20 |
 | ★ | [2217](strategies/2217/) | ETH Daily Trend-Strength FastExit 1D | +31.52% | +23.02% | +9.78% | 7 | 2026-09-20 |
 |  | [2216](strategies/2216/) | ETH Daily Trend-Strength Ride 1D | -11.85% | +52.92% | +24.20% | 6 | 2026-09-20 |
 | ★ | [2215](strategies/2215/) | SOL Trailing-Peak ProfitLock 1D | +193.55% | +1.05% | +40.01% | 1766 | 2026-09-20 |
