@@ -3,16 +3,16 @@
   "name": "BTC Hashrate Fixed-Size Baseline 1D",
   "kind": "custom",
   "verified": {
-    "backtestId": 8725,
-    "return": 270.67,
-    "mdd": 25.51,
-    "trades": 40,
-    "vsBuyHold": "win",
-    "benchRet": 178.43,
+    "backtestId": 8728,
+    "return": 64.62,
+    "mdd": 22.8,
+    "trades": 42,
+    "vsBuyHold": "lose",
+    "benchRet": 427.47,
     "benchBasis": "price",
     "gapPct": 0,
-    "tFrom": 1514764800,
-    "tTo": 1622419200,
+    "tFrom": 1672531200,
+    "tTo": 1767139200,
     "approxNotes": [
       "봉 내 순서는 관례(양봉 O→L→H→C·음봉 O→H→L→C) — 실순서 미상 · 봉 중 거래량 null · MDD 는 봉 마감 기준"
     ],
@@ -20,8 +20,8 @@
       "ex": "binance",
       "sym": "BTCUSDT",
       "interval": "1d",
-      "bars": 1247,
-      "end": 1622505600
+      "bars": 1096,
+      "end": 1767225600
     }
   },
   "config": null,
