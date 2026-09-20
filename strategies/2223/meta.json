@@ -1,0 +1,30 @@
+{
+  "id": 2223,
+  "name": "ETH Daily Trend-Strength + Wide Trailing Stop 1D",
+  "kind": "custom",
+  "verified": {
+    "backtestId": 9007,
+    "return": 2.92,
+    "mdd": 38.63,
+    "trades": 22,
+    "vsBuyHold": "lose",
+    "benchRet": 36.8,
+    "benchBasis": "price",
+    "gapPct": 0,
+    "tFrom": 1688169600,
+    "tTo": 1789776000,
+    "approxNotes": [
+      "봉 내 순서는 관례(양봉 O→L→H→C·음봉 O→H→L→C) — 실순서 미상 · 봉 중 거래량 null · MDD 는 봉 마감 기준"
+    ],
+    "spec": {
+      "ex": "binance",
+      "sym": "ETHUSDT",
+      "interval": "1d",
+      "bars": 1177,
+      "end": 1789862400
+    }
+  },
+  "config": null,
+  "updatedAt": "2026-09-20T17:06:11.750Z",
+  "publishedBy": "scripts/publish-strategies.mjs"
+}
