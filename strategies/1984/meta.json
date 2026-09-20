@@ -1,0 +1,30 @@
+{
+  "id": 1984,
+  "name": "BTC EMA Momentum ATR Trail",
+  "kind": "custom",
+  "verified": {
+    "backtestId": 7912,
+    "return": -9.05,
+    "mdd": 9.5,
+    "trades": 32,
+    "vsBuyHold": "lose",
+    "benchRet": 0.53,
+    "benchBasis": "price",
+    "gapPct": 0,
+    "tFrom": 1784466000,
+    "tTo": 1786262400,
+    "approxNotes": [
+      "봉 내 순서는 관례(양봉 O→L→H→C·음봉 O→H→L→C) — 실순서 미상 · 봉 중 거래량 null · MDD 는 봉 마감 기준"
+    ],
+    "spec": {
+      "ex": "binance",
+      "sym": "BTCUSDT",
+      "interval": "1h",
+      "bars": 500,
+      "end": 1786266000
+    }
+  },
+  "config": null,
+  "updatedAt": "2026-09-20T01:40:12.032Z",
+  "publishedBy": "scripts/publish-strategies.mjs"
+}

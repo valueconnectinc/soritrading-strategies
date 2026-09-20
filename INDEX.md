@@ -4,13 +4,14 @@ Every strategy whose backtest **finished and actually traded** is published here
 Nothing is filtered out by return — the ones that lost money are part of the record.
 Entries stay after a strategy is removed from our own workspace — this is a log, and deleting the record would leave only the survivors.
 
-**★ marks a strategy that out-returned buy & hold over the same window** — 123 of 556 right now.
+**★ marks a strategy that out-returned buy & hold over the same window** — 123 of 557 right now.
 `—` means the comparison **could not be made**: the engine does not compute a benchmark for multi-symbol, futures, or multi-leg runs. That is *unknown*, not *lost*, and it is 174 of them right now.
 
 Every figure comes from the last verifying backtest at publish time. These are past results over historical data. Nothing here is promised or assured about the future, and none of it is investment advice.
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
+|  | [1984](strategies/1984/) | BTC EMA Momentum ATR Trail | -9.05% | +0.53% | +9.50% | 32 | 2026-09-20 |
 |  | [1983](strategies/1983/) | BTC Bollinger Squeeze Breakout | +3.13% | +20.40% | +0.96% | 2 | 2026-09-20 |
 | ★ | [1981](strategies/1981/) | BB Stoch Dual Mean Reversion | -10.27% | -32.98% | +22.23% | 13 | 2026-09-20 |
 |  | [1980](strategies/1980/) | Multi-Signal Ensemble Mean Reversion | +21.76% | +59.34% | +4.64% | 26 | 2026-09-20 |
