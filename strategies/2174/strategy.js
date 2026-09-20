@@ -12,7 +12,7 @@
  * the exit keeps it from whipsawing out of a choppy bull on shallow dips.
  * When it buys and sells: buy when the 30-day smoothed hash rate is higher
  * than 60 days ago AND price is above its 100-day average. Sell when the hash
- * rate turns down OR price closes more than two ATR below the 100-day average
+ * rate turns down OR price closes more than one ATR below the 100-day average
  * (a shallow dip no longer triggers an exit). After a whipsaw exit it
  * re-enters faster (price back above the 100-day average with only mildly
  * rising hash rate) so a choppy bull is not missed.
@@ -51,8 +51,8 @@ function onUpdate(ctx) {
     return null;
   } else {
     // exit only on a real breakdown: hashrate down, or price closing more
-    // than two ATR below the 100-day average (shallow dips are ignored)
-    const breakDown = closePrev < sma - 2 * atr;
+    // than one ATR below the 100-day average (shallow dips are ignored)
+    const breakDown = closePrev < sma - atr;
     if ((prev60 != null && hr < prev60 * 0.98) || breakDown) {
       return { side: 'sell', qty: pos };
     }
