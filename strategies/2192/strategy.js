@@ -1,28 +1,27 @@
 /*
  * @coinsori-strategy v1
- * name: BTC Fed-Regime Trend 1D
+ * name: BTC Fed-Regime Trend v2 Scaled 1D
  * ex: binance
  * syms: BTCUSDT
  * interval: 1d
  * cash: 10000
  *
- * Why this strategy: Bitcoin is a risk asset that is pressured when the Fed is
- * hiking (tightening liquidity) and supported when the Fed is cutting or on
- * hold. This strategy uses the Fed funds rate direction as a slow macro regime
- * filter on top of a 100-day price trend guard: it stays in BTC only while the
- * Fed is NOT hiking and price is above its trend. This is a macro-regime
- * family, different from the on-chain hashrate and price-trend strategies.
- * When it buys and sells: buy when the Fed funds rate is not clearly higher
- * than ~90 days ago AND price is above its 100-day average. Sell when the Fed
- * starts hiking OR price closes more than one ATR below the 100-day average
- * (shallow dips ignored to avoid whipsaw).
- * When it does NOT work: in a raging bull it still trails buy-and-hold (the
- * regime gate adds friction); with a flat/early Fed history (2017-18) the gate
- * is silent and only the price guard protects; it needs the fed data feed.
+ * Why this strategy: Bitcoin is a risk asset pressured when the Fed hikes and
+ * supported when it cuts or holds. The Fed funds rate direction is a slow macro
+ * regime filter. On top of it we add a 50-day trend guard and scale the
+ * position by trend strength so we capture more of a bull while staying
+ * defensive in a hiking bear.
+ * When it buys and sells: buy when the Fed is NOT hiking AND price is above its
+ * 50-day average (full position when price is well above, half when barely
+ * above). Sell when the Fed starts hiking OR price closes more than one ATR
+ * below the 50-day average.
+ * When it does NOT work: in a raging bull it still trails buy-and-hold (the Fed
+ * gate adds friction); with a flat/early Fed history the gate is silent and only
+ * the price guard protects; it needs the fed data feed.
  */
 function onUpdate(ctx) {
   const fed = ctx.data('fed');
-  const sma = ctx.sma(100, 1);
+  const sma = ctx.sma(50, 1);
   const atr = ctx.atr(14, 1);
   const closePrev = ctx.closes[ctx.closes.length - 2];
   if (fed == null || sma == null || atr == null || closePrev == null) return null;
@@ -43,7 +42,12 @@ function onUpdate(ctx) {
     if (prev90 == null) return null;
     const aboveSma = closePrev > sma;
     if (aboveSma && !hiking) {
-      return { side: 'buy', qty: (cash / price) * 0.6 };
+      // scale up: full size when well above trend, half when barely above
+      const strength = (closePrev - sma) / atr;
+      let frac = 0.5;
+      if (strength > 1.5) frac = 0.98;
+      else if (strength > 0.5) frac = 0.75;
+      return { side: 'buy', qty: (cash / price) * frac };
     }
     return null;
   } else {

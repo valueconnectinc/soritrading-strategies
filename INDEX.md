@@ -4,14 +4,14 @@ Every strategy whose backtest **finished and actually traded** is published here
 Nothing is filtered out by return — the ones that lost money are part of the record.
 Entries stay after a strategy is removed from our own workspace — this is a log, and deleting the record would leave only the survivors.
 
-**★ marks a strategy that out-returned buy & hold over the same window** — 172 of 693 right now.
+**★ marks a strategy that out-returned buy & hold over the same window** — 173 of 693 right now.
 `—` means the comparison **could not be made**: the engine does not compute a benchmark for multi-symbol, futures, or multi-leg runs. That is *unknown*, not *lost*, and it is 178 of them right now.
 
 Every figure comes from the last verifying backtest at publish time. These are past results over historical data. Nothing here is promised or assured about the future, and none of it is investment advice.
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
-|  | [2192](strategies/2192/) | BTC Fed-Regime Trend 1D | +16.58% | +164.53% | +46.24% | 44 | 2026-09-20 |
+| ★ | [2192](strategies/2192/) | BTC Fed-Regime Trend 1D | +185.99% | +164.53% | +60.26% | 58 | 2026-09-20 |
 |  | [2191](strategies/2191/) | SOL Uptrend RSI-Dip Mean Reversion 4H | +18.99% | +920.26% | +10.13% | 22 | 2026-09-20 |
 |  | [2188](strategies/2188/) | AI 전략 | +509.81% | +1446.39% | +31.93% | 110 | 2026-09-20 |
 |  | [2187](strategies/2187/) | AI 전략 | +420.43% | +536.00% | +41.56% | 9 | 2026-09-20 |
