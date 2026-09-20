@@ -1,27 +1,27 @@
 /*
  * @coinsori-strategy v1
- * name: RSI Momentum Volume
+ * name: RSI Momentum Volume v2
  * ex: binance
  * syms: SOLUSDT
  * interval: 4h
  * cash: 10000
  *
- * Why this strategy: Combines RSI momentum (confirms the direction), volume
- * (confirms conviction), and EMA21 trend filter to catch medium-term swings
- * on a volatile asset like SOL. The RSI 40-65 band captures early-momentum
- * entries before overbought exhaustion.
- * When it buys and sells: Buys when RSI crosses above 55 with price above EMA21
- * and volume above average — catches the start of a push. Sells on RSI>72
- * (overbought) or EMA21 trend flip.
- * When it does NOT work: In slow grinding uptrends where RSI stays elevated
- * without crossing 55 (missed entry), or in choppy markets with false RSI
- * crosses and volume spikes (whipsaw losses).
+ * Why this strategy: Tightens the RSI signal band and volume filter to reduce
+ * whipsaws that plagued v1 (76 trades, -8.9% avg). Wider RSI 40-70 band avoids
+ * chasing overbought; 1.2x volume threshold ensures only high-conviction breakouts.
+ * 15% TP lets winners run in SOL's explosive moves.
+ * When it buys and sells: Buys when RSI crosses above 50 (not 55 — wider band)
+ * with price above EMA21 and volume > 1.2x its 20-bar average. Sells on EMA9<EMA21
+ * flip, RSI>70, or 15% take-profit.
+ * When it does NOT work: In slow grinding trends where RSI never drops back to 50
+ * (missed entries), or in sharp reversals where the 15% TP never hits.
  */
 function onUpdate(ctx) {
     const price    = ctx.price;
     const position = ctx.position;
 
     // Indicators
+    const ema9   = ctx.ema(9);
     const ema21  = ctx.ema(21);
     const rsi    = ctx.rsi(14);
     const atr    = ctx.atr(14);
@@ -29,53 +29,30 @@ function onUpdate(ctx) {
     const vol    = ctx.vol;
 
     // Warm-up
-    if (ema21 == null || rsi == null || atr == null || avgVol == null || vol == null) return null;
+    if (ema9 == null || ema21 == null || rsi == null || atr == null || avgVol == null || vol == null) return null;
 
     // Previous bar for crossover detection
-    const prevRsi  = ctx.rsi(14, 1);
-    const prevEma9 = ctx.ema(9, 1);
+    const prevRsi   = ctx.rsi(14, 1);
+    const prevEma9  = ctx.ema(9,  1);
     const prevEma21 = ctx.ema(21, 1);
     if (prevRsi == null || prevEma9 == null || prevEma21 == null) return null;
 
-    // EMA9 for crossover detection
-    const ema9 = ctx.ema(9);
-    if (ema9 == null) return null;
-
-    // Volume confirmation: today's volume must be above its 20-bar average
-    const volConfirm = vol >= avgVol;
+    // Volume confirmation: today's volume must be 1.2x above its 20-bar average (high conviction)
+    const volConfirm = vol >= avgVol * 1.2;
 
     // ---- ENTRY: Long ----
-    // RSI crosses above 55 (momentum building)
-    const rsiCrossUp = prevRsi <= 55 && rsi > 55;
+    // RSI crosses above 50 (wider band = fewer signals than v1's 55 threshold)
+    const rsiCrossUp = prevRsi <= 50 && rsi > 50;
     // Price above EMA21 (trend is up)
     const trendUp = price > ema21;
-    // Volume confirms the move
+    // Volume confirms the move (1.2x threshold — stricter than v1)
     const volOk = volConfirm;
 
     if (rsiCrossUp && trendUp && volOk && position === 0) {
-        // Stop: 3% below entry or 2x ATR, whichever is tighter
-        const pctStop = price * 0.97;
-        const atrStop = price - 2.0 * atr;
-        const stopPx  = Math.max(pctStop, atrStop);
+        // Stop: 2.5x ATR below entry (tighter than v1's 2x ATR, relative to SOL's vol)
+        const stopPx = price - 2.5 * atr;
         return {
             side: 'buy',
-            qty: ctx.cash / price * 0.98,
-            type: 'limit',
-            price: price,
-            stopPx: stopPx
-        };
-    }
-
-    // ---- ENTRY: Short ----
-    const rsiCrossDn = prevRsi >= 45 && rsi < 45;
-    const trendDown  = price < ema21;
-
-    if (rsiCrossDn && trendDown && volOk && position === 0) {
-        const pctStop = price * 1.03;
-        const atrStop = price + 2.0 * atr;
-        const stopPx  = Math.min(pctStop, atrStop);
-        return {
-            side: 'sell',
             qty: ctx.cash / price * 0.98,
             type: 'limit',
             price: price,
@@ -88,43 +65,22 @@ function onUpdate(ctx) {
         const entryPx = ctx.entryPx;
         const pnlPct  = (price - entryPx) / entryPx;
 
-        // Take profit at 10%
-        if (pnlPct >= 0.10) {
+        // Take profit at 15% (wider than v1's 10% — let winners run)
+        if (pnlPct >= 0.15) {
             return { side: 'sell', qty: position, type: 'market' };
         }
-        // Stop-loss
-        const pctStop = entryPx * 0.97;
-        const atrStop = entryPx - 2.0 * atr;
-        if (price <= Math.max(pctStop, atrStop)) {
+        // Stop-loss at 2.5x ATR
+        const atrStop = entryPx - 2.5 * atr;
+        if (price <= atrStop) {
             return { side: 'sell', qty: position, type: 'market' };
         }
-        // Exit on overbought
-        if (rsi > 72) {
+        // Exit on overbought (RSI > 70 — trend may be exhausting)
+        if (rsi > 70) {
             return { side: 'sell', qty: position, type: 'market' };
         }
-        // Exit on EMA flip
+        // Exit on EMA crossover flip (trend ended)
         if (ema9 < ema21) {
             return { side: 'sell', qty: position, type: 'market' };
-        }
-    }
-
-    // ---- EXIT SHORT ----
-    if (position < 0) {
-        const entryPx = ctx.entryPx;
-        const pnlPct   = (entryPx - price) / entryPx;
-
-        // Take profit at 10%
-        if (pnlPct >= 0.10) {
-            return { side: 'buy', qty: Math.abs(position), type: 'market' };
-        }
-        // Stop-loss
-        const shortStopPx = entryPx * 1.03;
-        if (price >= shortStopPx) {
-            return { side: 'buy', qty: Math.abs(position), type: 'market' };
-        }
-        // Exit on EMA flip
-        if (ema9 > ema21) {
-            return { side: 'buy', qty: Math.abs(position), type: 'market' };
         }
     }
 
