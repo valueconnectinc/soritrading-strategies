@@ -44,12 +44,14 @@ function onUpdate(ctx) {
     const hrMild = hr > prev60 * 1.005;
     const aboveSma = closePrev > sma;
     if (aboveSma && ((beenIn && hrMild) || (!beenIn && hrRising))) {
-      const qty = (cash / price) * 0.99;
+      const qty = (cash / price) * 0.6;
       ctx.state.beenIn = true;
       return { side: 'buy', qty: qty };
     }
     return null;
   } else {
+    // exit only on a real breakdown: hashrate down, or price closing more
+    // than one ATR below the 100-day average (shallow dips are ignored)
     const breakDown = closePrev < sma - atr;
     if ((prev60 != null && hr < prev60 * 0.98) || breakDown) {
       return { side: 'sell', qty: pos };
