@@ -1,0 +1,30 @@
+{
+  "id": 2253,
+  "name": "BTC Trend Ride + Conditional CrashStop 4H",
+  "kind": "custom",
+  "verified": {
+    "backtestId": 9176,
+    "return": 406.41,
+    "mdd": 33.24,
+    "trades": 76,
+    "vsBuyHold": "win",
+    "benchRet": 360.77,
+    "benchBasis": "price",
+    "gapPct": 0,
+    "tFrom": 1573905600,
+    "tTo": 1645905600,
+    "approxNotes": [
+      "봉 내 순서는 관례(양봉 O→L→H→C·음봉 O→H→L→C) — 실순서 미상 · 봉 중 거래량 null · MDD 는 봉 마감 기준"
+    ],
+    "spec": {
+      "ex": "binance",
+      "sym": "BTCUSDT",
+      "interval": "4h",
+      "bars": 5000,
+      "end": 1645920000
+    }
+  },
+  "config": null,
+  "updatedAt": "2026-09-20T19:01:58.896Z",
+  "publishedBy": "scripts/publish-strategies.mjs"
+}
