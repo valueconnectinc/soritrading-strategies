@@ -1,45 +1,43 @@
 /*
  * @coinsori-strategy v1
- * name: ETH Trend Ride with Slope Filter 4H
+ * name: ETH Trend Ride Faster Exit 4H
  * ex: binance
  * syms: ETHUSDT
  * interval: 4h
  * cash: 10000
  *
- * Why this strategy: The plain 200-SMA trend ride is the job's most robust
- * result (positive on all 3 long windows), but it does 123-148 trades because
- * price whipsaws around the SMA in flat markets. Adding a slope condition on
- * the 200-SMA itself should skip false breakouts: only buy when the long-term
- * trend is genuinely turning up, not just price poking above a flat SMA.
- * When it buys and sells: buy on a 4h close above a rising 200-SMA, hold while
- * price stays above it, sell on a close back below the 200-SMA.
- * When it does NOT work: in a long flat/choppy market it still whipsaws (just
- * fewer times); it also gives back the last part of every trend because it only
- * exits after price has fallen back through the SMA.
+ * Why this strategy: The base 200-SMA trend ride is robust but gives back the
+ * last part of every trend because it only exits after price falls all the way
+ * back through the 200-SMA. This variant keeps the same 200-SMA entry but exits
+ * earlier on a close below the 50-SMA, hoping to lock in more of each trend and
+ * cut drawdown. The question is whether faster exits cost more in whipsaw than
+ * they save in drawdown.
+ * When it buys and sells: buy on a close above the 200-SMA, sell on a close
+ * below the 50-SMA while in position.
+ * When it does NOT work: in a choppy uptrend price dips below the 50-SMA often
+ * and gets shaken out too early, then re-enters higher — this can underperform
+ * simply holding through pullbacks.
  */
 function onUpdate(ctx) {
-  const sma = ctx.sma(200, 1);
-  const smaP = ctx.sma(200, 2);
+  const sma200 = ctx.sma(200, 1);
+  const sma50 = ctx.sma(50, 1);
   const closePrev = ctx.closes[ctx.closes.length - 2];
   const closePrev2 = ctx.closes[ctx.closes.length - 3];
-  if (sma == null || smaP == null || closePrev == null || closePrev2 == null) return null;
-
-  // slope of the 200-SMA itself: rising means the long-term trend is up
-  const smaRising = sma > smaP;
+  if (sma200 == null || sma50 == null || closePrev == null || closePrev2 == null) return null;
 
   const pos = ctx.position;
   const price = ctx.price;
   const cash = ctx.cash;
 
   if (pos <= 0) {
-    // enter only when price crosses above a RISING 200-SMA (skip flat-SMA breakouts)
-    if (smaRising && closePrev2 <= smaP && closePrev > sma) {
+    // same entry as base: close crossing above the 200-SMA
+    if (closePrev2 <= sma200 && closePrev > sma200) {
       return { side: 'buy', qty: (cash / price) * 0.98 };
     }
     return null;
   } else {
-    // exit on a close back below the 200-SMA (same as base, trend broken)
-    if (closePrev < sma) {
+    // faster exit: close below the 50-SMA (lock in more of the trend)
+    if (closePrev < sma50) {
       return { side: 'sell', qty: pos };
     }
     return null;
