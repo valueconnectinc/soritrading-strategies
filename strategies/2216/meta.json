@@ -1,0 +1,30 @@
+{
+  "id": 2216,
+  "name": "ETH Daily Trend-Strength Ride 1D",
+  "kind": "custom",
+  "verified": {
+    "backtestId": 8974,
+    "return": -11.85,
+    "mdd": 24.2,
+    "trades": 6,
+    "vsBuyHold": "lose",
+    "benchRet": 52.92,
+    "benchBasis": "price",
+    "gapPct": 0,
+    "tFrom": 1502928000,
+    "tTo": 1530576000,
+    "approxNotes": [
+      "봉 내 순서는 관례(양봉 O→L→H→C·음봉 O→H→L→C) — 실순서 미상 · 봉 중 거래량 null · MDD 는 봉 마감 기준"
+    ],
+    "spec": {
+      "ex": "binance",
+      "sym": "ETHUSDT",
+      "interval": "1d",
+      "bars": 1000,
+      "end": 1530662400
+    }
+  },
+  "config": null,
+  "updatedAt": "2026-09-20T16:42:58.660Z",
+  "publishedBy": "scripts/publish-strategies.mjs"
+}
