@@ -1,0 +1,30 @@
+{
+  "id": 1988,
+  "name": "ETH 4h ATR Trailing Stop Trend",
+  "kind": "custom",
+  "verified": {
+    "backtestId": 7921,
+    "return": -16.09,
+    "mdd": 16.09,
+    "trades": 36,
+    "vsBuyHold": "win",
+    "benchRet": -26.52,
+    "benchBasis": "price",
+    "gapPct": 0,
+    "tFrom": 1775462400,
+    "tTo": 1782648000,
+    "approxNotes": [
+      "봉 내 순서는 관례(양봉 O→L→H→C·음봉 O→H→L→C) — 실순서 미상 · 봉 중 거래량 null · MDD 는 봉 마감 기준"
+    ],
+    "spec": {
+      "ex": "binance",
+      "sym": "ETHUSDT",
+      "interval": "4h",
+      "bars": 500,
+      "end": 1782662400
+    }
+  },
+  "config": null,
+  "updatedAt": "2026-09-20T01:42:37.158Z",
+  "publishedBy": "scripts/publish-strategies.mjs"
+}
