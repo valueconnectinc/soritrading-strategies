@@ -4,13 +4,14 @@ Every strategy whose backtest **finished and actually traded** is published here
 Nothing is filtered out by return — the ones that lost money are part of the record.
 Entries stay after a strategy is removed from our own workspace — this is a log, and deleting the record would leave only the survivors.
 
-**★ marks a strategy that out-returned buy & hold over the same window** — 153 of 612 right now.
+**★ marks a strategy that out-returned buy & hold over the same window** — 153 of 613 right now.
 `—` means the comparison **could not be made**: the engine does not compute a benchmark for multi-symbol, futures, or multi-leg runs. That is *unknown*, not *lost*, and it is 176 of them right now.
 
 Every figure comes from the last verifying backtest at publish time. These are past results over historical data. Nothing here is promised or assured about the future, and none of it is investment advice.
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
+|  | [2073](strategies/2073/) | AI 전략 | -3.91% | +0.64% | +3.91% | 28 | 2026-09-20 |
 | ★ | [2072](strategies/2072/) | ATR Trailing Stop Trend Follower | +8.74% | +8.57% | +4.24% | 1 | 2026-09-20 |
 |  | [2071](strategies/2071/) | BB-RSI Mean Reversion on BTCUSDT | +2.51% | +24.61% | +3.74% | 53 | 2026-09-20 |
 | ★ | [2070](strategies/2070/) | BB-RSI Mean Reversion on MATICUSDT | -22.29% | -31.93% | +28.66% | 18 | 2026-09-20 |
