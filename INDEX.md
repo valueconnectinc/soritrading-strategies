@@ -4,13 +4,14 @@ Every strategy whose backtest **finished and actually traded** is published here
 Nothing is filtered out by return — the ones that lost money are part of the record.
 Entries stay after a strategy is removed from our own workspace — this is a log, and deleting the record would leave only the survivors.
 
-**★ marks a strategy that out-returned buy & hold over the same window** — 117 of 537 right now.
+**★ marks a strategy that out-returned buy & hold over the same window** — 118 of 538 right now.
 `—` means the comparison **could not be made**: the engine does not compute a benchmark for multi-symbol, futures, or multi-leg runs. That is *unknown*, not *lost*, and it is 174 of them right now.
 
 Every figure comes from the last verifying backtest at publish time. These are past results over historical data. Nothing here is promised or assured about the future, and none of it is investment advice.
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
+| ★ | [1958](strategies/1958/) | RSI Mean Reversion + ATR Stop (No BB) | +4.79% | -8.39% | +3.98% | 16 | 2026-09-20 |
 |  | [1957](strategies/1957/) | RSI Mean Reversion + BB Confirmation (ETHUSDT 4H) | -15.42% | +9.22% | +15.57% | 38 | 2026-09-20 |
 |  | [1956](strategies/1956/) | AI 전략 | -35.89% | +12.40% | +35.89% | 72 | 2026-09-20 |
 |  | [1953](strategies/1953/) | AI 전략 | -0.61% | +20.55% | +0.72% | 6 | 2026-09-20 |
