@@ -3,15 +3,15 @@
   "name": "ETH Daily Trend Strength-Scaled 1D (conservative)",
   "kind": "custom",
   "verified": {
-    "backtestId": 8605,
-    "return": 182.6,
-    "mdd": 32.38,
-    "trades": 29,
-    "vsBuyHold": "lose",
-    "benchRet": 261.18,
+    "backtestId": 8610,
+    "return": 1164.88,
+    "mdd": 74.11,
+    "trades": 53,
+    "vsBuyHold": "win",
+    "benchRet": 771.75,
     "benchBasis": "price",
     "gapPct": 0,
-    "tFrom": 1609459200,
+    "tFrom": 1502928000,
     "tTo": 1789776000,
     "approxNotes": [
       "봉 내 순서는 관례(양봉 O→L→H→C·음봉 O→H→L→C) — 실순서 미상 · 봉 중 거래량 null · MDD 는 봉 마감 기준",
@@ -21,11 +21,11 @@
       "ex": "binance",
       "sym": "ETHUSDT",
       "interval": "1d",
-      "bars": 2089,
-      "end": 1789906490
+      "bars": 3550,
+      "end": 1789906530
     }
   },
   "config": null,
-  "updatedAt": "2026-09-20T12:14:47.936Z",
+  "updatedAt": "2026-09-20T12:15:26.236Z",
   "publishedBy": "scripts/publish-strategies.mjs"
 }
