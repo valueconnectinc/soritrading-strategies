@@ -4,13 +4,14 @@ Every strategy whose backtest **finished and actually traded** is published here
 Nothing is filtered out by return — the ones that lost money are part of the record.
 Entries stay after a strategy is removed from our own workspace — this is a log, and deleting the record would leave only the survivors.
 
-**★ marks a strategy that out-returned buy & hold over the same window** — 126 of 569 right now.
+**★ marks a strategy that out-returned buy & hold over the same window** — 127 of 570 right now.
 `—` means the comparison **could not be made**: the engine does not compute a benchmark for multi-symbol, futures, or multi-leg runs. That is *unknown*, not *lost*, and it is 176 of them right now.
 
 Every figure comes from the last verifying backtest at publish time. These are past results over historical data. Nothing here is promised or assured about the future, and none of it is investment advice.
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
+| ★ | [2002](strategies/2002/) | ATR Regime Adaptive v3 — Volume-Enhanced | -10.30% | -32.98% | +11.01% | 20 | 2026-09-20 |
 | ★ | [2001](strategies/2001/) | Macro Regime + ATR Dual-Framework | -10.91% | -32.98% | +16.50% | 12 | 2026-09-20 |
 |  | [2000](strategies/2000/) | ATR Regime Adaptive SOLUSDT 4H | +19.39% | +59.34% | +2.98% | 25 | 2026-09-20 |
 |  | [1999](strategies/1999/) | Stochastic Trend Momentum with ATR Trail | -43.18% | +71.76% | +43.18% | 115 | 2026-09-20 |
