@@ -1,6 +1,6 @@
 /*
  * @coinsori-strategy v1
- * name: ETH Trend Strength-Scaled Size 4H v5
+ * name: ETH Trend Strength-Scaled Size 4H
  * ex: binance
  * syms: ETHUSDT
  * interval: 4h
@@ -11,15 +11,15 @@
  * a fixed $300 risk never uses the full account in a clean uptrend, which is
  * why it lags buy-and-hold in bull markets. This version scales the risk by
  * trend strength: when price is far above the 200-SMA (strong trend) it risks
- * more per trade; when price hugs the SMA (weak, likely to whipsaw) it risks
- * less. A trailing ATR stop locks in gains so a strong trend's profit is not
- * given back waiting for a full SMA cross to sell.
- * When it buys and sells: long on a close above the 200-SMA. Sell when price
- * closes below the SMA OR when it falls a fixed multiple of ATR below the
- * highest close since entry (trailing stop). Size = risk / ATR with risk scaled
- * by trend strength.
- * When it does NOT work: sideways chop whipsaws in and out; a trailing stop
- * can exit a still-valid trend on a normal pullback, missing the later leg.
+ * more per trade and takes a bigger position; when price hugs the SMA (weak,
+ * likely to whipsaw) it risks less. Signals and exit stay identical to the
+ * proven base.
+ * When it buys and sells: long on a close above the 200-SMA, sell on a close
+ * below it. Position size = risk / ATR, where risk grows with how far price is
+ * above the SMA (capped so we never risk more than a fixed fraction of cash).
+ * When it does NOT work: same whipsaw in sideways chop; scaling risk up only
+ * helps when the trend actually persists, so a strong-looking but false breakout
+ * loses more than the flat-size version.
  */
 function onUpdate(ctx) {
   const sma = ctx.sma(200, 1);
@@ -45,14 +45,6 @@ function onUpdate(ctx) {
     }
     return null;
   } else {
-    // trailing stop: track highest close since entry, sell if it falls 3 ATR below
-    const atr = ctx.atr(14, 1);
-    if (atr == null) return null;
-    const peak = ctx.state.peak != null ? ctx.state.peak : closePrev;
-    ctx.state.peak = Math.max(peak, closePrev);
-    if (closePrev < ctx.state.peak - 3 * atr) {
-      return { side: 'sell', qty: pos };
-    }
     if (closePrev < sma) {
       return { side: 'sell', qty: pos };
     }
