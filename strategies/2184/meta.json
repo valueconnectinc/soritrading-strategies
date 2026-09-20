@@ -1,0 +1,30 @@
+{
+  "id": 2184,
+  "name": "BTC Active-Address Network Growth 1D",
+  "kind": "custom",
+  "verified": {
+    "backtestId": 8731,
+    "return": -28.3,
+    "mdd": 35.62,
+    "trades": 56,
+    "vsBuyHold": "lose",
+    "benchRet": 52.01,
+    "benchBasis": "price",
+    "gapPct": 0,
+    "tFrom": 1502928000,
+    "tTo": 1530576000,
+    "approxNotes": [
+      "봉 내 순서는 관례(양봉 O→L→H→C·음봉 O→H→L→C) — 실순서 미상 · 봉 중 거래량 null · MDD 는 봉 마감 기준"
+    ],
+    "spec": {
+      "ex": "binance",
+      "sym": "BTCUSDT",
+      "interval": "1d",
+      "bars": 1500,
+      "end": 1530662400
+    }
+  },
+  "config": null,
+  "updatedAt": "2026-09-20T13:26:22.806Z",
+  "publishedBy": "scripts/publish-strategies.mjs"
+}
