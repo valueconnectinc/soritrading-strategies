@@ -1,53 +1,97 @@
 /*
  * @coinsori-strategy v1
- * name: SOL Breakout Volume 4H
+ * name: EMA Crossover + Tight ATR Stop
  * ex: binance
  * syms: SOLUSDT
  * interval: 4h
  * cash: 10000
  *
- * Why this strategy: When price breaks above a 20-bar highest high on above-average volume,
- * it signals institutional or strong-market participation. This is a pure price-action breakout
- * without RSI or ATR filters that were too restrictive in testing.
- * When it buys and sells: Enter long when price closes above the 20-bar highest high
- * and volume exceeds 1.1x its 20-bar average. Exit when price falls below the 14-bar
- * lowest low.
- * When it does NOT work: In choppy markets with false breakouts. In strong downtrends
- * where even volume-confirmed breakouts fail.
+ * Why this strategy: SOL trends sharply but choppy in between. EMA crossover
+ * catches the big moves; a tight ATR stop (1.5x vs prior 2.5x) prevents
+ * winners from shrinking back to zero. Volume filter cuts false breakouts.
+ * When it buys and sells: Buy when EMA9 crosses above EMA21 on a closed bar,
+ * with RSI>50 (momentum confirmed) and volume>1.5x avg (institutional push).
+ * Sell on reverse crossover or when price hits 1.5x ATR stop below entry.
+ * When it does NOT work: In tight ranges where EMAs criss-cross repeatedly,
+ * each false cross costs a trade. Also struggles at the start of trends
+ * (lagging signal) and end of trends ( ATR stop exits too early).
  */
 
 function onUpdate(ctx) {
-    const avgVol = ctx.avgVol(20);
-    if (avgVol == null) return null;
+  // Need 21 bars for EMA21 warmup + ATR(14)
+  if (ctx.i < 21) return null;
 
-    // Read previous closed bar (ago=1 is safe in backtest and live)
-    const prevHigh = ctx.high(20, 1);
-    const prevLow  = ctx.low(14, 1);
-    if (prevHigh == null || prevLow == null) return null;
+  // ── Indicators ──────────────────────────────────────────────
+  const atr9  = ctx.atr(9);   // ATR for stop (shorter period = tighter)
+  const atr14 = ctx.atr(14);  // ATR for signal filter
+  const ema9  = ctx.ema(9);
+  const ema21 = ctx.ema(21);
+  const rsi   = ctx.rsi(14);
+  const av20  = ctx.avgVol(20);  // 20-bar avg volume for filter
 
-    const hasPosition = ctx.position > 0;
+  if (atr9 == null || atr14 == null || ema9 == null || ema21 == null ||
+      rsi == null || av20 == null || av20 === 0) return null;
 
-    // Entry: price breaks above 20-bar high, volume confirm
-    if (!hasPosition) {
-        const priceBreakout = ctx.price > prevHigh;
-        const volConfirm = ctx.vol > avgVol * 1.1;
-        if (priceBreakout && volConfirm) {
-            return {
-                side: 'buy',
-                qty: ctx.cash / ctx.price * 0.95,
-                type: 'market'
-            };
-        }
+  // ── Previous bar data (ago=1 = last closed bar, stable) ──────
+  const ema9_p1  = ctx.ema(9,  1);
+  const ema21_p1 = ctx.ema(21, 1);
+  if (ema9_p1 == null || ema21_p1 == null) return null;
+
+  // ── EMA crossover on CLOSED bars (no repainting) ─────────────
+  // Cross UP: EMA9 was below EMA21 1 bar ago, now above
+  const crossUp   = ema21_p1 >= ema9_p1 && ema9 > ema21;
+  // Cross DOWN: EMA9 was above EMA21 1 bar ago, now below
+  const crossDown = ema9_p1 >= ema21_p1 && ema21 > ema9;
+
+  // ── Filters ─────────────────────────────────────────────────
+  const rsiConfirm = rsi > 50;          // Confirm upward momentum
+  const rsiWeak   = rsi < 50;          // Confirm downward momentum
+  const volConfirm = ctx.vol > av20 * 1.5;  // Volume spike (1.5x avg)
+  const bullBias  = ctx.price > ctx.ema(20); // Price above EMA20 = uptrend
+  const bearBias  = ctx.price < ctx.ema(20); // Price below EMA20 = downtrend
+
+  // ── Entry signals ────────────────────────────────────────────
+  const buySignal  = crossUp  && rsiConfirm && volConfirm && bullBias;
+  const sellSignal = crossDown && rsiWeak   && volConfirm && bearBias;
+
+  // ── Position sizing: 1% risk per trade, 1.5x ATR stop ───────
+  const stopDist = 1.5 * atr9;  // Tight stop: 1.5x ATR (vs prior 2.5x)
+  if (stopDist <= 0) return null;
+
+  // ── Open position: look for entries ─────────────────────────
+  if (ctx.position === 0) {
+    if (buySignal) {
+      const riskAmt = ctx.cash * 0.01;
+      const qty    = riskAmt / stopDist / ctx.price;
+      return { side: 'buy', qty };
     }
-
-    // Exit: price falls below 14-bar lowest low
-    if (hasPosition && ctx.price < prevLow) {
-        return {
-            side: 'sell',
-            qty: ctx.position,
-            type: 'market'
-        };
+    if (sellSignal) {
+      const riskAmt = ctx.cash * 0.01;
+      const qty    = riskAmt / stopDist / ctx.price;
+      return { side: 'sell', qty };
     }
+  }
 
-    return null;
+  // ── Close on reverse signal or ATR stop ─────────────────────
+  if (ctx.position > 0) {
+    // Tight ATR stop: exit if price dropped stopDist from entry
+    if (ctx.price <= ctx.entryPx - stopDist) {
+      return { side: 'sell', qty: ctx.position };
+    }
+    // Also exit on bearish EMA cross (trend reversing)
+    if (crossDown) {
+      return { side: 'sell', qty: ctx.position };
+    }
+  }
+
+  if (ctx.position < 0) {
+    if (ctx.price >= ctx.entryPx + stopDist) {
+      return { side: 'buy', qty: Math.abs(ctx.position) };
+    }
+    if (crossUp) {
+      return { side: 'buy', qty: Math.abs(ctx.position) };
+    }
+  }
+
+  return null;
 }
