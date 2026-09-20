@@ -11,7 +11,7 @@ Every figure comes from the last verifying backtest at publish time. These are p
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
-| ★ | [2201](strategies/2201/) | ETH Trend-Gated Vol-Target BASE 1D | +259.47% | +44.91% | +46.31% | 4340 | 2026-09-20 |
+| ★ | [2201](strategies/2201/) | ETH Trend-Gated Vol-Target BASE 1D | +442.51% | +40.97% | +51.89% | 4153 | 2026-09-20 |
 | ★ | [2200](strategies/2200/) | ETH Trend-Gated Vol-Target SMA100 1D | +945.42% | +501.57% | +74.78% | 2292 | 2026-09-20 |
 | ★ | [2198](strategies/2198/) | ETH Trend-Gated Vol-Target 1D | +108.63% | +86.46% | +38.75% | 1895 | 2026-09-20 |
 |  | [2197](strategies/2197/) | ETH Vol-Targeted Hold 1D | +21.92% | +23.02% | +38.47% | 211 | 2026-09-20 |
