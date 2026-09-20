@@ -1,21 +1,18 @@
 /*
  * @coinsori-strategy v1
- * name: ETH Trend-Gated Vol-Target LowChurn 4H
+ * name: ETH Trend-Gated Vol-Target 4H
  * ex: binance
  * syms: ETHUSDT
  * interval: 4h
  * cash: 10000
  *
- * Why this strategy: the 4h vol-target champion generalizes to ETH (all windows beat
- * hold) but churns 7400-8500 trades from continuous vol-target rebalancing, costing
- * heavy fees. This adds a rebalance threshold so it only trades when the target
- * position shifts by more than 5% of current size, cutting churn while keeping
- * most of the alpha.
+ * Why this strategy: the SMA50-gated vol-target champion transfers to BTC 4h (all
+ * windows beat hold). This tests whether the 4h transfer also generalizes to ETH,
+ * a second major asset, making 4h a robust alternative home for the champion.
  * When it buys and sells: above SMA50 = fully invested; below = position scaled by
- * closeness to SMA50; beyond the ATR crash band = cash. Only rebalance when the
- * desired size differs from current by >5%.
- * When it does NOT work: violent bull corrections give deep drawdowns, and the
- * threshold may delay exiting a fast crash.
+ * closeness to SMA50; beyond the ATR crash band = cash.
+ * When it does NOT work: violent bull corrections give deep drawdowns, and a fast
+ * V-shaped recovery can sell near the bottom.
  */
 function onUpdate(ctx) {
   const atr = ctx.atr(14, 1);
@@ -43,9 +40,7 @@ function onUpdate(ctx) {
 
   const curQty = pos;
   const diff = targetQty - curQty;
-  // only rebalance when the desired size differs by >5% of current position —
-  // cuts the constant vol-target churn that drove 7400+ trades
-  if (Math.abs(diff) < 0.05 * Math.max(0.0001, curQty)) return null;
+  if (Math.abs(diff) < 0.0001 * Math.max(0.0001, curQty)) return null;
 
   if (diff > 0) {
     const buyQty = Math.min(diff, (cash / price) * 0.98);
