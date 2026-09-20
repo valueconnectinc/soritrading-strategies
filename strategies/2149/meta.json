@@ -3,9 +3,9 @@
   "name": "BTC Trend Strength-Scaled Size 4H",
   "kind": "custom",
   "verified": {
-    "backtestId": 8454,
-    "return": 35.07,
-    "mdd": 48.55,
+    "backtestId": 8460,
+    "return": 34.14,
+    "mdd": 48.52,
     "trades": 115,
     "vsBuyHold": "win",
     "benchRet": 31.06,
@@ -26,6 +26,6 @@
     }
   },
   "config": null,
-  "updatedAt": "2026-09-20T09:01:57.140Z",
+  "updatedAt": "2026-09-20T09:03:38.675Z",
   "publishedBy": "scripts/publish-strategies.mjs"
 }

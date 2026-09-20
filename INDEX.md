@@ -11,7 +11,7 @@ Every figure comes from the last verifying backtest at publish time. These are p
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
-| ★ | [2149](strategies/2149/) | BTC Trend Strength-Scaled Size 4H | +35.07% | +31.06% | +48.55% | 115 | 2026-09-20 |
+| ★ | [2149](strategies/2149/) | BTC Trend Strength-Scaled Size 4H | +34.14% | +31.06% | +48.52% | 115 | 2026-09-20 |
 |  | [2146](strategies/2146/) | ETH Trend Strength-Scaled Size v2 4H | +789.61% | +1436.34% | +32.71% | 110 | 2026-09-20 |
 |  | [2145](strategies/2145/) | ETH Trend Strength-Scaled Size 4H | +789.61% | +1436.34% | +32.71% | 110 | 2026-09-20 |
 | ★ | [2144](strategies/2144/) | ETH Trend ATR Trailing + Sized 4H | +37.81% | +31.06% | +36.80% | 146 | 2026-09-20 |
