@@ -11,7 +11,7 @@ Every figure comes from the last verifying backtest at publish time. These are p
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
-| ★ | [2231](strategies/2231/) | DOGE BB-RSI Mean Reversion SoftGuard 4H | +30.16% | +16.64% | +46.03% | 153 | 2026-09-20 |
+| ★ | [2231](strategies/2231/) | DOGE BB-RSI Mean Reversion SoftGuard 4H | +14.78% | -41.23% | +33.31% | 172 | 2026-09-20 |
 | ★ | [2230](strategies/2230/) | DOGE BB-RSI Mean Reversion + Crash Guard 4H | +33.04% | -41.23% | +17.34% | 79 | 2026-09-20 |
 |  | [2229](strategies/2229/) | LINK BB-RSI Mean Reversion 4H | +242.31% | +396.32% | +56.80% | 193 | 2026-09-20 |
 |  | [2228](strategies/2228/) | DOGE BB-RSI Mean Reversion 4H | +1094.23% | +4729.86% | +49.69% | 293 | 2026-09-20 |
