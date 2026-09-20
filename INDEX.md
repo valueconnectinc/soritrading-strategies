@@ -11,7 +11,7 @@ Every figure comes from the last verifying backtest at publish time. These are p
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
-| ★ | [2245](strategies/2245/) | ETH Slow Trend Ride SMA300 4H | +55.07% | +35.72% | +37.78% | 125 | 2026-09-20 |
+| ★ | [2245](strategies/2245/) | ETH Slow Trend Ride SMA300 4H | +52.01% | -29.25% | +48.05% | 131 | 2026-09-20 |
 |  | [2244](strategies/2244/) | ETH Volatility Squeeze Breakout | -22.58% | +35.72% | +33.43% | 120 | 2026-09-20 |
 | — | [2243](strategies/2243/) | BTC-ETH 200SMA Rotation | -80.52% | — | +89.06% | 866 | 2026-09-20 |
 |  | [2242](strategies/2242/) | ETH Trend Ride + ATR CrashStop 4H | +1235.04% | +1421.83% | +43.66% | 111 | 2026-09-20 |
