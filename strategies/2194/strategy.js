@@ -1,6 +1,6 @@
 /*
  * @coinsori-strategy v1
- * name: BTC Vol-Targeted Hold 1D
+ * name: BTC Vol-Targeted Hold v2 Band 1D
  * ex: binance
  * syms: BTCUSDT
  * interval: 1d
@@ -11,9 +11,10 @@
  * position sized inversely to recent volatility (smaller when wild, larger when
  * calm), the equity curve is smoothed and crash drawdowns are cut, while still
  * participating in the long-term uptrend. No market timing, no regime filter.
- * When it buys and sells: always hold BTC, but each day set the position so the
- * expected daily move (ATR) is a constant fraction of cash. Sell down when ATR
- * spikes, buy back when it calms. Never fully flat.
+ * When it buys and sells: always hold BTC, but only rebalance when the target
+ * position (sized so the daily ATR move is a constant fraction of cash) drifts
+ * more than 15% from the current position — so it reacts to big volatility
+ * swings but does not churn on small daily noise.
  * When it does NOT work: it never beats buy-and-hold in a clean steady bull
  * (it is always partly in cash on average), and it still falls in a crash
  * (just less); it is a risk-reducer, not a return-maximizer.
@@ -26,16 +27,17 @@ function onUpdate(ctx) {
   if (atr == null || price == null || price <= 0) return null;
 
   // target: daily ATR move should be ~2% of total account value
-  // so target position value = 0.02 * (cash + pos*price) / (atr/price)
   const equity = cash + pos * price;
   const targetValue = (0.02 * equity) / (atr / price);
   const targetQty = targetValue / price;
   const curQty = pos;
 
+  // deadband: only rebalance when target is >15% away from current position
+  // (15% = ignore small daily noise, react to real volatility shifts)
+  if (Math.abs(targetQty - curQty) <= 0.15 * Math.max(curQty, 1e-9)) return null;
+
   const diff = targetQty - curQty;
-  if (Math.abs(diff) < 0.0001 * curQty) return null;
   if (diff > 0) {
-    // buy the shortfall, but never exceed ~98% of cash value
     const buyQty = Math.min(diff, (cash / price) * 0.98);
     if (buyQty <= 0) return null;
     return { side: 'buy', qty: buyQty };
