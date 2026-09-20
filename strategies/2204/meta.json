@@ -1,0 +1,32 @@
+{
+  "id": 2204,
+  "name": "ETH Trend-Gated Vol-Target CrashStop Confirm 1D",
+  "kind": "custom",
+  "verified": {
+    "backtestId": 8888,
+    "return": 314.73,
+    "mdd": 56.18,
+    "trades": 3015,
+    "vsBuyHold": "win",
+    "benchRet": 198.82,
+    "benchBasis": "price",
+    "gapPct": 0,
+    "tFrom": 1609459200,
+    "tTo": 1767139200,
+    "approxNotes": [
+      "봉 내 순서는 관례(양봉 O→L→H→C·음봉 O→H→L→C) — 실순서 미상 · 봉 중 거래량 null · MDD 는 봉 마감 기준",
+      "[유동성/전무] 시장가 주문 82건은 **한 주도 체결되지 않았습니다**. 부분체결이 아니라 전무라, 그 시점의 진입·청산은 **일어나지 않았습니다.**",
+      "기간 종료 시 미청산 포지션 1종목 (총자산의 69.34%) — 이 수익률은 **평가액**을 포함합니다. 퇴출 수수료·거래세를 안 냈고, 마지막 봉 가격에 실제로 팔 수 있다는 보장도 없습니다(얇은 호가·상장폐지). exec.endLiquidate 로 마지막 봉 청산을 켤 수 있습니다"
+    ],
+    "spec": {
+      "ex": "binance",
+      "sym": "BTCUSDT",
+      "interval": "1d",
+      "bars": 1826,
+      "end": 1767225600
+    }
+  },
+  "config": null,
+  "updatedAt": "2026-09-20T15:23:58.535Z",
+  "publishedBy": "scripts/publish-strategies.mjs"
+}
