@@ -3,7 +3,7 @@
   "name": "ETH Daily Trend with Fast Re-entry",
   "kind": "custom",
   "verified": {
-    "backtestId": 8992,
+    "backtestId": 8995,
     "return": 410.25,
     "mdd": 74.54,
     "trades": 15,
