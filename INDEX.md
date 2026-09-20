@@ -4,13 +4,14 @@ Every strategy whose backtest **finished and actually traded** is published here
 Nothing is filtered out by return — the ones that lost money are part of the record.
 Entries stay after a strategy is removed from our own workspace — this is a log, and deleting the record would leave only the survivors.
 
-**★ marks a strategy that out-returned buy & hold over the same window** — 161 of 639 right now.
+**★ marks a strategy that out-returned buy & hold over the same window** — 161 of 640 right now.
 `—` means the comparison **could not be made**: the engine does not compute a benchmark for multi-symbol, futures, or multi-leg runs. That is *unknown*, not *lost*, and it is 177 of them right now.
 
 Every figure comes from the last verifying backtest at publish time. These are past results over historical data. Nothing here is promised or assured about the future, and none of it is investment advice.
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
+|  | [2125](strategies/2125/) | Ichimoku Cloud Trend on SOLUSDT 4h | -1.33% | +52.55% | +2.75% | 10 | 2026-09-20 |
 |  | [2121](strategies/2121/) | ATR Regime + EMA Trend | -1.82% | +180.61% | +4.28% | 14 | 2026-09-20 |
 |  | [2120](strategies/2120/) | ATR Regime + Volume Momentum | -7.19% | +180.61% | +14.25% | 36 | 2026-09-20 |
 |  | [2119](strategies/2119/) | AI 전략 | -85.91% | +180.61% | +85.95% | 163 | 2026-09-20 |
