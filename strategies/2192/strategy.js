@@ -1,6 +1,6 @@
 /*
  * @coinsori-strategy v1
- * name: BTC Fed-Regime Trend v2 Scaled 1D
+ * name: BTC Fed-Regime Trend v3 Loose-Exit 1D
  * ex: binance
  * syms: BTCUSDT
  * interval: 1d
@@ -8,16 +8,16 @@
  *
  * Why this strategy: Bitcoin is a risk asset pressured when the Fed hikes and
  * supported when it cuts or holds. The Fed funds rate direction is a slow macro
- * regime filter. On top of it we add a 50-day trend guard and scale the
- * position by trend strength so we capture more of a bull while staying
- * defensive in a hiking bear.
+ * regime filter. On top we add a 50-day trend guard, scale the position by trend
+ * strength, and use a looser 1.5-ATR exit so shallow dips in a choppy bull do
+ * not shake us out (fewer whipsaw trades).
  * When it buys and sells: buy when the Fed is NOT hiking AND price is above its
- * 50-day average (full position when price is well above, half when barely
- * above). Sell when the Fed starts hiking OR price closes more than one ATR
- * below the 50-day average.
- * When it does NOT work: in a raging bull it still trails buy-and-hold (the Fed
- * gate adds friction); with a flat/early Fed history the gate is silent and only
- * the price guard protects; it needs the fed data feed.
+ * 50-day average (full position when well above, half when barely above). Sell
+ * when the Fed starts hiking OR price closes more than 1.5 ATR below the 50-day
+ * average.
+ * When it does NOT work: in a raging bull it still trails buy-and-hold; with a
+ * flat/early Fed history the gate is silent and only the price guard protects;
+ * it needs the fed data feed.
  */
 function onUpdate(ctx) {
   const fed = ctx.data('fed');
@@ -42,7 +42,6 @@ function onUpdate(ctx) {
     if (prev90 == null) return null;
     const aboveSma = closePrev > sma;
     if (aboveSma && !hiking) {
-      // scale up: full size when well above trend, half when barely above
       const strength = (closePrev - sma) / atr;
       let frac = 0.5;
       if (strength > 1.5) frac = 0.98;
@@ -51,7 +50,8 @@ function onUpdate(ctx) {
     }
     return null;
   } else {
-    const breakDown = closePrev < sma - atr;
+    // looser 1.5-ATR exit: only exit on a real breakdown, not a shallow dip
+    const breakDown = closePrev < sma - atr * 1.5;
     if (hiking || breakDown) {
       return { side: 'sell', qty: pos };
     }
