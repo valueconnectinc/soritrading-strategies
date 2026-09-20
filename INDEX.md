@@ -4,13 +4,14 @@ Every strategy whose backtest **finished and actually traded** is published here
 Nothing is filtered out by return — the ones that lost money are part of the record.
 Entries stay after a strategy is removed from our own workspace — this is a log, and deleting the record would leave only the survivors.
 
-**★ marks a strategy that out-returned buy & hold over the same window** — 119 of 542 right now.
+**★ marks a strategy that out-returned buy & hold over the same window** — 119 of 543 right now.
 `—` means the comparison **could not be made**: the engine does not compute a benchmark for multi-symbol, futures, or multi-leg runs. That is *unknown*, not *lost*, and it is 174 of them right now.
 
 Every figure comes from the last verifying backtest at publish time. These are past results over historical data. Nothing here is promised or assured about the future, and none of it is investment advice.
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
+|  | [1964](strategies/1964/) | EMA Crossover + Volume Momentum | +11.06% | +38.94% | +8.86% | 22 | 2026-09-20 |
 |  | [1963](strategies/1963/) | ATR Volatility Breakout | -42.72% | -41.03% | +46.27% | 1 | 2026-09-20 |
 |  | [1961](strategies/1961/) | Multi-Timeframe EMA Trend Filter | +0.46% | +38.94% | +13.89% | 40 | 2026-09-20 |
 | ★ | [1960](strategies/1960/) | BB Expansion Trend Follower | -1.70% | -8.39% | +8.38% | 10 | 2026-09-20 |

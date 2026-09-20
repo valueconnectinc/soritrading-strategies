@@ -1,0 +1,31 @@
+{
+  "id": 1964,
+  "name": "EMA Crossover + Volume Momentum",
+  "kind": "custom",
+  "verified": {
+    "backtestId": 7848,
+    "return": 11.06,
+    "mdd": 8.86,
+    "trades": 22,
+    "vsBuyHold": "lose",
+    "benchRet": 38.94,
+    "benchBasis": "price",
+    "gapPct": 0,
+    "tFrom": 1782662400,
+    "tTo": 1789848000,
+    "approxNotes": [
+      "봉 내 순서는 관례(양봉 O→L→H→C·음봉 O→H→L→C) — 실순서 미상 · 봉 중 거래량 null · MDD 는 봉 마감 기준",
+      "거래량은 봉 마감에만 확정 — 봉 중 평가에서 ctx.vol/volumes 가 null 이라 거래량 조건이 걸러졌을 수 있음(봉 중에도 쓰려면 ctx.volPrev·ctx.avgVol)"
+    ],
+    "spec": {
+      "ex": "binance",
+      "sym": "BNBUSDT",
+      "interval": "4h",
+      "bars": 500,
+      "end": 1789862400
+    }
+  },
+  "config": null,
+  "updatedAt": "2026-09-20T01:03:54.029Z",
+  "publishedBy": "scripts/publish-strategies.mjs"
+}
