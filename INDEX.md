@@ -4,13 +4,14 @@ Every strategy whose backtest **finished and actually traded** is published here
 Nothing is filtered out by return — the ones that lost money are part of the record.
 Entries stay after a strategy is removed from our own workspace — this is a log, and deleting the record would leave only the survivors.
 
-**★ marks a strategy that out-returned buy & hold over the same window** — 176 of 701 right now.
+**★ marks a strategy that out-returned buy & hold over the same window** — 177 of 702 right now.
 `—` means the comparison **could not be made**: the engine does not compute a benchmark for multi-symbol, futures, or multi-leg runs. That is *unknown*, not *lost*, and it is 178 of them right now.
 
 Every figure comes from the last verifying backtest at publish time. These are past results over historical data. Nothing here is promised or assured about the future, and none of it is investment advice.
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
+| ★ | [2202](strategies/2202/) | ETH Trend-Gated Vol-Target CrashStop 1D | +2263.08% | +501.57% | +70.24% | 2560 | 2026-09-20 |
 | ★ | [2201](strategies/2201/) | ETH Trend-Gated Vol-Target BASE 1D | +900.64% | +43.05% | +41.62% | 2895 | 2026-09-20 |
 | ★ | [2200](strategies/2200/) | ETH Trend-Gated Vol-Target SMA100 1D | +945.42% | +501.57% | +74.78% | 2292 | 2026-09-20 |
 | ★ | [2198](strategies/2198/) | ETH Trend-Gated Vol-Target 1D | +108.63% | +86.46% | +38.75% | 1895 | 2026-09-20 |
