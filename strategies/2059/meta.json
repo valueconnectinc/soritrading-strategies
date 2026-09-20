@@ -1,30 +1,30 @@
 {
-  "id": 2058,
-  "name": "ATR Regime-Adaptive Mean Reversion v2",
+  "id": 2059,
+  "name": "ATR Regime-Adaptive Mean Reversion — BNBUSDT",
   "kind": "custom",
   "verified": {
-    "backtestId": 8139,
-    "return": -8.2,
-    "mdd": 9,
-    "trades": 6,
+    "backtestId": 8142,
+    "return": -3.14,
+    "mdd": 7.89,
+    "trades": 8,
     "vsBuyHold": "win",
-    "benchRet": -27.72,
+    "benchRet": -33.48,
     "benchBasis": "price",
     "gapPct": 0,
-    "tFrom": 1775476800,
-    "tTo": 1782662400,
+    "tFrom": 1768276800,
+    "tTo": 1775462400,
     "approxNotes": [
       "봉 내 순서는 관례(양봉 O→L→H→C·음봉 O→H→L→C) — 실순서 미상 · 봉 중 거래량 null · MDD 는 봉 마감 기준"
     ],
     "spec": {
       "ex": "binance",
-      "sym": "ETHUSDT",
+      "sym": "BNBUSDT",
       "interval": "4h",
       "bars": 500,
-      "end": 1782676800
+      "end": 1775476800
     }
   },
   "config": null,
-  "updatedAt": "2026-09-20T04:41:39.462Z",
+  "updatedAt": "2026-09-20T04:41:39.480Z",
   "publishedBy": "scripts/publish-strategies.mjs"
 }
