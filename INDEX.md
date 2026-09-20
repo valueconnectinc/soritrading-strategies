@@ -11,7 +11,7 @@ Every figure comes from the last verifying backtest at publish time. These are p
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
-| ★ | [2250](strategies/2250/) | ETH Trend Hysteresis Band 0.5 4H | +56.41% | +35.72% | +41.38% | 95 | 2026-09-20 |
+| ★ | [2250](strategies/2250/) | ETH Trend Hysteresis Band 0.5 4H | +55.69% | -29.25% | +43.18% | 89 | 2026-09-20 |
 | ★ | [2248](strategies/2248/) | ETH Liquidation-Capitulation Sentiment 4H | +55.69% | -29.25% | +43.18% | 89 | 2026-09-20 |
 |  | [2247](strategies/2247/) | ETH On-Chain Activity Regime 4H | -62.20% | +35.72% | +79.52% | 424 | 2026-09-20 |
 |  | [2246](strategies/2246/) | ETH Trend Ride + FearGreed Top-Exit 4H | +258.41% | +1421.83% | +43.66% | 113 | 2026-09-20 |
