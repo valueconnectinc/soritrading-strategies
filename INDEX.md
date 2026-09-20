@@ -11,13 +11,13 @@ Every figure comes from the last verifying backtest at publish time. These are p
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
+|  | [2142](strategies/2142/) | ETH Slow Trend Ride + Volume Filter 4H | +493.35% | +1436.34% | +30.47% | 52 | 2026-09-20 |
+|  | [2146](strategies/2146/) | ETH Trend Strength-Scaled Size v2 4H | +789.61% | +1436.34% | +32.71% | 110 | 2026-09-20 |
 |  | [2150](strategies/2150/) | BTC On-chain Network Growth 1D | -0.36% | +52.01% | +28.96% | 4 | 2026-09-20 |
 | ★ | [2149](strategies/2149/) | BTC Trend Strength-Scaled Size 4H | +45.97% | -41.14% | +59.67% | 128 | 2026-09-20 |
-|  | [2146](strategies/2146/) | ETH Trend Strength-Scaled Size v2 4H | +789.61% | +1436.34% | +32.71% | 110 | 2026-09-20 |
 |  | [2145](strategies/2145/) | ETH Trend Strength-Scaled Size 4H | +789.61% | +1436.34% | +32.71% | 110 | 2026-09-20 |
 | ★ | [2144](strategies/2144/) | ETH Trend ATR Trailing + Sized 4H | +37.81% | +31.06% | +36.80% | 146 | 2026-09-20 |
 | ★ | [2143](strategies/2143/) | ETH Trend + Dollar Regime Filter 4H | +51.00% | -29.87% | +47.73% | 123 | 2026-09-20 |
-|  | [2142](strategies/2142/) | ETH Slow Trend Ride + Volume Filter 4H | +493.35% | +1436.34% | +30.47% | 52 | 2026-09-20 |
 | ★ | [2141](strategies/2141/) | ETH Trend Ride with Trailing Exit 4H | +47.18% | -29.87% | +49.00% | 123 | 2026-09-20 |
 |  | [2140](strategies/2140/) | BTC Slow Trend Ride 4H | +32.06% | +73.86% | +76.27% | 186 | 2026-09-20 |
 |  | [2138](strategies/2138/) | Fear-Greed Contrarian 1D | -26.71% | +856.89% | +66.94% | 24 | 2026-09-20 |
