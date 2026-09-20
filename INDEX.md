@@ -11,7 +11,7 @@ Every figure comes from the last verifying backtest at publish time. These are p
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
-|  | [2157](strategies/2157/) | BTC Daily Donchian Trend Ride v2 (wider exit) | +2.29% | +52.92% | +53.94% | 11 | 2026-09-20 |
+|  | [2157](strategies/2157/) | BTC Daily Donchian Trend Ride v2 (wider exit) | -20.12% | +52.01% | +20.12% | 2 | 2026-09-20 |
 |  | [2156](strategies/2156/) | BTC Daily Donchian Trend Ride | +30.97% | +52.01% | +42.37% | 11 | 2026-09-20 |
 |  | [2155](strategies/2155/) | ETH 1H Channel Breakout | -67.69% | -6.12% | +68.55% | 388 | 2026-09-20 |
 |  | [2154](strategies/2154/) | ETH 1H Volatility Breakout | +30.52% | +39.94% | +34.95% | 1 | 2026-09-20 |
