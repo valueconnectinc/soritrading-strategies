@@ -1,0 +1,30 @@
+{
+  "id": 2255,
+  "name": "SOL SMA200 Trend Ride 4H",
+  "kind": "custom",
+  "verified": {
+    "backtestId": 9181,
+    "return": 140.17,
+    "mdd": 59.4,
+    "trades": 112,
+    "vsBuyHold": "win",
+    "benchRet": 82.75,
+    "benchBasis": "price",
+    "gapPct": 0,
+    "tFrom": 1645920000,
+    "tTo": 1717905600,
+    "approxNotes": [
+      "봉 내 순서는 관례(양봉 O→L→H→C·음봉 O→H→L→C) — 실순서 미상 · 봉 중 거래량 null · MDD 는 봉 마감 기준"
+    ],
+    "spec": {
+      "ex": "binance",
+      "sym": "SOLUSDT",
+      "interval": "4h",
+      "bars": 5000,
+      "end": 1717920000
+    }
+  },
+  "config": null,
+  "updatedAt": "2026-09-20T19:03:27.891Z",
+  "publishedBy": "scripts/publish-strategies.mjs"
+}

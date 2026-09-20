@@ -4,13 +4,15 @@ Every strategy whose backtest **finished and actually traded** is published here
 Nothing is filtered out by return — the ones that lost money are part of the record.
 Entries stay after a strategy is removed from our own workspace — this is a log, and deleting the record would leave only the survivors.
 
-**★ marks a strategy that out-returned buy & hold over the same window** — 195 of 743 right now.
+**★ marks a strategy that out-returned buy & hold over the same window** — 196 of 745 right now.
 `—` means the comparison **could not be made**: the engine does not compute a benchmark for multi-symbol, futures, or multi-leg runs. That is *unknown*, not *lost*, and it is 180 of them right now.
 
 Every figure comes from the last verifying backtest at publish time. These are past results over historical data. Nothing here is promised or assured about the future, and none of it is investment advice.
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
+| ★ | [2255](strategies/2255/) | SOL SMA200 Trend Ride 4H | +140.17% | +82.75% | +59.40% | 112 | 2026-09-20 |
+|  | [2254](strategies/2254/) | BTC Trend Ride FastExit SMA100 4H | -6.81% | +16.64% | +33.13% | 130 | 2026-09-20 |
 | ★ | [2253](strategies/2253/) | BTC Trend Ride + Conditional CrashStop 4H | +406.41% | +360.77% | +33.24% | 76 | 2026-09-20 |
 |  | [2252](strategies/2252/) | BTC Bull-Regime Mean Reversion 4H | -19.57% | +16.64% | +28.92% | 38 | 2026-09-20 |
 | ★ | [2251](strategies/2251/) | BTC SMA200 Trend Ride 4H | +110.87% | +79.49% | +24.19% | 69 | 2026-09-20 |

@@ -1,0 +1,30 @@
+{
+  "id": 2254,
+  "name": "BTC Trend Ride FastExit SMA100 4H",
+  "kind": "custom",
+  "verified": {
+    "backtestId": 9179,
+    "return": -6.81,
+    "mdd": 33.13,
+    "trades": 130,
+    "vsBuyHold": "lose",
+    "benchRet": 16.64,
+    "benchBasis": "price",
+    "gapPct": 0,
+    "tFrom": 1717920000,
+    "tTo": 1789905600,
+    "approxNotes": [
+      "봉 내 순서는 관례(양봉 O→L→H→C·음봉 O→H→L→C) — 실순서 미상 · 봉 중 거래량 null · MDD 는 봉 마감 기준"
+    ],
+    "spec": {
+      "ex": "binance",
+      "sym": "BTCUSDT",
+      "interval": "4h",
+      "bars": 5000,
+      "end": 1789920000
+    }
+  },
+  "config": null,
+  "updatedAt": "2026-09-20T19:02:57.857Z",
+  "publishedBy": "scripts/publish-strategies.mjs"
+}
