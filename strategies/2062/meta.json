@@ -1,0 +1,30 @@
+{
+  "id": 2062,
+  "name": "ATR Regime-Adaptive Mean Reversion (SOLUSDT 4H)",
+  "kind": "custom",
+  "verified": {
+    "backtestId": 8154,
+    "return": -15.96,
+    "mdd": 19.18,
+    "trades": 22,
+    "vsBuyHold": "win",
+    "benchRet": -41.09,
+    "benchBasis": "price",
+    "gapPct": 0,
+    "tFrom": 1768276800,
+    "tTo": 1775462400,
+    "approxNotes": [
+      "봉 내 순서는 관례(양봉 O→L→H→C·음봉 O→H→L→C) — 실순서 미상 · 봉 중 거래량 null · MDD 는 봉 마감 기준"
+    ],
+    "spec": {
+      "ex": "binance",
+      "sym": "SOLUSDT",
+      "interval": "4h",
+      "bars": 500,
+      "end": 1775476800
+    }
+  },
+  "config": null,
+  "updatedAt": "2026-09-20T04:49:32.196Z",
+  "publishedBy": "scripts/publish-strategies.mjs"
+}
