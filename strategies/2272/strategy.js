@@ -1,15 +1,15 @@
 /*
  * @coinsori-strategy v1
- * name: ETH Trend-Gated Vol-Target TrendScaled 1D
+ * name: BTC Trend-Gated Vol-Target 4H
  * ex: binance
- * syms: ETHUSDT
- * interval: 1d
+ * syms: BTCUSDT
+ * interval: 4h
  * cash: 10000
  *
  * Why this strategy: the trend-gated vol-target (SMA50 gate + ATR vol-target + ATR
- * crash stop + trend-strength scaling) is the job's most validated family — it cut
- * MDD to ~21-25% while beating buy-and-hold 3-14x on BTC and SOL 1d. This tests
- * whether the same champion generalizes to ETH 1d (a third major asset).
+ * crash stop) is the job's most validated family on 1d (BTC/SOL/ETH/DOGE all beat
+ * hold with MDD ~21-33%). This tests whether that same edge transfers to the 4h
+ * timeframe, where the simple 200-SMA trend ride was separately found robust.
  * When it buys and sells: above SMA50 = fully invested; below SMA50 = position
  * scaled by closeness to SMA50; beyond the ATR crash band = cash.
  * When it does NOT work: violent bull corrections give deep drawdowns, and a fast
