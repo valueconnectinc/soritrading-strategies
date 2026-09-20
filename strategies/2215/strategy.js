@@ -1,52 +1,54 @@
 /*
  * @coinsori-strategy v1
- * name: SOL Trailing-Peak ProfitLock 1D
+ * name: SOL Trend-Gate + Deep Crash-Cap 1D
  * ex: binance
  * syms: SOLUSDT
  * interval: 1d
  * cash: 10000
  *
- * Why this strategy: every attempt to predict SOL's drawdowns (trend gates, vol
- * filters, macro, hashrate, fear/greed, OI, diversification) failed because the
- * drawdowns are inherent and unpredictable. This tries a DIFFERENT mechanism —
- * profit-locking with a trailing stop that follows the price PEAK rather than a
- * moving average. Instead of predicting the crash, it locks in a large fraction
- * of the peak before the full drawdown develops, which directly caps the loss
- * from peak to trough.
- * When it buys and sells: above SMA50 and within 25% of the trailing peak = fully
- * invested. If price falls more than 25% from its running peak, exit fully to
- * cash and wait for the trend gate to re-enter on the way back up.
- * When it does NOT work: a sharp V-shaped crash-and-recovery sells near the
- * bottom and misses the bounce, and in a healthy-but-choppy bull the 25% trailing
- * band can trigger on a normal pullback, trimming upside vs buy-and-hold.
+ * Why this strategy: the validated SOL champion (SMA50 trend-gate + ATR vol-target
+ * + 3-ATR crash stop) has great returns but 40-64% drawdown. A tight 25% trailing
+ * stop failed because it whipsaws out of SOL's volatile bulls. This version adds a
+ * DEEP trailing crash-cap that only fires on a genuine crash (price must be BELOW
+ * SMA50 AND more than 45% off its running peak). It preserves full bull exposure
+ * (protecting return) while capping only the deepest drawdowns — the one mechanism
+ * that showed a real MDD reduction in the bear window (36% vs 55%).
+ * When it buys and sells: above SMA50 = fully invested. Below SMA50 but within
+ * 3 ATRs = ATR vol-target (2% daily). Beyond 3 ATRs below SMA50 OR more than 45%
+ * off the peak = fully to cash.
+ * When it does NOT work: in a broad crypto-wide crash the 45% cap is too loose to
+ * help much, and it still trims some upside in a deep-but-recovering correction.
  */
 function onUpdate(ctx) {
+  const atr = ctx.atr(14, 1);
   const sma50 = ctx.sma(50, 1);
   const price = ctx.price;
   const cash = ctx.cash;
   const pos = ctx.position;
-  if (sma50 == null || price == null || price <= 0) return null;
+  if (atr == null || sma50 == null || price == null || price <= 0) return null;
 
-  // Track the running peak (highest price seen) across bars.
+  // Track the running peak (highest price seen) across bars for the crash cap.
   let peak = ctx.state.peak;
   if (peak == null || price > peak) peak = price;
   ctx.state.peak = peak;
 
   const equity = cash + pos * price;
   const trendUp = price > sma50;
-  // Trailing stop: 25% below the peak. Chosen to be loose enough to survive
-  // normal SOL pullbacks (which are often 10-15%) but tight enough to lock in a
-  // large fraction of the peak before the 40-64% drawdowns the champion suffers.
-  const trailStop = price < peak * 0.75;
+  const crashDist = 3.0 * atr;
+  const crashStop = price < sma50 - crashDist;
+  // Deep crash-cap: only fires when BOTH below the trend gate AND far off the
+  // peak (45%). 45% is loose enough to survive normal SOL bull pullbacks (which
+  // routinely exceed 25%) while capping the deepest 60%+ drawdowns.
+  const deepCap = price < peak * 0.55;
 
   let targetQty;
-  if (trailStop) {
-    targetQty = 0; // locked in: exit fully, wait for re-entry
+  if (crashStop || deepCap) {
+    targetQty = 0; // genuine crash: exit fully
   } else if (trendUp) {
-    targetQty = equity / price; // uptrend above peak band: stay fully invested
+    targetQty = equity / price; // uptrend: stay fully invested
   } else {
-    // below SMA50 but not stopped out: stay out (conservative) — do not chase
-    targetQty = 0;
+    const targetValue = (0.02 * equity) / (atr / price); // mild downtrend: vol-target
+    targetQty = targetValue / price;
   }
 
   const curQty = pos;
