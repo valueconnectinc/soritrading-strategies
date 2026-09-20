@@ -1,58 +1,46 @@
 /*
  * @coinsori-strategy v1
- * name: EMA Crossover + RSI Filter
+ * name: EMA Crossover + Wide RSI Filter
  * ex: binance
  * syms: BTCUSDT
  * interval: 4h
  * cash: 10000
  *
- * Why this strategy: The EMA9/21 crossover strategy (1709) showed promise — it's
- * momentum-following, not mean reversion, so it doesn't sell too early in bull
- * markets. Strategy 2037 (funding/OI filter) had 56 trades but underperformed in
- * bull markets because it used mean-reversion exits. This version uses pure
- * momentum logic: buy when EMA9 crosses above EMA21 AND RSI is in the 40-70 zone
- * (avoiding entries when RSI is already extreme, which often precedes reversals).
- *
- * When it buys and sells: Buy on EMA9/21 golden cross when RSI is between 40
- * and 70 — not overbought, not oversold. Sell on death cross (EMA9 crosses below
- * EMA21) or if RSI drops below 35 (momentum fading). No position if RSI > 70 at
- * cross (overbought — likely a false signal).
- *
- * When it does NOT work: In choppy markets where EMA9/21 oscillate frequently —
- * each cross triggers a trade, accumulating fees. Also fails in very slow trends
- * where the 4h EMA crossover is too lagging to capture meaningful moves.
+ * Why this strategy: BTC 4H trends in bursts — EMA crossover catches the start of each burst.
+ * Wide RSI filter (30-85) avoids extremes while allowing entries during strong momentum.
+ * When it buys and sells: Buy on EMA 9/20 bullish crossover when RSI is between 30-85.
+ * Sell on EMA 9/20 bearish crossover or if RSI drops below 30 (oversold exit).
+ * When it does NOT work: In sharp one-bar reversals with no follow-through, EMA crossovers
+ * still fire and produce whipsaws. In ultra-slow grinding trends, many small crosses occur.
  */
+
 function onUpdate(ctx) {
-    const ema9  = ctx.ema(9);
-    const ema21 = ctx.ema(21);
-    const rsi   = ctx.rsi(14);
-    if (ema9 == null || ema21 == null || rsi == null) return null;
+  const ema9_1 = ctx.ema(9, 1), ema9_2 = ctx.ema(9, 2);
+  const ema20_1 = ctx.ema(20, 1), ema20_2 = ctx.ema(20, 2);
+  const rsi = ctx.rsi(14, 1);
+  const price = ctx.price;
 
-    // Read previous bar to detect crossover (ago=1 = closed bar)
-    const ema9_1  = ctx.ema(9,  1);
-    const ema21_1 = ctx.ema(21, 1);
-    if (ema9_1 == null || ema21_1 == null) return null;
+  if (ema9_1 == null || ema9_2 == null || ema20_1 == null || ema20_2 == null || rsi == null) return null;
 
-    const price    = ctx.price;
-    const position = ctx.position;
+  // === ENTRY: EMA bullish crossover, RSI in wide 30-85 range ===
+  // Relaxed from 40-70 to allow entries during strong momentum (RSI 70-85)
+  // and oversold bounces (RSI 30-40)
+  const prevBelow = ema9_2 <= ema20_2;
+  const currAbove = ema9_1 > ema20_1;
+  const rsiOk = rsi >= 30 && rsi <= 85;
 
-    // === GOLDEN CROSS: EMA9 crosses above EMA21 ===
-    const goldenCross = ema9_1 <= ema21_1 && ema9 > ema21;
+  if (prevBelow && currAbove && rsiOk && ctx.position === 0) {
+    return { side: 'buy', qty: ctx.cash / price * 0.99 };
+  }
 
-    // === DEATH CROSS: EMA9 crosses below EMA21 ===
-    const deathCross = ema9_1 >= ema21_1 && ema9 < ema21;
+  // === EXIT: EMA bearish crossover OR RSI oversold (< 30) ===
+  const prevAbove = ema9_2 >= ema20_2;
+  const currBelow = ema9_1 < ema20_1;
+  const rsiOversold = rsi < 30;
 
-    // === ENTRY: golden cross + RSI in the "confirming" zone ===
-    // RSI 40-70: not oversold (avoid catching falling knife), not overbought
-    // (avoid buying at the top of a rally)
-    if (!position && goldenCross && rsi >= 40 && rsi <= 70) {
-        return { side: 'buy', qty: ctx.cash / price * 0.99 };
-    }
+  if ((prevAbove && currBelow || rsiOversold) && ctx.position > 0) {
+    return { side: 'sell', qty: ctx.position };
+  }
 
-    // === EXIT: death cross OR RSI drops below 35 (momentum fading) ===
-    if (position && (deathCross || rsi < 35)) {
-        return { side: 'sell', qty: position };
-    }
-
-    return null;
+  return null;
 }
