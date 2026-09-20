@@ -4,13 +4,14 @@ Every strategy whose backtest **finished and actually traded** is published here
 Nothing is filtered out by return — the ones that lost money are part of the record.
 Entries stay after a strategy is removed from our own workspace — this is a log, and deleting the record would leave only the survivors.
 
-**★ marks a strategy that out-returned buy & hold over the same window** — 124 of 564 right now.
+**★ marks a strategy that out-returned buy & hold over the same window** — 125 of 565 right now.
 `—` means the comparison **could not be made**: the engine does not compute a benchmark for multi-symbol, futures, or multi-leg runs. That is *unknown*, not *lost*, and it is 176 of them right now.
 
 Every figure comes from the last verifying backtest at publish time. These are past results over historical data. Nothing here is promised or assured about the future, and none of it is investment advice.
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
+| ★ | [1997](strategies/1997/) | Funding Rate Gradient + Stochastic Mean Reversion | -7.98% | -32.98% | +25.29% | 36 | 2026-09-20 |
 |  | [1995](strategies/1995/) | Funding Rate Delta + RSI Mean Reversion v2 | -13.86% | +59.34% | +13.86% | 29 | 2026-09-20 |
 |  | [1994](strategies/1994/) | Funding Rate Sentiment + RSI Mean Reversion | -5.57% | +59.34% | +5.75% | 9 | 2026-09-20 |
 | — | [1993](strategies/1993/) | Volume Profile Breakout v2 | -30.06% | — | +36.01% | 3 | 2026-09-20 |
