@@ -1,0 +1,29 @@
+{
+  "id": 2050,
+  "name": "RSI Mean Reversion v3 — EMA9 Exit",
+  "kind": "custom",
+  "verified": {
+    "backtestId": 8121,
+    "return": -4.87,
+    "mdd": 8.81,
+    "trades": 32,
+    "vsBuyHold": "lose",
+    "benchRet": 64.64,
+    "benchBasis": "price",
+    "gapPct": 0,
+    "tFrom": 1782676800,
+    "tTo": 1789862400,
+    "approxNotes": [
+      "봉 내 순서는 관례(양봉 O→L→H→C·음봉 O→H→L→C) — 실순서 미상 · 봉 중 거래량 null · MDD 는 봉 마감 기준"
+    ],
+    "spec": {
+      "ex": "binance",
+      "sym": "ETHUSDT",
+      "interval": "4h",
+      "bars": 500
+    }
+  },
+  "config": null,
+  "updatedAt": "2026-09-20T04:18:56.903Z",
+  "publishedBy": "scripts/publish-strategies.mjs"
+}
