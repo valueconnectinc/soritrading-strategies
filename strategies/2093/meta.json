@@ -3,16 +3,16 @@
   "name": "Trend-Following EMA200 Regime + RSI Momentum",
   "kind": "custom",
   "verified": {
-    "backtestId": 8230,
-    "return": -9.53,
-    "mdd": 10.06,
-    "trades": 4,
-    "vsBuyHold": "lose",
-    "benchRet": 52.55,
+    "backtestId": 8236,
+    "return": 3.56,
+    "mdd": 10.38,
+    "trades": 22,
+    "vsBuyHold": "win",
+    "benchRet": -41.09,
     "benchBasis": "price",
     "gapPct": 0,
-    "tFrom": 1782676800,
-    "tTo": 1789862400,
+    "tFrom": 1768276800,
+    "tTo": 1775462400,
     "approxNotes": [
       "봉 내 순서는 관례(양봉 O→L→H→C·음봉 O→H→L→C) — 실순서 미상 · 봉 중 거래량 null · MDD 는 봉 마감 기준"
     ],
@@ -21,10 +21,10 @@
       "sym": "SOLUSDT",
       "interval": "4h",
       "bars": 500,
-      "end": 1789876800
+      "end": 1775476800
     }
   },
   "config": null,
-  "updatedAt": "2026-09-20T06:06:56.212Z",
+  "updatedAt": "2026-09-20T06:07:39.504Z",
   "publishedBy": "scripts/publish-strategies.mjs"
 }
