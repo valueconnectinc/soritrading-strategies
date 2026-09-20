@@ -11,7 +11,7 @@ Every figure comes from the last verifying backtest at publish time. These are p
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
-| ★ | [2102](strategies/2102/) | Bollinger Band Mean Reversion | +1223.97% | -34.84% | +38.96% | 263 | 2026-09-20 |
+| ★ | [2102](strategies/2102/) | Bollinger Band Mean Reversion | +3251.29% | +190.96% | +51.98% | 261 | 2026-09-20 |
 |  | [2101](strategies/2101/) | EMA Cross RSI Filter | -53.93% | +190.96% | +71.46% | 101 | 2026-09-20 |
 |  | [2099](strategies/2099/) | ATR Ratio Regime — XRPUSDT 4H | +16.01% | +31.84% | +4.84% | 21 | 2026-09-20 |
 |  | [2096](strategies/2096/) | Volume-Breakout EMA20 + ATR Stop | -84.62% | +3002.24% | +85.74% | 118 | 2026-09-20 |
