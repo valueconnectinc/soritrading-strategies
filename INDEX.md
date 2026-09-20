@@ -11,7 +11,7 @@ Every figure comes from the last verifying backtest at publish time. These are p
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
-| — | [2213](strategies/2213/) | Crypto Basket Trend-Gated Vol-Target 1D | +631.58% | — | +59.39% | 2571 | 2026-09-20 |
+| — | [2213](strategies/2213/) | Crypto Basket Trend-Gated Vol-Target 1D | +32.39% | — | +52.60% | 5281 | 2026-09-20 |
 |  | [2212](strategies/2212/) | SOL Hashrate-Gated Trend 1D | +935.63% | +2503.00% | +62.03% | 1161 | 2026-09-20 |
 | ★ | [2211](strategies/2211/) | SOL Trend-Gated Vol-Target FearGreed Filter 1D | +158.32% | +1.05% | +40.01% | 2211 | 2026-09-20 |
 |  | [2210](strategies/2210/) | SOL Donchian Breakout ATR-Trailing 1D | +38.00% | +474.52% | +19.04% | 3 | 2026-09-20 |
