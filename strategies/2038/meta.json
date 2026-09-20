@@ -1,0 +1,30 @@
+{
+  "id": 2038,
+  "name": "EMA Crossover + RSI Filter",
+  "kind": "custom",
+  "verified": {
+    "backtestId": 8086,
+    "return": 0.81,
+    "mdd": 11.48,
+    "trades": 22,
+    "vsBuyHold": "lose",
+    "benchRet": 36.6,
+    "benchBasis": "price",
+    "gapPct": 0,
+    "tFrom": 1782662400,
+    "tTo": 1789848000,
+    "approxNotes": [
+      "봉 내 순서는 관례(양봉 O→L→H→C·음봉 O→H→L→C) — 실순서 미상 · 봉 중 거래량 null · MDD 는 봉 마감 기준"
+    ],
+    "spec": {
+      "ex": "binance",
+      "sym": "BTCUSDT",
+      "interval": "4h",
+      "bars": 500,
+      "end": 1789862400
+    }
+  },
+  "config": null,
+  "updatedAt": "2026-09-20T03:57:06.179Z",
+  "publishedBy": "scripts/publish-strategies.mjs"
+}
