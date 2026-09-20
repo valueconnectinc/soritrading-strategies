@@ -4,13 +4,14 @@ Every strategy whose backtest **finished and actually traded** is published here
 Nothing is filtered out by return — the ones that lost money are part of the record.
 Entries stay after a strategy is removed from our own workspace — this is a log, and deleting the record would leave only the survivors.
 
-**★ marks a strategy that out-returned buy & hold over the same window** — 191 of 734 right now.
+**★ marks a strategy that out-returned buy & hold over the same window** — 191 of 735 right now.
 `—` means the comparison **could not be made**: the engine does not compute a benchmark for multi-symbol, futures, or multi-leg runs. That is *unknown*, not *lost*, and it is 180 of them right now.
 
 Every figure comes from the last verifying backtest at publish time. These are past results over historical data. Nothing here is promised or assured about the future, and none of it is investment advice.
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
+|  | [2244](strategies/2244/) | ETH Volatility Squeeze Breakout | -22.58% | +35.72% | +33.43% | 120 | 2026-09-20 |
 | — | [2243](strategies/2243/) | BTC-ETH 200SMA Rotation | -80.52% | — | +89.06% | 866 | 2026-09-20 |
 |  | [2242](strategies/2242/) | ETH Trend Ride + ATR CrashStop 4H | +1235.04% | +1421.83% | +43.66% | 111 | 2026-09-20 |
 | ★ | [2241](strategies/2241/) | DOGE Long-Term Trend Ride 4H | +10.59% | -41.23% | +69.47% | 141 | 2026-09-20 |
