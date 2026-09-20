@@ -3,7 +3,7 @@
   "name": "BTC Fed-Regime Trend 1D",
   "kind": "custom",
   "verified": {
-    "backtestId": 8789,
+    "backtestId": 8793,
     "return": -11.91,
     "mdd": 28.98,
     "trades": 18,
