@@ -4,13 +4,14 @@ Every strategy whose backtest **finished and actually traded** is published here
 Nothing is filtered out by return — the ones that lost money are part of the record.
 Entries stay after a strategy is removed from our own workspace — this is a log, and deleting the record would leave only the survivors.
 
-**★ marks a strategy that out-returned buy & hold over the same window** — 188 of 720 right now.
+**★ marks a strategy that out-returned buy & hold over the same window** — 188 of 721 right now.
 `—` means the comparison **could not be made**: the engine does not compute a benchmark for multi-symbol, futures, or multi-leg runs. That is *unknown*, not *lost*, and it is 179 of them right now.
 
 Every figure comes from the last verifying backtest at publish time. These are past results over historical data. Nothing here is promised or assured about the future, and none of it is investment advice.
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
+|  | [2228](strategies/2228/) | DOGE BB-RSI Mean Reversion 4H | +1094.23% | +4729.86% | +49.69% | 293 | 2026-09-20 |
 |  | [2227](strategies/2227/) | ETH Daily Trend-Strength Ride 1D (re-verify) | +79.77% | +105.58% | +30.62% | 23 | 2026-09-20 |
 | ★ | [2226](strategies/2226/) | ETH Daily Bollinger Volatility Breakout 1D | +126.30% | -2.46% | +40.70% | 37 | 2026-09-20 |
 | ★ | [2223](strategies/2223/) | ETH Daily Trend-Strength + Wide Trailing Stop 1D | +138.85% | -2.46% | +42.01% | 1767 | 2026-09-20 |
