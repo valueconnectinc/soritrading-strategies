@@ -3,7 +3,7 @@
   "name": "BTC-ETH 200SMA Rotation",
   "kind": "custom",
   "verified": {
-    "backtestId": 9104,
+    "backtestId": 9105,
     "return": -80.52,
     "mdd": 89.06,
     "trades": 866,
@@ -24,6 +24,6 @@
     }
   },
   "config": null,
-  "updatedAt": "2026-09-20T18:24:03.882Z",
+  "updatedAt": "2026-09-20T18:25:05.664Z",
   "publishedBy": "scripts/publish-strategies.mjs"
 }
