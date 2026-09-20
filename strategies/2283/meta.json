@@ -1,0 +1,30 @@
+{
+  "id": 2283,
+  "name": "BTC Simple SMA50 Trend Ride 1D",
+  "kind": "custom",
+  "verified": {
+    "backtestId": 9297,
+    "return": 444.67,
+    "mdd": 60.64,
+    "trades": 102,
+    "vsBuyHold": "lose",
+    "benchRet": 881.1,
+    "benchBasis": "price",
+    "gapPct": 0,
+    "tFrom": 1546300800,
+    "tTo": 1622419200,
+    "approxNotes": [
+      "봉 내 순서는 관례(양봉 O→L→H→C·음봉 O→H→L→C) — 실순서 미상 · 봉 중 거래량 null · MDD 는 봉 마감 기준"
+    ],
+    "spec": {
+      "ex": "binance",
+      "sym": "BTCUSDT",
+      "interval": "1d",
+      "bars": 882,
+      "end": 1622505600
+    }
+  },
+  "config": null,
+  "updatedAt": "2026-09-20T19:47:29.032Z",
+  "publishedBy": "scripts/publish-strategies.mjs"
+}
