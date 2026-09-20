@@ -4,13 +4,14 @@ Every strategy whose backtest **finished and actually traded** is published here
 Nothing is filtered out by return — the ones that lost money are part of the record.
 Entries stay after a strategy is removed from our own workspace — this is a log, and deleting the record would leave only the survivors.
 
-**★ marks a strategy that out-returned buy & hold over the same window** — 142 of 598 right now.
+**★ marks a strategy that out-returned buy & hold over the same window** — 143 of 599 right now.
 `—` means the comparison **could not be made**: the engine does not compute a benchmark for multi-symbol, futures, or multi-leg runs. That is *unknown*, not *lost*, and it is 176 of them right now.
 
 Every figure comes from the last verifying backtest at publish time. These are past results over historical data. Nothing here is promised or assured about the future, and none of it is investment advice.
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
+| ★ | [2052](strategies/2052/) | AI 전략 | +3.12% | -31.09% | +4.11% | 2 | 2026-09-20 |
 |  | [2050](strategies/2050/) | RSI Mean Reversion v3 — EMA9 Exit | -4.87% | +64.64% | +8.81% | 32 | 2026-09-20 |
 | ★ | [2048](strategies/2048/) | RSI Mean Reversion with ATR Adaptive Stop | -20.04% | -27.72% | +20.04% | 60 | 2026-09-20 |
 |  | [2047](strategies/2047/) | Funding Rate + OI Sentiment Momentum v5 | +11.74% | +68.26% | +6.51% | 18 | 2026-09-20 |
