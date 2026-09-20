@@ -11,7 +11,7 @@ Every figure comes from the last verifying backtest at publish time. These are p
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
-|  | [2168](strategies/2168/) | ETH Daily Trend Strength-Scaled 1D (conservative) | +545.62% | +771.75% | +74.58% | 53 | 2026-09-20 |
+|  | [2168](strategies/2168/) | ETH Daily Trend Strength-Scaled 1D (conservative) | +182.60% | +261.18% | +32.38% | 29 | 2026-09-20 |
 |  | [2167](strategies/2167/) | ETH Daily Trend Strength-Scaled 1D | +348.41% | +501.57% | +74.62% | 21 | 2026-09-20 |
 |  | [2166](strategies/2166/) | ETH BB RSI Mean Reversion 4H | -60.40% | +1446.39% | +65.62% | 104 | 2026-09-20 |
 | ★ | [2165](strategies/2165/) | ETH Trend Pyramiding 4H | +39.80% | -41.02% | +63.95% | 152 | 2026-09-20 |

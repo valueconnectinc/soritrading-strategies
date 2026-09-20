@@ -1,23 +1,23 @@
 /*
  * @coinsori-strategy v1
- * name: ETH Daily Trend Strength-Scaled 1D (conservative)
+ * name: ETH Daily Equity-Scaled Trend Ride 1D
  * ex: binance
  * syms: ETHUSDT
  * interval: 1d
  * cash: 10000
  *
- * Why this strategy: the daily 200-SMA trend ride with trend-strength-scaled
- * risk beat the 4h champion on the recent window (higher return, half the
- * drawdown). Its only weakness is a high drawdown (75%) in the 2017-21
- * parabolic bull, caused by risking up to $1500 while holding through the
- * 2018 crash. This conservative variant caps the risk lower to reduce that
- * drawdown while keeping most of the recent-window edge.
+ * Why this strategy: the daily 200-SMA trend ride cuts drawdown hard (31% vs
+ * buy-and-hold's 75% on the recent window) but lags holding on raw return,
+ * because a fixed $ risk never grows with the account. Scaling the risk base
+ * to a percentage of current cash makes a bull that compounds the account buy
+ * more coins on each re-entry, so it can catch more of the up-move while still
+ * cutting the downside. This is an equity-compounding variant of the daily core.
  * When it buys and sells: long on a close above the 200-SMA, sell on a close
- * below it. Position = risk/ATR, risk grows with distance above the SMA but
- * is capped at a smaller $900.
- * When it does NOT work: in a long sideways market price pokes above and
- * below the trend line (small losses), and it lags the exact top/bottom of
- * parabolic bulls.
+ * below it. Position size = risk/ATR, where risk = 2% of current cash plus a
+ * trend-strength bonus, capped at 25% of cash.
+ * When it does NOT work: in a long sideways market price pokes above and below
+ * the trend line (repeated small losses), and compounding into a late false
+ * breakout after a long run loses more than a flat-size version would.
  */
 function onUpdate(ctx) {
   const sma = ctx.sma(200, 1);
@@ -28,15 +28,20 @@ function onUpdate(ctx) {
 
   const price = ctx.price;
   const pos = ctx.position;
+  const cash = ctx.cash;
 
   if (pos <= 0) {
     if (closePrev2 <= smaP && closePrev > sma) {
       const atr = ctx.atr(14, 1);
-      if (atr == null || atr <= 0) return { side: 'buy', qty: (ctx.cash / price) * 0.98 };
+      if (atr == null || atr <= 0) return { side: 'buy', qty: (cash / price) * 0.98 };
+      // trend strength = distance above the 200-SMA, in fraction
       const distPct = (closePrev - sma) / sma;
-      const risk = 300 + Math.min(Math.max(distPct * 12000, 0), 600); // cap at $900
+      // risk base = 2% of cash (compounds with the account) + distance bonus
+      const baseRisk = 0.02 * cash + Math.min(Math.max(distPct * 20000, 0), 1200);
+      // never risk more than 25% of cash in one trade
+      const risk = Math.min(baseRisk, 0.25 * cash);
       const riskQty = risk / atr;
-      const maxQty = (ctx.cash / price) * 0.98;
+      const maxQty = (cash / price) * 0.98;
       return { side: 'buy', qty: Math.min(riskQty, maxQty) };
     }
     return null;
