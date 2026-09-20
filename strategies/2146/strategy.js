@@ -1,22 +1,22 @@
 /*
  * @coinsori-strategy v1
- * name: ETH Trend Strength-Scaled Size v2 4H
+ * name: ETH Trend Strength-Scaled Size v3 4H
  * ex: binance
  * syms: ETHUSDT
  * interval: 4h
  * cash: 10000
  *
- * Why this strategy: v1 scaled risk with trend strength (price distance above
- * the 200-SMA) and lifted the old-bull return from +510% to +790%. This v2
- * uses a slightly more conservative scaling curve (lower max risk, gentler
- * slope) to keep most of that bull gain while risking a bit less when the
- * trend is only moderately strong — aiming to hold the bear-window protection
- * closer to the flat-size base.
+ * Why this strategy: v1 (risk $300->$1500 by distance above the 200-SMA) is
+ * consistent across windows but still under-deploys in strong bulls — a fixed
+ * dollar risk buys few coins when ATR is high, so it lagged the 2019-22 bull
+ * (+677% vs +1436% buy-hold). This v3 raises the max risk cap and steepens the
+ * ramp so a strong, persistent trend deploys closer to full account, attacking
+ * the bull-lag while keeping the base $300 risk for weak/whipsaw trends.
  * When it buys and sells: long on a close above the 200-SMA, sell on a close
- * below it. Position size = risk / ATR, risk grows with distance above the SMA
- * but is capped tighter than v1.
- * When it does NOT work: same whipsaw in sideways chop; any trend-scaling
- * version loses more than flat sizing on a strong-looking false breakout.
+ * below it. Position size = risk / ATR, risk scales $300->$2500 with distance
+ * above the SMA (capped at 98% of cash).
+ * When it does NOT work: same whipsaw in sideways chop; the higher cap means a
+ * strong-looking but false breakout loses more than the lower-cap version.
  */
 function onUpdate(ctx) {
   const sma = ctx.sma(200, 1);
@@ -33,8 +33,8 @@ function onUpdate(ctx) {
       const atr = ctx.atr(14, 1);
       if (atr == null || atr <= 0) return { side: 'buy', qty: (ctx.cash / price) * 0.98 };
       const distPct = (closePrev - sma) / sma;
-      // gentler curve: $300 base up to $900 max, slower ramp than v1's $1500
-      const risk = 300 + Math.min(Math.max(distPct * 12000, 0), 600);
+      // higher cap ($2500) and steeper ramp than v1's $1500 to deploy more in strong trends
+      const risk = 300 + Math.min(Math.max(distPct * 40000, 0), 2200);
       const riskQty = risk / atr;
       const maxQty = (ctx.cash / price) * 0.98;
       return { side: 'buy', qty: Math.min(riskQty, maxQty) };
