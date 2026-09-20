@@ -11,7 +11,7 @@ Every figure comes from the last verifying backtest at publish time. These are p
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
-| ★ | [2209](strategies/2209/) | SOL Trend-Gated Vol-Target CrashStop 1D | +2444.88% | +619.42% | +70.41% | 1252 | 2026-09-20 |
+| ★ | [2209](strategies/2209/) | SOL Trend-Gated Vol-Target CrashStop 1D | +11030.08% | +3266.98% | +70.41% | 2878 | 2026-09-20 |
 | ★ | [2207](strategies/2207/) | BTC Fed-Regime Trend ATR-Buffer 1D | +146.88% | +116.17% | +45.54% | 91 | 2026-09-20 |
 | ★ | [2206](strategies/2206/) | ETH Trend-Gated Vol-Target SoftCrash 1D | +1501.46% | +143.85% | +60.07% | 2488 | 2026-09-20 |
 | ★ | [2204](strategies/2204/) | ETH Trend-Gated Vol-Target CrashStop Confirm 1D | +314.73% | +198.82% | +56.18% | 3015 | 2026-09-20 |
