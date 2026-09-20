@@ -1,23 +1,24 @@
 /*
  * @coinsori-strategy v1
- * name: BTC Fed-Regime Trend v2 Scaled 1D
+ * name: BTC Fed-Regime Trend v3 Ride-Bull 1D
  * ex: binance
  * syms: BTCUSDT
  * interval: 1d
  * cash: 10000
  *
  * Why this strategy: Bitcoin is a risk asset pressured when the Fed hikes and
- * supported when it cuts or holds. The Fed funds rate direction is a slow macro
- * regime filter. On top of it we add a 50-day trend guard and scale the
- * position by trend strength so we capture more of a bull while staying
- * defensive in a hiking bear.
+ * supported when it cuts or holds. The Fed funds rate direction is the slow
+ * macro regime that separates bear from bull. In a bull (not hiking) we ride
+ * the whole uptrend with a full position and only a very wide exit, because a
+ * tight trend guard whipsaws in choppy bulls and costs upside. The Fed gate
+ * alone provides the bear defense.
  * When it buys and sells: buy when the Fed is NOT hiking AND price is above its
- * 50-day average (full position when price is well above, half when barely
- * above). Sell when the Fed starts hiking OR price closes more than one ATR
- * below the 50-day average.
- * When it does NOT work: in a raging bull it still trails buy-and-hold (the Fed
- * gate adds friction); with a flat/early Fed history the gate is silent and only
- * the price guard protects; it needs the fed data feed.
+ * 50-day average (full position when well above, half when barely above). Sell
+ * when the Fed starts hiking OR price closes more than 2 ATR below the 50-day
+ * average (a wide buffer that only fires on a real trend break, not a dip).
+ * When it does NOT work: in a raging bull it still trails buy-and-hold slightly
+ * (the entry guard adds a little friction); with a flat/early Fed history the
+ * gate is silent and only the price guard protects; it needs the fed data feed.
  */
 function onUpdate(ctx) {
   const fed = ctx.data('fed');
@@ -51,7 +52,8 @@ function onUpdate(ctx) {
     }
     return null;
   } else {
-    const breakDown = closePrev < sma - atr;
+    // wide exit: only a real trend break (2 ATR) or a Fed hike sells the position
+    const breakDown = closePrev < sma - atr * 2;
     if (hiking || breakDown) {
       return { side: 'sell', qty: pos };
     }

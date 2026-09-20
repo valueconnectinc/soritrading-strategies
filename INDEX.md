@@ -11,7 +11,7 @@ Every figure comes from the last verifying backtest at publish time. These are p
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
-|  | [2192](strategies/2192/) | BTC Fed-Regime Trend 1D | +61.64% | +70.25% | +23.62% | 56 | 2026-09-20 |
+|  | [2192](strategies/2192/) | BTC Fed-Regime Trend 1D | +97.00% | +372.90% | +31.67% | 27 | 2026-09-20 |
 |  | [2191](strategies/2191/) | SOL Uptrend RSI-Dip Mean Reversion 4H | +18.99% | +920.26% | +10.13% | 22 | 2026-09-20 |
 |  | [2188](strategies/2188/) | AI 전략 | +509.81% | +1446.39% | +31.93% | 110 | 2026-09-20 |
 |  | [2187](strategies/2187/) | AI 전략 | +420.43% | +536.00% | +41.56% | 9 | 2026-09-20 |
