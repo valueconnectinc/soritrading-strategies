@@ -1,19 +1,21 @@
 /*
  * @coinsori-strategy v1
- * name: DOGE Trend-Gated Vol-Target CrashStop 1D
+ * name: DOGE Trend-Gated Vol-Target TrendScaled 1D
  * ex: binance
  * syms: DOGEUSDT
  * interval: 1d
  * cash: 10000
  *
  * Why this strategy: the trend-gated vol-target (SMA50 gate + ATR vol-target + ATR
- * crash stop) is our most validated risk-managed family — it beats buy-and-hold on
- * BTC, ETH and SOL across all walk-forward windows, including bear markets. This
- * tests whether the same edge holds on DOGE, the most volatile major coin. It stays
- * fully invested in uptrends, scales down to a 2%-daily-vol target in mild pullbacks,
- * and exits fully only on a genuine crash (>3 ATR below SMA50).
- * When it buys and sells: above SMA50 = fully invested; below SMA50 but within an
- * ATR-scaled band = reduced ATR vol-target; beyond the ATR-scaled crash band = cash.
+ * crash stop) is our most validated risk-managed family, and it beat buy-and-hold
+ * on DOGE 1d last cycle. Its only weakness there is a high drawdown (61-85%) because
+ * DOGE's melt-up vol keeps the 2% vol-target position large. This version scales the
+ * position by trend strength: the further price is above SMA50, the bigger the
+ * position; as it falls toward the crash band, position shrinks smoothly to zero.
+ * The goal is to keep the bull-capture while cutting the deep-correction drawdown.
+ * When it buys and sells: above SMA50 = fully invested; below SMA50 but above the
+ * ATR crash band = position scaled by how close price is to SMA50 (smaller as it
+ * falls); beyond the crash band = cash.
  * When it does NOT work: DOGE's extreme volatility still gives deep drawdowns in
  * violent bull corrections, and a fast V-shaped recovery can sell near the bottom
  * and miss the bounce.
@@ -28,7 +30,7 @@ function onUpdate(ctx) {
 
   const equity = cash + pos * price;
   const trendUp = price > sma50;
-  // ATR-scaled crash band: 3.0 ATRs below the SMA50 — normal DOGE dips (1-2 ATR)
+  // ATR-scaled crash band: 3.0 ATRs below SMA50 — normal DOGE dips (1-2 ATR)
   // stay in the vol-target regime; only a genuine crash triggers the full exit.
   const crashDist = 3.0 * atr;
   const crashStop = price < sma50 - crashDist;
@@ -39,7 +41,11 @@ function onUpdate(ctx) {
   } else if (trendUp) {
     targetQty = equity / price; // uptrend: stay fully invested
   } else {
-    const targetValue = (0.02 * equity) / (atr / price); // mild downtrend: vol-target
+    // mild downtrend: vol-target, scaled by trend strength.
+    // distFrac = 1 right at SMA50 (still near uptrend) down to 0 at the crash band.
+    const distFrac = 1 - (sma50 - price) / crashDist;
+    // base 2% daily vol-target, then shrink linearly toward 0 as price nears crash band.
+    const targetValue = (0.02 * equity) / (atr / price) * Math.max(0.1, distFrac);
     targetQty = targetValue / price;
   }
 

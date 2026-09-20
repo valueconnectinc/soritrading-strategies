@@ -11,7 +11,7 @@ Every figure comes from the last verifying backtest at publish time. These are p
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
-| ★ | [2264](strategies/2264/) | DOGE Trend-Gated Vol-Target CrashStop 1D | +4442.48% | +1730.44% | +85.04% | 2107 | 2026-09-20 |
+| ★ | [2264](strategies/2264/) | DOGE Trend-Gated Vol-Target CrashStop 1D | +473.13% | +62.44% | +53.99% | 4204 | 2026-09-20 |
 |  | [2263](strategies/2263/) | BTC Donchian Breakout SMA200 Gate 1D | +161.75% | +232.94% | +28.71% | 19 | 2026-09-20 |
 | ★ | [2262](strategies/2262/) | DOGE Donchian Daily Breakout 55/30 | -3.67% | -62.05% | +20.25% | 3 | 2026-09-20 |
 |  | [2258](strategies/2258/) | ETH Donchian Daily Breakout ATR-Sized 55/30 | +41.44% | +52.92% | +27.90% | 4 | 2026-09-20 |
