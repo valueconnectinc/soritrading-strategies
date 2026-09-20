@@ -11,7 +11,7 @@ Every figure comes from the last verifying backtest at publish time. These are p
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
-| ★ | [2284](strategies/2284/) | BTC Regime-Adaptive Vol-Target TrendScaled 1D | +5783.23% | +263.36% | +14.83% | 4042 | 2026-09-20 |
+| ★ | [2284](strategies/2284/) | BTC Regime-Adaptive Vol-Target TrendScaled 1D | +152.77% | +52.01% | +15.27% | 889 | 2026-09-20 |
 |  | [2283](strategies/2283/) | BTC Simple SMA50 Trend Ride 1D | +0.47% | +232.94% | +62.20% | 309 | 2026-09-20 |
 |  | [2282](strategies/2282/) | DOGE Donchian Daily Breakout 55/30 | +711.96% | +881.10% | +33.50% | 10 | 2026-09-20 |
 | ★ | [2280](strategies/2280/) | LTC Trend-Gated Vol-Target TrendScaled 1D | -24.12% | -70.66% | +45.29% | 296 | 2026-09-20 |
