@@ -3,7 +3,7 @@
   "name": "ETH Trend-Gated Vol-Target LowChurn 4H",
   "kind": "custom",
   "verified": {
-    "backtestId": 9257,
+    "backtestId": 9265,
     "return": -76.97,
     "mdd": 85.18,
     "trades": 5943,
