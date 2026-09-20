@@ -11,7 +11,7 @@ Every figure comes from the last verifying backtest at publish time. These are p
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
-| ★ | [2143](strategies/2143/) | ETH Trend + Dollar Regime Filter 4H | +47.25% | -41.14% | +58.46% | 127 | 2026-09-20 |
+| ★ | [2143](strategies/2143/) | ETH Trend + Dollar Regime Filter 4H | +51.00% | -29.87% | +47.73% | 123 | 2026-09-20 |
 |  | [2142](strategies/2142/) | ETH Slow Trend Ride + Volume Filter 4H | +493.35% | +1436.34% | +30.47% | 52 | 2026-09-20 |
 | ★ | [2141](strategies/2141/) | ETH Trend Ride with Trailing Exit 4H | +47.18% | -29.87% | +49.00% | 123 | 2026-09-20 |
 |  | [2140](strategies/2140/) | BTC Slow Trend Ride 4H | +32.06% | +73.86% | +76.27% | 186 | 2026-09-20 |
