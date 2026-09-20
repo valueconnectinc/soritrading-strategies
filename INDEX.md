@@ -11,7 +11,7 @@ Every figure comes from the last verifying backtest at publish time. These are p
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
-| ★ | [2164](strategies/2164/) | ETH Daily 200-SMA Trend Ride 1D | +98.78% | -41.02% | +37.83% | 52 | 2026-09-20 |
+| ★ | [2164](strategies/2164/) | ETH Daily 200-SMA Trend Ride 1D | +78.26% | +43.05% | +22.28% | 27 | 2026-09-20 |
 | ★ | [2162](strategies/2162/) | ETH Uptrend RSI Dip-Buy 4H | +5.52% | -30.03% | +24.36% | 78 | 2026-09-20 |
 | ★ | [2161](strategies/2161/) | ETH OI-Sentiment Fade 4H | +33.87% | +32.19% | +48.52% | 115 | 2026-09-20 |
 | ★ | [2160](strategies/2160/) | ETH Trend-Momentum Deployment 4H | +3.74% | -30.03% | +6.79% | 123 | 2026-09-20 |
