@@ -1,23 +1,23 @@
 /*
  * @coinsori-strategy v1
- * name: BTC Fed-Regime Trend v4 Full-Bull 1D
+ * name: BTC Fed-Regime Trend v2 Scaled 1D
  * ex: binance
  * syms: BTCUSDT
  * interval: 1d
  * cash: 10000
  *
  * Why this strategy: Bitcoin is a risk asset pressured when the Fed hikes and
- * supported when it cuts or holds. The Fed funds rate direction is the slow
- * macro regime that separates bear from bull. In a non-hiking bull we go to a
- * full position whenever price is above the 50-day average, because the Fed
- * gate is the real signal there — scaling down to half when price hovers near
- * the average leaves us perpetually underweight in a choppy bull.
- * When it buys and sells: buy a full position when the Fed is NOT hiking AND
- * price is above its 50-day average. Sell when the Fed starts hiking OR price
- * closes more than one ATR below the 50-day average.
- * When it does NOT work: in a raging bull it still trails buy-and-hold (the
- * entry guard adds a little friction); with a flat/early Fed history the gate
- * is silent and only the price guard protects; it needs the fed data feed.
+ * supported when it cuts or holds. The Fed funds rate direction is a slow macro
+ * regime filter. On top of it we add a 50-day trend guard and scale the
+ * position by trend strength so we capture more of a bull while staying
+ * defensive in a hiking bear.
+ * When it buys and sells: buy when the Fed is NOT hiking AND price is above its
+ * 50-day average (full position when price is well above, half when barely
+ * above). Sell when the Fed starts hiking OR price closes more than one ATR
+ * below the 50-day average.
+ * When it does NOT work: in a raging bull it still trails buy-and-hold (the Fed
+ * gate adds friction); with a flat/early Fed history the gate is silent and only
+ * the price guard protects; it needs the fed data feed.
  */
 function onUpdate(ctx) {
   const fed = ctx.data('fed');
@@ -42,8 +42,12 @@ function onUpdate(ctx) {
     if (prev90 == null) return null;
     const aboveSma = closePrev > sma;
     if (aboveSma && !hiking) {
-      // full position whenever above trend in a non-hiking regime
-      return { side: 'buy', qty: (cash / price) * 0.98 };
+      // scale up: full size when well above trend, half when barely above
+      const strength = (closePrev - sma) / atr;
+      let frac = 0.5;
+      if (strength > 1.5) frac = 0.98;
+      else if (strength > 0.5) frac = 0.75;
+      return { side: 'buy', qty: (cash / price) * frac };
     }
     return null;
   } else {
