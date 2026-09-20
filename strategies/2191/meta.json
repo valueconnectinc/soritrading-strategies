@@ -1,0 +1,30 @@
+{
+  "id": 2191,
+  "name": "SOL Uptrend RSI-Dip Mean Reversion 4H",
+  "kind": "custom",
+  "verified": {
+    "backtestId": 8782,
+    "return": -13.87,
+    "mdd": 32.42,
+    "trades": 38,
+    "vsBuyHold": "win",
+    "benchRet": -34.54,
+    "benchBasis": "price",
+    "gapPct": 0,
+    "tFrom": 1735689600,
+    "tTo": 1767211200,
+    "approxNotes": [
+      "봉 내 순서는 관례(양봉 O→L→H→C·음봉 O→H→L→C) — 실순서 미상 · 봉 중 거래량 null · MDD 는 봉 마감 기준"
+    ],
+    "spec": {
+      "ex": "binance",
+      "sym": "SOLUSDT",
+      "interval": "4h",
+      "bars": 2190,
+      "end": 1767225600
+    }
+  },
+  "config": null,
+  "updatedAt": "2026-09-20T13:53:24.262Z",
+  "publishedBy": "scripts/publish-strategies.mjs"
+}
