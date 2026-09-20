@@ -1,59 +1,67 @@
 /*
  * @coinsori-strategy v1
- * name: BTC Fed-Rate Regime Trend 1D
+ * name: BTC Hashrate + Fed-Regime Trend 1D
  * ex: binance
  * syms: BTCUSDT
  * interval: 1d
  * cash: 10000
  *
- * Why this strategy: Bitcoin behaves like a high-beta risk asset: it tends to
- * rally when the Fed is easing or holding steady (cheap money) and suffers
- * during hiking cycles. The direction of the Fed funds rate is a slow macro
- * regime signal that filters out the worst bear phases.
- * When it buys and sells: buy when the Fed funds rate is not rising (no
- * hiking cycle) AND price is above its 100-day average. Sell when the Fed
- * starts hiking (rate clearly up) or price closes more than one ATR below
- * the 100-day average (a shallow dip no longer triggers an exit).
- * When it does NOT work: rate direction is very slow, so it cannot time the
- * exact top in a bull or bottom in a bear; in a choppy sideways regime with
- * no rate change it relies entirely on the price trend guard. It never beats
- * buy-and-hold in a raging bull. Requires the fed data feed to be online.
+ * Why this strategy: Bitcoin's hash rate (miners' total computing power) is an
+ * on-chain fundamental that leads price over long stretches, and the Fed funds
+ * rate direction is a slow macro regime that filters out the worst hiking-cycle
+ * bears. Combining the two strongest signals from prior research: hashrate for
+ * the fundamental trend, Fed regime for extra bear defense.
+ * When it buys and sells: buy when the smoothed hash rate is higher than 60
+ * days ago AND the Fed is not in a hiking cycle AND price is above its 100-day
+ * average. Sell when the hash rate turns down, the Fed starts hiking, or price
+ * closes more than one ATR below the 100-day average (shallow dips ignored).
+ * When it does NOT work: a 100-day average is still sensitive in deep chop;
+ * halving events distort the hash-rate trend; it never beats buy-and-hold in a
+ * raging bull. Requires hashrate and fed data feeds to be online.
  */
 function onUpdate(ctx) {
+  const hr = ctx.data('hashrate_sma30');
   const fed = ctx.data('fed');
   const sma = ctx.sma(100, 1);
   const atr = ctx.atr(14, 1);
   const closePrev = ctx.closes[ctx.closes.length - 2];
-  if (fed == null || sma == null || atr == null || closePrev == null) return null;
+  if (hr == null || fed == null || sma == null || atr == null || closePrev == null) return null;
 
-  // track the Fed funds rate history to detect a hiking cycle
-  const hist = ctx.state.fedHist || [];
-  hist.push(fed);
-  if (hist.length > 400) hist.shift();
-  ctx.state.fedHist = hist;
+  const hist = ctx.state.hist || [];
+  const fedHist = ctx.state.fedHist || [];
+  const prev60 = hist.length >= 60 ? hist[hist.length - 60] : null;
+  hist.push(hr);
+  if (hist.length > 120) hist.shift();
+  ctx.state.hist = hist;
+
+  fedHist.push(fed);
+  if (fedHist.length > 400) fedHist.shift();
+  ctx.state.fedHist = fedHist;
+  const prev90 = fedHist.length >= 90 ? fedHist[fedHist.length - 90] : null;
+  // hiking cycle = Fed funds rate clearly higher than ~90 days ago
+  const hiking = prev90 != null && fed > prev90 * 1.01;
 
   const pos = ctx.position;
   const price = ctx.price;
   const cash = ctx.cash;
   let beenIn = ctx.state.beenIn || false;
 
-  // hiking cycle = rate is clearly higher than ~90 days ago (a policy shift)
-  const prev90 = hist.length >= 90 ? hist[hist.length - 90] : null;
-  const hiking = prev90 != null && fed > prev90 * 1.01;
-
   if (pos <= 0) {
-    if (prev90 == null) return null;
-    // enter when not hiking and price above its 100-day trend
-    if (!hiking && closePrev > sma) {
+    if (prev60 == null || prev90 == null) return null;
+    const hrRising = hr > prev60 * 1.02;
+    const hrMild = hr > prev60 * 1.005;
+    const aboveSma = closePrev > sma;
+    // require both fundamental (hashrate) and macro (not hiking) to be aligned
+    if (aboveSma && !hiking && ((beenIn && hrMild) || (!beenIn && hrRising))) {
       const qty = (cash / price) * 0.6;
       ctx.state.beenIn = true;
       return { side: 'buy', qty: qty };
     }
     return null;
   } else {
-    // exit when the Fed turns to hiking, or price breaks below the trend by
-    // more than one ATR (shallow dips are ignored to avoid whipsaw)
-    if (hiking || closePrev < sma - atr) {
+    const breakDown = closePrev < sma - atr;
+    // exit on any of: hashrate down, Fed hiking, or price breaking the trend
+    if ((prev60 != null && hr < prev60 * 0.98) || hiking || breakDown) {
       return { side: 'sell', qty: pos };
     }
     return null;
