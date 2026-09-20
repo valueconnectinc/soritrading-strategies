@@ -1,35 +1,53 @@
 /*
  * @coinsori-strategy v1
- * name: ETH Trend-Gated Vol-Target SMA100 1D
+ * name: ETH Trend-Gated Vol-Target Hysteresis 1D
  * ex: binance
  * syms: ETHUSDT
  * interval: 1d
  * cash: 10000
  *
- * Why this strategy: sensitivity check on the SMA period for the trend-gated
- * vol-target. The base version uses SMA50; this uses SMA100 (slower trend gate)
- * to confirm the edge is not hypersensitive to the exact SMA length.
- * When it buys and sells: if price > SMA100, hold full position. If price <
- * SMA100, size so the daily ATR move is ~2% of account value. Rebalance daily.
- * When it does NOT work: a slower SMA reacts later to trend turns, so it can
- * stay fully invested longer into a developing downtrend (bigger drawdown).
+ * Why this strategy: the trend-gated vol-target (SMA50 gate) is validated on ETH
+ * and BTC, but its known weakness is churn when price oscillates around the
+ * 50-day average — the gate flips on/off, buying late into rallies and selling
+ * late into dips. This version adds HYSTERESIS (a dead-band around the SMA50):
+ * once in uptrend mode it stays there until price falls a meaningful distance
+ * below the average; once in downtrend mode it stays until price rises a
+ * meaningful distance above. This cuts the whipsaw churn in sideways markets.
+ * When it buys and sells: in uptrend mode hold full position. Flip to downtrend
+ * de-risk only when price < SMA50 - 1.0*ATR. In downtrend mode size to 2% daily
+ * ATR move; flip back to full only when price > SMA50 + 1.0*ATR. Rebalance daily.
+ * When it does NOT work: the hysteresis makes the gate slower to react, so at a
+ * genuine trend turn it stays in the wrong mode longer (bigger initial drawdown
+ * into a new downtrend). It still loses in a crash (just less than hold).
  */
 function onUpdate(ctx) {
   const atr = ctx.atr(14, 1);
-  const sma = ctx.sma(100, 1);
+  const sma50 = ctx.sma(50, 1);
   const price = ctx.price;
   const cash = ctx.cash;
   const pos = ctx.position;
-  if (atr == null || sma == null || price == null || price <= 0) return null;
+  if (atr == null || sma50 == null || price == null || price <= 0) return null;
+
+  // persist the current regime across bars (0=downtrend/de-risk, 1=uptrend/full)
+  let mode = ctx.state.mode;
+  if (mode == null) mode = price > sma50 ? 1 : 0;
+
+  const band = atr; // dead-band of one ATR around the average (hysteresis width)
+  if (mode === 1) {
+    // uptrend: only flip down when price falls clearly below the average
+    if (price < sma50 - band) mode = 0;
+  } else {
+    // downtrend: only flip up when price rises clearly above the average
+    if (price > sma50 + band) mode = 1;
+  }
+  ctx.state.mode = mode;
 
   const equity = cash + pos * price;
-  const trendUp = price > sma;
-
   let targetQty;
-  if (trendUp) {
-    targetQty = equity / price;
+  if (mode === 1) {
+    targetQty = equity / price; // full investment in uptrend
   } else {
-    const targetValue = (0.02 * equity) / (atr / price);
+    const targetValue = (0.02 * equity) / (atr / price); // 2% daily ATR vol-target
     targetQty = targetValue / price;
   }
 
