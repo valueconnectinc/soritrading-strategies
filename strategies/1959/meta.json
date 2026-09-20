@@ -1,0 +1,31 @@
+{
+  "id": 1959,
+  "name": "BB Expansion Trend Follower",
+  "kind": "custom",
+  "verified": {
+    "backtestId": 7830,
+    "return": 10.6,
+    "mdd": 10.98,
+    "trades": 19,
+    "vsBuyHold": "lose",
+    "benchRet": 38.94,
+    "benchBasis": "price",
+    "gapPct": 0,
+    "tFrom": 1782662400,
+    "tTo": 1789848000,
+    "approxNotes": [
+      "봉 내 순서는 관례(양봉 O→L→H→C·음봉 O→H→L→C) — 실순서 미상 · 봉 중 거래량 null · MDD 는 봉 마감 기준",
+      "기간 종료 시 미청산 포지션 1종목 (총자산의 99.27%) — 이 수익률은 **평가액**을 포함합니다. 퇴출 수수료·거래세를 안 냈고, 마지막 봉 가격에 실제로 팔 수 있다는 보장도 없습니다(얇은 호가·상장폐지). exec.endLiquidate 로 마지막 봉 청산을 켤 수 있습니다"
+    ],
+    "spec": {
+      "ex": "binance",
+      "sym": "BNBUSDT",
+      "interval": "4h",
+      "bars": 500,
+      "end": 1789862400
+    }
+  },
+  "config": null,
+  "updatedAt": "2026-09-20T00:41:46.842Z",
+  "publishedBy": "scripts/publish-strategies.mjs"
+}
