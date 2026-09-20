@@ -11,7 +11,7 @@ Every figure comes from the last verifying backtest at publish time. These are p
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
-| ★ | [2210](strategies/2210/) | SOL Donchian Breakout ATR-Trailing 1D | +2504.27% | +489.72% | +58.85% | 1705 | 2026-09-20 |
+| ★ | [2210](strategies/2210/) | SOL Donchian Breakout ATR-Trailing 1D | +501.99% | +474.52% | +42.05% | 305 | 2026-09-20 |
 | ★ | [2209](strategies/2209/) | SOL Trend-Gated Vol-Target CrashStop 1D | +3149.21% | +1287.60% | +63.69% | 983 | 2026-09-20 |
 | ★ | [2207](strategies/2207/) | BTC Fed-Regime Trend ATR-Buffer 1D | +146.88% | +116.17% | +45.54% | 91 | 2026-09-20 |
 | ★ | [2206](strategies/2206/) | ETH Trend-Gated Vol-Target SoftCrash 1D | +1501.46% | +143.85% | +60.07% | 2488 | 2026-09-20 |
