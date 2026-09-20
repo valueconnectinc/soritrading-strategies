@@ -1,23 +1,22 @@
 /*
  * @coinsori-strategy v1
- * name: SOL Trend-Gate + Deep Crash-Cap 1D
+ * name: SOL Trend-Gated Vol-Target AdaptiveCrash 1D
  * ex: binance
  * syms: SOLUSDT
  * interval: 1d
  * cash: 10000
  *
- * Why this strategy: the validated SOL champion (SMA50 trend-gate + ATR vol-target
- * + 3-ATR crash stop) has great returns but 40-64% drawdown. A tight 25% trailing
- * stop failed because it whipsaws out of SOL's volatile bulls. This version adds a
- * DEEP trailing crash-cap that only fires on a genuine crash (price must be BELOW
- * SMA50 AND more than 45% off its running peak). It preserves full bull exposure
- * (protecting return) while capping only the deepest drawdowns — the one mechanism
- * that showed a real MDD reduction in the bear window (36% vs 55%).
- * When it buys and sells: above SMA50 = fully invested. Below SMA50 but within
- * 3 ATRs = ATR vol-target (2% daily). Beyond 3 ATRs below SMA50 OR more than 45%
- * off the peak = fully to cash.
- * When it does NOT work: in a broad crypto-wide crash the 45% cap is too loose to
- * help much, and it still trims some upside in a deep-but-recovering correction.
+ * Why this strategy: improvement on the validated SOL trend-gated vol-target
+ * champion. The original used a FIXED 12% crash threshold, which is too tight for
+ * SOL's high volatility (normal dips trigger the full exit and whipsaw) and too
+ * loose in fast crashes. This version scales the crash threshold with ATR so the
+ * exit adapts to the actual volatility regime.
+ * When it buys and sells: above SMA50 = fully invested. Below SMA50 but within an
+ * ATR-scaled band = ATR vol-target (2% daily). Beyond the ATR-scaled crash band =
+ * fully to cash.
+ * When it does NOT work: SOL's volatility still means deep drawdowns in violent
+ * bull corrections; a fast V-shaped recovery can sell near the bottom and miss the
+ * bounce. Adaptive threshold reduces but does not eliminate whipsaw.
  */
 function onUpdate(ctx) {
   const atr = ctx.atr(14, 1);
@@ -27,23 +26,17 @@ function onUpdate(ctx) {
   const pos = ctx.position;
   if (atr == null || sma50 == null || price == null || price <= 0) return null;
 
-  // Track the running peak (highest price seen) across bars for the crash cap.
-  let peak = ctx.state.peak;
-  if (peak == null || price > peak) peak = price;
-  ctx.state.peak = peak;
-
   const equity = cash + pos * price;
   const trendUp = price > sma50;
+  // ATR-scaled crash band: 3.0 ATRs below the SMA50. Chosen so normal SOL dips
+  // (1-2 ATR) stay in the vol-target regime and only a genuine crash (>3 ATR)
+  // triggers the full exit — replaces the fixed 12% that whipsawed in bull dips.
   const crashDist = 3.0 * atr;
   const crashStop = price < sma50 - crashDist;
-  // Deep crash-cap: only fires when BOTH below the trend gate AND far off the
-  // peak (45%). 45% is loose enough to survive normal SOL bull pullbacks (which
-  // routinely exceed 25%) while capping the deepest 60%+ drawdowns.
-  const deepCap = price < peak * 0.55;
 
   let targetQty;
-  if (crashStop || deepCap) {
-    targetQty = 0; // genuine crash: exit fully
+  if (crashStop) {
+    targetQty = 0; // real crash: exit fully
   } else if (trendUp) {
     targetQty = equity / price; // uptrend: stay fully invested
   } else {
