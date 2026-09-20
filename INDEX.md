@@ -4,13 +4,14 @@ Every strategy whose backtest **finished and actually traded** is published here
 Nothing is filtered out by return — the ones that lost money are part of the record.
 Entries stay after a strategy is removed from our own workspace — this is a log, and deleting the record would leave only the survivors.
 
-**★ marks a strategy that out-returned buy & hold over the same window** — 135 of 584 right now.
+**★ marks a strategy that out-returned buy & hold over the same window** — 136 of 585 right now.
 `—` means the comparison **could not be made**: the engine does not compute a benchmark for multi-symbol, futures, or multi-leg runs. That is *unknown*, not *lost*, and it is 176 of them right now.
 
 Every figure comes from the last verifying backtest at publish time. These are past results over historical data. Nothing here is promised or assured about the future, and none of it is investment advice.
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
+| ★ | [2030](strategies/2030/) | EMA Momentum 4H | -2.78% | -24.39% | +6.65% | 26 | 2026-09-20 |
 |  | [2029](strategies/2029/) | Volume-Confirmed RSI Mean Reversion | +0.04% | +2.83% | +3.42% | 10 | 2026-09-20 |
 |  | [2028](strategies/2028/) | Supertrend ATR Momentum | -1.86% | +20.52% | +2.14% | 2 | 2026-09-20 |
 | ★ | [2026](strategies/2026/) | MACD Trend + Volume Confirmation | -5.85% | -12.57% | +13.75% | 30 | 2026-09-20 |
