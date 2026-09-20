@@ -3,16 +3,16 @@
   "name": "BTC Fed-Regime Trend 1D",
   "kind": "custom",
   "verified": {
-    "backtestId": 8793,
-    "return": -11.91,
-    "mdd": 28.98,
-    "trades": 18,
-    "vsBuyHold": "win",
-    "benchRet": -43.6,
+    "backtestId": 8799,
+    "return": 16.58,
+    "mdd": 46.24,
+    "trades": 44,
+    "vsBuyHold": "lose",
+    "benchRet": 164.53,
     "benchBasis": "price",
     "gapPct": 0,
-    "tFrom": 1609459200,
-    "tTo": 1672444800,
+    "tFrom": 1502928000,
+    "tTo": 1596153600,
     "approxNotes": [
       "봉 내 순서는 관례(양봉 O→L→H→C·음봉 O→H→L→C) — 실순서 미상 · 봉 중 거래량 null · MDD 는 봉 마감 기준"
     ],
@@ -20,8 +20,8 @@
       "ex": "binance",
       "sym": "BTCUSDT",
       "interval": "1d",
-      "bars": 730,
-      "end": 1672531200
+      "bars": 1096,
+      "end": 1596240000
     }
   },
   "config": null,
