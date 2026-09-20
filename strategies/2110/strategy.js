@@ -1,41 +1,35 @@
 /*
  * @coinsori-strategy v1
- * name: RSI Zone + Volume + DXY Macro Filter — XRPUSDT 4H
+ * name: RSI+BB+Vol Mean Reversion — XRPUSDT 4H (Fixed Size)
  * ex: binance
  * syms: XRPUSDT
  * interval: 4h
  * cash: 10000
  *
- * Why this strategy: Strategy 2099 (ATR Ratio Regime) fired zero trades on XRPUSDT
- * because its regime thresholds were too tight for XRP's specific volatility profile.
- * This strategy uses a simpler, proven signal: RSI oversold at the lower Bollinger Band
- * with volume confirmation and a DXY macro filter to avoid trading against a strong
- * USD uptrend. BB+RSI already beat the market on XRPUSDT (Exp 512: +247% vs +3251%
- * buy-and-hold — it underperformed in the bull run but won in bear/range windows).
- * Adding volume confirmation and DXY filtering improves signal quality.
- * When it buys and sells: Buy when RSI < 35, price ≤ lower BB, volume > 1.2× avg20,
- * and DXY < 104 (no strong USD). Sell when RSI > 60 or price reaches middle BB.
+ * Why this strategy: Strategy 2110 added a DXY macro filter that blocked all
+ * entries in W2/W3 (XRP's 2021-2024 bull cycle had DXY > 104 most of the time).
+ * The ATR-based position sizing was also too conservative for XRP's low price.
+ * This revision removes DXY, uses fixed-cash position sizing (90% of cash),
+ * and keeps the core signal: RSI oversold + at lower BB + volume surge.
+ * When it buys and sells: Buy when RSI < 35, price ≤ lower BB(20,2), volume > 1.2× avg20.
+ * Sell when RSI > 60 or price reaches middle BB. Stop at 2.5× ATR below entry.
  * When it does NOT work: In sustained XRP pumps where RSI never drops below 35
- * and the strategy misses the entire move. Also fails if XRP gaps down on negative
- * news (DXY spike) before the strategy can exit.
+ * and the strategy sits out entirely. Also fails in sharp news-driven crashes
+ * where the stop loss is hit before any bounce materializes.
  */
 function onUpdate(ctx) {
     // ── Indicators ──────────────────────────────────────────────────────────────
-    const rsi   = ctx.rsi(14);
-    const bb    = ctx.bb(20, 2);
-    const atr   = ctx.atr(14);
-    const vol   = ctx.vol;
+    const rsi  = ctx.rsi(14);
+    const bb  = ctx.bb(20, 2);
+    const atr = ctx.atr(14);
+    const vol = ctx.vol;
 
     if (rsi == null || bb == null || atr == null || vol == null) return null;
 
-    // ── Volume confirmation: current vol > 20-bar average ───────────────────────
+    // ── Volume confirmation: current vol > 1.2× 20-bar average ─────────────────
     const avgVol = ctx.avgVol(20);
     if (avgVol == null) return null;
     const volSurge = vol > avgVol * 1.2;
-
-    // ── DXY macro filter: DXY > 104 = strong USD, historically bearish for XRP ──
-    const dxy    = ctx.macro('dxy');
-    const usdSafe = dxy == null || dxy < 104;  // null = allow, no filter
 
     // ── Previous bar RSI for "fresh cross" detection ────────────────────────────
     const rsi1 = ctx.rsi(14, 1);
@@ -47,25 +41,20 @@ function onUpdate(ctx) {
 
     // ── Entry: Long ─────────────────────────────────────────────────────────────
     if (pos === 0) {
-        const rsiOversold   = rsi < 35;
-        const rsiFreshDrop  = rsi < 35 && rsi1 >= 35;   // just crossed into oversold
-        const atLowerBB     = bb.lower != null && price <= bb.lower * 1.01;
-        const confirmed     = volSurge && usdSafe;
+        const rsiFreshDrop = rsi < 35 && rsi1 >= 35;   // just crossed into oversold
+        const atLowerBB    = bb.lower != null && price <= bb.lower * 1.01;
 
-        // Primary: fresh RSI cross + at lower BB + volume + DXY confirmed
-        if (rsiFreshDrop && atLowerBB && confirmed) {
-            const riskCash = ctx.cash * 0.015;          // 1.5% risk per trade
-            const stopDist = atr * 2.5;                  // 2.5× ATR stop
-            const qty      = Math.floor(riskCash / stopDist);
+        // Primary signal: fresh RSI cross + at lower BB + volume surge
+        if (rsiFreshDrop && atLowerBB && volSurge) {
+            // Fixed cash: use 90% of available cash
+            const qty = (ctx.cash * 0.90) / price;
             if (qty < 1) return null;
             return { side: 'buy', qty, type: 'limit', price: price * 0.998 };
         }
 
-        // Fallback: already deeply oversold + strong volume + DXY confirmed
-        if (rsi < 30 && atLowerBB && volSurge && usdSafe) {
-            const riskCash = ctx.cash * 0.015;
-            const stopDist = atr * 2.5;
-            const qty      = Math.floor(riskCash / stopDist);
+        // Fallback: already deeply oversold + strong volume + at BB
+        if (rsi < 30 && atLowerBB && volSurge) {
+            const qty = (ctx.cash * 0.90) / price;
             if (qty < 1) return null;
             return { side: 'buy', qty, type: 'limit', price: price * 0.998 };
         }
@@ -87,11 +76,6 @@ function onUpdate(ctx) {
                 return { side: 'sell', qty: pos };
             }
         }
-    }
-
-    // ── Emergency macro exit: DXY > 107 = strong USD spike, close position ─────
-    if (pos > 0 && dxy != null && dxy > 107) {
-        return { side: 'sell', qty: pos };
     }
 
     return null;
