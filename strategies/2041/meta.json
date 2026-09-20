@@ -1,0 +1,30 @@
+{
+  "id": 2041,
+  "name": "MACD Momentum Breakout",
+  "kind": "custom",
+  "verified": {
+    "backtestId": 8103,
+    "return": -10.18,
+    "mdd": 10.18,
+    "trades": 12,
+    "vsBuyHold": "win",
+    "benchRet": -24.28,
+    "benchBasis": "price",
+    "gapPct": 0,
+    "tFrom": 1768276800,
+    "tTo": 1775462400,
+    "approxNotes": [
+      "봉 내 순서는 관례(양봉 O→L→H→C·음봉 O→H→L→C) — 실순서 미상 · 봉 중 거래량 null · MDD 는 봉 마감 기준"
+    ],
+    "spec": {
+      "ex": "binance",
+      "sym": "BTCUSDT",
+      "interval": "4h",
+      "bars": 500,
+      "end": 1775476800
+    }
+  },
+  "config": null,
+  "updatedAt": "2026-09-20T04:02:32.626Z",
+  "publishedBy": "scripts/publish-strategies.mjs"
+}
