@@ -11,7 +11,7 @@ Every figure comes from the last verifying backtest at publish time. These are p
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
-|  | [2173](strategies/2173/) | BTC Hashrate + Fast Trend Guard 1D | +6.76% | +86.46% | +16.05% | 25 | 2026-09-20 |
+|  | [2173](strategies/2173/) | BTC Hashrate + Fast Trend Guard 1D | +308.85% | +774.99% | +33.04% | 24 | 2026-09-20 |
 |  | [2172](strategies/2172/) | BTC Hashrate Fundamental Trend 1D | +260.64% | +774.99% | +41.71% | 15 | 2026-09-20 |
 | ★ | [2171](strategies/2171/) | BTC Fear-Dip Trend-Ride 1D | -0.18% | -26.82% | +18.40% | 8 | 2026-09-20 |
 |  | [2170](strategies/2170/) | BTC Fear-Greed Contrarian 1D | -4.28% | +774.99% | +36.97% | 8 | 2026-09-20 |
