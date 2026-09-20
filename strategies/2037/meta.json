@@ -1,0 +1,30 @@
+{
+  "id": 2037,
+  "name": "Funding-OI Macro Regime + RSI",
+  "kind": "custom",
+  "verified": {
+    "backtestId": 8083,
+    "return": 13.92,
+    "mdd": 2.81,
+    "trades": 56,
+    "vsBuyHold": "lose",
+    "benchRet": 36.6,
+    "benchBasis": "price",
+    "gapPct": 0,
+    "tFrom": 1782662400,
+    "tTo": 1789848000,
+    "approxNotes": [
+      "봉 내 순서는 관례(양봉 O→L→H→C·음봉 O→H→L→C) — 실순서 미상 · 봉 중 거래량 null · MDD 는 봉 마감 기준"
+    ],
+    "spec": {
+      "ex": "binance",
+      "sym": "BTCUSDT",
+      "interval": "4h",
+      "bars": 500,
+      "end": 1789862400
+    }
+  },
+  "config": null,
+  "updatedAt": "2026-09-20T03:56:39.159Z",
+  "publishedBy": "scripts/publish-strategies.mjs"
+}
