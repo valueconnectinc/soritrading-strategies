@@ -3,29 +3,30 @@
   "name": "ETH Vol-Targeted Hold 1D",
   "kind": "custom",
   "verified": {
-    "backtestId": 8845,
-    "return": 129.01,
-    "mdd": 39.08,
-    "trades": 3906,
+    "backtestId": 8846,
+    "return": 40.66,
+    "mdd": 35.27,
+    "trades": 238,
     "vsBuyHold": "lose",
-    "benchRet": 288.71,
+    "benchRet": 147.57,
     "benchBasis": "price",
     "gapPct": 0,
-    "tFrom": 1530662400,
-    "tTo": 1616976000,
+    "tFrom": 1672531200,
+    "tTo": 1767139200,
     "approxNotes": [
       "봉 내 순서는 관례(양봉 O→L→H→C·음봉 O→H→L→C) — 실순서 미상 · 봉 중 거래량 null · MDD 는 봉 마감 기준",
-      "기간 종료 시 미청산 포지션 1종목 (총자산의 35.13%) — 이 수익률은 **평가액**을 포함합니다. 퇴출 수수료·거래세를 안 냈고, 마지막 봉 가격에 실제로 팔 수 있다는 보장도 없습니다(얇은 호가·상장폐지). exec.endLiquidate 로 마지막 봉 청산을 켤 수 있습니다"
+      "[유동성/전무] 시장가 주문 26건은 **한 주도 체결되지 않았습니다**. 부분체결이 아니라 전무라, 그 시점의 진입·청산은 **일어나지 않았습니다.**",
+      "기간 종료 시 미청산 포지션 1종목 (총자산의 50.9%) — 이 수익률은 **평가액**을 포함합니다. 퇴출 수수료·거래세를 안 냈고, 마지막 봉 가격에 실제로 팔 수 있다는 보장도 없습니다(얇은 호가·상장폐지). exec.endLiquidate 로 마지막 봉 청산을 켤 수 있습니다"
     ],
     "spec": {
       "ex": "binance",
       "sym": "ETHUSDT",
       "interval": "1d",
-      "bars": 1000,
-      "end": 1617062400
+      "bars": 1096,
+      "end": 1767225600
     }
   },
   "config": null,
-  "updatedAt": "2026-09-20T14:55:06.969Z",
+  "updatedAt": "2026-09-20T14:58:23.759Z",
   "publishedBy": "scripts/publish-strategies.mjs"
 }
