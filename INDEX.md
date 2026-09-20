@@ -11,7 +11,7 @@ Every figure comes from the last verifying backtest at publish time. These are p
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
-|  | [2242](strategies/2242/) | ETH Trend Ride + ATR CrashStop 4H | -16.34% | +35.72% | +39.30% | 63 | 2026-09-20 |
+|  | [2242](strategies/2242/) | ETH Trend Ride + ATR CrashStop 4H | +1235.04% | +1421.83% | +43.66% | 111 | 2026-09-20 |
 | ★ | [2241](strategies/2241/) | DOGE Long-Term Trend Ride 4H | +10.59% | -41.23% | +69.47% | 141 | 2026-09-20 |
 |  | [2239](strategies/2239/) | ETH Long-Term Trend Ride 4H | +1235.04% | +1421.83% | +43.66% | 111 | 2026-09-20 |
 |  | [2238](strategies/2238/) | ETH Dual-Oscillator Mean Reversion 4H | -63.67% | +4729.86% | +76.38% | 155 | 2026-09-20 |
