@@ -1,0 +1,28 @@
+{
+  "id": 2222,
+  "name": "BTC Daily Trend-Strength Ride 1D",
+  "kind": "custom",
+  "verified": {
+    "backtestId": 8999,
+    "return": -2.16,
+    "mdd": 14.84,
+    "trades": 8,
+    "vsBuyHold": "unmeasured",
+    "gapPct": 0,
+    "tFrom": 0,
+    "tTo": 0,
+    "approxNotes": [
+      "봉 내 순서는 관례(양봉 O→L→H→C·음봉 O→H→L→C) — 실순서 미상 · 봉 중 거래량 null · MDD 는 봉 마감 기준"
+    ],
+    "spec": {
+      "ex": "binance",
+      "sym": "BTCUSDT",
+      "interval": "1d",
+      "bars": 2000,
+      "end": 1444262400
+    }
+  },
+  "config": null,
+  "updatedAt": "2026-09-20T17:03:48.137Z",
+  "publishedBy": "scripts/publish-strategies.mjs"
+}
