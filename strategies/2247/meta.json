@@ -1,0 +1,30 @@
+{
+  "id": 2247,
+  "name": "ETH On-Chain Activity Regime 4H",
+  "kind": "custom",
+  "verified": {
+    "backtestId": 9138,
+    "return": -62.2,
+    "mdd": 79.52,
+    "trades": 424,
+    "vsBuyHold": "lose",
+    "benchRet": 35.72,
+    "benchBasis": "price",
+    "gapPct": 0,
+    "tFrom": 1645920000,
+    "tTo": 1717905600,
+    "approxNotes": [
+      "봉 내 순서는 관례(양봉 O→L→H→C·음봉 O→H→L→C) — 실순서 미상 · 봉 중 거래량 null · MDD 는 봉 마감 기준"
+    ],
+    "spec": {
+      "ex": "binance",
+      "sym": "ETHUSDT",
+      "interval": "4h",
+      "bars": 5000,
+      "end": 1717920000
+    }
+  },
+  "config": null,
+  "updatedAt": "2026-09-20T18:46:41.750Z",
+  "publishedBy": "scripts/publish-strategies.mjs"
+}
