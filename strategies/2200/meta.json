@@ -3,7 +3,7 @@
   "name": "ETH Trend-Gated Vol-Target SMA100 1D",
   "kind": "custom",
   "verified": {
-    "backtestId": 8860,
+    "backtestId": 8861,
     "return": 846.38,
     "mdd": 64.5,
     "trades": 1478,
