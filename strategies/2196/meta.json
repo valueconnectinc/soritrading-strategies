@@ -1,0 +1,30 @@
+{
+  "id": 2196,
+  "name": "XRP BB-RSI Mean Reversion Vol-Sized 4H",
+  "kind": "custom",
+  "verified": {
+    "backtestId": 8840,
+    "return": -13.21,
+    "mdd": 28.76,
+    "trades": 112,
+    "vsBuyHold": "lose",
+    "benchRet": 251.26,
+    "benchBasis": "price",
+    "gapPct": 0,
+    "tFrom": 1674705600,
+    "tTo": 1732291200,
+    "approxNotes": [
+      "봉 내 순서는 관례(양봉 O→L→H→C·음봉 O→H→L→C) — 실순서 미상 · 봉 중 거래량 null · MDD 는 봉 마감 기준"
+    ],
+    "spec": {
+      "ex": "binance",
+      "sym": "XRPUSDT",
+      "interval": "4h",
+      "bars": 4000,
+      "end": 1732305600
+    }
+  },
+  "config": null,
+  "updatedAt": "2026-09-20T14:52:48.474Z",
+  "publishedBy": "scripts/publish-strategies.mjs"
+}
