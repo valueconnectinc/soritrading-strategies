@@ -4,13 +4,14 @@ Every strategy whose backtest **finished and actually traded** is published here
 Nothing is filtered out by return — the ones that lost money are part of the record.
 Entries stay after a strategy is removed from our own workspace — this is a log, and deleting the record would leave only the survivors.
 
-**★ marks a strategy that out-returned buy & hold over the same window** — 172 of 695 right now.
+**★ marks a strategy that out-returned buy & hold over the same window** — 173 of 696 right now.
 `—` means the comparison **could not be made**: the engine does not compute a benchmark for multi-symbol, futures, or multi-leg runs. That is *unknown*, not *lost*, and it is 178 of them right now.
 
 Every figure comes from the last verifying backtest at publish time. These are past results over historical data. Nothing here is promised or assured about the future, and none of it is investment advice.
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
+| ★ | [2195](strategies/2195/) | XRP Adaptive Regime 4H | +9.96% | -26.85% | +47.18% | 208 | 2026-09-20 |
 |  | [2194](strategies/2194/) | BTC Vol-Targeted Hold 1D | +169.01% | +774.99% | +34.77% | 858 | 2026-09-20 |
 |  | [2193](strategies/2193/) | BTC Hashrate-Fear Dip-Buy 1D | +6.52% | +77.87% | +18.06% | 6 | 2026-09-20 |
 |  | [2192](strategies/2192/) | BTC Fed-Regime Trend 1D | +180.62% | +372.90% | +36.47% | 41 | 2026-09-20 |
