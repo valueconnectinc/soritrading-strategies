@@ -3,7 +3,7 @@
   "name": "ETH Slow Trend Ride SMA300 4H",
   "kind": "custom",
   "verified": {
-    "backtestId": 9120,
+    "backtestId": 9123,
     "return": 114.35,
     "mdd": 38.74,
     "trades": 91,
