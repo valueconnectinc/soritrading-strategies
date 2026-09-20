@@ -4,14 +4,15 @@ Every strategy whose backtest **finished and actually traded** is published here
 Nothing is filtered out by return — the ones that lost money are part of the record.
 Entries stay after a strategy is removed from our own workspace — this is a log, and deleting the record would leave only the survivors.
 
-**★ marks a strategy that out-returned buy & hold over the same window** — 172 of 671 right now.
+**★ marks a strategy that out-returned buy & hold over the same window** — 172 of 672 right now.
 `—` means the comparison **could not be made**: the engine does not compute a benchmark for multi-symbol, futures, or multi-leg runs. That is *unknown*, not *lost*, and it is 177 of them right now.
 
 Every figure comes from the last verifying backtest at publish time. These are past results over historical data. Nothing here is promised or assured about the future, and none of it is investment advice.
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
-| ★ | [2167](strategies/2167/) | ETH Daily Trend Strength-Scaled 1D | +114.20% | +41.93% | +30.02% | 27 | 2026-09-20 |
+| ★ | [2168](strategies/2168/) | ETH Daily Trend Strength-Scaled 1D (conservative) | +115.58% | +41.93% | +28.79% | 27 | 2026-09-20 |
+|  | [2167](strategies/2167/) | ETH Daily Trend Strength-Scaled 1D | +348.41% | +501.57% | +74.62% | 21 | 2026-09-20 |
 |  | [2166](strategies/2166/) | ETH BB RSI Mean Reversion 4H | -60.40% | +1446.39% | +65.62% | 104 | 2026-09-20 |
 | ★ | [2165](strategies/2165/) | ETH Trend Pyramiding 4H | +39.80% | -41.02% | +63.95% | 152 | 2026-09-20 |
 |  | [2164](strategies/2164/) | ETH Daily 200-SMA Trend Ride 1D | +190.03% | +501.57% | +49.06% | 21 | 2026-09-20 |
