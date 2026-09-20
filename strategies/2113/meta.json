@@ -1,0 +1,30 @@
+{
+  "id": 2113,
+  "name": "Minimal RSI Cross — XRPUSDT 4H Diagnostic",
+  "kind": "custom",
+  "verified": {
+    "backtestId": 8305,
+    "return": -25.14,
+    "mdd": 25.14,
+    "trades": 745,
+    "vsBuyHold": "lose",
+    "benchRet": 190.96,
+    "benchBasis": "price",
+    "gapPct": 0,
+    "tFrom": 1573862400,
+    "tTo": 1645862400,
+    "approxNotes": [
+      "봉 내 순서는 관례(양봉 O→L→H→C·음봉 O→H→L→C) — 실순서 미상 · 봉 중 거래량 null · MDD 는 봉 마감 기준"
+    ],
+    "spec": {
+      "ex": "binance",
+      "sym": "XRPUSDT",
+      "interval": "4h",
+      "bars": 5000,
+      "end": 1645876800
+    }
+  },
+  "config": null,
+  "updatedAt": "2026-09-20T07:18:30.931Z",
+  "publishedBy": "scripts/publish-strategies.mjs"
+}
