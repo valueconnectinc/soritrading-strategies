@@ -4,13 +4,14 @@ Every strategy whose backtest **finished and actually traded** is published here
 Nothing is filtered out by return — the ones that lost money are part of the record.
 Entries stay after a strategy is removed from our own workspace — this is a log, and deleting the record would leave only the survivors.
 
-**★ marks a strategy that out-returned buy & hold over the same window** — 196 of 746 right now.
+**★ marks a strategy that out-returned buy & hold over the same window** — 197 of 747 right now.
 `—` means the comparison **could not be made**: the engine does not compute a benchmark for multi-symbol, futures, or multi-leg runs. That is *unknown*, not *lost*, and it is 180 of them right now.
 
 Every figure comes from the last verifying backtest at publish time. These are past results over historical data. Nothing here is promised or assured about the future, and none of it is investment advice.
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
+| ★ | [2257](strategies/2257/) | BTC Donchian Daily Breakout 55/30 | +124.05% | +34.44% | +42.14% | 23 | 2026-09-20 |
 | ★ | [2256](strategies/2256/) | SOL Vol-Adaptive Exit Trend Ride 4H | +49.13% | -31.75% | +42.92% | 79 | 2026-09-20 |
 |  | [2255](strategies/2255/) | SOL SMA200 Trend Ride 4H | +830.34% | +2987.53% | +50.07% | 56 | 2026-09-20 |
 |  | [2254](strategies/2254/) | BTC Trend Ride FastExit SMA100 4H | -6.81% | +16.64% | +33.13% | 130 | 2026-09-20 |
