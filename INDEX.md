@@ -11,7 +11,7 @@ Every figure comes from the last verifying backtest at publish time. These are p
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
-|  | [2234](strategies/2234/) | AI 전략 | +57.39% | +1421.83% | +29.57% | 152 | 2026-09-20 |
+|  | [2234](strategies/2234/) | AI 전략 | -63.67% | +4729.86% | +76.38% | 155 | 2026-09-20 |
 |  | [2233](strategies/2233/) | AI 전략 | -55.25% | +79.49% | +55.25% | 80 | 2026-09-20 |
 | ★ | [2231](strategies/2231/) | DOGE BB-RSI Mean Reversion SoftGuard 4H | +50.93% | +16.64% | +36.06% | 90 | 2026-09-20 |
 | ★ | [2230](strategies/2230/) | DOGE BB-RSI Mean Reversion + Crash Guard 4H | +33.04% | -41.23% | +17.34% | 79 | 2026-09-20 |
