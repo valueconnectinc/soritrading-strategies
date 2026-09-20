@@ -4,14 +4,14 @@ Every strategy whose backtest **finished and actually traded** is published here
 Nothing is filtered out by return — the ones that lost money are part of the record.
 Entries stay after a strategy is removed from our own workspace — this is a log, and deleting the record would leave only the survivors.
 
-**★ marks a strategy that out-returned buy & hold over the same window** — 133 of 581 right now.
+**★ marks a strategy that out-returned buy & hold over the same window** — 134 of 581 right now.
 `—` means the comparison **could not be made**: the engine does not compute a benchmark for multi-symbol, futures, or multi-leg runs. That is *unknown*, not *lost*, and it is 176 of them right now.
 
 Every figure comes from the last verifying backtest at publish time. These are past results over historical data. Nothing here is promised or assured about the future, and none of it is investment advice.
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
-|  | [2025](strategies/2025/) | RSI Momentum Volume | -8.07% | +57.00% | +8.07% | 28 | 2026-09-20 |
+| ★ | [2025](strategies/2025/) | RSI Momentum Volume | -9.33% | -12.57% | +24.99% | 15 | 2026-09-20 |
 |  | [2022](strategies/2022/) | EMA Momentum Breakout | -11.58% | +57.00% | +12.36% | 38 | 2026-09-20 |
 |  | [2020](strategies/2020/) | Donchian Trend + Volume Confirmation | +4.65% | +57.00% | +19.07% | 19 | 2026-09-20 |
 |  | [2017](strategies/2017/) | BB Mean Reversion + RSI Oversold | -0.01% | +57.00% | +0.01% | 4 | 2026-09-20 |
