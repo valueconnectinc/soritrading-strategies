@@ -11,7 +11,7 @@ Every figure comes from the last verifying backtest at publish time. These are p
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
-|  | [2227](strategies/2227/) | ETH Daily Trend-Strength Ride 1D (re-verify) | +41.68% | +64.10% | +35.04% | 4 | 2026-09-20 |
+|  | [2227](strategies/2227/) | ETH Daily Trend-Strength Ride 1D (re-verify) | +79.77% | +105.58% | +30.62% | 23 | 2026-09-20 |
 | ★ | [2226](strategies/2226/) | ETH Daily Bollinger Volatility Breakout 1D | +126.30% | -2.46% | +40.70% | 37 | 2026-09-20 |
 | ★ | [2223](strategies/2223/) | ETH Daily Trend-Strength + Wide Trailing Stop 1D | +138.85% | -2.46% | +42.01% | 1767 | 2026-09-20 |
 |  | [2222](strategies/2222/) | BTC Daily Trend-Strength Ride 1D | -0.38% | +3.80% | +36.60% | 17 | 2026-09-20 |
