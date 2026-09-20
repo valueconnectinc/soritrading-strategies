@@ -12,10 +12,9 @@
  * price-only breakout. This confirms trend-following entries and avoids
  * entering rallies that no one is participating in.
  * When it buys and sells: buy when price is above its 100-day average AND
- * the 30-day average of active addresses is above its 90-day average (the
- * smoothed activity trend must be up). Sell when price closes more than one
- * ATR below the 100-day average, or when the smoothed activity trend turns
- * down.
+ * the 10-day mean of active addresses is above its 60-day mean (the short
+ * activity trend is up). Sell when price closes more than one ATR below the
+ * 100-day average, or when the short activity trend turns down.
  * When it does NOT work: active addresses can lag price, so it may enter
  * late in a fast rally; in a raging bull it still trails buy-and-hold; and
  * if address data has gaps the signal turns off (stays in cash, which is
@@ -33,22 +32,22 @@ function onUpdate(ctx) {
   if (hist.length > 120) hist.shift();
   ctx.state.hist = hist;
 
-  // smoothed activity trend: 30-day mean vs 90-day mean (both in-state)
-  if (hist.length < 90) return null;
-  let s30 = 0, s90 = 0;
+  // short activity trend: 10-day mean vs 60-day mean (in-state)
+  if (hist.length < 60) return null;
+  let s10 = 0, s60 = 0;
   for (let i = 0; i < hist.length; i++) {
-    if (i >= hist.length - 30) s30 += hist[i];
-    s90 += hist[i];
+    if (i >= hist.length - 10) s10 += hist[i];
+    s60 += hist[i];
   }
-  s30 /= 30;
-  s90 /= hist.length;
+  s10 /= 10;
+  s60 /= hist.length;
 
   const pos = ctx.position;
   const price = ctx.price;
   const cash = ctx.cash;
 
   if (pos <= 0) {
-    const activityUp = s30 > s90 * 1.01; // smoothed usage trending up
+    const activityUp = s10 > s60 * 1.001; // short usage trend up
     const aboveSma = closePrev > sma;
     if (aboveSma && activityUp) {
       const qty = (cash / price) * 0.6;
@@ -56,9 +55,8 @@ function onUpdate(ctx) {
     }
     return null;
   } else {
-    // exit on price breakdown below SMA-ATR, or smoothed activity turning down
     const breakDown = closePrev < sma - atr;
-    const activityDown = s30 < s90 * 0.99;
+    const activityDown = s10 < s60 * 0.999;
     if (breakDown || activityDown) {
       return { side: 'sell', qty: pos };
     }
