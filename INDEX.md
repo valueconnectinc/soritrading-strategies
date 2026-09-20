@@ -11,7 +11,7 @@ Every figure comes from the last verifying backtest at publish time. These are p
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
-|  | [2196](strategies/2196/) | XRP BB-RSI Mean Reversion Vol-Sized 4H | -13.21% | +251.26% | +28.76% | 112 | 2026-09-20 |
+|  | [2196](strategies/2196/) | XRP BB-RSI Mean Reversion Vol-Sized 4H | -27.39% | -26.85% | +56.28% | 134 | 2026-09-20 |
 | ★ | [2195](strategies/2195/) | XRP Adaptive Regime 4H | +9.96% | -26.85% | +47.18% | 208 | 2026-09-20 |
 |  | [2194](strategies/2194/) | BTC Vol-Targeted Hold 1D | +169.01% | +774.99% | +34.77% | 858 | 2026-09-20 |
 |  | [2193](strategies/2193/) | BTC Hashrate-Fear Dip-Buy 1D | +6.52% | +77.87% | +18.06% | 6 | 2026-09-20 |
