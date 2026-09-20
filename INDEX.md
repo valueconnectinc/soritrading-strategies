@@ -11,7 +11,7 @@ Every figure comes from the last verifying backtest at publish time. These are p
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
-|  | [2194](strategies/2194/) | BTC Vol-Targeted Hold 1D | +88.12% | +115.81% | +41.69% | 175 | 2026-09-20 |
+|  | [2194](strategies/2194/) | BTC Vol-Targeted Hold 1D | +20.50% | +43.67% | +47.26% | 456 | 2026-09-20 |
 |  | [2193](strategies/2193/) | BTC Hashrate-Fear Dip-Buy 1D | +6.52% | +77.87% | +18.06% | 6 | 2026-09-20 |
 |  | [2192](strategies/2192/) | BTC Fed-Regime Trend 1D | +180.62% | +372.90% | +36.47% | 41 | 2026-09-20 |
 |  | [2191](strategies/2191/) | SOL Uptrend RSI-Dip Mean Reversion 4H | +18.99% | +920.26% | +10.13% | 22 | 2026-09-20 |
