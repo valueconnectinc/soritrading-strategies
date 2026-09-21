@@ -11,7 +11,7 @@ Every figure comes from the last verifying backtest at publish time. These are p
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
-| ★ | [2300](strategies/2300/) | BTC DXY-Regime Trend Ride | +32.55% | -20.56% | +21.35% | 84 | 2026-09-21 |
+| ★ | [2300](strategies/2300/) | BTC DXY-Regime Trend Ride | +45.62% | -78.53% | +22.47% | 71 | 2026-09-21 |
 | ★ | [2299](strategies/2299/) | LTC Band Bounce | +32.55% | -20.56% | +21.35% | 84 | 2026-09-21 |
 | ★ | [2298](strategies/2298/) | XRP Band Bounce | +47.35% | -31.45% | +13.02% | 78 | 2026-09-21 |
 |  | [2297](strategies/2297/) | Fear Greed Contrarian | +10.82% | +84.65% | +66.77% | 2 | 2026-09-21 |

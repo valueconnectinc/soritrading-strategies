@@ -3,25 +3,26 @@
   "name": "BTC DXY-Regime Trend Ride",
   "kind": "custom",
   "verified": {
-    "backtestId": 9392,
-    "return": 32.55,
-    "mdd": 21.35,
-    "trades": 84,
+    "backtestId": 9395,
+    "return": 45.62,
+    "mdd": 22.47,
+    "trades": 71,
     "vsBuyHold": "win",
-    "benchRet": -20.56,
+    "benchRet": -78.53,
     "benchBasis": "price",
-    "gapPct": 0,
-    "tFrom": 1718006400,
-    "tTo": 1789992000,
+    "gapPct": 0.4,
+    "tFrom": 1513123200,
+    "tTo": 1573992000,
     "approxNotes": [
-      "봉 내 순서는 관례(양봉 O→L→H→C·음봉 O→H→L→C) — 실순서 미상 · 봉 중 거래량 null · MDD 는 봉 마감 기준"
+      "봉 내 순서는 관례(양봉 O→L→H→C·음봉 O→H→L→C) — 실순서 미상 · 봉 중 거래량 null · MDD 는 봉 마감 기준",
+      "기간 종료 시 미청산 포지션 1종목 (총자산의 49.11%) — 이 수익률은 **평가액**을 포함합니다. 퇴출 수수료·거래세를 안 냈고, 마지막 봉 가격에 실제로 팔 수 있다는 보장도 없습니다(얇은 호가·상장폐지). exec.endLiquidate 로 마지막 봉 청산을 켤 수 있습니다"
     ],
     "spec": {
       "ex": "binance",
       "sym": "LTCUSDT",
       "interval": "4h",
       "bars": 5000,
-      "end": 1790006400
+      "end": 1574006400
     }
   },
   "config": null,
