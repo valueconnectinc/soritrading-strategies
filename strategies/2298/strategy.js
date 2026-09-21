@@ -9,13 +9,13 @@
  * Bollinger Band mean reversion on a liquid alt, gated by the 200-SMA trend,
  * with partial profit-taking so winners can run. Bet: liquid altcoins snap
  * back toward the middle band after touching the lower band when RSI is
- * oversold — but only in an uptrend. To fix the previous weakness (selling
- * the whole position at the middle band and missing big uptrends), we take
- * profit on half there and keep the other half on a trailing stop.
+ * oversold — but only in an uptrend. To avoid selling the whole position at
+ * the middle band and missing big uptrends, we take profit on half there and
+ * keep the other half on a trailing stop.
  * When it buys: price touches the lower Bollinger band, RSI is oversold
  * (< 35), AND price is above the 200-SMA. When it sells: half at the middle
- * band, the rest on a trailing stop (price falls back X% from the peak after
- * entry, or RSI turns overbought).
+ * band, the rest on a trailing stop (price falls back 8% from the peak after
+ * entry, or RSI turns overbought, or a hard 12% stop below entry).
  * When it does NOT work: strong one-way downtrends (we stay in cash, missing
  * the bounce but avoiding losses), and choppy flat regimes where the 200-SMA
  * gate whipsaws. The trailing half still gives back some gains in sharp
@@ -29,38 +29,49 @@ function onUpdate(ctx) {
   const px = ctx.price;
   if (px == null) return null;
 
-  const pos = ctx.position || 0;
+  const pos = ctx.position || 0 | 0; // force number
   const entry = ctx.entryPx || 0;
-  if (pos === 0) return null;
 
-  // Hard stop: exit all if price fell 12% below entry (real breakdown)
+  // ---- ENTRY: mean-reversion bounce, only in an uptrend ----
+  if (pos === 0) {
+    // price touched/broke below lower band, RSI oversold, above 200-SMA
+    if (px <= bb.lower && rsi < 35 && px > sma200) {
+      ctx.state.peak = px;      // start trailing peak at entry
+      ctx.state.halfKept = 0;   // not yet scaled out
+      return { side: 'buy', qty: ctx.cash / ctx.price * 0.99 };
+    }
+    return null;
+  }
+
+  // ---- EXITS (we hold a position) ----
+  // Hard stop: real breakdown, exit everything.
   if (entry > 0 && px < entry * 0.88) {
+    ctx.state.peak = 0; ctx.state.halfKept = 0;
     return { side: 'sell', qty: pos };
   }
 
-  // Track the highest price since entry via state to trail the running half.
-  // state persists across bars; store the trailing peak.
-  const peak = ctx.state.peak ? Math.max(ctx.state.peak, px) : Math.max(entry, pxipse);
+  // Track the highest price since entry (trailing peak).
+  const peak = Math.max(ctx.state.peak || entry || px, px);
   ctx.state.peak = peak;
 
-  // If RSI turns overbought, exit everything (bounce played out)
+  // RSI overbought: bounce fully played out, exit everything.
   if (rsi > 65) {
+    ctx.state.peak = 0; ctx.state.halfKept = 0;
     return { side: 'sell', qty: pos };
   }
 
-  // Scale out: at the middle band, if we still hold more than half, sell down to half.
-  if (px >= bb.mid && pos > ctx.state.halfKept) {
-    const sellQty = pos - ctx.state.halfKept;
+  // Scale out: when price reaches the middle band and we haven't scaled yet,
+  // sell down to half the position.
+  if (ctx.state.halfKept === 0 && px >= bb.mid) {
+    ctx.state.halfKept = pos / 2;              // half is now kept
+    const sellQty = pos - ctx.state.halfKept;  // sell the other half
     return { side: 'sell', qty: sellQty };
   }
-  // Mark that we've scaled out once so we don't re-sell at the middle band.
-  if (px >= bb.mid && ctx.state.halfKept == null) {
-    ctx.state.halfKept = pos / 2;
-  }
 
-  // Trailing stop for the running half: exit if price fell 8% from the peak
-  // (after we've already scaled out once)
-  if (ctx.state.halfKept != null && px < peak * 0.92) {
+  // Trailing stop for the running half: exit all if price fell 8% from peak
+  // (only relevant after we've scaled out once).
+  if (ctx.state.halfKept > 0 && px < peak * 0.92) {
+    ctx.state.peak = 0; ctx.state.halfKept = 0;
     return { side: 'sell', qty: pos };
   }
 

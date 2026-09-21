@@ -3,10 +3,10 @@
   "name": "XRP Band Bounce",
   "kind": "custom",
   "verified": {
-    "backtestId": 9370,
-    "return": 453.18,
-    "mdd": 14.12,
-    "trades": 72,
+    "backtestId": 9373,
+    "return": 251.93,
+    "mdd": 16.69,
+    "trades": 108,
     "vsBuyHold": "win",
     "benchRet": 173.51,
     "benchBasis": "price",
@@ -25,6 +25,6 @@
     }
   },
   "config": null,
-  "updatedAt": "2026-09-21T16:31:28.764Z",
+  "updatedAt": "2026-09-21T17:15:15.439Z",
   "publishedBy": "scripts/publish-strategies.mjs"
 }
