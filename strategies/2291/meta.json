@@ -3,7 +3,7 @@
   "name": "BTC Trend-Gated Vol-Target EMA100 1D",
   "kind": "custom",
   "verified": {
-    "backtestId": 9322,
+    "backtestId": 9325,
     "return": 194.84,
     "mdd": 53.25,
     "trades": 1014,
@@ -20,7 +20,7 @@
       "ex": "binance",
       "sym": "BTCUSDT",
       "interval": "1d",
-      "bars": 2500,
+      "bars": 1250,
       "end": 1573948800
     }
   },
