@@ -11,7 +11,7 @@ Every figure comes from the last verifying backtest at publish time. These are p
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
-|  | [2289](strategies/2289/) | [검증] 불변식 프로브 — 항상 전액 매수(매도 없음) | +16.33% | +18.57% | +67.55% | 3 | 2026-09-21 |
+|  | [2289](strategies/2289/) | [검증] 불변식 프로브 — 항상 전액 매수(매도 없음) | +689.95% | +773.04% | +93.97% | 3 | 2026-09-21 |
 |  | [2288](strategies/2288/) | [검증] 봉내경로 프로브 — 2286 사본 (ETH Vol-Target 1D) | -96.28% | +773.04% | +98.08% | 6679 | 2026-09-21 |
 | ★ | [2287](strategies/2287/) | BTC Regime-Adaptive Vol-Target Relax4 1D | +68923.11% | +1795.44% | +23.55% | 9264 | 2026-09-21 |
 | ★ | [2286](strategies/2286/) | ETH Regime-Adaptive Vol-Target TrendScaled 1D | +147310.90% | +773.04% | +33.08% | 9617 | 2026-09-21 |
