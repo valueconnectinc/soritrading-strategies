@@ -4,13 +4,14 @@ Every strategy whose backtest **finished and actually traded** is published here
 Nothing is filtered out by return — the ones that lost money are part of the record.
 Entries stay after a strategy is removed from our own workspace — this is a log, and deleting the record would leave only the survivors.
 
-**★ marks a strategy that out-returned buy & hold over the same window** — 219 of 792 right now.
+**★ marks a strategy that out-returned buy & hold over the same window** — 219 of 793 right now.
 `—` means the comparison **could not be made**: the engine does not compute a benchmark for multi-symbol, futures, or multi-leg runs. That is *unknown*, not *lost*, and it is 180 of them right now.
 
 Every figure comes from the last verifying backtest at publish time. These are past results over historical data. Nothing here is promised or assured about the future, and none of it is investment advice.
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
+|  | [2312](strategies/2312/) | BTC Donchian Vol-Confirm 2.0x 1D | -5.86% | +53.72% | +22.38% | 2 | 2026-09-21 |
 | ★ | [2311](strategies/2311/) | BTC Plain Donchian 55/30 1D (A/B baseline) | +380.45% | +273.76% | +45.20% | 25 | 2026-09-21 |
 |  | [2310](strategies/2310/) | BTC Donchian Volume-Confirmed Breakout 1D | +37.06% | +53.72% | +40.69% | 4 | 2026-09-21 |
 |  | [2309](strategies/2309/) | SOL Band Bounce | -29.84% | -27.11% | +41.00% | 105 | 2026-09-21 |
