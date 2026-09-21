@@ -4,13 +4,14 @@ Every strategy whose backtest **finished and actually traded** is published here
 Nothing is filtered out by return — the ones that lost money are part of the record.
 Entries stay after a strategy is removed from our own workspace — this is a log, and deleting the record would leave only the survivors.
 
-**★ marks a strategy that out-returned buy & hold over the same window** — 217 of 785 right now.
+**★ marks a strategy that out-returned buy & hold over the same window** — 218 of 786 right now.
 `—` means the comparison **could not be made**: the engine does not compute a benchmark for multi-symbol, futures, or multi-leg runs. That is *unknown*, not *lost*, and it is 180 of them right now.
 
 Every figure comes from the last verifying backtest at publish time. These are past results over historical data. Nothing here is promised or assured about the future, and none of it is investment advice.
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
+| ★ | [2305](strategies/2305/) | ADA Band Bounce | +37.64% | -50.35% | +28.67% | 81 | 2026-09-21 |
 |  | [2303](strategies/2303/) | ETH Band Bounce | +104.81% | +1320.24% | +47.49% | 132 | 2026-09-21 |
 |  | [2302](strategies/2302/) | AI 전략 | -72.87% | +38.79% | +86.95% | 91 | 2026-09-21 |
 |  | [2301](strategies/2301/) | BCH Band Bounce | -3.22% | +38.79% | +30.15% | 75 | 2026-09-21 |
