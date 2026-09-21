@@ -11,7 +11,7 @@ Every figure comes from the last verifying backtest at publish time. These are p
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
-|  | [2308](strategies/2308/) | BTC Macro On-Chain Regime Defense | -16.07% | +38.20% | +47.62% | 99 | 2026-09-21 |
+|  | [2308](strategies/2308/) | BTC Macro On-Chain Regime Defense | -15.59% | +98.15% | +49.75% | 32 | 2026-09-21 |
 |  | [2307](strategies/2307/) | BTC On-Chain Regime Trend | -44.44% | +53.72% | +44.44% | 12 | 2026-09-21 |
 |  | [2306](strategies/2306/) | XRP Daily Donchian Trend | -71.24% | -36.84% | +81.88% | 21 | 2026-09-21 |
 | ★ | [2305](strategies/2305/) | ADA Band Bounce | -14.24% | -45.21% | +33.79% | 87 | 2026-09-21 |
