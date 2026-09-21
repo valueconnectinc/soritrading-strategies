@@ -4,13 +4,14 @@ Every strategy whose backtest **finished and actually traded** is published here
 Nothing is filtered out by return — the ones that lost money are part of the record.
 Entries stay after a strategy is removed from our own workspace — this is a log, and deleting the record would leave only the survivors.
 
-**★ marks a strategy that out-returned buy & hold over the same window** — 217 of 783 right now.
+**★ marks a strategy that out-returned buy & hold over the same window** — 217 of 784 right now.
 `—` means the comparison **could not be made**: the engine does not compute a benchmark for multi-symbol, futures, or multi-leg runs. That is *unknown*, not *lost*, and it is 180 of them right now.
 
 Every figure comes from the last verifying backtest at publish time. These are past results over historical data. Nothing here is promised or assured about the future, and none of it is investment advice.
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
+|  | [2302](strategies/2302/) | AI 전략 | -72.87% | +38.79% | +86.95% | 91 | 2026-09-21 |
 |  | [2301](strategies/2301/) | BCH Band Bounce | -3.22% | +38.79% | +30.15% | 75 | 2026-09-21 |
 | ★ | [2300](strategies/2300/) | BTC DXY-Regime Trend Ride | +45.62% | -78.53% | +22.47% | 71 | 2026-09-21 |
 | ★ | [2299](strategies/2299/) | LTC Band Bounce | +32.55% | -20.56% | +21.35% | 84 | 2026-09-21 |
