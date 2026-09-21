@@ -11,7 +11,7 @@ Every figure comes from the last verifying backtest at publish time. These are p
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
-|  | [2313](strategies/2313/) | BTC Donchian Vol-Confirm 3.0x 1D | +26.86% | +232.13% | +15.36% | 3 | 2026-09-21 |
+|  | [2313](strategies/2313/) | BTC Donchian Vol-Confirm 3.0x 1D | +158.91% | +232.13% | +24.99% | 15 | 2026-09-21 |
 |  | [2312](strategies/2312/) | BTC Donchian Vol-Confirm 2.0x 1D | -5.86% | +53.72% | +22.38% | 2 | 2026-09-21 |
 | ★ | [2311](strategies/2311/) | BTC Plain Donchian 55/30 1D (A/B baseline) | +380.45% | +273.76% | +45.20% | 25 | 2026-09-21 |
 |  | [2310](strategies/2310/) | BTC Donchian Volume-Confirmed Breakout 1D | +37.06% | +53.72% | +40.69% | 4 | 2026-09-21 |
