@@ -13,11 +13,12 @@
  * (mining hashrate expanding = network strong) to only hold in the most
  * favorable conditions, and use a wide ATR-based trailing stop so we ride
  * bull runs without being shaken out by normal pullbacks.
- * When it buys: the fed funds rate is NOT rising (flat or falling) AND
- * price is above its 200-day average AND hashrate is above its 30-day
- * average. When it sells: the fed funds rate starts rising (tightening)
- * OR price falls more than 3x the ATR from its recent peak (wide trailing
- * stop that ignores small noise but catches real reversals).
+ * When it buys: the fed funds rate is NOT rising (flat or falling, measured
+ * against its value 30 bars earlier) AND price is above its 200-day average
+ * AND hashrate is above its 30-day average. When it sells: the fed funds
+ * rate starts rising (tightening) OR price falls more than 3x the ATR from
+ * its recent peak (wide trailing stop that ignores small noise but catches
+ * real reversals).
  * When it does NOT work: this is a defensive strategy — it will never beat
  * buy-and-hold in a raging bull market because it sits in cash during Fed
  * tightening even if BTC is pumping. It also lags at the very start of a
@@ -31,11 +32,14 @@ function onUpdate(ctx) {
   const px = ctx.price;
   if (px == null) return null;
 
-  // Macro regime from the fed funds rate. It changes rarely, so compare the
-  // current rate to its value ~30 bars back to detect easing vs tightening.
+  // Macro regime from the fed funds rate. fed = current rate, fedLag =
+  // the rate 30 bars ago. If the current rate is BELOW the 30-bars-ago rate
+  // the Fed is easing/neutral; if it is ABOVE, the Fed is tightening. This
+  // is the correct easing comparison (the old code compared two aliases of
+  // the same table and was always true).
   const fed = ctx.data('fed');
-  const fedPrev = ctx.data('macro_fed_funds');
-  if (fed == null || fedPrev == null) return null;
+  const fedLag = ctx.data('fed_lag30');
+  if (fed == null || fedLag == null) return null;
 
   // On-chain health: hashrate expanding means the network (and usually the
   // trend) is strengthening.
@@ -47,10 +51,10 @@ function onUpdate(ctx) {
   const uptrend = px > sma200;
   const hashrateOk = hr >= hrAvg;
 
-  // Easing/neutral = fed not rising. We treat a rising fed funds rate as a
-  // "tightening" regime and sit out. This single macro gate is the core of
-  // the defensive thesis.
-  const easing = fed <= fedPrev;
+  // Easing/neutral = fed not rising vs 30 bars ago. A rising fed funds rate
+  // is a "tightening" regime and we sit out. This macro gate is the core of
+  // the defensive thesis. Small epsilon so flat rates count as neutral.
+  const easing = fed <= fedLag + 1e-9;
 
   if (pos === 0) {
     // ENTRY: all three conditions — macro neutral/easing, uptrend, hashrate ok.
