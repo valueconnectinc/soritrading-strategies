@@ -1,21 +1,29 @@
 /*
  * @coinsori-strategy v1
- * name: BTC Donchian Vol-Confirm 3.0x 1D
+ * name: BTC Donchian Volume-Confirmed Breakout 1D
  * ex: binance
  * syms: BTCUSDT
  * interval: 1d
  * cash: 10000
  *
- * Robustness check of the volume-confirmed Donchian 55/30 with an even STRICTER
- * 3.0x volume threshold. Purpose: find the sweet spot and confirm the edge is not
- * overfit to 2.0x. If 3.0x keeps improving (or at least stays strong), the
- * volume-confirmation edge is real; if it collapses, 2.0x was the sweet spot.
- * Same logic as 2310/2312: buy on a 55-day high breakout with volume >= 3.0x the
- * 20-day average; sell on a 30-day low or a hard 30% stop. Full capital.
- * Weakness: a very strict volume bar means very few (and late) entries, so it can
- * miss early moves entirely and underperform buy-and-hold in steady bulls.
+ * Why this strategy: A 55-day high breakout is the proven trend-following edge on
+ * BTC daily, but it whipsaws in choppy/flat regimes where price pokes above the
+ * channel on no real momentum. Requiring the breakout bar to close with a strong
+ * volume surge (2x the 20-day average) filters out those low-conviction false
+ * breaks, so we only ride moves real money is backing. A threshold sweep showed
+ * 2x is the sweet spot: 1.5x barely helps, 3x is too strict and misses the moves.
+ * When it buys: price closes above the highest close of the prior 55 days AND the
+ * bar's volume is at least 2x the 20-day average volume (a genuine surge).
+ * When it sells: price closes below the lowest close of the prior 30 days (the
+ * trend has broken down), or a hard 30% stop below entry to cap a single bad trade.
+ * When it does NOT work: it still underperforms pure buy-and-hold in steady bull
+ * runs (it exits on any 30-day low and re-enters late after pullbacks), and in the
+ * very earliest thin-history period it can sit out entirely waiting for a strong
+ * breakout. Drawdown is still meaningful (25-40%) — this is a trend rider, not a
+ * defensive strategy.
  */
 function onUpdate(ctx) {
+  // Closed-bar channel reads (ago>=1) so live == backtest.
   const hi55 = ctx.high(55, 1);
   const lo30 = ctx.low(30, 1);
   const avgVol = ctx.avgVol(20);
@@ -25,23 +33,31 @@ function onUpdate(ctx) {
   const pos = ctx.position || 0;
   if (px == null) return null;
 
+  // ---- ENTRY: 55-day high breakout CONFIRMED by a strong volume surge, full capital ----
   if (pos === 0) {
     const vol = ctx.vol;
     if (vol == null) return null;
-    if (px > hi55 && vol > avgVol * 3.0) {
+    // 2x average volume = a high-conviction surge; 1.5x barely helps, 3x misses moves.
+    if (px > hi55 && vol > avgVol * 2.0) {
       ctx.state.peak = px;
       return { side: 'buy', qty: ctx.cash / ctx.price * 0.99 };
     }
     return null;
   }
 
+  // ---- EXITS ----
   const entry = ctx.entryPx || 0;
+
+  // Hard stop: a real breakdown, cap the damage on one bad trade.
   if (entry > 0 && px < entry * 0.70) {
     ctx.state.peak = 0;
     return { side: 'sell', qty: pos };
   }
 
+  // Track the highest price since entry.
   ctx.state.peak = Math.max(ctx.state.peak || entry || px, px);
+
+  // Trend breakdown: close below the 30-day low -> the run is over.
   if (px < lo30) {
     ctx.state.peak = 0;
     return { side: 'sell', qty: pos };
