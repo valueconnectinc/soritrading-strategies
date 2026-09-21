@@ -1,26 +1,30 @@
 /*
  * @coinsori-strategy v1
- * name: XRP Band Bounce
+ * name: XRP Band Bounce Trend-Gated
  * ex: binance
  * syms: XRPUSDT
  * interval: 4h
  * cash: 1000
  *
- * Bollinger Band mean reversion on a liquid alt. Bet: liquid altcoins tend to
- * snap back toward the middle band after touching the lower band when RSI is
- * oversold, and to fade back from the upper band when RSI is overbought.
- * When it buys: price touches the lower Bollinger band while RSI is oversold
- * (< 35). When it sells: price reaches the middle band or RSI turns overbought
- * (> 65), or a hard stop protects against a real breakdown.
- * When it does NOT work: strong one-way trends where price keeps pushing
- * through the lower band (falling knife) or keeps running above the upper band
- * (leaves money on the table by exiting too early). A hard stop limits the
- * falling-knife case.
+ * Bollinger Band mean reversion on a liquid alt, gated by the 200-SMA trend.
+ * Bet: liquid altcoins snap back toward the middle band after touching the
+ * lower band when RSI is oversold — but only in an uptrend (price above the
+ * 200-SMA), which avoids buying falling knives in a persistent downtrend.
+ * When it buys: price touches the lower Bollinger band, RSI is oversold
+ * (< 35), AND price is above the 200-SMA. When it sells: price reaches the
+ * middle band or RSI turns overbought (> 65), or a hard stop protects a
+ * real breakdown.
+ * When it does NOT work: strong one-way downtrends (we simply stay in cash,
+ * missing the bounce but also avoiding losses), and choppy flat regimes where
+ * price straddles the 200-SMA and the gate whipsaws. The trend gate also means
+ * we sit out most of a bear market — that's the point, but it caps upside if
+ * the market turns up sharply from below the SMA.
  */
 function onUpdate(ctx) {
   const bb = ctx.bb(20, 2, 1);
   const rsi = ctx.rsi(14, 1);
-  if (bb == null || rsi == null) return null;
+  const sma200 = ctx.sma(200, 1);
+  if (bb == null || rsi == null || sma200 == null) return null;
   const px = ctx.price;
   if (px == null) return null;
 
@@ -32,8 +36,8 @@ function onUpdate(ctx) {
     return { side: 'sell', qty: pos };
   }
 
-  // Buy at lower band with oversold RSI
-  if (pos === 0 && px <= bb.lower && rsi < 35) {
+  // Buy at lower band with oversold RSI, only in an uptrend (above 200-SMA)
+  if (pos === 0 && px <= bb.lower && rsi < 35 && px > sma200) {
     return { side: 'buy', qty: ctx.cash / ctx.price * 0.99 };
   }
 
