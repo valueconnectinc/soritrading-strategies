@@ -3,12 +3,12 @@
   "name": "XRP Band Bounce",
   "kind": "custom",
   "verified": {
-    "backtestId": 9350,
-    "return": 82.1,
-    "mdd": 38.96,
-    "trades": 218,
+    "backtestId": 9355,
+    "return": 19.5,
+    "mdd": 41.04,
+    "trades": 204,
     "vsBuyHold": "win",
-    "benchRet": -1.93,
+    "benchRet": -64.74,
     "benchBasis": "price",
     "gapPct": 0,
     "tFrom": 1717992000,
@@ -18,7 +18,7 @@
     ],
     "spec": {
       "ex": "binance",
-      "sym": "SUIUSDT",
+      "sym": "AVAXUSDT",
       "interval": "4h",
       "bars": 5000,
       "end": 1789992000
