@@ -3,16 +3,16 @@
   "name": "ADA Band Bounce",
   "kind": "custom",
   "verified": {
-    "backtestId": 9414,
-    "return": 37.64,
-    "mdd": 28.67,
-    "trades": 81,
+    "backtestId": 9415,
+    "return": -14.24,
+    "mdd": 33.79,
+    "trades": 87,
     "vsBuyHold": "win",
-    "benchRet": -50.35,
+    "benchRet": -45.21,
     "benchBasis": "price",
     "gapPct": 0,
-    "tFrom": 1646006400,
-    "tTo": 1717992000,
+    "tFrom": 1718006400,
+    "tTo": 1789992000,
     "approxNotes": [
       "봉 내 순서는 관례(양봉 O→L→H→C·음봉 O→H→L→C) — 실순서 미상 · 봉 중 거래량 null · MDD 는 봉 마감 기준"
     ],
@@ -21,7 +21,7 @@
       "sym": "ADAUSDT",
       "interval": "4h",
       "bars": 5000,
-      "end": 1718006400
+      "end": 1790006400
     }
   },
   "config": null,

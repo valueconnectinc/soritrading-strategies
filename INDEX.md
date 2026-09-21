@@ -11,7 +11,7 @@ Every figure comes from the last verifying backtest at publish time. These are p
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
-| ★ | [2305](strategies/2305/) | ADA Band Bounce | +37.64% | -50.35% | +28.67% | 81 | 2026-09-21 |
+| ★ | [2305](strategies/2305/) | ADA Band Bounce | -14.24% | -45.21% | +33.79% | 87 | 2026-09-21 |
 |  | [2303](strategies/2303/) | ETH Band Bounce | +104.81% | +1320.24% | +47.49% | 132 | 2026-09-21 |
 |  | [2302](strategies/2302/) | AI 전략 | -72.87% | +38.79% | +86.95% | 91 | 2026-09-21 |
 |  | [2301](strategies/2301/) | BCH Band Bounce | -3.22% | +38.79% | +30.15% | 75 | 2026-09-21 |
