@@ -3,16 +3,16 @@
   "name": "BTC On-Chain Regime Trend",
   "kind": "custom",
   "verified": {
-    "backtestId": 9425,
-    "return": -55.08,
-    "mdd": 68.37,
-    "trades": 334,
+    "backtestId": 9428,
+    "return": -44.44,
+    "mdd": 44.44,
+    "trades": 12,
     "vsBuyHold": "lose",
-    "benchRet": 273.76,
+    "benchRet": 53.72,
     "benchBasis": "price",
     "gapPct": 0,
-    "tFrom": 1530748800,
-    "tTo": 1660262400,
+    "tFrom": 1502928000,
+    "tTo": 1530662400,
     "approxNotes": [
       "봉 내 순서는 관례(양봉 O→L→H→C·음봉 O→H→L→C) — 실순서 미상 · 봉 중 거래량 null · MDD 는 봉 마감 기준"
     ],
@@ -21,7 +21,7 @@
       "sym": "BTCUSDT",
       "interval": "1d",
       "bars": 1500,
-      "end": 1660348800
+      "end": 1530748800
     }
   },
   "config": null,
