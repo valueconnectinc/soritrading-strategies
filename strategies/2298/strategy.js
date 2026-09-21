@@ -1,17 +1,21 @@
 /*
  * @coinsori-strategy v1
- * name: XRP Band Bounce Scale-Out
+ * name: LTC Band Bounce
  * ex: binance
- * syms: XRPUSDT
+ * syms: LTCUSDT
  * interval: 4h
  * cash: 1000
  *
- * Bollinger Band mean reversion on a liquid alt, gated by the 200-SMA trend,
- * with partial profit-taking so winners can run. Bet: liquid altcoins snap
- * back toward the middle band after touching the lower band when RSI is
- * oversold — but only in an uptrend. To avoid selling the whole position at
- * the middle band and missing big uptrends, we take profit on half there and
- * keep the other half on a trailing stop.
+ * Bollinger Band mean reversion on a mature, lower-volatility alt, gated by
+ * the 200-SMA trend, with partial profit-taking so winners can run. This is
+ * the same validated design as the XRP Band Bounce (which held up on three
+ * disjoint 5000-bar windows) applied to LTC to test whether the small-alt
+ * mean-reversion edge generalizes beyond XRP. Bet: liquid altcoins snap back
+ * toward the middle band after touching the lower band when RSI is oversold
+ * — but only in an uptrend)Skip the deep lower-band touches in sustained
+ * bears. To avoid selling the whole position at the middle band and missing
+ * big uptrends, we take profit on half there and keep the other half on a
+ * trailing stop.
  * When it buys: price touches the lower Bollinger band, RSI is oversold
  * (< 35), AND price is above the 200-SMA. When it sells: half at the middle
  * band, the rest on a trailing stop (price falls 8% from peak after entry,
@@ -20,8 +24,7 @@
  * the bounce but avoiding losses), and choppy flat regimes where the 200-SMA
  * gate whipsaws. It also lags sustained bull runs because it only buys on
  * deep lower-band touches — during a strong rally price rarely dips that far,
- * so it stays in cash while the market runs. The trailing half still gives
- * back some gains in sharp reversals, but the hard stop caps real breakdowns.
+ * so it stays in cash while the market runschers.
  */
 function onUpdate(ctx) {
   const bb = ctx.bb(20, 2, 1);
@@ -45,7 +48,7 @@ function onUpdate(ctx) {
   }
 
   // ---- EXITS ----
-  // Hard stop: real breakdown, exit everything.
+  // Hard stop: real breakdown, exit everything. 12% below entry.
   if (entry > 0 && px < entry * 0.88) {
     ctx.state.peak = 0; ctx.state.halfKept = 0;
     return { side: 'sell', qty: pos };
