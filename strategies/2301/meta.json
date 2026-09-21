@@ -1,0 +1,30 @@
+{
+  "id": 2301,
+  "name": "BCH Band Bounce",
+  "kind": "custom",
+  "verified": {
+    "backtestId": 9399,
+    "return": -3.22,
+    "mdd": 30.15,
+    "trades": 75,
+    "vsBuyHold": "lose",
+    "benchRet": 38.79,
+    "benchBasis": "price",
+    "gapPct": 0,
+    "tFrom": 1574928000,
+    "tTo": 1645992000,
+    "approxNotes": [
+      "봉 내 순서는 관례(양봉 O→L→H→C·음봉 O→H→L→C) — 실순서 미상 · 봉 중 거래량 null · MDD 는 봉 마감 기준"
+    ],
+    "spec": {
+      "ex": "binance",
+      "sym": "BCHUSDT",
+      "interval": "4h",
+      "bars": 5000,
+      "end": 1646006400
+    }
+  },
+  "config": null,
+  "updatedAt": "2026-09-21T19:23:02.203Z",
+  "publishedBy": "scripts/publish-strategies.mjs"
+}
