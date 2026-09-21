@@ -1,64 +1,76 @@
 /*
  * @coinsori-strategy v1
- * name: BTC DXY-Regime Trend Ride
+ * name: LTC Band Bounce
  * ex: binance
- * syms: BTCUSDT
+ * syms: LTCUSDT
  * interval: 4h
- * cash: 10000
+ * cash: 1000
  *
- * Macro-regime filter: crypto tends to rally when the US Dollar Index (DXY) is
- * weakening (liquidity/risk-on) and bleed when the dollar strengthens. This
- * strategy rides an EMA trend for BTC but only takes longs when the dollar is
- * NOT in a strengthening regime, so it avoids buying into dollar headwinds.
- * When it buys: BTC price is above its 50-EMA (uptrend) AND the DXY is below
- * its own rolling average (dollar not strengthening). When it sells: BTC drops
- * below its 20-EMA (trend breaks) or the dollar regime turns against us.
- * When it does NOT work: if DXY and BTC stop having an inverse relationship
- * (e.g. both rally on global risk-on, or BTC driven by crypto-specific news),
- * the DXY gate is just noise and adds whipsaw. It also misses strong BTC
- * rallies that happen while the dollar is firming. Trend-following on BTC 4h
- * has historically whipsawed in chop (ledger), so this relies on the DXY gate
- * adding real signal, not just extra trading.
+ * Bollinger Band mean reversion on a mature, low-volatility alt, gated by the
+ * 200-SMA trend, with partial profit-taking so winners can run. This is the
+ * same logic as the validated XRP Band Bounce, ported to LTC to test whether
+ * the edge generalizes to a genuinely different asset. Bet: a liquid, less
+ * volatile alt snaps back toward the middle band after touching the lower band
+ * when RSI is oversold — but only in an uptrend.
+ * When it buys: price touches the lower Bollinger band, RSI is oversold
+ * (< 35), AND price is above the 200-SMA. When it sells: half at the middle
+ * band, the rest on a trailing stop (price falls 8% from peak after entry,
+ * or RSI turns overbought, or a hard 12% stop below entry).
+ * When it does NOT work: strong one-way downtrends (we stay in cash, missing
+ * the bounce but avoiding losses), and choppy flat regimes where the 200-SMA
+ * gate whipsaws. It also lags sustained bull runs because it only buys on
+ * deep lower-band touches. If LTC's weak, choppy trends dominate, this may
+ * just tread water (as the trend-gated family did on LTC 1d).
  */
 function onUpdate(ctx) {
-  const ema20 = ctx.ema(20, 1);
-  const ema50 = ctx.ema(50, 1);
-  if (ema20 == null || ema50 == null) return null;
+  const bb = ctx.bb(20, 2, 1);
+  const rsi = ctx.rsi(14, 1);
+  const sma200 = ctx.sma(200, 1);
+  if (bb == null || rsi == null || sma200 == null) return null;
   const px = ctx.price;
   if (px == null) return null;
+
   const pos = ctx.position || 0;
   const entry = ctx.entryPx || 0;
 
-  // ---- DXY regime: maintain a rolling average of the dollar index in state.
-  // DXY is a scalar from ctx.macro; we smooth it ourselves over ~40 bars so we
-  // only flip on a sustained dollar move, not intraday noise.
-  const dxy = ctx.macro('dxy');
-  let dxyAvg = ctx.state.dxyAvg;
-  if (dxy == null) {
-    // DXY unknown this bar: keep the last known regime (do not block/flip).
-    dxyAvg = dxyAvg || null;
-  } else {
-    dxyAvg = dxyAvg == null ? dxy : dxyAvg * 0.975 + dxy * 0.025; // ~40-bar EMA
-    ctx.state.dxyAvg = dxyAvg;
-  }
-  // If we have no DXY history at all, treat regime as neutral (allow trade).
-  const dollarStrong = dxyAvg != null && dxy > dxyAvg;
-
-  // ---- ENTRY: BTC uptrend + dollar not strengthening ----
+  // ---- ENTRY: deep oversold bounce at the lower band, only in an uptrend ----
   if (pos === 0) {
-    if (px > ema50 && !dollarStrong) {
+    if (px <= bb.lower && rsi < 35 && px > sma200) {
+      ctx.state.peak = px;
+      ctx.state.halfKept = 0;
       return { side: 'buy', qty: ctx.cash / ctx.price * 0.99 };
     }
     return null;
   }
 
-  // ---- EXIT: trend breaks or dollar regime turns against us ----
-  if (px < ema20 || dollarStrong) {
+  // ---- EXITS ----
+  // Hard stop: real breakdown, exit everything.
+  if (entry > 0 && px < entry * 0.88) {
+    ctx.state.peak = 0; ctx.state.halfKept = 0;
     return { side: 'sell', qty: pos };
   }
 
-  // Hard stop: real breakdown, 10% below entry.
-  if (entry > 0 && px < entry * 0.90) {
+  // Track the highest price since entry (trailing peak).
+  const peak = Math.max(ctx.state.peak || entry || px, px);
+  ctx.state.peak = peak;
+
+  // RSI overbought: bounce fully played out, exit everything.
+  if (rsi > 65) {
+    ctx.state.peak = 0; ctx.state.halfKept = 0;
+    return { side: 'sell', qty: pos };
+  }
+
+  // Scale out: when price reaches the middle band and we haven't scaled yet,
+  // sell down to half the position.
+  if (ctx.state.halfKept === 0 && px >= bb.mid) {
+    ctx.state.halfKept = pos / 2;
+    const sellQty = pos - ctx.state.halfKept;
+    return { side: 'sell', qty: sellQty };
+  }
+
+  // Trailing stop for the running half: exit all if price fell 8% from peak.
+  if (ctx.state.halfKept > 0 && px < peak * 0.92) {
+    ctx.state.peak = 0; ctx.state.halfKept = 0;
     return { side: 'sell', qty: pos };
   }
 
