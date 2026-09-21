@@ -1,0 +1,31 @@
+{
+  "id": 2306,
+  "name": "XRP Daily Donchian Trend",
+  "kind": "custom",
+  "verified": {
+    "backtestId": 9417,
+    "return": -71.24,
+    "mdd": 81.88,
+    "trades": 21,
+    "vsBuyHold": "lose",
+    "benchRet": -36.84,
+    "benchBasis": "price",
+    "gapPct": 0,
+    "tFrom": 1525392000,
+    "tTo": 1617062400,
+    "approxNotes": [
+      "봉 내 순서는 관례(양봉 O→L→H→C·음봉 O→H→L→C) — 실순서 미상 · 봉 중 거래량 null · MDD 는 봉 마감 기준",
+      "기간 종료 시 미청산 포지션 1종목 (총자산의 100%) — 이 수익률은 **평가액**을 포함합니다. 퇴출 수수료·거래세를 안 냈고, 마지막 봉 가격에 실제로 팔 수 있다는 보장도 없습니다(얇은 호가·상장폐지). exec.endLiquidate 로 마지막 봉 청산을 켤 수 있습니다"
+    ],
+    "spec": {
+      "ex": "binance",
+      "sym": "XRPUSDT",
+      "interval": "1d",
+      "bars": 2000,
+      "end": 1617148800
+    }
+  },
+  "config": null,
+  "updatedAt": "2026-09-21T20:08:31.527Z",
+  "publishedBy": "scripts/publish-strategies.mjs"
+}
