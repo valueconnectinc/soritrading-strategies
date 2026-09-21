@@ -11,7 +11,7 @@ Every figure comes from the last verifying backtest at publish time. These are p
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
-| ★ | [2298](strategies/2298/) | XRP Band Bounce | +41.91% | -71.21% | +49.42% | 150 | 2026-09-21 |
+| ★ | [2298](strategies/2298/) | XRP Band Bounce | +82.10% | -1.93% | +38.96% | 218 | 2026-09-21 |
 |  | [2297](strategies/2297/) | Fear Greed Contrarian | +10.82% | +84.65% | +66.77% | 2 | 2026-09-21 |
 |  | [2296](strategies/2296/) | XRP Trend Rider | -1.43% | +170.75% | +47.42% | 88 | 2026-09-21 |
 |  | [2295](strategies/2295/) | BTC Trend-Ride EMA ATR Trailing 1D | -19.87% | +53.72% | +19.87% | 4 | 2026-09-21 |
