@@ -65,7 +65,7 @@ function onUpdate(ctx) {
   // sell down to half the position.
   if (ctx.state.halfKept === 0 && px >= bb.mid) {
     ctx.state.halfKept = pos / 2;
-    const sellQty = pos - ctx.state.halfKeptortun;
+    const sellQty = pos - ctx.state.halfKept;
     return { side: 'sell', qty: sellQty };
   }
 

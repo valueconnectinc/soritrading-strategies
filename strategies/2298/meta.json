@@ -3,16 +3,16 @@
   "name": "XRP Band Bounce",
   "kind": "custom",
   "verified": {
-    "backtestId": 9376,
-    "return": -17.47,
-    "mdd": 34.37,
-    "trades": 168,
-    "vsBuyHold": "lose",
-    "benchRet": 200.8,
+    "backtestId": 9379,
+    "return": 47.35,
+    "mdd": 13.02,
+    "trades": 78,
+    "vsBuyHold": "win",
+    "benchRet": -31.45,
     "benchBasis": "price",
     "gapPct": 0,
-    "tFrom": 1718006400,
-    "tTo": 1789992000,
+    "tFrom": 1646006400,
+    "tTo": 1717992000,
     "approxNotes": [
       "봉 내 순서는 관례(양봉 O→L→H→C·음봉 O→H→L→C) — 실순서 미상 · 봉 중 거래량 null · MDD 는 봉 마감 기준"
     ],
@@ -21,10 +21,10 @@
       "sym": "XRPUSDT",
       "interval": "4h",
       "bars": 5000,
-      "end": 1790006400
+      "end": 1718006400
     }
   },
   "config": null,
-  "updatedAt": "2026-09-21T17:21:48.114Z",
+  "updatedAt": "2026-09-21T17:23:01.190Z",
   "publishedBy": "scripts/publish-strategies.mjs"
 }
