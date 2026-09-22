@@ -3,12 +3,12 @@
   "name": "LTC-XRP-DOT Band Bounce 1D",
   "kind": "custom",
   "verified": {
-    "backtestId": 9501,
-    "return": -21.23,
-    "mdd": 52.59,
-    "trades": 17,
+    "backtestId": 9504,
+    "return": -17.25,
+    "mdd": 55.23,
+    "trades": 18,
     "vsBuyHold": "lose",
-    "benchRet": 95.19,
+    "benchRet": 14.76,
     "benchBasis": "price",
     "gapPct": 0,
     "tFrom": 1548115200,
@@ -18,7 +18,7 @@
     ],
     "spec": {
       "ex": "binance",
-      "sym": "LTCUSDT",
+      "sym": "XRPUSDT",
       "interval": "1d",
       "bars": 1400,
       "end": 1669075200

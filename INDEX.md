@@ -11,7 +11,7 @@ Every figure comes from the last verifying backtest at publish time. These are p
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
-|  | [2324](strategies/2324/) | LTC-XRP-DOT Band Bounce 1D | -21.23% | +95.19% | +52.59% | 17 | 2026-09-22 |
+|  | [2324](strategies/2324/) | LTC-XRP-DOT Band Bounce 1D | -17.25% | +14.76% | +55.23% | 18 | 2026-09-22 |
 | ★ | [2321](strategies/2321/) | DOT Band Bounce Funding-Filter 4H | +9.12% | -43.31% | +22.17% | 33 | 2026-09-22 |
 |  | [2320](strategies/2320/) | LTC Donchian Funding-Filter 4H | -74.40% | +13.16% | +76.03% | 70 | 2026-09-22 |
 |  | [2319](strategies/2319/) | BTC Donchian Funding-Filter 1D | -5.86% | +52.37% | +22.38% | 2 | 2026-09-22 |
