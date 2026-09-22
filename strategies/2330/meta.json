@@ -1,0 +1,30 @@
+{
+  "id": 2330,
+  "name": "DOT Band Bounce On-Chain Filter 4H",
+  "kind": "custom",
+  "verified": {
+    "backtestId": 9525,
+    "return": 291.05,
+    "mdd": 23.02,
+    "trades": 81,
+    "vsBuyHold": "lose",
+    "benchRet": 447.74,
+    "benchBasis": "price",
+    "gapPct": 0,
+    "tFrom": 1597780800,
+    "tTo": 1646035200,
+    "approxNotes": [
+      "봉 내 순서는 관례(양봉 O→L→H→C·음봉 O→H→L→C) — 실순서 미상 · 봉 중 거래량 null · MDD 는 봉 마감 기준"
+    ],
+    "spec": {
+      "ex": "binance",
+      "sym": "DOTUSDT",
+      "interval": "4h",
+      "bars": 5000,
+      "end": 1646049600
+    }
+  },
+  "config": null,
+  "updatedAt": "2026-09-22T04:51:06.763Z",
+  "publishedBy": "scripts/publish-strategies.mjs"
+}
