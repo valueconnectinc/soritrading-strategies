@@ -4,14 +4,14 @@ Every strategy whose backtest **finished and actually traded** is published here
 Nothing is filtered out by return — the ones that lost money are part of the record.
 Entries stay after a strategy is removed from our own workspace — this is a log, and deleting the record would leave only the survivors.
 
-**★ marks a strategy that out-returned buy & hold over the same window** — 225 of 809 right now.
+**★ marks a strategy that out-returned buy & hold over the same window** — 224 of 809 right now.
 `—` means the comparison **could not be made**: the engine does not compute a benchmark for multi-symbol, futures, or multi-leg runs. That is *unknown*, not *lost*, and it is 181 of them right now.
 
 Every figure comes from the last verifying backtest at publish time. These are past results over historical data. Nothing here is promised or assured about the future, and none of it is investment advice.
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
-| ★ | [2334](strategies/2334/) | AI 전략 | +48.39% | -22.41% | +30.22% | 319 | 2026-09-22 |
+|  | [2334](strategies/2334/) | AI 전략 | +61.06% | +86.20% | +26.80% | 56 | 2026-09-22 |
 |  | [2332](strategies/2332/) | XRP Band Bounce On-Chain Filter 4H | +145.06% | +194.02% | +12.70% | 81 | 2026-09-22 |
 |  | [2331](strategies/2331/) | DOT Band Bounce On-Chain Filter 4H | +105.88% | +478.06% | +23.60% | 60 | 2026-09-22 |
 |  | [2330](strategies/2330/) | DOT Band Bounce On-Chain Filter 4H | +29.18% | +86.20% | +22.31% | 84 | 2026-09-22 |
