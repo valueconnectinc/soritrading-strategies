@@ -3,22 +3,22 @@
   "name": "AI 전략",
   "kind": "custom",
   "verified": {
-    "backtestId": 9565,
-    "return": 61.06,
-    "mdd": 26.8,
-    "trades": 56,
+    "backtestId": 9570,
+    "return": 119.63,
+    "mdd": 20.54,
+    "trades": 44,
     "vsBuyHold": "lose",
-    "benchRet": 86.2,
+    "benchRet": 478.06,
     "benchBasis": "price",
     "gapPct": 0,
-    "tFrom": 1574049600,
+    "tFrom": 1597780800,
     "tTo": 1646049600,
     "approxNotes": [
       "봉 내 순서는 관례(양봉 O→L→H→C·음봉 O→H→L→C) — 실순서 미상 · 봉 중 거래량 null · MDD 는 봉 마감 기준"
     ],
     "spec": {
       "ex": "binance",
-      "sym": "LTCUSDT",
+      "sym": "DOTUSDT",
       "interval": "4h",
       "bars": 5000,
       "end": 1646064000

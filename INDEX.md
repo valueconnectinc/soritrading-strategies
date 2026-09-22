@@ -11,7 +11,7 @@ Every figure comes from the last verifying backtest at publish time. These are p
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
-|  | [2334](strategies/2334/) | AI 전략 | +61.06% | +86.20% | +26.80% | 56 | 2026-09-22 |
+|  | [2334](strategies/2334/) | AI 전략 | +119.63% | +478.06% | +20.54% | 44 | 2026-09-22 |
 |  | [2332](strategies/2332/) | XRP Band Bounce On-Chain Filter 4H | +145.06% | +194.02% | +12.70% | 81 | 2026-09-22 |
 |  | [2331](strategies/2331/) | DOT Band Bounce On-Chain Filter 4H | +105.88% | +478.06% | +23.60% | 60 | 2026-09-22 |
 |  | [2330](strategies/2330/) | DOT Band Bounce On-Chain Filter 4H | +29.18% | +86.20% | +22.31% | 84 | 2026-09-22 |
