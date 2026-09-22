@@ -1,0 +1,30 @@
+{
+  "id": 2332,
+  "name": "XRP Band Bounce On-Chain Filter 4H",
+  "kind": "custom",
+  "verified": {
+    "backtestId": 9548,
+    "return": -2.57,
+    "mdd": 29.51,
+    "trades": 66,
+    "vsBuyHold": "lose",
+    "benchRet": 211.19,
+    "benchBasis": "price",
+    "gapPct": 0,
+    "tFrom": 1718064000,
+    "tTo": 1790049600,
+    "approxNotes": [
+      "봉 내 순서는 관례(양봉 O→L→H→C·음봉 O→H→L→C) — 실순서 미상 · 봉 중 거래량 null · MDD 는 봉 마감 기준"
+    ],
+    "spec": {
+      "ex": "binance",
+      "sym": "XRPUSDT",
+      "interval": "4h",
+      "bars": 5000,
+      "end": 1790064000
+    }
+  },
+  "config": null,
+  "updatedAt": "2026-09-22T08:19:03.932Z",
+  "publishedBy": "scripts/publish-strategies.mjs"
+}
