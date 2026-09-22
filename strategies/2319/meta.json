@@ -3,7 +3,7 @@
   "name": "BTC Donchian Funding-Filter 1D",
   "kind": "custom",
   "verified": {
-    "backtestId": 9481,
+    "backtestId": 9484,
     "return": -5.86,
     "mdd": 22.38,
     "trades": 2,
