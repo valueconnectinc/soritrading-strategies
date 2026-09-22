@@ -3,16 +3,16 @@
   "name": "DOT Band Bounce Funding-Filter 4H",
   "kind": "custom",
   "verified": {
-    "backtestId": 9490,
-    "return": 33.17,
-    "mdd": 17.45,
-    "trades": 51,
+    "backtestId": 9493,
+    "return": 9.12,
+    "mdd": 22.17,
+    "trades": 33,
     "vsBuyHold": "win",
-    "benchRet": -5.78,
+    "benchRet": -43.31,
     "benchBasis": "price",
     "gapPct": 0,
-    "tFrom": 1660435200,
-    "tTo": 1703620800,
+    "tFrom": 1703635200,
+    "tTo": 1746820800,
     "approxNotes": [
       "봉 내 순서는 관례(양봉 O→L→H→C·음봉 O→H→L→C) — 실순서 미상 · 봉 중 거래량 null · MDD 는 봉 마감 기준"
     ],
@@ -21,7 +21,7 @@
       "sym": "DOTUSDT",
       "interval": "4h",
       "bars": 3000,
-      "end": 1703635200
+      "end": 1746835200
     }
   },
   "config": null,

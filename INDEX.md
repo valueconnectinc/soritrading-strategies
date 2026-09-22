@@ -11,7 +11,7 @@ Every figure comes from the last verifying backtest at publish time. These are p
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
-| ★ | [2321](strategies/2321/) | DOT Band Bounce Funding-Filter 4H | +33.17% | -5.78% | +17.45% | 51 | 2026-09-22 |
+| ★ | [2321](strategies/2321/) | DOT Band Bounce Funding-Filter 4H | +9.12% | -43.31% | +22.17% | 33 | 2026-09-22 |
 |  | [2320](strategies/2320/) | LTC Donchian Funding-Filter 4H | -74.40% | +13.16% | +76.03% | 70 | 2026-09-22 |
 |  | [2319](strategies/2319/) | BTC Donchian Funding-Filter 1D | -5.86% | +52.37% | +22.38% | 2 | 2026-09-22 |
 |  | [2318](strategies/2318/) | BTC Keltner Channel Trend 1D | -79.86% | +5.58% | +79.86% | 122 | 2026-09-22 |
