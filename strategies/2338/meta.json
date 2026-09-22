@@ -3,7 +3,7 @@
   "name": "LTC StochRSI MR Adaptive-Exit 4H",
   "kind": "custom",
   "verified": {
-    "backtestId": 9604,
+    "backtestId": 9607,
     "return": 22.27,
     "mdd": 24.04,
     "trades": 40,
