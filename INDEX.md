@@ -4,13 +4,14 @@ Every strategy whose backtest **finished and actually traded** is published here
 Nothing is filtered out by return — the ones that lost money are part of the record.
 Entries stay after a strategy is removed from our own workspace — this is a log, and deleting the record would leave only the survivors.
 
-**★ marks a strategy that out-returned buy & hold over the same window** — 220 of 797 right now.
+**★ marks a strategy that out-returned buy & hold over the same window** — 220 of 798 right now.
 `—` means the comparison **could not be made**: the engine does not compute a benchmark for multi-symbol, futures, or multi-leg runs. That is *unknown*, not *lost*, and it is 180 of them right now.
 
 Every figure comes from the last verifying backtest at publish time. These are past results over historical data. Nothing here is promised or assured about the future, and none of it is investment advice.
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
+|  | [2320](strategies/2320/) | LTC Donchian Funding-Filter 4H | -74.40% | +13.16% | +76.03% | 70 | 2026-09-22 |
 |  | [2319](strategies/2319/) | BTC Donchian Funding-Filter 1D | -5.86% | +52.37% | +22.38% | 2 | 2026-09-22 |
 |  | [2318](strategies/2318/) | BTC Keltner Channel Trend 1D | -79.86% | +5.58% | +79.86% | 122 | 2026-09-22 |
 |  | [2315](strategies/2315/) | DOGE Band Bounce | +740.41% | +4626.18% | +37.10% | 119 | 2026-09-21 |
