@@ -11,7 +11,7 @@ Every figure comes from the last verifying backtest at publish time. These are p
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
-|  | [2330](strategies/2330/) | DOT Band Bounce On-Chain Filter 4H | +51.52% | +76.06% | +24.35% | 96 | 2026-09-22 |
+|  | [2330](strategies/2330/) | DOT Band Bounce On-Chain Filter 4H | +29.18% | +86.20% | +22.31% | 84 | 2026-09-22 |
 | — | [2329](strategies/2329/) | Altcoin Momentum Rotation 1D | -81.81% | — | +87.90% | 1430 | 2026-09-22 |
 |  | [2328](strategies/2328/) | BNB Regime-Adaptive Vol-Target 1D | +97.51% | +775.88% | +16.97% | 747 | 2026-09-22 |
 | ★ | [2327](strategies/2327/) | XRP Regime-Adaptive Vol-Target 1D | -0.28% | -46.41% | +0.28% | 16 | 2026-09-22 |
