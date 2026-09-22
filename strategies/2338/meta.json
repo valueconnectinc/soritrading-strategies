@@ -1,0 +1,30 @@
+{
+  "id": 2338,
+  "name": "LTC StochRSI MR Adaptive-Exit 4H",
+  "kind": "custom",
+  "verified": {
+    "backtestId": 9604,
+    "return": 22.27,
+    "mdd": 24.04,
+    "trades": 40,
+    "vsBuyHold": "win",
+    "benchRet": -30.1,
+    "benchBasis": "price",
+    "gapPct": 0,
+    "tFrom": 1646092800,
+    "tTo": 1718078400,
+    "approxNotes": [
+      "봉 내 순서는 관례(양봉 O→L→H→C·음봉 O→H→L→C) — 실순서 미상 · 봉 중 거래량 null · MDD 는 봉 마감 기준"
+    ],
+    "spec": {
+      "ex": "binance",
+      "sym": "LTCUSDT",
+      "interval": "4h",
+      "bars": 5000,
+      "end": 1718092800
+    }
+  },
+  "config": null,
+  "updatedAt": "2026-09-22T17:21:20.258Z",
+  "publishedBy": "scripts/publish-strategies.mjs"
+}
