@@ -1,0 +1,30 @@
+{
+  "id": 2315,
+  "name": "DOGE Band Bounce",
+  "kind": "custom",
+  "verified": {
+    "backtestId": 9465,
+    "return": 82.91,
+    "mdd": 21.16,
+    "trades": 120,
+    "vsBuyHold": "lose",
+    "benchRet": 1714.9,
+    "benchBasis": "price",
+    "gapPct": 0,
+    "tFrom": 1574020800,
+    "tTo": 1646020800,
+    "approxNotes": [
+      "봉 내 순서는 관례(양봉 O→L→H→C·음봉 O→H→L→C) — 실순서 미상 · 봉 중 거래량 null · MDD 는 봉 마감 기준"
+    ],
+    "spec": {
+      "ex": "binance",
+      "sym": "BNBUSDT",
+      "interval": "4h",
+      "bars": 5000,
+      "end": 1646035200
+    }
+  },
+  "config": null,
+  "updatedAt": "2026-09-21T23:57:21.641Z",
+  "publishedBy": "scripts/publish-strategies.mjs"
+}
