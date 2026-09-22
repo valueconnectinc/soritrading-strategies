@@ -3,7 +3,7 @@
   "name": "[검증] 불변식 프로브 — 항상 전액 매수(매도 없음)",
   "kind": "custom",
   "verified": {
-    "backtestId": 9532,
+    "backtestId": 9533,
     "return": -6.29,
     "mdd": 53.27,
     "trades": 2,
