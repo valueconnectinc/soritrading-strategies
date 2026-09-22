@@ -1,28 +1,26 @@
 /*
  * @coinsori-strategy v1
- * name: LTC Band Bounce + Bull Overlay 4H
+ * name: LTC Band Bounce 4H
  * ex: binance
  * syms: LTCUSDT
  * interval: 4h
  * cash: 1000
  *
- * Why this strategy: The plain LTC 4h band-bounce is a validated defensive
- * winner (beat buy-and-hold in 2/3 walk-forward windows, crushed both bear
- * markets, MDD 15-27%). Its ONE documented weakness is that it lags strong
- * bull runs: it only buys on deep lower-band touches, so in a sustained
- * uptrend price rarely pulls back far enough and the strategy sits in cash.
- * This version keeps the proven deep-oversold bounce but ADDS a bull-mode
- * overlay: when the trend is strongly up, it buys shallower pullbacks so it
- * participates in the run instead of watching it pass.
- * When it buys: (1) deep oversold bounce at the lower band with RSI<35 in an
- * uptrend (the proven edge), OR (2) in a strong bull (price well above 200-SMA
- * and above the mid band) a shallower pullback to the mid band with RSI<50.
- * When it sells: half at the mid band, rest on RSI>65, a trailing stop 8% off
- * peak, or a hard 12% stop below entry.
- * When it does NOT work: choppy flat regimes where the 200-SMA gate and the
- * bull overlay whipsaw, and a straight parabolic melt-up where any pullback
- * entry is too late. The bull overlay adds trades, so fees and whipsaw risk
- * are higher than the plain version.
+ * Why this strategy: Bollinger Band mean reversion on a mature, low-volatility
+ * alt, gated by the 200-SMA trend, with partial profit-taking so winners can
+ * run. This is the validated LTC 4h edge (beat buy-and-hold in 2/3 walk-forward
+ * windows, crushed both bear markets, MDD 15-27%). Bet: a liquid, less volatile
+ * alt snaps back toward the middle band after touching the lower band when RSI
+ * is oversold — but only in an uptrend.
+ * When it buys: price touches the lower Bollinger band, RSI is oversold
+ * (< 35), AND price is above the 200-SMA. When it sells: half at the middle
+ * band, the rest on RSI turning overbought (> 65), a trailing stop (price falls
+ * 8% from peak), or a hard 12% stop below entry.
+ * When it does NOT work: strong one-way downtrends (we stay in cash, missing
+ * the bounce but avoiding losses), and choppy flat regimes where the 200-SMA
+ * gate whipsaws. It also lags sustained bull runs because it only buys on deep
+ * lower-band touches — a deliberate tradeoff: adding shallow-pullback entries
+ * to capture bulls was tested and made things far worse (whipsaw).
  */
 function onUpdate(ctx) {
   const bb = ctx.bb(20, 2, 1);
@@ -35,19 +33,9 @@ function onUpdate(ctx) {
   const pos = ctx.position || 0;
   const entry = ctx.entryPx || 0;
 
-  // ---- ENTRY ----
+  // ---- ENTRY: deep oversold bounce at the lower band, only in an uptrend ----
   if (pos === 0) {
-    // Path 1 (proven): deep oversold bounce at the lower band, uptrend only.
     if (px <= bb.lower && rsi < 35 && px > sma200) {
-      ctx.state.peak = px;
-      ctx.state.halfKept = 0;
-      return { side: 'buy', qty: ctx.cash / ctx.price * 0.99 };
-    }
-    // Path 2 (new overlay): strong bull, shallower pullback to the mid band.
-    // Only fire when the trend is clearly up (price >1.05x the 200-SMA so we
-    // are well inside a bull, not near the gate) AND price is at/above mid band
-    // (no falling knife). This is the anti-lag addition for bull runs.
-    if (px > sma200 * 1.05 && px >= bb.mid && rsi < 50) {
       ctx.state.peak = px;
       ctx.state.halfKept = 0;
       return { side: 'buy', qty: ctx.cash / ctx.price * 0.99 };
