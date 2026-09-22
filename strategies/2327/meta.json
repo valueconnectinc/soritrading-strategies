@@ -1,0 +1,30 @@
+{
+  "id": 2327,
+  "name": "XRP Regime-Adaptive Vol-Target 1D",
+  "kind": "custom",
+  "verified": {
+    "backtestId": 9517,
+    "return": -0.28,
+    "mdd": 0.28,
+    "trades": 16,
+    "vsBuyHold": "win",
+    "benchRet": -46.41,
+    "benchBasis": "price",
+    "gapPct": 0,
+    "tFrom": 1525392000,
+    "tTo": 1530748800,
+    "approxNotes": [
+      "봉 내 순서는 관례(양봉 O→L→H→C·음봉 O→H→L→C) — 실순서 미상 · 봉 중 거래량 null · MDD 는 봉 마감 기준"
+    ],
+    "spec": {
+      "ex": "binance",
+      "sym": "XRPUSDT",
+      "interval": "1d",
+      "bars": 1500,
+      "end": 1530835200
+    }
+  },
+  "config": null,
+  "updatedAt": "2026-09-22T03:57:16.851Z",
+  "publishedBy": "scripts/publish-strategies.mjs"
+}
