@@ -11,7 +11,7 @@ Every figure comes from the last verifying backtest at publish time. These are p
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
-|  | [2315](strategies/2315/) | DOGE Band Bounce | +82.91% | +1714.90% | +21.16% | 120 | 2026-09-21 |
+|  | [2315](strategies/2315/) | DOGE Band Bounce | +740.41% | +4626.18% | +37.10% | 119 | 2026-09-21 |
 | ★ | [2313](strategies/2313/) | BTC Donchian Vol-Confirm 3.0x 1D | +121.89% | +83.66% | +24.82% | 14 | 2026-09-21 |
 |  | [2312](strategies/2312/) | BTC Donchian Vol-Confirm 2.0x 1D | -5.86% | +53.72% | +22.38% | 2 | 2026-09-21 |
 | ★ | [2311](strategies/2311/) | BTC Plain Donchian 55/30 1D (A/B baseline) | +380.45% | +273.76% | +45.20% | 25 | 2026-09-21 |
