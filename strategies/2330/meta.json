@@ -3,16 +3,16 @@
   "name": "DOT Band Bounce On-Chain Filter 4H",
   "kind": "custom",
   "verified": {
-    "backtestId": 9536,
-    "return": -59.06,
-    "mdd": 59.88,
-    "trades": 219,
+    "backtestId": 9539,
+    "return": 51.52,
+    "mdd": 24.35,
+    "trades": 96,
     "vsBuyHold": "lose",
-    "benchRet": -27.17,
+    "benchRet": 76.06,
     "benchBasis": "price",
     "gapPct": 0,
-    "tFrom": 1646049600,
-    "tTo": 1718035200,
+    "tFrom": 1574035200,
+    "tTo": 1646035200,
     "approxNotes": [
       "봉 내 순서는 관례(양봉 O→L→H→C·음봉 O→H→L→C) — 실순서 미상 · 봉 중 거래량 null · MDD 는 봉 마감 기준"
     ],
@@ -21,7 +21,7 @@
       "sym": "LTCUSDT",
       "interval": "4h",
       "bars": 5000,
-      "end": 1718049600
+      "end": 1646049600
     }
   },
   "config": null,
