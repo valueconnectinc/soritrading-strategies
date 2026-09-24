@@ -3,16 +3,16 @@
   "name": "LTC Band-Bounce Mean Reversion Cooldown 1D",
   "kind": "custom",
   "verified": {
-    "backtestId": 9715,
-    "return": 43.16,
-    "mdd": 9.73,
+    "backtestId": 9717,
+    "return": 113.79,
+    "mdd": 44.42,
     "trades": 58,
     "vsBuyHold": "win",
-    "benchRet": 0.83,
+    "benchRet": -26.21,
     "benchBasis": "price",
     "gapPct": 0,
-    "tFrom": 1660608000,
-    "tTo": 1790121600,
+    "tFrom": 1531008000,
+    "tTo": 1660521600,
     "approxNotes": [
       "봉 내 순서는 관례(양봉 O→L→H→C·음봉 O→H→L→C) — 실순서 미상 · 봉 중 거래량 null · MDD 는 봉 마감 기준"
     ],
@@ -21,7 +21,7 @@
       "sym": "LTCUSDT",
       "interval": "1d",
       "bars": 1500,
-      "end": 1790208000
+      "end": 1660608000
     }
   },
   "config": null,
