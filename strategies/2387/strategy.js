@@ -1,44 +1,67 @@
 /*
  * @coinsori-strategy v1
- * name: BTC Band-Bounce Mean Reversion 1D
+ * name: SOL Hysteresis Pure-Regime NoTrail 1D
  * ex: binance
- * syms: BTCUSDT
+ * syms: SOLUSDT
  * interval: 1d
  * cash: 10000
  *
- * Why this strategy: Bitcoin's price mean-reverts — sharp drops to the lower Bollinger band
- * with an oversold RSI are capitulation events that usually bounce back toward the average.
- * This is the opposite family from trend-following: it buys weakness and sells strength.
- * When it buys and sells: Buy when the last closed price touches the lower Bollinger band
- * (20,2) AND RSI(14) is oversold (<30). Sell when price reaches the upper band or RSI turns
- * overbought (>70).
- * When it does NOT work: In a genuine bear-market breakdown, "cheap" keeps getting cheaper
- * and the bounce never comes — this strategy keeps buying falling knives and can hold a deep
- * drawdown. It also sits flat (in cash) for long stretches during strong one-way trends,
- * missing the rally entirely.
+ * Why this strategy: The SOL champion loses to buy-and-hold in the explosive 2020-2022
+ * parabolic window because its 3-ATR trailing stop exits normal pullbacks and misses the
+ * resumption. This variant removes the trailing stop entirely and holds the position for
+ * the full trend, exiting only when the regime truly breaks (price closes 1 ATR below the
+ * 50-day average) or on a hard crash (2.5 ATR below the average). Winners run the full move.
+ * When it buys and sells: Buy when the last closed price is above the 50-day average,
+ * sized down when volatility is high or the crowd is in extreme fear. Sell when price
+ * closes 1 ATR below the average, or drops 2.5 ATRs below it in a crash. No trailing stop.
+ * When it does NOT work: With no trailing stop, it gives back more profit in slow
+ * grind-downs that never make a new high but stay above the average for a while; and it
+ * rides full drawdowns in crashes, so MDD can be higher than the trailing-stop version.
  */
 function onUpdate(ctx) {
   const closes = ctx.closes;
-  if (closes == null || closes.length < 60) return null;
+  if (closes == null || closes.length < 55) return null;
   const px = closes[closes.length - 2]; // last CLOSED bar
-  const bb = ctx.bb(20, 2, 1);
-  const rsi = ctx.rsi(14, 1);
-  if (px == null || bb == null || rsi == null || bb.lower == null || bb.upper == null) return null;
-
+  const sma50 = ctx.sma(50, 1);
+  const atr = ctx.atr(14, 1);
   const pos = ctx.position;
-  const lower = bb.lower;
-  const upper = bb.upper;
+  const cash = ctx.cash;
+  const st = ctx.state;
+  if (px == null || sma50 == null || atr == null || px <= 0) return null;
+
+  const long = px > sma50;
+  const exitBelow = px < sma50 - 1.0 * atr; // hysteresis: ignore small chop
+  const crashStop = px < sma50 - 2.5 * atr; // tightened from 3.0 to cut deeper drawdowns
+
+  // Volatility-scaled sizing: normalized vol = ATR/price averaged over last 50 bars,
+  // compared to today's ratio. More volatile than normal -> cut exposure, clamp [0.3,1].
+  let ratioSum = 0, ratioCount = 0;
+  for (let k = 1; k <= 50; k++) {
+    const c = closes[closes.length - 1 - k];
+    const a = ctx.atr(14, k);
+    if (c != null && a != null && c > 0) { ratioSum += a / c; ratioCount++; }
+  }
+  let sizeMult = 1;
+  if (ratioCount >= 20) {
+    const normRatio = ratioSum / ratioCount;
+    const currentRatio = atr / px;
+    sizeMult = Math.max(0.3, Math.min(1, normRatio / currentRatio));
+  }
+
+  // Fear & greed risk filter: extreme fear (<=20) usually means mid-crash. Cut to 40%.
+  const fg = ctx.data('fear_greed');
+  if (fg != null && fg <= 20) {
+    sizeMult *= 0.4;
+  }
 
   if (pos === 0) {
-    // Buy capitulation: price at/below the lower band AND oversold.
-    if (px <= lower && rsi < 30 && ctx.price > 0) {
-      return { side: 'buy', qty: (ctx.cash / ctx.price) * 0.98 };
+    if (long && cash > 0 && ctx.price > 0) {
+      return { side: 'buy', qty: (cash / ctx.price) * 0.98 * sizeMult };
     }
     return null;
   }
 
-  // Exit the bounce: price back at the upper band or RSI overbought.
-  if (px >= upper || rsi > 70) {
+  if (exitBelow || crashStop) {
     return { side: 'sell', qty: pos };
   }
   return null;
