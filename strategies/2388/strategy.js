@@ -1,23 +1,24 @@
 /*
  * @coinsori-strategy v1
- * name: SOL Hysteresis Staged-Exit 1D
+ * name: SOL Hysteresis Staged-Exit FastReentry 1D
  * ex: binance
  * syms: SOLUSDT
  * interval: 1d
  * cash: 10000
  *
- * Why this strategy: The validated SOL champion loses to buy-and-hold in sustained
- * melt-ups because its all-or-nothing exit (close 1 ATR below the 50-day average) sells
- * the whole position on pullbacks that immediately recover. This variant scales out in
- * stages instead: sell half when price dips 1 ATR below the average, and the rest only if
- * the dip deepens to 2 ATR or a hard crash hits. Winners keep more of the full move.
- * When it buys and sells: Buy above the 50-day average, sized down on high volatility or
- * extreme fear. Sell half the position when price closes 1 ATR below the average; sell the
- * rest if it reaches 2 ATR below, or on a 3-ATR crash. Never re-buy until the regime is
- * back above the average.
- * When it does NOT work: In straight-line melt-ups (e.g. 2023-2025) it still trails
- * buy-and-hold because the regime-break exit is late to the resumption; in slow
- * grind-downs that hover just under the average the half position rides the drawdown.
+ * Why this strategy: The validated SOL champion (staged-exit) beat buy-and-hold on every
+ * window but still trailed in straight-line melt-ups because after a full exit it waited
+ * for price to climb all the way back above the 50-day average before re-entering. This
+ * variant adds a faster re-entry trigger: once a full exit happens inside a still-up
+ * longer trend, it re-buys as soon as price crosses back above a faster 20-day average,
+ * catching the resumption of the rally sooner.
+ * When it buys and sells: Buy when price is above the 50-day average (or, after a full
+ * exit, when price crosses back above the 20-day average while the 50-day trend is still
+ * up), sized down on high volatility or extreme fear. Sell half when price closes 1 ATR
+ * below the average; sell the rest at 2 ATR below or on a 3-ATR crash.
+ * When it does NOT work: In a slow grind-down that hovers just under the average, the
+ * faster re-entry can re-buy into a falling knife and the half position rides the
+ * drawdown; in choppy sideways markets the faster trigger causes more whipsaw trades.
  * Drawdown stays elevated in long choppy downtrends.
  */
 function onUpdate(ctx) {
@@ -25,11 +26,12 @@ function onUpdate(ctx) {
   if (closes == null || closes.length < 55) return null;
   const px = closes[closes.length - 2]; // last CLOSED bar
   const sma50 = ctx.sma(50, 1);
+  const ema20 = ctx.ema(20, 1);
   const atr = ctx.atr(14, 1);
   const pos = ctx.position;
   const cash = ctx.cash;
   const st = ctx.state;
-  if (px == null || sma50 == null || atr == null || px <= 0) return null;
+  if (px == null || sma50 == null || ema20 == null || atr == null || px <= 0) return null;
 
   const long = px > sma50;
   const dip1 = px < sma50 - 1.0 * atr;   // mild pullback -> exit half
@@ -57,7 +59,16 @@ function onUpdate(ctx) {
   }
 
   if (pos === 0) {
-    if (long && cash > 0 && ctx.price > 0) {
+    // Standard entry: above the 50-day average.
+    let shouldBuy = long;
+    // Faster re-entry after a full exit: price crossed back above the 20-day average
+    // while the 50-day trend is still up (sma50 rising or price above a slow reference).
+    // This is the melt-up fix: catch the resumption sooner than waiting for sma50.
+    if (!shouldBuy && st.fastReentry && px > ema20 && px > sma50 - 1.0 * atr) {
+      shouldBuy = true;
+    }
+    if (shouldBuy && cash > 0 && ctx.price > 0) {
+      st.fastReentry = 0;
       return { side: 'buy', qty: (cash / ctx.price) * 0.98 * sizeMult };
     }
     return null;
@@ -66,10 +77,12 @@ function onUpdate(ctx) {
   // Staged exit: use a state flag so we sell half once, then the rest on deeper dip.
   if (crash) {
     st.stage = 0;
+    st.fastReentry = 1; // allow faster re-entry after a full exit
     return { side: 'sell', qty: pos };
   }
   if (dip2) {
     st.stage = 0;
+    st.fastReentry = 1; // allow faster re-entry after a full exit
     return { side: 'sell', qty: pos };
   }
   if (dip1 && st.stage !== 1) {
