@@ -15,9 +15,9 @@
  * average. Sell full when price closes more than 1 ATR below the average, OR falls
  * a set % off its highest close since entry (trailing stop), OR drops 3 ATRs below
  * the average in one move (crash stop).
- * When it does NOT work: In a straight-line melt-up the trailing stop exits a normal
- * pullback that instantly recovers, so it can lag buy-and-hold; and the trailing
- * stop does not help in a slow steady decline where price never makes a new high.
+ * When it does NOT work: In a straight-line melt-up a tight trailing stop exits a
+ * normal pullback that instantly recovers, so it lags buy-and-hold; and the stop
+ * does not help in a slow steady decline where price never makes a new high.
  */
 function onUpdate(ctx) {
   const closes = ctx.closes;
@@ -46,10 +46,10 @@ function onUpdate(ctx) {
   // While long, update the running high to the highest closed price we've seen.
   if (st.runHigh == null) st.runHigh = px;
   st.runHigh = Math.max(st.runHigh, px);
-  // Trailing stop: exit if price falls 20% off the running high. 20% = a normal
-  // SOL correction, tight enough to protect profit after a big run, loose enough
-  // not to whipsaw on daily noise.
-  const trailHit = px < st.runHigh * (1 - 0.20);
+  // Trailing stop: exit if price falls 40% off the running high. 40% is loose
+  // enough that normal SOL bull pullbacks (20-30%) don't whipsaw us out, but it
+  // still protects profit from the worst grind-downs and crash reversals.
+  const trailHit = px < st.runHigh * (1 - 0.40);
 
   if (exitBelow || crashStop || trailHit) {
     return { side: 'sell', qty: pos };
