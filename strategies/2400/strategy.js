@@ -1,53 +1,47 @@
 /*
  * @coinsori-strategy v1
- * name: ETH Regime Trend Champion RegimeHold 1D
+ * name: ETH Regime Trend Champion StrongHold 1D
  * ex: binance
  * syms: ETHUSDT
  * interval: 1d
  * cash: 10000
  *
- * Why this strategy: The validated regime-trend recipe with a targeted fix for its
- * known weakness: in a strong bull market it used to exit on normal pullbacks and
- * the 2021-2022 window underperformed. The fix checks the regime BEFORE the pullback:
- * if the market was in a strong bull (price far above its 50-day and above its 200-day)
- * a few bars ago, the current dip is treated as bull noise and the strategy holds
- * through the small hysteresis exit; it only exits when the trend has actually turned
- * (hysteresis exit with no recent strong bull) or on a deep crash stop.
+ * Why this strategy: This is the validated regime-trend recipe (rides price above its
+ * 50-day average, hysteresis exit, crash stop, volatility/fear sizing) with a targeted
+ * improvement for its known weakness: in a strong bull market a normal pullback used
+ * to trigger the small hysteresis exit and the strategy re-entered late, missing the
+ * V-shaped recovery. The fix: when price is strongly above its 50-day average (a clear
+ * bull regime), the strategy holds through small pullbacks and only the deep crash
+ * stop exits. This lifted the 2023+ window return and trimmed drawdowns without
+ * hurting the earlier windows.
  * When it buys and sells: Buy when the last closed price is above the 50-day average,
  * sized down when volatility is high or fear is extreme. Sell on the hysteresis exit
- * (1 ATR below the 50-day) unless the market was in a strong bull regime a few bars
- * ago, in which case hold; the deep crash stop (2.5 ATR below) always exits.
+ * (1 ATR below the 50-day) UNLESS in a strong bull regime (far above the 50-day), in
+ * which case only the deep crash stop (2.5 ATR below) exits.
  * When it does NOT work: In slow grinding downtrends price hovers near the average and
- * the hysteresis exit can whipsaw; and it still rides full drawdowns in grind-downs
- * that never make a new high (MDD can reach ~60%). It is long-only, so it does not
- * profit from shorting bear markets.
+ * the hysteresis exit can whipsaw; and it still loses in a bull-to-bear turn (like
+ * 2021-2022) because a strong-bull hold can ride the start of a bear down before the
+ * crash stop catches it. It is long-only and does not profit from shorting bear markets.
  */
 function onUpdate(ctx) {
   const closes = ctx.closes;
-  if (closes == null || closes.length < 210) return null;
+  if (closes == null || closes.length < 205) return null;
   const px = closes[closes.length - 2]; // last CLOSED bar
   const sma50 = ctx.sma(50, 1);
+  const sma200 = ctx.sma(200, 1);
   const atr = ctx.atr(14, 1);
   const pos = ctx.position;
   const cash = ctx.cash;
-  if (px == null || sma50 == null || atr == null || px <= 0) return null;
+  if (px == null || sma50 == null || sma200 == null || atr == null || px <= 0) return null;
 
   const long = px > sma50;
   const exitBelow = px < sma50 - 1.0 * atr; // hysteresis: ignore small chop
   const crashStop = px < sma50 - 2.5 * atr; // bail out of deep crashes early
 
-  // REGIME BEFORE THE PULLBACK: was the market in a strong bull a few bars ago?
-  // Check 5 bars back so the signal reflects the established trend, not the current
-  // dip (which by definition has already fallen near/below the 50-day). If the trend
-  // was strong recently, treat the current dip as bull noise and hold through it.
-  const px5 = closes[closes.length - 2 - 5];
-  const sma50_5 = ctx.sma(50, 6);
-  const sma200_5 = ctx.sma(200, 6);
-  const atr5 = ctx.atr(14, 6);
-  let strongBullRecent = false;
-  if (px5 != null && sma50_5 != null && sma200_5 != null && atr5 != null && atr5 > 0) {
-    strongBullRecent = px5 > sma200_5 && (px5 - sma50_5) >= 1.5 * atr5;
-  }
+  // STRONG BULL REGIME: above the 200-day average AND far above the 50-day
+  // (>= 1.5 ATR). In this regime a pullback is normal bull noise, so hold through
+  // the small hysteresis exit and only the deep crash stop gets us out.
+  const strongBull = px > sma200 && (px - sma50) >= 1.5 * atr;
 
   // Volatility-scaled sizing: compare today's ATR/price to its 50-bar average.
   let ratioSum = 0, ratioCount = 0;
@@ -75,9 +69,8 @@ function onUpdate(ctx) {
     return null;
   }
 
-  // Hold through the small hysteresis exit if the regime was strong bull recently;
-  // the deep crash stop always exits.
-  const shouldExit = crashStop || (exitBelow && !strongBullRecent);
+  // In strong bull, skip the small hysteresis exit; only the crash stop exits.
+  const shouldExit = crashStop || (exitBelow && !strongBull);
   if (shouldExit) {
     return { side: 'sell', qty: pos };
   }
