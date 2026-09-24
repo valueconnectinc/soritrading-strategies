@@ -1,0 +1,30 @@
+{
+  "id": 2379,
+  "name": "BTC On-Chain Regime Trend 1D",
+  "kind": "custom",
+  "verified": {
+    "backtestId": 9885,
+    "return": -28.16,
+    "mdd": 43.52,
+    "trades": 388,
+    "vsBuyHold": "lose",
+    "benchRet": 408.45,
+    "benchBasis": "price",
+    "gapPct": 0,
+    "tFrom": 1669248000,
+    "tTo": 1790121600,
+    "approxNotes": [
+      "봉 내 순서는 관례(양봉 O→L→H→C·음봉 O→H→L→C) — 실순서 미상 · 봉 중 거래량 null · MDD 는 봉 마감 기준"
+    ],
+    "spec": {
+      "ex": "binance",
+      "sym": "BTCUSDT",
+      "interval": "1d",
+      "bars": 1400,
+      "end": 1790208000
+    }
+  },
+  "config": null,
+  "updatedAt": "2026-09-24T12:33:15.247Z",
+  "publishedBy": "scripts/publish-strategies.mjs"
+}
