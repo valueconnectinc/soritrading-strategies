@@ -3,12 +3,12 @@
   "name": "BTC Bollinger Squeeze Breakout 1D",
   "kind": "custom",
   "verified": {
-    "backtestId": 9756,
-    "return": -31.99,
-    "mdd": 46.58,
-    "trades": 30,
+    "backtestId": 9759,
+    "return": -54.5,
+    "mdd": 65.09,
+    "trades": 28,
     "vsBuyHold": "lose",
-    "benchRet": 253.8,
+    "benchRet": 43.06,
     "benchBasis": "price",
     "gapPct": 0,
     "tFrom": 1660608000,
@@ -18,7 +18,7 @@
     ],
     "spec": {
       "ex": "binance",
-      "sym": "BTCUSDT",
+      "sym": "ETHUSDT",
       "interval": "1d",
       "bars": 1500,
       "end": 1790208000
