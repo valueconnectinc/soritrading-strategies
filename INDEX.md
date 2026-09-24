@@ -11,7 +11,7 @@ Every figure comes from the last verifying backtest at publish time. These are p
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
-|  | [2366](strategies/2366/) | ETH Volume-Confirmed Donchian 1D | +13.12% | +60.78% | +66.03% | 1 | 2026-09-24 |
+|  | [2366](strategies/2366/) | ETH Volume-Confirmed Donchian 1D | +13.46% | +60.78% | +49.96% | 1 | 2026-09-24 |
 | — | [2365](strategies/2365/) | BTC Bollinger Squeeze Breakout 1D | -85.95% | — | +93.88% | 58 | 2026-09-24 |
 |  | [2364](strategies/2364/) | BTC Fear-Greed Trend Dip-Buy 1D | -33.09% | +57.69% | +33.09% | 8 | 2026-09-24 |
 |  | [2363](strategies/2363/) | BTC Fear-Greed Contrarian 1D | -11.26% | +253.80% | +25.02% | 56 | 2026-09-24 |
