@@ -1,0 +1,30 @@
+{
+  "id": 2364,
+  "name": "BTC Fear-Greed Trend Dip-Buy 1D",
+  "kind": "custom",
+  "verified": {
+    "backtestId": 9749,
+    "return": -33.09,
+    "mdd": 33.09,
+    "trades": 8,
+    "vsBuyHold": "lose",
+    "benchRet": 57.69,
+    "benchBasis": "price",
+    "gapPct": 0,
+    "tFrom": 1502928000,
+    "tTo": 1530921600,
+    "approxNotes": [
+      "봉 내 순서는 관례(양봉 O→L→H→C·음봉 O→H→L→C) — 실순서 미상 · 봉 중 거래량 null · MDD 는 봉 마감 기준"
+    ],
+    "spec": {
+      "ex": "binance",
+      "sym": "BTCUSDT",
+      "interval": "1d",
+      "bars": 1500,
+      "end": 1531008000
+    }
+  },
+  "config": null,
+  "updatedAt": "2026-09-24T11:00:43.482Z",
+  "publishedBy": "scripts/publish-strategies.mjs"
+}
