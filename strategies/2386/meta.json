@@ -1,0 +1,30 @@
+{
+  "id": 2386,
+  "name": "BTC On-Chain Adoption Trend 1D",
+  "kind": "custom",
+  "verified": {
+    "backtestId": 9923,
+    "return": -96.03,
+    "mdd": 96.08,
+    "trades": 686,
+    "vsBuyHold": "lose",
+    "benchRet": 258.98,
+    "benchBasis": "price",
+    "gapPct": 0,
+    "tFrom": 1531008000,
+    "tTo": 1660521600,
+    "approxNotes": [
+      "봉 내 순서는 관례(양봉 O→L→H→C·음봉 O→H→L→C) — 실순서 미상 · 봉 중 거래량 null · MDD 는 봉 마감 기준"
+    ],
+    "spec": {
+      "ex": "binance",
+      "sym": "BTCUSDT",
+      "interval": "1d",
+      "bars": 1500,
+      "end": 1660608000
+    }
+  },
+  "config": null,
+  "updatedAt": "2026-09-24T12:54:57.123Z",
+  "publishedBy": "scripts/publish-strategies.mjs"
+}
