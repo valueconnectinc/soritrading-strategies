@@ -11,7 +11,7 @@ Every figure comes from the last verifying backtest at publish time. These are p
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
-| ★ | [2359](strategies/2359/) | LTC Band-Bounce Cooldown + StopLoss 1D | +249.00% | -15.53% | +32.31% | 54 | 2026-09-24 |
+| ★ | [2359](strategies/2359/) | LTC Band-Bounce Cooldown + StopLoss 1D | +284.07% | +57.46% | +32.40% | 34 | 2026-09-24 |
 | ★ | [2358](strategies/2358/) | LTC Band-Bounce Fear-Confirmed 1D | +22.50% | -70.76% | +54.96% | 10 | 2026-09-24 |
 | ★ | [2357](strategies/2357/) | LTC Band-Bounce Mean Reversion Cooldown 1D | +113.79% | -26.21% | +44.42% | 58 | 2026-09-24 |
 | ★ | [2356](strategies/2356/) | ETC Band-Bounce Mean Reversion 1D | +71.65% | -47.25% | +31.07% | 38 | 2026-09-24 |
