@@ -11,7 +11,7 @@ Every figure comes from the last verifying backtest at publish time. These are p
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
-| ★ | [2368](strategies/2368/) | BTC Regime-Switch Trend 1D | +710.35% | +290.13% | +52.21% | 83 | 2026-09-24 |
+| ★ | [2368](strategies/2368/) | BTC Regime-Switch Trend 1D | +592.00% | +498.76% | +31.73% | 15 | 2026-09-24 |
 |  | [2367](strategies/2367/) | SOL Trend-Gated Vol-Target AdaptiveCrash 1D | -90.24% | +352.44% | +97.07% | 2912 | 2026-09-24 |
 |  | [2366](strategies/2366/) | ETH Volume-Confirmed Donchian 1D | +13.46% | +60.78% | +49.96% | 1 | 2026-09-24 |
 | — | [2365](strategies/2365/) | BTC Bollinger Squeeze Breakout 1D | -85.95% | — | +93.88% | 58 | 2026-09-24 |
