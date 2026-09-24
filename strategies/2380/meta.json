@@ -1,0 +1,30 @@
+{
+  "id": 2380,
+  "name": "AI 전략",
+  "kind": "custom",
+  "verified": {
+    "backtestId": 9888,
+    "return": -21.19,
+    "mdd": 32.63,
+    "trades": 2,
+    "vsBuyHold": "lose",
+    "benchRet": 778.26,
+    "benchBasis": "price",
+    "gapPct": 0,
+    "tFrom": 1531008000,
+    "tTo": 1617321600,
+    "approxNotes": [
+      "봉 내 순서는 관례(양봉 O→L→H→C·음봉 O→H→L→C) — 실순서 미상 · 봉 중 거래량 null · MDD 는 봉 마감 기준"
+    ],
+    "spec": {
+      "ex": "binance",
+      "sym": "BTCUSDT",
+      "interval": "1d",
+      "bars": 1000,
+      "end": 1617408000
+    }
+  },
+  "config": null,
+  "updatedAt": "2026-09-24T12:35:36.642Z",
+  "publishedBy": "scripts/publish-strategies.mjs"
+}
