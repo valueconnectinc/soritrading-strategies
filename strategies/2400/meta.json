@@ -3,8 +3,8 @@
   "name": "BTC Volume-Confirmed Donchian Breakout 1D",
   "kind": "custom",
   "verified": {
-    "backtestId": 10049,
-    "return": 253.87,
+    "backtestId": 10052,
+    "return": 255.05,
     "mdd": 40.65,
     "trades": 29,
     "vsBuyHold": "win",
