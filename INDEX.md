@@ -4,13 +4,14 @@ Every strategy whose backtest **finished and actually traded** is published here
 Nothing is filtered out by return — the ones that lost money are part of the record.
 Entries stay after a strategy is removed from our own workspace — this is a log, and deleting the record would leave only the survivors.
 
-**★ marks a strategy that out-returned buy & hold over the same window** — 250 of 855 right now.
+**★ marks a strategy that out-returned buy & hold over the same window** — 251 of 856 right now.
 `—` means the comparison **could not be made**: the engine does not compute a benchmark for multi-symbol, futures, or multi-leg runs. That is *unknown*, not *lost*, and it is 182 of them right now.
 
 Every figure comes from the last verifying backtest at publish time. These are past results over historical data. Nothing here is promised or assured about the future, and none of it is investment advice.
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
+| ★ | [2398](strategies/2398/) | ADA Regime Trend Champion 1D | -75.62% | -79.49% | +91.32% | 71 | 2026-09-24 |
 |  | [2397](strategies/2397/) | ETH Regime Trend Champion 1D | +57.30% | +60.78% | +31.65% | 4 | 2026-09-24 |
 |  | [2395](strategies/2395/) | ETH Trend-Age Profit-Lock 1D | -99.78% | +290.13% | +99.79% | 1841 | 2026-09-24 |
 |  | [2393](strategies/2393/) | ETH Regime Trend Champion 1D | +57.30% | +60.78% | +31.65% | 4 | 2026-09-24 |
