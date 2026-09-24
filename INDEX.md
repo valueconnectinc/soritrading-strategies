@@ -11,7 +11,7 @@ Every figure comes from the last verifying backtest at publish time. These are p
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
-|  | [2371](strategies/2371/) | BTC Hysteresis Regime Trend 1D | +2803.88% | +4143.75% | +54.65% | 139 | 2026-09-24 |
+|  | [2371](strategies/2371/) | BTC Hysteresis Regime Trend 1D | +106.64% | +466.73% | +61.89% | 31 | 2026-09-24 |
 |  | [2370](strategies/2370/) | BNB Regime-Switch Trend 1D | +1911.61% | +3386.13% | +72.17% | 69 | 2026-09-24 |
 | ★ | [2368](strategies/2368/) | BTC Regime-Switch Trend 1D | +6189.76% | +2180.51% | +40.98% | 121 | 2026-09-24 |
 |  | [2367](strategies/2367/) | SOL Trend-Gated Vol-Target AdaptiveCrash 1D | -90.24% | +352.44% | +97.07% | 2912 | 2026-09-24 |
