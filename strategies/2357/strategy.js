@@ -7,19 +7,14 @@
  * cash: 1000
  *
  * Why this strategy: the cooldown champion beats buy-and-hold on all windows but
- * still has high MDD (17-54%) because every buy goes all-in (0.99 of cash). In a
- * crash, a high-volatility entry means full exposure to the falling knife. This
- * version sizes the position by ATR: risk a fixed dollar fraction per trade, so a
- * 2xATR adverse move only loses that fraction. High-volatility (crash) entries size
- * DOWN, calm entries size UP — cutting MDD without changing the entry/exit logic
- * that defines the edge. ATR sizing improved MDD on other families (BTC hashrate,
- * ETH trend-ride), so this is a fair out-of-sample risk test.
+ * has high MDD (17-54%) because every buy goes all-in. ATR sizing sizes down in
+ * high-volatility (crash) entries. 2% risk crushed returns (the family's edge IS
+ * full-size bear bounces), so this tests a higher 10% risk fraction for balance.
  * When it buys and sells: same as champion — buy at/below lower Bollinger band with
  * RSI oversold AND 5+ bars since last exit; sell at middle band or RSI overbought.
- * Position size is scaled by ATR instead of all-in.
- * When it does NOT work: in a slow grind down near the lower band, the cooldown may
- * miss the bounce; and risk-sizing caps upside in violent but ultimately winning
- * bounces because it sizes down exactly when the move is biggest.
+ * Position size scaled by ATR (risk 10% of cash per trade).
+ * When it does NOT work: risk-sizing caps upside in violent winning bounces because
+ * it sizes down exactly when the move is biggest.
  */
 function onUpdate(ctx) {
   const bb = ctx.bb(20, 2);
@@ -45,8 +40,8 @@ function onUpdate(ctx) {
   const rsiOversold = rsi < 35;
 
   if (atLowerBand && rsiOversold && cooldownOk && ctx.position === 0) {
-    // risk 2% of cash per trade: a 2xATR adverse move loses that 2%
-    const riskCash = ctx.cash * 0.02;
+    // risk 10% of cash per trade: a 2xATR adverse move loses that 10%
+    const riskCash = ctx.cash * 0.10;
     const qty = riskCash / (2 * atr);
     // never exceed available cash
     const maxQty = ctx.cash / ctx.price * 0.99;
