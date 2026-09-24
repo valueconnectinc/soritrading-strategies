@@ -11,7 +11,7 @@ Every figure comes from the last verifying backtest at publish time. These are p
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
-| ★ | [2411](strategies/2411/) | ETH Oversold Bounce Mean Reversion 1D | -2.22% | -2.46% | +30.34% | 8 | 2026-09-24 |
+| ★ | [2411](strategies/2411/) | ETH Oversold Bounce Mean Reversion 1D | +143.96% | -2.46% | +61.38% | 21 | 2026-09-24 |
 | ★ | [2410](strategies/2410/) | ETH Regime Trend Slope-Filtered 1D | +7.15% | -22.51% | +47.30% | 21 | 2026-09-24 |
 | ★ | [2409](strategies/2409/) | ETH Bollinger Mean Reversion 1D | +71.50% | +26.85% | +61.46% | 21 | 2026-09-24 |
 | ★ | [2408](strategies/2408/) | ETH Regime Trend HighWaterMark 1D | +210.64% | +65.49% | +40.65% | 25 | 2026-09-24 |
