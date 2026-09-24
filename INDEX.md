@@ -11,7 +11,7 @@ Every figure comes from the last verifying backtest at publish time. These are p
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
-| ★ | [2388](strategies/2388/) | BNB Volume-Confirmed Trend 1D | +856.74% | +606.52% | +62.15% | 25 | 2026-09-24 |
+| ★ | [2388](strategies/2388/) | BNB Volume-Confirmed Trend 1D | +161.53% | +33.67% | +60.03% | 57 | 2026-09-24 |
 | ★ | [2387](strategies/2387/) | BTC Band-Bounce Mean Reversion 1D | +340.79% | +111.44% | +48.29% | 22 | 2026-09-24 |
 |  | [2386](strategies/2386/) | BTC On-Chain Adoption Trend 1D | +51.08% | +153.58% | +53.88% | 7 | 2026-09-24 |
 | ★ | [2385](strategies/2385/) | SOL Pure-Regime TightCrash 1D | +340.79% | +111.44% | +48.29% | 22 | 2026-09-24 |

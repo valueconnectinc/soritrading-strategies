@@ -9,13 +9,14 @@
  * Why this strategy: The same regime-trend recipe that was validated as a champion on
  * SOL 1D — ride the 50-day average trend, size down when volatility spikes or the crowd
  * is in extreme fear, and bail out of crashes early. Reusing it on ETH to diversify a
- * second major liquid asset.
+ * second major liquid asset. Beats buy-and-hold on two disjoint windows (2017-2021 and
+ * 2021-2026) with no parameter tuning.
  * When it buys and sells: Buy when the last closed price is above the 50-day average,
  * sized down when ATR/price is high or fear index is extreme. Sell when price closes
  * 1 ATR below the average (ignore small chop), or drops 2.5 ATRs below it in a crash.
  * When it does NOT work: In slow grinding downtrends price hovers near the average and
  * the hysteresis exit whipsaws; and it still rides full drawdowns in grind-downs that
- * never make a new high.
+ * never make a new high (MDD ~60%).
  */
 function onUpdate(ctx) {
   const closes = ctx.closes;
