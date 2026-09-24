@@ -1,0 +1,30 @@
+{
+  "id": 2400,
+  "name": "BTC Volume-Confirmed Donchian Breakout 1D",
+  "kind": "custom",
+  "verified": {
+    "backtestId": 10043,
+    "return": -25.11,
+    "mdd": 59.75,
+    "trades": 18,
+    "vsBuyHold": "lose",
+    "benchRet": 64.63,
+    "benchBasis": "price",
+    "gapPct": 0,
+    "tFrom": 1609459200,
+    "tTo": 1672358400,
+    "approxNotes": [
+      "봉 내 순서는 관례(양봉 O→L→H→C·음봉 O→H→L→C) — 실순서 미상 · 봉 중 거래량 null · MDD 는 봉 마감 기준"
+    ],
+    "spec": {
+      "ex": "binance",
+      "sym": "ETHUSDT",
+      "interval": "1d",
+      "bars": 729,
+      "end": 1672444800
+    }
+  },
+  "config": null,
+  "updatedAt": "2026-09-24T14:51:00.700Z",
+  "publishedBy": "scripts/publish-strategies.mjs"
+}
