@@ -4,14 +4,15 @@ Every strategy whose backtest **finished and actually traded** is published here
 Nothing is filtered out by return — the ones that lost money are part of the record.
 Entries stay after a strategy is removed from our own workspace — this is a log, and deleting the record would leave only the survivors.
 
-**★ marks a strategy that out-returned buy & hold over the same window** — 241 of 837 right now.
+**★ marks a strategy that out-returned buy & hold over the same window** — 241 of 838 right now.
 `—` means the comparison **could not be made**: the engine does not compute a benchmark for multi-symbol, futures, or multi-leg runs. That is *unknown*, not *lost*, and it is 182 of them right now.
 
 Every figure comes from the last verifying backtest at publish time. These are past results over historical data. Nothing here is promised or assured about the future, and none of it is investment advice.
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
-| ★ | [2374](strategies/2374/) | SOL Hysteresis + ATR-Adaptive Trailing Stop 1D | +3891.26% | +3024.45% | +75.99% | 135 | 2026-09-24 |
+|  | [2375](strategies/2375/) | AI 전략 | +73.65% | +493.04% | +58.23% | 33 | 2026-09-24 |
+| ★ | [2374](strategies/2374/) | SOL Hysteresis + ATR-Adaptive Trailing Stop 1D | +2825.89% | +506.19% | +72.78% | 83 | 2026-09-24 |
 | ★ | [2373](strategies/2373/) | SOL Hysteresis Regime Trend 1D | +540.75% | +498.76% | +25.33% | 7 | 2026-09-24 |
 |  | [2371](strategies/2371/) | BTC Hysteresis Regime Trend 1D | +106.64% | +466.73% | +61.89% | 31 | 2026-09-24 |
 |  | [2370](strategies/2370/) | BNB Regime-Switch Trend 1D | +1911.61% | +3386.13% | +72.17% | 69 | 2026-09-24 |
