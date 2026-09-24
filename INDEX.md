@@ -11,7 +11,7 @@ Every figure comes from the last verifying backtest at publish time. These are p
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
-| ★ | [2382](strategies/2382/) | AI 전략 | +998.05% | +778.26% | +44.24% | 49 | 2026-09-24 |
+| ★ | [2382](strategies/2382/) | AI 전략 | +64.84% | -25.39% | +54.95% | 39 | 2026-09-24 |
 |  | [2380](strategies/2380/) | AI 전략 | -21.19% | +778.26% | +32.63% | 2 | 2026-09-24 |
 |  | [2379](strategies/2379/) | BTC On-Chain Regime Trend 1D | -28.16% | +408.45% | +43.52% | 388 | 2026-09-24 |
 | ★ | [2378](strategies/2378/) | Cross-Sectional Momentum Rotation 1D | +540.75% | +498.76% | +25.33% | 7 | 2026-09-24 |
