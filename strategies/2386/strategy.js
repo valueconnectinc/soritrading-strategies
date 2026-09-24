@@ -11,11 +11,11 @@
  * price is above its long-term 200-day average, the market is in a healthy adoption regime.
  * This uses an on-chain fundamental signal (ctx.data 'addr') instead of only price math.
  * When it buys and sells: Buy when active addresses grew versus the prior day AND price is
- * above the 200-day average. Sell when adoption stops growing or price drops 3% below the
- * 200-day average.
+ * above the 200-day average. Sell only when price drops 3% below the 200-day average (a trend
+ * break) — adoption is NOT used to exit, only to gate entries, so it cannot churn the position.
  * When it does NOT work: Adoption data is noisy day-to-day and can lag price. In a bubble
  * where price runs far ahead of real usage, the adoption gate keeps you out of the top of
- * the move; and on-chain data is sparse, so a bad missing-data day can delay an exit.
+ * the move; and on-chain data is sparse, so a bad missing-data day can delay an entry.
  */
 function onUpdate(ctx) {
   const closes = ctx.closes;
@@ -35,20 +35,19 @@ function onUpdate(ctx) {
 
   const addrGrowth = addr / prevAddr - 1; // daily adoption growth, + = network growing
   const adoptionUp = addrGrowth > 0;
-  const priceUp = px > sma200;
   const pos = ctx.position;
 
   if (pos === 0) {
     // Enter only when adoption is growing AND price is in a long uptrend.
-    if (adoptionUp && priceUp && ctx.price > 0) {
+    if (adoptionUp && px > sma200 && ctx.price > 0) {
       return { side: 'buy', qty: (ctx.cash / ctx.price) * 0.98 };
     }
     return null;
   }
 
-  // Exit when adoption rolls over, or price breaks 3% below the 200-day average.
-  // 3% hysteresis avoids whipsaw on small noise around a flat average.
-  if (!adoptionUp || px < sma200 * 0.97) {
+  // Exit ONLY on a trend break (3% below the 200-day average). Adoption never triggers exit,
+  // so the position is not whipsawed by noisy day-to-day address changes.
+  if (px < sma200 * 0.97) {
     return { side: 'sell', qty: pos };
   }
   return null;
