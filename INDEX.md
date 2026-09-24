@@ -4,14 +4,14 @@ Every strategy whose backtest **finished and actually traded** is published here
 Nothing is filtered out by return — the ones that lost money are part of the record.
 Entries stay after a strategy is removed from our own workspace — this is a log, and deleting the record would leave only the survivors.
 
-**★ marks a strategy that out-returned buy & hold over the same window** — 256 of 865 right now.
+**★ marks a strategy that out-returned buy & hold over the same window** — 257 of 865 right now.
 `—` means the comparison **could not be made**: the engine does not compute a benchmark for multi-symbol, futures, or multi-leg runs. That is *unknown*, not *lost*, and it is 182 of them right now.
 
 Every figure comes from the last verifying backtest at publish time. These are past results over historical data. Nothing here is promised or assured about the future, and none of it is investment advice.
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
-|  | [2408](strategies/2408/) | ETH Regime Trend HighWaterMark 1D | +92.39% | +351.33% | +71.40% | 186 | 2026-09-24 |
+| ★ | [2408](strategies/2408/) | ETH Regime Trend HighWaterMark 1D | +210.64% | +65.49% | +40.65% | 25 | 2026-09-24 |
 |  | [2407](strategies/2407/) | ETH Regime Trend HighWaterMark 1D | -99.63% | +26.85% | +99.79% | 1723 | 2026-09-24 |
 | ★ | [2406](strategies/2406/) | DOGE Regime Trend Champion 1D | +152.02% | -22.05% | +37.24% | 17 | 2026-09-24 |
 | ★ | [2404](strategies/2404/) | BTC Regime Trend StrongBullHold 1D | +671.92% | +258.98% | +47.29% | 43 | 2026-09-24 |

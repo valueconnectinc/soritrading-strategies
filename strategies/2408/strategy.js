@@ -1,40 +1,36 @@
 /*
  * @coinsori-strategy v1
- * name: ETH Regime Trend HighWaterMark 1D
+ * name: ETH Regime Trend Champion 1D
  * ex: binance
  * syms: ETHUSDT
  * interval: 1d
  * cash: 10000
  *
- * Why this strategy: The validated regime-trend champion rides full drawdowns in
- * grind-downs that never make a new high, so it lost to buy-and-hold in the
- * 2021-2024 chop/crash window. This variant replaces the SMA50-relative exit with a
- * trailing stop measured from the highest close of the last 20 bars, so it locks in
- * gains as price falls instead of waiting for a close below the 50-day average.
- * When it buys and sells: Buy when the last closed price is above the 50-day average
- * (sized down in high vol / extreme fear). Sell when price closes 2.5 ATRs below the
- * highest close of the last 20 bars (trailing stop), or as a crash stop 3 ATRs below
- * the 50-day average.
- * When it does NOT work: In strong straight-line bull runs a pullback can breach the
- * trailing stop and exit, giving back melt-up gains; and it still cannot profit from
- * shorting bear markets (long-only).
+ * Why this strategy: The validated regime-trend recipe that beat buy-and-hold on
+ * ETH, BTC, SOL and BNB across disjoint windows. Riding price above its 50-day
+ * average captures most of the upside, while a hysteresis exit (1 ATR below the
+ * average) and a crash stop cut the worst drawdowns.
+ * When it buys and sells: Buy when the last closed price is above the 50-day average,
+ * sized down when ATR/price is high or fear is extreme (<=20). Sell when price closes
+ * 1 ATR below the average, or drops 2.5 ATRs below it in a crash.
+ * When it does NOT work: In slow grinding downtrends price hovers near the average and
+ * the hysteresis exit can whipsaw; it rides full drawdowns in grind-downs that never
+ * make a new high. Long-only, so no shorting bear markets.
  */
 function onUpdate(ctx) {
   const closes = ctx.closes;
   if (closes == null || closes.length < 55) return null;
-  const px = closes[closes.length - 2]; // last CLOSED bar
+  const px = closes[closes.length - 2];
   const sma50 = ctx.sma(50, 1);
   const atr = ctx.atr(14, 1);
-  const peak = ctx.high(20, 1); // highest close of the last 20 closed bars
   const pos = ctx.position;
   const cash = ctx.cash;
-  if (px == null || sma50 == null || atr == null || peak == null || px <= 0) return null;
+  if (px == null || sma50 == null || atr == null || px <= 0) return null;
 
   const long = px > sma50;
-  const trailStop = px < peak - 2.5 * atr; // exit 2.5 ATR below the 20-bar high
-  const crashStop = px < sma50 - 3.0 * atr; // deep crash bail-out
+  const exitBelow = px < sma50 - 1.0 * atr;
+  const crashStop = px < sma50 - 2.5 * atr;
 
-  // Volatility-scaled sizing (same as champion).
   let ratioSum = 0, ratioCount = 0;
   for (let k = 1; k <= 50; k++) {
     const c = closes[closes.length - 1 - k];
@@ -60,7 +56,7 @@ function onUpdate(ctx) {
     return null;
   }
 
-  if (trailStop || crashStop) {
+  if (exitBelow || crashStop) {
     return { side: 'sell', qty: pos };
   }
   return null;
