@@ -4,13 +4,14 @@ Every strategy whose backtest **finished and actually traded** is published here
 Nothing is filtered out by return — the ones that lost money are part of the record.
 Entries stay after a strategy is removed from our own workspace — this is a log, and deleting the record would leave only the survivors.
 
-**★ marks a strategy that out-returned buy & hold over the same window** — 260 of 868 right now.
+**★ marks a strategy that out-returned buy & hold over the same window** — 261 of 869 right now.
 `—` means the comparison **could not be made**: the engine does not compute a benchmark for multi-symbol, futures, or multi-leg runs. That is *unknown*, not *lost*, and it is 182 of them right now.
 
 Every figure comes from the last verifying backtest at publish time. These are past results over historical data. Nothing here is promised or assured about the future, and none of it is investment advice.
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
+| ★ | [2412](strategies/2412/) | ETH Trend Donchian-Breakout Entry 1D | +211.72% | -2.46% | +43.75% | 11 | 2026-09-24 |
 | ★ | [2411](strategies/2411/) | ETH Oversold Bounce Mean Reversion 1D | +143.96% | -2.46% | +61.38% | 21 | 2026-09-24 |
 | ★ | [2410](strategies/2410/) | ETH Regime Trend Slope-Filtered 1D | +7.15% | -22.51% | +47.30% | 21 | 2026-09-24 |
 | ★ | [2409](strategies/2409/) | ETH Bollinger Mean Reversion 1D | +71.50% | +26.85% | +61.46% | 21 | 2026-09-24 |
