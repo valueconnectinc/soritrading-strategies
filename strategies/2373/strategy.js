@@ -27,6 +27,7 @@ function onUpdate(ctx) {
   const atr = ctx.atr(14, 1);
   const pos = ctx.position;
   const cash = ctx.cash;
+  const st = ctx.state;
   if (px == null || sma50 == null || atr == null || px <= 0) return null;
 
   const long = px > sma50;
@@ -34,25 +35,21 @@ function onUpdate(ctx) {
   const crashStop = px < sma50 - 3.0 * atr;
 
   if (pos === 0) {
+    st.runHigh = null; // reset when flat
     if (long && cash > 0 && ctx.price > 0) {
+      st.runHigh = px; // set running high at entry
       return { side: 'buy', qty: (cash / ctx.price) * 0.98 };
     }
     return null;
   }
 
-  // Trailing stop: track the highest close since we've been long, exit if price
-  // falls 20% off that high. 20% = a normal SOL correction, tight enough to protect
-  // profit after a big run, loose enough not to whipsaw on daily noise.
-  const entryIdx = ctx.i - 1; // current closed bar index
-  let runHigh = px;
-  // scan closed bars since entry for the running high
-  for (let k = closes.length - 2; k >= 0; k--) {
-    const c = closes[k];
-    if (c == null) break;
-    runHigh = Math.max(runHigh, c);
-  }
-  const trailStop = runHigh * (1 - 0.20);
-  const trailHit = px < trailStop;
+  // While long, update the running high to the highest closed price we've seen.
+  if (st.runHigh == null) st.runHigh = px;
+  st.runHigh = Math.max(st.runHigh, px);
+  // Trailing stop: exit if price falls 20% off the running high. 20% = a normal
+  // SOL correction, tight enough to protect profit after a big run, loose enough
+  // not to whipsaw on daily noise.
+  const trailHit = px < st.runHigh * (1 - 0.20);
 
   if (exitBelow || crashStop || trailHit) {
     return { side: 'sell', qty: pos };
