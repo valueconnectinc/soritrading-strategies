@@ -1,0 +1,29 @@
+{
+  "id": 2409,
+  "name": "ETH Bollinger Mean Reversion 1D",
+  "kind": "custom",
+  "verified": {
+    "backtestId": 10147,
+    "return": -14.8,
+    "mdd": 24.64,
+    "trades": 20,
+    "vsBuyHold": "lose",
+    "benchRet": 65.49,
+    "benchBasis": "price",
+    "gapPct": 0,
+    "tFrom": 1695168000,
+    "tTo": 1790121600,
+    "approxNotes": [
+      "봉 내 순서는 관례(양봉 O→L→H→C·음봉 O→H→L→C) — 실순서 미상 · 봉 중 거래량 null · MDD 는 봉 마감 기준"
+    ],
+    "spec": {
+      "ex": "binance",
+      "sym": "ETHUSDT",
+      "interval": "1d",
+      "bars": 1100
+    }
+  },
+  "config": null,
+  "updatedAt": "2026-09-24T15:40:57.695Z",
+  "publishedBy": "scripts/publish-strategies.mjs"
+}
