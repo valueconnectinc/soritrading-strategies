@@ -11,7 +11,7 @@ Every figure comes from the last verifying backtest at publish time. These are p
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
-|  | [2399](strategies/2399/) | LTC Regime Trend Champion 1D | -4.71% | +16.71% | +60.03% | 33 | 2026-09-24 |
+|  | [2399](strategies/2399/) | LTC Regime Trend Champion 1D | -54.25% | -12.79% | +66.12% | 47 | 2026-09-24 |
 |  | [2398](strategies/2398/) | ADA Regime Trend Champion 1D | +107.12% | +357.90% | +87.15% | 87 | 2026-09-24 |
 |  | [2397](strategies/2397/) | ETH Regime Trend Champion 1D | +57.30% | +60.78% | +31.65% | 4 | 2026-09-24 |
 |  | [2395](strategies/2395/) | ETH Trend-Age Profit-Lock 1D | -99.78% | +290.13% | +99.79% | 1841 | 2026-09-24 |
