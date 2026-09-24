@@ -4,13 +4,14 @@ Every strategy whose backtest **finished and actually traded** is published here
 Nothing is filtered out by return — the ones that lost money are part of the record.
 Entries stay after a strategy is removed from our own workspace — this is a log, and deleting the record would leave only the survivors.
 
-**★ marks a strategy that out-returned buy & hold over the same window** — 244 of 844 right now.
+**★ marks a strategy that out-returned buy & hold over the same window** — 245 of 845 right now.
 `—` means the comparison **could not be made**: the engine does not compute a benchmark for multi-symbol, futures, or multi-leg runs. That is *unknown*, not *lost*, and it is 182 of them right now.
 
 Every figure comes from the last verifying backtest at publish time. These are past results over historical data. Nothing here is promised or assured about the future, and none of it is investment advice.
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
+| ★ | [2383](strategies/2383/) | SOL Hysteresis ATR Trail NoSizing 1D | +1258.55% | +202.26% | +69.25% | 38 | 2026-09-24 |
 |  | [2382](strategies/2382/) | AI 전략 | +353.43% | +1147.75% | +52.93% | 42 | 2026-09-24 |
 |  | [2380](strategies/2380/) | AI 전략 | -21.19% | +778.26% | +32.63% | 2 | 2026-09-24 |
 |  | [2379](strategies/2379/) | BTC On-Chain Regime Trend 1D | -28.16% | +408.45% | +43.52% | 388 | 2026-09-24 |
