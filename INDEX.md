@@ -11,7 +11,7 @@ Every figure comes from the last verifying backtest at publish time. These are p
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
-| ★ | [2353](strategies/2353/) | ADA Band-Bounce Mean Reversion 4H | +871.16% | -53.18% | +41.39% | 245 | 2026-09-24 |
+| ★ | [2353](strategies/2353/) | ADA Band-Bounce Mean Reversion 4H | +6526.11% | +2159.91% | +58.74% | 210 | 2026-09-24 |
 | ★ | [2352](strategies/2352/) | ETC Band-Bounce Mean Reversion 4H | +340.96% | -19.58% | +34.77% | 230 | 2026-09-24 |
 |  | [2351](strategies/2351/) | BNB Regime-Adaptive Vol-Target 1D | -63.81% | +801.34% | +75.16% | 754 | 2026-09-24 |
 |  | [2350](strategies/2350/) | DOGE Volume-Confirmed Donchian 1D | -100.00% | -68.32% | +100.00% | 6440 | 2026-09-24 |
