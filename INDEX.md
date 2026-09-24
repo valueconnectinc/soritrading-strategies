@@ -11,7 +11,7 @@ Every figure comes from the last verifying backtest at publish time. These are p
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
-| ★ | [2374](strategies/2374/) | SOL Hysteresis + ATR-Adaptive Trailing Stop 1D | +1126.99% | +411.07% | +62.82% | 67 | 2026-09-24 |
+| ★ | [2374](strategies/2374/) | SOL Hysteresis + ATR-Adaptive Trailing Stop 1D | +1403.93% | +606.52% | +61.43% | 27 | 2026-09-24 |
 | ★ | [2373](strategies/2373/) | SOL Hysteresis Regime Trend 1D | +540.75% | +498.76% | +25.33% | 7 | 2026-09-24 |
 |  | [2371](strategies/2371/) | BTC Hysteresis Regime Trend 1D | +106.64% | +466.73% | +61.89% | 31 | 2026-09-24 |
 |  | [2370](strategies/2370/) | BNB Regime-Switch Trend 1D | +1911.61% | +3386.13% | +72.17% | 69 | 2026-09-24 |
