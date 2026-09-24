@@ -4,14 +4,14 @@ Every strategy whose backtest **finished and actually traded** is published here
 Nothing is filtered out by return — the ones that lost money are part of the record.
 Entries stay after a strategy is removed from our own workspace — this is a log, and deleting the record would leave only the survivors.
 
-**★ marks a strategy that out-returned buy & hold over the same window** — 238 of 833 right now.
+**★ marks a strategy that out-returned buy & hold over the same window** — 239 of 833 right now.
 `—` means the comparison **could not be made**: the engine does not compute a benchmark for multi-symbol, futures, or multi-leg runs. That is *unknown*, not *lost*, and it is 182 of them right now.
 
 Every figure comes from the last verifying backtest at publish time. These are past results over historical data. Nothing here is promised or assured about the future, and none of it is investment advice.
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
-|  | [2368](strategies/2368/) | BTC Regime-Switch Trend 1D | -56.87% | +57.69% | +84.10% | 38 | 2026-09-24 |
+| ★ | [2368](strategies/2368/) | BTC Regime-Switch Trend 1D | +710.35% | +290.13% | +52.21% | 83 | 2026-09-24 |
 |  | [2367](strategies/2367/) | SOL Trend-Gated Vol-Target AdaptiveCrash 1D | -90.24% | +352.44% | +97.07% | 2912 | 2026-09-24 |
 |  | [2366](strategies/2366/) | ETH Volume-Confirmed Donchian 1D | +13.46% | +60.78% | +49.96% | 1 | 2026-09-24 |
 | — | [2365](strategies/2365/) | BTC Bollinger Squeeze Breakout 1D | -85.95% | — | +93.88% | 58 | 2026-09-24 |
