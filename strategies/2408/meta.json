@@ -1,0 +1,30 @@
+{
+  "id": 2408,
+  "name": "ETH Regime Trend HighWaterMark 1D",
+  "kind": "custom",
+  "verified": {
+    "backtestId": 10141,
+    "return": 92.39,
+    "mdd": 71.4,
+    "trades": 186,
+    "vsBuyHold": "lose",
+    "benchRet": 351.33,
+    "benchBasis": "price",
+    "gapPct": 0,
+    "tFrom": 1600128000,
+    "tTo": 1695081600,
+    "approxNotes": [
+      "봉 내 순서는 관례(양봉 O→L→H→C·음봉 O→H→L→C) — 실순서 미상 · 봉 중 거래량 null · MDD 는 봉 마감 기준"
+    ],
+    "spec": {
+      "ex": "binance",
+      "sym": "ETHUSDT",
+      "interval": "1d",
+      "bars": 1100,
+      "end": 1695168000
+    }
+  },
+  "config": null,
+  "updatedAt": "2026-09-24T15:37:31.128Z",
+  "publishedBy": "scripts/publish-strategies.mjs"
+}
