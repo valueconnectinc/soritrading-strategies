@@ -3,12 +3,12 @@
   "name": "SOL Hysteresis Regime Trend 1D",
   "kind": "custom",
   "verified": {
-    "backtestId": 9835,
-    "return": 40.66,
-    "mdd": 50.53,
-    "trades": 21,
+    "backtestId": 9838,
+    "return": 156.3,
+    "mdd": 37.24,
+    "trades": 17,
     "vsBuyHold": "win",
-    "benchRet": -28.41,
+    "benchRet": -22.05,
     "benchBasis": "price",
     "gapPct": 0,
     "tFrom": 1721088000,
@@ -19,7 +19,7 @@
     ],
     "spec": {
       "ex": "binance",
-      "sym": "SOLUSDT",
+      "sym": "ETHUSDT",
       "interval": "1d",
       "bars": 800,
       "end": 1790208000
