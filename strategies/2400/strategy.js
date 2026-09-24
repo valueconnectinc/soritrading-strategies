@@ -1,42 +1,38 @@
 /*
  * @coinsori-strategy v1
- * name: ETH Confirmed-Bear Gate Trend 1D
+ * name: ETH Wide-Hysteresis Trend 1D
  * ex: binance
  * syms: ETHUSDT
  * interval: 1d
  * cash: 10000
  *
- * Why this strategy: The pure price gate (enter only above the 200-day) fixed the
- * 2018/2021 whipsaw but hurt 2023+ because price dips below the 200-day mid-rally.
- * This version blocks entry ONLY in a confirmed bear: price below the 200-day AND
- * the 200-day itself falling. In a bull (200-day rising) it allows entry even if
- * price is temporarily below the 200-day, so it keeps the recovery legs. The bet:
- * a rising 200-day marks a durable uptrend where below-average dips are buyable; a
- * falling 200-day with price below it marks the bear to avoid.
- * When it buys and sells: Buy when price is above the 50-day average AND NOT
- * (price below the 200-day AND the 200-day falling) — i.e. blocked only in a
- * confirmed bear (sized down in high volatility / extreme fear). Sell when price
- * closes 1 ATR below the 50-day average, or drops 2.5 ATRs below it in a crash.
- * When it does NOT work: It can still ride the start of a bear before the 200-day
- * turns down, and it can lag a fresh bull's first leg. Long-only.
+ * Why this strategy: The champion's 2021-2022 weakness (-25% vs market +65%)
+ * comes from whipsawing out of the volatile bull on shallow pullbacks (1 ATR
+ * below the average). This version widens the exit hysteresis to 1.5 ATR so it
+ * tolerates deeper pullbacks before selling. The bet: in a high-volatility bull,
+ * pullbacks routinely exceed 1 ATR without ending the trend, so a wider exit
+ * keeps the position through more of the rally. No regime gate is used, because
+ * gates block the aggressive re-entry the 2023+ bull rewards.
+ * When it buys and sells: Buy when price is above the 50-day average (sized down
+ * in high volatility / extreme fear). Sell when price closes 1.5 ATRs below the
+ * 50-day average, or drops 3 ATRs below it in a crash.
+ * When it does NOT work: A wider exit gives back more profit before selling in a
+ * topping range, and it can ride deeper drawdowns before the exit triggers
+ * (MDD can be large). It is long-only, so it does not profit from shorting.
  */
 function onUpdate(ctx) {
   const closes = ctx.closes;
-  if (closes == null || closes.length < 220) return null;
+  if (closes == null || closes.length < 55) return null;
   const px = closes[closes.length - 2]; // last CLOSED bar
   const sma50 = ctx.sma(50, 1);
-  const sma200 = ctx.sma(200, 1);
-  const sma200prev = ctx.sma(200, 2);
   const atr = ctx.atr(14, 1);
   const pos = ctx.position;
   const cash = ctx.cash;
-  if (px == null || sma50 == null || sma200 == null || sma200prev == null || atr == null || px <= 0) return null;
+  if (px == null || sma50 == null || atr == null || px <= 0) return null;
 
-  // Confirmed bear: price below the 200-day AND the 200-day is falling.
-  const confirmedBear = px < sma200 && sma200 < sma200prev;
-  const long = px > sma50 && !confirmedBear;
-  const exitBelow = px < sma50 - 1.0 * atr; // hysteresis: ignore small chop
-  const crashStop = px < sma50 - 2.5 * atr; // bail out of deep crashes early
+  const long = px > sma50;
+  const exitBelow = px < sma50 - 1.5 * atr; // wider hysteresis: tolerate deeper pullbacks
+  const crashStop = px < sma50 - 3.0 * atr; // deep crash bail-out
 
   // Volatility-scaled sizing: compare today's ATR/price to its 50-bar average.
   let ratioSum = 0, ratioCount = 0;

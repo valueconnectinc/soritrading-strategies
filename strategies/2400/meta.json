@@ -3,29 +3,29 @@
   "name": "BTC Volume-Confirmed Donchian Breakout 1D",
   "kind": "custom",
   "verified": {
-    "backtestId": 10075,
-    "return": 180.06,
-    "mdd": 40.65,
-    "trades": 27,
+    "backtestId": 10081,
+    "return": 25.96,
+    "mdd": 70.1,
+    "trades": 19,
     "vsBuyHold": "win",
-    "benchRet": 123.66,
+    "benchRet": -0.37,
     "benchBasis": "price",
     "gapPct": 0,
-    "tFrom": 1672531200,
-    "tTo": 1790121600,
+    "tFrom": 1514764800,
+    "tTo": 1609286400,
     "approxNotes": [
       "봉 내 순서는 관례(양봉 O→L→H→C·음봉 O→H→L→C) — 실순서 미상 · 봉 중 거래량 null · MDD 는 봉 마감 기준",
-      "기간 종료 시 미청산 포지션 1종목 (총자산의 98.84%) — 이 수익률은 **평가액**을 포함합니다. 퇴출 수수료·거래세를 안 냈고, 마지막 봉 가격에 실제로 팔 수 있다는 보장도 없습니다(얇은 호가·상장폐지). exec.endLiquidate 로 마지막 봉 청산을 켤 수 있습니다"
+      "기간 종료 시 미청산 포지션 1종목 (총자산의 99.18%) — 이 수익률은 **평가액**을 포함합니다. 퇴출 수수료·거래세를 안 냈고, 마지막 봉 가격에 실제로 팔 수 있다는 보장도 없습니다(얇은 호가·상장폐지). exec.endLiquidate 로 마지막 봉 청산을 켤 수 있습니다"
     ],
     "spec": {
       "ex": "binance",
       "sym": "ETHUSDT",
       "interval": "1d",
-      "bars": 1362,
-      "end": 1790208000
+      "bars": 1095,
+      "end": 1609372800
     }
   },
   "config": null,
-  "updatedAt": "2026-09-24T15:11:52.123Z",
+  "updatedAt": "2026-09-24T15:12:42.479Z",
   "publishedBy": "scripts/publish-strategies.mjs"
 }
