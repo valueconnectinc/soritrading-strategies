@@ -11,7 +11,7 @@ Every figure comes from the last verifying backtest at publish time. These are p
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
-| ★ | [2406](strategies/2406/) | DOGE Regime Trend Champion 1D | +3.27% | -3.24% | +5.41% | 43 | 2026-09-24 |
+| ★ | [2406](strategies/2406/) | DOGE Regime Trend Champion 1D | +152.02% | -22.05% | +37.24% | 17 | 2026-09-24 |
 | ★ | [2404](strategies/2404/) | BTC Regime Trend StrongBullHold 1D | +671.92% | +258.98% | +47.29% | 43 | 2026-09-24 |
 | ★ | [2403](strategies/2403/) | BTC Regime Trend Champion 1D (pure) | +873.47% | +778.26% | +47.29% | 29 | 2026-09-24 |
 | ★ | [2402](strategies/2402/) | BTC Regime Trend + On-Chain Sizing 1D | +372.64% | +258.98% | +43.01% | 43 | 2026-09-24 |
