@@ -1,47 +1,51 @@
 /*
  * @coinsori-strategy v1
- * name: ETH Regime Trend Champion StrongHold 1D
+ * name: ETH Trend-Break Hold 1D
  * ex: binance
  * syms: ETHUSDT
  * interval: 1d
  * cash: 10000
  *
- * Why this strategy: This is the validated regime-trend recipe (rides price above its
- * 50-day average, hysteresis exit, crash stop, volatility/fear sizing) with a targeted
- * improvement for its known weakness: in a strong bull market a normal pullback used
- * to trigger the small hysteresis exit and the strategy re-entered late, missing the
- * V-shaped recovery. The fix: when price is strongly above its 50-day average (a clear
- * bull regime), the strategy holds through small pullbacks and only the deep crash
- * stop exits. This lifted the 2023+ window return and trimmed drawdowns without
- * hurting the earlier windows.
- * When it buys and sells: Buy when the last closed price is above the 50-day average,
- * sized down when volatility is high or fear is extreme. Sell on the hysteresis exit
- * (1 ATR below the 50-day) UNLESS in a strong bull regime (far above the 50-day), in
- * which case only the deep crash stop (2.5 ATR below) exits.
- * When it does NOT work: In slow grinding downtrends price hovers near the average and
- * the hysteresis exit can whipsaw; and it still loses in a bull-to-bear turn (like
- * 2021-2022) because a strong-bull hold can ride the start of a bear down before the
- * crash stop catches it. It is long-only and does not profit from shorting bear markets.
+ * Why this strategy: The champion regime-trend recipe's biggest weakness is the
+ * 2021-2022 window where it whipsaws out on shallow pullbacks (1 ATR below the
+ * average) and misses the bull. This version holds through pullbacks while the
+ * 50-day average is still RISING, and only exits when the trend actually breaks
+ * (price below the average AND the average itself turns down). The bet: in crypto
+ * uptrends, price routinely dips below its average mid-rally without ending the
+ * trend, so exiting on the dip forfeits the recovery leg.
+ * When it buys and sells: Buy when price is above the 50-day average (sized down
+ * in high volatility / extreme fear). Sell only when price closes below the
+ * 50-day average AND the average is falling (trend confirmed broken), or on a
+ * deep crash stop (price 3 ATR below the average). In a strong uptrend (price
+ * well above the 200-day average) hold even through deeper pullbacks.
+ * When it does NOT work: In slow grinding downtrends where the average slowly
+ * erodes, it may hold too long and ride drawdowns before the trend-break exit
+ * triggers (MDD can be large). It is long-only, so it does not profit from
+ * shorting bear markets, and it can give back profits in a topping range before
+ * the average rolls over.
  */
 function onUpdate(ctx) {
   const closes = ctx.closes;
-  if (closes == null || closes.length < 205) return null;
+  if (closes == null || closes.length < 220) return null;
   const px = closes[closes.length - 2]; // last CLOSED bar
   const sma50 = ctx.sma(50, 1);
+  const sma50prev = ctx.sma(50, 2);
   const sma200 = ctx.sma(200, 1);
   const atr = ctx.atr(14, 1);
   const pos = ctx.position;
   const cash = ctx.cash;
-  if (px == null || sma50 == null || sma200 == null || atr == null || px <= 0) return null;
+  if (px == null || sma50 == null || sma50prev == null || atr == null || px <= 0) return null;
 
   const long = px > sma50;
-  const exitBelow = px < sma50 - 1.0 * atr; // hysteresis: ignore small chop
-  const crashStop = px < sma50 - 2.5 * atr; // bail out of deep crashes early
+  // Trend is broken only when price is below the average AND the average is falling.
+  const trendBreak = px < sma50 && sma50 < sma50prev;
+  const crashStop = px < sma50 - 3.0 * atr; // deep crash bail-out
 
-  // STRONG BULL REGIME: above the 200-day average AND far above the 50-day
-  // (>= 1.5 ATR). In this regime a pullback is normal bull noise, so hold through
-  // the small hysteresis exit and only the deep crash stop gets us out.
-  const strongBull = px > sma200 && (px - sma50) >= 1.5 * atr;
+  // Strong uptrend: price far above the 200-day average → hold through pullbacks.
+  let strongTrend = false;
+  if (sma200 != null && sma200 > 0) {
+    strongTrend = px > sma200 * 1.25;
+  }
 
   // Volatility-scaled sizing: compare today's ATR/price to its 50-bar average.
   let ratioSum = 0, ratioCount = 0;
@@ -69,8 +73,8 @@ function onUpdate(ctx) {
     return null;
   }
 
-  // In strong bull, skip the small hysteresis exit; only the crash stop exits.
-  const shouldExit = crashStop || (exitBelow && !strongBull);
+  // In a strong uptrend, ignore trendBreak and only exit on a deep crash.
+  const shouldExit = strongTrend ? crashStop : (trendBreak || crashStop);
   if (shouldExit) {
     return { side: 'sell', qty: pos };
   }
