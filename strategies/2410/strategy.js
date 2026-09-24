@@ -10,7 +10,9 @@
  * average, but its documented weakness is losing in prolonged chop/crash windows (e.g.
  * 2021-2024) where price hovers near a flat average and it whipsaws. This variant adds
  * a trend-strength gate: only enter long when the 50-day average itself is rising, so
- * it does not buy into a flat or falling regime. Same hysteresis exit and crash stop.
+ * it does not buy into a flat or falling regime. A 10-bar slope lookback filters out
+ * short noise while staying responsive to real trend changes (a 3-bar version was
+ * tested and whipsawed more in chop). Same hysteresis exit and crash stop.
  * When it buys and sells: Buy when the last closed price is above the 50-day average
  * AND that average is rising (higher than it was ~10 bars ago). Sell when price closes
  * 1 ATR below the average, or drops 2.5 ATRs below it in a crash. Sizing down in high

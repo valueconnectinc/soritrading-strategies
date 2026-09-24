@@ -3,10 +3,10 @@
   "name": "ETH Regime Trend Slope-Filtered 1D",
   "kind": "custom",
   "verified": {
-    "backtestId": 10156,
-    "return": 780.51,
-    "mdd": 48.64,
-    "trades": 17,
+    "backtestId": 10159,
+    "return": 568.97,
+    "mdd": 57.69,
+    "trades": 19,
     "vsBuyHold": "win",
     "benchRet": 267.21,
     "benchBasis": "price",
@@ -26,6 +26,6 @@
     }
   },
   "config": null,
-  "updatedAt": "2026-09-24T15:44:49.422Z",
+  "updatedAt": "2026-09-24T15:49:42.753Z",
   "publishedBy": "scripts/publish-strategies.mjs"
 }
