@@ -3,16 +3,14 @@
   "name": "BTC Bollinger Squeeze Breakout 1D",
   "kind": "custom",
   "verified": {
-    "backtestId": 9752,
-    "return": -4.58,
-    "mdd": 15.29,
+    "backtestId": 9753,
+    "return": -4.78,
+    "mdd": 4.78,
     "trades": 2,
-    "vsBuyHold": "lose",
-    "benchRet": 57.69,
-    "benchBasis": "price",
+    "vsBuyHold": "unmeasured",
     "gapPct": 0,
-    "tFrom": 1502928000,
-    "tTo": 1530921600,
+    "tFrom": 0,
+    "tTo": 0,
     "approxNotes": [
       "봉 내 순서는 관례(양봉 O→L→H→C·음봉 O→H→L→C) — 실순서 미상 · 봉 중 거래량 null · MDD 는 봉 마감 기준"
     ],
@@ -21,7 +19,7 @@
       "sym": "BTCUSDT",
       "interval": "1d",
       "bars": 1500,
-      "end": 1531008000
+      "end": 1401408000
     }
   },
   "config": null,
