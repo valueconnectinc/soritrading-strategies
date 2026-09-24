@@ -1,22 +1,23 @@
 /*
  * @coinsori-strategy v1
- * name: LTC Band-Bounce Cooldown + StopLoss 1D
+ * name: LTC Band-Bounce Mean Reversion Cooldown 1D
  * ex: binance
  * syms: LTCUSDT
  * interval: 1d
  * cash: 1000
  *
- * Why this strategy: the champion band-bounce mean reversion (cooldown) beats
- * buy-and-hold on all windows but carries 39-59% MDD on 1D because it holds
- * every position until mid-band, including failed bounces that keep falling.
- * This variant adds a hard stop-loss below entry to cut those worst knife
- * trades while keeping FULL position size (so it does NOT cap the bear-market
- * bounces that are the edge — unlike the rejected ATR sizing).
- * When it buys and sells: buys at/below lower Bollinger band with RSI oversold
- * and 5+ bars since last exit; sells at mid-band, RSI overbought, OR a hard stop
- * stopPct below entry.
- * When it does NOT work: a stop that is too tight cuts valid bounces before they
- * recover to mid-band; in a slow grind the cooldown may miss the eventual bounce.
+ * Why this strategy: the cooldown version of the band-bounce mean reversion beat
+ * buy-and-hold on all 4 disjoint ETC 1D windows (+71/+642/+240/+669%) with
+ * controlled MDD by stopping repeated falling-knife buys. This is the LTC 1D
+ * version (the other 1D-validated asset) as an out-of-sample confirmation. ATR
+ * position sizing was tried and REJECTED because it caps the full-size bear-market
+ * bounces that are the edge.
+ * When it buys and sells: buys when price closes at/below the lower Bollinger band
+ * with RSI oversold AND at least 5 bars since the last exit; sells when price returns
+ * to the middle band or RSI turns overbought.
+ * When it does NOT work: in a slow grind down where price stays near the lower band
+ * for many bars, the cooldown may cause it to miss the eventual bounce; and in fast
+ * crashes it may still catch a knife on the first touch.
  */
 function onUpdate(ctx) {
   const bb = ctx.bb(20, 2);
@@ -28,7 +29,6 @@ function onUpdate(ctx) {
 
   const lower = bb.lower;
   const mid = bb.mid;
-  const stopPct = 0.20; // hard stop 20% below entry: cuts the deepest failed knives
 
   // cooldown state: bar index of the last exit (default far in the past)
   const lastExit = ctx.state.lastExit || -9999;
@@ -43,12 +43,11 @@ function onUpdate(ctx) {
     return { side: 'buy', qty: ctx.cash / ctx.price * 0.99 };
   }
 
-  // SELL: price at/above middle band OR RSI turns overbought OR hard stop hit
+  // SELL: price at/above middle band OR RSI turns overbought
   const atMidBand = ctx.price >= mid;
   const rsiOverbought = rsi > 65 && rsi_1 <= 65;
-  const stopHit = ctx.position > 0 && ctx.price <= ctx.entryPx * (1 - stopPct);
 
-  if ((atMidBand || rsiOverbought || stopHit) && ctx.position > 0) {
+  if ((atMidBand || rsiOverbought) && ctx.position > 0) {
     ctx.state.lastExit = ctx.i; // record exit bar for the cooldown
     return { side: 'sell', qty: ctx.position };
   }
