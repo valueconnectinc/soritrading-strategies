@@ -3,10 +3,10 @@
   "name": "BNB Volume-Confirmed Trend 1D",
   "kind": "custom",
   "verified": {
-    "backtestId": 9950,
-    "return": 274.7,
-    "mdd": 55.77,
-    "trades": 31,
+    "backtestId": 9956,
+    "return": 199.97,
+    "mdd": 59.38,
+    "trades": 25,
     "vsBuyHold": "win",
     "benchRet": 153.6,
     "benchBasis": "price",
@@ -26,6 +26,6 @@
     }
   },
   "config": null,
-  "updatedAt": "2026-09-24T13:10:34.099Z",
+  "updatedAt": "2026-09-24T13:14:57.425Z",
   "publishedBy": "scripts/publish-strategies.mjs"
 }
