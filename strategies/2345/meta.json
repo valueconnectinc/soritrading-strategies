@@ -1,0 +1,30 @@
+{
+  "id": 2345,
+  "name": "XLM Keltner Mean Reversion 4H",
+  "kind": "custom",
+  "verified": {
+    "backtestId": 9645,
+    "return": -10.99,
+    "mdd": 23,
+    "trades": 56,
+    "vsBuyHold": "win",
+    "benchRet": -48.08,
+    "benchBasis": "price",
+    "gapPct": 0,
+    "tFrom": 1646236800,
+    "tTo": 1718222400,
+    "approxNotes": [
+      "봉 내 순서는 관례(양봉 O→L→H→C·음봉 O→H→L→C) — 실순서 미상 · 봉 중 거래량 null · MDD 는 봉 마감 기준"
+    ],
+    "spec": {
+      "ex": "binance",
+      "sym": "XLMUSDT",
+      "interval": "4h",
+      "bars": 5000,
+      "end": 1718236800
+    }
+  },
+  "config": null,
+  "updatedAt": "2026-09-24T08:02:22.402Z",
+  "publishedBy": "scripts/publish-strategies.mjs"
+}
