@@ -11,7 +11,7 @@ Every figure comes from the last verifying backtest at publish time. These are p
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
-| ★ | [2365](strategies/2365/) | BTC Bollinger Squeeze Breakout 1D | +5.59% | -70.76% | +16.61% | 2 | 2026-09-24 |
+| ★ | [2365](strategies/2365/) | BTC Bollinger Squeeze Breakout 1D | +1.19% | -60.46% | +31.15% | 14 | 2026-09-24 |
 |  | [2364](strategies/2364/) | BTC Fear-Greed Trend Dip-Buy 1D | -33.09% | +57.69% | +33.09% | 8 | 2026-09-24 |
 |  | [2363](strategies/2363/) | BTC Fear-Greed Contrarian 1D | -11.26% | +253.80% | +25.02% | 56 | 2026-09-24 |
 | ★ | [2362](strategies/2362/) | LTC Band-Bounce Cooldown 10 1D | +153.43% | -23.01% | +23.45% | 30 | 2026-09-24 |
