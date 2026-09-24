@@ -1,21 +1,23 @@
 /*
  * @coinsori-strategy v1
- * name: ADA Band-Bounce Mean Reversion 4H
+ * name: ADA Band-Bounce MR with ATR Stop 4H
  * ex: binance
  * syms: ADAUSDT
  * interval: 4h
  * cash: 1000
  *
  * Why this strategy: band-bounce mean reversion is the proven, repeatable edge
- * of this job (validated on LTC/XRP/DOT/ETC/LINK — all beat buy-and-hold on 3
- * disjoint windows). This tests the exact same logic on ADA, a mature
- * mid-price alt that fits the family's profile, to see if it generalizes to a
- * 6th diversifier.
+ * of this job (validated on LTC/XRP/DOT/ETC/LINK/ADA). Its documented weakness
+ * is buying falling knives in strong downtrends — it holds until price returns
+ * to mid-band, which can be a deep drawdown (ADA MDD up to 59%). This adds a
+ * trailing ATR stop to cap that downside and tests whether it cuts MDD without
+ * destroying returns.
  * When it buys and sells: buys when price closes at/below the lower Bollinger
- * band with RSI oversold; sells when price returns to the middle band or RSI
- * turns overbought.
- * When it does NOT work: in strong trending moves where price hugs the outer
- * band for extended periods (it keeps buying falling knives).
+ * band with RSI oversold; sells when price returns to the middle band, RSI turns
+ * overbought, or the ATR stop is hit.
+ * When it does NOT work: in strong trending moves that hug the outer band for
+ * long stretches (it keeps buying falling knives and now exits them early via
+ * the stop, missing the eventual rebound).
  */
 function onUpdate(ctx) {
   const bb = ctx.bb(20, 2);
@@ -24,6 +26,9 @@ function onUpdate(ctx) {
   const rsi = ctx.rsi(14);
   const rsi_1 = ctx.rsi(14, 1);
   if (rsi == null || rsi_1 == null) return null;
+
+  const atr = ctx.atr(14);
+  if (atr == null) return null;
 
   const lower = bb.lower;
   const mid = bb.mid;
@@ -36,12 +41,19 @@ function onUpdate(ctx) {
     return { side: 'buy', qty: ctx.cash / ctx.price * 0.99 };
   }
 
-  // SELL: price at/above middle band OR RSI turns overbought
-  const atMidBand = ctx.price >= mid;
-  const rsiOverbought = rsi > 65 && rsi_1 <= 65;
+  // SELL conditions once in a position
+  if (ctx.position > 0) {
+    // ATR stop: exit if price fell 3 ATR below entry — caps the falling-knife
+    // drawdown that the no-stop version suffered (MDD up to 59%).
+    const stopPx = ctx.entryPx - 3 * atr;
+    const stopHit = ctx.price <= stopPx;
 
-  if ((atMidBand || rsiOverbought) && ctx.position > 0) {
-    return { side: 'sell', qty: ctx.position };
+    const atMidBand = ctx.price >= mid;
+    const rsiOverbought = rsi > 65 && rsi_1 <= 65;
+
+    if (stopHit || atMidBand || rsiOverbought) {
+      return { side: 'sell', qty: ctx.position };
+    }
   }
 
   return null;
