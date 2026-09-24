@@ -1,46 +1,59 @@
 /*
  * @coinsori-strategy v1
- * name: DOGE Volume-Confirmed Donchian 1D
+ * name: LTC Regime-Adaptive Vol-Target 1D
  * ex: binance
- * syms: DOGEUSDT
+ * syms: LTCUSDT
  * interval: 1d
- * cash: 1000
+ * cash: 10000
  *
- * Why this strategy: DOGE has pronounced boom-bust cycles, so a wide Donchian
- * breakout should catch the strong up-legs and the volume confirmation filters out
- * false breakouts in the chop. Tests whether the volume-confirmed Donchian that
- * worked on ETH also holds on a high-beta meme coin.
- * When it buys and sells: buys when price closes above the highest high of the last
- * 55 days AND that day's volume is at least 1.5x the 20-day average; sells when price
- * closes below the lowest low of the last 30 days.
- * When it does NOT work: in long sideways/choppy markets where breakouts reverse,
- * and it underperforms buy-and-hold in steady grind-up bulls because it waits for a
- * fresh breakout to get back in.
+ * Why this strategy: the regime-adaptive vol-target is the validated champion
+ * (beats buy-and-hold on all windows on BTC, SOL and ETH 1D). This ports the
+ * EXACT same logic to LTC — a liquid mature alt never validated for this family —
+ * to test whether the edge generalizes beyond the big three majors.
+ * When it buys and sells: above SMA50 = invested, position scaled by how far
+ * above SMA50; below SMA50 = tight vol-target; beyond the 3-ATR crash band =
+ * cash.
+ * When it does NOT work: violent bull corrections cut deeper with the larger
+ * bull position, and choppy flat regimes cause repeated small rebalancing.
  */
 function onUpdate(ctx) {
-  const hi55 = ctx.high(55, 2);
-  const lo30 = ctx.low(30, 2);
-  if (hi55 == null || lo30 == null) return null;
+  const atr = ctx.atr(14, 1);
+  const sma50 = ctx.sma(50, 1);
+  const price = ctx.price;
+  const cash = ctx.cash;
+  const pos = ctx.position;
+  if (atr == null || sma50 == null || price == null || price <= 0) return null;
 
-  const closes = ctx.closes;
-  const prevClose = closes[closes.length - 2];
-  if (prevClose == null) return null;
+  const equity = cash + pos * price;
+  const trendUp = price > sma50;
+  const crashDist = 3.0 * atr;
+  const crashStop = price < sma50 - crashDist;
 
-  const avgVol = ctx.avgVol(20);
-  const vols = ctx.volumes;
-  const prevVol = vols[vols.length - 2];
-  if (avgVol == null || prevVol == null) return null;
-
-  if (ctx.position === 0) {
-    const volOk = prevVol >= 1.5 * avgVol;
-    if (prevClose > hi55 && volOk) {
-      return { side: 'buy', qty: ctx.cash / ctx.price * 0.99 };
+  let targetQty;
+  if (crashStop) {
+    targetQty = 0;
+  } else {
+    const trendStrength = (price - sma50) / atr;
+    let volTarget;
+    if (trendUp) {
+      volTarget = 0.02 + 0.03 * Math.min(1, Math.max(0, trendStrength));
+    } else {
+      const distFrac = 1 - (sma50 - price) / crashDist;
+      volTarget = 0.02 * Math.max(0.1, distFrac);
     }
-    return null;
+    const targetValue = (volTarget * equity) / (atr / price);
+    targetQty = targetValue / price;
   }
 
-  if (prevClose < lo30) {
-    return { side: 'sell', qty: ctx.position };
+  const curQty = pos;
+  const diff = targetQty - curQty;
+  if (Math.abs(diff) < 0.0001 * Math.max(0.0001, curQty)) return null;
+
+  if (diff > 0) {
+    const buyQty = Math.min(diff, (cash / price) * 0.98);
+    if (buyQty <= 0) return null;
+    return { side: 'buy', qty: buyQty };
+  } else {
+    return { side: 'sell', qty: Math.min(curQty, -diff) };
   }
-  return null;
 }
