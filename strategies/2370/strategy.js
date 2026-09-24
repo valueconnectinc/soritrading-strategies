@@ -1,8 +1,8 @@
 /*
  * @coinsori-strategy v1
- * name: SOL Regime-Switch Trend 1D
+ * name: BNB Regime-Switch Trend 1D
  * ex: binance
- * syms: SOLUSDT
+ * syms: BNBUSDT
  * interval: 1d
  * cash: 10000
  *
@@ -19,8 +19,6 @@
 function onUpdate(ctx) {
   const closes = ctx.closes;
   if (closes == null || closes.length < 55) return null;
-  // Use the last CLOSED bar (ago=1) for both price and signal — deterministic
-  // and identical in backtest/paper/live (the critical lesson from earlier).
   const px = closes[closes.length - 2];
   const sma50 = ctx.sma(50, 1);
   const atr = ctx.atr(14, 1);
