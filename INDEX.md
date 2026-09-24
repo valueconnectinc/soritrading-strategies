@@ -11,7 +11,7 @@ Every figure comes from the last verifying backtest at publish time. These are p
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
-| ★ | [2393](strategies/2393/) | ETH Regime Trend Champion 1D | +256.72% | +253.80% | +34.75% | 43 | 2026-09-24 |
+| ★ | [2393](strategies/2393/) | ETH Regime Trend Champion 1D | +200.08% | +43.06% | +40.65% | 39 | 2026-09-24 |
 | ★ | [2392](strategies/2392/) | ETH Regime Trend Tight Hysteresis 1D | +576.83% | +258.98% | +45.91% | 51 | 2026-09-24 |
 | ★ | [2391](strategies/2391/) | ETH Regime Trend Tight Crash 1D | +200.08% | +43.06% | +40.65% | 39 | 2026-09-24 |
 | ★ | [2388](strategies/2388/) | BNB Volume-Confirmed Trend 1D | +192.06% | +138.35% | +47.64% | 55 | 2026-09-24 |
