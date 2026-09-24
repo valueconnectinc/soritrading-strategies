@@ -11,7 +11,7 @@ Every figure comes from the last verifying backtest at publish time. These are p
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
-| ★ | [2357](strategies/2357/) | LTC Band-Bounce Mean Reversion Cooldown 1D | +335.98% | +57.46% | +32.40% | 28 | 2026-09-24 |
+| ★ | [2357](strategies/2357/) | LTC Band-Bounce Mean Reversion Cooldown 1D | +59.78% | -79.59% | +54.92% | 35 | 2026-09-24 |
 | ★ | [2356](strategies/2356/) | ETC Band-Bounce Mean Reversion 1D | +71.65% | -47.25% | +31.07% | 38 | 2026-09-24 |
 | ★ | [2355](strategies/2355/) | LTC Band-Bounce Mean Reversion 1D | +12.12% | -70.76% | +54.96% | 10 | 2026-09-24 |
 | ★ | [2354](strategies/2354/) | BTC ATR Channel Volatility Breakout 1D | +188.03% | +47.93% | +22.83% | 35 | 2026-09-24 |
