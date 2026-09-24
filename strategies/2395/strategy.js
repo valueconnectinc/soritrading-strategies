@@ -1,38 +1,36 @@
 /*
  * @coinsori-strategy v1
- * name: ETH Trend-Age Profit-Lock 1D
+ * name: ETH Regime Trend + Chandelier Exit 1D
  * ex: binance
  * syms: ETHUSDT
  * interval: 1d
  * cash: 10000
  *
- * Why this strategy: The validated regime-trend champion's known weakness is that it
- * exits on shallow pullbacks during straight-line melt-ups, giving back gains that
- * immediately recover. Instead of a fixed hysteresis band, this version PROGRESSIVELY
- * tightens the exit as the position ages and profits grow — a mechanism, not a
- * parameter tweak. Early positions keep a loose 1.5-ATR band (ignore chop); mature,
- * deeply-profitable positions lock gains with a much tighter band.
- * When it buys and sells: Buy when price closes above the 50-day average (vol-scaled
- * size). Sell when price closes below the average minus a band that shrinks from
- * 1.5 ATR (fresh position) down to 0.3 ATR (long-held, big-profit position).
- * When it does NOT work: In choppy ranges the tightening can still whipsaw, and in
- * grind-downs that never recover it still rides deep drawdowns. It may also give up
- * a melt-up's final leg if the band tightens too early.
+ * Why this strategy: The validated regime-trend recipe (SMA50 trend + vol-scaled
+ * sizing + fear filter) is the most robust strategy found in this job. This variant
+ * replaces the SMA-mean exit band with a CHANDELIER trailing stop (exit when price
+ * drops 3 ATR from the highest high since entry) to protect gains in grind-downs
+ * that never make a new high, while a rising trailing stop still lets melt-ups run.
+ * When it buys and sells: Buy when the last closed price is above the 50-day average,
+ * sized down when volatility is high or fear is extreme. Sell when price closes 3 ATR
+ * below the highest high since entry, or 2.5 ATR below the 50-day average in a crash.
+ * When it does NOT work: In straight-line melt-ups the trailing stop still exits on
+ * pullbacks that immediately recover, so it underperforms buy-and-hold; and in slow
+ * grind-downs the 3-ATR chandelier may still be too loose to fully protect the ride.
  */
 function onUpdate(ctx) {
   const closes = ctx.closes;
   if (closes == null || closes.length < 55) return null;
-  const px = closes[closes.length - 2];
+  const px = closes[closes.length - 2]; // last CLOSED bar
   const sma50 = ctx.sma(50, 1);
   const atr = ctx.atr(14, 1);
   const pos = ctx.position;
   const cash = ctx.cash;
-  const entryPx = ctx.entryPx;
   if (px == null || sma50 == null || atr == null || px <= 0) return null;
 
   const long = px > sma50;
 
-  // Volatility-scaled sizing (kept from champion).
+  // Volatility-scaled sizing: compare today's ATR/price to its 50-bar average.
   let ratioSum = 0, ratioCount = 0;
   for (let k = 1; k <= 50; k++) {
     const c = closes[closes.length - 1 - k];
@@ -46,6 +44,9 @@ function onUpdate(ctx) {
     sizeMult = Math.max(0.3, Math.min(1, normRatio / currentRatio));
   }
 
+  const fg = ctx.data('fear_greed');
+  if (fg != null && fg <= 20) sizeMult *= 0.4;
+
   if (pos === 0) {
     if (long && cash > 0 && ctx.price > 0) {
       return { side: 'buy', qty: (cash / ctx.price) * 0.98 * sizeMult };
@@ -53,19 +54,14 @@ function onUpdate(ctx) {
     return null;
   }
 
-  // Progressively tighten the exit as the position matures and profits grow.
-  // Fresh: 1.5 ATR band (ignore chop). Mature & profitable: down to 0.3 ATR.
-  let band = 1.5;
-  if (entryPx != null && entryPx > 0) {
-    const profitPct = (px - entryPx) / entryPx;
-    const profitFactor = Math.max(0, Math.min(1, profitPct / 0.25)); // 0 at entry, 1 at +25%
-    band = 1.5 - 1.2 * profitFactor; // 1.5 -> 0.3 as profit grows
-  }
-  const exitBelow = px < sma50 - band * atr;
-  const crashStop = px < sma50 - 2.5 * atr;
-
-  if (exitBelow || crashStop) {
+  // In position: track highest high since entry, exit on chandelier trailing stop.
+  const st = ctx.state || {};
+  const runHigh = Math.max(st.hi || 0, ctx.high(1));
+  const chandExit = px < runHigh - 3.0 * atr; // 3 ATR below run-high = give up normal pullback, keep melt-up
+  const crashStop = px < sma50 - 2.5 * atr; // backstop for deep crashes
+  if (chandExit || crashStop) {
     return { side: 'sell', qty: pos };
   }
+  ctx.state = { hi: runHigh };
   return null;
 }
