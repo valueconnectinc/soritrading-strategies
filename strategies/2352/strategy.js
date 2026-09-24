@@ -1,15 +1,16 @@
 /*
  * @coinsori-strategy v1
- * name: ETC Band-Bounce Mean Reversion 4H
+ * name: LINK Band-Bounce Mean Reversion 4H
  * ex: binance
- * syms: ETCUSDT
+ * syms: LINKUSDT
  * interval: 4h
  * cash: 1000
  *
  * Why this strategy: band-bounce mean reversion is the proven, repeatable edge
- * of this job (validated on LTC/XRP/DOT with multiple signal variants). This
- * tests the exact same logic on ETC — a mature, mid-price alt that fits the
- * family's profile — to see if it generalizes to a 4th diversifier.
+ * of this job (validated on LTC/XRP/DOT/ETC — all beat buy-and-hold on 3
+ * disjoint windows). This tests the exact same logic on LINK, a mature
+ * mid-price alt that fits the family's profile, to see if it generalizes to a
+ * 5th diversifier.
  * When it buys and sells: buys when price closes at/below the lower Bollinger
  * band with RSI oversold; sells when price returns to the middle band or RSI
  * turns overbought.
