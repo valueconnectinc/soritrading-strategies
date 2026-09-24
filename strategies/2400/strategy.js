@@ -1,22 +1,22 @@
 /*
  * @coinsori-strategy v1
- * name: ETH Regime Trend Champion StrongHold 1D
+ * name: ETH Regime Trend Champion StrongHold WideCrash 1D
  * ex: binance
  * syms: ETHUSDT
  * interval: 1d
  * cash: 10000
  *
- * Why this strategy: This is the validated regime-trend recipe (rides price above its
- * 50-day average, hysteresis exit, crash stop, volatility/fear sizing) with ONE targeted
- * fix for its known weakness: in a strong bull market (price well above the 200-day
- * average and far above the 50-day), a normal pullback used to trigger the small
- * hysteresis exit and the strategy re-entered late, missing the V-shaped recovery
- * (the 2021-2022 underperformance). The fix: in a strong bull regime, HOLD through
- * small pullbacks and only exit on the deep crash stop.
+ * Why this strategy: The validated regime-trend recipe with a targeted fix for its
+ * known weakness: in a strong bull market it used to exit on normal pullbacks and
+ * the 2021-2022 window underperformed. This version HOLDS through pullbacks in a
+ * strong bull regime and widens the crash stop there, so a sharp-but-normal bull
+ * dip (like May 2021) does not kick it out; it only exits when the trend actually
+ * turns (price closing 1 ATR below the 50-day) or on a truly catastrophic crash.
  * When it buys and sells: Buy when the last closed price is above the 50-day average,
- * sized down when volatility is high or fear is extreme. Sell on the hysteresis exit
- * (1 ATR below the 50-day) UNLESS we are in a strong bull regime (above 200-day and
- * far above 50-day), in which case only the deep crash stop (2.5 ATR below) exits.
+ * sized down when volatility is high or fear is extreme. In a strong bull regime
+ * (above the 200-day and far above the 50-day) hold through small pullbacks and use
+ * a wider crash stop; otherwise the normal hysteresis (1 ATR below) and crash stop
+ * apply.
  * When it does NOT work: In slow grinding downtrends price hovers near the average and
  * the hysteresis exit can whipsaw; and it still rides full drawdowns in grind-downs
  * that never make a new high (MDD can reach ~60%). It is long-only, so it does not
@@ -35,12 +35,15 @@ function onUpdate(ctx) {
 
   const long = px > sma50;
   const exitBelow = px < sma50 - 1.0 * atr; // hysteresis: ignore small chop
-  const crashStop = px < sma50 - 2.5 * atr; // bail out of deep crashes early
 
   // STRONG BULL REGIME: above the 200-day average AND far above the 50-day
   // (>= 1.5 ATR). In this regime a pullback is normal bull noise, so hold through
-  // the small hysteresis exit and only the deep crash stop gets us out.
+  // the small hysteresis exit and use a much wider crash stop (4 ATR) so a sharp
+  // bull dip like May 2021 does not kick us out early.
   const strongBull = px > sma200 && (px - sma50) >= 1.5 * atr;
+  const crashStop = strongBull
+    ? px < sma50 - 4.0 * atr   // wide crash stop in strong bull
+    : px < sma50 - 2.5 * atr;  // normal crash stop otherwise
 
   // Volatility-scaled sizing: compare today's ATR/price to its 50-bar average.
   let ratioSum = 0, ratioCount = 0;
@@ -68,7 +71,7 @@ function onUpdate(ctx) {
     return null;
   }
 
-  // In strong bull, skip the small hysteresis exit; only the crash stop exits.
+  // In strong bull, skip the small hysteresis exit; only the (wider) crash stop exits.
   const shouldExit = crashStop || (exitBelow && !strongBull);
   if (shouldExit) {
     return { side: 'sell', qty: pos };
