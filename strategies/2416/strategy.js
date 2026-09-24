@@ -1,41 +1,43 @@
 /*
  * @coinsori-strategy v1
- * name: ETH Trend Donchian-10 NoRegime 1D
+ * name: ETH Trend Donchian-15 Breakout 1D
  * ex: binance
  * syms: ETHUSDT
  * interval: 1d
  * cash: 10000
  *
- * Why this strategy: The 10-day Donchian breakout variant had the best chop window
- * (2021-24 +18.9% vs champion +6%) and lowest MDD, but the weakest bull window
- * (2024-26 +21% vs champion +69%). This variant removes the "50-day average rising"
- * regime filter to test whether that filter is what delays bull re-entry — a breakout
- * above the 50-day average alone may re-enter faster in a steady bull.
- * When it buys and sells: Buy when price closes at a fresh 10-day high AND above the
- * 50-day average (no regime-slope requirement). Sell when price closes 1 ATR below the
- * average, or drops 2.5 ATRs below it in a crash.
- * When it does NOT work: Without the regime filter it may buy a bounce in a falling
- * trend (the breakout can happen during a bear rally), so it can whipsaw more in
- * confirmed bears. Long-only, no shorting.
+ * Why this strategy: The 20-day Donchian breakout cut MDD and improved the 2018-21
+ * window (+212% vs champion +144%) but gave up the 2024-26 bull (+33% vs +69%)
+ * because the 20-day window was too slow. The 10-day version recovered the chop
+ * window but gave up even more bull. This variant uses a MIDDLE 15-day window to
+ * balance: keep most of the breakout's chop/MDD benefit while recovering bull
+ * participation.
+ * When it buys and sells: Buy when price closes at a fresh 15-day high AND above the
+ * 50-day average AND the 50-day average is rising. Sell when price closes 1 ATR below
+ * the average, or drops 2.5 ATRs below it in a crash.
+ * When it does NOT work: A 15-day window still delays re-entry at sharp V-recoveries,
+ * and it is long-only so it does not profit from shorting bear markets.
  */
 function onUpdate(ctx) {
   const closes = ctx.closes;
   if (closes == null || closes.length < 60) return null;
   const px = closes[closes.length - 2]; // last CLOSED bar
   const sma50 = ctx.sma(50, 1);
+  const sma50Prev = ctx.sma(50, 11); // ~10 bars earlier, to gauge regime slope
   const atr = ctx.atr(14, 1);
   const pos = ctx.position;
   const cash = ctx.cash;
-  if (px == null || sma50 == null || atr == null || px <= 0) return null;
+  if (px == null || sma50 == null || sma50Prev == null || atr == null || px <= 0) return null;
 
-  // Donchian breakout over the PRIOR 10 bars (k=2..11, excluding px itself).
-  let high10 = 0;
-  for (let k = 2; k <= 11; k++) {
+  // Donchian breakout over the PRIOR 15 bars (k=2..16, excluding px itself).
+  let high15 = 0;
+  for (let k = 2; k <= 16; k++) {
     const c = closes[closes.length - 1 - k];
-    if (c != null && c > high10) high10 = c;
+    if (c != null && c > high15) high15 = c;
   }
-  const breakout = px > high10; // fresh 10-day high
-  const long = px > sma50 && breakout; // no regime-slope requirement
+  const breakout = px > high15; // fresh 15-day high
+  const regimeUp = sma50 > sma50Prev; // 50-day average rising = bull regime intact
+  const long = px > sma50 && breakout && regimeUp;
 
   const exitBelow = px < sma50 - 1.0 * atr; // hysteresis: ignore small chop
   const crashStop = px < sma50 - 2.5 * atr; // bail out of deep crashes early
