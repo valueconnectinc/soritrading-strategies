@@ -3,9 +3,9 @@
   "name": "LTC Band-Bounce Fear-Confirmed 1D",
   "kind": "custom",
   "verified": {
-    "backtestId": 9723,
-    "return": 39.26,
-    "mdd": 39.92,
+    "backtestId": 9726,
+    "return": 22.5,
+    "mdd": 54.96,
     "trades": 10,
     "vsBuyHold": "win",
     "benchRet": -70.76,
@@ -26,6 +26,6 @@
     }
   },
   "config": null,
-  "updatedAt": "2026-09-24T10:35:44.003Z",
+  "updatedAt": "2026-09-24T10:39:17.144Z",
   "publishedBy": "scripts/publish-strategies.mjs"
 }
