@@ -3,7 +3,7 @@
   "name": "LTC Band-Bounce Cooldown + StopLoss 1D",
   "kind": "custom",
   "verified": {
-    "backtestId": 9732,
+    "backtestId": 9735,
     "return": 284.07,
     "mdd": 32.4,
     "trades": 34,
