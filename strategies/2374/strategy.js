@@ -1,23 +1,21 @@
 /*
  * @coinsori-strategy v1
- * name: SOL Hysteresis + ATR-Adaptive Stop + Vol-DeRisk 1D
+ * name: SOL Hysteresis + ATR-Adaptive Stop + Vol-Sized 1D
  * ex: binance
  * syms: SOLUSDT
  * interval: 1d
  * cash: 10000
  *
  * Why this strategy: The validated 1-ATR hysteresis regime-switch beats buy-and-hold
- * on SOL, and the ATR-adaptive trailing stop locks in gains. But all-in/all-out
- * produced deep drawdowns (up to 76%) because a position held through a volatility
- * spike gives back the whole run before the trailing stop triggers. This version
- * de-risks DURING the hold: when volatility spikes above its own normal level we
- * trim exposure, and we scale the trailing stop tighter as volatility rises.
+ * on SOL, and the ATR-adaptive trailing stop locks in gains. But going all-in on
+ * every signal produced deep drawdowns (up to 76%). This version scales position
+ * size down when volatility is high relative to its own history, so we risk less in
+ * choppy/risky regimes and more when the market is calm.
  * When it buys and sells: Buy when the last closed price is above the 50-day average,
- * sized by how calm volatility is. Sell (or trim) when volatility spikes, price closes
- * more than 1 ATR below the average, falls more than 3 ATRs in one move, or falls off
- * its running high by a volatility-scaled distance.
- * When it does NOT work: In a straight-line melt-up the de-risking keeps some cash
- * idle so it lags a fully-invested buy-and-hold; and no sizing rule fixes a slow
+ * sized by how calm volatility is. Sell when price closes more than 1 ATR below the
+ * average, falls more than 3 ATRs in one move, or falls 4 ATRs off its running high.
+ * When it does NOT work: In a straight-line melt-up the volatility scaling keeps some
+ * cash idle so it lags a fully-invested buy-and-hold; and no sizing rule fixes a slow
  * steady decline where price never makes a new high.
  */
 function onUpdate(ctx) {
@@ -35,32 +33,27 @@ function onUpdate(ctx) {
   const exitBelow = px < sma50 - 1.0 * atr; // hysteresis: ignore small chop
   const crashStop = px < sma50 - 3.0 * atr;
 
-  // Normalized volatility = ATR as a fraction of price, averaged over 50 bars = "normal".
+  // Volatility-scaled sizing: normalized vol = ATR as a fraction of price. We average
+  // that ratio over the last 50 bars as the "normal" level, then compare today's ratio
+  // to it. When today is more volatile than normal we cut exposure; the multiplier is
+  // clamped to [0.3, 1] so we never go fully flat or over 100% invested.
   let ratioSum = 0, ratioCount = 0;
   for (let k = 1; k <= 50; k++) {
     const c = closes[closes.length - 1 - k];
     const a = ctx.atr(14, k);
     if (c != null && a != null && c > 0) { ratioSum += a / c; ratioCount++; }
   }
-  let normRatio = null;
-  if (ratioCount >= 20) normRatio = ratioSum / ratioCount;
-  const currentRatio = atr / px;
-  const volSpike = normRatio != null && currentRatio > 1.5 * normRatio; // choppy regime
-
-  // Trailing stop scales with volatility: calm -> wide (6 ATR), choppy -> tight (2 ATR).
-  // Tightening in high-vol regimes locks in gains before a spike can reverse.
-  let trailMult = 4;
-  if (normRatio != null) {
-    trailMult = Math.max(2, Math.min(6, 6 * (normRatio / currentRatio)));
+  let sizeMult = 1;
+  if (ratioCount >= 20) {
+    const normRatio = ratioSum / ratioCount;
+    const currentRatio = atr / px;
+    sizeMult = Math.max(0.3, Math.min(1, normRatio / currentRatio));
   }
 
   if (pos === 0) {
     st.runHigh = null;
     if (long && cash > 0 && ctx.price > 0) {
       st.runHigh = px;
-      // Size by calmness: when vol is above normal we enter smaller.
-      let sizeMult = 1;
-      if (normRatio != null) sizeMult = Math.max(0.3, Math.min(1, normRatio / currentRatio));
       return { side: 'buy', qty: (cash / ctx.price) * 0.98 * sizeMult };
     }
     return null;
@@ -68,17 +61,11 @@ function onUpdate(ctx) {
 
   if (st.runHigh == null) st.runHigh = px;
   st.runHigh = Math.max(st.runHigh, px);
-  const trailHit = px < st.runHigh - trailMult * atr;
+  // Trailing stop scaled to volatility: exit if price falls 4 ATRs off the running high.
+  const trailHit = px < st.runHigh - 4.0 * atr;
 
   if (exitBelow || crashStop || trailHit) {
     return { side: 'sell', qty: pos };
-  }
-
-  // In-position de-risking: if volatility spikes while we hold, trim to half.
-  // This caps how much a single spike can cost us before the trailing stop fires.
-  if (volSpike && pos > 0) {
-    const trimQty = pos * 0.5;
-    if (trimQty > 0.0001) return { side: 'sell', qty: trimQty };
   }
   return null;
 }
