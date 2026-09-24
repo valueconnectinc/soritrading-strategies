@@ -1,39 +1,40 @@
 /*
  * @coinsori-strategy v1
- * name: LTC Regime Trend Champion 1D
+ * name: ETH Regime Trend Champion v3 1D
  * ex: binance
- * syms: LTCUSDT
+ * syms: ETHUSDT
  * interval: 1d
  * cash: 10000
  *
- * Why this strategy: This is the exact regime-trend recipe validated on ETH, BTC,
- * SOL, BNB, ADA and XRP (no parameter tuning) — applied here to LTC as a fresh-asset
- * robustness check. The bet: crypto trends persist for months, so riding price above
- * its 50-day average captures most of the upside, while a hysteresis exit (1 ATR below
- * the average) and a crash stop cut the worst drawdowns. Sizing down in high volatility
- * and extreme fear protects capital without missing the bull.
+ * Why this strategy: Improvement on the validated regime-trend champion. The original
+ * rode full drawdowns in grinding downtrends because its 1-ATR hysteresis exit whipsaws
+ * when price hovers near a flat/declining 50-day average. An earlier attempt also
+ * required a rising 50-day average to enter, but that missed strong bull runs that start
+ * from a flat average. This version keeps the proven simple entry (price above the 50-day
+ * average) and adds only the trend-break exit: leave when the 50-day average itself turns
+ * down, which cuts grind-down drawdowns without blocking bull entries.
  * When it buys and sells: Buy when the last closed price is above the 50-day average,
- * sized down when ATR/price is high or the fear index is extreme (<=20). Sell when
- * price closes 1 ATR below the average (ignore small chop), or drops 2.5 ATRs below
- * it in a crash.
- * When it does NOT work: In slow grinding downtrends price hovers near the average and
- * the hysteresis exit can whipsaw; it still rides full drawdowns in grind-downs that
- * never make a new high (MDD can reach ~60%). It is long-only, so it does not profit
- * from shorting bear markets.
+ * sized down when ATR/price is high or fear is extreme. Sell when price closes 1 ATR
+ * below the average, drops 2.5 ATRs below it, or the 50-day average itself starts falling.
+ * When it does NOT work: In a choppy sideways market it can whipsaw around the average;
+ * it is long-only so it does not profit from shorting bear markets. If a downtrend is so
+ * gradual the average never clearly turns down, it can still ride a deep drawdown.
  */
 function onUpdate(ctx) {
   const closes = ctx.closes;
-  if (closes == null || closes.length < 55) return null;
+  if (closes == null || closes.length < 60) return null;
   const px = closes[closes.length - 2]; // last CLOSED bar
   const sma50 = ctx.sma(50, 1);
+  const sma50prev = ctx.sma(50, 6); // SMA 5 bars earlier to check slope
   const atr = ctx.atr(14, 1);
   const pos = ctx.position;
   const cash = ctx.cash;
-  if (px == null || sma50 == null || atr == null || px <= 0) return null;
+  if (px == null || sma50 == null || sma50prev == null || atr == null || px <= 0) return null;
 
-  const long = px > sma50;
+  const long = px > sma50; // proven simple entry: price above the 50-day average
   const exitBelow = px < sma50 - 1.0 * atr; // hysteresis: ignore small chop
   const crashStop = px < sma50 - 2.5 * atr; // bail out of deep crashes early
+  const trendBreak = sma50 < sma50prev; // the trend itself has turned down
 
   // Volatility-scaled sizing: compare today's ATR/price to its 50-bar average.
   let ratioSum = 0, ratioCount = 0;
@@ -61,7 +62,7 @@ function onUpdate(ctx) {
     return null;
   }
 
-  if (exitBelow || crashStop) {
+  if (exitBelow || crashStop || trendBreak) {
     return { side: 'sell', qty: pos };
   }
   return null;
