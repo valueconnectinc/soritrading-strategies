@@ -1,51 +1,79 @@
 /*
  * @coinsori-strategy v1
- * name: BTC Macro-Regime Trend 1D
+ * name: SOL Hysteresis + Tighter ATR Trail + Vol&Fear Sizing 1D
  * ex: binance
- * syms: BTCUSDT
+ * syms: SOLUSDT
  * interval: 1d
  * cash: 10000
  *
- * Why this strategy: Crypto is highly sensitive to monetary policy. The DIRECTION of the
- * fed funds rate matters more than its level: when the Fed is easing (cutting rates)
- * liquidity is expanding and risk assets rally; when it is tightening (hiking) liquidity
- * drains. This uses the rate's direction as a macro regime gate on top of a price trend —
- * a different data source than price indicators.
- * When it buys and sells: Buy when price is above its 50-day average AND the fed funds
- * rate is not currently in a sharp tightening cycle (rate not at a multi-month high).
- * Sell when price closes below the 50-day average.
- * When it does NOT work: Fed policy is slow-moving and monthly, so it cannot time the
- * short, sharp crypto cycles within a rate regime; and any policy gate can keep you out
- * of a bull market that runs despite the macro backdrop.
+ * Why this strategy: The validated SOL champion (1-ATR hysteresis regime switch with
+ * vol & fear-greed sizing) beats buy-and-hold but has a 63% drawdown. The deepest
+ * losses come from slow grind-downs that the 4-ATR trailing stop only catches late.
+ * This variant tightens the trailing stop to 3 ATR and adds a fast vol-spike exit so
+ * we bail out of crash days sooner, cutting MDD while keeping most of the upside.
+ * When it buys and sells: Buy when the last closed price is above the 50-day average,
+ * sized down when volatility is high or the crowd is in extreme fear. Sell when price
+ * closes 1 ATR below the average, drops 3 ATRs below it in one move, falls 3 ATRs off
+ * its running high, or closes with a single-day move bigger than 2.5 ATRs (vol spike).
+ * When it does NOT work: A tighter trail exits normal 20-30% SOL bull pullbacks that
+ * instantly recover, so it lags buy-and-hold in straight-line melt-ups; and no sizing
+ * rule fixes a slow steady decline that never makes a new high.
  */
 function onUpdate(ctx) {
   const closes = ctx.closes;
   if (closes == null || closes.length < 55) return null;
   const px = closes[closes.length - 2]; // last CLOSED bar
+  const pxPrev = closes[closes.length - 3];
   const sma50 = ctx.sma(50, 1);
+  const atr = ctx.atr(14, 1);
   const pos = ctx.position;
   const cash = ctx.cash;
-  if (px == null || sma50 == null || px <= 0) return null;
+  const st = ctx.state;
+  if (px == null || sma50 == null || atr == null || px <= 0) return null;
 
-  // Macro regime by DIRECTION: compare the current fed funds rate to its level roughly
-  // half a year ago (180 days back). If the rate is meaningfully higher now, the Fed is
-  // tightening (headwind); if flat or lower, policy is not a blocker.
-  const fed = ctx.data('fed');
-  const fedLag = ctx.data('fed_lag30'); // fed funds lagged 30 rows (~monthly)
-  let tight = false;
-  if (fed != null && fedLag != null && fedLag > 0) {
-    // Tightening = rate more than 0.5pp above where it was ~6 months ago.
-    tight = fed - fedLag > 0.5;
+  const long = px > sma50;
+  const exitBelow = px < sma50 - 1.0 * atr; // hysteresis: ignore small chop
+  const crashStop = px < sma50 - 3.0 * atr;
+
+  // Volatility-scaled sizing: normalized vol = ATR/price averaged over last 50 bars,
+  // compared to today's ratio. More volatile than normal -> cut exposure, clamp [0.3,1].
+  let ratioSum = 0, ratioCount = 0;
+  for (let k = 1; k <= 50; k++) {
+    const c = closes[closes.length - 1 - k];
+    const a = ctx.atr(14, k);
+    if (c != null && a != null && c > 0) { ratioSum += a / c; ratioCount++; }
+  }
+  let sizeMult = 1;
+  if (ratioCount >= 20) {
+    const normRatio = ratioSum / ratioCount;
+    const currentRatio = atr / px;
+    sizeMult = Math.max(0.3, Math.min(1, normRatio / currentRatio));
+  }
+
+  // Fear & greed risk filter: extreme fear (<=20) usually means mid-crash. Cut to 40%.
+  const fg = ctx.data('fear_greed');
+  if (fg != null && fg <= 20) {
+    sizeMult *= 0.4;
   }
 
   if (pos === 0) {
-    if (px > sma50 && !tight && cash > 0 && ctx.price > 0) {
-      return { side: 'buy', qty: (cash / ctx.price) * 0.98 };
+    st.runHigh = null;
+    if (long && cash > 0 && ctx.price > 0) {
+      st.runHigh = px;
+      return { side: 'buy', qty: (cash / ctx.price) * 0.98 * sizeMult };
     }
     return null;
   }
 
-  if (px < sma50) {
+  if (st.runHigh == null) st.runHigh = px;
+  st.runHigh = Math.max(st.runHigh, px);
+  const trailHit = px < st.runHigh - 3.0 * atr; // tighter than 4 ATR to cut MDD
+
+  // Vol-spike exit: a single-day move bigger than 2.5 ATRs while long is usually the
+  // start of a crash. Bail out immediately instead of waiting for the trail to catch.
+  const volSpike = pxPrev != null && atr > 0 && Math.abs(px - pxPrev) > 2.5 * atr && px < pxPrev;
+
+  if (exitBelow || crashStop || trailHit || volSpike) {
     return { side: 'sell', qty: pos };
   }
   return null;
