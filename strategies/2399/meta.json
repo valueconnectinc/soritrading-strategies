@@ -3,11 +3,11 @@
   "name": "LTC Regime Trend Champion 1D",
   "kind": "custom",
   "verified": {
-    "backtestId": 10013,
-    "return": 166.46,
-    "mdd": 46.39,
-    "trades": 21,
-    "vsBuyHold": "win",
+    "backtestId": 10016,
+    "return": -35.94,
+    "mdd": 78.41,
+    "trades": 417,
+    "vsBuyHold": "lose",
     "benchRet": -0.37,
     "benchBasis": "price",
     "gapPct": 0,
@@ -26,6 +26,6 @@
     }
   },
   "config": null,
-  "updatedAt": "2026-09-24T14:24:56.222Z",
+  "updatedAt": "2026-09-24T14:25:52.829Z",
   "publishedBy": "scripts/publish-strategies.mjs"
 }
