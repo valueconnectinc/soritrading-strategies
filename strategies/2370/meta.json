@@ -3,29 +3,28 @@
   "name": "BNB Regime-Switch Trend 1D",
   "kind": "custom",
   "verified": {
-    "backtestId": 9809,
-    "return": 120.64,
-    "mdd": 37.96,
-    "trades": 107,
+    "backtestId": 9812,
+    "return": 53.5,
+    "mdd": 42.27,
+    "trades": 14,
     "vsBuyHold": "lose",
-    "benchRet": 142.76,
+    "benchRet": 89.81,
     "benchBasis": "price",
     "gapPct": 0,
-    "tFrom": 1660608000,
-    "tTo": 1790121600,
+    "tFrom": 1502928000,
+    "tTo": 1574121600,
     "approxNotes": [
-      "봉 내 순서는 관례(양봉 O→L→H→C·음봉 O→H→L→C) — 실순서 미상 · 봉 중 거래량 null · MDD 는 봉 마감 기준",
-      "기간 종료 시 미청산 포지션 1종목 (총자산의 98.68%) — 이 수익률은 **평가액**을 포함합니다. 퇴출 수수료·거래세를 안 냈고, 마지막 봉 가격에 실제로 팔 수 있다는 보장도 없습니다(얇은 호가·상장폐지). exec.endLiquidate 로 마지막 봉 청산을 켤 수 있습니다"
+      "봉 내 순서는 관례(양봉 O→L→H→C·음봉 O→H→L→C) — 실순서 미상 · 봉 중 거래량 null · MDD 는 봉 마감 기준"
     ],
     "spec": {
       "ex": "binance",
-      "sym": "BNBUSDT",
+      "sym": "BTCUSDT",
       "interval": "1d",
-      "bars": 1500,
-      "end": 1790208000
+      "bars": 2500,
+      "end": 1574208000
     }
   },
   "config": null,
-  "updatedAt": "2026-09-24T11:37:54.933Z",
+  "updatedAt": "2026-09-24T11:38:45.975Z",
   "publishedBy": "scripts/publish-strategies.mjs"
 }
