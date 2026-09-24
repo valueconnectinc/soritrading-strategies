@@ -15,9 +15,10 @@
  * extreme fear. Sell half the position when price closes 1 ATR below the average; sell the
  * rest if it reaches 2 ATR below, or on a 3-ATR crash. Never re-buy until the regime is
  * back above the average.
- * When it does NOT work: In slow grind-downs that hover just under the average, the half
- * position still rides the drawdown; and partial exits mean more profit is given back in a
- * genuine top that reverses slowly. Drawdown can stay elevated in long choppy downtrends.
+ * When it does NOT work: In straight-line melt-ups (e.g. 2023-2025) it still trails
+ * buy-and-hold because the regime-break exit is late to the resumption; in slow
+ * grind-downs that hover just under the average the half position rides the drawdown.
+ * Drawdown stays elevated in long choppy downtrends.
  */
 function onUpdate(ctx) {
   const closes = ctx.closes;
