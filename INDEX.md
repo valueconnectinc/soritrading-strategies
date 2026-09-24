@@ -11,7 +11,7 @@ Every figure comes from the last verifying backtest at publish time. These are p
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
-| ★ | [2356](strategies/2356/) | ETC Band-Bounce Mean Reversion 1D | +775.46% | +128.46% | +69.59% | 74 | 2026-09-24 |
+| ★ | [2356](strategies/2356/) | ETC Band-Bounce Mean Reversion 1D | -10.07% | -47.25% | +40.91% | 9 | 2026-09-24 |
 | ★ | [2355](strategies/2355/) | LTC Band-Bounce Mean Reversion 1D | +12.12% | -70.76% | +54.96% | 10 | 2026-09-24 |
 | ★ | [2354](strategies/2354/) | BTC ATR Channel Volatility Breakout 1D | +188.03% | +47.93% | +22.83% | 35 | 2026-09-24 |
 | ★ | [2353](strategies/2353/) | ADA Band-Bounce Mean Reversion 4H | +6526.11% | +2159.91% | +58.74% | 210 | 2026-09-24 |
