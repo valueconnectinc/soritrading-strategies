@@ -11,7 +11,7 @@ Every figure comes from the last verifying backtest at publish time. These are p
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
-| ★ | [2385](strategies/2385/) | SOL Pure-Regime TightCrash 1D | +52.21% | -28.41% | +46.47% | 21 | 2026-09-24 |
+| ★ | [2385](strategies/2385/) | SOL Pure-Regime TightCrash 1D | +340.79% | +111.44% | +48.29% | 22 | 2026-09-24 |
 | ★ | [2384](strategies/2384/) | SOL Hysteresis Pure-Regime NoTrail 1D | +3868.08% | +3825.24% | +72.74% | 133 | 2026-09-24 |
 |  | [2383](strategies/2383/) | SOL Hysteresis ATR Trail NoSizing 1D | +1763.37% | +2290.78% | +69.25% | 26 | 2026-09-24 |
 |  | [2382](strategies/2382/) | AI 전략 | +353.43% | +1147.75% | +52.93% | 42 | 2026-09-24 |
