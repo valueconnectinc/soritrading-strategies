@@ -1,0 +1,61 @@
+/*
+ * @coinsori-strategy v1
+ * name: SOL Hysteresis Trend + Trailing Stop 1D
+ * ex: binance
+ * syms: SOLUSDT
+ * interval: 1d
+ * cash: 10000
+ *
+ * Why this strategy: The validated 1-ATR hysteresis regime-switch (ride SOL above
+ * its 50-day average, exit a full ATR below it) already beats buy-and-hold. Its
+ * one documented weakness is a slow grind-down below the average by less than 1
+ * ATR a day: price gives back profit before the exit triggers. Adding a trailing
+ * stop that locks in gains as price falls off its running high fixes that weakness.
+ * When it buys and sells: Buy full when the last closed price is above the 50-day
+ * average. Sell full when price closes more than 1 ATR below the average, OR falls
+ * a set % off its highest close since entry (trailing stop), OR drops 3 ATRs below
+ * the average in one move (crash stop).
+ * When it does NOT work: In a straight-line melt-up the trailing stop exits a normal
+ * pullback that instantly recovers, so it can lag buy-and-hold; and the trailing
+ * stop does not help in a slow steady decline where price never makes a new high.
+ */
+function onUpdate(ctx) {
+  const closes = ctx.closes;
+  if (closes == null || closes.length < 55) return null;
+  const px = closes[closes.length - 2]; // last CLOSED bar
+  const sma50 = ctx.sma(50, 1);
+  const atr = ctx.atr(14, 1);
+  const pos = ctx.position;
+  const cash = ctx.cash;
+  if (px == null || sma50 == null || atr == null || px <= 0) return null;
+
+  const long = px > sma50;
+  const exitBelow = px < sma50 - 1.0 * atr; // hysteresis: ignore small chop
+  const crashStop = px < sma50 - 3.0 * atr;
+
+  if (pos === 0) {
+    if (long && cash > 0 && ctx.price > 0) {
+      return { side: 'buy', qty: (cash / ctx.price) * 0.98 };
+    }
+    return null;
+  }
+
+  // Trailing stop: track the highest close since we've been long, exit if price
+  // falls 20% off that high. 20% = a normal SOL correction, tight enough to protect
+  // profit after a big run, loose enough not to whipsaw on daily noise.
+  const entryIdx = ctx.i - 1; // current closed bar index
+  let runHigh = px;
+  // scan closed bars since entry for the running high
+  for (let k = closes.length - 2; k >= 0; k--) {
+    const c = closes[k];
+    if (c == null) break;
+    runHigh = Math.max(runHigh, c);
+  }
+  const trailStop = runHigh * (1 - 0.20);
+  const trailHit = px < trailStop;
+
+  if (exitBelow || crashStop || trailHit) {
+    return { side: 'sell', qty: pos };
+  }
+  return null;
+}
