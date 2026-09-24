@@ -1,22 +1,20 @@
 /*
  * @coinsori-strategy v1
- * name: ETC Band-Bounce Mean Reversion TrendFilter 1D
+ * name: ETC Band-Bounce Mean Reversion TrendFilter50 1D
  * ex: binance
  * syms: ETCUSDT
  * interval: 1d
  * cash: 1000
  *
- * Why this strategy: band-bounce mean reversion is the proven, repeatable edge
- * of this job (6 assets on 4h, LTC+ETC on 1D). Its one weakness is deep MDD in
- * sustained downtrends, where it keeps buying falling knives. This version adds
- * a long-term trend filter so it only buys bounces when price is above a long
- * SMA — an attempt to cut drawdown without losing the family's bear-market edge.
+ * Why this strategy: the SMA100 trend filter was too strict — it cut trade count
+ * to 2 in recent windows and collapsed returns from +1153% to ~+20% in 2022-26,
+ * because the family's edge IS the bear-market bounce. This uses a faster SMA50
+ * trend filter: less restrictive, still skips the deepest falling-knife regimes.
  * When it buys and sells: buys only when price closes at/below the lower Bollinger
- * band WITH RSI oversold AND price above the long SMA; sells when price returns to
- * the middle band or RSI turns overbought.
- * When it does NOT work: if the trend filter is too strict it misses the very bear
- * windows where the family makes its biggest returns, and it still buys knives in
- * fast crashes that take price below the SMA in one move.
+ * band WITH RSI oversold AND price above the 50-day SMA; sells when price returns
+ * to the middle band or RSI turns overbought.
+ * When it does NOT work: if SMA50 is still too strict it repeats the SMA100 failure;
+ * if too loose it keeps the deep MDD of the unfiltered version.
  */
 function onUpdate(ctx) {
   const bb = ctx.bb(20, 2);
@@ -26,15 +24,15 @@ function onUpdate(ctx) {
   const rsi_1 = ctx.rsi(14, 1);
   if (rsi == null || rsi_1 == null) return null;
 
-  // long-term trend filter: only buy when price is above the 100-day SMA
-  const sma100 = ctx.sma(100);
-  if (sma100 == null) return null;
-  const uptrend = ctx.price > sma100;
+  // faster trend filter: only buy when price is above the 50-day SMA
+  const sma50 = ctx.sma(50);
+  if (sma50 == null) return null;
+  const uptrend = ctx.price > sma50;
 
   const lower = bb.lower;
   const mid = bb.mid;
 
-  // BUY: at/below lower band AND RSI oversold AND price above long SMA
+  // BUY: at/below lower band AND RSI oversold AND price above 50-day SMA
   const atLowerBand = ctx.price <= lower;
   const rsiOversold = rsi < 35;
 
