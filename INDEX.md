@@ -11,7 +11,7 @@ Every figure comes from the last verifying backtest at publish time. These are p
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
-| ★ | [2346](strategies/2346/) | ETH Volume-Confirmed Donchian 1D | +64.75% | +60.78% | +51.51% | 4 | 2026-09-24 |
+| ★ | [2346](strategies/2346/) | ETH Volume-Confirmed Donchian 1D | +97.51% | +57.69% | +43.27% | 2 | 2026-09-24 |
 | ★ | [2345](strategies/2345/) | XLM Keltner Mean Reversion 4H | -10.99% | -48.08% | +23.00% | 56 | 2026-09-24 |
 | ★ | [2338](strategies/2338/) | LTC StochRSI MR Adaptive-Exit 4H | +22.27% | -30.10% | +24.04% | 40 | 2026-09-22 |
 |  | [2334](strategies/2334/) | AI 전략 | +119.63% | +478.06% | +20.54% | 44 | 2026-09-22 |

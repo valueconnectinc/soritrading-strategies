@@ -3,12 +3,12 @@
   "name": "ETH Volume-Confirmed Donchian 1D",
   "kind": "custom",
   "verified": {
-    "backtestId": 9651,
-    "return": 64.75,
-    "mdd": 51.51,
-    "trades": 4,
+    "backtestId": 9654,
+    "return": 97.51,
+    "mdd": 43.27,
+    "trades": 2,
     "vsBuyHold": "win",
-    "benchRet": 60.78,
+    "benchRet": 57.69,
     "benchBasis": "price",
     "gapPct": 0,
     "tFrom": 1502928000,
@@ -18,7 +18,7 @@
     ],
     "spec": {
       "ex": "binance",
-      "sym": "ETHUSDT",
+      "sym": "BTCUSDT",
       "interval": "1d",
       "bars": 1500,
       "end": 1531008000
