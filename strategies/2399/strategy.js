@@ -6,19 +6,17 @@
  * interval: 1d
  * cash: 10000
  *
- * Why this strategy: A different family from trend-following. Crypto spends a lot of
- * time reverting to its mean, so buying sharp oversold dips at the lower Bollinger
- * band and selling when price snaps back to the middle band can capture the bounce.
- * This profits in chop and ranges where the trend champion loses, so it diversifies.
- * When it buys and sells: Buy when the last closed price touches the lower Bollinger
- * band AND RSI is oversold (<30). Sell when price closes back at the middle band
- * (SMA20), or cut losses if price keeps falling (stop below entry). A slow-trend
- * filter (price above its 200-day average) keeps it from catching knives in deep
- * bear markets.
- * When it does NOT work: In strong one-way trends price keeps falling past the lower
- * band and the stop takes repeated small losses; it also sits in cash most of the
- * time, so it massively underperforms in long bull runs. It is a chop strategy, not
- * a trend strategy.
+ * Why this strategy: A different family from trend-following. Crypto often snaps back
+ * to its average after sharp oversold dips, so buying at the lower Bollinger band and
+ * selling at the middle band captures the bounce. It profits in chop where trend
+ * strategies lose, diversifying the portfolio.
+ * When it buys and sells: Buy when the last closed price is at or below the lower
+ * Bollinger band AND RSI is oversold (<40). Very deep fear dips (RSI<25) are bought
+ * even in a downtrend. Sell when price closes back at the middle band (SMA20), or cut
+ * losses if price keeps falling (stop below entry).
+ * When it does NOT work: In strong one-way trends price keeps falling through the
+ * lower band and the stop takes repeated small losses; it also sits in cash a lot, so
+ * it underperforms in long bull runs. It is a chop strategy, not a trend strategy.
  */
 function onUpdate(ctx) {
   const closes = ctx.closes;
@@ -38,16 +36,19 @@ function onUpdate(ctx) {
   const mid = bb.mid;
 
   if (pos === 0) {
-    // Only buy dips when price is still above its long-term average (not a deep bear).
-    if (px > sma200 && px <= lower && rsi < 30 && cash > 0 && ctx.price > 0) {
+    if (cash <= 0 || ctx.price <= 0) return null;
+    const atBand = px <= lower;
+    const oversold = rsi < 40;
+    const deepFear = rsi < 25; // buy even in a downtrend if truly washed out
+    const uptrend = px > sma200;
+    if (atBand && oversold && (uptrend || deepFear)) {
       return { side: 'buy', qty: (cash / ctx.price) * 0.98 };
     }
     return null;
   }
 
-  // Exit on reversion to the middle band, or stop out if it keeps falling.
   const revert = px >= mid;
-  const stop = ctx.entryPx != null && px < ctx.entryPx - 2.0 * atr;
+  const stop = ctx.entryPx != null && px < ctx.entryPx - 2.5 * atr;
   if (revert || stop) {
     return { side: 'sell', qty: pos };
   }
