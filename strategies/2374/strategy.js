@@ -1,22 +1,22 @@
 /*
  * @coinsori-strategy v1
- * name: SOL Hysteresis + ATR-Adaptive Stop + Vol-Sized 1D
+ * name: SOL Hysteresis + ATR-Adaptive Stop + Vol&Fear Sizing 1D
  * ex: binance
  * syms: SOLUSDT
  * interval: 1d
  * cash: 10000
  *
  * Why this strategy: The validated 1-ATR hysteresis regime-switch beats buy-and-hold
- * on SOL, and the ATR-adaptive trailing stop locks in gains. But going all-in on
- * every signal produced deep drawdowns (up to 76%). This version scales position
- * size down when volatility is high relative to its own history, so we risk less in
- * choppy/risky regimes and more when the market is calm.
+ * on SOL, and the ATR-adaptive trailing stop locks in gains. The deep drawdowns come
+ * from crash regimes (extreme fear). This version scales position size down BOTH when
+ * volatility is high relative to its own history AND when the fear & greed index is in
+ * extreme-fear territory, so we risk least right before the worst crashes.
  * When it buys and sells: Buy when the last closed price is above the 50-day average,
- * sized by how calm volatility is. Sell when price closes more than 1 ATR below the
- * average, falls more than 3 ATRs in one move, or falls 4 ATRs off its running high.
- * When it does NOT work: In a straight-line melt-up the volatility scaling keeps some
- * cash idle so it lags a fully-invested buy-and-hold; and no sizing rule fixes a slow
- * steady decline where price never makes a new high.
+ * sized by how calm volatility is and how fearful the crowd is. Sell when price closes
+ * more than 1 ATR below the average, falls more than 3 ATRs in one move, or falls 4 ATRs
+ * off its running high.
+ * When it does NOT work: In a straight-line melt-up the scaling keeps some cash idle so
+ * it lags a fully-invested buy-and-hold; and no sizing rule fixes a slow steady decline.
  */
 function onUpdate(ctx) {
   const closes = ctx.closes;
@@ -33,10 +33,9 @@ function onUpdate(ctx) {
   const exitBelow = px < sma50 - 1.0 * atr; // hysteresis: ignore small chop
   const crashStop = px < sma50 - 3.0 * atr;
 
-  // Volatility-scaled sizing: normalized vol = ATR as a fraction of price. We average
-  // that ratio over the last 50 bars as the "normal" level, then compare today's ratio
-  // to it. When today is more volatile than normal we cut exposure; the multiplier is
-  // clamped to [0.3, 1] so we never go fully flat or over 100% invested.
+  // Volatility-scaled sizing: normalized vol = ATR as a fraction of price, averaged over
+  // the last 50 bars as "normal", then compare today's ratio to it. When more volatile
+  // than normal we cut exposure; clamped to [0.3, 1].
   let ratioSum = 0, ratioCount = 0;
   for (let k = 1; k <= 50; k++) {
     const c = closes[closes.length - 1 - k];
@@ -50,6 +49,14 @@ function onUpdate(ctx) {
     sizeMult = Math.max(0.3, Math.min(1, normRatio / currentRatio));
   }
 
+  // Fear & greed risk filter: when the crowd is in extreme fear (index <= 20) the market
+  // is usually mid-crash. Cut exposure to a fraction of what the vol rule allows. This is
+  // the drawdown lever — it does not change WHEN we trade, only HOW MUCH we risk.
+  const fg = ctx.data('fear_greed');
+  if (fg != null && fg <= 20) {
+    sizeMult *= 0.4; // extreme fear -> risk only 40% of the vol-scaled size
+  }
+
   if (pos === 0) {
     st.runHigh = null;
     if (long && cash > 0 && ctx.price > 0) {
@@ -61,7 +68,6 @@ function onUpdate(ctx) {
 
   if (st.runHigh == null) st.runHigh = px;
   st.runHigh = Math.max(st.runHigh, px);
-  // Trailing stop scaled to volatility: exit if price falls 4 ATRs off the running high.
   const trailHit = px < st.runHigh - 4.0 * atr;
 
   if (exitBelow || crashStop || trailHit) {
