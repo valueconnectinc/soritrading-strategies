@@ -1,0 +1,30 @@
+{
+  "id": 2346,
+  "name": "ETH Volume-Confirmed Donchian 1D",
+  "kind": "custom",
+  "verified": {
+    "backtestId": 9651,
+    "return": 64.75,
+    "mdd": 51.51,
+    "trades": 4,
+    "vsBuyHold": "win",
+    "benchRet": 60.78,
+    "benchBasis": "price",
+    "gapPct": 0,
+    "tFrom": 1502928000,
+    "tTo": 1530921600,
+    "approxNotes": [
+      "봉 내 순서는 관례(양봉 O→L→H→C·음봉 O→H→L→C) — 실순서 미상 · 봉 중 거래량 null · MDD 는 봉 마감 기준"
+    ],
+    "spec": {
+      "ex": "binance",
+      "sym": "ETHUSDT",
+      "interval": "1d",
+      "bars": 1500,
+      "end": 1531008000
+    }
+  },
+  "config": null,
+  "updatedAt": "2026-09-24T08:09:12.371Z",
+  "publishedBy": "scripts/publish-strategies.mjs"
+}
