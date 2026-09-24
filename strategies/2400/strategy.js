@@ -1,24 +1,27 @@
 /*
  * @coinsori-strategy v1
- * name: ETH Gated Wide-Hysteresis 1D
+ * name: ETH Crash-Gated Reentry Trend 1D
  * ex: binance
  * syms: ETHUSDT
  * interval: 1d
  * cash: 10000
  *
- * Why this strategy: The champion's two worst windows are 2018 (rides the top
- * crash) and 2021-2022 (whipsaws out of the volatile bull). This version combines
- * two levers: a 200-day PRICE gate (only open longs above the 200-day average, so
- * it stops buying in the 2022 bear) and a wider 1.5-ATR exit (tolerates deeper
- * pullbacks, so fewer whipsaws in the 2021 bull). The bet: a long-only trend
- * strategy should not be buying below its long-term average (falling knife) and
- * should tolerate the deep pullbacks that a high-volatility bull throws at it.
- * When it buys and sells: Buy when price is above BOTH the 50-day and the 200-day
- * average (sized down in high volatility / extreme fear). Sell when price closes
- * 1.5 ATRs below the 50-day average, or drops 3 ATRs below it in a crash.
- * When it does NOT work: The 200-day gate can make it miss the early recovery of a
- * new bull (waits for price to climb back above the 200-day), and the wider exit
- * gives back more profit in a topping range. Long-only, so no profit from shorting.
+ * Why this strategy: The champion's 2021-2022 loss comes from repeatedly
+ * re-entering below the 200-day average during the 2022 bear and getting
+ * whipsawed. Full regime gates fix that but also block the 2023+ bull's fast
+ * re-entries after normal pullbacks. This version applies the gate ONLY after a
+ * CRASH-STOP exit (2.5 ATR below the average): after a deep crash you must wait
+ * for price to climb back above the 200-day before re-entering. Normal pullback
+ * exits re-enter freely. The bet: a deep crash marks a regime change where
+ * re-buying below the 200-day is a falling knife, while a normal pullback in a
+ * bull is a buying opportunity.
+ * When it buys and sells: Buy when price is above the 50-day average (sized down
+ * in high volatility / extreme fear). If the last exit was a crash stop, require
+ * price also above the 200-day. Sell when price closes 1 ATR below the 50-day
+ * average, or drops 2.5 ATRs below it in a crash.
+ * When it does NOT work: It can still miss the very first recovery leg after a
+ * deep crash (waits for the 200-day), and it can ride a slow grind-down where
+ * exits are normal (not crash) and re-entries stay ungated. Long-only.
  */
 function onUpdate(ctx) {
   const closes = ctx.closes;
@@ -31,9 +34,9 @@ function onUpdate(ctx) {
   const cash = ctx.cash;
   if (px == null || sma50 == null || sma200 == null || atr == null || px <= 0) return null;
 
-  const long = px > sma50 && px > sma200; // price gate: only enter above 200-day
-  const exitBelow = px < sma50 - 1.5 * atr; // wider hysteresis: tolerate deeper pullbacks
-  const crashStop = px < sma50 - 3.0 * atr; // deep crash bail-out
+  const long = px > sma50;
+  const exitBelow = px < sma50 - 1.0 * atr; // hysteresis: ignore small chop
+  const crashStop = px < sma50 - 2.5 * atr; // deep crash bail-out
 
   // Volatility-scaled sizing: compare today's ATR/price to its 50-bar average.
   let ratioSum = 0, ratioCount = 0;
@@ -55,13 +58,19 @@ function onUpdate(ctx) {
   }
 
   if (pos === 0) {
-    if (long && cash > 0 && ctx.price > 0) {
+    if (cash <= 0 || ctx.price <= 0) return null;
+    // After a crash stop, require price back above the 200-day before re-entering.
+    const wasCrash = ctx.state.crashExit && (ctx.i - ctx.state.crashExit.bar) < 300;
+    if (long && (!wasCrash || px > sma200)) {
       return { side: 'buy', qty: (cash / ctx.price) * 0.98 * sizeMult };
     }
     return null;
   }
 
   if (exitBelow || crashStop) {
+    if (crashStop) {
+      ctx.state.crashExit = { bar: ctx.i };
+    }
     return { side: 'sell', qty: pos };
   }
   return null;
