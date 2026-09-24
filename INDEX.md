@@ -11,7 +11,7 @@ Every figure comes from the last verifying backtest at publish time. These are p
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
-| ★ | [2400](strategies/2400/) | BTC Volume-Confirmed Donchian Breakout 1D | +218.84% | -0.37% | +48.72% | 9 | 2026-09-24 |
+| ★ | [2400](strategies/2400/) | BTC Volume-Confirmed Donchian Breakout 1D | +62.66% | -0.37% | +59.32% | 13 | 2026-09-24 |
 | ★ | [2399](strategies/2399/) | LTC Regime Trend Champion 1D | +37.65% | -0.37% | +70.90% | 90 | 2026-09-24 |
 |  | [2398](strategies/2398/) | ADA Regime Trend Champion 1D | +107.12% | +357.90% | +87.15% | 87 | 2026-09-24 |
 |  | [2397](strategies/2397/) | ETH Regime Trend Champion 1D | +57.30% | +60.78% | +31.65% | 4 | 2026-09-24 |

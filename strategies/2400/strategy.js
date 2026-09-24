@@ -1,25 +1,26 @@
 /*
  * @coinsori-strategy v1
- * name: ETH Rising-200D Trend 1D
+ * name: ETH Deep-Bear Gate Trend 1D
  * ex: binance
  * syms: ETHUSDT
  * interval: 1d
  * cash: 10000
  *
- * Why this strategy: The 200-day PRICE gate (enter only above the 200-day) fixed
- * the 2018 and 2021-2022 whipsaw but badly hurt 2023+ because price dips below
- * the 200-day mid-rally. This version uses the 200-day DIRECTION instead: enter
- * any time the 200-day average is rising (confirmed uptrend), regardless of where
- * price sits relative to it. The bet: a rising 200-day average marks a durable
- * uptrend where pullbacks below it are buying opportunities, not the start of a
- * bear; a falling 200-day marks the bear where dip-buys bleed.
- * When it buys and sells: Buy when price is above the 50-day average AND the
- * 200-day average is rising (sized down in high volatility / extreme fear). Sell
- * when price closes 1 ATR below the 50-day average, or drops 2.5 ATRs below it.
- * When the 200-day is falling, stay in cash.
- * When it does NOT work: It can still ride the start of a bear before the 200-day
- * rolls over, and it can miss the very first leg of a new bull before the 200-day
- * turns up. Long-only, so no profit from shorting.
+ * Why this strategy: Strict regime gates (enter only above the 200-day, or only
+ * when the 200-day is rising) fixed the 2018/2021 whipsaw but badly hurt the
+ * 2023+ bull because price dips below the 200-day mid-rally. This version uses a
+ * SOFT gate: it only blocks entries when price has fallen 20% or more below the
+ * 200-day average (a deep bear / falling-knife regime), and otherwise lets the
+ * champion's normal trend logic run. The bet: shallow pullbacks below the 200-day
+ * in a bull are recoverable, but a -20% breach of the long-term average marks a
+ * durable bear where dip-buys bleed.
+ * When it buys and sells: Buy when price is above the 50-day average AND not more
+ * than 20% below the 200-day average (sized down in high volatility / extreme
+ * fear). Sell when price closes 1 ATR below the 50-day average, or drops 2.5 ATRs
+ * below it in a crash.
+ * When it does NOT work: It can still take a -20% drawdown before the gate blocks
+ * re-entry, and it misses the bottom of a deep bear-to-bull turn (waits for price
+ * to climb back within 20% of the 200-day). Long-only.
  */
 function onUpdate(ctx) {
   const closes = ctx.closes;
@@ -27,14 +28,13 @@ function onUpdate(ctx) {
   const px = closes[closes.length - 2]; // last CLOSED bar
   const sma50 = ctx.sma(50, 1);
   const sma200 = ctx.sma(200, 1);
-  const sma200prev = ctx.sma(200, 2);
   const atr = ctx.atr(14, 1);
   const pos = ctx.position;
   const cash = ctx.cash;
-  if (px == null || sma50 == null || sma200 == null || sma200prev == null || atr == null || px <= 0) return null;
+  if (px == null || sma50 == null || sma200 == null || atr == null || px <= 0) return null;
 
-  const uptrend = sma200 > sma200prev; // 200-day rising = durable uptrend
-  const long = px > sma50 && uptrend;
+  const notDeepBear = px > sma200 * 0.8; // soft gate: block only deep falling knives
+  const long = px > sma50 && notDeepBear;
   const exitBelow = px < sma50 - 1.0 * atr; // hysteresis: ignore small chop
   const crashStop = px < sma50 - 2.5 * atr; // bail out of deep crashes early
 
