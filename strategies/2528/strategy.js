@@ -1,26 +1,27 @@
 /*
  * @coinsori-strategy v1
- * name: Regime-Switch Hybrid VolTargeted + VolGate
+ * name: Regime-Switch Hybrid VolTargeted + TrailStop
  * ex: binance
  * syms: BTCUSDT, SOLUSDT, ETHUSDT
  * interval: 4h
  * cash: 10000
  *
  * Why this strategy: The vol-targeted regime-switch hybrid champion (2528) beats
- * buy-and-hold on every window but its documented weakness is still high drawdown
- * (up to 39% on BTC, more on alts) because the trend leg keeps buying pullbacks
- * even into a blow-off melt-up top (extreme volatility), then rides the crash all
- * the way down to the 50-EMA. This variant adds ONE conservative regime filter:
- * it refuses trend-leg entries when volatility (ATR/price) is extreme — those are
- * exactly the blow-off tops where trend entries lose the most. Everything else
- * (entries, exits, vol-targeted sizing) is unchanged from 2528.
+ * buy-and-hold on every window but its documented weakness is drawdown (up to 39%
+ * on BTC) because the trend leg rides a position all the way down to the 50-EMA
+ * during a bull pullback, giving back a lot of profit. This variant adds ONE
+ * conservative change: a trailing stop on the TREND leg only — once in a bull
+ * position, it tracks the highest high since entry and exits if price closes below
+ * the higher of the 50-EMA or that peak minus 2.5x ATR (whichever is tighter). This
+ * locks in profit during pullbacks. The contrarian leg and vol-targeted sizing are
+ * unchanged from 2528.
  * When it buys and sells: identical to 2528 — bear regime buys panic bottoms
  * (fear<40 + lower Bollinger break, mid-band exit); bull regime buys pullbacks to
- * the 20-EMA in a confirmed uptrend (exit below the 50-EMA) — but only if current
- * volatility is not extreme. Sizing stays vol-targeted (inverse ATR).
+ * the 20-EMA in a confirmed uptrend and exits on the new trailing stop. Sizing
+ * stays vol-targeted (inverse ATR).
  * When it does NOT work: same as champion — sideways chop whipsaws the 50-EMA, and
- * a sharp V-reversal through the 50-EMA gives the trend leg no entry. The new vol
- * gate can also miss a genuine new trend that starts right after a volatile spike.
+ * a sharp V-reversal through the 50-EMA gives the trend leg no entry. The tighter
+ * trailing stop can also cut a strong trend early during a normal shallow pullback.
  */
 function onUpdate(ctx) {
   const bb = ctx.bb(20, 2, 1);
@@ -38,24 +39,35 @@ function onUpdate(ctx) {
   const bull = ema20 > ema50 && price > ema50;
 
   if (pos > 0) {
+    // hard stop: 3x ATR from entry (unchanged from champion)
     if (price <= ctx.entryPx - atr * 3) return { side: 'sell', qty: pos };
     if (!bull) {
+      // bear regime: mean-reversion exit at mid band
       if (price >= bb.mid) return { side: 'sell', qty: pos };
     } else {
-      if (price < ema50) return { side: 'sell', qty: pos };
+      // TREND leg trailing stop: track the peak high since entry and exit when
+      // price drops below the higher of the 50-EMA or peak minus 2.5x ATR.
+      // 2.5x ATR is looser than the 3x hard stop from entry but tighter than the
+      // 50-EMA during a strong run, so it protects profit without whipsawing.
+      if (ctx.state.peak == null) ctx.state.peak = ctx.entryPx;
+      const pb = ctx.high(1);
+      if (pb != null && pb > ctx.state.peak) ctx.state.peak = pb;
+      const trail = ctx.state.peak - atr * 2.5;
+      const exitLevel = Math.max(ema50, trail);
+      if (price < exitLevel) return { side: 'sell', qty: pos };
     }
     return null;
   }
 
+  // reset trailing peak when flat (next entry starts fresh)
+  ctx.state.peak = null;
+
+  // Volatility-targeted position size (unchanged from 2528)
   const riskBudget = 0.015;
   const volFrac = riskBudget / (atr / price);
   const qty = (ctx.cash / price) * Math.min(volFrac, 0.99);
 
-  // Regime gate: skip trend entries when ATR/price is extreme (blow-off top).
-  const volPct = atr / price;
-  const extremeVol = volPct > 0.06;
-
-  if (bull && !extremeVol) {
+  if (bull) {
     const nearEma20 = price <= ema20 + atr * 0.5 && price > ema50;
     const rising = ema20 > ema20p;
     if (nearEma20 && rising) {
