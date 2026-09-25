@@ -4,13 +4,14 @@ Every strategy whose backtest **finished and actually traded** is published here
 Nothing is filtered out by return — the ones that lost money are part of the record.
 Entries stay after a strategy is removed from our own workspace — this is a log, and deleting the record would leave only the survivors.
 
-**★ marks a strategy that out-returned buy & hold over the same window** — 280 of 926 right now.
+**★ marks a strategy that out-returned buy & hold over the same window** — 280 of 927 right now.
 `—` means the comparison **could not be made**: the engine does not compute a benchmark for multi-symbol, futures, or multi-leg runs. That is *unknown*, not *lost*, and it is 184 of them right now.
 
 Every figure comes from the last verifying backtest at publish time. These are past results over historical data. Nothing here is promised or assured about the future, and none of it is investment advice.
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
+|  | [2494](strategies/2494/) | DOT 1D Band-Bounce Mean Reversion | +54.00% | +1234.85% | +3.68% | 12 | 2026-09-25 |
 | ★ | [2492](strategies/2492/) | XRP 1D Band-Bounce Mean Reversion | +0.46% | -46.16% | +16.32% | 6 | 2026-09-25 |
 | ★ | [2491](strategies/2491/) | BTC 1D Fed-Regime + ATR Trail | +401.84% | +116.17% | +63.03% | 19 | 2026-09-25 |
 | ★ | [2490](strategies/2490/) | Champion + Volatility-Scaled Sizing | +34.70% | +25.00% | +30.90% | 82 | 2026-09-25 |
