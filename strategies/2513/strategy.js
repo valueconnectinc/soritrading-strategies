@@ -1,8 +1,8 @@
 /*
  * @coinsori-strategy v1
- * name: SOL 4H VWAP Pullback Mean-Reversion (tighter risk)
+ * name: BTC 4H VWAP Pullback Mean-Reversion (tighter risk)
  * ex: binance
- * syms: SOLUSDT
+ * syms: BTCUSDT
  * interval: 4h
  * cash: 10000
  *
@@ -15,8 +15,7 @@
  * When it buys and sells: Buy when price pulls back to within 2% of the 50-bar
  *   VWAP while the 50-bar SMA is rising (uptrend intact). Sell on a 6% trailing
  *   stop, a 10% hard stop-loss from entry, or when price extends more than 7%
- *   above VWAP (overextended). Tighter than the base version to cut the very
- *   high drawdown SOL showed (up to 88%).
+ *   above VWAP (overextended). Tighter than the base version to cut drawdown.
  * When it does NOT work: In a choppy range the VWAP pullback triggers often and
  *   whipsaws, and tighter stops cut winners short in a strong trend. It also
  *   misses fast V-shaped rallies where price never pulls back to VWAP.
