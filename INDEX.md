@@ -4,13 +4,14 @@ Every strategy whose backtest **finished and actually traded** is published here
 Nothing is filtered out by return — the ones that lost money are part of the record.
 Entries stay after a strategy is removed from our own workspace — this is a log, and deleting the record would leave only the survivors.
 
-**★ marks a strategy that out-returned buy & hold over the same window** — 281 of 929 right now.
-`—` means the comparison **could not be made**: the engine does not compute a benchmark for multi-symbol, futures, or multi-leg runs. That is *unknown*, not *lost*, and it is 184 of them right now.
+**★ marks a strategy that out-returned buy & hold over the same window** — 281 of 930 right now.
+`—` means the comparison **could not be made**: the engine does not compute a benchmark for multi-symbol, futures, or multi-leg runs. That is *unknown*, not *lost*, and it is 185 of them right now.
 
 Every figure comes from the last verifying backtest at publish time. These are past results over historical data. Nothing here is promised or assured about the future, and none of it is investment advice.
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
+| — | [2497](strategies/2497/) | XRP 1D Short Mean-Reversion (Fade Overbought) | -99.33% | — | +99.64% | 174 | 2026-09-25 |
 |  | [2496](strategies/2496/) | XRP 1D Passive-Bull + Band-Bounce Hybrid | +150.79% | +304.43% | +76.66% | 166 | 2026-09-25 |
 | ★ | [2495](strategies/2495/) | DOT 1D Regime-Switch Hybrid | +62.39% | -71.65% | +8.82% | 34 | 2026-09-25 |
 |  | [2494](strategies/2494/) | DOT 1D Band-Bounce Mean Reversion | +69.24% | +791.79% | +23.12% | 14 | 2026-09-25 |
