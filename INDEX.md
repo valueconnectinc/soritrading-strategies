@@ -11,7 +11,7 @@ Every figure comes from the last verifying backtest at publish time. These are p
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
-| ★ | [2520](strategies/2520/) | Regime-Switch Hybrid FearContrarian + Trend | +907.77% | +443.26% | +38.24% | 219 | 2026-09-25 |
+| ★ | [2520](strategies/2520/) | Regime-Switch Hybrid FearContrarian + Trend | +200.85% | -15.21% | +39.72% | 243 | 2026-09-25 |
 | ★ | [2519](strategies/2519/) | FearGreed Contrarian LTC Generalization | +87.12% | -9.88% | +19.75% | 243 | 2026-09-25 |
 |  | [2518](strategies/2518/) | ETH Fast Dual-Oscillator Mean Reversion | -99.61% | +1598.87% | +99.62% | 976 | 2026-09-25 |
 |  | [2517](strategies/2517/) | FearGreed Contrarian Volume-Confirmed | +29.00% | +443.26% | +44.46% | 95 | 2026-09-25 |
