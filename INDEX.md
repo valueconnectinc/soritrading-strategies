@@ -4,14 +4,14 @@ Every strategy whose backtest **finished and actually traded** is published here
 Nothing is filtered out by return — the ones that lost money are part of the record.
 Entries stay after a strategy is removed from our own workspace — this is a log, and deleting the record would leave only the survivors.
 
-**★ marks a strategy that out-returned buy & hold over the same window** — 293 of 956 right now.
+**★ marks a strategy that out-returned buy & hold over the same window** — 294 of 956 right now.
 `—` means the comparison **could not be made**: the engine does not compute a benchmark for multi-symbol, futures, or multi-leg runs. That is *unknown*, not *lost*, and it is 185 of them right now.
 
 Every figure comes from the last verifying backtest at publish time. These are past results over historical data. Nothing here is promised or assured about the future, and none of it is investment advice.
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
-|  | [2528](strategies/2528/) | AI 전략 | +193.38% | +443.26% | +35.41% | 353 | 2026-09-25 |
+| ★ | [2528](strategies/2528/) | AI 전략 | +93.60% | +61.78% | +39.30% | 200 | 2026-09-25 |
 | ★ | [2527](strategies/2527/) | Champion + MeltUp Breakout Capture | +29.85% | +26.55% | +44.23% | 315 | 2026-09-25 |
 |  | [2526](strategies/2526/) | ETH Trend Ride ATR Trail 4H | +142.22% | +1598.87% | +71.84% | 63 | 2026-09-25 |
 |  | [2525](strategies/2525/) | BTC OnChain ConstantTest | +26.22% | +100.31% | +15.16% | 2 | 2026-09-25 |
