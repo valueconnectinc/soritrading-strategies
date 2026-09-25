@@ -3,7 +3,7 @@
   "name": "FearGreed Contrarian Mean Reversion",
   "kind": "custom",
   "verified": {
-    "backtestId": 10670,
+    "backtestId": 10679,
     "return": 212.83,
     "mdd": 37.44,
     "trades": 100,
@@ -25,6 +25,6 @@
     }
   },
   "config": null,
-  "updatedAt": "2026-09-25T20:49:56.129Z",
+  "updatedAt": "2026-09-25T20:50:29.889Z",
   "publishedBy": "scripts/publish-strategies.mjs"
 }
