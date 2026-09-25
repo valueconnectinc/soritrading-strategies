@@ -1,27 +1,25 @@
 /*
  * @coinsori-strategy v1
- * name: Regime-Switch Hybrid VolTargeted + TrailStop
+ * name: Regime-Switch Hybrid VolTargeted
  * ex: binance
  * syms: BTCUSDT, SOLUSDT, ETHUSDT
  * interval: 4h
  * cash: 10000
  *
- * Why this strategy: The vol-targeted regime-switch hybrid champion (2528) beats
- * buy-and-hold on every window but its documented weakness is drawdown (up to 39%
- * on BTC) because the trend leg rides a position all the way down to the 50-EMA
- * during a bull pullback, giving back a lot of profit. This variant adds ONE
- * conservative change: a trailing stop on the TREND leg only — once in a bull
- * position, it tracks the highest high since entry and exits if price closes below
- * the higher of the 50-EMA or that peak minus 2.5x ATR (whichever is tighter). This
- * locks in profit during pullbacks. The contrarian leg and vol-targeted sizing are
- * unchanged from 2528.
- * When it buys and sells: identical to 2528 — bear regime buys panic bottoms
- * (fear<40 + lower Bollinger break, mid-band exit); bull regime buys pullbacks to
- * the 20-EMA in a confirmed uptrend and exits on the new trailing stop. Sizing
- * stays vol-targeted (inverse ATR).
- * When it does NOT work: same as champion — sideways chop whipsaws the 50-EMA, and
- * a sharp V-reversal through the 50-EMA gives the trend leg no entry. The tighter
- * trailing stop can also cut a strong trend early during a normal shallow pullback.
+ * Why this strategy: The regime-switch hybrid champion (fear-contrarian bear leg +
+ * selective trend leg) is the best strategy in this job but its documented weakness
+ * is high drawdown (33-51% on BTC, up to 80% on SOL) because it goes all-in on both
+ * legs. This variant keeps the exact same entries and exits but replaces all-in
+ * sizing with volatility-targeted position sizing: positions are scaled by inverse
+ * ATR so high-volatility periods (where big drawdowns happen) take smaller positions.
+ * The ledger shows this exact axis improved another strategy's MDD without hurting
+ * returns (choppy window +94% vs +65%, MDD 26% vs 30%).
+ * When it buys and sells: identical to the champion — bear regime buys panic bottoms
+ * (fear<40 + lower Bollinger break, mid-band exit); bull regime buys pullbacks to the
+ * 20-EMA in a confirmed uptrend (exit below the 50-EMA). Only the SIZE differs.
+ * When it does NOT work: same as champion — sideways chop whipsaws the 50-EMA, and a
+ * sharp V-reversal straight through the 50-EMA gives the trend leg no entry. Vol
+ * targeting reduces but does not eliminate the high-drawdown risk on volatile alts.
  */
 function onUpdate(ctx) {
   const bb = ctx.bb(20, 2, 1);
@@ -42,28 +40,19 @@ function onUpdate(ctx) {
     // hard stop: 3x ATR from entry (unchanged from champion)
     if (price <= ctx.entryPx - atr * 3) return { side: 'sell', qty: pos };
     if (!bull) {
-      // bear regime: mean-reversion exit at mid band
       if (price >= bb.mid) return { side: 'sell', qty: pos };
     } else {
-      // TREND leg trailing stop: track the peak high since entry and exit when
-      // price drops below the higher of the 50-EMA or peak minus 2.5x ATR.
-      // 2.5x ATR is looser than the 3x hard stop from entry but tighter than the
-      // 50-EMA during a strong run, so it protects profit without whipsawing.
-      if (ctx.state.peak == null) ctx.state.peak = ctx.entryPx;
-      const pb = ctx.high(1);
-      if (pb != null && pb > ctx.state.peak) ctx.state.peak = pb;
-      const trail = ctx.state.peak - atr * 2.5;
-      const exitLevel = Math.max(ema50, trail);
-      if (price < exitLevel) return { side: 'sell', qty: pos };
+      if (price < ema50) return { side: 'sell', qty: pos };
     }
     return null;
   }
 
-  // reset trailing peak when flat (next entry starts fresh)
-  ctx.state.peak = null;
-
-  // Volatility-targeted position size (unchanged from 2528)
-  const riskBudget = 0.015;
+  // Volatility-targeted position size: we want a 1-ATR adverse move to cost about
+  // 1.5% of equity (riskBudget). Position fraction = riskBudget / (atr/price).
+  // On BTC 4h, atr/price is ~2-6%, so this yields full size in calm periods and
+  // a fraction (down to ~1/4) in volatile periods — exactly where drawdowns happen.
+  // This is the ONLY change from the champion — entries and exits are untouched.
+  const riskBudget = 0.015; // 1.5% equity risked per 1 ATR of adverse move
   const volFrac = riskBudget / (atr / price);
   const qty = (ctx.cash / price) * Math.min(volFrac, 0.99);
 
