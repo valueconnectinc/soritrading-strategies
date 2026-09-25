@@ -1,0 +1,30 @@
+{
+  "id": 2515,
+  "name": "FearGreed Contrarian UpperBand Exit",
+  "kind": "custom",
+  "verified": {
+    "backtestId": 10707,
+    "return": -26.96,
+    "mdd": 69.94,
+    "trades": 74,
+    "vsBuyHold": "lose",
+    "benchRet": 61,
+    "benchBasis": "price",
+    "gapPct": 0,
+    "tFrom": 1646366400,
+    "tTo": 1718352000,
+    "approxNotes": [
+      "봉 내 순서는 관례(양봉 O→L→H→C·음봉 O→H→L→C) — 실순서 미상 · 봉 중 거래량 null · MDD 는 봉 마감 기준"
+    ],
+    "spec": {
+      "ex": "binance",
+      "sym": "SOLUSDT",
+      "interval": "4h",
+      "bars": 5000,
+      "end": 1718366400
+    }
+  },
+  "config": null,
+  "updatedAt": "2026-09-25T21:04:42.306Z",
+  "publishedBy": "scripts/publish-strategies.mjs"
+}
