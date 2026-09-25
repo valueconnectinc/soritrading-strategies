@@ -1,51 +1,72 @@
 /*
  * @coinsori-strategy v1
- * name: ETH 1D Volume-Confirmed Momentum
+ * name: LTC 4H Band-Bounce + Trailing Uptrend Exit
  * ex: binance
- * syms: ETHUSDT
- * interval: 1d
+ * syms: LTCUSDT
+ * interval: 4h
  * cash: 10000
  *
- * Why this strategy: Momentum family, but with a volume-confirmation filter
- *   that the failed Donchian breakout lacked. A new 20-day high is only bought
- *   when volume is well above its average — real participation, not a low-volume
- *   spike. The idea: genuine breakouts with heavy volume tend to persist, while
- *   low-volume pops reverse. Different family from the mean-reversion champion.
- * When it buys and sells: Buy when the close makes a new 20-day high AND today's
- *   volume is above 1.5x its 50-day average. Sell when the close makes a new
- *   10-day low or on a 15% trailing stop.
- * When it does NOT work: In choppy ranges, even volume-confirmed breakouts
- *   whipsaw and churn fees. It also misses steady grind-ups that never print a
- *   high-volume breakout, and can buy extended tops late in a run.
+ * Why this strategy: The band-bounce mean-reversion champion (buy deep oversold
+ *   dips below the lower Bollinger band, sell on recovery) is validated on many
+ *   assets, but its one documented weakness is exiting too early in fast melt-ups
+ *   (it sells at the SMA20 bounce and misses the rally). This version keeps the
+ *   proven deep-oversold entry but replaces the fixed SMA20 exit with a trailing
+ *   ATR stop once price recovers above the SMA — so weak bounces still exit fast
+ *   while strong bounces are allowed to run into bigger rallies.
+ * When it buys and sells: Buy when the close is below the lower Bollinger band
+ *   AND RSI(2) is deeply oversold, with a cooldown after each exit. After entry,
+ *   if price recovers above the 20-SMA, hold with a 2.5x-ATR trailing stop
+ *   instead of selling immediately; otherwise exit on recovery to the SMA or an
+ *   overbought RSI. A 6% hard stop caps single-trade damage.
+ * When it does NOT work: In a grinding downtrend price can keep re-touching the
+ *   lower band for many bars (cooldown reduces but does not eliminate falling-knife
+ *   buys), and in a sharp crash price can gap through the trailing stop. It is
+ *   still a mean-reversion strategy and will lag steady, low-volatility bull
+ *   markets where there are no deep dips to buy.
  */
 function onUpdate(ctx) {
-  let hi20 = null;
-  for (let i = 1; i <= 20; i++) {
-    const c = ctx.closes[ctx.closes.length - 1 - i];
-    if (c == null) return null;
-    if (hi20 == null || c > hi20) hi20 = c;
-  }
-  let lo10 = null;
-  for (let i = 1; i <= 10; i++) {
-    const c = ctx.closes[ctx.closes.length - 1 - i];
-    if (c == null) return null;
-    if (lo10 == null || c < lo10) lo10 = c;
-  }
+  const bb = ctx.bb(20, 2, 1);
+  const rsi = ctx.rsi(2, 1);
+  const sma = ctx.sma(20, 1);
+  if (bb == null || bb.lower == null || rsi == null || sma == null) return null;
 
   const price = ctx.price;
   const pos = ctx.position;
-  const vol = ctx.vol;
-  const avgVol = ctx.avgVol(50);
-  if (vol == null || avgVol == null) return null;
+  const atr = ctx.atr(14, 1);
+  if (atr == null) return null;
+
+  // cooldown: wait 5 bars after each exit to avoid re-buying a falling knife
+  const lastExit = ctx.state.lastExit || -9999;
+  const cooldownOk = (ctx.i - lastExit) >= 5;
 
   if (pos > 0) {
-    if (price < ctx.entryPx * 0.85) return { side: 'sell', qty: pos };
-    if (price < lo10) return { side: 'sell', qty: pos };
+    // hard stop always active
+    if (price < ctx.entryPx * 0.94) return { side: 'sell', qty: pos };
+
+    // track highest close since entry for the trailing stop
+    if (ctx.state.highest == null || price > ctx.state.highest) ctx.state.highest = price;
+
+    if (price > sma) {
+      // recovered above SMA = strong bounce regime: let it run with a trailing stop
+      const trailStop = ctx.state.highest - 2.5 * atr; // 2.5 ATR: tight enough to cut weak bounces, wide enough to ride melt-ups
+      if (price < trailStop) {
+        ctx.state.lastExit = ctx.i;
+        return { side: 'sell', qty: pos };
+      }
+      return null;
+    }
+
+    // still below SMA: exit on recovery toward the SMA or overbought RSI
+    if (price >= sma || rsi > 55) {
+      ctx.state.lastExit = ctx.i;
+      return { side: 'sell', qty: pos };
+    }
     return null;
   }
 
-  // fresh 20-day high WITH above-average volume (real participation)
-  if (price > hi20 && vol > avgVol * 1.5) {
+  // entry: deep oversold dip below the lower band, with cooldown
+  if (price < bb.lower && rsi < 30 && cooldownOk) {
+    ctx.state.highest = price;
     return { side: 'buy', qty: ctx.cash / ctx.price * 0.98 };
   }
   return null;
