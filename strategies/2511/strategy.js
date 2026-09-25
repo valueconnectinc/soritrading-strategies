@@ -13,8 +13,8 @@
  *   find support at VWAP, so buying the dip there catches reversals with less
  *   falling-knife risk than a pure oversold signal.
  * When it buys and sells: Buy when price pulls back to within 2% of the 50-bar
- *   VWAP while the 50-bar SMA is rising (uptrend intact). Sell on a 12% trailing
- *   stop or when price extends more than 12% above VWAP (overextended).
+ *   VWAP while the 50-bar SMA is rising (uptrend intact). Sell on a 8% trailing
+ *   stop or when price extends more than 8% above VWAP (overextended).
  * When it does NOT work: In a strong downtrend the 50-SMA falls and the strategy
  *   stays flat (good), but in a choppy range the VWAP pullback triggers often
  *   and whipsaws. It also misses fast V-shaped rallies where price never pulls
@@ -43,9 +43,9 @@ function onUpdate(ctx) {
   const pos = ctx.position;
 
   if (pos > 0) {
-    // trailing stop or overextended above VWAP
-    if (price < ctx.entryPx * 0.88) return { side: 'sell', qty: pos };
-    if (price > vwap * 1.12) return { side: 'sell', qty: pos };
+    // tighter trailing stop and overextension exit to cut drawdown
+    if (price < ctx.entryPx * 0.92) return { side: 'sell', qty: pos };
+    if (price > vwap * 1.08) return { side: 'sell', qty: pos };
     return null;
   }
 
