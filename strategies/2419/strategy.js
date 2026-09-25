@@ -1,75 +1,49 @@
 /*
  * @coinsori-strategy v1
- * name: ETH Trend Donchian-10 Confirmed 1D
+ * name: BTC FearGreed Trend
  * ex: binance
- * syms: ETHUSDT
+ * syms: BTCUSDT
  * interval: 1d
  * cash: 10000
  *
- * Why this strategy: Crypto trends persist for months, so riding price above its
- * 50-day average captures most of the upside. Adding a 10-day Donchian breakout
- * confirmation fixes the documented chop/bear-recovery weakness of the plain
- * regime-trend champion — it only buys on a fresh 10-day high, avoiding re-entry
- * into grind-downs (ledger exp 874).
- * When it buys and sells: Buy when the last closed price is above the 50-day average
- * AND at a fresh 10-day high, sized down when volatility is high or fear is extreme.
- * Sell when price closes 1 ATR below the average (ignore small chop), or drops 2.5
- * ATRs below it in a crash.
- * When it does NOT work: The 10-day breakout delays re-entry at sharp V-recoveries,
- * trimming bull gains. It is long-only, so it does not profit from shorting bears.
- * In slow grind-downs the hysteresis exit can still whipsaw and ride drawdowns.
+ * Why this strategy: Crypto trends hard on the daily timeframe, but buying every
+ *   uptrend leg catches the top of speculative blow-offs. The fear/greed index
+ *   tells us when the crowd is euphoric (late-stage tops) vs fearful.
+ * When it buys and sells: Buy when price is above its long trend line AND the
+ *   short trend has turned up (momentum), but only when the sentiment is not
+ *   extreme-greed (avoid buying the top of a mania). Sell when the short trend
+ *   turns back down.
+ * When it does NOT work: In straight-line melt-ups where price never pulls back
+ *   to give a fresh entry, it will be in cash and lag buy-and-hold. Extreme-greed
+ *   filters can also keep it out of the very last leg of a rally.
  */
 function onUpdate(ctx) {
-  const closes = ctx.closes;
-  if (closes == null || closes.length < 60) return null;
-  const px = closes[closes.length - 2]; // last CLOSED bar
-  const sma50 = ctx.sma(50, 1);
-  const atr = ctx.atr(14, 1);
-  const pos = ctx.position;
-  const cash = ctx.cash;
-  if (px == null || sma50 == null || atr == null || px <= 0) return null;
+  // Trend base: short vs long EMA crossover on the daily close.
+  const fast = ctx.ema(20, 1);
+  const slow = ctx.ema(100, 1);
+  if (fast == null || slow == null) return null;
 
-  // Donchian breakout over the PRIOR 10 bars (k=2..11, excluding px itself) —
-  // a fresh 10-day high confirms the trend is resuming, not just hovering.
-  let high10 = 0;
-  for (let k = 2; k <= 11; k++) {
-    const c = closes[closes.length - 1 - k];
-    if (c != null && c > high10) high10 = c;
-  }
-  const breakout = px > high10;
-  const long = px > sma50 && breakout;
+  // Fear/greed sentiment from the connected dataset (0-100).
+  const fg = ctx.data('fg');
+  const fgKnown = (fg != null);
 
-  const exitBelow = px < sma50 - 1.0 * atr; // hysteresis: ignore small chop
-  const crashStop = px < sma50 - 2.5 * atr; // bail out of deep crashes early
+  // Long-term trend gate: only trade when price is above the 200-day average.
+  const lt = ctx.sma(200, 1);
+  if (lt == null) return null;
+  const price = ctx.closes[ctx.closes.length - 1];
 
-  // Volatility-scaled sizing: compare today's ATR/price to its 50-bar average.
-  let ratioSum = 0, ratioCount = 0;
-  for (let k = 1; k <= 50; k++) {
-    const c = closes[closes.length - 1 - k];
-    const a = ctx.atr(14, k);
-    if (c != null && a != null && c > 0) { ratioSum += a / c; ratioCount++; }
-  }
-  let sizeMult = 1;
-  if (ratioCount >= 20) {
-    const normRatio = ratioSum / ratioCount;
-    const currentRatio = atr / px;
-    sizeMult = Math.max(0.3, Math.min(1, normRatio / currentRatio));
-  }
-
-  const fg = ctx.data('fear_greed');
-  if (fg != null && fg <= 20) {
-    sizeMult *= 0.4;
-  }
-
-  if (pos === 0) {
-    if (long && cash > 0 && ctx.price > 0) {
-      return { side: 'buy', qty: (cash / ctx.price) * 0.98 * sizeMult };
-    }
+  // Exit: short trend crossing back below the long trend.
+  if (ctx.position > 0) {
+    if (fast < slow) return { side: 'sell', qty: ctx.position };
     return null;
   }
 
-  if (exitBelow || crashStop) {
-    return { side: 'sell', qty: pos };
+  // Enter: short trend up + price above 200-day MA.
+  if (fast > slow && price > lt) {
+    // Skip entries when sentiment is extreme greed (>= 80) — late-stage mania.
+    if (fgKnown && fg >= 80) return null;
+    return { side: 'buy', qty: ctx.cash / ctx.price * 0.99 };
   }
+
   return null;
 }
