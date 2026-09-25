@@ -1,0 +1,30 @@
+{
+  "id": 2476,
+  "name": "BTC 1D Donchian Trend + ATR Trail",
+  "kind": "custom",
+  "verified": {
+    "backtestId": 10487,
+    "return": 25.24,
+    "mdd": 60.5,
+    "trades": 30,
+    "vsBuyHold": "lose",
+    "benchRet": 258.07,
+    "benchBasis": "price",
+    "gapPct": 0,
+    "tFrom": 1531094400,
+    "tTo": 1660608000,
+    "approxNotes": [
+      "봉 내 순서는 관례(양봉 O→L→H→C·음봉 O→H→L→C) — 실순서 미상 · 봉 중 거래량 null · MDD 는 봉 마감 기준"
+    ],
+    "spec": {
+      "ex": "binance",
+      "sym": "BTCUSDT",
+      "interval": "1d",
+      "bars": 1500,
+      "end": 1660694400
+    }
+  },
+  "config": null,
+  "updatedAt": "2026-09-25T18:10:41.106Z",
+  "publishedBy": "scripts/publish-strategies.mjs"
+}
