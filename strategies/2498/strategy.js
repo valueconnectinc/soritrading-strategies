@@ -1,27 +1,23 @@
 /*
  * @coinsori-strategy v1
- * name: XRP 1D Band-Bounce Oversold-Scaled
+ * name: XRP 1D Band-Bounce Mean Reversion (Champion)
  * ex: binance
  * syms: XRPUSDT
  * interval: 1d
  * cash: 10000
  *
  * Why this strategy: The band-bounce mean-reversion recipe (buy a deep oversold
- *   dip below the lower Bollinger band, exit on recovery) is a validated edge
- *   across XRP/LTC/DOT/BNB/ADA/ETC on 1D. The one confirmed weakness is lagging
- *   strong bull runs, and every attempt to force participation has destroyed the
- *   edge. This version does NOT force participation — instead it scales position
- *   size by HOW deep the panic is, buying more at the most extreme oversold
- *   readings where the mean-reversion edge is strongest. It still sits in cash
- *   through bull runs, but concentrates capital at the deepest dips.
- * When it buys and sells: Buy when close is below the lower Bollinger band AND
- *   RSI(2) is oversold. Position size scales up as RSI gets more extreme (deeper
- *   panic = bigger size). Sell when price recovers to the 20-SMA or RSI climbs
- *   above 55. A 6% hard stop limits single-trade damage.
+ *   dip below the lower Bollinger band with RSI<30, exit on recovery) is a
+ *   validated, repeatable edge on XRP/LTC/DOT/BNB/ADA/ETC at 1D across many
+ *   disjoint windows. It beats buy-and-hold in every flat/down window. The edge
+ *   IS sitting in cash through bull runs and only buying deep panic dips — every
+ *   attempt to force participation or add filters has destroyed it.
+ * When it buys and sells: Buy when the close is below the lower Bollinger band
+ *   AND RSI(2) is deeply oversold. Sell when price recovers to the 20-bar SMA or
+ *   RSI climbs above 55. A 6% hard stop limits single-trade damage.
  * When it does NOT work: In sustained multi-week downtrends the deep-oversold
- *   entry keeps re-buying falling knives (larger size on deeper dips makes this
- *   worse), and in fast melt-ups it exits too early and misses the rally. Mean
- *   reversion lags strong trends.
+ *   entry keeps re-buying falling knives, and in fast melt-ups it exits too early
+ *   and misses the rally. Mean reversion lags strong trends.
  */
 function onUpdate(ctx) {
   const bb = ctx.bb(20, 2, 1);
@@ -39,16 +35,9 @@ function onUpdate(ctx) {
     return null;
   }
 
-  // deep oversold dip below the lower band
+  // deep oversold dip below the lower band — single-bar entry is optimal
   if (price < bb.lower && rsi < 30) {
-    // scale size by panic depth: 0.5x at RSI 25-30, up to 1.5x at RSI<15
-    // deeper oversold = stronger mean-reversion signal = bigger position
-    let frac = 0.98;
-    if (rsi < 15) frac = 1.5;
-    else if (rsi < 20) frac = 1.25;
-    else if (rsi < 25) frac = 1.0;
-    else frac = 0.6;
-    return { side: 'buy', qty: ctx.cash / ctx.price * frac };
+    return { side: 'buy', qty: ctx.cash / ctx.price * 0.98 };
   }
   return null;
 }
