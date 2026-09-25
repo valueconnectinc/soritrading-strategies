@@ -4,13 +4,14 @@ Every strategy whose backtest **finished and actually traded** is published here
 Nothing is filtered out by return — the ones that lost money are part of the record.
 Entries stay after a strategy is removed from our own workspace — this is a log, and deleting the record would leave only the survivors.
 
-**★ marks a strategy that out-returned buy & hold over the same window** — 295 of 959 right now.
+**★ marks a strategy that out-returned buy & hold over the same window** — 296 of 960 right now.
 `—` means the comparison **could not be made**: the engine does not compute a benchmark for multi-symbol, futures, or multi-leg runs. That is *unknown*, not *lost*, and it is 185 of them right now.
 
 Every figure comes from the last verifying backtest at publish time. These are past results over historical data. Nothing here is promised or assured about the future, and none of it is investment advice.
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
+| ★ | [2532](strategies/2532/) | Regime-Switch Hybrid VolTargeted + FearDepthSizing | +764.92% | +443.26% | +23.43% | 219 | 2026-09-25 |
 | ★ | [2531](strategies/2531/) | BTC 4H EMA-Stack Momentum | +75.57% | +26.55% | +27.28% | 237 | 2026-09-25 |
 |  | [2530](strategies/2530/) | SOL 1H RSI Oversold Mean Reversion | -8.68% | +41.03% | +15.84% | 52 | 2026-09-25 |
 |  | [2529](strategies/2529/) | BTC 1D Donchian Breakout VolTargeted | -45.17% | +45.03% | +54.36% | 143 | 2026-09-25 |
