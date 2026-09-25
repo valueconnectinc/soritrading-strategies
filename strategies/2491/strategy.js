@@ -9,15 +9,16 @@
  * Why this strategy: Bitcoin is a risk asset that historically rallies while the
  *   central bank is easing or neutral, and struggles when the Fed is actively
  *   hiking. This version holds BTC whenever the Fed is NOT tightening and goes
- *   to cash when it is — no price-trend filter, to see if the macro gate alone
- *   carries the edge.
+ *   to cash when it is — a slow macro gate with very low turnover. Adding any
+ *   price-trend exit was tested and only added whipsaw, so the pure macro gate
+ *   is kept.
  * When it buys and sells: Buy when the Fed funds rate is not more than 0.5pp
  *   above its level ~6 months earlier (not tightening). Sell when the Fed turns
  *   to tightening.
  * When it does NOT work: The Fed signal is slow and macro-driven — it can sit
- *   out liquidity-driven melt-ups that run while rates are still high, and it
- *   lags sharp turns in policy. With no price filter it also rides full
- *   drawdowns during Fed-stable bear markets.
+ *   out liquidity-driven melt-ups that run while rates are still high, and with
+ *   no price filter it rides full drawdowns during Fed-stable bear markets
+ *   (MDD can reach 50-60%).
  */
 function onUpdate(ctx) {
   const fed = ctx.data('fed_lag30');
