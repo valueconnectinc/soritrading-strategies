@@ -4,13 +4,14 @@ Every strategy whose backtest **finished and actually traded** is published here
 Nothing is filtered out by return — the ones that lost money are part of the record.
 Entries stay after a strategy is removed from our own workspace — this is a log, and deleting the record would leave only the survivors.
 
-**★ marks a strategy that out-returned buy & hold over the same window** — 271 of 891 right now.
+**★ marks a strategy that out-returned buy & hold over the same window** — 271 of 892 right now.
 `—` means the comparison **could not be made**: the engine does not compute a benchmark for multi-symbol, futures, or multi-leg runs. That is *unknown*, not *lost*, and it is 182 of them right now.
 
 Every figure comes from the last verifying backtest at publish time. These are past results over historical data. Nothing here is promised or assured about the future, and none of it is investment advice.
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
+|  | [2441](strategies/2441/) | BTC 4H Volume-Surge Breakout | +980.63% | +1574.61% | +33.53% | 55 | 2026-09-25 |
 |  | [2440](strategies/2440/) | SOL 4H EMA50/200 Trend | +3057.93% | +3149.38% | +65.71% | 46 | 2026-09-25 |
 |  | [2439](strategies/2439/) | BTC 4H Donchian Breakout | +49.23% | +436.51% | +49.91% | 89 | 2026-09-25 |
 |  | [2438](strategies/2438/) | BTC 4H Band-Bounce Mean Reversion | -4.71% | +436.51% | +17.78% | 138 | 2026-09-25 |
