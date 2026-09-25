@@ -9,15 +9,17 @@
  * Why this strategy: Trends in crypto are strongest when they start from fear,
  *   not greed. Buying an uptrend while the crowd is still scared (Fear & Greed
  *   below the greed zone) catches the early, safer part of a move; entering when
- *   everyone is already greedy tends to buy a top. This overlays a sentiment
- *   filter on a simple trend-following rule.
+ *   everyone is already greedy tends to buy a top. Selling into extreme greed
+ *   locks in profit before the euphoria breaks. This overlays a sentiment filter
+ *   on a simple trend-following rule.
  * When it buys and sells: Buy when ETH's 50-period EMA is above its 200-period
  *   EMA (uptrend) AND the Fear & Greed index is below the greed threshold (crowd
  *   is not yet euphoric). Sell when the uptrend breaks (fast EMA crosses below
- *   slow EMA).
+ *   slow EMA) OR when sentiment reaches extreme greed (euphoria top).
  * When it does NOT work: In relentless melt-ups where greed stays high for months,
- *   the sentiment gate keeps it out of the biggest gains. In chop it whipsaws.
- *   Long-only, so it misses short-side profits in bears.
+ *   the entry gate keeps it out of the biggest gains and the euphoria exit can
+ *   sell too early. In chop it whipsaws. Long-only, so it misses short-side
+ *   profits in bears.
  */
 function onUpdate(ctx) {
   const fast = ctx.ema(50, 1);
@@ -29,9 +31,10 @@ function onUpdate(ctx) {
 
   const pos = ctx.position;
 
-  // Exit: uptrend broken.
+  // Exit: uptrend broken, OR crowd reached extreme greed (sell into euphoria).
+  const EUPHORIA = 85; // extreme-greed zone — a classic contrarian exit
   if (pos > 0) {
-    if (fast < slow) return { side: 'sell', qty: pos };
+    if (fast < slow || fg > EUPHORIA) return { side: 'sell', qty: pos };
     return null;
   }
 
