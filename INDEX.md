@@ -11,7 +11,7 @@ Every figure comes from the last verifying backtest at publish time. These are p
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
-|  | [2441](strategies/2441/) | BTC 4H Volume-Surge Breakout | +980.63% | +1574.61% | +33.53% | 55 | 2026-09-25 |
+|  | [2441](strategies/2441/) | BTC 4H Volume-Surge Breakout | +235.82% | +436.51% | +46.06% | 57 | 2026-09-25 |
 |  | [2440](strategies/2440/) | SOL 4H EMA50/200 Trend | +3057.93% | +3149.38% | +65.71% | 46 | 2026-09-25 |
 |  | [2439](strategies/2439/) | BTC 4H Donchian Breakout | +49.23% | +436.51% | +49.91% | 89 | 2026-09-25 |
 |  | [2438](strategies/2438/) | BTC 4H Band-Bounce Mean Reversion | -4.71% | +436.51% | +17.78% | 138 | 2026-09-25 |
