@@ -1,22 +1,22 @@
 /*
  * @coinsori-strategy v1
- * name: BTC 4H Vol-Surge + ATR Trail + FearGreed Gate 85
+ * name: BTC 4H Vol-Surge + ATR Trail + Vol-Scaled Size
  * ex: binance
  * syms: BTCUSDT
  * interval: 4h
  * cash: 10000
  *
  * Why this strategy: The champion (vol-surge breakout + 3x ATR trail) is solid
- *   but buys breakouts at market tops. The F&G gate at 75 helped the recent
- *   windows but cut the 2019-22 melt-up badly (extreme greed persisted for weeks
- *   while price climbed). This loosens the gate to block ONLY the most extreme
- *   greed (F&G >= 85), hoping to keep the melt-up continuations while still
- *   avoiding the very worst exhaustion tops.
- * When it buys and sells: Buy 20-bar-high breaks on above-average volume ONLY
- *   when Fear & Greed is below 85. Exit on the 3x ATR trailing stop.
- * When it does NOT work: In a parabolic melt-up, F&G can sit above 85 for the
- *   entire run, so even this loose gate can miss the biggest trend. Depends on
- *   the Fear & Greed feed being available.
+ *   but its drawdown (27-32%) comes mostly from entering at high-volatility
+ *   moments where a sharp adverse move hurts more. This scales position size
+ *   DOWN when ATR is high (volatile/risky regime) and keeps full size when calm,
+ *   targeting the drawdown without removing any entries.
+ * When it buys and sells: Same entry as champion — buy 20-bar-high breaks on
+ *   above-average volume. Position size is reduced when ATR(14) is above its
+ *   own long average. Exit on the 3x ATR trailing stop.
+ * When it does NOT work: Scaling down in volatile regimes also trims the size
+ *   of the biggest trend winners (which often start in high volatility), so it
+ *   can shave returns on melt-ups. Long-only, misses bear shorts.
  */
 function onUpdate(ctx) {
   let hh = -Infinity;
@@ -41,11 +41,24 @@ function onUpdate(ctx) {
     return null;
   }
 
-  const fg = ctx.data('fear_greed');
-  if (fg == null) return null;
-  if (price > hh && vol > avgVol * 1.5 && fg < 85) {
+  if (price > hh && vol > avgVol * 1.5) {
     ctx.state.highest = price;
-    return { side: 'buy', qty: ctx.cash / ctx.price * 0.98 };
+    // Scale size down when current ATR is above its 50-bar average (risky regime).
+    const atr = ctx.atr(14, 1);
+    const atrAvg = ctx.sma(14, 1) ? null : null; // placeholder, replaced below
+    // compute ATR average from available data
+    let atrSum = 0, atrN = 0;
+    for (let i = 1; i <= 50; i++) {
+      const a = ctx.atr(14, i);
+      if (a == null) break;
+      atrSum += a; atrN++;
+    }
+    const atrMean = atrN > 0 ? atrSum / atrN : null;
+    let size = ctx.cash / ctx.price * 0.98;
+    if (atr != null && atrMean != null && atr > atrMean * 1.2) {
+      size *= 0.5; // halve size when ATR is 20% above its average
+    }
+    return { side: 'buy', qty: size };
   }
   return null;
 }
