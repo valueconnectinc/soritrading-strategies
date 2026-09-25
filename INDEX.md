@@ -11,7 +11,7 @@ Every figure comes from the last verifying backtest at publish time. These are p
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
-| ★ | [2498](strategies/2498/) | ADA 1D Band-Bounce Mean Reversion | +14.60% | -40.31% | +10.40% | 14 | 2026-09-25 |
+| ★ | [2498](strategies/2498/) | ADA 1D Band-Bounce Mean Reversion | +2130.70% | +304.43% | +27.95% | 199 | 2026-09-25 |
 | — | [2497](strategies/2497/) | XRP 1D Short Mean-Reversion (Fade Overbought) | -99.33% | — | +99.64% | 174 | 2026-09-25 |
 |  | [2496](strategies/2496/) | XRP 1D Passive-Bull + Band-Bounce Hybrid | +150.79% | +304.43% | +76.66% | 166 | 2026-09-25 |
 | ★ | [2495](strategies/2495/) | DOT 1D Regime-Switch Hybrid | +62.39% | -71.65% | +8.82% | 34 | 2026-09-25 |
