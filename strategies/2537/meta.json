@@ -1,0 +1,31 @@
+{
+  "id": 2537,
+  "name": "FedData Diagnostic",
+  "kind": "custom",
+  "verified": {
+    "backtestId": 10887,
+    "return": -0.21,
+    "mdd": 0.67,
+    "trades": 1,
+    "vsBuyHold": "win",
+    "benchRet": -19.29,
+    "benchBasis": "price",
+    "gapPct": 0,
+    "tFrom": 1747166400,
+    "tTo": 1790352000,
+    "approxNotes": [
+      "봉 내 순서는 관례(양봉 O→L→H→C·음봉 O→H→L→C) — 실순서 미상 · 봉 중 거래량 null · MDD 는 봉 마감 기준",
+      "[유동성/거래량없음] 호가 두께를 판정한 시점의 100% 에서 거래량을 못 받아 합성 호가가 고정 기본값(100000 명목)으로 돌았습니다 — 그 구간의 주문은 종목의 실제 두께가 아니라 이 기본값에 잘렸습니다. 체결량·수익률·MDD 를 그대로 믿지 마세요(거래량이 붙으면 숫자가 달라집니다)."
+    ],
+    "spec": {
+      "ex": "binance",
+      "sym": "BTCUSDT",
+      "interval": "4h",
+      "bars": 3000,
+      "end": 1790366400
+    }
+  },
+  "config": null,
+  "updatedAt": "2026-09-25T23:41:07.681Z",
+  "publishedBy": "scripts/publish-strategies.mjs"
+}
