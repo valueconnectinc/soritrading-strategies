@@ -1,17 +1,16 @@
 /*
  * @coinsori-strategy v1
- * name: ETH Regime Trend Champion 4H
+ * name: ETH Regime Trend Champion 1D
  * ex: binance
  * syms: ETHUSDT
- * interval: 4h
+ * interval: 1d
  * cash: 10000
  *
- * Why this strategy: Crypto trends persist for weeks-to-months, so riding price above
- * its moving average captures most of the upside while a hysteresis exit and a crash
- * stop cut the worst drawdowns. This is the same recipe validated on daily bars for
- * BTC/ETH/SOL/BNB/ADA/XRP; here we test whether the edge survives on 4-hour bars,
- * a faster cadence with noisier signals.
- * When it buys and sells: Buy when the last closed price is above the 50-bar average,
+ * Why this strategy: Crypto trends persist for months, so riding price above its
+ * 50-day average captures most of the upside while a hysteresis exit and a crash stop
+ * cut the worst drawdowns. This is the same recipe validated on daily bars for
+ * BTC/ETH/SOL/BNB/ADA/XRP; here we re-confirm it on ETH daily on fresh windows.
+ * When it buys and sells: Buy when the last closed price is above the 50-day average,
  * sized down when volatility is high or fear is extreme (<=20). Sell when price closes
  * 1 ATR below the average (ignore small chop), or drops 2.5 ATRs below it in a crash.
  * When it does NOT work: In slow grinding downtrends price hovers near the average and
