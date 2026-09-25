@@ -11,7 +11,7 @@ Every figure comes from the last verifying backtest at publish time. These are p
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
-| ★ | [2437](strategies/2437/) | BTC 4H EMA50/200 Trend | +39.23% | +26.42% | +30.39% | 61 | 2026-09-25 |
+| ★ | [2437](strategies/2437/) | BTC 4H EMA50/200 Trend | +588.82% | +436.51% | +34.17% | 47 | 2026-09-25 |
 |  | [2436](strategies/2436/) | ETH Daily Donchian Breakout 1D | -90.87% | +46.55% | +93.79% | 99 | 2026-09-25 |
 |  | [2435](strategies/2435/) | ETH 4H EMA Trend w/ Fast Exit | -100.00% | +1574.61% | +100.00% | 3475 | 2026-09-25 |
 |  | [2434](strategies/2434/) | ETH Daily EMA20/100 Trend (pure price) | +395.98% | +565.07% | +62.64% | 9 | 2026-09-25 |
