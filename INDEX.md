@@ -11,7 +11,7 @@ Every figure comes from the last verifying backtest at publish time. These are p
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
-| ★ | [2511](strategies/2511/) | SOL 4H VWAP Pullback Mean-Reversion | +79.75% | -15.21% | +67.12% | 98 | 2026-09-25 |
+| ★ | [2511](strategies/2511/) | SOL 4H VWAP Pullback Mean-Reversion | +580.02% | +443.26% | +55.14% | 86 | 2026-09-25 |
 |  | [2510](strategies/2510/) | SOL 4H Stochastic RSI Mean-Reversion | +100.64% | +3033.04% | +37.26% | 109 | 2026-09-25 |
 |  | [2508](strategies/2508/) | BNB 4H Volume-Surge Breakout Momentum | +585.61% | +2234.34% | +47.44% | 76 | 2026-09-25 |
 | ★ | [2506](strategies/2506/) | ETH 4H Volume-Surge Breakout Momentum | +177.39% | +61.00% | +58.43% | 78 | 2026-09-25 |
