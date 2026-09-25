@@ -11,7 +11,7 @@ Every figure comes from the last verifying backtest at publish time. These are p
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
-|  | [2491](strategies/2491/) | BTC 1D Fed-Regime + ATR Trail | +37.76% | +159.03% | +60.46% | 31 | 2026-09-25 |
+|  | [2491](strategies/2491/) | BTC 1D Fed-Regime + ATR Trail | +94.09% | +427.47% | +25.06% | 1 | 2026-09-25 |
 | ★ | [2490](strategies/2490/) | Champion + Volatility-Scaled Sizing | +34.70% | +25.00% | +30.90% | 82 | 2026-09-25 |
 |  | [2488](strategies/2488/) | Champion + FearGreed Top Filter | +103.98% | +456.30% | +22.95% | 75 | 2026-09-25 |
 |  | [2487](strategies/2487/) | FearGreed Contrarian | -62.37% | +45.03% | +64.83% | 30 | 2026-09-25 |
