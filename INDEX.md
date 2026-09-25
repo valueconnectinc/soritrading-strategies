@@ -11,7 +11,7 @@ Every figure comes from the last verifying backtest at publish time. These are p
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
-| ★ | [2417](strategies/2417/) | ETH Regime Trend Champion 4H | +28.27% | +23.15% | +49.97% | 160 | 2026-09-25 |
+| ★ | [2417](strategies/2417/) | ETH Regime Trend Champion 4H | +199.15% | +29.50% | +60.03% | 55 | 2026-09-25 |
 |  | [2416](strategies/2416/) | ETH Trend Donchian-10 NoRegime 1D | +1683.46% | +2542.87% | +45.40% | 30 | 2026-09-24 |
 | ★ | [2414](strategies/2414/) | ETH Trend Profit-Lock Trailing 1D | +143.96% | -2.46% | +61.38% | 21 | 2026-09-24 |
 | ★ | [2413](strategies/2413/) | ETH Trend Donchian-10 Breakout Entry 1D | +178.19% | -2.46% | +46.37% | 13 | 2026-09-24 |
