@@ -10,7 +10,7 @@
  * crowd fear is at an extreme, prices tend to overshoot down and snap back. Fear &
  * Greed (ctx.data('fg')) is populated in this feed, so we can confirm the crowd is
  * actually fearful rather than guessing from price alone.
- * When it buys: when sentiment is fearful (< 40) AND price pierces the lower
+ * When it buys: when sentiment is fearful (< 50) AND price pierces the lower
  * Bollinger band — a panic-bottom. Sells when price recovers to the middle band
  * (mean reversion complete) or after a hard stop.
  * When it does NOT work: in a prolonged structural bear (fear stays extreme and price
@@ -33,8 +33,8 @@ function onUpdate(ctx) {
     return null;
   }
 
-  // relaxed fear threshold: more entries, catches more bounces
-  if (fg < 40 && price < bb.lower) {
+  // fear threshold <50: even more entries, catches more bounces
+  if (fg < 50 && price < bb.lower) {
     return { side: 'buy', qty: ctx.cash / ctx.price * 0.99 };
   }
 
