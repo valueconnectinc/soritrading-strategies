@@ -1,0 +1,30 @@
+{
+  "id": 2495,
+  "name": "DOT 1D Regime-Switch Hybrid",
+  "kind": "custom",
+  "verified": {
+    "backtestId": 10575,
+    "return": -30.73,
+    "mdd": 66.23,
+    "trades": 70,
+    "vsBuyHold": "lose",
+    "benchRet": 73.87,
+    "benchBasis": "price",
+    "gapPct": 0,
+    "tFrom": 1597708800,
+    "tTo": 1669248000,
+    "approxNotes": [
+      "봉 내 순서는 관례(양봉 O→L→H→C·음봉 O→H→L→C) — 실순서 미상 · 봉 중 거래량 null · MDD 는 봉 마감 기준"
+    ],
+    "spec": {
+      "ex": "binance",
+      "sym": "DOTUSDT",
+      "interval": "1d",
+      "bars": 1400,
+      "end": 1669334400
+    }
+  },
+  "config": null,
+  "updatedAt": "2026-09-25T19:23:40.770Z",
+  "publishedBy": "scripts/publish-strategies.mjs"
+}
