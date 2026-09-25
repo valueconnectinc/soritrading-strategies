@@ -3,11 +3,11 @@
   "name": "Champion + Volatility-Scaled Sizing",
   "kind": "custom",
   "verified": {
-    "backtestId": 10529,
-    "return": 20.07,
+    "backtestId": 10532,
+    "return": 34.7,
     "mdd": 30.9,
     "trades": 82,
-    "vsBuyHold": "lose",
+    "vsBuyHold": "win",
     "benchRet": 25,
     "benchBasis": "price",
     "gapPct": 0,
@@ -26,6 +26,6 @@
     }
   },
   "config": null,
-  "updatedAt": "2026-09-25T18:48:51.446Z",
+  "updatedAt": "2026-09-25T18:49:58.270Z",
   "publishedBy": "scripts/publish-strategies.mjs"
 }
