@@ -11,7 +11,7 @@ Every figure comes from the last verifying backtest at publish time. These are p
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
-|  | [2494](strategies/2494/) | DOT 1D Band-Bounce Mean Reversion | +54.00% | +1234.85% | +3.68% | 12 | 2026-09-25 |
+|  | [2494](strategies/2494/) | DOT 1D Band-Bounce Mean Reversion | +56.40% | +185.16% | +48.60% | 57 | 2026-09-25 |
 | ★ | [2492](strategies/2492/) | XRP 1D Band-Bounce Mean Reversion | +0.46% | -46.16% | +16.32% | 6 | 2026-09-25 |
 | ★ | [2491](strategies/2491/) | BTC 1D Fed-Regime + ATR Trail | +401.84% | +116.17% | +63.03% | 19 | 2026-09-25 |
 | ★ | [2490](strategies/2490/) | Champion + Volatility-Scaled Sizing | +34.70% | +25.00% | +30.90% | 82 | 2026-09-25 |
