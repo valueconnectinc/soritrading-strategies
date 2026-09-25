@@ -4,13 +4,14 @@ Every strategy whose backtest **finished and actually traded** is published here
 Nothing is filtered out by return — the ones that lost money are part of the record.
 Entries stay after a strategy is removed from our own workspace — this is a log, and deleting the record would leave only the survivors.
 
-**★ marks a strategy that out-returned buy & hold over the same window** — 284 of 936 right now.
+**★ marks a strategy that out-returned buy & hold over the same window** — 285 of 937 right now.
 `—` means the comparison **could not be made**: the engine does not compute a benchmark for multi-symbol, futures, or multi-leg runs. That is *unknown*, not *lost*, and it is 185 of them right now.
 
 Every figure comes from the last verifying backtest at publish time. These are past results over historical data. Nothing here is promised or assured about the future, and none of it is investment advice.
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
+| ★ | [2504](strategies/2504/) | AVAX 4H Band-Bounce Generalization Test | +33.33% | -33.12% | +48.14% | 373 | 2026-09-25 |
 | ★ | [2503](strategies/2503/) | LTC 4H Band-Bounce Champion (plain) | +218.64% | +121.63% | +36.29% | 480 | 2026-09-25 |
 |  | [2502](strategies/2502/) | ETH 1D Volume-Confirmed Momentum | -35.36% | -12.08% | +62.91% | 381 | 2026-09-25 |
 |  | [2501](strategies/2501/) | BTC 1D Donchian Breakout Trend-Following | +28.78% | +56.64% | +52.38% | 13 | 2026-09-25 |
