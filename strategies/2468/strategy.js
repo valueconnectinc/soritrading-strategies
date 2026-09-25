@@ -1,23 +1,23 @@
 /*
  * @coinsori-strategy v1
- * name: BTC 4H Vol-Surge + ATR Trail + Lookback 10
+ * name: BTC 4H Vol-Surge + ATR Trail + Vol 2x Only
  * ex: binance
  * syms: BTCUSDT
  * interval: 4h
  * cash: 10000
  *
- * Why this strategy: Isolates ONLY the breakout-lookback change (20 -> 10
- *   bars) at the champion's 1.5x volume, to see if a shorter breakout window
- *   triggers earlier on fresh moves and improves the weak bear window (W3).
- * When it buys and sells: Buy a 10-bar-high break on >1.5x average volume.
+ * Why this strategy: Isolates ONLY the volume-threshold change (1.5x -> 2.0x)
+ *   on the champion's 20-bar breakout, to see if a stricter volume filter
+ *   alone cuts whipsaw trades and improves the weak bear window (W3).
+ * When it buys and sells: Buy a 20-bar-high break on >2.0x average volume.
  *   Exit only when price drops 3x ATR below the highest close since entry.
- * When it does NOT work: A shorter lookback is more sensitive and fires on
- *   more noise, so it may add whipsaw trades in choppy regimes. If the bear
- *   window's loss is trend-driven, earlier entries won't help.
+ * When it does NOT work: Raising the volume bar means fewer entries, so it
+ *   may miss melt-up runs. If the bear window's loss is trend-driven rather
+ *   than noise-driven, a volume filter alone won't fix it.
  */
 function onUpdate(ctx) {
   let hh = -Infinity;
-  for (let i = 1; i <= 10; i++) {
+  for (let i = 1; i <= 20; i++) {
     const h = ctx.high(20, i);
     if (h == null) return null;
     if (h > hh) hh = h;
@@ -37,7 +37,7 @@ function onUpdate(ctx) {
     if (price < stop) return { side: 'sell', qty: pos };
     return null;
   }
-  if (price > hh && vol > avgVol * 1.5) {
+  if (price > hh && vol > avgVol * 2.0) {
     ctx.state.highest = price;
     return { side: 'buy', qty: ctx.cash / ctx.price * 0.98 };
   }
