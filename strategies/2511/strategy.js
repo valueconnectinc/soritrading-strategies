@@ -14,7 +14,8 @@
  *   falling-knife risk than a pure oversold signal.
  * When it buys and sells: Buy when price pulls back to within 2% of the 50-bar
  *   VWAP while the 50-bar SMA is rising (uptrend intact). Sell on a 8% trailing
- *   stop or when price extends more than 8% above VWAP (overextended).
+ *   stop, a 14% hard stop-loss from entry, or when price extends more than 8%
+ *   above VWAP (overextended).
  * When it does NOT work: In a strong downtrend the 50-SMA falls and the strategy
  *   stays flat (good), but in a choppy range the VWAP pullback triggers often
  *   and whipsaws. It also misses fast V-shaped rallies where price never pulls
@@ -43,7 +44,9 @@ function onUpdate(ctx) {
   const pos = ctx.position;
 
   if (pos > 0) {
-    // tighter trailing stop and overextension exit to cut drawdown
+    // hard stop-loss caps the per-trade loss in a crash
+    if (price < ctx.entryPx * 0.86) return { side: 'sell', qty: pos };
+    // trailing stop and overextension exit
     if (price < ctx.entryPx * 0.92) return { side: 'sell', qty: pos };
     if (price > vwap * 1.08) return { side: 'sell', qty: pos };
     return null;
