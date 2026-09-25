@@ -1,12 +1,12 @@
 {
-  "id": 2450,
-  "name": "BTC 4H Vol-Surge + ATR Trail 4x",
+  "id": 2451,
+  "name": "BTC 4H Vol-Surge + ATR Trail ONLY",
   "kind": "custom",
   "verified": {
-    "backtestId": 10376,
-    "return": 240.89,
+    "backtestId": 10379,
+    "return": 259.92,
     "mdd": 27.53,
-    "trades": 79,
+    "trades": 77,
     "vsBuyHold": "lose",
     "benchRet": 456.3,
     "benchBasis": "price",
@@ -27,6 +27,6 @@
     }
   },
   "config": null,
-  "updatedAt": "2026-09-25T16:31:38.381Z",
+  "updatedAt": "2026-09-25T16:35:51.287Z",
   "publishedBy": "scripts/publish-strategies.mjs"
 }
