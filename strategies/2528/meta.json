@@ -3,12 +3,12 @@
   "name": "AI 전략",
   "kind": "custom",
   "verified": {
-    "backtestId": 10793,
-    "return": 67.18,
-    "mdd": 51.33,
-    "trades": 232,
+    "backtestId": 10796,
+    "return": 93.6,
+    "mdd": 39.3,
+    "trades": 200,
     "vsBuyHold": "win",
-    "benchRet": 28.64,
+    "benchRet": 61.78,
     "benchBasis": "price",
     "gapPct": 0,
     "tFrom": 1646366400,
@@ -18,7 +18,7 @@
     ],
     "spec": {
       "ex": "binance",
-      "sym": "ETHUSDT",
+      "sym": "BTCUSDT",
       "interval": "4h",
       "bars": 5000,
       "end": 1718366400
