@@ -3,31 +3,29 @@
   "name": "Regime-Switch Hybrid VolTargeted + CrashSizing",
   "kind": "custom",
   "verified": {
-    "backtestId": 10849,
-    "return": 221.59,
-    "mdd": 41.13,
-    "trades": 248,
+    "backtestId": 10852,
+    "return": 751.5,
+    "mdd": 26.94,
+    "trades": 207,
     "vsBuyHold": "win",
-    "benchRet": 112.15,
+    "benchRet": 443.26,
     "benchBasis": "price",
     "gapPct": 0,
     "tFrom": 1574352000,
     "tTo": 1646352000,
     "approxNotes": [
       "봉 내 순서는 관례(양봉 O→L→H→C·음봉 O→H→L→C) — 실순서 미상 · 봉 중 거래량 null · MDD 는 봉 마감 기준",
-      "[유동성/미체결] 시장가 주문 44건이 그 봉의 호가 두께를 넘어 일부만 체결됐습니다(전체 요청 금액의 5% 미체결, 남은 물량은 다음 봉으로). 진입·청산이 전략이 의도한 시점보다 늦습니다. ★ 원인은 둘 중 하나이고 이 수만으로는 못 가릅니다 — 종목이 얇거나, 주문이 한 봉이 소화할 수 있는 것보다 크거나. 주문 크기를 줄여 같은 구간을 다시 돌리면…",
-      "[유동성/전무] 시장가 주문 2건은 **한 주도 체결되지 않았습니다**. 부분체결이 아니라 전무라, 그 시점의 진입·청산은 **일어나지 않았습니다.**",
-      "기간 종료 시 미청산 포지션 1종목 (총자산의 41.73%) — 이 수익률은 **평가액**을 포함합니다. 퇴출 수수료·거래세를 안 냈고, 마지막 봉 가격에 실제로 팔 수 있다는 보장도 없습니다(얇은 호가·상장폐지). exec.endLiquidate 로 마지막 봉 청산을 켤 수 있습니다"
+      "기간 종료 시 미청산 포지션 1종목 (총자산의 59.52%) — 이 수익률은 **평가액**을 포함합니다. 퇴출 수수료·거래세를 안 냈고, 마지막 봉 가격에 실제로 팔 수 있다는 보장도 없습니다(얇은 호가·상장폐지). exec.endLiquidate 로 마지막 봉 청산을 켤 수 있습니다"
     ],
     "spec": {
       "ex": "binance",
-      "sym": "LTCUSDT",
+      "sym": "BTCUSDT",
       "interval": "4h",
       "bars": 5000,
       "end": 1646366400
     }
   },
   "config": null,
-  "updatedAt": "2026-09-25T23:06:12.748Z",
+  "updatedAt": "2026-09-25T23:08:51.936Z",
   "publishedBy": "scripts/publish-strategies.mjs"
 }

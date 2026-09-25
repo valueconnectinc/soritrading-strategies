@@ -1,6 +1,6 @@
 /*
  * @coinsori-strategy v1
- * name: Regime-Switch Hybrid VolTargeted + CrashSizing
+ * name: Regime-Switch Hybrid VolTargeted + FearDepthSizing v2
  * ex: binance
  * syms: BTCUSDT, SOLUSDT, ETHUSDT
  * interval: 4h
@@ -8,31 +8,31 @@
  *
  * Why this strategy: The regime-switch hybrid champion (fear-contrarian bear leg +
  * selective trend leg) beats buy-and-hold on all three BTC 4h windows but its
- * documented weakness is high drawdown on the bear leg. Scaling down at extreme fear
- * (fg<20) helped W1 MDD (32.7→26.9) but cost W3 return (88→76) because some
- * extreme-fear bottoms are sharp V-reversals inside a bull market that recover fast.
- * This variant keeps every entry and exit identical and scales the bear-leg position
- * down ONLY when extreme fear coincides with a long-term downtrend (price below the
- * 200-EMA) — the genuine-crash falling-knife zone. Bull-market V-bottoms (price above
- * the 200-EMA) keep full size, preserving their upside.
+ * documented weakness is high drawdown on the bear leg, whose biggest losses come
+ * from buying panic bottoms in GENUINE crashes (extreme fear) that keep falling.
+ * The first fear-depth variant (fg<20 -> 70% size) cut BTC W1 MDD from 32.7 to 26.9
+ * while keeping returns. This v2 keeps that tier and ADDS a deeper tier: at true
+ * capitulation (fg<10) the bear leg is cut to 50%. The idea is that the deeper the
+ * panic the more likely the bottom keeps falling, so the falling-knife position
+ * should shrink further — while moderate panic recoveries stay fully sized.
  * When it buys and sells: identical to the champion — bear regime buys panic bottoms
  * (fear<40 + lower Bollinger break, mid-band exit); bull regime buys pullbacks to the
- * 20-EMA in a confirmed uptrend (exit below the 50-EMA). Only the bear-leg SIZE differs.
+ * 20-EMA in a confirmed uptrend (exit below the 50-EMA). Only the bear-leg SIZE at
+ * extreme fear differs.
  * When it does NOT work: same as champion — sideways chop whipsaws the 50-EMA, and a
  * sharp V-reversal straight through the 50-EMA gives the trend leg no entry. If a
- * genuine crash is followed by an equally fast V-recovery, the reduced size caps upside.
+ * window's biggest recoveries come from fg<10 capitulation bottoms, the 50% cap will
+ * cut the upside on exactly those trades.
  */
 function onUpdate(ctx) {
   const bb = ctx.bb(20, 2, 1);
   const ema50 = ctx.ema(50, 1);
   const ema20 = ctx.ema(20, 1);
   const ema20p = ctx.ema(20, 2);
-  const ema200 = ctx.ema(200, 1);
   const atr = ctx.atr(14, 1);
   const fg = ctx.data('fg');
   if (bb == null || bb.lower == null || bb.mid == null) return null;
   if (ema50 == null || ema20 == null || ema20p == null || atr == null) return null;
-  if (ema200 == null) return null;
   if (fg == null) return null;
 
   const price = ctx.price;
@@ -65,10 +65,11 @@ function onUpdate(ctx) {
     return null;
   }
 
-  // Bear leg: only trim when extreme fear (fg<20) ALSO sits below the 200-EMA — that is
-  // a genuine-crash falling knife, not a bull-market V-bottom. Bull V-bottoms (price
-  // above the 200-EMA) keep full size to preserve their fast recoveries.
-  if (fg < 20 && price < ema200) qty = qty * 0.7;
+  // Bear leg: scale down as fear deepens. Moderate panic (fg>=20) keeps full size.
+  // fg<20 (falling knife) -> 70%; fg<10 (true capitulation, most likely to keep
+  // falling) -> 50%. The 10/50 tier is the ONLY change from the validated v1.
+  if (fg < 10) qty = qty * 0.5;
+  else if (fg < 20) qty = qty * 0.7;
 
   if (fg < 40 && price < bb.lower) {
     return { side: 'buy', qty: qty };
