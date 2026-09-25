@@ -3,11 +3,11 @@
   "name": "BTC 4H EMA-Stack Momentum",
   "kind": "custom",
   "verified": {
-    "backtestId": 10822,
-    "return": -86.71,
-    "mdd": 88.16,
-    "trades": 338,
-    "vsBuyHold": "lose",
+    "backtestId": 10824,
+    "return": 93.6,
+    "mdd": 39.3,
+    "trades": 200,
+    "vsBuyHold": "win",
     "benchRet": 61.78,
     "benchBasis": "price",
     "gapPct": 0,
@@ -25,6 +25,6 @@
     }
   },
   "config": null,
-  "updatedAt": "2026-09-25T22:48:09.654Z",
+  "updatedAt": "2026-09-25T22:52:02.426Z",
   "publishedBy": "scripts/publish-strategies.mjs"
 }
