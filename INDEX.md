@@ -11,7 +11,7 @@ Every figure comes from the last verifying backtest at publish time. These are p
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
-|  | [2488](strategies/2488/) | Champion + FearGreed Top Filter | +88.35% | +456.30% | +22.95% | 67 | 2026-09-25 |
+|  | [2488](strategies/2488/) | Champion + FearGreed Top Filter | +103.98% | +456.30% | +22.95% | 75 | 2026-09-25 |
 |  | [2487](strategies/2487/) | FearGreed Contrarian | -62.37% | +45.03% | +64.83% | 30 | 2026-09-25 |
 | ★ | [2482](strategies/2482/) | BTC 4H Funding Diag | -7.18% | -20.04% | +30.90% | 52 | 2026-09-25 |
 |  | [2480](strategies/2480/) | BTC 1D Addr Log Diag | -65.08% | +45.03% | +71.36% | 101 | 2026-09-25 |

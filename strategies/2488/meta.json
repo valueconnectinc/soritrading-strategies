@@ -3,10 +3,10 @@
   "name": "Champion + FearGreed Top Filter",
   "kind": "custom",
   "verified": {
-    "backtestId": 10522,
-    "return": 88.35,
+    "backtestId": 10525,
+    "return": 103.98,
     "mdd": 22.95,
-    "trades": 67,
+    "trades": 75,
     "vsBuyHold": "lose",
     "benchRet": 456.3,
     "benchBasis": "price",
