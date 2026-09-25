@@ -1,30 +1,26 @@
 /*
  * @coinsori-strategy v1
- * name: Regime-Switch Hybrid VolTargeted + FearDepthSizing v2
+ * name: Regime-Switch Hybrid VolTargeted + FearDepthSizing + GreedDepth
  * ex: binance
  * syms: BTCUSDT, SOLUSDT, ETHUSDT
  * interval: 4h
  * cash: 10000
  *
  * Why this strategy: The regime-switch hybrid champion (fear-contrarian bear leg +
- * selective trend leg) beats buy-and-hold on all three BTC 4h windows but its
- * documented weakness is high drawdown on the bear leg, whose biggest losses come
- * from buying panic bottoms in GENUINE crashes (extreme fear) that keep falling.
- * The first fear-depth variant (fg<20 -> 70% size) cut BTC W1 MDD from 32.7 to 26.9
- * while keeping returns. This v2 keeps that tier and ADDS a deeper tier: at true
- * capitulation (fg<10) the bear leg is cut to 50%. The idea is that the deeper the
- * panic the more likely the bottom keeps falling, so the falling-knife position
- * should shrink further — while moderate panic recoveries stay fully sized.
- * A harder cut (fg<10 -> 40%) was tested and gave identical BTC results, so 50% is
- * the natural sweet spot.
+ * selective trend leg) beats buy-and-hold on all BTC 4h windows. Fear-depth sizing
+ * (fg<20 -> 70%, fg<10 -> 50% on the bear leg) already cut drawdown while keeping
+ * returns. This v3 extends the SAME insight to the bull leg: at extreme GREED
+ * (fg>90, euphoric melt-up) buying a pullback to the 20-EMA is most likely to catch
+ * the top, so the trend-leg position shrinks there. The idea is symmetric — the
+ * deeper the emotion, the more likely the move reverses, so position shrinks.
  * When it buys and sells: identical to the champion — bear regime buys panic bottoms
  * (fear<40 + lower Bollinger break, mid-band exit); bull regime buys pullbacks to the
- * 20-EMA in a confirmed uptrend (exit below the 50-EMA). Only the bear-leg SIZE at
- * extreme fear differs.
+ * 20-EMA in a confirmed uptrend (exit below the 50-EMA). Only the bull-leg SIZE at
+ * extreme greed differs.
  * When it does NOT work: same as champion — sideways chop whipsaws the 50-EMA, and a
  * sharp V-reversal straight through the 50-EMA gives the trend leg no entry. If a
- * window's biggest recoveries come from fg<10 capitulation bottoms, the 50% cap will
- * cut the upside on exactly those trades.
+ * window's biggest trend-leg gains come from re-buying pullbacks during a euphoric
+ * melt-up that keeps running, the fg>90 cap will cut that upside.
  */
 function onUpdate(ctx) {
   const bb = ctx.bb(20, 2, 1);
@@ -62,14 +58,18 @@ function onUpdate(ctx) {
     const nearEma20 = price <= ema20 + atr * 0.5 && price > ema50;
     const rising = ema20 > ema20p;
     if (nearEma20 && rising) {
+      // Greed-depth sizing on the bull leg: fg>90 (euphoric melt-up top) -> 50% size,
+      // fg>80 (strong greed) -> 70%. Symmetric to the bear-leg fear tiers: the deeper
+      // the emotion, the more likely the pullback-buy catches a top, so shrink.
+      if (fg > 90) qty = qty * 0.5;
+      else if (fg > 80) qty = qty * 0.7;
       return { side: 'buy', qty: qty };
     }
     return null;
   }
 
   // Bear leg: scale down as fear deepens. Moderate panic (fg>=20) keeps full size.
-  // fg<20 (falling knife) -> 70%; fg<10 (true capitulation, most likely to keep
-  // falling) -> 50%.
+  // fg<20 (falling knife) -> 70%; fg<10 (true capitulation) -> 50%.
   if (fg < 10) qty = qty * 0.5;
   else if (fg < 20) qty = qty * 0.7;
 
