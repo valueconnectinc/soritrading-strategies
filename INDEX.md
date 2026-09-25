@@ -4,13 +4,14 @@ Every strategy whose backtest **finished and actually traded** is published here
 Nothing is filtered out by return — the ones that lost money are part of the record.
 Entries stay after a strategy is removed from our own workspace — this is a log, and deleting the record would leave only the survivors.
 
-**★ marks a strategy that out-returned buy & hold over the same window** — 265 of 875 right now.
+**★ marks a strategy that out-returned buy & hold over the same window** — 265 of 876 right now.
 `—` means the comparison **could not be made**: the engine does not compute a benchmark for multi-symbol, futures, or multi-leg runs. That is *unknown*, not *lost*, and it is 182 of them right now.
 
 Every figure comes from the last verifying backtest at publish time. These are past results over historical data. Nothing here is promised or assured about the future, and none of it is investment advice.
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
+|  | [2421](strategies/2421/) | BNB 4H Band-Bounce Mean Reversion | +97.47% | +973.31% | +51.87% | 128 | 2026-09-25 |
 | ★ | [2420](strategies/2420/) | BTC EMA Trend (no filter) | +33.24% | -24.48% | +43.25% | 35 | 2026-09-25 |
 |  | [2419](strategies/2419/) | ETH Trend Donchian-10 Confirmed 1D | +364.57% | +1231.41% | +64.49% | 9 | 2026-09-25 |
 | ★ | [2417](strategies/2417/) | ETH Regime Trend Champion 4H | +199.15% | +29.50% | +60.03% | 55 | 2026-09-25 |
