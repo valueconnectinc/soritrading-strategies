@@ -1,22 +1,22 @@
 /*
  * @coinsori-strategy v1
- * name: BTC 4H Vol-Surge + ATR Trail + FearGreed Gate
+ * name: BTC 4H Vol-Surge + ATR Trail + FearGreed Gate 85
  * ex: binance
  * syms: BTCUSDT
  * interval: 4h
  * cash: 10000
  *
  * Why this strategy: The champion (vol-surge breakout + 3x ATR trail) is solid
- *   but buys every breakout including ones right at market tops, where extreme
- *   greed marks exhaustion. The Crypto Fear & Greed index is a sentiment gauge
- *   that tends to peak near local tops. This gates the entry: skip a breakout
- *   when sentiment is at extreme greed, aiming to cut drawdown on the tops.
+ *   but buys breakouts at market tops. The F&G gate at 75 helped the recent
+ *   windows but cut the 2019-22 melt-up badly (extreme greed persisted for weeks
+ *   while price climbed). This loosens the gate to block ONLY the most extreme
+ *   greed (F&G >= 85), hoping to keep the melt-up continuations while still
+ *   avoiding the very worst exhaustion tops.
  * When it buys and sells: Buy 20-bar-high breaks on above-average volume ONLY
- *   when Fear & Greed is below 75 (not in extreme-greed territory). Exit on the
- *   3x ATR trailing stop below the highest close since entry.
- * When it does NOT work: In a strong melt-up, extreme greed can persist for
- *   weeks while price keeps climbing — the gate can filter out the best trend
- *   continuations. Also depends on the Fear & Greed feed being available.
+ *   when Fear & Greed is below 85. Exit on the 3x ATR trailing stop.
+ * When it does NOT work: In a parabolic melt-up, F&G can sit above 85 for the
+ *   entire run, so even this loose gate can miss the biggest trend. Depends on
+ *   the Fear & Greed feed being available.
  */
 function onUpdate(ctx) {
   let hh = -Infinity;
@@ -41,10 +41,9 @@ function onUpdate(ctx) {
     return null;
   }
 
-  // Sentiment gate: only enter when not at extreme greed (F&G < 75).
   const fg = ctx.data('fear_greed');
-  if (fg == null) return null; // no sentiment data -> stay out
-  if (price > hh && vol > avgVol * 1.5 && fg < 75) {
+  if (fg == null) return null;
+  if (price > hh && vol > avgVol * 1.5 && fg < 85) {
     ctx.state.highest = price;
     return { side: 'buy', qty: ctx.cash / ctx.price * 0.98 };
   }
