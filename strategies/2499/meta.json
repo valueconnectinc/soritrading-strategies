@@ -1,0 +1,30 @@
+{
+  "id": 2499,
+  "name": "SOL 1D Band-Bounce Mean Reversion",
+  "kind": "custom",
+  "verified": {
+    "backtestId": 10598,
+    "return": 223.16,
+    "mdd": 51.23,
+    "trades": 122,
+    "vsBuyHold": "win",
+    "benchRet": 188.7,
+    "benchBasis": "price",
+    "gapPct": 0,
+    "tFrom": 1660694400,
+    "tTo": 1790208000,
+    "approxNotes": [
+      "봉 내 순서는 관례(양봉 O→L→H→C·음봉 O→H→L→C) — 실순서 미상 · 봉 중 거래량 null · MDD 는 봉 마감 기준"
+    ],
+    "spec": {
+      "ex": "binance",
+      "sym": "SOLUSDT",
+      "interval": "1d",
+      "bars": 1500,
+      "end": 1790294400
+    }
+  },
+  "config": null,
+  "updatedAt": "2026-09-25T19:45:46.911Z",
+  "publishedBy": "scripts/publish-strategies.mjs"
+}
