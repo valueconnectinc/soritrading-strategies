@@ -1,22 +1,22 @@
 /*
  * @coinsori-strategy v1
- * name: Champion + Volatility-Scaled Sizing
+ * name: BTC 4H Volume-Surge + ATR Trail
  * ex: binance
  * syms: BTCUSDT
  * interval: 4h
  * cash: 10000
  *
- * Why this strategy: The volume-surge champion risks the same position size on
- *   every breakout, but high-volatility breakouts (wide ATR) are riskier and
- *   produce the deepest drawdowns. Sizing positions inversely to ATR keeps the
- *   dollar risk per trade roughly constant, so a violent spike risks the same
- *   as a calm breakout.
- * When it buys and sells: Same entry/exit as the champion (20-bar-high break on
- *   >1.5x volume, 3x ATR trail), but the buy quantity is scaled down when ATR
- *   is high relative to its recent average.
- * When it does NOT work: Scaling down size in high-vol regimes also cuts the
- *   biggest winners (breakouts that turn into huge trends often start with a
- *   volatility spike), so it can lag the champion in powerful bull runs.
+ * Why this strategy: Breakouts on heavy volume tend to be real moves, not noise.
+ *   Buying a 20-bar-high break that comes with >1.5x average volume rides genuine
+ *   momentum, and a wide 3x-ATR trailing stop lets winners run while cutting
+ *   losers. This proved the most robust recipe across BTC/ETH/SOL and many
+ *   walk-forward windows in this development job.
+ * When it buys and sells: Buy when price breaks the 20-bar high on above-average
+ *   volume. Exit only when price falls 3x ATR below the highest close since entry.
+ * When it does NOT work: In a fast crash price can gap through the ATR trail, so
+ *   deep drawdowns are still possible; and in a long flat range the 20-bar-high
+ *   break whipsaws, paying extra fees. It is a momentum strategy, so it loses in
+ *   chop and is fully invested during drawdowns.
  */
 function onUpdate(ctx) {
   let hh = -Infinity;
@@ -42,20 +42,7 @@ function onUpdate(ctx) {
   }
   if (price > hh && vol > avgVol * 1.5) {
     ctx.state.highest = price;
-    // Average of the last 50 ATR values (closed bars) as the "normal" vol level.
-    let sum = 0, n = 0;
-    for (let i = 1; i <= 50; i++) {
-      const a = ctx.atr(14, i);
-      if (a == null) break;
-      sum += a; n++;
-    }
-    let scale = 1;
-    if (n >= 20) {
-      const atrAvg = sum / n;
-      const atrNow = ctx.atr(14);
-      if (atrNow != null && atrAvg > 0 && atrNow / atrAvg > 1.5) scale = 0.5;
-    }
-    return { side: 'buy', qty: ctx.cash / ctx.price * 0.98 * scale };
+    return { side: 'buy', qty: ctx.cash / ctx.price * 0.98 };
   }
   return null;
 }
