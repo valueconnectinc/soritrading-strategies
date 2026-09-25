@@ -43,10 +43,8 @@ function onUpdate(ctx) {
 
   if (price > hh && vol > avgVol * 1.5) {
     ctx.state.highest = price;
-    // Scale size down when current ATR is above its 50-bar average (risky regime).
     const atr = ctx.atr(14, 1);
-    const atrAvg = ctx.sma(14, 1) ? null : null; // placeholder, replaced below
-    // compute ATR average from available data
+    // compute ATR average over the last 50 closed bars
     let atrSum = 0, atrN = 0;
     for (let i = 1; i <= 50; i++) {
       const a = ctx.atr(14, i);
@@ -55,8 +53,9 @@ function onUpdate(ctx) {
     }
     const atrMean = atrN > 0 ? atrSum / atrN : null;
     let size = ctx.cash / ctx.price * 0.98;
+    // halve size when ATR is 20% above its average (volatile/risky regime)
     if (atr != null && atrMean != null && atr > atrMean * 1.2) {
-      size *= 0.5; // halve size when ATR is 20% above its average
+      size *= 0.5;
     }
     return { side: 'buy', qty: size };
   }

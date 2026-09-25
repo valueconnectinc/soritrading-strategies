@@ -11,7 +11,7 @@ Every figure comes from the last verifying backtest at publish time. These are p
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
-| ★ | [2461](strategies/2461/) | BTC 4H Vol-Surge + ATR Trail + FearGreed Gate | +34.70% | +25.00% | +30.90% | 82 | 2026-09-25 |
+| ★ | [2461](strategies/2461/) | BTC 4H Vol-Surge + ATR Trail + FearGreed Gate | +63.27% | +61.41% | +32.23% | 88 | 2026-09-25 |
 |  | [2460](strategies/2460/) | ETH 1D RSI2 Capitulation Bounce | +259.92% | +456.30% | +27.53% | 77 | 2026-09-25 |
 |  | [2459](strategies/2459/) | BTC 4H Volatility-Squeeze Breakout | -38.40% | +61.41% | +43.25% | 34 | 2026-09-25 |
 | ★ | [2455](strategies/2455/) | BTC 4H Vol-Surge + Partial TP + Trail | +68.33% | +61.41% | +32.23% | 88 | 2026-09-25 |
