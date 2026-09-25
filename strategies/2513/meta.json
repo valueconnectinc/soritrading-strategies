@@ -1,0 +1,30 @@
+{
+  "id": 2513,
+  "name": "SOL 4H VWAP Pullback Mean-Reversion (tighter risk)",
+  "kind": "custom",
+  "verified": {
+    "backtestId": 10661,
+    "return": 144.77,
+    "mdd": 63.35,
+    "trades": 128,
+    "vsBuyHold": "win",
+    "benchRet": -15.21,
+    "benchBasis": "price",
+    "gapPct": 0,
+    "tFrom": 1718366400,
+    "tTo": 1790352000,
+    "approxNotes": [
+      "봉 내 순서는 관례(양봉 O→L→H→C·음봉 O→H→L→C) — 실순서 미상 · 봉 중 거래량 null · MDD 는 봉 마감 기준"
+    ],
+    "spec": {
+      "ex": "binance",
+      "sym": "SOLUSDT",
+      "interval": "4h",
+      "bars": 5000,
+      "end": 1790366400
+    }
+  },
+  "config": null,
+  "updatedAt": "2026-09-25T20:31:26.619Z",
+  "publishedBy": "scripts/publish-strategies.mjs"
+}
