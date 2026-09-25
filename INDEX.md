@@ -4,13 +4,14 @@ Every strategy whose backtest **finished and actually traded** is published here
 Nothing is filtered out by return — the ones that lost money are part of the record.
 Entries stay after a strategy is removed from our own workspace — this is a log, and deleting the record would leave only the survivors.
 
-**★ marks a strategy that out-returned buy & hold over the same window** — 276 of 919 right now.
+**★ marks a strategy that out-returned buy & hold over the same window** — 276 of 920 right now.
 `—` means the comparison **could not be made**: the engine does not compute a benchmark for multi-symbol, futures, or multi-leg runs. That is *unknown*, not *lost*, and it is 184 of them right now.
 
 Every figure comes from the last verifying backtest at publish time. These are past results over historical data. Nothing here is promised or assured about the future, and none of it is investment advice.
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
+|  | [2480](strategies/2480/) | BTC 1D Addr Log Diag | -65.08% | +45.03% | +71.36% | 101 | 2026-09-25 |
 |  | [2478](strategies/2478/) | BTC 1D Addr Diagnostic | -65.08% | +45.03% | +71.36% | 101 | 2026-09-25 |
 |  | [2476](strategies/2476/) | BTC 1D Donchian Trend + ATR Trail | +25.24% | +258.07% | +60.50% | 30 | 2026-09-25 |
 | ★ | [2475](strategies/2475/) | BTC 4H Vol-Surge + ATR Trail + DXY Risk Gate | +34.70% | +25.00% | +30.90% | 82 | 2026-09-25 |
