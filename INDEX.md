@@ -11,7 +11,7 @@ Every figure comes from the last verifying backtest at publish time. These are p
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
-| ★ | [2533](strategies/2533/) | Regime-Switch Hybrid VolTargeted + CrashSizing | +751.50% | +443.26% | +26.94% | 207 | 2026-09-25 |
+| ★ | [2533](strategies/2533/) | Regime-Switch Hybrid VolTargeted + CrashSizing | +221.59% | +112.15% | +41.13% | 248 | 2026-09-25 |
 |  | [2532](strategies/2532/) | Regime-Switch Hybrid VolTargeted + FearDepthSizing | +287.91% | +1598.87% | +44.82% | 203 | 2026-09-25 |
 | ★ | [2531](strategies/2531/) | BTC 4H EMA-Stack Momentum | +75.57% | +26.55% | +27.28% | 237 | 2026-09-25 |
 |  | [2530](strategies/2530/) | SOL 1H RSI Oversold Mean Reversion | -8.68% | +41.03% | +15.84% | 52 | 2026-09-25 |
