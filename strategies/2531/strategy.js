@@ -1,35 +1,39 @@
 /*
  * @coinsori-strategy v1
- * name: Regime-Switch Hybrid VolTargeted
+ * name: Regime-Switch Hybrid VolTargeted + BearTrendSizing
  * ex: binance
  * syms: BTCUSDT, SOLUSDT, ETHUSDT
  * interval: 4h
  * cash: 10000
  *
  * Why this strategy: The regime-switch hybrid champion (fear-contrarian bear leg +
- * selective trend leg) is the best strategy in this job but its documented weakness
- * is high drawdown (33-51% on BTC, up to 80% on SOL) because it goes all-in on both
- * legs. This variant keeps the exact same entries and exits but replaces all-in
- * sizing with volatility-targeted position sizing: positions are scaled by inverse
- * ATR so high-volatility periods (where big drawdowns happen) take smaller positions.
- * The ledger shows this exact axis improved another strategy's MDD without hurting
- * returns (choppy window +94% vs +65%, MDD 26% vs 30%).
+ * selective trend leg) beats buy-and-hold on all three BTC 4h windows but its
+ * documented weakness is high drawdown (30-39% MDD on BTC, up to 80% on SOL) because
+ * it goes all-in on both legs. The previous cycle added volatility-targeted sizing
+ * (inverse-ATR) which helped. This variant keeps every entry and exit identical and
+ * adds ONE more sizing rule: in a confirmed LONG-TERM downtrend (price below the
+ * 200-EMA), the bear leg takes a smaller position, because panic-buys in a deep bear
+ * are more likely to keep falling — that is exactly where the biggest drawdowns come
+ * from. The trend leg is untouched.
  * When it buys and sells: identical to the champion — bear regime buys panic bottoms
  * (fear<40 + lower Bollinger break, mid-band exit); bull regime buys pullbacks to the
- * 20-EMA in a confirmed uptrend (exit below the 50-EMA). Only the SIZE differs.
+ * 20-EMA in a confirmed uptrend (exit below the 50-EMA). Only the bear-leg SIZE differs.
  * When it does NOT work: same as champion — sideways chop whipsaws the 50-EMA, and a
- * sharp V-reversal straight through the 50-EMA gives the trend leg no entry. Vol
- * targeting reduces but does not eliminate the high-drawdown risk on volatile alts.
+ * sharp V-reversal straight through the 50-EMA gives the trend leg no entry. Scaling
+ * down in deep bear reduces but does not eliminate the high-drawdown risk on volatile
+ * alts.
  */
 function onUpdate(ctx) {
   const bb = ctx.bb(20, 2, 1);
   const ema50 = ctx.ema(50, 1);
   const ema20 = ctx.ema(20, 1);
   const ema20p = ctx.ema(20, 2);
+  const ema200 = ctx.ema(200, 1);
   const atr = ctx.atr(14, 1);
   const fg = ctx.data('fg');
   if (bb == null || bb.lower == null || bb.mid == null) return null;
   if (ema50 == null || ema20 == null || ema20p == null || atr == null) return null;
+  if (ema200 == null) return null;
   if (fg == null) return null;
 
   const price = ctx.price;
@@ -47,14 +51,11 @@ function onUpdate(ctx) {
     return null;
   }
 
-  // Volatility-targeted position size: we want a 1-ATR adverse move to cost about
-  // 1.5% of equity (riskBudget). Position fraction = riskBudget / (atr/price).
-  // On BTC 4h, atr/price is ~2-6%, so this yields full size in calm periods and
-  // a fraction (down to ~1/4) in volatile periods — exactly where drawdowns happen.
-  // This is the ONLY change from the champion — entries and exits are untouched.
-  const riskBudget = 0.015; // 1.5% equity risked per 1 ATR of adverse move
+  // Volatility-targeted position size (unchanged from champion): a 1-ATR adverse move
+  // should cost ~1.5% of equity. Position fraction = riskBudget / (atr/price).
+  const riskBudget = 0.015;
   const volFrac = riskBudget / (atr / price);
-  const qty = (ctx.cash / price) * Math.min(volFrac, 0.99);
+  let qty = (ctx.cash / price) * Math.min(volFrac, 0.99);
 
   if (bull) {
     const nearEma20 = price <= ema20 + atr * 0.5 && price > ema50;
@@ -64,6 +65,12 @@ function onUpdate(ctx) {
     }
     return null;
   }
+
+  // Bear leg: in a confirmed long-term downtrend (price below 200-EMA), cut the
+  // position to half — a panic-buy in a deep bear more often keeps falling, and that
+  // is where the biggest drawdowns live. This is the ONLY change from the vol-targeted
+  // champion; entries and exits are untouched.
+  if (price < ema200) qty = qty * 0.5;
 
   if (fg < 40 && price < bb.lower) {
     return { side: 'buy', qty: qty };

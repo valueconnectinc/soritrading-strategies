@@ -11,7 +11,7 @@ Every figure comes from the last verifying backtest at publish time. These are p
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
-| ★ | [2531](strategies/2531/) | BTC 4H EMA-Stack Momentum | +93.60% | +61.78% | +39.30% | 200 | 2026-09-25 |
+| ★ | [2531](strategies/2531/) | BTC 4H EMA-Stack Momentum | +87.60% | +26.55% | +30.01% | 241 | 2026-09-25 |
 |  | [2530](strategies/2530/) | SOL 1H RSI Oversold Mean Reversion | -8.68% | +41.03% | +15.84% | 52 | 2026-09-25 |
 |  | [2529](strategies/2529/) | BTC 1D Donchian Breakout VolTargeted | -45.17% | +45.03% | +54.36% | 143 | 2026-09-25 |
 | ★ | [2528](strategies/2528/) | AI 전략 | +5.53% | -22.21% | +48.88% | 249 | 2026-09-25 |
