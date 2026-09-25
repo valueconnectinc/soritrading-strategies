@@ -48,11 +48,11 @@ function onUpdate(ctx) {
   }
 
   // Volatility-targeted position size: we want a 1-ATR adverse move to cost about
-  // 2% of equity (riskBudget). Position fraction = riskBudget / (atr/price).
+  // 1.5% of equity (riskBudget). Position fraction = riskBudget / (atr/price).
   // On BTC 4h, atr/price is ~2-6%, so this yields full size in calm periods and
-  // a fraction (down to ~1/3) in volatile periods — exactly where drawdowns happen.
+  // a fraction (down to ~1/4) in volatile periods — exactly where drawdowns happen.
   // This is the ONLY change from the champion — entries and exits are untouched.
-  const riskBudget = 0.02; // 2% equity risked per 1 ATR of adverse move
+  const riskBudget = 0.015; // 1.5% equity risked per 1 ATR of adverse move
   const volFrac = riskBudget / (atr / price);
   const qty = (ctx.cash / price) * Math.min(volFrac, 0.99);
 
