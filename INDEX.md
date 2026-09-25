@@ -4,14 +4,14 @@ Every strategy whose backtest **finished and actually traded** is published here
 Nothing is filtered out by return — the ones that lost money are part of the record.
 Entries stay after a strategy is removed from our own workspace — this is a log, and deleting the record would leave only the survivors.
 
-**★ marks a strategy that out-returned buy & hold over the same window** — 274 of 912 right now.
+**★ marks a strategy that out-returned buy & hold over the same window** — 273 of 912 right now.
 `—` means the comparison **could not be made**: the engine does not compute a benchmark for multi-symbol, futures, or multi-leg runs. That is *unknown*, not *lost*, and it is 184 of them right now.
 
 Every figure comes from the last verifying backtest at publish time. These are past results over historical data. Nothing here is promised or assured about the future, and none of it is investment advice.
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
-| ★ | [2468](strategies/2468/) | BTC 4H Vol-Surge + ATR Trail + Lookback 10 | +71.01% | +61.41% | +39.74% | 98 | 2026-09-25 |
+|  | [2468](strategies/2468/) | BTC 4H Vol-Surge + ATR Trail + Lookback 10 | +249.11% | +456.30% | +26.02% | 55 | 2026-09-25 |
 | — | [2465](strategies/2465/) | BTC 4H Short-Only Vol-Surge Breakdown | -51.42% | — | +65.27% | 82 | 2026-09-25 |
 | — | [2464](strategies/2464/) | BTC 4H Two-Sided Vol-Surge Long+Short | +75.14% | — | +48.92% | 155 | 2026-09-25 |
 |  | [2463](strategies/2463/) | BTC 4H Vol-Surge + ATR Trail + Reentry Cooldown | +56.86% | +61.41% | +32.23% | 88 | 2026-09-25 |
