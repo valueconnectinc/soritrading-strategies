@@ -1,0 +1,30 @@
+{
+  "id": 2514,
+  "name": "FearGreed Contrarian Mean Reversion",
+  "kind": "custom",
+  "verified": {
+    "backtestId": 10670,
+    "return": 212.83,
+    "mdd": 37.44,
+    "trades": 100,
+    "vsBuyHold": "lose",
+    "benchRet": 443.26,
+    "benchBasis": "price",
+    "gapPct": 0,
+    "tFrom": 1574352000,
+    "tTo": 1646352000,
+    "approxNotes": [
+      "봉 내 순서는 관례(양봉 O→L→H→C·음봉 O→H→L→C) — 실순서 미상 · 봉 중 거래량 null · MDD 는 봉 마감 기준"
+    ],
+    "spec": {
+      "ex": "binance",
+      "sym": "BTCUSDT",
+      "interval": "4h",
+      "bars": 5000,
+      "end": 1646366400
+    }
+  },
+  "config": null,
+  "updatedAt": "2026-09-25T20:49:56.129Z",
+  "publishedBy": "scripts/publish-strategies.mjs"
+}
