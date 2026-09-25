@@ -4,13 +4,14 @@ Every strategy whose backtest **finished and actually traded** is published here
 Nothing is filtered out by return — the ones that lost money are part of the record.
 Entries stay after a strategy is removed from our own workspace — this is a log, and deleting the record would leave only the survivors.
 
-**★ marks a strategy that out-returned buy & hold over the same window** — 274 of 915 right now.
+**★ marks a strategy that out-returned buy & hold over the same window** — 274 of 916 right now.
 `—` means the comparison **could not be made**: the engine does not compute a benchmark for multi-symbol, futures, or multi-leg runs. That is *unknown*, not *lost*, and it is 184 of them right now.
 
 Every figure comes from the last verifying backtest at publish time. These are past results over historical data. Nothing here is promised or assured about the future, and none of it is investment advice.
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
+|  | [2473](strategies/2473/) | Cross-Asset Vol-Surge + ATR Trail (ETH/SOL) | +363.98% | +1657.40% | +35.23% | 79 | 2026-09-25 |
 | ★ | [2472](strategies/2472/) | BTC 1D Vol-Surge + ATR Trail (champion transfer) | +128.36% | +45.03% | +36.17% | 29 | 2026-09-25 |
 |  | [2471](strategies/2471/) | BTC 4H Vol-Surge + ATR Trail + Vol-Scaled Size | +263.28% | +456.30% | +27.53% | 77 | 2026-09-25 |
 |  | [2469](strategies/2469/) | BTC 4H Vol-Surge + ATR Trail + Trend-Gated Size | +280.89% | +456.30% | +27.53% | 77 | 2026-09-25 |
