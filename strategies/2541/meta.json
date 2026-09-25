@@ -3,26 +3,26 @@
   "name": "Champion v2 BTC 1D Robustness",
   "kind": "custom",
   "verified": {
-    "backtestId": 10901,
-    "return": 48.75,
-    "mdd": 28.04,
-    "trades": 37,
-    "vsBuyHold": "lose",
-    "benchRet": 88.98,
+    "backtestId": 10903,
+    "return": 47.01,
+    "mdd": 24.98,
+    "trades": 103,
+    "vsBuyHold": "win",
+    "benchRet": 29.5,
     "benchBasis": "price",
     "gapPct": 0,
-    "tFrom": 1502928000,
-    "tTo": 1574208000,
+    "tFrom": 1617494400,
+    "tTo": 1790208000,
     "approxNotes": [
       "봉 내 순서는 관례(양봉 O→L→H→C·음봉 O→H→L→C) — 실순서 미상 · 봉 중 거래량 null · MDD 는 봉 마감 기준",
-      "기간 종료 시 미청산 포지션 1종목 (총자산의 39.99%) — 이 수익률은 **평가액**을 포함합니다. 퇴출 수수료·거래세를 안 냈고, 마지막 봉 가격에 실제로 팔 수 있다는 보장도 없습니다(얇은 호가·상장폐지). exec.endLiquidate 로 마지막 봉 청산을 켤 수 있습니다"
+      "기간 종료 시 미청산 포지션 1종목 (총자산의 53.88%) — 이 수익률은 **평가액**을 포함합니다. 퇴출 수수료·거래세를 안 냈고, 마지막 봉 가격에 실제로 팔 수 있다는 보장도 없습니다(얇은 호가·상장폐지). exec.endLiquidate 로 마지막 봉 청산을 켤 수 있습니다"
     ],
     "spec": {
       "ex": "binance",
-      "sym": "BTCUSDT",
+      "sym": "ETHUSDT",
       "interval": "1d",
       "bars": 2000,
-      "end": 1574294400
+      "end": 1790294400
     }
   },
   "config": null,
