@@ -11,7 +11,7 @@ Every figure comes from the last verifying backtest at publish time. These are p
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
-| ★ | [2503](strategies/2503/) | LTC 4H Band-Bounce Champion (plain) | +13.95% | -12.08% | +30.98% | 494 | 2026-09-25 |
+| ★ | [2503](strategies/2503/) | LTC 4H Band-Bounce Champion (plain) | +218.64% | +121.63% | +36.29% | 480 | 2026-09-25 |
 |  | [2502](strategies/2502/) | ETH 1D Volume-Confirmed Momentum | -35.36% | -12.08% | +62.91% | 381 | 2026-09-25 |
 |  | [2501](strategies/2501/) | BTC 1D Donchian Breakout Trend-Following | +28.78% | +56.64% | +52.38% | 13 | 2026-09-25 |
 |  | [2500](strategies/2500/) | BTC 1D Trend-Following SMA Crossover | +127.10% | +261.61% | +40.63% | 19 | 2026-09-25 |
