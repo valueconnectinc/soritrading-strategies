@@ -11,7 +11,7 @@ Every figure comes from the last verifying backtest at publish time. These are p
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
-| ★ | [2527](strategies/2527/) | Champion + MeltUp Breakout Capture | +1452.63% | +443.26% | +44.70% | 219 | 2026-09-25 |
+| ★ | [2527](strategies/2527/) | Champion + MeltUp Breakout Capture | +29.85% | +26.55% | +44.23% | 315 | 2026-09-25 |
 |  | [2526](strategies/2526/) | ETH Trend Ride ATR Trail 4H | +142.22% | +1598.87% | +71.84% | 63 | 2026-09-25 |
 |  | [2525](strategies/2525/) | BTC OnChain ConstantTest | +26.22% | +100.31% | +15.16% | 2 | 2026-09-25 |
 |  | [2524](strategies/2524/) | BTC OnChain DataArrival Test | -88.87% | +100.31% | +93.95% | 203 | 2026-09-25 |
