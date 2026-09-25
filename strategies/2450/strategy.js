@@ -1,18 +1,18 @@
 /*
  * @coinsori-strategy v1
- * name: BTC 4H Vol-Surge + ATR Trail 4x
+ * name: BTC 4H Vol-Surge + ATR Trail 2.5x
  * ex: binance
  * syms: BTCUSDT
  * interval: 4h
  * cash: 10000
  *
- * Why this strategy: Same as the ATR-trail champion variant but with a wider
- *   4x ATR trailing stop — sensitivity test to see how the exit multiplier
+ * Why this strategy: Same as the ATR-trail champion variant but with a tighter
+ *   2.5x ATR trailing stop — sensitivity test to see how the exit multiplier
  *   affects the drawdown/return tradeoff on BTC 4H.
  * When it buys and sells: Buy 20-bar-high breaks on above-average volume. Exit
- *   when price drops 4x ATR below the highest close since entry, or below the
+ *   when price drops 2.5x ATR below the highest close since entry, or below the
  *   20-bar low as backstop.
- * When it does NOT work: Wider trail gives back more profit before exiting.
+ * When it does NOT work: Tighter trail exits more winners on normal pullbacks.
  */
 function onUpdate(ctx) {
   let hh = -Infinity, ll = Infinity;
@@ -34,7 +34,7 @@ function onUpdate(ctx) {
     if (atr == null) return null;
     const s = ctx.state;
     if (s.highest == null || price > s.highest) s.highest = price;
-    const stop = s.highest - 4 * atr;
+    const stop = s.highest - 2.5 * atr;
     if (price < stop || price < ll) return { side: 'sell', qty: pos };
     return null;
   }
