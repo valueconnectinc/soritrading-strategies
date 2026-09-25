@@ -11,7 +11,7 @@ Every figure comes from the last verifying backtest at publish time. These are p
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
-| ★ | [2513](strategies/2513/) | SOL 4H VWAP Pullback Mean-Reversion (tighter risk) | +182.99% | +61.00% | +86.59% | 163 | 2026-09-25 |
+| ★ | [2513](strategies/2513/) | SOL 4H VWAP Pullback Mean-Reversion (tighter risk) | +144.77% | -15.21% | +63.35% | 128 | 2026-09-25 |
 | ★ | [2512](strategies/2512/) | BTC 4H VWAP Pullback Mean-Reversion | +630.06% | +443.26% | +54.92% | 112 | 2026-09-25 |
 | ★ | [2511](strategies/2511/) | SOL 4H VWAP Pullback Mean-Reversion | -6.72% | -22.21% | +61.83% | 67 | 2026-09-25 |
 |  | [2510](strategies/2510/) | SOL 4H Stochastic RSI Mean-Reversion | +100.64% | +3033.04% | +37.26% | 109 | 2026-09-25 |
