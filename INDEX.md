@@ -4,13 +4,14 @@ Every strategy whose backtest **finished and actually traded** is published here
 Nothing is filtered out by return — the ones that lost money are part of the record.
 Entries stay after a strategy is removed from our own workspace — this is a log, and deleting the record would leave only the survivors.
 
-**★ marks a strategy that out-returned buy & hold over the same window** — 290 of 947 right now.
+**★ marks a strategy that out-returned buy & hold over the same window** — 290 of 948 right now.
 `—` means the comparison **could not be made**: the engine does not compute a benchmark for multi-symbol, futures, or multi-leg runs. That is *unknown*, not *lost*, and it is 185 of them right now.
 
 Every figure comes from the last verifying backtest at publish time. These are past results over historical data. Nothing here is promised or assured about the future, and none of it is investment advice.
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
+|  | [2518](strategies/2518/) | ETH Fast Dual-Oscillator Mean Reversion | -99.61% | +1598.87% | +99.62% | 976 | 2026-09-25 |
 |  | [2517](strategies/2517/) | FearGreed Contrarian Volume-Confirmed | +29.00% | +443.26% | +44.46% | 95 | 2026-09-25 |
 |  | [2515](strategies/2515/) | FearGreed Contrarian UpperBand Exit | +21.57% | +28.64% | +54.93% | 84 | 2026-09-25 |
 | ★ | [2514](strategies/2514/) | FearGreed Contrarian Mean Reversion | +210.57% | -15.21% | +34.98% | 173 | 2026-09-25 |
