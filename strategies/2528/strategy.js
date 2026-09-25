@@ -1,25 +1,26 @@
 /*
  * @coinsori-strategy v1
- * name: Regime-Switch Hybrid VolTargeted
+ * name: Regime-Switch Hybrid VolTargeted + VolGate
  * ex: binance
  * syms: BTCUSDT, SOLUSDT, ETHUSDT
  * interval: 4h
  * cash: 10000
  *
- * Why this strategy: The regime-switch hybrid champion (fear-contrarian bear leg +
- * selective trend leg) is the best strategy in this job but its documented weakness
- * is high drawdown (33-51% on BTC, up to 80% on SOL) because it goes all-in on both
- * legs. This variant keeps the exact same entries and exits but replaces all-in
- * sizing with volatility-targeted position sizing: positions are scaled by inverse
- * ATR so high-volatility periods (where big drawdowns happen) take smaller positions.
- * The ledger shows this exact axis improved another strategy's MDD without hurting
- * returns (choppy window +94% vs +65%, MDD 26% vs 30%).
- * When it buys and sells: identical to the champion — bear regime buys panic bottoms
- * (fear<40 + lower Bollinger break, mid-band exit); bull regime buys pullbacks to the
- * 20-EMA in a confirmed uptrend (exit below the 50-EMA). Only the SIZE differs.
- * When it does NOT work: same as champion — sideways chop whipsaws the 50-EMA, and a
- * sharp V-reversal straight through the 50-EMA gives the trend leg no entry. Vol
- * targeting reduces but does not eliminate the high-drawdown risk on volatile alts.
+ * Why this strategy: The vol-targeted regime-switch hybrid champion (2528) beats
+ * buy-and-hold on every window but its documented weakness is still high drawdown
+ * (up to 39% on BTC, more on alts) because the trend leg keeps buying pullbacks
+ * even into a blow-off melt-up top (extreme volatility), then rides the crash all
+ * the way down to the 50-EMA. This variant adds ONE conservative regime filter:
+ * it refuses trend-leg entries when volatility (ATR/price) is in the extreme top
+ * range — those are exactly the blow-off tops where trend entries lose the most.
+ * Everything else (entries, exits, vol-targeted sizing) is unchanged from 2528.
+ * When it buys and sells: identical to 2528 — bear regime buys panic bottoms
+ * (fear<40 + lower Bollinger break, mid-band exit); bull regime buys pullbacks to
+ * the 20-EMA in a confirmed uptrend (exit below the 50-EMA) — but only if current
+ * volatility is not extreme. Sizing stays vol-targeted (inverse ATR).
+ * When it does NOT work: same as champion — sideways chop whipsaws the 50-EMA, and
+ * a sharp V-reversal through the 50-EMA gives the trend leg no entry. The new vol
+ * gate can also miss a genuine new trend that starts right after a volatile spike.
  */
 function onUpdate(ctx) {
   const bb = ctx.bb(20, 2, 1);
@@ -47,16 +48,20 @@ function onUpdate(ctx) {
     return null;
   }
 
-  // Volatility-targeted position size: we want a 1-ATR adverse move to cost about
-  // 1.5% of equity (riskBudget). Position fraction = riskBudget / (atr/price).
-  // On BTC 4h, atr/price is ~2-6%, so this yields full size in calm periods and
-  // a fraction (down to ~1/4) in volatile periods — exactly where drawdowns happen.
-  // This is the ONLY change from the champion — entries and exits are untouched.
-  const riskBudget = 0.015; // 1.5% equity risked per 1 ATR of adverse move
+  // Volatility-targeted position size (unchanged from 2528): a 1-ATR adverse move
+  // should cost about 1.5% of equity.
+  const riskBudget = 0.015;
   const volFrac = riskBudget / (atr / price);
   const qty = (ctx.cash / price) * Math.min(volFrac, 0.99);
 
-  if (bull) {
+  // NEW regime gate: current volatility as a fraction of price. On BTC 4h this is
+  // normally ~2-6%. Above 9% is a blow-off/panic spike — trend pullback entries
+  // there are catching the top of a melt-up, the worst drawdown source. Skip them.
+  // This threshold is a regime filter, not tuned to any single window.
+  const volPct = atr / price;
+  const extremeVol = volPct > 0.09;
+
+  if (bull && !extremeVol) {
     const nearEma20 = price <= ema20 + atr * 0.5 && price > ema50;
     const rising = ema20 > ema20p;
     if (nearEma20 && rising) {
