@@ -6,43 +6,40 @@
  * interval: 4h
  * cash: 10000
  *
- * Why this strategy: a pure trend-following ride with an ATR trailing stop —
- * a genuinely different family from the mean-reversion champion. It enters on
- * a confirmed uptrend (fast EMA above slow EMA) and lets winners run by
- * trailing the stop behind price, cutting losers fast with a hard ATR stop.
- * When it buys: fast EMA9 crosses above slow EMA21 AND price is above the
- * slow EMA50 (higher-timeframe uptrend proxy). It exits when price closes
- * below the ATR trailing stop (set at 3x ATR below the highest close since
- * entry), or on a hard 3x ATR stop from entry.
- * When it does NOT work: in a choppy sideways range the EMA cross whipsaws
- * and the trailing stop gets hit repeatedly (many small losses); and it
- * re-enters late after a sharp V-reversal, missing the very bottom.
+ * Why this strategy: trend-following ride with a WIDE ATR trailing stop.
+ * Previous version used a 3x ATR trail with a fast EMA9/21 cross and bled out
+ * on 300+ whipsaw trades. This version uses a slower EMA20/50 entry (far fewer
+ * signals) and a much wider 7x ATR trail so winners run and losers are cut
+ * without constant stop-outs.
+ * When it buys: EMA20 crosses above EMA50 AND price above EMA100 (strong
+ * higher-timeframe uptrend proxy). Exits when price closes below the 7x ATR
+ * trailing stop (below the highest close since entry) or a 7x ATR hard stop.
+ * When it does NOT work: in a long choppy range the EMA20/50 cross still
+ * whipsaws occasionally, and the wide trail gives back a big chunk of any
+ * peak before exiting — poor in mean-reverting, range-bound markets.
  */
 function onUpdate(ctx) {
-  const e9 = ctx.ema(9, 1);
-  const e21 = ctx.ema(21, 1);
+  const e20 = ctx.ema(20, 1);
   const e50 = ctx.ema(50, 1);
+  const e100 = ctx.ema(100, 1);
   const atr = ctx.atr(14, 1);
-  if (e9 == null || e21 == null || e50 == null || atr == null) return null;
+  if (e20 == null || e50 == null || e100 == null || atr == null) return null;
 
   const price = ctx.price;
   const pos = ctx.position;
   const st = ctx.state || {};
 
   if (pos > 0) {
-    // hard stop: 3x ATR below entry
-    if (price <= ctx.entryPx - atr * 3) return { side: 'sell', qty: pos };
-    // ATR trailing stop: ratchet up to 3x ATR below the highest close since entry
+    if (price <= ctx.entryPx - atr * 7) return { side: 'sell', qty: pos };
     const hi = st.hi != null ? Math.max(st.hi, price) : price;
     st.hi = hi;
     ctx.state = st;
-    const trail = hi - atr * 3;
+    const trail = hi - atr * 7;
     if (price <= trail) return { side: 'sell', qty: pos };
     return null;
   }
 
-  // entry: confirmed uptrend (EMA9 above EMA21) AND price above the slow EMA50
-  if (e9 > e21 && price > e50) {
+  if (e20 > e50 && price > e100) {
     st.hi = price;
     ctx.state = st;
     return { side: 'buy', qty: ctx.cash / ctx.price * 0.99 };

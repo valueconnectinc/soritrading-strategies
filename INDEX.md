@@ -11,7 +11,7 @@ Every figure comes from the last verifying backtest at publish time. These are p
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
-|  | [2526](strategies/2526/) | ETH Trend Ride ATR Trail 4H | -97.90% | -47.91% | +98.31% | 301 | 2026-09-25 |
+|  | [2526](strategies/2526/) | ETH Trend Ride ATR Trail 4H | +142.22% | +1598.87% | +71.84% | 63 | 2026-09-25 |
 |  | [2525](strategies/2525/) | BTC OnChain ConstantTest | +26.22% | +100.31% | +15.16% | 2 | 2026-09-25 |
 |  | [2524](strategies/2524/) | BTC OnChain DataArrival Test | -88.87% | +100.31% | +93.95% | 203 | 2026-09-25 |
 |  | [2523](strategies/2523/) | BTC SMA50 Trend Plain | -88.87% | +100.31% | +93.95% | 203 | 2026-09-25 |
