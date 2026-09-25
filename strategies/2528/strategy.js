@@ -11,9 +11,9 @@
  * (up to 39% on BTC, more on alts) because the trend leg keeps buying pullbacks
  * even into a blow-off melt-up top (extreme volatility), then rides the crash all
  * the way down to the 50-EMA. This variant adds ONE conservative regime filter:
- * it refuses trend-leg entries when volatility (ATR/price) is in the extreme top
- * range — those are exactly the blow-off tops where trend entries lose the most.
- * Everything else (entries, exits, vol-targeted sizing) is unchanged from 2528.
+ * it refuses trend-leg entries when volatility (ATR/price) is extreme — those are
+ * exactly the blow-off tops where trend entries lose the most. Everything else
+ * (entries, exits, vol-targeted sizing) is unchanged from 2528.
  * When it buys and sells: identical to 2528 — bear regime buys panic bottoms
  * (fear<40 + lower Bollinger break, mid-band exit); bull regime buys pullbacks to
  * the 20-EMA in a confirmed uptrend (exit below the 50-EMA) — but only if current
@@ -38,7 +38,6 @@ function onUpdate(ctx) {
   const bull = ema20 > ema50 && price > ema50;
 
   if (pos > 0) {
-    // hard stop: 3x ATR from entry (unchanged from champion)
     if (price <= ctx.entryPx - atr * 3) return { side: 'sell', qty: pos };
     if (!bull) {
       if (price >= bb.mid) return { side: 'sell', qty: pos };
@@ -48,18 +47,13 @@ function onUpdate(ctx) {
     return null;
   }
 
-  // Volatility-targeted position size (unchanged from 2528): a 1-ATR adverse move
-  // should cost about 1.5% of equity.
   const riskBudget = 0.015;
   const volFrac = riskBudget / (atr / price);
   const qty = (ctx.cash / price) * Math.min(volFrac, 0.99);
 
-  // NEW regime gate: current volatility as a fraction of price. On BTC 4h this is
-  // normally ~2-6%. Above 9% is a blow-off/panic spike — trend pullback entries
-  // there are catching the top of a melt-up, the worst drawdown source. Skip them.
-  // This threshold is a regime filter, not tuned to any single window.
+  // Regime gate: skip trend entries when ATR/price is extreme (blow-off top).
   const volPct = atr / price;
-  const extremeVol = volPct > 0.09;
+  const extremeVol = volPct > 0.06;
 
   if (bull && !extremeVol) {
     const nearEma20 = price <= ema20 + atr * 0.5 && price > ema50;
