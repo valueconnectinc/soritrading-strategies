@@ -19,9 +19,9 @@
  * 20-EMA in a confirmed uptrend (exit below the 50-EMA). Only the bear-leg SIZE at
  * extreme fear differs.
  * When it does NOT work: same as champion — sideways chop whipsaws the 50-EMA, and a
- * sharp V-reversal straight through the 50-EMA gives the trend leg no entry. If the
- * biggest recoveries come from extreme-fear bottoms (e.g. COVID 2020), scaling down
- * there will cap the upside on those trades.
+ * sharp V-reversal straight through the 50-EMA gives the trend leg no entry. If a
+ * window's biggest recoveries come from extreme-fear bottoms, scaling down there will
+ * cap the upside on those trades.
  */
 function onUpdate(ctx) {
   const bb = ctx.bb(20, 2, 1);
@@ -66,8 +66,9 @@ function onUpdate(ctx) {
 
   // Bear leg: scale down as fear deepens. Moderate panic (fg>=20) keeps full size;
   // extreme fear (fg<20) is the falling-knife zone where genuine crashes keep falling,
-  // so cut to a fraction there. This is the ONLY change from the vol-targeted champion.
-  if (fg < 20) qty = qty * 0.5;
+  // so cut to 70% there — enough to trim knife-catching losses but still keep most of
+  // the upside when an extreme-fear bottom does recover sharply.
+  if (fg < 20) qty = qty * 0.7;
 
   if (fg < 40 && price < bb.lower) {
     return { side: 'buy', qty: qty };
