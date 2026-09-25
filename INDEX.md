@@ -4,14 +4,14 @@ Every strategy whose backtest **finished and actually traded** is published here
 Nothing is filtered out by return — the ones that lost money are part of the record.
 Entries stay after a strategy is removed from our own workspace — this is a log, and deleting the record would leave only the survivors.
 
-**★ marks a strategy that out-returned buy & hold over the same window** — 289 of 945 right now.
+**★ marks a strategy that out-returned buy & hold over the same window** — 290 of 945 right now.
 `—` means the comparison **could not be made**: the engine does not compute a benchmark for multi-symbol, futures, or multi-leg runs. That is *unknown*, not *lost*, and it is 185 of them right now.
 
 Every figure comes from the last verifying backtest at publish time. These are past results over historical data. Nothing here is promised or assured about the future, and none of it is investment advice.
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
-|  | [2514](strategies/2514/) | FearGreed Contrarian Mean Reversion | +72.75% | +1598.87% | +39.21% | 117 | 2026-09-25 |
+| ★ | [2514](strategies/2514/) | FearGreed Contrarian Mean Reversion | +183.82% | -15.21% | +26.02% | 172 | 2026-09-25 |
 | ★ | [2513](strategies/2513/) | SOL 4H VWAP Pullback Mean-Reversion (tighter risk) | +144.77% | -15.21% | +63.35% | 128 | 2026-09-25 |
 | ★ | [2512](strategies/2512/) | BTC 4H VWAP Pullback Mean-Reversion | +630.06% | +443.26% | +54.92% | 112 | 2026-09-25 |
 | ★ | [2511](strategies/2511/) | SOL 4H VWAP Pullback Mean-Reversion | -6.72% | -22.21% | +61.83% | 67 | 2026-09-25 |
