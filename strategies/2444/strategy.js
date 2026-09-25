@@ -38,19 +38,14 @@ function onUpdate(ctx) {
   }
   // entry: 20-bar high break on above-average volume
   if (price > hh && vol > avgVol * 1.5) {
-    // volatility-scaled size: ATR relative to its own 100-bar average
-    const atr = ctx.atr(14);
-    const atrAvg = ctx.atr(14, 1); // placeholder, replaced below
+    // volatility-scaled size: compare short ATR(14) to longer ATR(50)
+    // ratio > 1.3 = volatility spiking -> size down; ratio < 0.7 = calm -> size up
+    const a14 = ctx.atr(14);
+    const a50 = ctx.atr(50);
     let sizeFactor = 1;
-    const a = ctx.atr(14);
-    if (a != null) {
-      // average ATR over last 100 bars via a rolling check is heavy; use EMA of close range instead
-      const emaRange = ctx.ema(14, 1);
-      if (emaRange != null && emaRange > 0) {
-        const ratio = a / emaRange;
-        // size down when ATR is well above its recent norm (ratio>1.5), size up when calm (<0.8)
-        sizeFactor = ratio > 1.5 ? 0.5 : (ratio < 0.8 ? 1.3 : 1.0);
-      }
+    if (a14 != null && a50 != null && a50 > 0) {
+      const ratio = a14 / a50;
+      sizeFactor = ratio > 1.3 ? 0.5 : (ratio < 0.7 ? 1.3 : 1.0);
     }
     const qty = ctx.cash / ctx.price * 0.98 * sizeFactor;
     return { side: 'buy', qty: qty };
