@@ -9,7 +9,7 @@
  * Why this strategy: The volume-surge breakout champion buys strength, but
  *   some of its worst trades come from buying breakouts into a sentiment
  *   blow-off top. The Fear & Greed index flags that regime: when it is in
- *   extreme greed (>75), breakouts are more likely to be exhaustion spikes.
+ *   extreme greed (>85), breakouts are more likely to be exhaustion spikes.
  *   Filtering those out should cut the champion's worst losses.
  * When it buys and sells: Same as the champion — buy a 20-bar-high break on
  *   >1.5x volume, exit on a 3x ATR trail — but only when Fear & Greed is not
@@ -42,7 +42,7 @@ function onUpdate(ctx) {
   }
   const fg = ctx.data('fg');
   // If sentiment data is missing, fall back to the plain champion (no filter).
-  if (fg != null && fg > 75) return null;
+  if (fg != null && fg > 85) return null;
   if (price > hh && vol > avgVol * 1.5) {
     ctx.state.highest = price;
     return { side: 'buy', qty: ctx.cash / ctx.price * 0.98 };
