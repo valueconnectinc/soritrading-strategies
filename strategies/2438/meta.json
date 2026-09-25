@@ -1,0 +1,30 @@
+{
+  "id": 2438,
+  "name": "BTC 4H Band-Bounce Mean Reversion",
+  "kind": "custom",
+  "verified": {
+    "backtestId": 10318,
+    "return": -4.71,
+    "mdd": 17.78,
+    "trades": 138,
+    "vsBuyHold": "lose",
+    "benchRet": 436.51,
+    "benchBasis": "price",
+    "gapPct": 0,
+    "tFrom": 1574323200,
+    "tTo": 1646323200,
+    "approxNotes": [
+      "봉 내 순서는 관례(양봉 O→L→H→C·음봉 O→H→L→C) — 실순서 미상 · 봉 중 거래량 null · MDD 는 봉 마감 기준"
+    ],
+    "spec": {
+      "ex": "binance",
+      "sym": "BTCUSDT",
+      "interval": "4h",
+      "bars": 5000,
+      "end": 1646337600
+    }
+  },
+  "config": null,
+  "updatedAt": "2026-09-25T15:49:31.166Z",
+  "publishedBy": "scripts/publish-strategies.mjs"
+}
