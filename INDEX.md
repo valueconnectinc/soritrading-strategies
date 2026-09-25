@@ -11,7 +11,7 @@ Every figure comes from the last verifying backtest at publish time. These are p
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
-| ★ | [2528](strategies/2528/) | AI 전략 | +94.30% | -15.21% | +37.75% | 243 | 2026-09-25 |
+| ★ | [2528](strategies/2528/) | AI 전략 | +87.60% | +26.55% | +30.01% | 241 | 2026-09-25 |
 | ★ | [2527](strategies/2527/) | Champion + MeltUp Breakout Capture | +29.85% | +26.55% | +44.23% | 315 | 2026-09-25 |
 |  | [2526](strategies/2526/) | ETH Trend Ride ATR Trail 4H | +142.22% | +1598.87% | +71.84% | 63 | 2026-09-25 |
 |  | [2525](strategies/2525/) | BTC OnChain ConstantTest | +26.22% | +100.31% | +15.16% | 2 | 2026-09-25 |
