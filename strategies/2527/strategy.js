@@ -1,6 +1,6 @@
 /*
  * @coinsori-strategy v1
- * name: Champion + MeltUp Breakout Capture
+ * name: Regime-Switch Hybrid FearContrarian + Trend
  * ex: binance
  * syms: BTCUSDT, SOLUSDT, ETHUSDT
  * interval: 4h
@@ -14,8 +14,7 @@
  * When it buys: in a BEAR regime (price below the 50-EMA) it buys the validated
  * panic-bottom (fear<40 + lower Bollinger break) and exits at the mid band. In a
  * confirmed BULL regime (20-EMA above 50-EMA and price above both) it buys a
- * pullback to the 20-EMA, OR a fresh 20-bar-high breakout (melt-up capture),
- * and rides until price closes back below the 50-EMA.
+ * pullback to the 20-EMA and rides until price closes back below the 50-EMA.
  * When it does NOT work: in sideways chop the 50-EMA whipsaws; and a sharp
  * V-reversal that drops straight through the 50-EMA without a pullback gives the
  * trend leg no entry (it sits in cash instead).
@@ -34,15 +33,6 @@ function onUpdate(ctx) {
   const price = ctx.price;
   const pos = ctx.position;
   const bull = ema20 > ema50 && price > ema50; // confirmed uptrend structure
-  const st = ctx.state || {};
-
-  // track the highest close over the last 20 bars to detect fresh breakouts
-  const hiHist = st.hiHist || [];
-  const prevHi = hiHist.length ? Math.max.apply(null, hiHist) : null;
-  hiHist.push(price);
-  if (hiHist.length > 20) hiHist.shift();
-  st.hiHist = hiHist;
-  ctx.state = st;
 
   if (pos > 0) {
     // hard stop: 3x ATR from entry (wider than 10% to avoid whipsaw exits)
@@ -58,17 +48,12 @@ function onUpdate(ctx) {
   }
 
   if (bull) {
-    // SELECTIVE trend leg: buy a pullback that holds above the 50-EMA and where
-    // the 20-EMA is still rising (uptrend intact).
+    // SELECTIVE trend leg: only buy a pullback that holds above the 50-EMA and
+    // where the 20-EMA is still rising (uptrend intact). Pullback = price dipped
+    // to within 1 ATR of the 20-EMA from above, then closed back above it.
     const nearEma20 = price <= ema20 + atr * 0.5 && price > ema50;
     const rising = ema20 > ema20p;
     if (nearEma20 && rising) {
-      return { side: 'buy', qty: ctx.cash / ctx.price * 0.99 };
-    }
-    // MELT-UP CAPTURE: in a confirmed uptrend, buy a fresh breakout above the
-    // recent 20-bar high. Addresses the documented weakness of sitting in cash
-    // during a straight melt-up that never pulls back to the 20-EMA.
-    if (prevHi != null && price > prevHi) {
       return { side: 'buy', qty: ctx.cash / ctx.price * 0.99 };
     }
     return null;
