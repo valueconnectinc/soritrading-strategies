@@ -1,0 +1,30 @@
+{
+  "id": 2442,
+  "name": "ETH 4H Trend-Pullback Dip Buy",
+  "kind": "custom",
+  "verified": {
+    "backtestId": 10336,
+    "return": -99.72,
+    "mdd": 99.72,
+    "trades": 1282,
+    "vsBuyHold": "lose",
+    "benchRet": 23.18,
+    "benchBasis": "price",
+    "gapPct": 0,
+    "tFrom": 1646337600,
+    "tTo": 1718323200,
+    "approxNotes": [
+      "봉 내 순서는 관례(양봉 O→L→H→C·음봉 O→H→L→C) — 실순서 미상 · 봉 중 거래량 null · MDD 는 봉 마감 기준"
+    ],
+    "spec": {
+      "ex": "binance",
+      "sym": "ETHUSDT",
+      "interval": "4h",
+      "bars": 5000,
+      "end": 1718337600
+    }
+  },
+  "config": null,
+  "updatedAt": "2026-09-25T15:58:30.639Z",
+  "publishedBy": "scripts/publish-strategies.mjs"
+}
