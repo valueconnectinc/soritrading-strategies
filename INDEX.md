@@ -11,7 +11,7 @@ Every figure comes from the last verifying backtest at publish time. These are p
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
-|  | [2452](strategies/2452/) | BTC 4H Vol-Surge + ATR Trail 2x ONLY | +104.89% | +456.30% | +23.45% | 106 | 2026-09-25 |
+|  | [2452](strategies/2452/) | BTC 4H Vol-Surge + ATR Trail 2x ONLY | +255.65% | +456.30% | +27.53% | 71 | 2026-09-25 |
 |  | [2451](strategies/2451/) | BTC 4H Vol-Surge + ATR Trail ONLY | +259.92% | +456.30% | +27.53% | 77 | 2026-09-25 |
 |  | [2450](strategies/2450/) | BTC 4H Vol-Surge + ATR Trail 4x | +240.89% | +456.30% | +27.53% | 79 | 2026-09-25 |
 |  | [2448](strategies/2448/) | BTC 4H Volume-Surge Breakout + ATR Trail | +240.89% | +456.30% | +27.53% | 79 | 2026-09-25 |
