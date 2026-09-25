@@ -11,7 +11,7 @@ Every figure comes from the last verifying backtest at publish time. These are p
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
-|  | [2423](strategies/2423/) | ETH Sentiment-Gated Trend 4H | +793.78% | +1574.61% | +50.05% | 33 | 2026-09-25 |
+|  | [2423](strategies/2423/) | ETH Sentiment-Gated Trend 4H | +271.73% | +1574.61% | +50.04% | 37 | 2026-09-25 |
 |  | [2421](strategies/2421/) | BNB 4H Band-Bounce Mean Reversion | +97.47% | +973.31% | +51.87% | 128 | 2026-09-25 |
 | ★ | [2420](strategies/2420/) | BTC EMA Trend (no filter) | +33.24% | -24.48% | +43.25% | 35 | 2026-09-25 |
 |  | [2419](strategies/2419/) | ETH Trend Donchian-10 Confirmed 1D | +364.57% | +1231.41% | +64.49% | 9 | 2026-09-25 |
