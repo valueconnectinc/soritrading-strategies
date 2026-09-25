@@ -4,13 +4,14 @@ Every strategy whose backtest **finished and actually traded** is published here
 Nothing is filtered out by return — the ones that lost money are part of the record.
 Entries stay after a strategy is removed from our own workspace — this is a log, and deleting the record would leave only the survivors.
 
-**★ marks a strategy that out-returned buy & hold over the same window** — 272 of 903 right now.
+**★ marks a strategy that out-returned buy & hold over the same window** — 273 of 904 right now.
 `—` means the comparison **could not be made**: the engine does not compute a benchmark for multi-symbol, futures, or multi-leg runs. That is *unknown*, not *lost*, and it is 182 of them right now.
 
 Every figure comes from the last verifying backtest at publish time. These are past results over historical data. Nothing here is promised or assured about the future, and none of it is investment advice.
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
+| ★ | [2455](strategies/2455/) | BTC 4H Vol-Surge + Partial TP + Trail | +68.33% | +61.41% | +32.23% | 88 | 2026-09-25 |
 |  | [2453](strategies/2453/) | BTC 4H Vol-Surge + ATR Trail + EMA100 Gate | +248.71% | +456.30% | +28.00% | 75 | 2026-09-25 |
 |  | [2452](strategies/2452/) | BTC 4H Vol-Surge + ATR Trail 2x ONLY | +255.65% | +456.30% | +27.53% | 71 | 2026-09-25 |
 |  | [2451](strategies/2451/) | BTC 4H Vol-Surge + ATR Trail ONLY | +259.92% | +456.30% | +27.53% | 77 | 2026-09-25 |
