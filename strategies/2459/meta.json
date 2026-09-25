@@ -1,0 +1,30 @@
+{
+  "id": 2459,
+  "name": "BTC 4H Volatility-Squeeze Breakout",
+  "kind": "custom",
+  "verified": {
+    "backtestId": 10409,
+    "return": -38.4,
+    "mdd": 43.25,
+    "trades": 34,
+    "vsBuyHold": "lose",
+    "benchRet": 61.41,
+    "benchBasis": "price",
+    "gapPct": 0,
+    "tFrom": 1646352000,
+    "tTo": 1718337600,
+    "approxNotes": [
+      "봉 내 순서는 관례(양봉 O→L→H→C·음봉 O→H→L→C) — 실순서 미상 · 봉 중 거래량 null · MDD 는 봉 마감 기준"
+    ],
+    "spec": {
+      "ex": "binance",
+      "sym": "BTCUSDT",
+      "interval": "4h",
+      "bars": 5000,
+      "end": 1718352000
+    }
+  },
+  "config": null,
+  "updatedAt": "2026-09-25T16:59:16.320Z",
+  "publishedBy": "scripts/publish-strategies.mjs"
+}
