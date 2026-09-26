@@ -11,16 +11,14 @@
  * but its weakness is HIGH DRAWDOWN (43-51% MDD) because it stays fully
  * invested through corrections. This version keeps the proven 30-day OBV trend
  * entry but scales position size DOWN when volatility is high (ATR% wide) and
- * EXITS fully when price drops below a fast trend line (20-day average), so
- * exposure is cut hard into danger instead of riding the whole drawdown.
+ * trims to half when price drops below the 50-day average, so exposure shrinks
+ * into danger without the whipsaw of a fast stop.
  * When it buys and sells: buys when 30-day OBV is clearly rising AND price is
  * above the 200-day average AND volume confirms. Position size is scaled by
- * inverse volatility. Exits fully when OBV turns down OR when price falls below
- * the 20-day average (fast drawdown stop). Re-enters when the trend signal
- * fires again.
- * When it does NOT work: the fast 20-day stop exits on normal pullbacks in a
- * choppy uptrend, so it can whipsaw and give up some of the trend's gains; and
- * it still lags the sharpest V-shaped melt-ups.
+ * inverse volatility. Trims to half below the 50-day average; exits fully when
+ * OBV turns down.
+ * When it does NOT work: in a steady grinding bull where vol stays low it
+ * under-risks slightly; and it still lags the sharpest V-shaped melt-ups.
  */
 function onUpdate(ctx) {
   const pos = ctx.position;
@@ -28,9 +26,9 @@ function onUpdate(ctx) {
   if (!Number.isFinite(price) || price <= 0) return null;
 
   const sma200 = ctx.sma(200, 1);
-  const sma20 = ctx.sma(20, 1);
+  const sma50 = ctx.sma(50, 1);
   const atr = ctx.atr(14, 1);
-  if (sma200 == null || sma20 == null || atr == null) return null;
+  if (sma200 == null || sma50 == null || atr == null) return null;
 
   const closes = ctx.closes;
   const vols = ctx.volumes;
@@ -68,13 +66,14 @@ function onUpdate(ctx) {
   }
 
   if (pos > 0) {
-    // Aggressive drawdown stop: full exit when price closes below the 20-day
-    // average. Fast enough to cut most of a correction, slow enough to avoid
-    // most normal pullbacks in a strong trend.
-    if (price < sma20 && cd === 0) {
+    // Drawdown-protection trim: if price falls below the 50-day average while
+    // holding, cut to half size (keeps some upside, caps the bleed).
+    if (price < sma50 && cd === 0) {
       ctx.state.cd = 5;
-      return { side: 'sell', qty: pos };
+      const target = ctx.cash * 0.5 / price;
+      if (pos > target) return { side: 'sell', qty: pos - target };
     }
+    // Full exit when the trend itself turns down.
     if (falling && cd === 0) {
       ctx.state.cd = 5;
       return { side: 'sell', qty: pos };
