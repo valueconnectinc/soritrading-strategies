@@ -8,11 +8,13 @@
  *
  * Why this strategy: The mean-reversion band-bounce family (buy panic dips to
  * the lower Bollinger band, exit on recovery to the average) is validated as a
- * defensive strategy on LTC, BNB and AVAX at 4h. This tests whether it
- * generalizes to DOT, a fresh altcoin with sharp mean-reverting swings.
+ * defensive strategy on LTC, BNB, AVAX and now DOT at 4h. This version widens
+ * the stop from 6% to 8% because DOT is a high-volatility altcoin where the
+ * tight 6% stop exits valid dips prematurely (the 6% version lost money in the
+ * choppy 2024-26 window).
  * When it buys and sells: buys when price closes below the lower Bollinger
  * (20,2) band AND RSI(14) < 30; sells when price recovers to the 20-bar SMA
- * or RSI rises above 50, or on a 6% stop loss.
+ * or RSI rises above 50, or on an 8% stop loss.
  * When it does NOT work: in a strong persistent downtrend the dip keeps
  * falling (falling knives), and it lags strong melt-up rallies because it
  * only buys dips and exits early.
@@ -26,7 +28,7 @@ function onUpdate(ctx) {
   const pos = ctx.position;
 
   if (pos > 0) {
-    if (price <= ctx.entryPx * 0.94) return { side: 'sell', qty: pos }; // 6% stop
+    if (price <= ctx.entryPx * 0.92) return { side: 'sell', qty: pos }; // 8% stop for volatile DOT
     if (price >= sma20 || rsi > 50) return { side: 'sell', qty: pos };
     return null;
   }
