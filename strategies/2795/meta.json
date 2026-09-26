@@ -1,0 +1,30 @@
+{
+  "id": 2795,
+  "name": "BTC 1D Regime-Switch Blend (Trend + Mean Reversion)",
+  "kind": "custom",
+  "verified": {
+    "backtestId": 12417,
+    "return": 26.73,
+    "mdd": 27.01,
+    "trades": 28,
+    "vsBuyHold": "lose",
+    "benchRet": 262.64,
+    "benchBasis": "price",
+    "gapPct": 0,
+    "tFrom": 1660780800,
+    "tTo": 1790294400,
+    "approxNotes": [
+      "봉 내 순서는 관례(양봉 O→L→H→C·음봉 O→H→L→C) — 실순서 미상 · 봉 중 거래량 null · MDD 는 봉 마감 기준"
+    ],
+    "spec": {
+      "ex": "binance",
+      "sym": "BTCUSDT",
+      "interval": "1d",
+      "bars": 1500,
+      "end": 1790380800
+    }
+  },
+  "config": null,
+  "updatedAt": "2026-09-26T22:27:31.775Z",
+  "publishedBy": "scripts/publish-strategies.mjs"
+}

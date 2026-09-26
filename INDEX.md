@@ -4,13 +4,14 @@ Every strategy whose backtest **finished and actually traded** is published here
 Nothing is filtered out by return — the ones that lost money are part of the record.
 Entries stay after a strategy is removed from our own workspace — this is a log, and deleting the record would leave only the survivors.
 
-**★ marks a strategy that out-returned buy & hold over the same window** — 344 of 1195 right now.
+**★ marks a strategy that out-returned buy & hold over the same window** — 344 of 1196 right now.
 `—` means the comparison **could not be made**: the engine does not compute a benchmark for multi-symbol, futures, or multi-leg runs. That is *unknown*, not *lost*, and it is 197 of them right now.
 
 Every figure comes from the last verifying backtest at publish time. These are past results over historical data. Nothing here is promised or assured about the future, and none of it is investment advice.
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
+|  | [2795](strategies/2795/) | BTC 1D Regime-Switch Blend (Trend + Mean Reversion) | +26.73% | +262.64% | +27.01% | 28 | 2026-09-26 |
 |  | [2794](strategies/2794/) | BTC 4H Trend-Scaled Band-Bounce Mean Reversion | +16.11% | +435.09% | +9.39% | 53 | 2026-09-26 |
 |  | [2793](strategies/2793/) | BTC 1D Pure Band-Bounce Champion (control) | +27.24% | +262.64% | +7.04% | 16 | 2026-09-26 |
 |  | [2792](strategies/2792/) | BTC 1D Trend-Scaled Band-Bounce Mean Reversion | +30.00% | +262.64% | +7.54% | 46 | 2026-09-26 |
