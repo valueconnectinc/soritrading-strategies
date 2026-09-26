@@ -33,7 +33,7 @@ function onUpdate(ctx) {
   // closes so we can read OBV 30 bars back without recomputing the whole series.
   const prevClose = st.ovc;
   const prevObv = st.obv;
-  let obv = prevObv;
+  let obv = Number.isFinite(prevObv) ? prevObv : 0; // first bar: start at 0
   if (prevClose != null && Number.isFinite(prevClose)) {
     const c = ctx.closes[ctx.closes.length - 1];
     const v = ctx.volumes[ctx.volumes.length - 1];
