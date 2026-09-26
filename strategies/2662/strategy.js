@@ -1,6 +1,6 @@
 /*
  * @coinsori-strategy v1
- * name: VWAP-Pullback SOL 4H
+ * name: VWAP-Pullback SOL 4H VolScaled
  * ex: binance
  * syms: SOLUSDT
  * interval: 4h
@@ -8,12 +8,13 @@
  *
  * Why this strategy: Mean reversion to the VWAP (volume-weighted average
  * price) — in an established uptrend, sharp dips back toward VWAP tend to
- * revert up as buyers step in. The prior version returned strongly on SOL
- * but with high drawdown; a too-tight exit killed the edge, so this version
- * lets winners run on a wide trailing stop only.
+ * revert up as buyers step in. This version adds a moderate volatility-scaled
+ * position size: at elevated volatility it trims the position, cutting
+ * drawdown, while keeping most exposure so the strong bull-window returns are
+ * largely preserved.
  * When it buys and sells: buys when price pulls back to/below VWAP while the
  * 50-SMA is rising and RSI is not overbought. Sells only on a wide 10-ATR
- * trailing stop (lets melt-ups run) or when the 50-SMA turns down.
+ * trailing stop or when the 50-SMA turns down.
  * When it does NOT work: fails in a true downtrend (pullbacks keep falling)
  * and in low-liquidity chop where VWAP gives no support. The wide stop means
  * large giveback on reversals.
@@ -40,13 +41,11 @@ function onUpdate(ctx) {
   const vwap = pv / vsum;
 
   if (pos > 0) {
-    // Trend break: exit if the 50-SMA turns down.
     const prevSma = ctx.sma(50, 5);
     if (prevSma != null && sma50 < prevSma) {
       s.lastExit = ctx.i;
       return { side: 'sell', qty: pos };
     }
-    // Wide trailing stop: 10-ATR from the highest price since entry.
     const atr = ctx.atr(14, 1);
     if (atr != null) {
       s.hi = s.hi == null ? price : Math.max(s.hi, price);
@@ -58,7 +57,6 @@ function onUpdate(ctx) {
     return null;
   }
 
-  // Entry: uptrend (rising 50-SMA), not overbought, price dipped to/below VWAP.
   const prevSma = ctx.sma(50, 5);
   if (prevSma == null) return null;
   const uptrend = sma50 > prevSma;
@@ -68,7 +66,16 @@ function onUpdate(ctx) {
   if (ctx.i - lastExit < 6) return null;
   if (price <= vwap * 1.02) {
     s.hi = price;
-    return { side: 'buy', qty: ctx.cash / ctx.price * 0.95 };
+    // Moderate vol-scaled sizing: start trimming when ATR/price exceeds 2.5%
+    // (elevated, not extreme), scale to a 45% floor at very high vol. This
+    // cuts panic-window drawdown while keeping most bull exposure.
+    const atr = ctx.atr(14, 1);
+    let frac = 0.95;
+    if (atr != null && price > 0) {
+      const vol = atr / price;
+      if (vol > 0.025) frac = Math.max(0.45, 0.95 - (vol - 0.025) * 15);
+    }
+    return { side: 'buy', qty: ctx.cash / ctx.price * frac };
   }
   return null;
 }

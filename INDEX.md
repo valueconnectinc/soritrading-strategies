@@ -11,7 +11,7 @@ Every figure comes from the last verifying backtest at publish time. These are p
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
-| ★ | [2662](strategies/2662/) | VWAP-Pullback SOL 4H | -15.01% | -33.30% | +42.96% | 97 | 2026-09-26 |
+| ★ | [2662](strategies/2662/) | VWAP-Pullback SOL 4H | -12.92% | -33.30% | +41.79% | 97 | 2026-09-26 |
 |  | [2661](strategies/2661/) | On-Chain Regime Momentum BTC 1D | +571.18% | +824.29% | +35.93% | 20 | 2026-09-26 |
 |  | [2660](strategies/2660/) | On-Chain Trend BTC 1D | +20.90% | +1258.25% | +72.15% | 204 | 2026-09-26 |
 |  | [2659](strategies/2659/) | Panic-Bounce NEAR 4H | +1.11% | +180.23% | +40.44% | 40 | 2026-09-26 |
