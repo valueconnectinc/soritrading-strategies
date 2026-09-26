@@ -3,7 +3,7 @@
   "name": "Defensive Donchian Price-Bull Wide Exit BTC 1D",
   "kind": "custom",
   "verified": {
-    "backtestId": 11216,
+    "backtestId": 11220,
     "return": -11.27,
     "mdd": 11.27,
     "trades": 2,
