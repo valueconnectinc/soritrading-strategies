@@ -9,13 +9,13 @@
  * Why this strategy: Mean reversion to the VWAP in an established uptrend —
  * sharp dips toward VWAP tend to revert up as buyers step in. This version
  * adds a MOMENTUM CONFIRMATION (only buy when RSI is turning up), middle
- * vol-scaling, partial take-profit at +4 ATR, and a soft 200-SMA regime filter.
- * NEW this cycle: raise the partial take-profit from +3 ATR to +4 ATR so winning
- * reversion trades run a little further before the first third is taken — and
- * keep the 24-bar time-stop that cuts the "grinder" trades.
+ * vol-scaling, partial take-profit at +2.5 ATR, and a soft 200-SMA regime filter.
+ * NEW this cycle: LOWER the partial take-profit from +3 ATR to +2.5 ATR so the
+ * first third locks in a smaller, more likely gain — testing whether earlier
+ * profit-taking helps the declining market window where 4-ATR hurt.
  * When it buys and sells: buys when price pulls back to/below VWAP*1.02, 50-SMA
  * rising, 200-SMA not declining, RSI not overbought AND RSI turning up. Sells a
- * third at +4 ATR, then the rest on the 50-SMA turn-down, 10-ATR trail, or the
+ * third at +2.5 ATR, then the rest on the 50-SMA turn-down, 10-ATR trail, or the
  * 24-bar time-stop.
  * When it does NOT work: fails in a true downtrend (pullbacks keep falling) and
  * in low-liquidity chop where VWAP gives no support.
@@ -52,12 +52,12 @@ function onUpdate(ctx) {
     if (atr != null) {
       s.hi = s.hi == null ? price : Math.max(s.hi, price);
       if (s.entry != null && !s.halfTaken) {
-        if (price >= s.entry + atr * 4) {
+        if (price >= s.entry + atr * 2.5) {
           s.halfTaken = true;
           return { side: 'sell', qty: pos / 3 };
         }
       }
-      // TIME-STOP: if held too long without reaching the +4 ATR target, bail.
+      // TIME-STOP: if held too long without reaching the +2.5 ATR target, bail.
       // 24 bars ~ 4 days on 4h — enough for a real reversion, cuts grinders.
       if (s.entry != null && !s.halfTaken && ctx.i - s.entryBar > 24) {
         s.lastExit = ctx.i;
