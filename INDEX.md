@@ -11,7 +11,7 @@ Every figure comes from the last verifying backtest at publish time. These are p
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
-|  | [2668](strategies/2668/) | VWAP-Pullback ETH 4H | +86.42% | +1658.04% | +14.66% | 204 | 2026-09-26 |
+|  | [2668](strategies/2668/) | VWAP-Pullback ETH 4H | +59.81% | +1658.04% | +10.83% | 153 | 2026-09-26 |
 |  | [2667](strategies/2667/) | Band-Bounce Mean Reversion BCH 4H | +16.09% | +33.72% | +22.83% | 42 | 2026-09-26 |
 |  | [2666](strategies/2666/) | VWAP-Pullback SOL 4H TimeStop32 | -2.13% | +1658.04% | +42.77% | 16 | 2026-09-26 |
 |  | [2665](strategies/2665/) | VWAP-Pullback SOL 4H TimeStop16 | +522.15% | +2935.18% | +16.25% | 72 | 2026-09-26 |
