@@ -3,10 +3,10 @@
   "name": "Market-Structure Trend BTC 1D",
   "kind": "custom",
   "verified": {
-    "backtestId": 12322,
-    "return": -29.84,
-    "mdd": 35.08,
-    "trades": 52,
+    "backtestId": 12324,
+    "return": -0.81,
+    "mdd": 7.65,
+    "trades": 10,
     "vsBuyHold": "lose",
     "benchRet": 154.52,
     "benchBasis": "price",
@@ -25,6 +25,6 @@
     }
   },
   "config": null,
-  "updatedAt": "2026-09-26T21:46:26.064Z",
+  "updatedAt": "2026-09-26T21:47:13.780Z",
   "publishedBy": "scripts/publish-strategies.mjs"
 }
