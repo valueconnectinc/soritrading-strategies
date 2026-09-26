@@ -1,6 +1,6 @@
 /*
  * @coinsori-strategy v1
- * name: Squeeze Breakout BTC+ETH 1D (Baseline)
+ * name: Squeeze Breakout BTC+ETH 1D (200-SMA Gate)
  * ex: binance
  * syms: BTCUSDT, ETHUSDT
  * interval: 1d
@@ -9,20 +9,24 @@
  * Why this strategy: Low-volatility coiling (Bollinger band-width contracting
  * below its own recent average) is followed by a sharp expansion move. Betting
  * on the expansion side of the squeeze, confirmed by a volume surge, captures
- * the start of new directional trends. Running on TWO large-cap majors (BTC and
- * ETH) keeps capital working when one symbol is quiet.
+ * the start of new directional trends. Running on TWO large-cap majors keeps
+ * capital working when one symbol is quiet.
  * When it buys and sells: on each symbol, buys when band-width is below its
  * 20-bar average AND price closes above the upper Bollinger band AND volume
- * > 1.5x its 20-day average. Exits on a 2.5x-ATR stop or a 20-day low trail.
- * When it does NOT work: choppy sideways markets where a squeeze resolves with a
- * failed breakout; bear markets where the breakout is a bull trap.
+ * > 1.5x its 20-day average AND price is above the 200-day SMA (only trade the
+ * long-term bull regime). Exits on a 2.5x-ATR stop or a 20-day low trail.
+ * When it does NOT work: it deliberately stays out of deep bear markets (price
+ * below the 200-day SMA), so it gives up the early bounce of a new bull run
+ * that starts from below the long average; choppy sideways markets where a
+ * squeeze resolves with a failed breakout.
  */
 function onUpdate(ctx) {
   const bb = ctx.bb(20, 2, 1);
   const atr = ctx.atr(14, 1);
   const vol = ctx.vol;
   const avgVol = ctx.avgVol(20);
-  if (bb == null || atr == null || vol == null || avgVol == null) return null;
+  const sma200 = ctx.sma(200, 1);
+  if (bb == null || atr == null || vol == null || avgVol == null || sma200 == null) return null;
 
   const price = ctx.price;
   const pos = ctx.position;
@@ -33,6 +37,9 @@ function onUpdate(ctx) {
     if (ll20 != null && price < ll20) return { side: 'sell', qty: pos };
     return null;
   }
+
+  // only enter the long-term bull regime (price above the 200-day average)
+  if (price <= sma200) return null;
 
   const bw = (bb.upper - bb.lower) / bb.middle;
   let sum = 0, cnt = 0;
