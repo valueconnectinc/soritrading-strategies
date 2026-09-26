@@ -4,14 +4,14 @@ Every strategy whose backtest **finished and actually traded** is published here
 Nothing is filtered out by return — the ones that lost money are part of the record.
 Entries stay after a strategy is removed from our own workspace — this is a log, and deleting the record would leave only the survivors.
 
-**★ marks a strategy that out-returned buy & hold over the same window** — 320 of 1096 right now.
+**★ marks a strategy that out-returned buy & hold over the same window** — 321 of 1096 right now.
 `—` means the comparison **could not be made**: the engine does not compute a benchmark for multi-symbol, futures, or multi-leg runs. That is *unknown*, not *lost*, and it is 197 of them right now.
 
 Every figure comes from the last verifying backtest at publish time. These are past results over historical data. Nothing here is promised or assured about the future, and none of it is investment advice.
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
-|  | [2675](strategies/2675/) | Band-Bounce Mean Reversion MATIC 4H | +42.22% | +115.63% | +21.63% | 51 | 2026-09-26 |
+| ★ | [2675](strategies/2675/) | Band-Bounce Mean Reversion MATIC 4H | -13.53% | -61.52% | +31.16% | 59 | 2026-09-26 |
 |  | [2673](strategies/2673/) | RSI-Divergence Mean Reversion ALGO 4H | -36.42% | +250.14% | +41.20% | 91 | 2026-09-26 |
 |  | [2672](strategies/2672/) | Band-Bounce Mean Reversion XLM 4H | +128.48% | +217.37% | +23.27% | 98 | 2026-09-26 |
 |  | [2671](strategies/2671/) | Volume-Confirmed Panic-Bounce ATOM 4H | +33.81% | +944.60% | +27.18% | 51 | 2026-09-26 |
