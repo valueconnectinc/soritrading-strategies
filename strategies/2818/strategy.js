@@ -10,13 +10,13 @@
  * BTC/ETH/SOL — it captures bull momentum the mean-reversion champion misses,
  * but its weakness is HIGH DRAWDOWN (43-51% MDD) because it stays fully
  * invested through corrections. This version keeps the proven 30-day OBV trend
- * entry but scales position size DOWN when volatility is high (ATR% wide) and
- * trims to half when price drops below the 50-day average, so exposure shrinks
- * into danger without the whipsaw of a fast stop.
+ * entry but scales position size DOWN only in extreme volatility (ATR% very
+ * wide) and trims to half below the 50-day average, so exposure shrinks in
+ * stress without giving up normal bull exposure.
  * When it buys and sells: buys when 30-day OBV is clearly rising AND price is
  * above the 200-day average AND volume confirms. Position size is scaled by
- * inverse volatility. Trims to half below the 50-day average; exits fully when
- * OBV turns down.
+ * inverse volatility, but only cuts in extreme stress (ATR > 6% of price).
+ * Trims to half below the 50-day average; exits fully when OBV turns down.
  * When it does NOT work: in a steady grinding bull where vol stays low it
  * under-risks slightly; and it still lags the sharpest V-shaped melt-ups.
  */
@@ -57,12 +57,14 @@ function onUpdate(ctx) {
   if (cd > 0) cd--;
   ctx.state.cd = cd;
 
-  // Volatility-target sizing: full size when ATR is <= 4% of price, scaling
-  // down linearly to 25% size when ATR reaches 10% of price.
+  // GENTLE volatility-target sizing: full size up to 6% ATR; scale linearly to
+  // 50% size at 12% ATR. (Judgement: crypto 1D range is normally 2-6%; only
+  // extreme stress above 6% warrants cutting, and never below half so we keep
+  // most of the trend's upside.)
   const atrPct = atr / price;
   let sizeFrac = 1.0;
-  if (atrPct > 0.04) {
-    sizeFrac = Math.max(0.25, 1.0 - (atrPct - 0.04) / 0.06);
+  if (atrPct > 0.06) {
+    sizeFrac = Math.max(0.5, 1.0 - (atrPct - 0.06) / 0.06);
   }
 
   if (pos > 0) {
