@@ -1,6 +1,6 @@
 /*
  * @coinsori-strategy v1
- * name: VWAP-Pullback SOL 4H VolScaled
+ * name: VWAP-Pullback SOL 4H RegimeFilter
  * ex: binance
  * syms: SOLUSDT
  * interval: 4h
@@ -8,16 +8,17 @@
  *
  * Why this strategy: Mean reversion to the VWAP (volume-weighted average
  * price) — in an established uptrend, sharp dips back toward VWAP tend to
- * revert up as buyers step in. This version adds a moderate volatility-scaled
- * position size: at elevated volatility it trims the position, cutting
- * drawdown, while keeping most exposure so the strong bull-window returns are
- * largely preserved.
+ * revert up as buyers step in. This version keeps the moderate volatility-
+ * scaled position size from the prior cycle AND adds a longer-term regime
+ * filter (price above the 200-SMA) so it does not buy pullbacks in a clear
+ * downtrend. That targets the recent bear-window losses without touching
+ * the entry/exit timing that carries the edge.
  * When it buys and sells: buys when price pulls back to/below VWAP while the
- * 50-SMA is rising and RSI is not overbought. Sells only on a wide 10-ATR
- * trailing stop or when the 50-SMA turns down.
- * When it does NOT work: fails in a true downtrend (pullbacks keep falling)
- * and in low-liquidity chop where VWAP gives no support. The wide stop means
- * large giveback on reversals.
+ * 50-SMA is rising, RSI is not overbought, and price is above the 200-SMA.
+ * Sells only on a wide 10-ATR trailing stop or when the 50-SMA turns down.
+ * When it does NOT work: fails in a true downtrend below the 200-SMA (no
+ * entries at all, so it just sits out) and in low-liquidity chop where VWAP
+ * gives no support. The wide stop means large giveback on reversals.
  */
 function onUpdate(ctx) {
   const s = ctx.state;
@@ -60,6 +61,11 @@ function onUpdate(ctx) {
   const prevSma = ctx.sma(50, 5);
   if (prevSma == null) return null;
   const uptrend = sma50 > prevSma;
+  // Long-term regime filter: only buy above the 200-SMA. This keeps us out
+  // of deep bear regimes (recent window) where pullbacks keep falling.
+  const sma200 = ctx.sma(200, 1);
+  if (sma200 == null) return null;
+  if (price < sma200) return null;
   const lastExit = s.lastExit || 0;
   if (!uptrend) return null;
   if (rsi > 65) return null;
