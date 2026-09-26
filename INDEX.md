@@ -11,7 +11,7 @@ Every figure comes from the last verifying backtest at publish time. These are p
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
-|  | [2656](strategies/2656/) | VWAP-Pullback BTC 4H | -26.10% | +438.54% | +35.42% | 44 | 2026-09-26 |
+|  | [2656](strategies/2656/) | VWAP-Pullback BTC 4H | -40.92% | +26.93% | +68.76% | 192 | 2026-09-26 |
 |  | [2655](strategies/2655/) | FearGreed Panic Mean-Reversion BTC 1D | +52.13% | +796.20% | +44.55% | 69 | 2026-09-26 |
 |  | [2654](strategies/2654/) | OnChain-Confirmed Band-Bounce BTC 4H | +7.70% | +26.93% | +13.00% | 44 | 2026-09-26 |
 | ★ | [2653](strategies/2653/) | Band-Bounce Mean Reversion DOGE 4H | +94.76% | +9.39% | +34.99% | 191 | 2026-09-26 |

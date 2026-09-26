@@ -3,16 +3,16 @@
   "name": "VWAP-Pullback BTC 4H",
   "kind": "custom",
   "verified": {
-    "backtestId": 11646,
-    "return": -26.1,
-    "mdd": 35.42,
-    "trades": 44,
+    "backtestId": 11649,
+    "return": -40.92,
+    "mdd": 68.76,
+    "trades": 192,
     "vsBuyHold": "lose",
-    "benchRet": 438.54,
+    "benchRet": 26.93,
     "benchBasis": "price",
     "gapPct": 0,
-    "tFrom": 1574395200,
-    "tTo": 1646395200,
+    "tFrom": 1718409600,
+    "tTo": 1790395200,
     "approxNotes": [
       "봉 내 순서는 관례(양봉 O→L→H→C·음봉 O→H→L→C) — 실순서 미상 · 봉 중 거래량 null · MDD 는 봉 마감 기준"
     ],
@@ -21,7 +21,7 @@
       "sym": "BTCUSDT",
       "interval": "4h",
       "bars": 5000,
-      "end": 1646409600
+      "end": 1790409600
     }
   },
   "config": null,
