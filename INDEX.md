@@ -11,7 +11,7 @@ Every figure comes from the last verifying backtest at publish time. These are p
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
-| — | [2557](strategies/2557/) | FearGreed Euphoria Short BTC 4H | -1.15% | — | +3.88% | 10 | 2026-09-26 |
+| — | [2557](strategies/2557/) | FearGreed Euphoria Short BTC 4H | -1.43% | — | +13.24% | 8 | 2026-09-26 |
 |  | [2556](strategies/2556/) | Champion v2 1H BTC | +4.20% | +27.16% | +24.65% | 206 | 2026-09-26 |
 |  | [2555](strategies/2555/) | Champion v2 OOS LINK 4H | +436.73% | +463.32% | +34.79% | 213 | 2026-09-26 |
 |  | [2554](strategies/2554/) | Champion v2 OOS DOGE 4H | +484.05% | +5181.97% | +41.61% | 335 | 2026-09-26 |
