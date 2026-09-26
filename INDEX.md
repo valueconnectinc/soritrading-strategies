@@ -11,7 +11,7 @@ Every figure comes from the last verifying backtest at publish time. These are p
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
-|  | [2565](strategies/2565/) | Pure-Price Hybrid ETH 1D | +126.38% | +431.74% | +24.40% | 93 | 2026-09-26 |
+|  | [2565](strategies/2565/) | Pure-Price Hybrid ETH 1D | +13.57% | +56.20% | +27.03% | 19 | 2026-09-26 |
 |  | [2564](strategies/2564/) | Pure-Price Melt-Up Trend Rider BTC 4H | -83.34% | +75.35% | +85.89% | 206 | 2026-09-26 |
 |  | [2563](strategies/2563/) | VWAP Pullback Mean Reversion SOL 4H RiskControlled | -26.17% | +3047.76% | +26.17% | 41 | 2026-09-26 |
 |  | [2562](strategies/2562/) | Pure Price-Based Hybrid No FearGreed BTC 4H | +161.25% | +270.70% | +37.21% | 67 | 2026-09-26 |
