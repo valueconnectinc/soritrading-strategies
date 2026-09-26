@@ -11,7 +11,7 @@ Every figure comes from the last verifying backtest at publish time. These are p
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
-|  | [2706](strategies/2706/) | Macro-Regime Band-Bounce BTC 4H | +12.25% | +26.89% | +13.00% | 48 | 2026-09-26 |
+|  | [2706](strategies/2706/) | Macro-Regime Band-Bounce BTC 4H | +17.71% | +449.51% | +17.69% | 32 | 2026-09-26 |
 |  | [2704](strategies/2704/) | Band-Bounce Bull-Ride Exit SOL 4H | +112.94% | +2922.17% | +15.52% | 23 | 2026-09-26 |
 |  | [2702](strategies/2702/) | Band-Bounce Mean Reversion DOGE 4H | +151.21% | +192.63% | +10.46% | 25 | 2026-09-26 |
 |  | [2701](strategies/2701/) | SOL Trend-Ride Pullback 4H | -16.57% | +1670.97% | +16.57% | 12 | 2026-09-26 |

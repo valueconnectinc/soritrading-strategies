@@ -47,12 +47,17 @@ function onUpdate(ctx) {
   if (price < sma200) return null;
 
   // Macro regime gate: only buy when the dollar is falling (risk-on).
-  // DXY down over 30 bars = supportive macro backdrop for crypto.
+  // Rolling 30-bar DXY history; gate when the dollar is rising over it.
   const dxy = ctx.macro('dxy');
-  if (dxy != null) {
-    const dxyNow = dxy.value;
-    const dxyPrev = dxy.history ? dxy.history(30) : null;
-    if (dxyPrev != null && dxyNow > dxyPrev) return null; // rising dollar = risk-off
+  if (dxy != null && dxy.value != null) {
+    ctx.state.dxyHist = ctx.state.dxyHist || [];
+    ctx.state.dxyHist.push(dxy.value);
+    if (ctx.state.dxyHist.length > 30) ctx.state.dxyHist.shift();
+    if (ctx.state.dxyHist.length === 30) {
+      const dxyNow = dxy.value;
+      const dxyPrev = ctx.state.dxyHist[0];
+      if (dxyNow > dxyPrev) return null; // rising dollar = risk-off
+    }
   }
 
   if (price < bb.lower && rsi < 30) {
