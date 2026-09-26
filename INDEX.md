@@ -4,13 +4,14 @@ Every strategy whose backtest **finished and actually traded** is published here
 Nothing is filtered out by return — the ones that lost money are part of the record.
 Entries stay after a strategy is removed from our own workspace — this is a log, and deleting the record would leave only the survivors.
 
-**★ marks a strategy that out-returned buy & hold over the same window** — 312 of 1030 right now.
-`—` means the comparison **could not be made**: the engine does not compute a benchmark for multi-symbol, futures, or multi-leg runs. That is *unknown*, not *lost*, and it is 189 of them right now.
+**★ marks a strategy that out-returned buy & hold over the same window** — 312 of 1031 right now.
+`—` means the comparison **could not be made**: the engine does not compute a benchmark for multi-symbol, futures, or multi-leg runs. That is *unknown*, not *lost*, and it is 190 of them right now.
 
 Every figure comes from the last verifying backtest at publish time. These are past results over historical data. Nothing here is promised or assured about the future, and none of it is investment advice.
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
+| — | [2606](strategies/2606/) | AI 전략 | +611.80% | — | +57.14% | 45 | 2026-09-26 |
 | — | [2605](strategies/2605/) | Relative-Strength Rotation BTC/ETH/SOL 1D | +164.91% | — | +54.52% | 32 | 2026-09-26 |
 | — | [2604](strategies/2604/) | Multi-Symbol Squeeze Breakout BTC+ETH 1D | +54.04% | — | +35.65% | 7 | 2026-09-26 |
 |  | [2603](strategies/2603/) | BTC On-Chain Active-Address Trend | +890.92% | +1351.39% | +42.15% | 23 | 2026-09-26 |
