@@ -1,19 +1,22 @@
 /*
  * @coinsori-strategy v1
- * name: Band-Bounce Mean Reversion ADA 4H
+ * name: Band-Bounce + Trend-Pullback LINK 4H
  * ex: binance
- * syms: ADAUSDT
+ * syms: LINKUSDT
  * interval: 4h
  * cash: 10000
  *
- * Why this strategy: The validated champion recipe applied to ADA 4h, a mature
- * large-cap. Tests whether the defensive mean-reversion edge extends to ADA.
- * Unchanged recipe.
- * When it buys and sells: buys when price closes below the lower Bollinger(20,2)
- * with RSI<30 while price is above the 200-SMA; exits at the middle band / RSI>50
- * or a 6-ATR stop; then waits 5 bars before re-entering.
- * When it does NOT work: lags strong melt-ups; below the 200-SMA it never buys;
- * a panic that keeps falling still loses. Defensive, not a trend rider.
+ * Why this strategy: The validated band-bounce champion is defensive but lags
+ * strong bull runs because it only buys panic dips below the lower band. This
+ * version adds a second, more frequent "trend-pullback" entry so it can ride
+ * pullbacks inside an uptrend instead of sitting in cash during melt-ups.
+ * When it buys and sells: (1) panic-dip entry — price below lower BB(20,2) with
+ * RSI<30 above the 200-SMA; (2) trend-pullback entry — price dips back to the
+ * middle band while above the 200-SMA with RSI in a healthy 40-60 pullback zone.
+ * Exits: middle band / RSI>50, or a 6-ATR stop; waits 5 bars before re-entering.
+ * When it does NOT work: below the 200-SMA it never buys; a panic that keeps
+ * falling still loses. The extra entries add trades in chop, so it can now lose
+ * more in sideways markets than the pure defensive version.
  */
 function onUpdate(ctx) {
   const bb = ctx.bb(20, 2, 1);
@@ -42,7 +45,15 @@ function onUpdate(ctx) {
 
   if (price < sma200) return null;
 
+  // Entry 1: panic dip below the lower band (the original defensive entry).
   if (price < bb.lower && rsi < 30) {
+    return { side: 'buy', qty: ctx.cash / ctx.price * 0.95 };
+  }
+
+  // Entry 2: trend pullback to the middle band in an uptrend.
+  // RSI 40-60 = a healthy pullback, not a panic and not overbought.
+  // This is the new entry that captures melt-up pullbacks.
+  if (price <= bb.mid * 1.01 && rsi >= 40 && rsi <= 60) {
     return { side: 'buy', qty: ctx.cash / ctx.price * 0.95 };
   }
   return null;
