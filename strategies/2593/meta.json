@@ -3,7 +3,7 @@
   "name": "Band-Bounce Mean Reversion LTC 4H",
   "kind": "custom",
   "verified": {
-    "backtestId": 11243,
+    "backtestId": 11245,
     "return": -34.46,
     "mdd": 49.47,
     "trades": 12,
