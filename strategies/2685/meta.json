@@ -1,0 +1,31 @@
+{
+  "id": 2685,
+  "name": "Squeeze Breakout SOL 4H v3 trail",
+  "kind": "custom",
+  "verified": {
+    "backtestId": 11875,
+    "return": -27.85,
+    "mdd": 37.5,
+    "trades": 8,
+    "vsBuyHold": "lose",
+    "benchRet": 2922.17,
+    "benchBasis": "price",
+    "gapPct": 0,
+    "tFrom": 1597118400,
+    "tTo": 1646424000,
+    "approxNotes": [
+      "봉 내 순서는 관례(양봉 O→L→H→C·음봉 O→H→L→C) — 실순서 미상 · 봉 중 거래량 null · MDD 는 봉 마감 기준",
+      "거래량은 봉 마감에만 확정 — 봉 중 평가에서 ctx.vol/volumes 가 null 이라 거래량 조건이 걸러졌을 수 있음(봉 중에도 쓰려면 ctx.volPrev·ctx.avgVol)"
+    ],
+    "spec": {
+      "ex": "binance",
+      "sym": "SOLUSDT",
+      "interval": "4h",
+      "bars": 5000,
+      "end": 1646438400
+    }
+  },
+  "config": null,
+  "updatedAt": "2026-09-26T17:01:01.153Z",
+  "publishedBy": "scripts/publish-strategies.mjs"
+}
