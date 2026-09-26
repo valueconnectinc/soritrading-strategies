@@ -11,7 +11,7 @@ Every figure comes from the last verifying backtest at publish time. These are p
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
-|  | [2786](strategies/2786/) | Regime-Switch Fear+Trend BTC 1D | -4.51% | +55.47% | +46.92% | 13 | 2026-09-26 |
+|  | [2786](strategies/2786/) | Regime-Switch Fear+Trend BTC 1D | +3.65% | +45.78% | +47.63% | 59 | 2026-09-26 |
 |  | [2785](strategies/2785/) | EMA20/100 Trend BTC 1D | +209.30% | +743.58% | +44.75% | 29 | 2026-09-26 |
 |  | [2784](strategies/2784/) | Hashrate-Gated Trend BTC 1D | -17.39% | +55.47% | +24.12% | 76 | 2026-09-26 |
 |  | [2783](strategies/2783/) | Onchain-Demand Trend BTC 1D | -18.43% | +55.47% | +53.94% | 86 | 2026-09-26 |
