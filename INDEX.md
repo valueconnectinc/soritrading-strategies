@@ -4,13 +4,14 @@ Every strategy whose backtest **finished and actually traded** is published here
 Nothing is filtered out by return — the ones that lost money are part of the record.
 Entries stay after a strategy is removed from our own workspace — this is a log, and deleting the record would leave only the survivors.
 
-**★ marks a strategy that out-returned buy & hold over the same window** — 320 of 1106 right now.
+**★ marks a strategy that out-returned buy & hold over the same window** — 320 of 1107 right now.
 `—` means the comparison **could not be made**: the engine does not compute a benchmark for multi-symbol, futures, or multi-leg runs. That is *unknown*, not *lost*, and it is 197 of them right now.
 
 Every figure comes from the last verifying backtest at publish time. These are past results over historical data. Nothing here is promised or assured about the future, and none of it is investment advice.
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
+|  | [2690](strategies/2690/) | Volume-Surge Breakout BTC 4H ATR3 | -42.69% | +449.51% | +48.52% | 244 | 2026-09-26 |
 |  | [2689](strategies/2689/) | VWAP-Pullback LTC 4H | -97.93% | +115.63% | +98.30% | 406 | 2026-09-26 |
 |  | [2688](strategies/2688/) | Band-Bounce Mean Reversion ADA 4H | -54.39% | -4.42% | +57.88% | 489 | 2026-09-26 |
 |  | [2686](strategies/2686/) | Band-Bounce Mean Reversion LINK 4H | +164.41% | +489.70% | +24.03% | 80 | 2026-09-26 |
