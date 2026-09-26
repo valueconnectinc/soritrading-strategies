@@ -1,13 +1,24 @@
 /*
  * @coinsori-strategy v1
- * name: VWAP-Pullback SOL 4H Control (no regime filter)
+ * name: VWAP-Pullback SOL 4H SoftRegime
  * ex: binance
  * syms: SOLUSDT
  * interval: 4h
  * cash: 10000
  *
- * Control version of the champion WITHOUT the 200-SMA regime filter, used to
- * A/B test whether the regime filter helps on identical windows.
+ * Why this strategy: Mean reversion to the VWAP (volume-weighted average
+ * price) — in an established uptrend, sharp dips back toward VWAP tend to
+ * revert up as buyers step in. This version keeps the moderate volatility-
+ * scaled position size AND adds a SOFT regime filter: it only blocks entries
+ * when the 200-SMA itself is declining (a confirmed downtrend), rather than
+ * requiring price above the 200-SMA. That avoids the worst bear entries
+ * without cutting off early bull-window pullbacks.
+ * When it buys and sells: buys when price pulls back to/below VWAP while the
+ * 50-SMA is rising, RSI is not overbought, and the 200-SMA is not declining.
+ * Sells only on a wide 10-ATR trailing stop or when the 50-SMA turns down.
+ * When it does NOT work: fails in a true downtrend (pullbacks keep falling)
+ * and in low-liquidity chop where VWAP gives no support. The wide stop means
+ * large giveback on reversals.
  */
 function onUpdate(ctx) {
   const s = ctx.state;
@@ -50,12 +61,22 @@ function onUpdate(ctx) {
   const prevSma = ctx.sma(50, 5);
   if (prevSma == null) return null;
   const uptrend = sma50 > prevSma;
+  // Soft regime filter: block entries only when the 200-SMA is declining
+  // (confirmed downtrend). Uses 5 bars back for the comparison so it is a
+  // closed-bar signal identical in backtest and live.
+  const sma200 = ctx.sma(200, 1);
+  const sma200prev = ctx.sma(200, 5);
+  if (sma200 == null || sma200prev == null) return null;
+  if (sma200 < sma200prev) return null;
   const lastExit = s.lastExit || 0;
   if (!uptrend) return null;
   if (rsi > 65) return null;
   if (ctx.i - lastExit < 6) return null;
   if (price <= vwap * 1.02) {
     s.hi = price;
+    // Moderate vol-scaled sizing: start trimming when ATR/price exceeds 2.5%
+    // (elevated, not extreme), scale to a 45% floor at very high vol. This
+    // cuts panic-window drawdown while keeping most bull exposure.
     const atr = ctx.atr(14, 1);
     let frac = 0.95;
     if (atr != null && price > 0) {
