@@ -3,16 +3,16 @@
   "name": "Regime-Switching Trend + Mean-Reversion BTC 4H",
   "kind": "custom",
   "verified": {
-    "backtestId": 11532,
-    "return": -44,
-    "mdd": 55.83,
+    "backtestId": 11534,
+    "return": -29.61,
+    "mdd": 52.59,
     "trades": 178,
     "vsBuyHold": "lose",
-    "benchRet": 61.01,
+    "benchRet": 448.2,
     "benchBasis": "price",
     "gapPct": 0,
-    "tFrom": 1646395200,
-    "tTo": 1718380800,
+    "tFrom": 1574380800,
+    "tTo": 1646380800,
     "approxNotes": [
       "봉 내 순서는 관례(양봉 O→L→H→C·음봉 O→H→L→C) — 실순서 미상 · 봉 중 거래량 null · MDD 는 봉 마감 기준"
     ],
@@ -21,7 +21,7 @@
       "sym": "BTCUSDT",
       "interval": "4h",
       "bars": 5000,
-      "end": 1718395200
+      "end": 1646395200
     }
   },
   "config": null,
