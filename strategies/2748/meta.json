@@ -1,0 +1,30 @@
+{
+  "id": 2748,
+  "name": "Trend-Scaled Band-Bounce BCH 1D",
+  "kind": "custom",
+  "verified": {
+    "backtestId": 12125,
+    "return": 16.41,
+    "mdd": 31.34,
+    "trades": 8,
+    "vsBuyHold": "win",
+    "benchRet": -38.46,
+    "benchBasis": "price",
+    "gapPct": 0,
+    "tFrom": 1574899200,
+    "tTo": 1660694400,
+    "approxNotes": [
+      "봉 내 순서는 관례(양봉 O→L→H→C·음봉 O→H→L→C) — 실순서 미상 · 봉 중 거래량 null · MDD 는 봉 마감 기준"
+    ],
+    "spec": {
+      "ex": "binance",
+      "sym": "BCHUSDT",
+      "interval": "1d",
+      "bars": 1500,
+      "end": 1660780800
+    }
+  },
+  "config": null,
+  "updatedAt": "2026-09-26T19:53:36.341Z",
+  "publishedBy": "scripts/publish-strategies.mjs"
+}
