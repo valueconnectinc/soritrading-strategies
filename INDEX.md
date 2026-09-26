@@ -11,7 +11,7 @@ Every figure comes from the last verifying backtest at publish time. These are p
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
-| ★ | [2624](strategies/2624/) | Squeeze Breakout ETH 4H (Risk-Sized + MACD Gate) | +46.94% | -48.01% | +14.10% | 64 | 2026-09-26 |
+| ★ | [2624](strategies/2624/) | Squeeze Breakout ETH 4H (Risk-Sized + MACD Gate) | +38.99% | -48.01% | +17.87% | 65 | 2026-09-26 |
 |  | [2623](strategies/2623/) | Squeeze Breakout ETH 4H (Risk-Sized) | +185.12% | +1613.96% | +20.75% | 94 | 2026-09-26 |
 |  | [2622](strategies/2622/) | Squeeze Breakout ETH 4H (MACD Momentum Gate) | +363.98% | +1613.96% | +43.64% | 78 | 2026-09-26 |
 |  | [2621](strategies/2621/) | AI 전략 | +325.39% | +1613.96% | +52.52% | 94 | 2026-09-26 |
