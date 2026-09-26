@@ -1,27 +1,26 @@
 /*
  * @coinsori-strategy v1
- * name: Donchian Pullback Trailing-Exit ETH 4H
+ * name: Donchian Pullback Trend-Strength RSIFloor ETH 4H
  * ex: binance
  * syms: ETHUSDT
  * interval: 4h
  * cash: 10000
  *
- * Why this strategy: Improvement on the RSI-floor Donchian-pullback champion
- * (2760). Same trend-pullback entry (buy a pullback to the lower 20-bar
- * Donchian channel in a rising-200-SMA uptrend with an RSI(14)>30 floor), but
- * the EXIT changes: instead of selling at the fixed middle Donchian channel,
- * it uses a trailing ATR stop that only arms once the trade is meaningfully in
- * profit. Bet: the champion's documented weakness is that it lags strong
- * melt-ups because the fixed middle-channel target caps winners too early; a
- * trailing stop lets winners run in strong trends while a trend-break backstop
- * still protects in chop.
- * When it buys and sells: same entry as 2760. Exit: once price has risen
- * >=3xATR above entry, a trailing stop trails at (highest high - 2xATR);
- * also exits immediately if the 200-SMA stops rising, or on a 3xATR hard stop.
+ * Why this strategy: Improvement on the trend-strength Donchian-pullback
+ * champion (2759). Same trend-pullback family, but with a ONE-SIDED RSI floor on
+ * the entry: only buy a pullback when RSI(14) is above 30. Bet: in a genuine
+ * uptrend a healthy pullback rarely pushes RSI below 30; a pullback that does is
+ * a trend break / falling knife — the champion's known weak spot. Unlike the
+ * two-sided 35-55 band, the floor does NOT block entries during strong trends
+ * where RSI stays elevated, so it keeps the melt-up capture.
+ * When it buys and sells: buys when price pulls back to the lower 20-bar
+ * Donchian channel, price above a RISING 200-SMA that rose >=0.15% over 5 bars,
+ * AND RSI(14) is above 30 (not a deep-oversold trend break); sells at the middle
+ * Donchian channel, when the 200-SMA stops rising, or on a 3x-ATR stop.
  * 5-bar cooldown.
- * When it does NOT work: same as champion — below the 200-SMA it sits out;
- * in a fake/weak uptrend the pullback keeps going; the trailing exit can give
- * back profit in a sharp reversal that never re-tests the 200-SMA.
+ * When it does NOT work: same as the champion — below the 200-SMA it sits out;
+ * in a fake/weak uptrend the pullback keeps going; the RSI floor may skip a few
+ * capitulation bounces that recover fast from deep oversold.
  */
 function onUpdate(ctx) {
   const price = ctx.price;
@@ -33,28 +32,17 @@ function onUpdate(ctx) {
   const uptrend = price > sma200 && sma200 > sma200prev;
 
   if (pos > 0) {
-    const atr = ctx.atr(14, 1);
-    if (atr != null) {
-      // hard stop: keep the champion's 3xATR floor stop
-      if (price <= ctx.entryPx - atr * 3) {
-        ctx.state.lastExit = ctx.i;
-        return { side: 'sell', qty: pos };
-      }
-      // trailing stop arms only once profit >= 3xATR above entry, then trails
-      // at highest-high - 2xATR. Lets melt-ups run instead of capping at the
-      // middle channel (the champion's documented lag weakness).
-      const profitATR = (price - ctx.entryPx) / atr;
-      if (profitATR >= 3) {
-        const peak = Math.max(ctx.state.peak || ctx.entryPx, price);
-        ctx.state.peak = peak;
-        if (price <= peak - atr * 2) {
-          ctx.state.lastExit = ctx.i;
-          return { side: 'sell', qty: pos };
-        }
-      }
+    const dcMid = (ctx.high(20, 1) + ctx.low(20, 1)) / 2;
+    if (dcMid != null && price >= dcMid) {
+      ctx.state.lastExit = ctx.i;
+      return { side: 'sell', qty: pos };
     }
-    // trend-break backstop: if the 200-SMA stops rising, leave
     if (!uptrend) {
+      ctx.state.lastExit = ctx.i;
+      return { side: 'sell', qty: pos };
+    }
+    const atr = ctx.atr(14, 1);
+    if (atr != null && price <= ctx.entryPx - atr * 3) {
       ctx.state.lastExit = ctx.i;
       return { side: 'sell', qty: pos };
     }
