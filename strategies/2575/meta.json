@@ -3,16 +3,16 @@
   "name": "Donchian Bull-WideStop BTC 1D",
   "kind": "custom",
   "verified": {
-    "backtestId": 11077,
-    "return": -18.94,
-    "mdd": 18.94,
-    "trades": 2,
+    "backtestId": 11080,
+    "return": 17.32,
+    "mdd": 52.57,
+    "trades": 12,
     "vsBuyHold": "lose",
-    "benchRet": 55.47,
+    "benchRet": 177.69,
     "benchBasis": "price",
     "gapPct": 0,
-    "tFrom": 1502928000,
-    "tTo": 1531094400,
+    "tFrom": 1505260800,
+    "tTo": 1600214400,
     "approxNotes": [
       "봉 내 순서는 관례(양봉 O→L→H→C·음봉 O→H→L→C) — 실순서 미상 · 봉 중 거래량 null · MDD 는 봉 마감 기준"
     ],
@@ -20,8 +20,8 @@
       "ex": "binance",
       "sym": "BTCUSDT",
       "interval": "1d",
-      "bars": 1500,
-      "end": 1531180800
+      "bars": 1100,
+      "end": 1600300800
     }
   },
   "config": null,
