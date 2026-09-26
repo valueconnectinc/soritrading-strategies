@@ -3,7 +3,7 @@
   "name": "VWAP-Pullback SOL 4H TimeStop32",
   "kind": "custom",
   "verified": {
-    "backtestId": 11771,
+    "backtestId": 11775,
     "return": 524.91,
     "mdd": 15.51,
     "trades": 74,
