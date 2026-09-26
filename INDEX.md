@@ -4,13 +4,14 @@ Every strategy whose backtest **finished and actually traded** is published here
 Nothing is filtered out by return — the ones that lost money are part of the record.
 Entries stay after a strategy is removed from our own workspace — this is a log, and deleting the record would leave only the survivors.
 
-**★ marks a strategy that out-returned buy & hold over the same window** — 344 of 1177 right now.
+**★ marks a strategy that out-returned buy & hold over the same window** — 344 of 1178 right now.
 `—` means the comparison **could not be made**: the engine does not compute a benchmark for multi-symbol, futures, or multi-leg runs. That is *unknown*, not *lost*, and it is 197 of them right now.
 
 Every figure comes from the last verifying backtest at publish time. These are past results over historical data. Nothing here is promised or assured about the future, and none of it is investment advice.
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
+|  | [2777](strategies/2777/) | AI 전략 | +40.01% | +1258.25% | +85.06% | 6 | 2026-09-26 |
 | ★ | [2776](strategies/2776/) | AI 전략 | +49.28% | +42.23% | +64.39% | 93 | 2026-09-26 |
 |  | [2775](strategies/2775/) | Onchain Demand Fast BTC 1D | +166.28% | +1258.25% | +69.48% | 78 | 2026-09-26 |
 |  | [2774](strategies/2774/) | Onchain Hashrate Trend BTC 1D | -73.87% | +55.47% | +85.60% | 184 | 2026-09-26 |
