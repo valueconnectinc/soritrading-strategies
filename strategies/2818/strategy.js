@@ -1,23 +1,25 @@
 /*
  * @coinsori-strategy v1
- * name: OBV Trend Vol-Scaled Champion 1D
+ * name: OBV Trend Partial Scale-Out 1D
  * ex: binance
- * syms: BTCUSDT
+ * syms: BTCUSDT, ETHUSDT, SOLUSDT
  * interval: 1d
  * cash: 10000
  *
  * Why this strategy: The OBV volume-flow trend family is validated across
  * BTC/ETH/SOL — it captures bull momentum the mean-reversion champion misses.
- * Adding GENTLE volatility-targeted position sizing (scale size down only in
- * extreme stress, ATR > 6% of price) improved it further: it trims exposure in
- * the most volatile stretches, cutting drawdown without giving up normal bull
- * capture. Validated on BTC/ETH/SOL walk-forward windows.
- * When it buys and sells: buys when 30-day OBV is clearly rising AND price is
- * above the 200-day average AND volume confirms. Position size is scaled by
- * inverse volatility, but only cuts in extreme stress (ATR > 6% of price, never
- * below half size). Exits fully when OBV turns down.
- * When it does NOT work: in a steady grinding bull where vol stays low it
- * under-risks slightly; and it still lags the sharpest V-shaped melt-ups.
+ * Its #1 weakness is high drawdown (MDD ~40-51%) because it stays fully invested
+ * through pullbacks. Full-exit trailing stops were shown to destroy return via
+ * whipsaw, so this version uses a PARTIAL scale-out instead: when price falls a
+ * deep amount below its peak since entry, it cuts exposure to half but stays in
+ * the trend, so it keeps riding any V-recovery instead of getting whipsawed out.
+ * When it buys and sells: buys when 30-day OBV is rising AND price is above the
+ * 200-day average AND volume confirms. Exits fully when OBV turns down. While
+ * holding, if price drops >35% below its peak since entry it sells half the
+ * position (a deep-drawdown shock absorber, not a normal exit).
+ * When it does NOT work: in a steady grinding bull with low volatility it
+ * under-risks slightly; and it still lags the sharpest V-shaped melt-ups because
+ * the 200-SMA gate + 30d OBV lag keep it out of the early rally.
  */
 function onUpdate(ctx) {
   const pos = ctx.position;
@@ -56,7 +58,7 @@ function onUpdate(ctx) {
   ctx.state.cd = cd;
 
   // GENTLE volatility-target sizing: full size up to 6% ATR; scale linearly to
-  // 50% size at 12% ATR. Only extreme stress cuts exposure, never below half.
+  // 50% size at 12% ATR. Only extreme stress cuts entry size, never below half.
   const atrPct = atr / price;
   let sizeFrac = 1.0;
   if (atrPct > 0.06) {
@@ -64,8 +66,22 @@ function onUpdate(ctx) {
   }
 
   if (pos > 0) {
+    // Track peak price since entry to detect deep drawdowns.
+    const peak = st.peak || price;
+    if (price > peak) ctx.state.peak = price;
+    const ddFromPeak = (peak - price) / peak;
+
+    // PARTIAL scale-out: cut to half on a deep drawdown from peak. 35% is far
+    // below normal pullbacks (which the trend should ride) but catches crashes.
+    // This is a shock absorber, NOT a full exit — keeps the V-recovery upside.
+    if (ddFromPeak > 0.35 && pos > 0.5) {
+      ctx.state.peak = price; // reset so it re-arms only after a new high
+      return { side: 'sell', qty: pos * 0.5 };
+    }
+
     if (falling && cd === 0) {
       ctx.state.cd = 5;
+      ctx.state.peak = 0;
       return { side: 'sell', qty: pos };
     }
     return null;
@@ -73,6 +89,7 @@ function onUpdate(ctx) {
 
   if (rising && price > sma200 && volOk && cd === 0) {
     ctx.state.cd = 5;
+    ctx.state.peak = price;
     const qty = ctx.cash / price * 0.95 * sizeFrac;
     return { side: 'buy', qty: qty };
   }
