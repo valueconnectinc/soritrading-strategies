@@ -3,9 +3,9 @@
   "name": "Fed-Gated Defensive Donchian BTC 1D",
   "kind": "custom",
   "verified": {
-    "backtestId": 11134,
-    "return": 346.53,
-    "mdd": 51.23,
+    "backtestId": 11136,
+    "return": 550.68,
+    "mdd": 44.42,
     "trades": 16,
     "vsBuyHold": "win",
     "benchRet": 245.42,
