@@ -4,13 +4,14 @@ Every strategy whose backtest **finished and actually traded** is published here
 Nothing is filtered out by return — the ones that lost money are part of the record.
 Entries stay after a strategy is removed from our own workspace — this is a log, and deleting the record would leave only the survivors.
 
-**★ marks a strategy that out-returned buy & hold over the same window** — 309 of 1018 right now.
+**★ marks a strategy that out-returned buy & hold over the same window** — 310 of 1019 right now.
 `—` means the comparison **could not be made**: the engine does not compute a benchmark for multi-symbol, futures, or multi-leg runs. That is *unknown*, not *lost*, and it is 187 of them right now.
 
 Every figure comes from the last verifying backtest at publish time. These are past results over historical data. Nothing here is promised or assured about the future, and none of it is investment advice.
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
+| ★ | [2594](strategies/2594/) | Defensive Donchian Price-Bull Wide Exit BTC 1D (baseline) | +349.44% | +324.12% | +58.47% | 15 | 2026-09-26 |
 |  | [2593](strategies/2593/) | Band-Bounce Mean Reversion LTC 4H | -34.46% | +270.70% | +49.47% | 12 | 2026-09-26 |
 |  | [2592](strategies/2592/) | Fear-Greed Contrarian Mean Reversion BTC 1D | -6.31% | +55.47% | +23.52% | 3 | 2026-09-26 |
 |  | [2591](strategies/2591/) | Defensive Donchian Price-Bull Wide Exit BTC 1D | +0.08% | +55.47% | +34.14% | 4 | 2026-09-26 |
