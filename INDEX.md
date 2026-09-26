@@ -4,13 +4,15 @@ Every strategy whose backtest **finished and actually traded** is published here
 Nothing is filtered out by return — the ones that lost money are part of the record.
 Entries stay after a strategy is removed from our own workspace — this is a log, and deleting the record would leave only the survivors.
 
-**★ marks a strategy that out-returned buy & hold over the same window** — 330 of 1132 right now.
+**★ marks a strategy that out-returned buy & hold over the same window** — 332 of 1134 right now.
 `—` means the comparison **could not be made**: the engine does not compute a benchmark for multi-symbol, futures, or multi-leg runs. That is *unknown*, not *lost*, and it is 197 of them right now.
 
 Every figure comes from the last verifying backtest at publish time. These are past results over historical data. Nothing here is promised or assured about the future, and none of it is investment advice.
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
+| ★ | [2720](strategies/2720/) | Band-Bounce Mean Reversion WAVES 4H | +5.63% | -18.08% | +37.94% | 53 | 2026-09-26 |
+| ★ | [2719](strategies/2719/) | Band-Bounce Mean Reversion NEO 4H | -14.78% | -78.45% | +22.46% | 44 | 2026-09-26 |
 |  | [2718](strategies/2718/) | AI 전략 | +18.35% | +28.67% | +20.75% | 58 | 2026-09-26 |
 |  | [2717](strategies/2717/) | AI 전략 | -32.84% | +301.51% | +41.14% | 73 | 2026-09-26 |
 |  | [2716](strategies/2716/) | AI 전략 | +35.71% | +614.25% | +25.46% | 43 | 2026-09-26 |
