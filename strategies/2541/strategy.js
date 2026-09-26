@@ -1,17 +1,15 @@
 /*
  * @coinsori-strategy v1
- * name: Champion v2 BTC 1D Robustness
+ * name: Champion v2 BNB 1D Generalization
  * ex: binance
- * syms: BTCUSDT
+ * syms: BNBUSDT
  * interval: 1d
  * cash: 10000
  *
- * Why this strategy: Stress-test of the champion (fear-contrarian bear leg + trend
- * pullback leg with two-tier fear-depth sizing) on a completely different regime —
- * daily bars spanning ~8 years (2021 bull, 2022 bear, 2023 recovery). If the
- * fear-depth edge is real it should survive the different macro mix; if it only fit
- * the 4h windows we tuned on, it will fail here. This is an out-of-sample robustness
- * check, not a new idea.
+ * Why this strategy: Out-of-sample generalization test of the validated champion
+ * (fear-contrarian bear leg + trend pullback leg with two-tier fear-depth sizing)
+ * on BNB daily bars — an asset NEVER used for tuning. If the fear-depth crash-defense
+ * edge is real and not fitted to BTC/ETH, it should transfer to BNB.
  * When it buys and sells: bear regime buys panic bottoms (fear<40 + lower Bollinger
  * break, mid-band exit, 3x ATR stop); bull regime buys pullbacks to the 20-EMA in a
  * confirmed uptrend. Position is volatility-targeted (~1.5% per 1-ATR move).
