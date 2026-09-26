@@ -11,7 +11,7 @@ Every figure comes from the last verifying backtest at publish time. These are p
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
-|  | [2683](strategies/2683/) | Squeeze Breakout BNB 4H | -6.10% | +2352.68% | +6.35% | 10 | 2026-09-26 |
+|  | [2683](strategies/2683/) | Squeeze Breakout BNB 4H | -2.18% | +63.93% | +2.18% | 2 | 2026-09-26 |
 |  | [2681](strategies/2681/) | Band-Bounce Mean Reversion TRX 4H | +12.16% | +97.86% | +8.20% | 56 | 2026-09-26 |
 |  | [2679](strategies/2679/) | Band-Bounce Mean Reversion DASH 4H | +8.55% | +174.85% | +27.37% | 61 | 2026-09-26 |
 |  | [2678](strategies/2678/) | Band-Bounce Mean Reversion VET 4H | +53.17% | +864.83% | +26.33% | 44 | 2026-09-26 |
