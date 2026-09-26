@@ -11,7 +11,7 @@ Every figure comes from the last verifying backtest at publish time. These are p
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
-| ★ | [2666](strategies/2666/) | VWAP-Pullback SOL 4H TimeStop32 | +119.48% | +64.11% | +24.20% | 79 | 2026-09-26 |
+| ★ | [2666](strategies/2666/) | VWAP-Pullback SOL 4H TimeStop32 | +26.20% | -15.65% | +18.22% | 94 | 2026-09-26 |
 |  | [2665](strategies/2665/) | VWAP-Pullback SOL 4H TimeStop16 | +522.15% | +2935.18% | +16.25% | 72 | 2026-09-26 |
 | ★ | [2664](strategies/2664/) | VWAP-Pullback SOL 4H MomentumEntry+MidVolSize | +93.64% | +64.11% | +22.84% | 82 | 2026-09-26 |
 | ★ | [2663](strategies/2663/) | VWAP-Pullback SOL 4H Control | +27.17% | -15.65% | +19.54% | 90 | 2026-09-26 |
