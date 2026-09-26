@@ -1,6 +1,6 @@
 /*
  * @coinsori-strategy v1
- * name: VWAP-Pullback SOL 4H
+ * name: VWAP-Pullback SOL 4H VolScaled
  * ex: binance
  * syms: SOLUSDT
  * interval: 4h
@@ -8,12 +8,13 @@
  *
  * Why this strategy: Mean reversion to the VWAP (volume-weighted average
  * price) — in an established uptrend, sharp dips back toward VWAP tend to
- * revert up as buyers step in. The prior version returned strongly on SOL
- * (W1 +1357%) but with 63-88% drawdown; a too-tight exit killed the edge,
- * so this version lets winners run on a wide trailing stop only.
+ * revert up as buyers step in. This version adds volatility-scaled position
+ * sizing: when market volatility (ATR/price) is high, it takes a smaller
+ * position, cutting drawdown without changing the entry/exit timing that
+ * creates the edge.
  * When it buys and sells: buys when price pulls back to/below VWAP while the
  * 50-SMA is rising and RSI is not overbought. Sells only on a wide 10-ATR
- * trailing stop (lets melt-ups run) or when the 50-SMA turns down.
+ * trailing stop or when the 50-SMA turns down.
  * When it does NOT work: fails in a true downtrend (pullbacks keep falling)
  * and in low-liquidity chop where VWAP gives no support. The wide stop means
  * large giveback on reversals.
@@ -69,7 +70,16 @@ function onUpdate(ctx) {
   if (ctx.i - lastExit < 6) return null;
   if (price <= vwap * 1.02) {
     s.hi = price;
-    return { side: 'buy', qty: ctx.cash / ctx.price * 0.95 };
+    // Volatility-scaled sizing: when ATR/price is high (turbulent market),
+    // take a smaller position to cut drawdown. Base is 95% of cash; scale
+    // down linearly as vol rises above a calm threshold (2% per 4h bar).
+    const atr = ctx.atr(14, 1);
+    let frac = 0.95;
+    if (atr != null && price > 0) {
+      const vol = atr / price;
+      if (vol > 0.02) frac = Math.max(0.3, 0.95 - (vol - 0.02) * 20);
+    }
+    return { side: 'buy', qty: ctx.cash / ctx.price * frac };
   }
   return null;
 }
