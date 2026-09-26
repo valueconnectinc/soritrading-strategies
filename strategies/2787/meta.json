@@ -3,29 +3,29 @@
   "name": "Liquidation-Capitulation Contrarian BTC 4H",
   "kind": "custom",
   "verified": {
-    "backtestId": 12376,
-    "return": 200.86,
-    "mdd": 51.75,
+    "backtestId": 12383,
+    "return": -0.25,
+    "mdd": 20.31,
     "trades": 13,
     "vsBuyHold": "lose",
-    "benchRet": 824.29,
+    "benchRet": 8.75,
     "benchBasis": "price",
     "gapPct": 0,
-    "tFrom": 1531180800,
-    "tTo": 1617494400,
+    "tFrom": 1617580800,
+    "tTo": 1703894400,
     "approxNotes": [
       "봉 내 순서는 관례(양봉 O→L→H→C·음봉 O→H→L→C) — 실순서 미상 · 봉 중 거래량 null · MDD 는 봉 마감 기준",
-      "기간 종료 시 미청산 포지션 1종목 (총자산의 85.72%) — 이 수익률은 **평가액**을 포함합니다. 퇴출 수수료·거래세를 안 냈고, 마지막 봉 가격에 실제로 팔 수 있다는 보장도 없습니다(얇은 호가·상장폐지). exec.endLiquidate 로 마지막 봉 청산을 켤 수 있습니다"
+      "기간 종료 시 미청산 포지션 1종목 (총자산의 52.81%) — 이 수익률은 **평가액**을 포함합니다. 퇴출 수수료·거래세를 안 냈고, 마지막 봉 가격에 실제로 팔 수 있다는 보장도 없습니다(얇은 호가·상장폐지). exec.endLiquidate 로 마지막 봉 청산을 켤 수 있습니다"
     ],
     "spec": {
       "ex": "binance",
-      "sym": "BTCUSDT",
+      "sym": "ETHUSDT",
       "interval": "1d",
       "bars": 1000,
-      "end": 1617580800
+      "end": 1703980800
     }
   },
   "config": null,
-  "updatedAt": "2026-09-26T22:12:39.457Z",
+  "updatedAt": "2026-09-26T22:13:28.488Z",
   "publishedBy": "scripts/publish-strategies.mjs"
 }

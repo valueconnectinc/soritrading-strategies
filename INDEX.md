@@ -11,7 +11,7 @@ Every figure comes from the last verifying backtest at publish time. These are p
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
-|  | [2787](strategies/2787/) | Liquidation-Capitulation Contrarian BTC 4H | +200.86% | +824.29% | +51.75% | 13 | 2026-09-26 |
+|  | [2787](strategies/2787/) | Liquidation-Capitulation Contrarian BTC 4H | -0.25% | +8.75% | +20.31% | 13 | 2026-09-26 |
 |  | [2786](strategies/2786/) | Regime-Switch Fear+Trend BTC 1D | +3.65% | +45.78% | +47.63% | 59 | 2026-09-26 |
 |  | [2785](strategies/2785/) | EMA20/100 Trend BTC 1D | +209.30% | +743.58% | +44.75% | 29 | 2026-09-26 |
 |  | [2784](strategies/2784/) | Hashrate-Gated Trend BTC 1D | -17.39% | +55.47% | +24.12% | 76 | 2026-09-26 |
