@@ -1,15 +1,15 @@
 /*
  * @coinsori-strategy v1
- * name: Band-Bounce Mean Reversion LTC 4H
+ * name: Band-Bounce Mean Reversion APT 4H
  * ex: binance
- * syms: LTCUSDT
+ * syms: APTUSDT
  * interval: 4h
  * cash: 10000
  *
  * Why this strategy: The band-bounce mean-reversion champion recipe, validated
- * unchanged across 20+ crypto large-caps on 4h. LTC is a mature large-cap with
- * long history and is one of the few top assets not yet run through the recipe —
- * a fresh confirmation of the family's cross-asset robustness.
+ * unchanged across 17+ crypto large-caps on 4h. APT is a top-20 large-cap that
+ * has not yet been run through the recipe — a fresh confirmation of the family's
+ * cross-asset robustness.
  * When it buys and sells: buys when price closes below the lower Bollinger(20,2)
  * with RSI<30 while price is above the 200-SMA; exits at the middle band / RSI>50
  * or a 6-ATR stop; waits 5 bars before re-entering.
