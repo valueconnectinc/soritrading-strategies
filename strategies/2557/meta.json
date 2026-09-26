@@ -1,0 +1,28 @@
+{
+  "id": 2557,
+  "name": "FearGreed Euphoria Short BTC 4H",
+  "kind": "custom",
+  "verified": {
+    "backtestId": 10969,
+    "return": -1.15,
+    "mdd": 3.88,
+    "trades": 10,
+    "vsBuyHold": "unmeasured",
+    "gapPct": 0,
+    "tFrom": 1718380800,
+    "tTo": 1790366400,
+    "approxNotes": [
+      "봉 내 순서는 관례(양봉 O→L→H→C·음봉 O→H→L→C) — 실순서 미상 · 봉 중 거래량 null · MDD 는 봉 마감 기준"
+    ],
+    "spec": {
+      "ex": "binance",
+      "sym": "BTCUSDT",
+      "interval": "4h",
+      "bars": 5000,
+      "end": 1790380800
+    }
+  },
+  "config": null,
+  "updatedAt": "2026-09-26T00:48:48.986Z",
+  "publishedBy": "scripts/publish-strategies.mjs"
+}
