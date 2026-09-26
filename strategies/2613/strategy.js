@@ -1,6 +1,6 @@
 /*
  * @coinsori-strategy v1
- * name: Squeeze Breakout BTC+ETH 1D (200-SMA Gate)
+ * name: Squeeze Breakout BTC+ETH 1D (Fed-Gated Wide Exit)
  * ex: binance
  * syms: BTCUSDT, ETHUSDT
  * interval: 1d
@@ -14,11 +14,14 @@
  * When it buys and sells: on each symbol, buys when band-width is below its
  * 20-bar average AND price closes above the upper Bollinger band AND volume
  * > 1.5x its 20-day average AND price is above the 200-day SMA (only trade the
- * long-term bull regime). Exits on a 2.5x-ATR stop or a 20-day low trail.
+ * long-term bull regime). Exits on a 2.5x-ATR stop or a 20-day low trail; when
+ * the fed is easing/neutral (rate not rising) we WIDEN the trail to a 40-day
+ * low so we hold through normal pullbacks and capture more of a bull run.
  * When it does NOT work: it deliberately stays out of deep bear markets (price
  * below the 200-day SMA), so it gives up the early bounce of a new bull run
- * that starts from below the long average; choppy sideways markets where a
- * squeeze resolves with a failed breakout.
+ * that starts below the long average; choppy sideways markets where a squeeze
+ * resolves with a failed breakout; and if the fed dataset is unavailable the
+ * gate disables and it behaves like the plain 20-day-low version.
  */
 function onUpdate(ctx) {
   const bb = ctx.bb(20, 2, 1);
@@ -32,9 +35,14 @@ function onUpdate(ctx) {
   const pos = ctx.position;
 
   if (pos > 0) {
-    if (price <= ctx.entryPx - atr * 2.5) return { side: 'sell', qty: pos };
-    const ll20 = ctx.low(20, 1);
-    if (ll20 != null && price < ll20) return { side: 'sell', qty: pos };
+    // fed easing/neutral -> wider trail; tightening -> tight trail
+    const fed = ctx.data('fed_lag30');
+    const easing = fed != null && fed <= 5.0; // rate at/below 5% = not tightening
+    const stopMult = easing ? 3.5 : 2.5;
+    if (price <= ctx.entryPx - atr * stopMult) return { side: 'sell', qty: pos };
+    const llN = easing ? 40 : 20;
+    const ll = ctx.low(llN, 1);
+    if (ll != null && price < ll) return { side: 'sell', qty: pos };
     return null;
   }
 
