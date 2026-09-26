@@ -1,6 +1,6 @@
 /*
  * @coinsori-strategy v1
- * name: Multi-Symbol Squeeze Breakout BTC+ETH 1D WideExit
+ * name: Multi-Symbol Squeeze Breakout BTC+ETH 1D
  * ex: binance
  * syms: BTCUSDT, ETHUSDT
  * interval: 1d
@@ -15,13 +15,11 @@
  * the defensive bear-market profile.
  * When it buys and sells: on each symbol, buys when band-width hits a 100-day
  * minimum AND price closes above the upper Bollinger band AND volume > 1.5x its
- * average. Exits on a 3.5x-ATR stop or a 40-day low trail — WIDER than the base
- * version (2.5x ATR / 20-day low) so strong bull moves are not cut off early.
+ * average. Exits on a 2.5x-ATR stop or a 20-day low trail.
  * When it does NOT work: choppy sideways markets where a squeeze resolves with a
  * failed breakout; bear markets where the breakout is a bull trap. The volume
  * filter keeps false signals down but cannot eliminate them. It also lags very
- * strong straight-line bull runs because it waits for a fresh squeeze, and the
- * wider exit gives back more profit in reversals.
+ * strong straight-line bull runs because it waits for a fresh squeeze.
  */
 function onUpdate(ctx) {
   // Trade whichever symbol we are on; apply the same rules to each.
@@ -35,11 +33,9 @@ function onUpdate(ctx) {
   const pos = ctx.position;
 
   if (pos > 0) {
-    // Wider exits: 3.5x ATR stop (was 2.5x) and 40-day low trail (was 20-day)
-    // so we hold through bull-run pullbacks instead of being shaken out.
-    if (price <= ctx.entryPx - atr * 3.5) return { side: 'sell', qty: pos };
-    const ll40 = ctx.low(40, 1);
-    if (ll40 != null && price < ll40) return { side: 'sell', qty: pos };
+    if (price <= ctx.entryPx - atr * 2.5) return { side: 'sell', qty: pos };
+    const ll20 = ctx.low(20, 1);
+    if (ll20 != null && price < ll20) return { side: 'sell', qty: pos };
     return null;
   }
 
