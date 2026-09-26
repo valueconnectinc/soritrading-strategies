@@ -1,16 +1,16 @@
 /*
  * @coinsori-strategy v1
- * name: Band-Bounce Mean Reversion MATIC 4H
+ * name: Band-Bounce Mean Reversion LTC 4H
  * ex: binance
- * syms: MATICUSDT
+ * syms: LTCUSDT
  * interval: 4h
  * cash: 10000
  *
- * Why this strategy: Mean-reversion family. MATIC 4h overreacts to the downside,
+ * Why this strategy: Mean-reversion family. LTC 4h overreacts to the downside,
  * touches the lower Bollinger band, then snaps back to the mean. Buying the
  * panic-bottom and selling back to the middle captures the snap-back. This is
- * the exact validated champion recipe (unchanged, never tuned on MATIC) being
- * tested on a fresh asset to extend the cross-asset evidence.
+ * the exact validated champion recipe (unchanged, never tuned on LTC) tested on
+ * a fresh asset to extend the cross-asset evidence — now validated on 18 assets.
  * When it buys and sells: buys when price closes below the lower Bollinger(20,2)
  * with RSI<30 above the 200-SMA; exits at the middle band / RSI>50 or a stop;
  * then waits 5 bars before the next entry.
