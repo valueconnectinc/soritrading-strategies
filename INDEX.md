@@ -11,7 +11,7 @@ Every figure comes from the last verifying backtest at publish time. These are p
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
-| ★ | [2602](strategies/2602/) | Bollinger Squeeze Volume Breakout BTC 1D | +61.25% | +27.72% | +28.18% | 37 | 2026-09-26 |
+| ★ | [2602](strategies/2602/) | Bollinger Squeeze Volume Breakout BTC 1D | +582.33% | +216.02% | +31.98% | 37 | 2026-09-26 |
 |  | [2601](strategies/2601/) | Defensive Donchian Price-Bull Wide Exit DOGE 1D | +10.76% | +32.42% | +72.06% | 19 | 2026-09-26 |
 | ★ | [2600](strategies/2600/) | Band-Bounce Mean Reversion DOGE 4H | -16.16% | -27.42% | +29.96% | 46 | 2026-09-26 |
 |  | [2599](strategies/2599/) | OI Sentiment Trend BTC 4H | -96.24% | +27.10% | +96.79% | 555 | 2026-09-26 |
