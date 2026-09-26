@@ -11,7 +11,7 @@ Every figure comes from the last verifying backtest at publish time. These are p
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
-|  | [2779](strategies/2779/) | OBV Volume-Flow Trend BTC 1D | -17.81% | +56.20% | +28.79% | 2 | 2026-09-26 |
+|  | [2779](strategies/2779/) | OBV Volume-Flow Trend BTC 1D | +18.18% | +45.78% | +46.24% | 51 | 2026-09-26 |
 |  | [2778](strategies/2778/) | AI 전략 | -59.65% | +1258.25% | +86.61% | 384 | 2026-09-26 |
 |  | [2777](strategies/2777/) | AI 전략 | +40.01% | +1258.25% | +85.06% | 6 | 2026-09-26 |
 | ★ | [2776](strategies/2776/) | AI 전략 | +49.28% | +42.23% | +64.39% | 93 | 2026-09-26 |

@@ -1,25 +1,23 @@
 /*
  * @coinsori-strategy v1
- * name: OBV Volume-Flow Trend BTC 1D
+ * name: OBV Volume-Flow Trend + Trailing Stop BTC 1D
  * ex: binance
  * syms: BTCUSDT
  * interval: 1d
  * cash: 10000
  *
- * Why this strategy: A genuinely different signal source — volume flow instead
- * of price or on-chain addresses. On-Balance Volume (OBV) accumulates up-day
- * volume and subtracts down-day volume, so it tracks whether money is flowing
- * in or out over time. Hypothesis: a rising OBV 30-day trend with price above
- * its 200-day average confirms an accumulation-driven uptrend; a falling OBV
- * trend warns of distribution even if price looks flat.
+ * Why this strategy: Volume flow (OBV) tracks whether money is accumulating or
+ * distributing better than price alone. A rising OBV trend with price above its
+ * 200-day average confirms an accumulation-driven uptrend. Adding a trailing
+ * stop lets winners run during strong melt-ups (where a pure OBV-flip exit
+ * exits too early) while still cutting losers on real reversals.
  * When it buys and sells: buys when smoothed OBV is clearly rising vs ~30 days
- * earlier AND price is above its 200-day average AND today's volume is above
- * its 30-day average (confirms the flow is real, not a thin quiet drift);
- * sells when smoothed OBV turns down. Hysteresis + cooldown reduce churn.
- * When it does NOT work: OBV can diverge from price for long stretches in
- * choppy sideways markets, causing whipsaw; and like all trend signals it lags
- * sharp V-shaped melt-ups where volume spikes before the 30-day average catches
- * up.
+ * ago AND price is above its 200-day average AND today's volume is above its
+ * 30-day average. Sells when price drops 20% from its highest close since entry
+ * (trailing stop) OR when OBV turns down. Hysteresis + cooldown reduce churn.
+ * When it does NOT work: OBV can diverge from price in choppy sideways markets,
+ * causing whipsaw; and the 20% trailing stop lets a fast bear-market crash run
+ * to -20% before exiting, which is slower than a tight stop.
  */
 function onUpdate(ctx) {
   const pos = ctx.position;
@@ -35,7 +33,6 @@ function onUpdate(ctx) {
   const vols = ctx.volumes;
   if (!closes || !vols || closes.length < 32) return null;
 
-  // Recompute OBV over available history each bar (cheap, deterministic).
   let obv = 0;
   const obvSeries = [];
   for (let k = 1; k < closes.length; k++) {
@@ -49,7 +46,7 @@ function onUpdate(ctx) {
   const obvNow = obvSeries[obvSeries.length - 1];
   const obvPast = obvSeries[obvSeries.length - 31];
 
-  // Hysteresis: 1.0% instead of 0.5% to cut the 136-trade churn in W3.
+  // Hysteresis: 1.0% to cut churn (validated last cycle).
   const rising = obvNow > obvPast * 1.01;
   const falling = obvNow < obvPast * 0.99;
 
@@ -65,6 +62,16 @@ function onUpdate(ctx) {
   ctx.state.cd = cd;
 
   if (pos > 0) {
+    // Trailing stop: track highest close since entry; exit if price drops 20%
+    // below it. 20% is wide enough to survive normal pullbacks in a melt-up but
+    // catches real reversals. Lets winners run in W3-style strong uptrends.
+    const peak = st.peak || price;
+    if (price > peak) st.peak = price;
+    if (price < st.peak * 0.80 && cd === 0) {
+      ctx.state.cd = 5;
+      return { side: 'sell', qty: pos };
+    }
+    // Backup OBV exit: distribution signal even if price hasn't dropped 20%.
     if (falling && cd === 0) {
       ctx.state.cd = 5;
       return { side: 'sell', qty: pos };
@@ -73,6 +80,7 @@ function onUpdate(ctx) {
   }
   if (rising && price > sma200 && volOk && cd === 0) {
     ctx.state.cd = 5;
+    st.peak = price;
     return { side: 'buy', qty: ctx.cash / price * 0.95 };
   }
   return null;
