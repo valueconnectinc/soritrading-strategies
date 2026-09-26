@@ -9,15 +9,15 @@
  * Why this strategy: The validated band-bounce champion is defensive but its
  * known weakness is missing bull melt-ups (SOL W1 +145% vs hold +2922%).
  * This variant keeps the champion's exact panic-bottom entry but improves the
- * EXIT: in a confirmed uptrend it holds winners with a trailing stop instead
- * of exiting at the middle band, so it can ride a strong bull. No new entries,
- * so it avoids the whipsaw that killed the trend-participation leg.
+ * EXIT: in a confirmed uptrend it holds winners with a wide trailing stop
+ * instead of exiting at the middle band, so it can ride a strong bull.
+ * No new entries, so it avoids the whipsaw that killed the trend-participation leg.
  * When it buys and sells: same buy as the champion (lower Bollinger + RSI<30
  * above the 200-SMA). Exit: if in a strong uptrend (20-EMA above 50-EMA above
- * 200-SMA) hold with a 6-ATR trailing stop; otherwise exit at mid-band / RSI>50.
+ * 200-SMA) hold with a 12-ATR trailing stop; otherwise exit at mid-band / RSI>50.
  * When it does NOT work: below the 200-SMA it never buys; a panic that keeps
- * falling still loses; choppy bull phases can give back gains before the
- * trailing stop triggers. Defensive core, slightly more upside participation.
+ * falling still loses; a choppy bull can give back gains before the wide trail
+ * triggers. Defensive core, slightly more upside participation.
  */
 function onUpdate(ctx) {
   const bb = ctx.bb(20, 2, 1);
@@ -32,12 +32,11 @@ function onUpdate(ctx) {
   const atr = ctx.atr(14, 1);
 
   if (pos > 0) {
-    // Confirmed uptrend: hold with a trailing stop instead of mid-band exit.
-    // This is the one change vs the champion — lets winners ride a bull.
     const strongTrend = price > sma200 && ema20 > ema50;
     if (strongTrend && atr != null) {
-      const trail = ctx.state.trail || (ctx.entryPx - atr * 6);
-      const newTrail = Math.max(trail, price - atr * 6);
+      // Wide 12-ATR trail lets a big melt-up run without giving back early.
+      const trail = ctx.state.trail || (ctx.entryPx - atr * 12);
+      const newTrail = Math.max(trail, price - atr * 12);
       ctx.state.trail = newTrail;
       if (price <= newTrail) {
         ctx.state.lastExit = ctx.i;
@@ -46,7 +45,6 @@ function onUpdate(ctx) {
       }
       return null;
     }
-    // Not in a strong uptrend: standard champion exit.
     if (price >= bb.mid || rsi > 50) {
       ctx.state.lastExit = ctx.i;
       ctx.state.trail = null;
