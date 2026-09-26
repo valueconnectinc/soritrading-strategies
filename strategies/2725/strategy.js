@@ -1,13 +1,13 @@
 /*
  * @coinsori-strategy v1
- * name: Band-Bounce Mean Reversion ETC 4H
+ * name: Band-Bounce Mean Reversion EOS 4H
  * ex: binance
- * syms: ETCUSDT
+ * syms: EOSUSDT
  * interval: 4h
  * cash: 10000
  *
  * Why this strategy: The band-bounce mean-reversion champion recipe, validated
- * unchanged across 20+ crypto large-caps on 4h. ETC is a mature large-cap with
+ * unchanged across 20+ crypto large-caps on 4h. EOS is a mature large-cap with
  * full history and a mean-reverting character — the type of asset where the
  * family's defensive edge is strongest — and has not yet been run through the recipe.
  * When it buys and sells: buys when price closes below the lower Bollinger(20,2)
