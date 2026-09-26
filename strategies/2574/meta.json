@@ -3,7 +3,7 @@
   "name": "Donchian Hashrate Regime BTC 1D",
   "kind": "custom",
   "verified": {
-    "backtestId": 11071,
+    "backtestId": 11074,
     "return": 67.13,
     "mdd": 43.19,
     "trades": 29,
