@@ -1,56 +1,53 @@
 /*
  * @coinsori-strategy v1
- * name: Band-Bounce Mean Reversion LTC 4H Scale-Out
+ * name: Defensive Donchian Price-Bull Wide Exit BTC 1D
  * ex: binance
- * syms: LTCUSDT
- * interval: 4h
+ * syms: BTCUSDT
+ * interval: 1d
  * cash: 10000
  *
- * Why this strategy: Mean-reversion family, complementary to trend-following.
- * LTC 4h regularly overreacts to the downside, touching the lower Bollinger
- * band, then snaps back to the mean. Buying that panic-bottom and selling
- * back to the middle captures the snap-back. This adds PARTIAL SCALE-OUT
- * (confirmed to cut MDD from ~30% to ~15-23% in the band-bounce recipe):
- * sell half at the middle band, let the rest ride toward the upper band.
- * When it buys and sells: buys when price closes below the lower Bollinger(20,2)
- * band with RSI<30 (panic), only when price is above the 200-period SMA (don't
- * catch knives in a downtrend); sells half at the middle band / RSI>50, the
- * rest at the upper band, or a hard stop.
- * When it does NOT work: lags strong melt-ups (sits in cash during rallies);
- * in a sustained downtrend below the 200-SMA it never buys; a panic that keeps
- * falling still loses. Mean reversion is defensive, not a trend rider.
+ * Why this strategy: The data-independent defensive Donchian family is the
+ * reliable offline fallback, but it exits too early on normal pullbacks in
+ * strong bull runs (the fed gate fixes this but needs external data). Here I
+ * replace the fed gate with a PURE-PRICE bull proxy: when price holds above
+ * its 100-day EMA, the market is in a confirmed uptrend, so we hold through
+ * normal pullbacks with a wider 60-day exit; below it we use the tight
+ * 30-day exit. This captures more bull upside with NO external data, so it
+ * runs identically whether or not the user's agent is online.
+ * When it buys and sells: buys a 55-day-high breakout (unless in a steep
+ * downtrend), sized by inverse volatility; exits on a 3x-ATR stop, or a
+ * 60-day low when price>EMA100, else a tight 30-day low.
+ * When it does NOT work: high drawdown in sharp reversals (MDD 40-60% is
+ * inherent); the EMA100 proxy is cruder than the fed gate and may keep the
+ * wide stop active into an early bear; underperforms in choppy sideways.
  */
 function onUpdate(ctx) {
-  const bb = ctx.bb(20, 2, 1);
-  const rsi = ctx.rsi(14, 1);
-  const sma200 = ctx.sma(200, 1);
-  if (bb == null || rsi == null || sma200 == null) return null;
+  const hh55 = ctx.high(55, 1);
+  const ll30 = ctx.low(30, 1);
+  const atr = ctx.atr(14, 1);
+  const ema50 = ctx.ema(50, 1);
+  const ema100 = ctx.ema(100, 1);
+  if (hh55 == null || ll30 == null || atr == null || ema50 == null || ema100 == null) return null;
 
   const price = ctx.price;
   const pos = ctx.position;
-  const atr = ctx.atr(14, 1);
 
   if (pos > 0) {
-    // Hard stop first: cap a panic that keeps falling (6x ATR was too loose
-    // at ~30% MDD; tighten to 4x to cut drawdown while still allowing a dip).
-    if (atr != null && price <= ctx.entryPx - atr * 4) return { side: 'sell', qty: pos };
-    // Partial scale-out: sell HALF when price recovers to the middle band or
-    // RSI turns neutral — locks in the snap-back, frees cash, cuts MDD.
-    if (price >= bb.mid || rsi > 50) {
-      return { side: 'sell', qty: pos * 0.5 };
-    }
-    // Full exit if the remaining half reaches the upper band (mean reversion
-    // complete / overbought).
-    if (price >= bb.upper) return { side: 'sell', qty: pos };
+    if (price <= ctx.entryPx - atr * 3) return { side: 'sell', qty: pos };
+    // Wide 60-day exit only in a confirmed bull (price above 100-day EMA),
+    // else tight 30-day. Pure-price proxy for the fed gate.
+    const exitLow = price > ema100 ? ctx.low(60, 1) : ll30;
+    if (exitLow != null && price < exitLow) return { side: 'sell', qty: pos };
     return null;
   }
 
-  // Only buy panic-bottoms when the long-term trend is intact (above 200-SMA),
-  // so we catch oversold dips in an uptrend, not falling knives in a downtrend.
-  if (price < sma200) return null;
+  const inSteepDowntrend = price < ema50 - atr * 3;
+  if (inSteepDowntrend) return null;
 
-  if (price < bb.lower && rsi < 30) {
-    return { side: 'buy', qty: ctx.cash / ctx.price * 0.95 };
+  if (price > hh55) {
+    const volRatio = atr / price;
+    const size = Math.min(0.99, Math.max(0.25, 0.03 / volRatio));
+    return { side: 'buy', qty: ctx.cash / ctx.price * size };
   }
   return null;
 }
