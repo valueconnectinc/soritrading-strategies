@@ -11,7 +11,7 @@ Every figure comes from the last verifying backtest at publish time. These are p
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
-| ★ | [2568](strategies/2568/) | Defensive Donchian Trend ADA 1D | +43.45% | -49.44% | +38.49% | 19 | 2026-09-26 |
+| ★ | [2568](strategies/2568/) | Defensive Donchian Trend ADA 1D | +30.26% | -49.44% | +74.53% | 19 | 2026-09-26 |
 | ★ | [2567](strategies/2567/) | Donchian Breakout ADA 1D | -14.22% | -42.56% | +37.68% | 2 | 2026-09-26 |
 | ★ | [2566](strategies/2566/) | Pure-Price Hybrid ADA 1D | +519.00% | +320.17% | +42.70% | 73 | 2026-09-26 |
 |  | [2565](strategies/2565/) | Pure-Price Hybrid ETH 1D | +13.57% | +56.20% | +27.03% | 19 | 2026-09-26 |

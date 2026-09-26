@@ -8,10 +8,10 @@
  *
  * Why this strategy: The Donchian channel breakout is the only non-champion
  * family that beats buy-and-hold (ADA 1d: W1 +409% vs hold +320%), but its
- * 62-74% drawdown is too high. This version keeps the trend-breakout edge but
- * tames the drawdown with the champion's proven defensive tools: ATR
- * vol-targeted sizing (smaller position in volatile markets) and a
- * steep-downtrend filter that refuses to buy breakouts while price is crashing.
+ * 62-74% drawdown is too high. This version keeps the full trend-breakout
+ * position (no vol-targeting, which killed the bull edge) but tames drawdown
+ * with a steep-downtrend filter that refuses to buy breakouts while price is
+ * crashing, plus a 3x-ATR disaster stop.
  * When it buys and sells: buys when price breaks a 55-day high AND price is not
  * in a steep downtrend; sells on a 30-day low or a 3x-ATR disaster stop.
  * When it does NOT work: it still underperforms buy-and-hold in choppy sideways
@@ -41,11 +41,7 @@ function onUpdate(ctx) {
   if (inSteepDowntrend) return null;
 
   if (price > hh55) {
-    // ATR vol-targeting: smaller position when volatility is high (champion's proven sizing)
-    const riskBudget = 0.015;
-    const volFrac = riskBudget / (atr / price);
-    const qty = (ctx.cash / price) * Math.min(volFrac, 0.99);
-    return { side: 'buy', qty: qty };
+    return { side: 'buy', qty: ctx.cash / ctx.price * 0.99 };
   }
   return null;
 }
