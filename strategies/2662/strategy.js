@@ -1,6 +1,6 @@
 /*
  * @coinsori-strategy v1
- * name: VWAP-Pullback SOL 4H VolScaled
+ * name: VWAP-Pullback SOL 4H
  * ex: binance
  * syms: SOLUSDT
  * interval: 4h
@@ -8,13 +8,12 @@
  *
  * Why this strategy: Mean reversion to the VWAP (volume-weighted average
  * price) — in an established uptrend, sharp dips back toward VWAP tend to
- * revert up as buyers step in. This version adds volatility-scaled position
- * sizing: only when volatility (ATR/price) is genuinely extreme does it cut
- * the position, reducing panic-window drawdown while keeping full exposure in
- * normal volatile-but-rising markets (so melt-up capture is preserved).
+ * revert up as buyers step in. The prior version returned strongly on SOL
+ * but with high drawdown; a too-tight exit killed the edge, so this version
+ * lets winners run on a wide trailing stop only.
  * When it buys and sells: buys when price pulls back to/below VWAP while the
  * 50-SMA is rising and RSI is not overbought. Sells only on a wide 10-ATR
- * trailing stop or when the 50-SMA turns down.
+ * trailing stop (lets melt-ups run) or when the 50-SMA turns down.
  * When it does NOT work: fails in a true downtrend (pullbacks keep falling)
  * and in low-liquidity chop where VWAP gives no support. The wide stop means
  * large giveback on reversals.
@@ -69,17 +68,7 @@ function onUpdate(ctx) {
   if (ctx.i - lastExit < 6) return null;
   if (price <= vwap * 1.02) {
     s.hi = price;
-    // Volatility-scaled sizing, gentle: only cut the position when ATR/price
-    // is extreme (panic regime, >3.5% per 4h bar). Normal volatility keeps
-    // full ~95% exposure so melt-ups are still captured. Scale down linearly
-    // to a 40% floor at very high vol.
-    const atr = ctx.atr(14, 1);
-    let frac = 0.95;
-    if (atr != null && price > 0) {
-      const vol = atr / price;
-      if (vol > 0.035) frac = Math.max(0.4, 0.95 - (vol - 0.035) * 12);
-    }
-    return { side: 'buy', qty: ctx.cash / ctx.price * frac };
+    return { side: 'buy', qty: ctx.cash / ctx.price * 0.95 };
   }
   return null;
 }
