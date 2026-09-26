@@ -11,7 +11,7 @@ Every figure comes from the last verifying backtest at publish time. These are p
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
-|  | [2583](strategies/2583/) | AI 전략 | +570.87% | +814.68% | +52.70% | 10 | 2026-09-26 |
+|  | [2583](strategies/2583/) | AI 전략 | +167.63% | +814.68% | +46.70% | 16 | 2026-09-26 |
 | ★ | [2582](strategies/2582/) | Fed-Gated Defensive Donchian BTC 1D | +550.68% | +245.42% | +44.42% | 16 | 2026-09-26 |
 | ★ | [2581](strategies/2581/) | Donchian Binary Vol-Adaptive Size BTC 1D | +558.49% | +270.70% | +38.65% | 19 | 2026-09-26 |
 |  | [2580](strategies/2580/) | Donchian Vol-Adaptive Size BTC 1D (thr4) | +77.42% | +262.64% | +42.05% | 29 | 2026-09-26 |
