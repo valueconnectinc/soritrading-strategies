@@ -35,14 +35,11 @@ function onUpdate(ctx) {
 
   // --- Exit ---
   if (pos > 0) {
-    // Hard regime flip: if we were long in the trend mode and price closes
-    // below the 200-day, the bull is over — get out.
     if (st.mode === 'trend' && price < sma200) {
       st.mode = null; st.peak = null;
       return { side: 'sell', qty: pos };
     }
     if (st.mode === 'trend') {
-      // Trailing stop: stay long while price holds within 8x ATR of the peak.
       const atr = ctx.atr(14, 1);
       if (atr == null) return null;
       const peak = Math.max(st.peak || ctx.entryPx || price, price);
@@ -53,8 +50,6 @@ function onUpdate(ctx) {
       }
       return null;
     }
-    // Mean-reversion mode exit: bounce exhausted when RSI recovers >50 or
-    // price closes back above the middle Bollinger band.
     const bb = ctx.bb(20, 2, 1), rsi = ctx.rsi(14, 1);
     if (bb == null || rsi == null) return null;
     if (rsi > 50 || price > bb.mid) {
@@ -63,7 +58,7 @@ function onUpdate(ctx) {
     }
     const stopPx = st.peak != null ? st.peak * 0.75 : (ctx.entryPx || price) * 0.75;
     if (price < stopPx) {
-      st.peak = null; st.mode = null;
+      st.mode = null; st.peak = null;
       return { side: 'sell', qty: pos };
     }
     if (price > (st.peak || 0)) st.peak = price;
@@ -83,7 +78,7 @@ function onUpdate(ctx) {
     if (hi10 == null || lo20 == null || hi10prev == null) return null;
     if (price <= lo20 && hi10 > hi10prev) {
       st.mode = 'trend'; st.peak = price;
-      return { side: 'buy', qty: ctx.cash / price * 0.5 };
+      return { side: 'buy', qty: ctx.cash / price * 0.9 };
     }
     return null;
   }

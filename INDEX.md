@@ -11,7 +11,7 @@ Every figure comes from the last verifying backtest at publish time. These are p
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
-|  | [2795](strategies/2795/) | BTC 1D Regime-Switch Blend (Trend + Mean Reversion) | +26.73% | +262.64% | +27.01% | 28 | 2026-09-26 |
+|  | [2795](strategies/2795/) | BTC 1D Regime-Switch Blend (Trend + Mean Reversion) | +147.96% | +270.70% | +55.94% | 32 | 2026-09-26 |
 |  | [2794](strategies/2794/) | BTC 4H Trend-Scaled Band-Bounce Mean Reversion | +16.11% | +435.09% | +9.39% | 53 | 2026-09-26 |
 |  | [2793](strategies/2793/) | BTC 1D Pure Band-Bounce Champion (control) | +27.24% | +262.64% | +7.04% | 16 | 2026-09-26 |
 |  | [2792](strategies/2792/) | BTC 1D Trend-Scaled Band-Bounce Mean Reversion | +30.00% | +262.64% | +7.54% | 46 | 2026-09-26 |
