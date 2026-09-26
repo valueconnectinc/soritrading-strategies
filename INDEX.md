@@ -11,7 +11,7 @@ Every figure comes from the last verifying backtest at publish time. These are p
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
-|  | [2592](strategies/2592/) | Fear-Greed Contrarian Mean Reversion BTC 1D | -55.83% | +270.70% | +65.28% | 7 | 2026-09-26 |
+|  | [2592](strategies/2592/) | Fear-Greed Contrarian Mean Reversion BTC 1D | -6.31% | +55.47% | +23.52% | 3 | 2026-09-26 |
 |  | [2591](strategies/2591/) | Defensive Donchian Price-Bull Wide Exit BTC 1D | +0.08% | +55.47% | +34.14% | 4 | 2026-09-26 |
 |  | [2590](strategies/2590/) | OnChain Addr-Growth Gate Defensive Donchian BTC 1D | +2.54% | +55.47% | +32.45% | 6 | 2026-09-26 |
 |  | [2589](strategies/2589/) | Defensive Donchian ETH 1D (Data-Independent) | +32.60% | +56.20% | +42.23% | 4 | 2026-09-26 |
