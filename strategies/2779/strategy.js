@@ -13,8 +13,9 @@
  * its 200-day average confirms an accumulation-driven uptrend; a falling OBV
  * trend warns of distribution even if price looks flat.
  * When it buys and sells: buys when smoothed OBV is clearly rising vs ~30 days
- * earlier AND price is above its 200-day average; sells when smoothed OBV turns
- * down. Hysteresis + cooldown reduce churn.
+ * earlier AND price is above its 200-day average AND today's volume is above
+ * its 30-day average (confirms the flow is real, not a thin quiet drift);
+ * sells when smoothed OBV turns down. Hysteresis + cooldown reduce churn.
  * When it does NOT work: OBV can diverge from price for long stretches in
  * choppy sideways markets, causing whipsaw; and like all trend signals it lags
  * sharp V-shaped melt-ups where volume spikes before the 30-day average catches
@@ -52,6 +53,11 @@ function onUpdate(ctx) {
   const rising = obvNow > obvPast * 1.01;
   const falling = obvNow < obvPast * 0.99;
 
+  // Volume confirmation: only enter when today's volume is above its 30-day
+  // average — a rising OBV on quiet volume is a weak drift, not accumulation.
+  const avgV = ctx.avgVol(30);
+  const volOk = avgV != null && Number.isFinite(avgV) && avgV > 0 && ctx.vol > avgV;
+
   // Cooldown: after a flip, wait 5 bars before flipping again (cuts whipsaw).
   const st = ctx.state;
   let cd = st.cd || 0;
@@ -65,7 +71,7 @@ function onUpdate(ctx) {
     }
     return null;
   }
-  if (rising && price > sma200 && cd === 0) {
+  if (rising && price > sma200 && volOk && cd === 0) {
     ctx.state.cd = 5;
     return { side: 'buy', qty: ctx.cash / price * 0.95 };
   }
