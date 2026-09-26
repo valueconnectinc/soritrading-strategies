@@ -3,16 +3,16 @@
   "name": "ETH 4H Band-Bounce Champion Control",
   "kind": "custom",
   "verified": {
-    "backtestId": 12487,
-    "return": 46.85,
-    "mdd": 45.91,
-    "trades": 58,
+    "backtestId": 12491,
+    "return": 48.59,
+    "mdd": 46.11,
+    "trades": 48,
     "vsBuyHold": "lose",
-    "benchRet": 1620.25,
+    "benchRet": 2723.53,
     "benchBasis": "price",
     "gapPct": 0,
-    "tFrom": 1574438400,
-    "tTo": 1646438400,
+    "tFrom": 1577836800,
+    "tTo": 1640980800,
     "approxNotes": [
       "봉 내 순서는 관례(양봉 O→L→H→C·음봉 O→H→L→C) — 실순서 미상 · 봉 중 거래량 null · MDD 는 봉 마감 기준"
     ],
@@ -20,8 +20,8 @@
       "ex": "binance",
       "sym": "ETHUSDT",
       "interval": "4h",
-      "bars": 5000,
-      "end": 1646452800
+      "bars": 4386,
+      "end": 1640995200
     }
   },
   "config": null,

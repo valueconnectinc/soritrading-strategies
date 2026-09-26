@@ -11,7 +11,7 @@ Every figure comes from the last verifying backtest at publish time. These are p
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
-|  | [2804](strategies/2804/) | ETH 4H Band-Bounce Champion Control | +46.85% | +1620.25% | +45.91% | 58 | 2026-09-26 |
+|  | [2804](strategies/2804/) | ETH 4H Band-Bounce Champion Control | +48.59% | +2723.53% | +46.11% | 48 | 2026-09-26 |
 | ★ | [2803](strategies/2803/) | ETH 4H Band-Bounce Champion + Fed Gate | +7.18% | -50.44% | +23.90% | 21 | 2026-09-26 |
 | ★ | [2802](strategies/2802/) | SOL 1D Fed-Funds Rate Regime Gate | +67.52% | -28.73% | +59.86% | 41 | 2026-09-26 |
 |  | [2801](strategies/2801/) | ETH 1D Fed-Funds Rate Regime Gate | +234.20% | +324.12% | +72.21% | 66 | 2026-09-26 |
