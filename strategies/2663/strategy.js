@@ -10,12 +10,12 @@
  * price) — in an established uptrend, sharp dips back toward VWAP tend to
  * revert up as buyers step in. Builds on the previous soft-regime version
  * (block entries only when the 200-SMA is declining) and adds a MILD partial
- * profit-taking step: once price has climbed ~4 ATR from entry, bank a
- * quarter of the position to trim giveback, leaving most exposure to ride
- * the trend. This lowers drawdown while keeping most of the big moves.
+ * profit-taking step: once price has climbed ~4 ATR from entry, bank a third
+ * of the position to trim giveback, leaving most exposure to ride the trend.
+ * This lowers drawdown while keeping most of the big moves.
  * When it buys and sells: buys when price pulls back to/below VWAP while the
  * 50-SMA is rising, RSI is not overbought, and the 200-SMA is not declining.
- * Sells a quarter at +4 ATR, then the rest on the 50-SMA turn-down or 10-ATR.
+ * Sells a third at +4 ATR, then the rest on the 50-SMA turn-down or 10-ATR.
  * When it does NOT work: fails in a true downtrend (pullbacks keep falling)
  * and in low-liquidity chop where VWAP gives no support. The remaining wide
  * stop still means giveback on sharp reversals.
@@ -50,13 +50,13 @@ function onUpdate(ctx) {
     }
     if (atr != null) {
       s.hi = s.hi == null ? price : Math.max(s.hi, price);
-      // Mild partial take-profit: at +4 ATR bank a quarter of the position.
-      // 4 ATR keeps most of the trend upside, a quarter of the size trims
-      // giveback without capping the winner like the more aggressive versions.
+      // Mild partial take-profit: at +4 ATR bank a third of the position.
+      // 4 ATR keeps most of the trend upside, a third of the size trims
+      // giveback without capping the winner like the half-at-2ATR version.
       if (s.entry != null && !s.halfTaken) {
         if (price >= s.entry + atr * 4) {
           s.halfTaken = true;
-          return { side: 'sell', qty: pos / 4 };
+          return { side: 'sell', qty: pos / 3 };
         }
       }
       if (price <= s.hi - atr * 10) {
