@@ -4,14 +4,14 @@ Every strategy whose backtest **finished and actually traded** is published here
 Nothing is filtered out by return — the ones that lost money are part of the record.
 Entries stay after a strategy is removed from our own workspace — this is a log, and deleting the record would leave only the survivors.
 
-**★ marks a strategy that out-returned buy & hold over the same window** — 315 of 1052 right now.
+**★ marks a strategy that out-returned buy & hold over the same window** — 314 of 1052 right now.
 `—` means the comparison **could not be made**: the engine does not compute a benchmark for multi-symbol, futures, or multi-leg runs. That is *unknown*, not *lost*, and it is 197 of them right now.
 
 Every figure comes from the last verifying backtest at publish time. These are past results over historical data. Nothing here is promised or assured about the future, and none of it is investment advice.
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
-| ★ | [2628](strategies/2628/) | Trend-Gated Vol-Target ETH 1D | -41.79% | -49.44% | +42.58% | 1189 | 2026-09-26 |
+|  | [2628](strategies/2628/) | Trend-Gated Vol-Target ETH 1D | -34.34% | +209.08% | +37.04% | 1389 | 2026-09-26 |
 |  | [2627](strategies/2627/) | Squeeze Breakout XRP 4H (Risk-Sized + MACD Gate) | +148.12% | +228.36% | +38.49% | 71 | 2026-09-26 |
 |  | [2626](strategies/2626/) | Squeeze Breakout BNB 4H (Risk-Sized + MACD Gate) | +210.73% | +2229.83% | +21.27% | 63 | 2026-09-26 |
 |  | [2625](strategies/2625/) | AI 전략 | +70.52% | +3087.79% | +16.85% | 57 | 2026-09-26 |
