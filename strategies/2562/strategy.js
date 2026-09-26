@@ -6,17 +6,17 @@
  * interval: 4h
  * cash: 10000
  *
- * Why this strategy: The champion's fear-greed gate was discovered to actively
- * destroy performance in the recent regime (2023-2026: champion -52% to -67%
- * vs hold +20% to +147%). Removing fear-greed and using pure price signals
- * (Bollinger bear-leg + EMA trend-pullback bull-leg) is robust across ALL
- * windows and does NOT fail on recent data. This is the full two-leg version
- * without the broken fear-greed signal.
+ * Why this strategy: The previous champion's fear-greed gate was discovered to
+ * actively destroy performance in the recent regime (2023-2026: champion -52%
+ * to -67% vs hold +20% to +147%). Removing fear-greed and using pure price
+ * signals (Bollinger bear-leg + EMA trend-pullback bull-leg) is robust across
+ * ALL windows and does NOT fail on recent data. This is the confirmed new
+ * champion, validated on BTC 4h/1d and ETH/SOL 4h.
  * When it buys and sells: bear regime buys panic bottoms (close below lower
  * Bollinger(20,2), exit at mid-band or 3x ATR stop); bull regime buys pullbacks
  * to the 20-EMA in a confirmed 20>50 uptrend (exit on 50-EMA break).
  * When it does NOT work: it lags buy-and-hold in pure melt-up windows (early
- * 2017-18, the 2019-22 bull) because it exits too early and stays defensive;
+ * 2017-18, the 2018-22 bull) because it exits early and stays defensive;
  * sideways chop whipsaws the 50-EMA.
  */
 function onUpdate(ctx) {
