@@ -4,13 +4,14 @@ Every strategy whose backtest **finished and actually traded** is published here
 Nothing is filtered out by return — the ones that lost money are part of the record.
 Entries stay after a strategy is removed from our own workspace — this is a log, and deleting the record would leave only the survivors.
 
-**★ marks a strategy that out-returned buy & hold over the same window** — 314 of 1053 right now.
+**★ marks a strategy that out-returned buy & hold over the same window** — 314 of 1054 right now.
 `—` means the comparison **could not be made**: the engine does not compute a benchmark for multi-symbol, futures, or multi-leg runs. That is *unknown*, not *lost*, and it is 197 of them right now.
 
 Every figure comes from the last verifying backtest at publish time. These are past results over historical data. Nothing here is promised or assured about the future, and none of it is investment advice.
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
+|  | [2630](strategies/2630/) | Squeeze Breakout BTC 4H (Risk-Sized + MACD Gate) | +31.83% | +61.01% | +19.29% | 78 | 2026-09-26 |
 |  | [2629](strategies/2629/) | Band-Bounce Mean Reversion DOT 4H | +236.20% | +462.58% | +12.33% | 38 | 2026-09-26 |
 |  | [2628](strategies/2628/) | Trend-Gated Vol-Target ETH 1D | -17.86% | +56.20% | +75.06% | 368 | 2026-09-26 |
 |  | [2627](strategies/2627/) | Squeeze Breakout XRP 4H (Risk-Sized + MACD Gate) | +148.12% | +228.36% | +38.49% | 71 | 2026-09-26 |
