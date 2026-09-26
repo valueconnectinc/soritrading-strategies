@@ -3,16 +3,16 @@
   "name": "Band-Bounce Mean Reversion LTC 4H",
   "kind": "custom",
   "verified": {
-    "backtestId": 11241,
+    "backtestId": 11243,
     "return": -34.46,
     "mdd": 49.47,
     "trades": 12,
     "vsBuyHold": "lose",
-    "benchRet": 400.27,
+    "benchRet": 270.7,
     "benchBasis": "price",
     "gapPct": 0,
-    "tFrom": 1530403200,
-    "tTo": 1653955200,
+    "tFrom": 1531180800,
+    "tTo": 1660694400,
     "approxNotes": [
       "봉 내 순서는 관례(양봉 O→L→H→C·음봉 O→H→L→C) — 실순서 미상 · 봉 중 거래량 null · MDD 는 봉 마감 기준"
     ],
@@ -20,8 +20,8 @@
       "ex": "binance",
       "sym": "BTCUSDT",
       "interval": "1d",
-      "bars": 1431,
-      "end": 1654041600
+      "bars": 1500,
+      "end": 1660780800
     }
   },
   "config": null,
