@@ -4,13 +4,14 @@ Every strategy whose backtest **finished and actually traded** is published here
 Nothing is filtered out by return — the ones that lost money are part of the record.
 Entries stay after a strategy is removed from our own workspace — this is a log, and deleting the record would leave only the survivors.
 
-**★ marks a strategy that out-returned buy & hold over the same window** — 306 of 999 right now.
+**★ marks a strategy that out-returned buy & hold over the same window** — 307 of 1000 right now.
 `—` means the comparison **could not be made**: the engine does not compute a benchmark for multi-symbol, futures, or multi-leg runs. That is *unknown*, not *lost*, and it is 187 of them right now.
 
 Every figure comes from the last verifying backtest at publish time. These are past results over historical data. Nothing here is promised or assured about the future, and none of it is investment advice.
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
+| ★ | [2574](strategies/2574/) | Donchian Hashrate Regime BTC 1D | +367.40% | +270.70% | +47.11% | 19 | 2026-09-26 |
 |  | [2573](strategies/2573/) | Defensive Donchian BTC 1D | +14.54% | +55.47% | +51.77% | 6 | 2026-09-26 |
 |  | [2572](strategies/2572/) | Defensive Donchian ChandelierExit ETH 1D | -47.65% | +56.20% | +66.90% | 10 | 2026-09-26 |
 |  | [2571](strategies/2571/) | Defensive Donchian SOL 1D | +18.28% | +45.78% | +44.05% | 29 | 2026-09-26 |
