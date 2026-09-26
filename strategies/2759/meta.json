@@ -3,25 +3,25 @@
   "name": "Donchian Pullback Trend-Strength ETH 4H",
   "kind": "custom",
   "verified": {
-    "backtestId": 12191,
-    "return": 47.34,
-    "mdd": 14.26,
-    "trades": 140,
-    "vsBuyHold": "win",
-    "benchRet": -24.71,
+    "backtestId": 12193,
+    "return": 231.98,
+    "mdd": 16.48,
+    "trades": 180,
+    "vsBuyHold": "lose",
+    "benchRet": 435.09,
     "benchBasis": "price",
     "gapPct": 0,
-    "tFrom": 1718452800,
-    "tTo": 1790438400,
+    "tFrom": 1574438400,
+    "tTo": 1646438400,
     "approxNotes": [
       "봉 내 순서는 관례(양봉 O→L→H→C·음봉 O→H→L→C) — 실순서 미상 · 봉 중 거래량 null · MDD 는 봉 마감 기준"
     ],
     "spec": {
       "ex": "binance",
-      "sym": "ETHUSDT",
+      "sym": "BTCUSDT",
       "interval": "4h",
       "bars": 5000,
-      "end": 1790452800
+      "end": 1646452800
     }
   },
   "config": null,
