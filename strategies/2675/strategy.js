@@ -1,18 +1,15 @@
 /*
  * @coinsori-strategy v1
- * name: Band-Bounce Mean Reversion LTC 4H
+ * name: Band-Bounce Mean Reversion XRP 4H
  * ex: binance
- * syms: LTCUSDT
+ * syms: XRPUSDT
  * interval: 4h
  * cash: 10000
  *
- * Why this strategy: Mean-reversion family. LTC 4h overreacts to the downside,
- * touches the lower Bollinger band, then snaps back to the mean. Buying the
- * panic-bottom and selling back to the middle captures the snap-back. This is
- * the validated champion recipe — the most robust, cross-asset strategy in the
- * whole job, confirmed positive on 18 assets at 4H. This cycle confirmed the
- * edge is 4H-specific (fails at 1H) and that adding a rising-SMA filter does
- * not improve it.
+ * Why this strategy: The validated champion recipe — XRP 4h overreacts to the
+ * downside, touches the lower Bollinger band, then snaps back to the mean.
+ * This family has been confirmed positive on 18 assets at 4H; XRP is a fresh
+ * generalization test (only tried on 1D before, where it was weak).
  * When it buys and sells: buys when price closes below the lower Bollinger(20,2)
  * with RSI<30 above the 200-SMA; exits at the middle band / RSI>50 or a stop;
  * then waits 5 bars before the next entry.
