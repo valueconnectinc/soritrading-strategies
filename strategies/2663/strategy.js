@@ -1,6 +1,6 @@
 /*
  * @coinsori-strategy v1
- * name: VWAP-Pullback SOL 4H SoftRegime+TakeProfit
+ * name: VWAP-Pullback SOL 4H SoftRegime+TP+Breakeven
  * ex: binance
  * syms: SOLUSDT
  * interval: 4h
@@ -8,17 +8,17 @@
  *
  * Why this strategy: Mean reversion to the VWAP (volume-weighted average
  * price) — in an established uptrend, sharp dips back toward VWAP tend to
- * revert up as buyers step in. Builds on the previous soft-regime version
- * (block entries only when the 200-SMA is declining) and adds a MILD partial
- * profit-taking step: once price has climbed ~3 ATR from entry, bank a third
- * of the position to lock in gains, leaving most exposure to ride the trend.
- * This cuts drawdown on all regimes and keeps the recent bear window positive.
+ * revert up as buyers step in. Builds on the soft-regime + partial-take-profit
+ * version and adds a BREAKEVEN stop: once price climbs ~3 ATR from entry we
+ * bank a third of the position and immediately move the stop up to entry, so
+ * the remaining two-thirds can never turn into a loss. This cuts the giveback
+ * that drove drawdown on the middle window without capping the trend upside.
  * When it buys and sells: buys when price pulls back to/below VWAP while the
  * 50-SMA is rising, RSI is not overbought, and the 200-SMA is not declining.
- * Sells a third at +3 ATR, then the rest on the 50-SMA turn-down or 10-ATR.
+ * Banks a third at +3 ATR, then stops the rest at breakeven, then on the
+ * 50-SMA turn-down or a 10-ATR trailing stop.
  * When it does NOT work: fails in a true downtrend (pullbacks keep falling)
- * and in low-liquidity chop where VWAP gives no support. The remaining wide
- * stop still means giveback on sharp reversals.
+ * and in low-liquidity chop where VWAP gives no support.
  */
 function onUpdate(ctx) {
   const s = ctx.state;
@@ -50,14 +50,19 @@ function onUpdate(ctx) {
     }
     if (atr != null) {
       s.hi = s.hi == null ? price : Math.max(s.hi, price);
-      // Mild partial take-profit: at +3 ATR bank a third of the position.
-      // 3 ATR keeps most of the trend upside, a third of the size trims
-      // giveback without capping the winner like the half-at-2ATR version.
+      // Partial take-profit: at +3 ATR bank a third of the position.
       if (s.entry != null && !s.halfTaken) {
         if (price >= s.entry + atr * 3) {
           s.halfTaken = true;
+          s.be = true; // breakeven stop armed after banking the third
           return { side: 'sell', qty: pos / 3 };
         }
+      }
+      // Breakeven stop: after the partial, never let the rest turn to a loss.
+      // This is the MDD killer — it caps giveback once we are in profit.
+      if (s.be && price <= s.entry) {
+        s.lastExit = ctx.i;
+        return { side: 'sell', qty: pos };
       }
       if (price <= s.hi - atr * 10) {
         s.lastExit = ctx.i;
@@ -70,8 +75,7 @@ function onUpdate(ctx) {
   const prevSma = ctx.sma(50, 5);
   if (prevSma == null) return null;
   const uptrend = sma50 > prevSma;
-  // Soft regime filter: block entries only when the 200-SMA is declining
-  // (confirmed downtrend). Closed-bar comparison identical in backtest/live.
+  // Soft regime filter: block entries only when the 200-SMA is declining.
   const sma200 = ctx.sma(200, 1);
   const sma200prev = ctx.sma(200, 5);
   if (sma200 == null || sma200prev == null) return null;
@@ -83,9 +87,9 @@ function onUpdate(ctx) {
   if (price <= vwap * 1.02) {
     s.hi = price;
     s.halfTaken = false;
-    s.entry = price; // record fill price for the partial take-profit
-    // Moderate vol-scaled sizing: start trimming when ATR/price exceeds 2.5%,
-    // scale to a 45% floor at very high vol. Cuts panic-window drawdown.
+    s.be = false;
+    s.entry = price;
+    // Moderate vol-scaled sizing: trim when ATR/price exceeds 2.5%, floor 45%.
     let frac = 0.95;
     if (atr != null && price > 0) {
       const vol = atr / price;
