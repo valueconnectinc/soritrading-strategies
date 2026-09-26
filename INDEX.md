@@ -11,7 +11,7 @@ Every figure comes from the last verifying backtest at publish time. These are p
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
-| ★ | [2651](strategies/2651/) | Band-Bounce Mean Reversion AVAX 4H | -7.62% | -61.46% | +31.64% | 45 | 2026-09-26 |
+| ★ | [2651](strategies/2651/) | Band-Bounce Mean Reversion AVAX 4H | -15.61% | -70.60% | +19.55% | 52 | 2026-09-26 |
 | ★ | [2650](strategies/2650/) | AI 전략 | -3.28% | -62.48% | +18.12% | 26 | 2026-09-26 |
 |  | [2649](strategies/2649/) | AI 전략 | -72.83% | -14.41% | +81.98% | 33 | 2026-09-26 |
 |  | [2648](strategies/2648/) | Stoch-Oversold Mean Reversion ADA 4H | -22.16% | +2198.33% | +50.72% | 209 | 2026-09-26 |
