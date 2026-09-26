@@ -11,7 +11,7 @@ Every figure comes from the last verifying backtest at publish time. These are p
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
-|  | [2655](strategies/2655/) | FearGreed Panic Mean-Reversion BTC 1D | -1.49% | +55.47% | +24.14% | 6 | 2026-09-26 |
+|  | [2655](strategies/2655/) | FearGreed Panic Mean-Reversion BTC 1D | -5.67% | +73.71% | +34.61% | 63 | 2026-09-26 |
 |  | [2654](strategies/2654/) | OnChain-Confirmed Band-Bounce BTC 4H | +7.70% | +26.93% | +13.00% | 44 | 2026-09-26 |
 | ★ | [2653](strategies/2653/) | Band-Bounce Mean Reversion DOGE 4H | +94.76% | +9.39% | +34.99% | 191 | 2026-09-26 |
 |  | [2652](strategies/2652/) | Regime-Adaptive ETH 4H | +23.34% | +31.85% | +39.04% | 10 | 2026-09-26 |

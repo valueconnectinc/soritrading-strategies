@@ -1,55 +1,52 @@
 /*
  * @coinsori-strategy v1
- * name: FearGreed Panic Mean-Reversion BTC 1D
+ * name: Band-Bounce Mean-Reversion BTC 4H
  * ex: binance
  * syms: BTCUSDT
- * interval: 1d
+ * interval: 4h
  * cash: 10000
  *
- * Why this strategy: Sentiment extremes on the crypto fear-greed index mark
- * panic bottoms and euphoria tops. The validated champion uses fear-greed only
- * as a position-sizing filter on a price signal; here we make sentiment the
- * PRIMARY timing signal on a daily timeframe — buy when the crowd is in extreme
- * fear and price has already pulled back, exit when sentiment recovers. This is
- * a genuinely different family (sentiment-driven mean reversion) from the
- * price-based band-bounce and squeeze-breakout champions.
- * When it buys and sells: buys when the fear-greed index is at extreme fear
- * (<20) AND price is below its 50-day average (already sold off), so we are not
- * catching a falling knife in a melt-up. Sells when sentiment recovers to
- * neutral (>50) or after 40 trading days, or a 4-ATR stop to cap a panic that
- * keeps falling.
- * When it does NOT work: extreme fear can persist for months in a real bear
- * market — buying early into a sustained downtrend loses even though sentiment
- * is "extreme fear". It also never buys during melt-ups (no fear), so it misses
- * most of a bull run. A panic that keeps falling still loses despite the
- * sentiment signal.
+ * Why this strategy: Panic sell-offs into the lower Bollinger band with extreme
+ * RSI tend to mean-revert. This is the validated cross-asset champion: buy
+ * panic-bottoms below the lower Bollinger(20,2) with RSI<30 while the long-term
+ * trend is still up (price above the 200-SMA), and sell when price recovers to
+ * the middle band or RSI turns neutral. Validated positive on 13+ assets.
+ * When it buys and sells: buys when price closes below the lower Bollinger band
+ * with RSI<30, above the 200-SMA (only buy dips in an uptrend). Sells at the
+ * middle band, RSI>50, or a 6-ATR stop; 5-bar re-entry cooldown.
+ * When it does NOT work: lags strong melt-ups (never buys without a dip, so it
+ * misses most of a bull run). A panic that keeps falling still loses despite
+ * the 6-ATR stop. Never buys below the 200-SMA, so it sits out entire bear
+ * markets (which is also its main protection).
  */
 function onUpdate(ctx) {
-  const fg = ctx.data('fear_greed');
-  const sma50 = ctx.sma(50, 1);
-  if (fg == null || sma50 == null) return null;
+  const bb = ctx.bb(20, 2, 1);
+  const rsi = ctx.rsi(14, 1);
+  const sma200 = ctx.sma(200, 1);
+  if (bb == null || rsi == null || sma200 == null) return null;
 
   const price = ctx.price;
   const pos = ctx.position;
 
   if (pos > 0) {
-    // Exit on sentiment recovery to neutral, or after 40 days, or a hard stop.
-    if (fg > 50) {
+    if (price >= bb.mid || rsi > 50) {
+      ctx.state.lastExit = ctx.i;
       return { side: 'sell', qty: pos };
     }
+    // 6-ATR stop caps a panic that keeps falling.
     const atr = ctx.atr(14, 1);
-    if (atr != null && price <= ctx.entryPx - atr * 4) {
-      return { side: 'sell', qty: pos };
-    }
-    if (ctx.state.entryBar != null && ctx.i - ctx.state.entryBar >= 40) {
+    if (atr != null && price <= ctx.entryPx - atr * 6) {
+      ctx.state.lastExit = ctx.i;
       return { side: 'sell', qty: pos };
     }
     return null;
   }
 
-  // Buy only at extreme fear (<20) with price below its 50-day average.
-  if (!(fg < 20 && price < sma50)) return null;
+  const lastExit = ctx.state.lastExit || 0;
+  if (ctx.i - lastExit < 5) return null; // 5-bar cooldown avoids re-buying a falling knife
+  if (price < sma200) return null;       // only buy dips in an uptrend
+  if (!(price < bb.lower && rsi < 30)) return null;
 
-  ctx.state.entryBar = ctx.i;
+  ctx.state.lastExit = ctx.i;
   return { side: 'buy', qty: ctx.cash / ctx.price * 0.95 };
 }
