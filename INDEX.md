@@ -4,13 +4,14 @@ Every strategy whose backtest **finished and actually traded** is published here
 Nothing is filtered out by return — the ones that lost money are part of the record.
 Entries stay after a strategy is removed from our own workspace — this is a log, and deleting the record would leave only the survivors.
 
-**★ marks a strategy that out-returned buy & hold over the same window** — 316 of 1069 right now.
+**★ marks a strategy that out-returned buy & hold over the same window** — 316 of 1070 right now.
 `—` means the comparison **could not be made**: the engine does not compute a benchmark for multi-symbol, futures, or multi-leg runs. That is *unknown*, not *lost*, and it is 197 of them right now.
 
 Every figure comes from the last verifying backtest at publish time. These are past results over historical data. Nothing here is promised or assured about the future, and none of it is investment advice.
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
+|  | [2648](strategies/2648/) | Stoch-Oversold Mean Reversion ADA 4H | -22.16% | +2198.33% | +50.72% | 209 | 2026-09-26 |
 | ★ | [2647](strategies/2647/) | Macro-Gated Band-Bounce ATOM 4H | +17.67% | -9.32% | +24.18% | 47 | 2026-09-26 |
 |  | [2645](strategies/2645/) | Donchian Turtle BTC 4H | +126.68% | +438.54% | +42.12% | 12 | 2026-09-26 |
 |  | [2644](strategies/2644/) | FearGreed-Gated Donchian BTC 1D | -7.89% | +142.85% | +16.17% | 14 | 2026-09-26 |
