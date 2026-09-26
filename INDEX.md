@@ -4,14 +4,14 @@ Every strategy whose backtest **finished and actually traded** is published here
 Nothing is filtered out by return — the ones that lost money are part of the record.
 Entries stay after a strategy is removed from our own workspace — this is a log, and deleting the record would leave only the survivors.
 
-**★ marks a strategy that out-returned buy & hold over the same window** — 306 of 1007 right now.
+**★ marks a strategy that out-returned buy & hold over the same window** — 307 of 1007 right now.
 `—` means the comparison **could not be made**: the engine does not compute a benchmark for multi-symbol, futures, or multi-leg runs. That is *unknown*, not *lost*, and it is 187 of them right now.
 
 Every figure comes from the last verifying backtest at publish time. These are past results over historical data. Nothing here is promised or assured about the future, and none of it is investment advice.
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
-|  | [2581](strategies/2581/) | Donchian Binary Vol-Adaptive Size BTC 1D | +10.66% | +55.47% | +35.66% | 6 | 2026-09-26 |
+| ★ | [2581](strategies/2581/) | Donchian Binary Vol-Adaptive Size BTC 1D | +526.54% | +324.12% | +44.03% | 19 | 2026-09-26 |
 |  | [2580](strategies/2580/) | Donchian Vol-Adaptive Size BTC 1D (thr4) | +77.42% | +262.64% | +42.05% | 29 | 2026-09-26 |
 |  | [2579](strategies/2579/) | Donchian Vol-Adaptive Size BTC 1D (thr6) | -7.21% | +177.69% | +66.25% | 18 | 2026-09-26 |
 |  | [2578](strategies/2578/) | Defensive Donchian BTC 1D (baseline) | +568.36% | +1258.25% | +62.35% | 19 | 2026-09-26 |
