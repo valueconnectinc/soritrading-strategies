@@ -1,6 +1,6 @@
 /*
  * @coinsori-strategy v1
- * name: VWAP-Pullback SOL 4H MomentumEntry+MidVolSize
+ * name: VWAP-Pullback SOL 4H DeepMomentum+MidVolSize
  * ex: binance
  * syms: SOLUSDT
  * interval: 4h
@@ -8,16 +8,17 @@
  *
  * Why this strategy: Mean reversion to the VWAP in an established uptrend —
  * sharp dips toward VWAP tend to revert up as buyers step in. This version
- * adds a MOMENTUM CONFIRMATION to the entry: it only buys when RSI is already
- * turning up (current RSI > previous RSI), i.e. the dip is starting to reverse,
- * instead of buying into a still-falling knife. Keeps the middle vol-scaling
- * (trim 2.2%, floor 38%) that already cut MDD on all windows.
+ * combines the momentum confirmation (RSI turning up, avoids buying into a
+ * falling knife) with a STRICTER pullback (price must actually reach VWAP,
+ * not just within 2% above it) to catch deeper, higher-quality reversion
+ * entries. Keeps the middle vol-scaling (trim 2.2%, floor 38%).
  * When it buys and sells: buys when price pulls back to/below VWAP, 50-SMA is
  * rising, 200-SMA not declining, RSI not overbought AND RSI is turning up.
  * Sells a third at +3 ATR, then the rest on the 50-SMA turn-down or 10-ATR.
  * When it does NOT work: fails in a true downtrend (pullbacks keep falling) and
- * in low-liquidity chop where VWAP gives no support. RSI-turn filter may miss
- * fast V-recoveries that never print a rising RSI bar.
+ * in low-liquidity chop where VWAP gives no support. Stricter pullback may miss
+ * shallow dips that still revert, and the RSI-turn filter may miss fast
+ * V-recoveries.
  */
 function onUpdate(ctx) {
   const s = ctx.state;
@@ -74,11 +75,11 @@ function onUpdate(ctx) {
   const lastExit = s.lastExit || 0;
   if (!uptrend) return null;
   if (rsi > 65) return null;
-  // Momentum confirmation: only buy when RSI is turning up (dip starting to
-  // reverse), instead of buying into a still-falling knife. Filters bad entries.
   if (rsi <= rsiPrev) return null;
   if (ctx.i - lastExit < 6) return null;
-  if (price <= vwap * 1.02) {
+  // Stricter pullback: price must actually reach VWAP (not within 2% above),
+  // catching deeper reversion entries that tend to revert harder.
+  if (price <= vwap) {
     s.hi = price;
     s.halfTaken = false;
     s.entry = price;
