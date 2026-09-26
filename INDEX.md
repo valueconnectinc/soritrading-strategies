@@ -11,7 +11,7 @@ Every figure comes from the last verifying backtest at publish time. These are p
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
-|  | [2563](strategies/2563/) | VWAP Pullback Mean Reversion SOL 4H RiskControlled | -92.62% | +54.34% | +93.43% | 613 | 2026-09-26 |
+|  | [2563](strategies/2563/) | VWAP Pullback Mean Reversion SOL 4H RiskControlled | -3.79% | +54.34% | +3.79% | 2 | 2026-09-26 |
 |  | [2562](strategies/2562/) | Pure Price-Based Hybrid No FearGreed BTC 4H | +161.25% | +270.70% | +37.21% | 67 | 2026-09-26 |
 |  | [2561](strategies/2561/) | Pure Bollinger Bear-Leg No FearGreed BTC 4H | +62.59% | +75.35% | +43.67% | 288 | 2026-09-26 |
 |  | [2560](strategies/2560/) | Wide-Stop Melt-Up Trend Rider BTC 4H | -52.48% | +146.83% | +63.65% | 125 | 2026-09-26 |
