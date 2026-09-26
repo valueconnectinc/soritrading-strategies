@@ -10,12 +10,12 @@
  * bull trend, prices tend to snap back (mean reversion). We bet on that
  * snap-back rather than on riding the trend.
  * When it buys and sells: buys when the 10-day rate-of-change is deeply
- * negative (a sharp pullback) AND the RSI is oversold, while the 200-day
- * average is still rising (confirmed bull); sells when price recovers to the
- * 20-day average or the 200-day trend rolls over, with a hard stop at 3x ATR.
+ * negative (a sharp pullback) AND the RSI is weak, while the 200-day average
+ * is still rising (confirmed bull); sells when price recovers to the 20-day
+ * average or the 200-day trend rolls over, with a hard stop at 3x ATR.
  * When it does NOT work: in a sustained bear market the pullback keeps
  * falling (the rising-200-SMA gate blocks most but not all); and it lags
- * strong V-shaped recoveries where price jumps back before the RSI dips.
+ * strong V-shaped recoveries where price jumps back before RSI dips.
  */
 function onUpdate(ctx) {
   const pos = ctx.position;
@@ -55,9 +55,9 @@ function onUpdate(ctx) {
     return null;
   }
 
-  // Deep pullback (10-day ROC <= -12%) + oversold RSI, inside a rising bull.
-  // 12% + RSI<35 filters out shallow noise, keeping only real dips.
-  if (roc10 <= -12 && rsi < 35 && price > sma200) {
+  // Moderate pullback (10-day ROC <= -10%) + weak RSI, inside a rising bull.
+  // 10% + RSI<40 keeps real dips while trading more than the ultra-tight v2.
+  if (roc10 <= -10 && rsi < 40 && price > sma200) {
     ctx.state.stopPx = price - 3 * atr;
     return { side: 'buy', qty: ctx.cash / price * 0.5 };
   }

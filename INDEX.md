@@ -11,7 +11,7 @@ Every figure comes from the last verifying backtest at publish time. These are p
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
-|  | [2781](strategies/2781/) | Market-Structure Trend BTC 1D | -0.81% | +154.52% | +7.65% | 10 | 2026-09-26 |
+|  | [2781](strategies/2781/) | Market-Structure Trend BTC 1D | -10.98% | +154.52% | +10.98% | 16 | 2026-09-26 |
 |  | [2780](strategies/2780/) | Volume-Panic Mean Reversion BTC 4H | -41.51% | +435.09% | +53.84% | 130 | 2026-09-26 |
 |  | [2779](strategies/2779/) | OBV Volume-Flow Trend BTC 1D | +137.82% | +262.64% | +23.11% | 53 | 2026-09-26 |
 |  | [2778](strategies/2778/) | AI 전략 | -59.65% | +1258.25% | +86.61% | 384 | 2026-09-26 |
