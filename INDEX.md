@@ -11,7 +11,7 @@ Every figure comes from the last verifying backtest at publish time. These are p
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
-|  | [2560](strategies/2560/) | Wide-Stop Melt-Up Trend Rider BTC 4H | -51.32% | +75.35% | +52.07% | 80 | 2026-09-26 |
+|  | [2560](strategies/2560/) | Wide-Stop Melt-Up Trend Rider BTC 4H | -67.45% | +28.36% | +73.12% | 193 | 2026-09-26 |
 |  | [2559](strategies/2559/) | Champion v2 Baseline BTC 4H | +17.03% | +75.35% | +49.43% | 199 | 2026-09-26 |
 |  | [2558](strategies/2558/) | Champion v2 OOS ADA 4H | +341.00% | +443.24% | +28.89% | 227 | 2026-09-26 |
 | — | [2557](strategies/2557/) | FearGreed Euphoria Short BTC 4H | -1.43% | — | +13.24% | 8 | 2026-09-26 |
