@@ -11,31 +11,32 @@
  * mean-reversion family: buy only after a deep correction, ride the recovery.
  * It is the opposite of the trend-following Donchian champion — it buys weakness
  * instead of strength, so it is a genuinely different strategy family.
- * When it buys and sells: buys when price falls ~35% below its 250-day high
- * (a deep correction); sells when price recovers to its 200-day EMA (uptrend
+ * When it buys and sells: buys when price has fallen ~35% below its 250-day high
+ * AND shows a bounce (price above its 5-day-ago level, so we catch the turn, not
+ * the falling knife); sells when price recovers to its 200-day EMA (uptrend
  * restored) or after a further 50% drop from the high (thesis broken).
- * When it does NOT work: prolonged bear markets that keep falling past the stop
- * (e.g. a multi-year decline), or a shallow correction that never reaches the
- * 35% entry and the strategy just sits in cash.
+ * When it does NOT work: prolonged bear markets that keep falling past the stop,
+ * or a shallow correction that never reaches the 35% entry (strategy sits in cash).
  */
 function onUpdate(ctx) {
   const hh250 = ctx.high(250, 1);
   const ema200 = ctx.ema(200, 1);
-  if (hh250 == null || ema200 == null) return null;
+  const p5 = ctx.price; // current
+  const pPrev5 = ctx.closes[ctx.i - 5]; // 5 bars ago
+  if (hh250 == null || ema200 == null || pPrev5 == null) return null;
 
   const price = ctx.price;
   const pos = ctx.position;
 
   if (pos > 0) {
-    // Thesis broken: fell 50% below the high -> get out before further damage.
     if (price <= hh250 * 0.50) return { side: 'sell', qty: pos };
-    // Recovered into an uptrend -> take the recovery profit.
     if (price >= ema200) return { side: 'sell', qty: pos };
     return null;
   }
 
-  // Deep correction: 35% below the 250-day high.
-  if (price <= hh250 * 0.65) {
+  // Deep correction (35% below 250d high) AND a bounce started (price now above
+  // its level 5 bars ago) -> catch the turn, avoid repeated falling-knife buys.
+  if (price <= hh250 * 0.65 && price > pPrev5) {
     return { side: 'buy', qty: ctx.cash / ctx.price * 0.99 };
   }
   return null;
