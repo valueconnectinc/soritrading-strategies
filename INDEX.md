@@ -11,7 +11,7 @@ Every figure comes from the last verifying backtest at publish time. These are p
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
-|  | [2632](strategies/2632/) | Fear-Greed Contrarian BTC 4H | +14.10% | +27.10% | +28.06% | 8 | 2026-09-26 |
+|  | [2632](strategies/2632/) | Fear-Greed Contrarian BTC 4H | -29.54% | +61.01% | +60.18% | 4 | 2026-09-26 |
 |  | [2631](strategies/2631/) | Band-Bounce Mean Reversion UNI 4H | +151.21% | +210.59% | +10.46% | 25 | 2026-09-26 |
 |  | [2630](strategies/2630/) | Squeeze Breakout BTC 4H (Risk-Sized + MACD Gate) | +31.83% | +61.01% | +19.29% | 78 | 2026-09-26 |
 |  | [2629](strategies/2629/) | Band-Bounce Mean Reversion DOT 4H | +236.20% | +462.58% | +12.33% | 38 | 2026-09-26 |

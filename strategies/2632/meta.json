@@ -3,16 +3,16 @@
   "name": "Fear-Greed Contrarian BTC 4H",
   "kind": "custom",
   "verified": {
-    "backtestId": 11510,
-    "return": 14.1,
-    "mdd": 28.06,
-    "trades": 8,
+    "backtestId": 11513,
+    "return": -29.54,
+    "mdd": 60.18,
+    "trades": 4,
     "vsBuyHold": "lose",
-    "benchRet": 27.1,
+    "benchRet": 61.01,
     "benchBasis": "price",
     "gapPct": 0,
-    "tFrom": 1718395200,
-    "tTo": 1790380800,
+    "tFrom": 1646395200,
+    "tTo": 1718380800,
     "approxNotes": [
       "봉 내 순서는 관례(양봉 O→L→H→C·음봉 O→H→L→C) — 실순서 미상 · 봉 중 거래량 null · MDD 는 봉 마감 기준"
     ],
@@ -21,7 +21,7 @@
       "sym": "BTCUSDT",
       "interval": "4h",
       "bars": 5000,
-      "end": 1790395200
+      "end": 1718395200
     }
   },
   "config": null,
