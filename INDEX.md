@@ -11,7 +11,7 @@ Every figure comes from the last verifying backtest at publish time. These are p
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
-|  | [2800](strategies/2800/) | BTC 1D Hashrate Fundamental + Trend Guard | -76.11% | +55.47% | +86.13% | 118 | 2026-09-26 |
+|  | [2800](strategies/2800/) | BTC 1D Hashrate Fundamental + Trend Guard | -6.88% | +270.70% | +71.99% | 118 | 2026-09-26 |
 |  | [2799](strategies/2799/) | BTC 1D Fed-Gate + Trend Defense (two-state) | -84.22% | +270.70% | +91.63% | 134 | 2026-09-26 |
 | ★ | [2798](strategies/2798/) | BTC 1D Fed-Funds Gate + Trend-Scaled Size | +62.05% | +55.47% | +19.78% | 638 | 2026-09-26 |
 |  | [2797](strategies/2797/) | BTC 1D Fed-Funds Rate Regime Gate | +44.60% | +55.47% | +47.21% | 22 | 2026-09-26 |
