@@ -11,7 +11,7 @@ Every figure comes from the last verifying backtest at publish time. These are p
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
-|  | [2822](strategies/2822/) | OBV Relaxed Gate + Rising Trend Filter 1D | -24.74% | -21.08% | +41.81% | 56 | 2026-09-26 |
+|  | [2822](strategies/2822/) | OBV Relaxed Gate + Rising Trend Filter 1D | +341.83% | +1147.75% | +50.50% | 26 | 2026-09-26 |
 | ★ | [2821](strategies/2821/) | OBV Relaxed Gate + Fed Buy-Blocker 1D | +18.83% | -21.08% | +34.47% | 68 | 2026-09-26 |
 |  | [2820](strategies/2820/) | OBV Trend Relaxed Gate 1D | +267.21% | +324.12% | +42.57% | 50 | 2026-09-26 |
 |  | [2819](strategies/2819/) | OBV Trend Fast 4H | -32.85% | -24.71% | +47.35% | 176 | 2026-09-26 |
