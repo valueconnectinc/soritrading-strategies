@@ -1,0 +1,30 @@
+{
+  "id": 2553,
+  "name": "FearGreed Bull-Momentum Trend-Rider BTC 4H",
+  "kind": "custom",
+  "verified": {
+    "backtestId": 10954,
+    "return": -85.85,
+    "mdd": 86.23,
+    "trades": 268,
+    "vsBuyHold": "lose",
+    "benchRet": 443.24,
+    "benchBasis": "price",
+    "gapPct": 0,
+    "tFrom": 1574366400,
+    "tTo": 1646366400,
+    "approxNotes": [
+      "봉 내 순서는 관례(양봉 O→L→H→C·음봉 O→H→L→C) — 실순서 미상 · 봉 중 거래량 null · MDD 는 봉 마감 기준"
+    ],
+    "spec": {
+      "ex": "binance",
+      "sym": "BTCUSDT",
+      "interval": "4h",
+      "bars": 5000,
+      "end": 1646380800
+    }
+  },
+  "config": null,
+  "updatedAt": "2026-09-26T00:41:27.870Z",
+  "publishedBy": "scripts/publish-strategies.mjs"
+}
