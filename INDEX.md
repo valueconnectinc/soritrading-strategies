@@ -11,7 +11,7 @@ Every figure comes from the last verifying backtest at publish time. These are p
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
-|  | [2744](strategies/2744/) | Band-Bounce Mean Reversion BCH 1D | +43.17% | +165.92% | +19.70% | 29 | 2026-09-26 |
+|  | [2744](strategies/2744/) | Band-Bounce Mean Reversion BCH 1D | +187.50% | +262.64% | +28.00% | 27 | 2026-09-26 |
 | ★ | [2743](strategies/2743/) | Band-Bounce Mean Reversion XRP 1D | +29.49% | -14.41% | +42.89% | 8 | 2026-09-26 |
 |  | [2742](strategies/2742/) | Donchian Trend-Following XRP 1D | -76.06% | +71.26% | +84.88% | 31 | 2026-09-26 |
 |  | [2741](strategies/2741/) | Band-Bounce Mean Reversion BCH 4H | +16.09% | +32.58% | +22.83% | 42 | 2026-09-26 |
