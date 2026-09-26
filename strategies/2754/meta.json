@@ -3,28 +3,28 @@
   "name": "Donchian Pullback Uptrend ETH 4H",
   "kind": "custom",
   "verified": {
-    "backtestId": 12168,
-    "return": 40.8,
-    "mdd": 22.89,
-    "trades": 186,
-    "vsBuyHold": "win",
-    "benchRet": -24.71,
+    "backtestId": 12176,
+    "return": 203.79,
+    "mdd": 20.34,
+    "trades": 202,
+    "vsBuyHold": "lose",
+    "benchRet": 435.09,
     "benchBasis": "price",
     "gapPct": 0,
-    "tFrom": 1718452800,
-    "tTo": 1790438400,
+    "tFrom": 1574438400,
+    "tTo": 1646438400,
     "approxNotes": [
       "봉 내 순서는 관례(양봉 O→L→H→C·음봉 O→H→L→C) — 실순서 미상 · 봉 중 거래량 null · MDD 는 봉 마감 기준"
     ],
     "spec": {
       "ex": "binance",
-      "sym": "ETHUSDT",
+      "sym": "BTCUSDT",
       "interval": "4h",
       "bars": 5000,
-      "end": 1790452800
+      "end": 1646452800
     }
   },
   "config": null,
-  "updatedAt": "2026-09-26T20:10:27.003Z",
+  "updatedAt": "2026-09-26T20:11:26.129Z",
   "publishedBy": "scripts/publish-strategies.mjs"
 }

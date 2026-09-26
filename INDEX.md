@@ -4,14 +4,14 @@ Every strategy whose backtest **finished and actually traded** is published here
 Nothing is filtered out by return — the ones that lost money are part of the record.
 Entries stay after a strategy is removed from our own workspace — this is a log, and deleting the record would leave only the survivors.
 
-**★ marks a strategy that out-returned buy & hold over the same window** — 340 of 1161 right now.
+**★ marks a strategy that out-returned buy & hold over the same window** — 339 of 1161 right now.
 `—` means the comparison **could not be made**: the engine does not compute a benchmark for multi-symbol, futures, or multi-leg runs. That is *unknown*, not *lost*, and it is 197 of them right now.
 
 Every figure comes from the last verifying backtest at publish time. These are past results over historical data. Nothing here is promised or assured about the future, and none of it is investment advice.
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
-| ★ | [2754](strategies/2754/) | Donchian Pullback Uptrend ETH 4H | +40.80% | -24.71% | +22.89% | 186 | 2026-09-26 |
+|  | [2754](strategies/2754/) | Donchian Pullback Uptrend ETH 4H | +203.79% | +435.09% | +20.34% | 202 | 2026-09-26 |
 |  | [2753](strategies/2753/) | Candle-Pattern Panic Reversal BTC 4H | -13.17% | +435.09% | +25.97% | 38 | 2026-09-26 |
 |  | [2752](strategies/2752/) | Bollinger Squeeze Breakout ETH 4H | +16.09% | +32.58% | +22.83% | 42 | 2026-09-26 |
 |  | [2751](strategies/2751/) | RSI2 Short-Term Mean Reversion BTC 4H | -97.02% | +449.51% | +97.05% | 1289 | 2026-09-26 |

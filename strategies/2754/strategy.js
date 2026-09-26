@@ -14,12 +14,12 @@
  * these pullbacks participates in the melt-ups the champion misses.
  * When it buys and sells: buys when price pulls back to the lower 20-bar
  * Donchian channel while price is above the 200-SMA and the 200-SMA is
- * rising; sells when price reaches the middle Donchian channel or the 200-SMA
- * stops rising, or on a 5x-ATR stop. 5-bar cooldown.
+ * rising; sells when price reaches the middle Donchian channel, the 200-SMA
+ * stops rising, or on a tighter 3x-ATR stop. 5-bar cooldown.
  * When it does NOT work: in a bear or choppy market below the 200-SMA it
- * sits out entirely; in a fake uptrend the pullback keeps going and the stop
- * catches a falling knife. It whipsaws in a sideways market where the 200-SMA
- * is flat.
+ * sits out; in a fake uptrend the pullback keeps going and the stop catches
+ * a falling knife. It whipsaws in a sideways market where the 200-SMA is
+ * flat.
  */
 function onUpdate(ctx) {
   const price = ctx.price;
@@ -32,7 +32,6 @@ function onUpdate(ctx) {
   const uptrend = price > sma200 && sma200 > sma200prev;
 
   if (pos > 0) {
-    // Exit at the middle Donchian channel, or when the uptrend breaks
     const dcMid = (ctx.high(20, 1) + ctx.low(20, 1)) / 2;
     if (dcMid != null && price >= dcMid) {
       ctx.state.lastExit = ctx.i;
@@ -43,7 +42,8 @@ function onUpdate(ctx) {
       return { side: 'sell', qty: pos };
     }
     const atr = ctx.atr(14, 1);
-    if (atr != null && price <= ctx.entryPx - atr * 5) {
+    // tightened from 5x to 3x ATR to cut losing dips faster in choppy markets
+    if (atr != null && price <= ctx.entryPx - atr * 3) {
       ctx.state.lastExit = ctx.i;
       return { side: 'sell', qty: pos };
     }
@@ -54,7 +54,6 @@ function onUpdate(ctx) {
   if (ctx.i - lastExit < 5) return null;
   if (!uptrend) return null;
 
-  // Buy the pullback to the lower Donchian channel
   const dcLow = ctx.low(20, 1);
   if (dcLow != null && price <= dcLow * 1.01) {
     return { side: 'buy', qty: ctx.cash / ctx.price * 0.95 };
