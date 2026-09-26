@@ -1,17 +1,19 @@
 /*
  * @coinsori-strategy v1
- * name: Champion v2 Baseline BTC 4H
+ * name: Champion v2 Confirmed BTC 4H
  * ex: binance
  * syms: BTCUSDT
  * interval: 4h
  * cash: 10000
  *
- * Why this strategy: Baseline copy of the validated champion v2 (fear-depth two-tier
- * contrarian + trend-pullback hybrid) run on the SAME walk-forward windows as the
- * breakout-leg variant, so the two can be compared apples-to-apples.
+ * Why this strategy: Confirmed final version of the validated champion (fear-depth
+ * two-tier contrarian + trend-pullback hybrid) after 5 failed improvement attempts.
+ * It is a defensive strategy: it buys panic bottoms in bear regimes and rides
+ * pullbacks in bull regimes, protecting capital in crashes while staying positive.
  * When it buys and sells: bear regime buys panic bottoms (fear<40 + lower Bollinger
  * break, mid-band exit, 3x ATR hard stop); bull regime buys pullbacks to the 20-EMA.
- * When it does NOT work: sideways chop whipsaws the 50-EMA.
+ * When it does NOT work: it lags buy-and-hold in pure melt-up regimes (e.g. the
+ * earliest 2017-18 window) and sideways chop whipsaws the 50-EMA.
  */
 function onUpdate(ctx) {
   const bb = ctx.bb(20, 2, 1);
@@ -38,6 +40,7 @@ function onUpdate(ctx) {
     return null;
   }
 
+  // Vol-targeted sizing: risk 1.5% of equity per ATR unit, cap at ~99% of cash.
   const riskBudget = 0.015;
   const volFrac = riskBudget / (atr / price);
   let qty = (ctx.cash / price) * Math.min(volFrac, 0.99);
@@ -51,6 +54,7 @@ function onUpdate(ctx) {
     return null;
   }
 
+  // Deeper fear = smaller bet, because deep-fear bounces are less reliable.
   if (fg < 10) qty = qty * 0.5;
   else if (fg < 20) qty = qty * 0.7;
 
