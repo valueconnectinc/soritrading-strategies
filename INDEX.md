@@ -11,7 +11,7 @@ Every figure comes from the last verifying backtest at publish time. These are p
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
-|  | [2593](strategies/2593/) | Band-Bounce Mean Reversion LTC 4H | -5.93% | +324.12% | +46.40% | 14 | 2026-09-26 |
+|  | [2593](strategies/2593/) | Band-Bounce Mean Reversion LTC 4H | -34.46% | +400.27% | +49.47% | 12 | 2026-09-26 |
 |  | [2592](strategies/2592/) | Fear-Greed Contrarian Mean Reversion BTC 1D | -6.31% | +55.47% | +23.52% | 3 | 2026-09-26 |
 |  | [2591](strategies/2591/) | Defensive Donchian Price-Bull Wide Exit BTC 1D | +0.08% | +55.47% | +34.14% | 4 | 2026-09-26 |
 |  | [2590](strategies/2590/) | OnChain Addr-Growth Gate Defensive Donchian BTC 1D | +2.54% | +55.47% | +32.45% | 6 | 2026-09-26 |
