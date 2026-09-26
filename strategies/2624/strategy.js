@@ -1,26 +1,26 @@
 /*
  * @coinsori-strategy v1
- * name: Squeeze Breakout ETH 4H (Profit-Locked Trail + MACD Gate)
+ * name: Squeeze Breakout ETH 4H (Risk-Sized + MACD Gate)
  * ex: binance
  * syms: ETHUSDT
  * interval: 4h
  * cash: 10000
  *
- * Why this strategy: Same validated ETH 4H squeeze-breakout entry as the
- * champion, but with a profit-locked trailing exit. The champion's 20-bar-low
- * trail gives back a lot in fast trends (the low can sit far below price).
- * This version adds an ATR trail that only activates once the trade is
- * meaningfully in profit, so it locks in gains without disturbing the
- * early-trade behavior that made the chandelier (trailing from entry) fail.
- * When it buys and sells: buys on a squeeze breakout (band-width below its
- * 20-bar average, close above the upper Bollinger band, volume > 1.5x its
- * 20-bar average, price above the 200-bar SMA, MACD above signal). Position
- * risks 2% of equity on the 2.5x-ATR stop. Exits on a 2.5x-ATR hard stop, or
- * once up 1.5x ATR, on a trailing stop at the higher of the 20-bar low and
- * (highest high since entry - 2.5x ATR).
- * When it does NOT work: stays out of deep bears (below 200-SMA), gives up
- * the early bounce of a new bull run, and lags the biggest melt-ups. The
- * profit-locked trail adds little in choppy, low-trend regimes.
+ * Why this strategy: Combines the two best single improvements tested on the
+ * validated ETH 4H squeeze-breakout. Risk-based sizing (2% of equity at risk
+ * on the 2.5x-ATR stop) cut drawdown roughly in half in every walk-forward
+ * window, and the MACD bullish-cross momentum gate improved capture in the
+ * big melt-up window. Together they aim for the same defensive profile with
+ * lower drawdown and slightly better trend capture than full-size buying.
+ * When it buys and sells: buys when band-width is below its 20-bar average
+ * AND price closes above the upper Bollinger band AND volume > 1.5x its
+ * 20-bar average AND price is above the 200-bar SMA AND the MACD line is
+ * above its signal. Position size risks 2% of equity on the 2.5x-ATR stop.
+ * Exits on a 2.5x-ATR stop or a 20-bar low trail.
+ * When it does NOT work: it deliberately stays out of deep bear markets
+ * (below the 200-bar SMA), gives up the early bounce of a new bull run, and
+ * lags the biggest melt-up rallies. Fixed 2% per-trade risk also caps upside
+ * in strong trends.
  */
 function onUpdate(ctx) {
   const bb = ctx.bb(20, 2, 1);
@@ -35,23 +35,7 @@ function onUpdate(ctx) {
   const pos = ctx.position;
 
   if (pos > 0) {
-    // hard stop: 2.5x ATR below entry
     if (price <= ctx.entryPx - atr * 2.5) return { side: 'sell', qty: pos };
-    // profit-locked trail: only after the trade is up 1.5x ATR
-    if (price > ctx.entryPx + atr * 1.5) {
-      // highest high since entry, using recent bars
-      let hh = price;
-      for (let k = 1; k <= 20; k++) {
-        const h = ctx.high(20, k);
-        if (h == null) break;
-        if (h > hh) hh = h;
-      }
-      const trail = hh - atr * 2.5;
-      const ll20 = ctx.low(20, 1);
-      const stop = ll20 != null ? Math.max(trail, ll20) : trail;
-      if (price < stop) return { side: 'sell', qty: pos };
-      return null;
-    }
     const ll20 = ctx.low(20, 1);
     if (ll20 != null && price < ll20) return { side: 'sell', qty: pos };
     return null;
