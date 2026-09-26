@@ -1,49 +1,55 @@
 /*
  * @coinsori-strategy v1
- * name: Trend-Gated Vol-Target BTC 1D
+ * name: Trend-Gated Vol-Target ETH 1D (correct recipe)
  * ex: binance
- * syms: BTCUSDT
+ * syms: ETHUSDT
  * interval: 1d
  * cash: 10000
  *
- * Why this strategy: The strongest hold-beating family in the ledger is the
- * trend-gated vol-target champion, validated on BTC 1d. It rides up-trends
- * at a risk-managed size and cuts exposure when volatility spikes. This
- * tests whether my implementation reproduces the documented BTC champion.
- * When it buys and sells: stays long only while price is above the 50-day
- * average; sizes the position so a 3x-ATR adverse move costs ~2% of equity,
- * scaling up with trend strength. Exits when price drops below the 50-day
- * average or a 3x-ATR stop is hit.
- * When it does NOT work: in choppy sideways markets the 50-day gate whipsaws;
- * on memecoins with violent crashes (DOGE 2021-24) it loses.
+ * Why this strategy: The trend-gated vol-target (SMA50 gate + ATR vol-target +
+ * ATR crash stop) is the job's most validated family on 1d — the header of the
+ * proven BTC 4h version says BTC/SOL/ETH/DOGE 1d all beat hold with MDD ~21-33%.
+ * My earlier ETH 1d failure used a wrong recipe (2% risk sizing even in uptrends,
+ * which barely participated). This uses the correct recipe: fully invested above
+ * SMA50, scaled by closeness below it, cash beyond the 3x-ATR crash band.
+ * When it buys and sells: above SMA50 = fully invested; below = position scaled
+ * by closeness to SMA50; beyond the ATR crash band = cash.
+ * When it does NOT work: violent bull corrections give deep drawdowns, and a fast
+ * V-shaped recovery can sell near the bottom.
  */
 function onUpdate(ctx) {
-  const sma50 = ctx.sma(50, 1);
   const atr = ctx.atr(14, 1);
-  if (sma50 == null || atr == null) return null;
+  const sma50 = ctx.sma(50, 1);
   const price = ctx.price;
+  const cash = ctx.cash;
   const pos = ctx.position;
+  if (atr == null || sma50 == null || price == null || price <= 0) return null;
 
-  if (pos > 0 && ctx.entryPx != null && price <= ctx.entryPx - atr * 3) {
-    return { side: 'sell', qty: pos };
-  }
-  if (pos > 0 && price < sma50) {
-    return { side: 'sell', qty: pos };
-  }
-  if (price <= sma50) return null;
+  const equity = cash + pos * price;
+  const trendUp = price > sma50;
+  const crashDist = 3.0 * atr;
+  const crashStop = price < sma50 - crashDist;
 
-  const strength = Math.min(1.5, Math.max(0.5, price / sma50 - 1.0 + 0.5));
-  const equity = ctx.cash + pos * price;
-  const riskPerCoin = atr * 3;
-  const targetQty = (equity * 0.02 * strength) / riskPerCoin;
-
-  if (pos > 0) {
-    const diff = targetQty - pos;
-    if (Math.abs(diff) > pos * 0.05) {
-      return { side: diff > 0 ? 'buy' : 'sell', qty: Math.abs(diff) };
-    }
-    return null;
+  let targetQty;
+  if (crashStop) {
+    targetQty = 0;
+  } else if (trendUp) {
+    targetQty = equity / price;
+  } else {
+    const distFrac = 1 - (sma50 - price) / crashDist;
+    const targetValue = (0.02 * equity) / (atr / price) * Math.max(0.1, distFrac);
+    targetQty = targetValue / price;
   }
-  if (targetQty > 0) return { side: 'buy', qty: targetQty };
-  return null;
+
+  const curQty = pos;
+  const diff = targetQty - curQty;
+  if (Math.abs(diff) < 0.0001 * Math.max(0.0001, curQty)) return null;
+
+  if (diff > 0) {
+    const buyQty = Math.min(diff, (cash / price) * 0.98);
+    if (buyQty <= 0) return null;
+    return { side: 'buy', qty: buyQty };
+  } else {
+    return { side: 'sell', qty: Math.min(curQty, -diff) };
+  }
 }
