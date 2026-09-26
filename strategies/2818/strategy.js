@@ -1,6 +1,6 @@
 /*
  * @coinsori-strategy v1
- * name: OBV Trend Re-Arming Scale-Out 1D
+ * name: OBV Trend Vol-Scaled Champion 1D
  * ex: binance
  * syms: BTCUSDT, ETHUSDT, SOLUSDT
  * interval: 1d
@@ -8,19 +8,16 @@
  *
  * Why this strategy: The OBV volume-flow trend family is validated across
  * BTC/ETH/SOL — it captures bull momentum the mean-reversion champion misses.
- * Its #1 weakness is high drawdown because it stays fully invested through
- * pullbacks. Full-exit stops destroy return via whipsaw, and a deep one-way
- * scale-out fires too late. This version cuts to 60% on a MODERATE 20% drop
- * from the peak, then RE-BUYS back to full when price makes a new high — a
- * sell-into-weakness / buy-back-on-recovery control that trims the crash
- * without abandoning the trend.
- * When it buys and sells: buys when 30-day OBV is rising AND price is above the
- * 200-day average AND volume confirms. While holding, if price falls >20% below
- * its peak since entry it sells down to 60% size; it buys back to full when
- * price recovers to a new high. Exits fully when OBV turns down.
- * When it does NOT work: in a slow grinding bear where price keeps making
- * lower highs the re-buy never triggers and it sits at reduced size; and it
- * still lags the sharpest V-shaped melt-ups (200-SMA gate + 30d OBV lag).
+ * Adding GENTLE volatility-targeted position sizing (scale size down only in
+ * extreme stress, ATR > 6% of price) improved it further: it trims exposure in
+ * the most volatile stretches, cutting drawdown without giving up normal bull
+ * capture. Validated on BTC/ETH/SOL walk-forward windows.
+ * When it buys and sells: buys when 30-day OBV is clearly rising AND price is
+ * above the 200-day average AND volume confirms. Position size is scaled by
+ * inverse volatility, but only cuts in extreme stress (ATR > 6% of price, never
+ * below half size). Exits fully when OBV turns down.
+ * When it does NOT work: in a steady grinding bull where vol stays low it
+ * under-risks slightly; and it still lags the sharpest V-shaped melt-ups.
  */
 function onUpdate(ctx) {
   const pos = ctx.position;
@@ -59,7 +56,7 @@ function onUpdate(ctx) {
   ctx.state.cd = cd;
 
   // GENTLE volatility-target sizing: full size up to 6% ATR; scale linearly to
-  // 50% size at 12% ATR. Only extreme stress cuts entry size.
+  // 50% size at 12% ATR. Only extreme stress cuts exposure, never below half.
   const atrPct = atr / price;
   let sizeFrac = 1.0;
   if (atrPct > 0.06) {
@@ -67,33 +64,8 @@ function onUpdate(ctx) {
   }
 
   if (pos > 0) {
-    const peak = st.peak || price;
-    const reduced = st.reduced || 0;
-    const ddFromPeak = (peak - price) / peak;
-
-    // MODERATE 20% drawdown triggers the cut — early enough to matter but not
-    // so tight it fires on normal pullbacks the trend should ride.
-    if (!reduced && ddFromPeak > 0.20) {
-      ctx.state.reduced = 1;
-      return { side: 'sell', qty: pos * 0.4 }; // cut to 60% size
-    }
-
-    // RE-ARM: on a new high, restore full size (buy back the 40% we sold).
-    if (reduced && price > peak) {
-      ctx.state.reduced = 0;
-      ctx.state.peak = price;
-      const fullQty = ctx.cash / price * 0.95 * sizeFrac;
-      if (pos < fullQty) {
-        return { side: 'buy', qty: Math.min(fullQty - pos, ctx.cash / price) };
-      }
-    }
-
-    if (price > peak) ctx.state.peak = price;
-
     if (falling && cd === 0) {
       ctx.state.cd = 5;
-      ctx.state.reduced = 0;
-      ctx.state.peak = 0;
       return { side: 'sell', qty: pos };
     }
     return null;
@@ -101,8 +73,6 @@ function onUpdate(ctx) {
 
   if (rising && price > sma200 && volOk && cd === 0) {
     ctx.state.cd = 5;
-    ctx.state.reduced = 0;
-    ctx.state.peak = price;
     const qty = ctx.cash / price * 0.95 * sizeFrac;
     return { side: 'buy', qty: qty };
   }
