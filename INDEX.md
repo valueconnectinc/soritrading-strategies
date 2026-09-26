@@ -11,7 +11,7 @@ Every figure comes from the last verifying backtest at publish time. These are p
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
-| — | [2613](strategies/2613/) | Squeeze Breakout BTC+ETH 1D (Tight Squeeze) | +162.31% | — | +54.52% | 34 | 2026-09-26 |
+| — | [2613](strategies/2613/) | Squeeze Breakout BTC+ETH 1D (Tight Squeeze) | +215.71% | — | +24.61% | 48 | 2026-09-26 |
 | — | [2612](strategies/2612/) | Relative-Strength Rotation BTC/ETH/SOL 1D | -99.99% | — | +99.99% | 1103 | 2026-09-26 |
 |  | [2610](strategies/2610/) | Squeeze Breakout BTC+ETH 1D (Chandelier Exit) | +99.21% | +335.65% | +27.87% | 12 | 2026-09-26 |
 | — | [2609](strategies/2609/) | Squeeze Breakout BTC+ETH 1D (DXY Trend Gate) | +289.55% | — | +59.10% | 62 | 2026-09-26 |
