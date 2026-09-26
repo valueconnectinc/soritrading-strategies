@@ -13,40 +13,35 @@
  * low (the trend has clearly turned). This is classic turtle-style trend
  * following — the opposite family from the mean-reversion strategies.
  * When it buys and sells: buys when today's close exceeds the highest close of
- * the last 55 days (entry channel), sells when the close falls below the lowest
- * close of the last 20 days (exit channel). A longer entry channel filters out
- * noise, a shorter exit channel locks in profits early when the trend breaks.
+ * the last 20 days (entry channel), sells when the close falls below the lowest
+ * close of the last 10 days (exit channel). A shorter entry channel reacts
+ * faster to new trends; the short exit channel locks in profits early when the
+ * trend breaks. Goes near-full so it actually participates in the trend.
  * When it does NOT work: in a sideways / choppy market with no sustained trend
  * it triggers false breakouts and gives back money (whipsaw). It also lags
- * sharp reversals because it needs a confirmed 20-day low before selling, so it
+ * sharp reversals because it needs a confirmed 10-day low before selling, so it
  * gives back a chunk of any peak-to-trough move.
  */
 function onUpdate(ctx) {
   const px = ctx.price;
   if (px == null) return null;
 
-  // entry: 55-day high breakout, exit: 20-day low — classic turtle parameters.
-  // Need 56 bars of history before the 55-day channel is meaningful.
-  const hi55 = ctx.high(55, 1); // highest high of last 55 closed bars
-  const lo20 = ctx.low(20, 1);  // lowest low of last 20 closed bars
-  if (hi55 == null || lo20 == null) return null;
+  // turtle 20/10: 20-day high entry, 10-day low exit — faster than 55/20.
+  const hi20 = ctx.high(20, 1); // highest high of last 20 closed bars
+  const lo10 = ctx.low(10, 1);  // lowest low of last 10 closed bars
+  if (hi20 == null || lo10 == null) return null;
 
   const pos = ctx.position;
-  const atr = ctx.atr(14, 1);
 
   if (pos > 0) {
-    // exit: close below the 20-day channel low = trend broke down, take profits.
-    if (px < lo20) return { side: 'sell', qty: pos };
+    // exit: close below the 10-day channel low = trend broke down.
+    if (px < lo10) return { side: 'sell', qty: pos };
     return null;
   }
 
-  // entry: close above the 55-day high = fresh uptrend confirmed.
-  if (px > hi55) {
-    // risk-size: risk 1% of equity per trade using ATR, capped at full cash.
-    if (atr == null) return { side: 'buy', qty: ctx.cash / px * 0.99 };
-    const riskPerCoin = atr * 2; // 2-ATR stop distance
-    const qty = Math.min(ctx.cash / px * 0.99, (ctx.cash * 0.01) / riskPerCoin);
-    return { side: 'buy', qty: qty };
+  // entry: close above the 20-day high = fresh uptrend confirmed, go near-full.
+  if (px > hi20) {
+    return { side: 'buy', qty: ctx.cash / px * 0.99 };
   }
   return null;
 }
