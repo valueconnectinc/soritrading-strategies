@@ -11,7 +11,7 @@ Every figure comes from the last verifying backtest at publish time. These are p
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
-|  | [2775](strategies/2775/) | Onchain Demand Fast BTC 1D | +137.21% | +1258.25% | +68.76% | 234 | 2026-09-26 |
+|  | [2775](strategies/2775/) | Onchain Demand Fast BTC 1D | +166.28% | +1258.25% | +69.48% | 78 | 2026-09-26 |
 |  | [2774](strategies/2774/) | Onchain Hashrate Trend BTC 1D | -73.87% | +55.47% | +85.60% | 184 | 2026-09-26 |
 |  | [2773](strategies/2773/) | Onchain Hashrate Probe | +247.17% | +262.64% | +52.47% | 1 | 2026-09-26 |
 |  | [2772](strategies/2772/) | Onchain Demand Trend BTC 1D | +134.03% | +262.64% | +42.13% | 85 | 2026-09-26 |

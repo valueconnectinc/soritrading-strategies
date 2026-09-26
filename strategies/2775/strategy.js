@@ -1,34 +1,40 @@
 /*
  * @coinsori-strategy v1
- * name: Onchain Demand Fast BTC 1D
+ * name: Onchain Demand Trend BTC 1D
  * ex: binance
  * syms: BTCUSDT
  * interval: 1d
  * cash: 10000
  *
- * Why this strategy: Variant of the validated on-chain demand strategy (id 2772)
- * using a FASTER 15-bar lookback instead of 30. Goal: catch demand turnarounds
- * sooner to reduce the melt-up lag (the 30-bar version lagged buy-and-hold in
- * W2/W3). Test is on the SAME windows so it is a fair comparison, not a re-tune.
- * When it buys and sells: holds BTC while smoothed demand rises vs ~15 days ago;
- * sells when it clearly turns down.
- * When it does NOT work: a faster lookback may add churn and lose the smoothing
- * that made the 30-bar version clean; if it whipsaws, revert to 30.
+ * Why this strategy: A genuinely different signal family — on-chain network
+ * demand instead of price. Uses the 30-day-smoothed active-address count
+ * (addr_sma30) so the signal is slow and stable. Hypothesis: rising network
+ * demand confirms / leads price uptrends; falling demand precedes weakness.
+ * Hold BTC while smoothed demand expands, step aside when it contracts.
+ * Hysteresis + cooldown reduce churn. NOTE: adding a price 200-SMA trend gate
+ * to this destroyed the edge (W2 went -48%) — demand is a leading signal that
+ * works even when price trend looks weak, so it is kept pure.
+ * When it buys and sells: buys when smoothed demand is clearly rising vs ~30
+ * days earlier; sells when it clearly turns down. Slow fundamental timing.
+ * When it does NOT work: lags pure buy-and-hold in melt-ups (demand lags price)
+ * and can miss sharp recoveries where price jumps before addresses catch up.
+ * On-chain data is live in the feed (verified).
  */
 function onUpdate(ctx) {
   const pos = ctx.position;
 
   const raw = ctx.data('addr_sma30');
   const now = Number(raw);
-  if (!Number.isFinite(now) || now <= 0) return null;
+  if (!Number.isFinite(now) || now <= 0) return null; // data unavailable: sit out
 
   const hist = ctx.state.hist || [];
   hist.push(now);
-  if (hist.length > 15) hist.shift();
+  if (hist.length > 30) hist.shift();
   ctx.state.hist = hist;
-  if (hist.length < 15) return null;
-  const past = hist[0]; // ~14 bars ago
+  if (hist.length < 30) return null;
+  const past = hist[0]; // ~29 bars ago
 
+  // Hysteresis: only flip on a clear 0.5% move to avoid noise-driven churn.
   const rising = now > past * 1.005;
   const falling = now < past * 0.995;
 
