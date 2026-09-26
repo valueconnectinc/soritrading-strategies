@@ -11,7 +11,7 @@ Every figure comes from the last verifying backtest at publish time. These are p
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
-|  | [2642](strategies/2642/) | Donchian Trend-Following BTC 1D | +48.88% | +123.18% | +30.65% | 31 | 2026-09-26 |
+|  | [2642](strategies/2642/) | Donchian Trend-Following BTC 1D | +24.55% | +154.20% | +20.72% | 8 | 2026-09-26 |
 |  | [2641](strategies/2641/) | Band-Bounce Mean Reversion ETH 4H | -53.64% | -22.93% | +57.56% | 256 | 2026-09-26 |
 |  | [2639](strategies/2639/) | Plain Band-Bounce BTC 4H control | +17.20% | +61.01% | +26.51% | 54 | 2026-09-26 |
 |  | [2638](strategies/2638/) | OI-Crowding Band-Bounce BTC 4H | +17.20% | +61.01% | +26.51% | 54 | 2026-09-26 |

@@ -3,26 +3,25 @@
   "name": "Donchian Trend-Following BTC 1D",
   "kind": "custom",
   "verified": {
-    "backtestId": 11558,
-    "return": 48.88,
-    "mdd": 30.65,
-    "trades": 31,
+    "backtestId": 11561,
+    "return": 24.55,
+    "mdd": 20.72,
+    "trades": 8,
     "vsBuyHold": "lose",
-    "benchRet": 123.18,
+    "benchRet": 154.2,
     "benchBasis": "price",
     "gapPct": 0,
-    "tFrom": 1565740800,
-    "tTo": 1677974400,
+    "tFrom": 1502928000,
+    "tTo": 1565654400,
     "approxNotes": [
-      "봉 내 순서는 관례(양봉 O→L→H→C·음봉 O→H→L→C) — 실순서 미상 · 봉 중 거래량 null · MDD 는 봉 마감 기준",
-      "기간 종료 시 미청산 포지션 1종목 (총자산의 53.03%) — 이 수익률은 **평가액**을 포함합니다. 퇴출 수수료·거래세를 안 냈고, 마지막 봉 가격에 실제로 팔 수 있다는 보장도 없습니다(얇은 호가·상장폐지). exec.endLiquidate 로 마지막 봉 청산을 켤 수 있습니다"
+      "봉 내 순서는 관례(양봉 O→L→H→C·음봉 O→H→L→C) — 실순서 미상 · 봉 중 거래량 null · MDD 는 봉 마감 기준"
     ],
     "spec": {
       "ex": "binance",
       "sym": "BTCUSDT",
       "interval": "1d",
       "bars": 1300,
-      "end": 1678060800
+      "end": 1565740800
     }
   },
   "config": null,
