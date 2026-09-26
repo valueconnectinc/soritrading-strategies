@@ -1,6 +1,6 @@
 /*
  * @coinsori-strategy v1
- * name: VWAP-Pullback SOL 4H SoftRegime+TP+TightTrail
+ * name: VWAP-Pullback SOL 4H SoftRegime+TakeProfit
  * ex: binance
  * syms: SOLUSDT
  * interval: 4h
@@ -8,18 +8,17 @@
  *
  * Why this strategy: Mean reversion to the VWAP (volume-weighted average
  * price) — in an established uptrend, sharp dips back toward VWAP tend to
- * revert up as buyers step in. Builds on the soft-regime + partial-take-profit
- * version and tightens the trailing stop AFTER the partial: once we bank a
- * third at +3 ATR, the remaining two-thirds trail at 6 ATR instead of 10.
- * A full breakeven stop killed winners in the recent bear window (tested and
- * reverted), so this is the milder middle ground — it gives back less than
- * the wide stop once we are in profit, without clipping every winner.
+ * revert up as buyers step in. Builds on the previous soft-regime version
+ * (block entries only when the 200-SMA is declining) and adds a MILD partial
+ * profit-taking step: once price has climbed ~3 ATR from entry, bank a third
+ * of the position to lock in gains, leaving most exposure to ride the trend.
+ * This cuts drawdown on all regimes and keeps the recent bear window positive.
  * When it buys and sells: buys when price pulls back to/below VWAP while the
  * 50-SMA is rising, RSI is not overbought, and the 200-SMA is not declining.
- * Banks a third at +3 ATR, then trails the rest at 6 ATR or exits on the
- * 50-SMA turn-down.
+ * Sells a third at +3 ATR, then the rest on the 50-SMA turn-down or 10-ATR.
  * When it does NOT work: fails in a true downtrend (pullbacks keep falling)
- * and in low-liquidity chop where VWAP gives no support.
+ * and in low-liquidity chop where VWAP gives no support. The remaining wide
+ * stop still means giveback on sharp reversals.
  */
 function onUpdate(ctx) {
   const s = ctx.state;
@@ -51,18 +50,14 @@ function onUpdate(ctx) {
     }
     if (atr != null) {
       s.hi = s.hi == null ? price : Math.max(s.hi, price);
-      // Partial take-profit: at +3 ATR bank a third of the position.
+      // Mild partial take-profit: at +3 ATR bank a third of the position.
       if (s.entry != null && !s.halfTaken) {
         if (price >= s.entry + atr * 3) {
           s.halfTaken = true;
           return { side: 'sell', qty: pos / 3 };
         }
       }
-      // Tighten the trail after the partial: 6 ATR instead of 10. Middle
-      // ground between the wide stop (too much giveback) and breakeven
-      // (clips winners) — tested both extremes.
-      const trail = s.halfTaken ? 6 : 10;
-      if (price <= s.hi - atr * trail) {
+      if (price <= s.hi - atr * 10) {
         s.lastExit = ctx.i;
         return { side: 'sell', qty: pos };
       }
