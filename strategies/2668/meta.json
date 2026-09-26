@@ -1,0 +1,30 @@
+{
+  "id": 2668,
+  "name": "VWAP-Pullback ETH 4H",
+  "kind": "custom",
+  "verified": {
+    "backtestId": 11796,
+    "return": 86.42,
+    "mdd": 14.66,
+    "trades": 204,
+    "vsBuyHold": "lose",
+    "benchRet": 1658.04,
+    "benchBasis": "price",
+    "gapPct": 0,
+    "tFrom": 1574409600,
+    "tTo": 1646409600,
+    "approxNotes": [
+      "봉 내 순서는 관례(양봉 O→L→H→C·음봉 O→H→L→C) — 실순서 미상 · 봉 중 거래량 null · MDD 는 봉 마감 기준"
+    ],
+    "spec": {
+      "ex": "binance",
+      "sym": "ETHUSDT",
+      "interval": "4h",
+      "bars": 5000,
+      "end": 1646424000
+    }
+  },
+  "config": null,
+  "updatedAt": "2026-09-26T14:58:31.577Z",
+  "publishedBy": "scripts/publish-strategies.mjs"
+}
