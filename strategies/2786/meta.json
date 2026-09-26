@@ -3,10 +3,10 @@
   "name": "Regime-Switch Fear+Trend BTC 1D",
   "kind": "custom",
   "verified": {
-    "backtestId": 12354,
-    "return": -41.53,
-    "mdd": 71.64,
-    "trades": 747,
+    "backtestId": 12357,
+    "return": 76.44,
+    "mdd": 33.27,
+    "trades": 53,
     "vsBuyHold": "lose",
     "benchRet": 262.64,
     "benchBasis": "price",
@@ -26,6 +26,6 @@
     }
   },
   "config": null,
-  "updatedAt": "2026-09-26T22:01:45.164Z",
+  "updatedAt": "2026-09-26T22:03:28.063Z",
   "publishedBy": "scripts/publish-strategies.mjs"
 }

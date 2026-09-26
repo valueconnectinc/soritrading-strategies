@@ -11,9 +11,10 @@
  * single rule can't do both, so this switches between two validated modes:
  * buy panic at extreme fear, and ride the trend when it is clearly up.
  * When it buys and sells: in the BEAR leg it buys when the fear-greed index is
- * in extreme fear (a panic bottom) and sells when the index recovers. In the
- * BULL leg it buys when the 20-day EMA is above the 100-day EMA (confirmed
- * uptrend) and sells on a wide ATR trail or when the trend flips down.
+ * in extreme fear (a panic bottom) and sells when the index recovers or a wide
+ * stop breaks. In the BULL leg it buys when the 20-day EMA is above the
+ * 100-day EMA (confirmed uptrend) and sells on a wide ATR trail or when the
+ * trend flips down.
  * When it does NOT work: the fear-contrarian leg needs real panic events — in
  * a calm grind-down it never triggers and we just sit in cash; and in a sharp
  * V-crash the wide trend trail gives back a large chunk before it fires.
@@ -31,29 +32,35 @@ function onUpdate(ctx) {
 
   const st = ctx.state;
 
-  // ---- BULL leg: ride the confirmed uptrend ----
   if (pos > 0) {
     const hi = Math.max(st.peak || ctx.entryPx, price);
     st.peak = hi;
-    // Wide 8x ATR trail lets winners run; exit when trend flips or trail breaks.
+    // Exit depends on WHICH leg we entered in — this is the key fix.
+    if (st.leg === 'bear') {
+      // Bear leg: sell when fear recovers or the wide stop breaks.
+      if ((fg != null && fg > 40) || price <= hi - 8 * atr) {
+        st.peak = null; st.leg = null;
+        return { side: 'sell', qty: pos };
+      }
+      return null;
+    }
+    // Bull leg: sell when trend flips down or the wide trail breaks.
     if (ema20 < ema100 || price <= hi - 8 * atr) {
-      st.peak = null;
+      st.peak = null; st.leg = null;
       return { side: 'sell', qty: pos };
     }
     return null;
   }
 
-  // ---- BEAR leg: panic-buy at extreme fear ----
-  // Only buy panic when we are NOT in a confirmed uptrend (else the trend leg
-  // would already have us in). fg is a 0-100 index; extreme fear = low value.
+  // BEAR leg entry: extreme fear while NOT in a confirmed uptrend.
   if (fg != null && fg < 25 && ema20 < ema100) {
-    st.peak = price;
+    st.peak = price; st.leg = 'bear';
     return { side: 'buy', qty: ctx.cash / price * 0.5 };
   }
 
-  // ---- BULL leg entry: confirmed uptrend ----
+  // BULL leg entry: confirmed uptrend.
   if (ema20 > ema100) {
-    st.peak = price;
+    st.peak = price; st.leg = 'bull';
     return { side: 'buy', qty: ctx.cash / price * 0.5 };
   }
   return null;
