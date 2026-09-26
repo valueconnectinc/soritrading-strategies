@@ -1,27 +1,25 @@
 /*
  * @coinsori-strategy v1
- * name: BTC 1D Regime-Switch Blend (Trend + Mean Reversion)
+ * name: BTC 1D Regime-Switch Blend, MR Exit Loosened
  * ex: binance
  * syms: BTCUSDT
  * interval: 1d
  * cash: 10000
  *
- * Why this strategy: Different market regimes need different tools. Above the
- * 200-day average (a bull trend) price tends to keep trending, so we ride
- * pullbacks to the Donchian channel. Below the 200-day average (a bear or
- * chop) buying panic flushes and riding the snap-back has been the most
- * robust edge. Switching between the two based on where price sits relative
- * to the long average captures the trend in bulls AND the mean-reversion
- * edge in bears — solving each family's known weakness on its own.
- * When it buys and sells: above the 200-day it buys pullbacks to the lower
- * Donchian channel and rides the trend with a trailing stop; below the
- * 200-day it buys deep-oversold panic flushes (RSI<30 at the lower Bollinger
- * band) and sells on RSI recovery. Either mode exits if price crosses the
- * 200-day the wrong way.
- * When it does NOT work: in a long sideways market the regime can flip back
- * and forth and both modes whipsaw; and below the 200-day in a grinding
- * downtrend the oversold bounces can be weak. It also lags a straight-line
- * melt-up because the trend mode waits for pullbacks.
+ * Why this strategy: Same regime-switch blend as the champion, but with the
+ * mean-reversion exit loosened (sell at RSI>60 instead of RSI>50, or above
+ * the upper band instead of the mid band). The idea is that in a strong
+ * panic snap-back the champion sells too early and leaves money on the table,
+ * so letting the bounce run a bit longer should capture more of the recovery
+ * in chop-heavy windows.
+ * When it buys and sells: identical to the champion — trend mode above the
+ * 200-day (pullbacks to the Donchian channel, trailing stop), mean-reversion
+ * mode below the 200-day (RSI<30 at the lower Bollinger band) — but the
+ * mean-reversion mode exits later.
+ * When it does NOT work: same as the champion — whipsaw in sideways markets,
+ * weak bounces in grinding downtrends, and lagging straight-line melt-ups.
+ * Loosening the MR exit also risks giving back gains if a bounce reverses
+ * before RSI reaches 60.
  */
 function onUpdate(ctx) {
   const pos = ctx.position;
@@ -52,7 +50,8 @@ function onUpdate(ctx) {
     }
     const bb = ctx.bb(20, 2, 1), rsi = ctx.rsi(14, 1);
     if (bb == null || rsi == null) return null;
-    if (rsi > 50 || price > bb.mid) {
+    // LOOSENED MR EXIT: let the bounce run to RSI>60 or above the upper band.
+    if (rsi > 60 || price > bb.upper) {
       st.mode = null; st.peak = null;
       return { side: 'sell', qty: pos };
     }
@@ -71,8 +70,6 @@ function onUpdate(ctx) {
   if (bb == null || rsi == null || atr == null) return null;
 
   if (price > sma200) {
-    // TREND MODE: buy a pullback to the lower 20-bar Donchian channel while
-    // the 10-bar channel is still rising (uptrend intact).
     const hi10 = ctx.high(10, 1), lo20 = ctx.low(20, 1);
     const hi10prev = ctx.high(10, 2);
     if (hi10 == null || lo20 == null || hi10prev == null) return null;
@@ -83,7 +80,6 @@ function onUpdate(ctx) {
     return null;
   }
 
-  // MEAN-REVERSION MODE: buy deep-oversold panic flush at the lower band.
   if (rsi < 30 && price <= bb.lower) {
     st.mode = 'mr'; st.peak = price;
     return { side: 'buy', qty: ctx.cash / price * 0.5 };

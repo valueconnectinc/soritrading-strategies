@@ -1,12 +1,12 @@
 {
-  "id": 2795,
-  "name": "BTC 1D Regime-Switch Blend (Trend + Mean Reversion)",
+  "id": 2796,
+  "name": "BTC 1D Regime-Switch Blend, MR Exit Loosened",
   "kind": "custom",
   "verified": {
-    "backtestId": 12428,
-    "return": 34.46,
-    "mdd": 80.32,
-    "trades": 80,
+    "backtestId": 12431,
+    "return": 141.7,
+    "mdd": 55.94,
+    "trades": 30,
     "vsBuyHold": "lose",
     "benchRet": 245.42,
     "benchBasis": "price",
@@ -25,6 +25,6 @@
     }
   },
   "config": null,
-  "updatedAt": "2026-09-26T22:31:32.250Z",
+  "updatedAt": "2026-09-26T22:31:47.383Z",
   "publishedBy": "scripts/publish-strategies.mjs"
 }
