@@ -3,24 +3,26 @@
   "name": "Band-Bounce Mean Reversion MATIC 4H",
   "kind": "custom",
   "verified": {
-    "backtestId": 11824,
-    "return": 11.72,
-    "mdd": 28.12,
-    "trades": 12,
+    "backtestId": 11829,
+    "return": 42.22,
+    "mdd": 21.63,
+    "trades": 51,
     "vsBuyHold": "lose",
-    "benchRet": 27.72,
+    "benchRet": 115.63,
     "benchBasis": "price",
     "gapPct": 0,
-    "tFrom": 1617580800,
-    "tTo": 1790294400,
+    "tFrom": 1574424000,
+    "tTo": 1646424000,
     "approxNotes": [
-      "봉 내 순서는 관례(양봉 O→L→H→C·음봉 O→H→L→C) — 실순서 미상 · 봉 중 거래량 null · MDD 는 봉 마감 기준"
+      "봉 내 순서는 관례(양봉 O→L→H→C·음봉 O→H→L→C) — 실순서 미상 · 봉 중 거래량 null · MDD 는 봉 마감 기준",
+      "[유동성/미체결] 시장가 주문 3건이 그 봉의 호가 두께를 넘어 일부만 체결됐습니다(전체 요청 금액의 1% 미체결, 남은 물량은 다음 봉으로). 진입·청산이 전략이 의도한 시점보다 늦습니다. ★ 원인은 둘 중 하나이고 이 수만으로는 못 가릅니다 — 종목이 얇거나, 주문이 한 봉이 소화할 수 있는 것보다 크거나. 주문 크기를 줄여 같은 구간을 다시 돌리면 …"
     ],
     "spec": {
       "ex": "binance",
-      "sym": "ETHUSDT",
-      "interval": "1d",
-      "bars": 2000
+      "sym": "LTCUSDT",
+      "interval": "4h",
+      "bars": 5000,
+      "end": 1646438400
     }
   },
   "config": null,

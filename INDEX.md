@@ -11,7 +11,7 @@ Every figure comes from the last verifying backtest at publish time. These are p
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
-|  | [2675](strategies/2675/) | Band-Bounce Mean Reversion MATIC 4H | +11.72% | +27.72% | +28.12% | 12 | 2026-09-26 |
+|  | [2675](strategies/2675/) | Band-Bounce Mean Reversion MATIC 4H | +42.22% | +115.63% | +21.63% | 51 | 2026-09-26 |
 |  | [2673](strategies/2673/) | RSI-Divergence Mean Reversion ALGO 4H | -36.42% | +250.14% | +41.20% | 91 | 2026-09-26 |
 |  | [2672](strategies/2672/) | Band-Bounce Mean Reversion XLM 4H | +128.48% | +217.37% | +23.27% | 98 | 2026-09-26 |
 |  | [2671](strategies/2671/) | Volume-Confirmed Panic-Bounce ATOM 4H | +33.81% | +944.60% | +27.18% | 51 | 2026-09-26 |
