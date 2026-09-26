@@ -3,16 +3,16 @@
   "name": "Volume-Confirmed Momentum Breakout BTC 4H",
   "kind": "custom",
   "verified": {
-    "backtestId": 10927,
-    "return": -8.84,
-    "mdd": 30.8,
-    "trades": 100,
+    "backtestId": 10930,
+    "return": -39.88,
+    "mdd": 44.04,
+    "trades": 138,
     "vsBuyHold": "lose",
-    "benchRet": 59.36,
+    "benchRet": 443.24,
     "benchBasis": "price",
     "gapPct": 0,
-    "tFrom": 1646380800,
-    "tTo": 1718366400,
+    "tFrom": 1574366400,
+    "tTo": 1646366400,
     "approxNotes": [
       "봉 내 순서는 관례(양봉 O→L→H→C·음봉 O→H→L→C) — 실순서 미상 · 봉 중 거래량 null · MDD 는 봉 마감 기준",
       "거래량은 봉 마감에만 확정 — 봉 중 평가에서 ctx.vol/volumes 가 null 이라 거래량 조건이 걸러졌을 수 있음(봉 중에도 쓰려면 ctx.volPrev·ctx.avgVol)"
@@ -22,7 +22,7 @@
       "sym": "BTCUSDT",
       "interval": "4h",
       "bars": 5000,
-      "end": 1718380800
+      "end": 1646380800
     }
   },
   "config": null,

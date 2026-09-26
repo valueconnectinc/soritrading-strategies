@@ -11,7 +11,7 @@ Every figure comes from the last verifying backtest at publish time. These are p
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
-|  | [2548](strategies/2548/) | Volume-Confirmed Momentum Breakout BTC 4H | -8.84% | +59.36% | +30.80% | 100 | 2026-09-26 |
+|  | [2548](strategies/2548/) | Volume-Confirmed Momentum Breakout BTC 4H | -39.88% | +443.24% | +44.04% | 138 | 2026-09-26 |
 |  | [2547](strategies/2547/) | Champion v2 Final OOS ETH 4H | +286.10% | +1597.45% | +44.82% | 203 | 2026-09-26 |
 |  | [2546](strategies/2546/) | Champion v2 Final OOS SOL 4H | +218.56% | +3047.76% | +30.66% | 143 | 2026-09-26 |
 | ★ | [2545](strategies/2545/) | Champion + FedRegime BearGate BTC 4H | +81.80% | +59.36% | +39.81% | 200 | 2026-09-26 |
