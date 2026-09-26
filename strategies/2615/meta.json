@@ -3,28 +3,28 @@
   "name": "BTC Trend-Pullback Dip Buyer 1D",
   "kind": "custom",
   "verified": {
-    "backtestId": 11409,
-    "return": -69.35,
-    "mdd": 70.16,
-    "trades": 94,
-    "vsBuyHold": "lose",
-    "benchRet": 335.65,
-    "benchBasis": "price",
+    "backtestId": 11412,
+    "return": -15.18,
+    "mdd": 18.87,
+    "trades": 2,
+    "vsBuyHold": "unmeasured",
     "gapPct": 0,
-    "tFrom": 1546300800,
-    "tTo": 1672444800,
+    "tFrom": 1502928000,
+    "tTo": 1531094400,
     "approxNotes": [
-      "봉 내 순서는 관례(양봉 O→L→H→C·음봉 O→H→L→C) — 실순서 미상 · 봉 중 거래량 null · MDD 는 봉 마감 기준"
+      "거래량은 봉 마감에만 확정 — 봉 중 평가에서 ctx.vol/volumes 가 null 이라 거래량 조건이 걸러졌을 수 있음(봉 중에도 쓰려면 ctx.volPrev·ctx.avgVol)",
+      "[생존 편향] 이 유니버스는 **지금 거래되는 종목**만입니다. 구간 중(또는 그 전에) 상장폐지된 종목은 **처음부터 들어 있지 않습니다** — 망한 종목이 빠져 있어 수익률이 **실제보다 좋게** 나옵니다. 스캐너·랭킹 전략일수록 그 차이가 큽니다."
     ],
     "spec": {
       "ex": "binance",
       "sym": "BTCUSDT",
       "interval": "1d",
-      "bars": 1461,
-      "end": 1672531200
+      "bars": 1500,
+      "end": 1531180800,
+      "syms": 2
     }
   },
   "config": null,
-  "updatedAt": "2026-09-26T06:28:05.215Z",
+  "updatedAt": "2026-09-26T06:30:43.523Z",
   "publishedBy": "scripts/publish-strategies.mjs"
 }
