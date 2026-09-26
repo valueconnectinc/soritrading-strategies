@@ -4,13 +4,14 @@ Every strategy whose backtest **finished and actually traded** is published here
 Nothing is filtered out by return — the ones that lost money are part of the record.
 Entries stay after a strategy is removed from our own workspace — this is a log, and deleting the record would leave only the survivors.
 
-**★ marks a strategy that out-returned buy & hold over the same window** — 341 of 1165 right now.
+**★ marks a strategy that out-returned buy & hold over the same window** — 342 of 1166 right now.
 `—` means the comparison **could not be made**: the engine does not compute a benchmark for multi-symbol, futures, or multi-leg runs. That is *unknown*, not *lost*, and it is 197 of them right now.
 
 Every figure comes from the last verifying backtest at publish time. These are past results over historical data. Nothing here is promised or assured about the future, and none of it is investment advice.
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
+| ★ | [2762](strategies/2762/) | AI 전략 | +46.00% | -24.71% | +11.35% | 132 | 2026-09-26 |
 |  | [2761](strategies/2761/) | AI 전략 | +96.72% | +1620.25% | +40.26% | 200 | 2026-09-26 |
 | ★ | [2760](strategies/2760/) | Donchian Pullback Trend-Strength 0.10 ETH 4H | +90.13% | +34.16% | +20.51% | 168 | 2026-09-26 |
 |  | [2759](strategies/2759/) | Donchian Pullback Trend-Strength ETH 4H | +231.98% | +435.09% | +16.48% | 180 | 2026-09-26 |
