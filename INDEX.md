@@ -11,7 +11,7 @@ Every figure comes from the last verifying backtest at publish time. These are p
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
-|  | [2597](strategies/2597/) | Bollinger Squeeze Breakout BTC 1D | +40.05% | +270.70% | +49.17% | 34 | 2026-09-26 |
+|  | [2597](strategies/2597/) | Bollinger Squeeze Breakout BTC 1D | +20.13% | +245.42% | +49.17% | 36 | 2026-09-26 |
 |  | [2596](strategies/2596/) | Band-Bounce Mean Reversion LTC 4H ScaleOut LooseStop | +0.90% | +113.26% | +4.20% | 48 | 2026-09-26 |
 | ★ | [2595](strategies/2595/) | Band-Bounce Mean Reversion LTC 4H Scale-Out | +8.07% | -81.75% | +3.35% | 46 | 2026-09-26 |
 | ★ | [2594](strategies/2594/) | Defensive Donchian Price-Bull Wide Exit BTC 1D (baseline) | +349.44% | +324.12% | +58.47% | 15 | 2026-09-26 |
