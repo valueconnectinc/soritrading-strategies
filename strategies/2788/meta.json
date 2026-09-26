@@ -1,0 +1,30 @@
+{
+  "id": 2788,
+  "name": "Regime-Switch Hybrid SOL 4H (DD-reduced)",
+  "kind": "custom",
+  "verified": {
+    "backtestId": 12385,
+    "return": -75.35,
+    "mdd": 86.82,
+    "trades": 380,
+    "vsBuyHold": "lose",
+    "benchRet": 62.63,
+    "benchBasis": "price",
+    "gapPct": 0,
+    "tFrom": 1646452800,
+    "tTo": 1718438400,
+    "approxNotes": [
+      "봉 내 순서는 관례(양봉 O→L→H→C·음봉 O→H→L→C) — 실순서 미상 · 봉 중 거래량 null · MDD 는 봉 마감 기준"
+    ],
+    "spec": {
+      "ex": "binance",
+      "sym": "SOLUSDT",
+      "interval": "4h",
+      "bars": 5000,
+      "end": 1718452800
+    }
+  },
+  "config": null,
+  "updatedAt": "2026-09-26T22:14:43.829Z",
+  "publishedBy": "scripts/publish-strategies.mjs"
+}

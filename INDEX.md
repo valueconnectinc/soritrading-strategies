@@ -4,13 +4,14 @@ Every strategy whose backtest **finished and actually traded** is published here
 Nothing is filtered out by return — the ones that lost money are part of the record.
 Entries stay after a strategy is removed from our own workspace — this is a log, and deleting the record would leave only the survivors.
 
-**★ marks a strategy that out-returned buy & hold over the same window** — 344 of 1188 right now.
+**★ marks a strategy that out-returned buy & hold over the same window** — 344 of 1189 right now.
 `—` means the comparison **could not be made**: the engine does not compute a benchmark for multi-symbol, futures, or multi-leg runs. That is *unknown*, not *lost*, and it is 197 of them right now.
 
 Every figure comes from the last verifying backtest at publish time. These are past results over historical data. Nothing here is promised or assured about the future, and none of it is investment advice.
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
+|  | [2788](strategies/2788/) | Regime-Switch Hybrid SOL 4H (DD-reduced) | -75.35% | +62.63% | +86.82% | 380 | 2026-09-26 |
 |  | [2787](strategies/2787/) | Liquidation-Capitulation Contrarian BTC 4H | -0.25% | +8.75% | +20.31% | 13 | 2026-09-26 |
 |  | [2786](strategies/2786/) | Regime-Switch Fear+Trend BTC 1D | +3.65% | +45.78% | +47.63% | 59 | 2026-09-26 |
 |  | [2785](strategies/2785/) | EMA20/100 Trend BTC 1D | +209.30% | +743.58% | +44.75% | 29 | 2026-09-26 |
