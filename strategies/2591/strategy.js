@@ -44,10 +44,10 @@ function onUpdate(ctx) {
   const inSteepDowntrend = price < ema50 - atr * 3;
   if (inSteepDowntrend) return null;
 
-  // Skip late breakout entries when price has already run 2.5x ATR above the
-  // 100-day EMA — a parabolic blowoff top. Buying here is buying the top;
-  // waiting for a pullback avoids the worst late entries and cuts MDD.
-  if (price > ema100 + atr * 2.5) return null;
+  // Skip entry only at a TRUE blowoff top (4x ATR above the 100-day EMA).
+  // 2.5x was too tight and blocked normal bull entries (price legitimately
+  // stays far above EMA100 in strong trends); 4x only triggers at extremes.
+  if (price > ema100 + atr * 4) return null;
 
   if (price > hh55) {
     const volRatio = atr / price;
