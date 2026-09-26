@@ -1,22 +1,19 @@
 /*
  * @coinsori-strategy v1
- * name: Band-Bounce Mean Reversion EOS 4H (Rising-SMA)
+ * name: Band-Bounce Mean Reversion LTC 4H (Rising-SMA)
  * ex: binance
- * syms: EOSUSDT
+ * syms: LTCUSDT
  * interval: 4h
  * cash: 10000
  *
- * Why this strategy: The validated band-bounce mean-reversion champion, plus one
- * targeted fix for its known weakness. The champion loses on secular decliners
- * (EOS/ALGO) where price is above a FLAT or falling 200-SMA and then collapses.
- * Requiring the 200-SMA itself to be RISING filters out those early-stage
- * downtrends, keeping only the ranging/recovering regimes where mean reversion
- * works. Testing this only on EOS, the champion's weakest asset.
+ * Why this strategy: The validated band-bounce mean-reversion champion, plus a
+ * rising-200-SMA slope filter. Testing whether the filter (which fixed EOS's
+ * secular-decliner losses) preserves the edge on LTC, a strong champion asset.
  * When it buys and sells: buys when price closes below the lower Bollinger(20,2)
  * with RSI<30, the 200-SMA is rising, and price is above it; exits at the middle
  * band / RSI>50 or a stop; waits 5 bars before the next entry.
- * When it does NOT work: lags strong melt-ups (sits in cash during rallies);
- * the rising-SMA filter may be too strict and skip valid early recoveries.
+ * When it does NOT work: lags strong melt-ups; the rising-SMA filter may be too
+ * strict and skip valid early recoveries during a bull market's base-building.
  */
 function onUpdate(ctx) {
   const bb = ctx.bb(20, 2, 1);
@@ -44,7 +41,7 @@ function onUpdate(ctx) {
   const lastExit = ctx.state.lastExit || 0;
   if (ctx.i - lastExit < 5) return null;
 
-  // NEW: require the 200-SMA to be rising (slope up) — filters secular decliners
+  // rising-200-SMA slope filter
   if (sma200 <= sma200p) return null;
   if (price < sma200) return null;
 
