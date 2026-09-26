@@ -1,0 +1,30 @@
+{
+  "id": 2615,
+  "name": "BTC Trend-Pullback Dip Buyer 1D",
+  "kind": "custom",
+  "verified": {
+    "backtestId": 11409,
+    "return": -69.35,
+    "mdd": 70.16,
+    "trades": 94,
+    "vsBuyHold": "lose",
+    "benchRet": 335.65,
+    "benchBasis": "price",
+    "gapPct": 0,
+    "tFrom": 1546300800,
+    "tTo": 1672444800,
+    "approxNotes": [
+      "봉 내 순서는 관례(양봉 O→L→H→C·음봉 O→H→L→C) — 실순서 미상 · 봉 중 거래량 null · MDD 는 봉 마감 기준"
+    ],
+    "spec": {
+      "ex": "binance",
+      "sym": "BTCUSDT",
+      "interval": "1d",
+      "bars": 1461,
+      "end": 1672531200
+    }
+  },
+  "config": null,
+  "updatedAt": "2026-09-26T06:28:05.215Z",
+  "publishedBy": "scripts/publish-strategies.mjs"
+}
