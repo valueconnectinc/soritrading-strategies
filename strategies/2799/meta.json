@@ -3,16 +3,16 @@
   "name": "BTC 1D Fed-Gate + Trend Defense (two-state)",
   "kind": "custom",
   "verified": {
-    "backtestId": 12441,
-    "return": -19.2,
-    "mdd": 73.19,
-    "trades": 106,
+    "backtestId": 12442,
+    "return": -84.22,
+    "mdd": 91.63,
+    "trades": 134,
     "vsBuyHold": "lose",
-    "benchRet": 262.64,
+    "benchRet": 270.7,
     "benchBasis": "price",
     "gapPct": 0,
-    "tFrom": 1660780800,
-    "tTo": 1790294400,
+    "tFrom": 1531180800,
+    "tTo": 1660694400,
     "approxNotes": [
       "봉 내 순서는 관례(양봉 O→L→H→C·음봉 O→H→L→C) — 실순서 미상 · 봉 중 거래량 null · MDD 는 봉 마감 기준"
     ],
@@ -21,7 +21,7 @@
       "sym": "BTCUSDT",
       "interval": "1d",
       "bars": 1500,
-      "end": 1790380800
+      "end": 1660780800
     }
   },
   "config": null,
