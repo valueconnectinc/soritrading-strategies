@@ -51,11 +51,10 @@ function onUpdate(ctx) {
     if (atr != null) {
       s.hi = s.hi == null ? price : Math.max(s.hi, price);
       // Partial take-profit: once price is ~2 ATR above entry, bank half the
-      // position. Locks in gains and cuts giveback; the rest keeps riding the
-      // trend. 2 ATR is a modest but meaningful move for a 4h mean-reversion.
-      if (s.entryPx != null && !s.halfTaken) {
-        const entry = ctx.entryPx != null ? ctx.entryPx : s.entryPx;
-        if (price >= entry + atr * 2) {
+      // position to lock in gains; the rest keeps riding the trend. 2 ATR is
+      // a modest but meaningful 4h move for a mean-reversion fill.
+      if (s.entry != null && !s.halfTaken) {
+        if (price >= s.entry + atr * 2) {
           s.halfTaken = true;
           return { side: 'sell', qty: pos / 2 };
         }
@@ -84,6 +83,7 @@ function onUpdate(ctx) {
   if (price <= vwap * 1.02) {
     s.hi = price;
     s.halfTaken = false;
+    s.entry = price; // record fill price for the partial take-profit
     // Moderate vol-scaled sizing: start trimming when ATR/price exceeds 2.5%,
     // scale to a 45% floor at very high vol. Cuts panic-window drawdown.
     let frac = 0.95;
