@@ -11,7 +11,7 @@ Every figure comes from the last verifying backtest at publish time. These are p
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
-|  | [2701](strategies/2701/) | SOL Trend-Ride Pullback 4H | -36.25% | +2922.17% | +54.53% | 94 | 2026-09-26 |
+|  | [2701](strategies/2701/) | SOL Trend-Ride Pullback 4H | -16.57% | +1670.97% | +16.57% | 12 | 2026-09-26 |
 | ★ | [2700](strategies/2700/) | Fed-Regime Macro Trend BTC 1D | +77.39% | +63.93% | +9.18% | 44 | 2026-09-26 |
 | ★ | [2698](strategies/2698/) | Band-Bounce Mean Reversion BNB 4H | +1.99% | -63.74% | +27.41% | 50 | 2026-09-26 |
 | ★ | [2697](strategies/2697/) | Band-Bounce Bull-Regime Exit LINK 4H | +29.08% | +9.46% | +23.72% | 49 | 2026-09-26 |
