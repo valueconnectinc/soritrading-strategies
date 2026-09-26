@@ -1,28 +1,27 @@
 /*
  * @coinsori-strategy v1
- * name: ETH 4H Band-Bounce Champion + Fed Gate + Vol Scaled Size
+ * name: ETH 4H Band-Bounce Champion + Fed Tightening Gate
  * ex: binance
  * syms: ETHUSDT
  * interval: 4h
  * cash: 10000
  *
  * Why this strategy: The band-bounce mean-reversion champion (buy panic dips to
- * the lower Bollinger band with oversold RSI, above a 200-SMA uptrend) plus the
- * validated Fed-tightening gate is the strongest family in the ledger. Its one
- * remaining weakness is drawdown (19-46%): it sizes every trade the same even
- * though a panic dip in a high-volatility regime is riskier than one in a calm
- * regime. This version keeps the champion's proven entries and exits UNCHANGED
- * but scales the position DOWN when volatility (ATR) is high, so a violent
- * regime risks less capital while a calm regime still uses full size. This is a
- * pure risk-management overlay — it should cut drawdown without sacrificing the
- * mean-reversion edge.
+ * the lower Bollinger band with oversold RSI, above a 200-SMA uptrend) is the
+ * most validated family in the ledger — defensive, low drawdown across 14
+ * assets. Its one weakness is that it still buys dips that keep falling in a
+ * strong macro downtrend. This adds a monetary-policy gate: when the Fed is
+ * actively raising rates (a tightening cycle), it stands aside in cash instead
+ * of catching falling knives. This is different from a price-trend filter —
+ * the fed gate is rare and slow, so it should not over-filter like fear/greed did.
  * When it buys and sells: buys a panic dip (price below the lower Bollinger
- * band, RSI<30, price above the 200-SMA), sized inversely to current ATR, and
- * sells at the mid-band, on RSI recovery above 50, or a 6x ATR stop. No buy
- * while the Fed is tightening.
- * When it does NOT work: if volatility is chronically high (a long volatile
- * regime), it stays under-invested and lags buy-and-hold; and it still stands in
- * cash during a tightening cycle, missing genuine panic-bottom bounces.
+ * band, RSI<30, price above the 200-SMA) and sells at the mid-band or when RSI
+ * recovers above 50 (or a 6-ATR stop). But it takes NO buy while the fed funds
+ * rate is more than ~0.5pp above its level ~30 days earlier.
+ * When it does NOT work: in a prolonged tightening cycle it stays in cash and
+ * misses genuine panic-bottom bounces; and if the Fed is on hold during a
+ * non-policy-driven crash (e.g. a leverage flush), the champion's normal
+ * drawdown weakness returns.
  */
 function onUpdate(ctx) {
   const price = ctx.price;
@@ -31,52 +30,42 @@ function onUpdate(ctx) {
   const fedNow = ctx.data('fed');
   const fedLag = ctx.data('fed_lag30');
   if (fedNow == null || fedLag == null) return null;
+  // Tightening = current rate meaningfully above its level ~30 rows ago.
   const tightening = fedNow > fedLag + 0.5;
 
   const pos = ctx.position;
-  const atr = ctx.atr(14, 1);
 
+  // Exit handling first.
   if (pos > 0) {
     const bb = ctx.bb(20, 2, 1);
     const rsi = ctx.rsi(14, 1);
+    const atr = ctx.atr(14, 1);
     if (bb == null || rsi == null || atr == null) return null;
     const mid = bb.mid;
     const entry = ctx.entryPx;
+    // Exit at mid-band, on RSI recovery above 50, or a 6-ATR stop from entry.
     if (price >= mid || rsi > 50 || (entry != null && price <= entry - 6 * atr)) {
       return { side: 'sell', qty: pos };
     }
     return null;
   }
 
+  // Stand aside entirely during an active Fed tightening cycle.
   if (tightening) return null;
 
+  // Entry: panic dip to lower band + oversold, but only in an uptrend.
   const sma200 = ctx.sma(200, 1);
   const bb = ctx.bb(20, 2, 1);
   const rsi = ctx.rsi(14, 1);
-  if (sma200 == null || bb == null || rsi == null || atr == null) return null;
-  if (price <= sma200) return null;
-  if (price > bb.lower) return null;
-  if (rsi >= 30) return null;
+  if (sma200 == null || bb == null || rsi == null) return null;
+  if (price <= sma200) return null; // only buy above the long uptrend
+  if (price > bb.lower) return null; // must be at/below the lower band
+  if (rsi >= 30) return null; // must be oversold
 
+  // 5-bar cooldown after any recent trade to avoid re-entry whipsaw.
   const lastTrade = ctx.state.lastTradeBar != null ? ctx.state.lastTradeBar : -1e9;
   if (ctx.i - lastTrade < 5) return null;
   ctx.state.lastTradeBar = ctx.i;
 
-  // Volatility-scaled size: base full position, scaled by (calmATR / currentATR).
-  // calmATR = 50-bar average of ATR. High current ATR -> smaller position.
-  const hist = ctx.state.atrHist;
-  if (!hist) ctx.state.atrHist = [];
-  ctx.state.atrHist.push(atr);
-  if (ctx.state.atrHist.length > 50) ctx.state.atrHist.shift();
-  let scale = 1;
-  if (ctx.state.atrHist.length >= 50) {
-    let sum = 0;
-    for (let i = 0; i < ctx.state.atrHist.length; i++) sum += ctx.state.atrHist[i];
-    const calm = sum / ctx.state.atrHist.length;
-    // Cap scale between 0.3 and 1 so we never go tiny or over-lever.
-    scale = Math.max(0.3, Math.min(1, calm / atr));
-  }
-
-  const qty = (ctx.cash / price) * 0.98 * scale;
-  return { side: 'buy', qty: qty };
+  return { side: 'buy', qty: (ctx.cash / price) * 0.98 };
 }
