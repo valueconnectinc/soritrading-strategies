@@ -3,29 +3,28 @@
   "name": "Band-Bounce Mean Reversion MATIC 4H",
   "kind": "custom",
   "verified": {
-    "backtestId": 11830,
-    "return": -13.53,
-    "mdd": 31.16,
-    "trades": 59,
-    "vsBuyHold": "win",
-    "benchRet": -61.52,
+    "backtestId": 11834,
+    "return": -9.64,
+    "mdd": 16.14,
+    "trades": 52,
+    "vsBuyHold": "lose",
+    "benchRet": -6.05,
     "benchBasis": "price",
-    "gapPct": 29.2,
-    "tFrom": 1646481600,
-    "tTo": 1748217600,
+    "gapPct": 0,
+    "tFrom": 1718438400,
+    "tTo": 1736434800,
     "approxNotes": [
-      "봉 내 순서는 관례(양봉 O→L→H→C·음봉 O→H→L→C) — 실순서 미상 · 봉 중 거래량 null · MDD 는 봉 마감 기준",
-      "[유동성/미체결] 시장가 주문 34건이 그 봉의 호가 두께를 넘어 일부만 체결됐습니다(전체 요청 금액의 25% 미체결, 남은 물량은 다음 봉으로). 진입·청산이 전략이 의도한 시점보다 늦습니다. ★ 원인은 둘 중 하나이고 이 수만으로는 못 가릅니다 — 종목이 얇거나, 주문이 한 봉이 소화할 수 있는 것보다 크거나. 주문 크기를 줄여 같은 구간을 다시 돌리…"
+      "봉 내 순서는 관례(양봉 O→L→H→C·음봉 O→H→L→C) — 실순서 미상 · 봉 중 거래량 null · MDD 는 봉 마감 기준"
     ],
     "spec": {
       "ex": "binance",
-      "sym": "EOSUSDT",
-      "interval": "4h",
+      "sym": "ETHUSDT",
+      "interval": "1h",
       "bars": 5000,
-      "end": 1790438400
+      "end": 1736438400
     }
   },
   "config": null,
-  "updatedAt": "2026-09-26T16:23:55.643Z",
+  "updatedAt": "2026-09-26T16:24:57.318Z",
   "publishedBy": "scripts/publish-strategies.mjs"
 }
