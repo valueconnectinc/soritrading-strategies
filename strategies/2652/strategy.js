@@ -1,69 +1,49 @@
 /*
  * @coinsori-strategy v1
- * name: Regime-Adaptive ETH 4H (Momentum in Trend, Mean-Reversion in Chop)
+ * name: Donchian Trend-Following ETH 1D (SMA Gate + Volume Confirm)
  * ex: binance
  * syms: ETHUSDT
- * interval: 4h
+ * interval: 1d
  * cash: 10000
  *
- * Why this strategy: Crypto alternates between trending and chopping regimes.
- * No single signal works in both — momentum whipsaws in chop and mean-reversion
- * misses trends. This strategy detects the regime and switches its logic:
- * momentum in trends, mean-reversion in chop.
- * When it buys and sells: In a strong uptrend it buys pullbacks to the fast EMA
- * and rides with an ATR trailing stop. In a choppy market it buys RSI oversold
- * near the lower Bollinger band and sells RSI overbought near the upper band.
- * When it does NOT work: regime detection is lagging — at the moment a trend
- * starts or ends, the wrong mode is active and it can give back gains or catch
- * a falling knife. Frequent mode switches add fees.
+ * Why this strategy: Trend-following family. ETH breaks to 55-day highs in
+ * sustained trends. A 200-SMA gate (only buy breakouts above the long-term
+ * average) fixes the family's known range-bound whipsaw weakness. Adding a
+ * volume confirmation (breakout must happen on above-average volume) filters
+ * out low-participation false breakouts in chop, where price drifts to a new
+ * high without real buying.
+ * When it buys and sells: buys when price closes above the 55-day high AND
+ * above the 200-SMA AND on above-average volume; sells when price closes below
+ * the 30-day low.
+ * When it does NOT work: still lags strong rallies that start from below the
+ * 200-SMA (waits for the gate), and drawdowns are large (50-60%) because it
+ * holds through full trend reversals. Trend-following is high-risk.
  */
 function onUpdate(ctx) {
-  const ema20 = ctx.ema(20, 1);
-  const ema50 = ctx.ema(50, 1);
-  const atr = ctx.atr(14, 1);
-  const bb = ctx.bb(20, 2, 1);
-  const rsi = ctx.rsi(14, 1);
-  if (ema20 == null || ema50 == null || atr == null || bb == null || rsi == null) return null;
+  const entry = ctx.high(55, 1);
+  const exit = ctx.low(30, 1);
+  const sma200 = ctx.sma(200, 1);
+  if (entry == null || exit == null || sma200 == null) return null;
 
-  const px = ctx.price;
+  const price = ctx.price;
   const pos = ctx.position;
 
-  // Regime: how far apart the fast and slow EMAs are, as a fraction of price.
-  // A wide gap = strong trend; a narrow gap = chop.
-  const spread = Math.abs(ema20 - ema50) / px;
-
-  // Trending regime threshold: fast EMA clearly separated from slow EMA.
-  // 0.8% of price on 4h is a meaningful, persistent trend, not noise.
-  const trending = spread > 0.008;
-
   if (pos > 0) {
-    // Exit: price closing below the fast EMA in trend mode, or RSI overbought
-    // near the upper band in chop mode. ATR trailing guard for trend mode.
-    if (trending) {
-      // Trail: give the position room equal to 2.5 ATR from the trend anchor.
-      const stop = ema20 - 2.5 * atr;
-      if (px < stop) return { side: 'sell', qty: pos };
-      return null;
-    } else {
-      // Chop mode: take profit near the upper band / overbought.
-      if (px > bb.upper || rsi > 70) return { side: 'sell', qty: pos };
-      return null;
-    }
+    // Exit: close below the 30-day low — trend has broken down.
+    if (price < exit) return { side: 'sell', qty: pos };
+    return null;
   }
 
-  // No position.
-  if (trending) {
-    // Trend mode: buy a pullback toward the fast EMA while the trend is up.
-    // Only buy when EMA20 > EMA50 (uptrend) and price is near/above EMA20.
-    if (ema20 > ema50 && px >= ema20 * 0.985) {
-      return { side: 'buy', qty: ctx.cash / ctx.price * 0.95 };
-    }
-    return null;
-  } else {
-    // Chop mode: buy oversold near the lower band. RSI < 32 = washed out.
-    if (px <= bb.lower * 1.01 && rsi < 32) {
-      return { side: 'buy', qty: ctx.cash / ctx.price * 0.95 };
-    }
-    return null;
+  // Volume confirmation: current bar's volume vs its 20-bar average.
+  // A real breakout needs participation; low-volume drift is a false signal.
+  const avgVol = ctx.avgVol(20);
+  if (avgVol != null && avgVol > 0 && ctx.vol < avgVol) {
+    return null; // breakout on weak volume — skip
   }
+
+  // Entry: only take breakouts when price is above the long-term trend.
+  if (price > sma200 && price > entry) {
+    return { side: 'buy', qty: ctx.cash / ctx.price * 0.95 };
+  }
+  return null;
 }
