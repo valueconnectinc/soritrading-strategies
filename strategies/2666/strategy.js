@@ -9,13 +9,13 @@
  * Why this strategy: Mean reversion to the VWAP in an established uptrend —
  * sharp dips toward VWAP tend to revert up as buyers step in. This version
  * adds a MOMENTUM CONFIRMATION (only buy when RSI is turning up), middle
- * vol-scaling, partial take-profit at +2.5 ATR, and a soft 200-SMA regime filter.
- * NEW this cycle: LOWER the partial take-profit from +3 ATR to +2.5 ATR so the
- * first third locks in a smaller, more likely gain — testing whether earlier
- * profit-taking helps the declining market window where 4-ATR hurt.
+ * vol-scaling, partial take-profit at +3 ATR, and a soft 200-SMA regime filter.
+ * PLUS a 24-bar TIME-STOP exit — a position held more than 24 bars (~4 days)
+ * without reaching the +3 ATR partial target is exited in full, cutting the
+ * "grinder" trades that never revert and just bleed.
  * When it buys and sells: buys when price pulls back to/below VWAP*1.02, 50-SMA
  * rising, 200-SMA not declining, RSI not overbought AND RSI turning up. Sells a
- * third at +2.5 ATR, then the rest on the 50-SMA turn-down, 10-ATR trail, or the
+ * third at +3 ATR, then the rest on the 50-SMA turn-down, 10-ATR trail, or the
  * 24-bar time-stop.
  * When it does NOT work: fails in a true downtrend (pullbacks keep falling) and
  * in low-liquidity chop where VWAP gives no support.
@@ -52,12 +52,12 @@ function onUpdate(ctx) {
     if (atr != null) {
       s.hi = s.hi == null ? price : Math.max(s.hi, price);
       if (s.entry != null && !s.halfTaken) {
-        if (price >= s.entry + atr * 2.5) {
+        if (price >= s.entry + atr * 3) {
           s.halfTaken = true;
           return { side: 'sell', qty: pos / 3 };
         }
       }
-      // TIME-STOP: if held too long without reaching the +2.5 ATR target, bail.
+      // TIME-STOP: if held too long without reaching the +3 ATR target, bail.
       // 24 bars ~ 4 days on 4h — enough for a real reversion, cuts grinders.
       if (s.entry != null && !s.halfTaken && ctx.i - s.entryBar > 24) {
         s.lastExit = ctx.i;
