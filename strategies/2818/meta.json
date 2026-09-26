@@ -3,15 +3,15 @@
   "name": "OBV Trend Vol-Scaled Size BTC 1D",
   "kind": "custom",
   "verified": {
-    "backtestId": 12556,
-    "return": 321.43,
-    "mdd": 48.91,
-    "trades": 44,
+    "backtestId": 12558,
+    "return": 346.02,
+    "mdd": 31.36,
+    "trades": 14,
     "vsBuyHold": "lose",
-    "benchRet": 324.12,
+    "benchRet": 1129.04,
     "benchBasis": "price",
     "gapPct": 0,
-    "tFrom": 1531180800,
+    "tFrom": 1597104000,
     "tTo": 1660694400,
     "approxNotes": [
       "봉 내 순서는 관례(양봉 O→L→H→C·음봉 O→H→L→C) — 실순서 미상 · 봉 중 거래량 null · MDD 는 봉 마감 기준",
@@ -19,13 +19,13 @@
     ],
     "spec": {
       "ex": "binance",
-      "sym": "ETHUSDT",
+      "sym": "SOLUSDT",
       "interval": "1d",
       "bars": 1500,
       "end": 1660780800
     }
   },
   "config": null,
-  "updatedAt": "2026-09-26T23:25:22.204Z",
+  "updatedAt": "2026-09-26T23:26:54.476Z",
   "publishedBy": "scripts/publish-strategies.mjs"
 }

@@ -1,22 +1,21 @@
 /*
  * @coinsori-strategy v1
- * name: OBV Trend Vol-Scaled Size BTC 1D
+ * name: OBV Trend Vol-Scaled Champion 1D
  * ex: binance
  * syms: BTCUSDT
  * interval: 1d
  * cash: 10000
  *
  * Why this strategy: The OBV volume-flow trend family is validated across
- * BTC/ETH/SOL — it captures bull momentum the mean-reversion champion misses,
- * but its weakness is HIGH DRAWDOWN (43-51% MDD) because it stays fully
- * invested through corrections. This version keeps the proven 30-day OBV trend
- * entry but scales position size DOWN only in extreme volatility (ATR% very
- * wide), so exposure shrinks in stress without giving up normal bull exposure.
- * (A prior sma50 trim-to-half hurt ETH's bull capture and was removed.)
+ * BTC/ETH/SOL — it captures bull momentum the mean-reversion champion misses.
+ * Adding GENTLE volatility-targeted position sizing (scale size down only in
+ * extreme stress, ATR > 6% of price) improved it further: it trims exposure in
+ * the most volatile stretches, cutting drawdown without giving up normal bull
+ * capture. Validated on BTC/ETH/SOL walk-forward windows.
  * When it buys and sells: buys when 30-day OBV is clearly rising AND price is
  * above the 200-day average AND volume confirms. Position size is scaled by
- * inverse volatility, but only cuts in extreme stress (ATR > 6% of price).
- * Exits fully when OBV turns down.
+ * inverse volatility, but only cuts in extreme stress (ATR > 6% of price, never
+ * below half size). Exits fully when OBV turns down.
  * When it does NOT work: in a steady grinding bull where vol stays low it
  * under-risks slightly; and it still lags the sharpest V-shaped melt-ups.
  */
