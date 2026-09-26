@@ -11,7 +11,7 @@ Every figure comes from the last verifying backtest at publish time. These are p
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
-|  | [2578](strategies/2578/) | Defensive Donchian BTC 1D (baseline) | +8.04% | +177.69% | +71.89% | 18 | 2026-09-26 |
+|  | [2578](strategies/2578/) | Defensive Donchian BTC 1D (baseline) | +568.36% | +1258.25% | +62.35% | 19 | 2026-09-26 |
 |  | [2577](strategies/2577/) | Donchian Vol-Adaptive Size BTC 1D | +18.18% | +177.69% | +62.35% | 18 | 2026-09-26 |
 |  | [2576](strategies/2576/) | BTC Deep-Correction Dip-Buy 1D | -82.64% | +55.47% | +82.77% | 242 | 2026-09-26 |
 |  | [2575](strategies/2575/) | Donchian Bull-WideStop BTC 1D | +17.32% | +177.69% | +52.57% | 12 | 2026-09-26 |
