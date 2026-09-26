@@ -11,7 +11,7 @@ Every figure comes from the last verifying backtest at publish time. These are p
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
-| ★ | [2562](strategies/2562/) | Pure Price-Based Hybrid No FearGreed BTC 4H | +1015.97% | +443.24% | +37.37% | 265 | 2026-09-26 |
+| ★ | [2562](strategies/2562/) | Pure Price-Based Hybrid No FearGreed BTC 4H | +47.34% | -20.98% | +40.31% | 299 | 2026-09-26 |
 |  | [2561](strategies/2561/) | Pure Bollinger Bear-Leg No FearGreed BTC 4H | +62.59% | +75.35% | +43.67% | 288 | 2026-09-26 |
 |  | [2560](strategies/2560/) | Wide-Stop Melt-Up Trend Rider BTC 4H | -52.48% | +146.83% | +63.65% | 125 | 2026-09-26 |
 |  | [2559](strategies/2559/) | Champion v2 Baseline BTC 4H | +17.03% | +75.35% | +49.43% | 199 | 2026-09-26 |
