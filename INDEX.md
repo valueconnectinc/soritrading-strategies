@@ -11,7 +11,7 @@ Every figure comes from the last verifying backtest at publish time. These are p
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
-| ★ | [2802](strategies/2802/) | SOL 1D Fed-Funds Rate Regime Gate | +2669.07% | +958.23% | +54.93% | 38 | 2026-09-26 |
+| ★ | [2802](strategies/2802/) | SOL 1D Fed-Funds Rate Regime Gate | +67.52% | -28.73% | +59.86% | 41 | 2026-09-26 |
 |  | [2801](strategies/2801/) | ETH 1D Fed-Funds Rate Regime Gate | +234.20% | +324.12% | +72.21% | 66 | 2026-09-26 |
 |  | [2800](strategies/2800/) | BTC 1D Hashrate Fundamental + Trend Guard | -6.88% | +270.70% | +71.99% | 118 | 2026-09-26 |
 |  | [2799](strategies/2799/) | BTC 1D Fed-Gate + Trend Defense (two-state) | -84.22% | +270.70% | +91.63% | 134 | 2026-09-26 |
