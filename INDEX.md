@@ -11,7 +11,7 @@ Every figure comes from the last verifying backtest at publish time. These are p
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
-| ★ | [2709](strategies/2709/) | Band-Bounce Mean Reversion XLM 4H | +71.06% | -78.64% | +15.41% | 14 | 2026-09-26 |
+| ★ | [2709](strategies/2709/) | Band-Bounce Mean Reversion XLM 4H | +29.47% | -20.49% | +10.96% | 62 | 2026-09-26 |
 |  | [2708](strategies/2708/) | Band-Bounce Mean Reversion ADA 4H | +118.53% | +2219.96% | +24.84% | 62 | 2026-09-26 |
 |  | [2707](strategies/2707/) | Regime-Switch Hybrid MDD-Capped SOL 4H | +237.49% | +2922.17% | +50.57% | 280 | 2026-09-26 |
 |  | [2706](strategies/2706/) | Macro-Regime Band-Bounce BTC 4H | +17.71% | +449.51% | +17.69% | 32 | 2026-09-26 |
