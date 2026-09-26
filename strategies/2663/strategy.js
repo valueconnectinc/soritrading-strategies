@@ -1,6 +1,6 @@
 /*
  * @coinsori-strategy v1
- * name: VWAP-Pullback SOL 4H SoftRegime+TP+AggVolSize
+ * name: VWAP-Pullback SOL 4H SoftRegime+TP+MidVolSize
  * ex: binance
  * syms: SOLUSDT
  * interval: 4h
@@ -9,11 +9,10 @@
  * Why this strategy: Mean reversion to the VWAP (volume-weighted average
  * price) — in an established uptrend, sharp dips back toward VWAP tend to
  * revert up as buyers step in. Builds on the soft-regime + partial-take-profit
- * champion and makes the volatility-scaled sizing MORE aggressive: we start
- * trimming position size at 2% ATR/price (was 2.5%) and floor at 30% (was
- * 45%). The champion's window-2 (2022-24) MDD of ~34% comes from the 2022
- * crash, so cutting exposure harder in high-vol regimes should reduce that
- * drawdown without touching the well-tuned exit rules.
+ * champion. The aggressive vol-scaling (2%/30%) cut MDD on every window but
+ * trimmed bull-window returns a lot (624→413). This MIDDLE setting (trim at
+ * 2.2%, floor 38%) sits between the champion (2.5%/45%) and the aggressive
+ * version to capture most of the MDD reduction with less return loss.
  * When it buys and sells: buys when price pulls back to/below VWAP while the
  * 50-SMA is rising, RSI is not overbought, and the 200-SMA is not declining.
  * Sells a third at +3 ATR, then the rest on the 50-SMA turn-down or 10-ATR.
@@ -81,13 +80,13 @@ function onUpdate(ctx) {
     s.hi = price;
     s.halfTaken = false;
     s.entry = price;
-    // Aggressive vol-scaled sizing: start trimming at 2% ATR/price (was 2.5%),
-    // floor at 30% (was 45%). Cuts exposure harder in crash regimes that drive
-    // window-2 MDD, while keeping full size in calm bull trends.
+    // Middle vol-scaled sizing: trim at 2.2% ATR/price, floor 38%. Between
+    // champion (2.5%/45%) and aggressive (2%/30%) — keeps most bull return
+    // while still cutting crash-regime drawdown.
     let frac = 0.95;
     if (atr != null && price > 0) {
       const vol = atr / price;
-      if (vol > 0.02) frac = Math.max(0.30, 0.95 - (vol - 0.02) * 20);
+      if (vol > 0.022) frac = Math.max(0.38, 0.95 - (vol - 0.022) * 18);
     }
     return { side: 'buy', qty: ctx.cash / ctx.price * frac };
   }
