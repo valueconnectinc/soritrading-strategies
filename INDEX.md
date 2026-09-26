@@ -11,7 +11,7 @@ Every figure comes from the last verifying backtest at publish time. These are p
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
-|  | [2628](strategies/2628/) | Trend-Gated Vol-Target ETH 1D | -58.73% | +56.20% | +85.89% | 28 | 2026-09-26 |
+|  | [2628](strategies/2628/) | Trend-Gated Vol-Target ETH 1D | -24.60% | +262.64% | +28.23% | 1001 | 2026-09-26 |
 |  | [2627](strategies/2627/) | Squeeze Breakout XRP 4H (Risk-Sized + MACD Gate) | +148.12% | +228.36% | +38.49% | 71 | 2026-09-26 |
 |  | [2626](strategies/2626/) | Squeeze Breakout BNB 4H (Risk-Sized + MACD Gate) | +210.73% | +2229.83% | +21.27% | 63 | 2026-09-26 |
 |  | [2625](strategies/2625/) | AI 전략 | +70.52% | +3087.79% | +16.85% | 57 | 2026-09-26 |
