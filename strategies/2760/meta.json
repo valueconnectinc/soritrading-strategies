@@ -3,28 +3,29 @@
   "name": "Donchian Pullback Trend-Strength 0.10 ETH 4H",
   "kind": "custom",
   "verified": {
-    "backtestId": 12206,
-    "return": 147.4,
-    "mdd": 16.48,
-    "trades": 164,
+    "backtestId": 12213,
+    "return": 441.95,
+    "mdd": 39.42,
+    "trades": 114,
     "vsBuyHold": "lose",
-    "benchRet": 435.09,
+    "benchRet": 2901.3,
     "benchBasis": "price",
     "gapPct": 0,
-    "tFrom": 1574438400,
+    "tFrom": 1597118400,
     "tTo": 1646438400,
     "approxNotes": [
-      "봉 내 순서는 관례(양봉 O→L→H→C·음봉 O→H→L→C) — 실순서 미상 · 봉 중 거래량 null · MDD 는 봉 마감 기준"
+      "봉 내 순서는 관례(양봉 O→L→H→C·음봉 O→H→L→C) — 실순서 미상 · 봉 중 거래량 null · MDD 는 봉 마감 기준",
+      "[유동성/미체결] 시장가 주문 22건이 그 봉의 호가 두께를 넘어 일부만 체결됐습니다(전체 요청 금액의 2% 미체결, 남은 물량은 다음 봉으로). 진입·청산이 전략이 의도한 시점보다 늦습니다. ★ 원인은 둘 중 하나이고 이 수만으로는 못 가릅니다 — 종목이 얇거나, 주문이 한 봉이 소화할 수 있는 것보다 크거나. 주문 크기를 줄여 같은 구간을 다시 돌리면…"
     ],
     "spec": {
       "ex": "binance",
-      "sym": "BTCUSDT",
+      "sym": "SOLUSDT",
       "interval": "4h",
       "bars": 5000,
       "end": 1646452800
     }
   },
   "config": null,
-  "updatedAt": "2026-09-26T20:31:07.732Z",
+  "updatedAt": "2026-09-26T20:33:08.644Z",
   "publishedBy": "scripts/publish-strategies.mjs"
 }
