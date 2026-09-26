@@ -1,6 +1,6 @@
 /*
  * @coinsori-strategy v1
- * name: VWAP-Pullback SOL 4H MomentumEntry+MidVolSize
+ * name: VWAP-Pullback SOL 4H MomentumEntry+MidVolSize+TimeStop
  * ex: binance
  * syms: SOLUSDT
  * interval: 4h
@@ -8,15 +8,17 @@
  *
  * Why this strategy: Mean reversion to the VWAP in an established uptrend —
  * sharp dips toward VWAP tend to revert up as buyers step in. This version
- * adds a MOMENTUM CONFIRMATION to the entry: it only buys when RSI is already
- * turning up (current RSI > previous RSI), i.e. the dip is starting to reverse,
- * instead of buying into a still-falling knife. Keeps the middle vol-scaling
- * (trim 2.2%, floor 38%) that already cut MDD on all windows. A stricter
- * price<=VWAP pullback was tested and cut returns sharply, so the looser
- * price<=VWAP*1.02 threshold is kept.
+ * adds a MOMENTUM CONFIRMATION (only buy when RSI is turning up), middle
+ * vol-scaling, partial take-profit at +3 ATR, and a soft 200-SMA regime filter.
+ * NEW this cycle: a TIME-STOP exit — a position held more than 24 bars (~4 days)
+ * without reaching the +3 ATR partial target is exited in full. The idea is to
+ * cut the "grinder" trades (dips that never revert and just bleed), which are
+ * the main loss source in sideways/deep-bear regimes, without tightening the
+ * trailing stop (which failed before by clipping winners).
  * When it buys and sells: buys when price pulls back to/below VWAP*1.02, 50-SMA
- * is rising, 200-SMA not declining, RSI not overbought AND RSI is turning up.
- * Sells a third at +3 ATR, then the rest on the 50-SMA turn-down or 10-ATR.
+ * rising, 200-SMA not declining, RSI not overbought AND RSI turning up. Sells a
+ * third at +3 ATR, then the rest on the 50-SMA turn-down, 10-ATR trail, or the
+ * 24-bar time-stop.
  * When it does NOT work: fails in a true downtrend (pullbacks keep falling) and
  * in low-liquidity chop where VWAP gives no support.
  */
@@ -57,6 +59,12 @@ function onUpdate(ctx) {
           return { side: 'sell', qty: pos / 3 };
         }
       }
+      // TIME-STOP: if held too long without reaching the +3 ATR target, bail.
+      // 24 bars ~ 4 days on 4h — enough for a real reversion, cuts grinders.
+      if (s.entry != null && !s.halfTaken && ctx.i - s.entryBar > 24) {
+        s.lastExit = ctx.i;
+        return { side: 'sell', qty: pos };
+      }
       if (price <= s.hi - atr * 10) {
         s.lastExit = ctx.i;
         return { side: 'sell', qty: pos };
@@ -81,6 +89,7 @@ function onUpdate(ctx) {
     s.hi = price;
     s.halfTaken = false;
     s.entry = price;
+    s.entryBar = ctx.i;
     let frac = 0.95;
     if (atr != null && price > 0) {
       const vol = atr / price;
