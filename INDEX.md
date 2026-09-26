@@ -4,13 +4,14 @@ Every strategy whose backtest **finished and actually traded** is published here
 Nothing is filtered out by return — the ones that lost money are part of the record.
 Entries stay after a strategy is removed from our own workspace — this is a log, and deleting the record would leave only the survivors.
 
-**★ marks a strategy that out-returned buy & hold over the same window** — 320 of 1092 right now.
+**★ marks a strategy that out-returned buy & hold over the same window** — 320 of 1093 right now.
 `—` means the comparison **could not be made**: the engine does not compute a benchmark for multi-symbol, futures, or multi-leg runs. That is *unknown*, not *lost*, and it is 197 of them right now.
 
 Every figure comes from the last verifying backtest at publish time. These are past results over historical data. Nothing here is promised or assured about the future, and none of it is investment advice.
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
+|  | [2671](strategies/2671/) | Volume-Confirmed Panic-Bounce ATOM 4H | +33.81% | +944.60% | +27.18% | 51 | 2026-09-26 |
 |  | [2670](strategies/2670/) | AI 전략 | +40.47% | +1500.95% | +32.19% | 18 | 2026-09-26 |
 |  | [2669](strategies/2669/) | AI 전략 | -60.83% | +502.17% | +69.50% | 153 | 2026-09-26 |
 |  | [2668](strategies/2668/) | VWAP-Pullback ETH 4H | +59.81% | +1658.04% | +10.83% | 153 | 2026-09-26 |
