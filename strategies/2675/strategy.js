@@ -1,22 +1,22 @@
 /*
  * @coinsori-strategy v1
- * name: Band-Bounce Mean Reversion LTC 4H
+ * name: Band-Bounce Mean Reversion ETH 1H
  * ex: binance
- * syms: LTCUSDT
- * interval: 4h
+ * syms: ETHUSDT
+ * interval: 1h
  * cash: 10000
  *
- * Why this strategy: Mean-reversion family. LTC 4h overreacts to the downside,
- * touches the lower Bollinger band, then snaps back to the mean. Buying the
- * panic-bottom and selling back to the middle captures the snap-back. This is
- * the exact validated champion recipe (unchanged, never tuned on LTC) tested on
- * a fresh asset to extend the cross-asset evidence — now validated on 18 assets.
+ * Why this strategy: Tests whether the validated 4H band-bounce mean-reversion
+ * edge survives at 1H frequency. ETH overreacts to downside, touches the lower
+ * Bollinger band, then snaps back to the mean. Buying the panic-bottom and
+ * selling back to the middle captures the snap-back. Exact champion recipe,
+ * unchanged — the only variable changed is the timeframe (4H -> 1H).
  * When it buys and sells: buys when price closes below the lower Bollinger(20,2)
  * with RSI<30 above the 200-SMA; exits at the middle band / RSI>50 or a stop;
  * then waits 5 bars before the next entry.
  * When it does NOT work: lags strong melt-ups (sits in cash during rallies);
  * in a sustained downtrend below the 200-SMA it never buys; a panic that keeps
- * falling still loses. Mean reversion is defensive, not a trend rider.
+ * falling still loses. 1H has more noise so the edge may be weaker than 4H.
  */
 function onUpdate(ctx) {
   const bb = ctx.bb(20, 2, 1);
