@@ -11,7 +11,7 @@ Every figure comes from the last verifying backtest at publish time. These are p
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
-|  | [2736](strategies/2736/) | Band-Bounce Mean Reversion MATIC 4H | +164.41% | +489.70% | +24.03% | 80 | 2026-09-26 |
+|  | [2736](strategies/2736/) | Band-Bounce Mean Reversion MATIC 4H | +273.09% | +1698.96% | +39.72% | 75 | 2026-09-26 |
 |  | [2734](strategies/2734/) | Band-Bounce Mean Reversion AVAX 4H | +29.26% | +1443.71% | +36.72% | 37 | 2026-09-26 |
 | ★ | [2733](strategies/2733/) | Band-Bounce Mean Reversion ATOM 4H | -21.82% | -73.64% | +24.50% | 41 | 2026-09-26 |
 |  | [2732](strategies/2732/) | On-Chain Network-Health BTC 1D | -39.60% | +55.47% | +39.60% | 14 | 2026-09-26 |
