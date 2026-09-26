@@ -1,9 +1,9 @@
 /*
  * @coinsori-strategy v1
- * name: Refined Trend-Scaled Band-Bounce BCH 1D
+ * name: Refined Trend-Scaled Band-Bounce BCH 4H
  * ex: binance
  * syms: BCHUSDT
- * interval: 1d
+ * interval: 4h
  * cash: 10000
  *
  * Why this strategy: The trend-scaled band-bounce (loosen RSI entry in strong

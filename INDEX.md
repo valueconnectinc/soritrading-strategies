@@ -11,7 +11,7 @@ Every figure comes from the last verifying backtest at publish time. These are p
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
-|  | [2750](strategies/2750/) | Refined Trend-Scaled Band-Bounce BCH 1D | +89.42% | +323.46% | +20.41% | 26 | 2026-09-26 |
+|  | [2750](strategies/2750/) | Refined Trend-Scaled Band-Bounce BCH 1D | -2.46% | +32.58% | +30.56% | 69 | 2026-09-26 |
 |  | [2748](strategies/2748/) | Trend-Scaled Band-Bounce BCH 1D | +17.64% | +165.92% | +29.60% | 41 | 2026-09-26 |
 |  | [2746](strategies/2746/) | Trend-Scaled Band-Bounce XRP 1D | +89.42% | +323.46% | +20.41% | 26 | 2026-09-26 |
 |  | [2745](strategies/2745/) | Regime-Switch Blend XRP 1D | -38.09% | +323.46% | +79.32% | 87 | 2026-09-26 |
