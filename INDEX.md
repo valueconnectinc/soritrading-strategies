@@ -4,13 +4,15 @@ Every strategy whose backtest **finished and actually traded** is published here
 Nothing is filtered out by return — the ones that lost money are part of the record.
 Entries stay after a strategy is removed from our own workspace — this is a log, and deleting the record would leave only the survivors.
 
-**★ marks a strategy that out-returned buy & hold over the same window** — 334 of 1137 right now.
+**★ marks a strategy that out-returned buy & hold over the same window** — 335 of 1139 right now.
 `—` means the comparison **could not be made**: the engine does not compute a benchmark for multi-symbol, futures, or multi-leg runs. That is *unknown*, not *lost*, and it is 197 of them right now.
 
 Every figure comes from the last verifying backtest at publish time. These are past results over historical data. Nothing here is promised or assured about the future, and none of it is investment advice.
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
+| ★ | [2728](strategies/2728/) | Band-Bounce Mean Reversion ZEC 4H | -17.98% | -79.99% | +24.77% | 97 | 2026-09-26 |
+|  | [2727](strategies/2727/) | Band-Bounce Mean Reversion XMR 4H | +18.44% | +218.91% | +20.75% | 64 | 2026-09-26 |
 | ★ | [2726](strategies/2726/) | Band-Bounce Mean Reversion LTC 4H | +20.90% | -21.82% | +14.32% | 32 | 2026-09-26 |
 | ★ | [2725](strategies/2725/) | Band-Bounce Mean Reversion EOS 4H | -20.45% | -22.46% | +57.57% | 32 | 2026-09-26 |
 |  | [2722](strategies/2722/) | Band-Bounce Mean Reversion IOTA 4H | +55.23% | +3698.03% | +29.77% | 63 | 2026-09-26 |
