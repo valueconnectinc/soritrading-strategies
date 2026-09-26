@@ -1,0 +1,31 @@
+{
+  "id": 2562,
+  "name": "Pure Price-Based Hybrid No FearGreed BTC 4H",
+  "kind": "custom",
+  "verified": {
+    "backtestId": 11001,
+    "return": 1015.97,
+    "mdd": 37.37,
+    "trades": 265,
+    "vsBuyHold": "win",
+    "benchRet": 443.24,
+    "benchBasis": "price",
+    "gapPct": 0,
+    "tFrom": 1574366400,
+    "tTo": 1646366400,
+    "approxNotes": [
+      "봉 내 순서는 관례(양봉 O→L→H→C·음봉 O→H→L→C) — 실순서 미상 · 봉 중 거래량 null · MDD 는 봉 마감 기준",
+      "기간 종료 시 미청산 포지션 1종목 (총자산의 59.51%) — 이 수익률은 **평가액**을 포함합니다. 퇴출 수수료·거래세를 안 냈고, 마지막 봉 가격에 실제로 팔 수 있다는 보장도 없습니다(얇은 호가·상장폐지). exec.endLiquidate 로 마지막 봉 청산을 켤 수 있습니다"
+    ],
+    "spec": {
+      "ex": "binance",
+      "sym": "BTCUSDT",
+      "interval": "4h",
+      "bars": 5000,
+      "end": 1646380800
+    }
+  },
+  "config": null,
+  "updatedAt": "2026-09-26T01:13:28.768Z",
+  "publishedBy": "scripts/publish-strategies.mjs"
+}

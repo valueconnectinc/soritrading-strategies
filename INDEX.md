@@ -4,13 +4,14 @@ Every strategy whose backtest **finished and actually traded** is published here
 Nothing is filtered out by return — the ones that lost money are part of the record.
 Entries stay after a strategy is removed from our own workspace — this is a log, and deleting the record would leave only the survivors.
 
-**★ marks a strategy that out-returned buy & hold over the same window** — 303 of 988 right now.
+**★ marks a strategy that out-returned buy & hold over the same window** — 304 of 989 right now.
 `—` means the comparison **could not be made**: the engine does not compute a benchmark for multi-symbol, futures, or multi-leg runs. That is *unknown*, not *lost*, and it is 187 of them right now.
 
 Every figure comes from the last verifying backtest at publish time. These are past results over historical data. Nothing here is promised or assured about the future, and none of it is investment advice.
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
+| ★ | [2562](strategies/2562/) | Pure Price-Based Hybrid No FearGreed BTC 4H | +1015.97% | +443.24% | +37.37% | 265 | 2026-09-26 |
 |  | [2561](strategies/2561/) | Pure Bollinger Bear-Leg No FearGreed BTC 4H | +62.59% | +75.35% | +43.67% | 288 | 2026-09-26 |
 |  | [2560](strategies/2560/) | Wide-Stop Melt-Up Trend Rider BTC 4H | -52.48% | +146.83% | +63.65% | 125 | 2026-09-26 |
 |  | [2559](strategies/2559/) | Champion v2 Baseline BTC 4H | +17.03% | +75.35% | +49.43% | 199 | 2026-09-26 |
