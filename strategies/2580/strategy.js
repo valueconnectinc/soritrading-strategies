@@ -1,23 +1,24 @@
 /*
  * @coinsori-strategy v1
- * name: Donchian Vol-Adaptive Size BTC 1D
+ * name: Donchian Continuous Vol-Target Size BTC 1D
  * ex: binance
  * syms: BTCUSDT
  * interval: 1d
  * cash: 10000
  *
  * Why this strategy: The validated defensive Donchian (55d-high entry, 30d-low
- * exit, 3x-ATR stop, EMA50 filter) has a 40-72% drawdown driven by sharp
- * reversals. This keeps the identical proven entry/exit logic but scales the
- * position DOWN when volatility (ATR as % of price) is elevated, so it risks
- * less capital exactly when reversals are most damaging. Validated on three
- * disjoint window splits: it cuts drawdown and never hurts returns vs baseline.
+ * exit, 3x-ATR stop, EMA50 filter) with binary vol-adaptive sizing (halve when
+ * ATR>5% of price) already cut drawdown without hurting returns. This replaces
+ * the hard 0.5/0.99 cliff with a CONTINUOUS vol-target curve: position size is
+ * inversely proportional to normalized volatility (size = 3% / volRatio),
+ * clamped between 0.25 and 0.99. It risks the same dollar amount of volatility
+ * in every regime, so it protects even more in extreme-vol crashes while
+ * staying fully invested in calm bulls.
  * When it buys and sells: same 55d-high breakout entry (unless steep downtrend),
- * same 30d-low / 3x-ATR exit — only the position size adapts to volatility
- * (half position when daily ATR >= 5% of price).
+ * same 30d-low / 3x-ATR exit — only the size scales continuously with ATR.
  * When it does NOT work: in a sustained calm bull it is fully invested like the
- * baseline, so it inherits the baseline's bull-underperformance; and if a crash
- * arrives without a prior volatility rise, the sizing does not help.
+ * baseline, inheriting its bull-underperformance; and if a crash arrives with no
+ * prior volatility rise, sizing cannot help.
  */
 function onUpdate(ctx) {
   const hh55 = ctx.high(55, 1);
@@ -39,11 +40,12 @@ function onUpdate(ctx) {
   if (inSteepDowntrend) return null;
 
   if (price > hh55) {
-    // Normalized volatility: ATR as a fraction of price. BTC daily ATR is usually
-    // 2-4%; above 5% marks a sharp-reversal regime where we halve the position.
-    // 5% is the balanced cutoff (4% over-halves bulls, 6% under-protects).
+    // Vol-target sizing: size = 3% / (ATR/price). At ATR 3% of price (calm) we
+    // are fully invested; at 5% (elevated) ~0.6x; at 8% (crash) ~0.38x; floor
+    // 0.25 so we never trade a token position. 3% is BTC's typical daily ATR,
+    // so this targets a roughly constant daily risk budget.
     const volRatio = atr / price;
-    const size = volRatio >= 0.05 ? 0.5 : 0.99;
+    const size = Math.max(0.25, Math.min(0.99, 0.03 / volRatio));
     return { side: 'buy', qty: ctx.cash / ctx.price * size };
   }
   return null;
