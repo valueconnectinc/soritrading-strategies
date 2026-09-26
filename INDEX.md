@@ -11,7 +11,7 @@ Every figure comes from the last verifying backtest at publish time. These are p
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
-| — | [2606](strategies/2606/) | AI 전략 | +74.10% | — | +39.95% | 50 | 2026-09-26 |
+| — | [2606](strategies/2606/) | AI 전략 | +191.20% | — | +24.61% | 52 | 2026-09-26 |
 | — | [2605](strategies/2605/) | Relative-Strength Rotation BTC/ETH/SOL 1D | +164.91% | — | +54.52% | 32 | 2026-09-26 |
 | — | [2604](strategies/2604/) | Multi-Symbol Squeeze Breakout BTC+ETH 1D | +54.04% | — | +35.65% | 7 | 2026-09-26 |
 |  | [2603](strategies/2603/) | BTC On-Chain Active-Address Trend | +890.92% | +1351.39% | +42.15% | 23 | 2026-09-26 |

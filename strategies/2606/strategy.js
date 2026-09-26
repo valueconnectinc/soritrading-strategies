@@ -1,6 +1,6 @@
 /*
  * @coinsori-strategy v1
- * name: Squeeze Breakout BTC+ETH 1D (Regime-Adaptive Gate)
+ * name: Squeeze Breakout BTC+ETH 1D (200-SMA Gate)
  * ex: binance
  * syms: BTCUSDT, ETHUSDT
  * interval: 1d
@@ -13,13 +13,13 @@
  * ETH) keeps capital working when one symbol is quiet.
  * When it buys and sells: on each symbol, buys when band-width is below its
  * 20-bar average AND price closes above the upper Bollinger band AND volume
- * > 1.5x its 20-day average. A regime-adaptive gate blocks entries only when the
- * 200-day SMA is FALLING (bear regime); entries below a RISING SMA are allowed
- * (bull pullback). Exits on a 2.5x-ATR stop or a 20-day low trail.
+ * > 1.5x its 20-day average. A 200-SMA entry gate blocks new buys while price
+ * trades below the long-term average (bear regime, where breakouts are bull
+ * traps). Exits on a 2.5x-ATR stop or a 20-day low trail.
  * When it does NOT work: choppy sideways markets where a squeeze resolves with a
  * failed breakout; it lags very strong straight-line bull runs because it waits
- * for fresh coiling. The gate cannot prevent losses in a slow grind-down where
- * the SMA is still rising but price keeps fading.
+ * for fresh coiling AND skips entries while price is below the 200-SMA during
+ * strong uptrend pullbacks. It gives up bull-market upside to reduce bear losses.
  */
 function onUpdate(ctx) {
   const bb = ctx.bb(20, 2, 1);
@@ -51,14 +51,10 @@ function onUpdate(ctx) {
   const avgBw = sum / cnt;
   if (bw >= avgBw) return null; // not coiling
 
-  // Regime-adaptive gate: only block entries when the 200-SMA is FALLING.
-  // A falling SMA = bear regime where breakouts are bull traps.
-  // A rising SMA = bull regime; buying below it is a pullback, not a trap.
+  // Entry gate: block new buys while price is below the 200-SMA (bear regime).
+  // In bear markets squeeze breakouts are bull traps, so skip them.
   const sma200 = ctx.sma(200, 1);
-  const sma200prev = ctx.sma(200, 2);
-  if (sma200 != null && sma200prev != null && sma200 < sma200prev) {
-    return null; // bear regime — block new entries
-  }
+  if (sma200 != null && price < sma200) return null;
 
   // Expansion trigger: volume surge + close above the upper band.
   if (vol > avgVol * 1.5 && price > bb.upper) {
