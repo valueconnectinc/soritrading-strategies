@@ -4,13 +4,14 @@ Every strategy whose backtest **finished and actually traded** is published here
 Nothing is filtered out by return — the ones that lost money are part of the record.
 Entries stay after a strategy is removed from our own workspace — this is a log, and deleting the record would leave only the survivors.
 
-**★ marks a strategy that out-returned buy & hold over the same window** — 315 of 1065 right now.
+**★ marks a strategy that out-returned buy & hold over the same window** — 315 of 1066 right now.
 `—` means the comparison **could not be made**: the engine does not compute a benchmark for multi-symbol, futures, or multi-leg runs. That is *unknown*, not *lost*, and it is 197 of them right now.
 
 Every figure comes from the last verifying backtest at publish time. These are past results over historical data. Nothing here is promised or assured about the future, and none of it is investment advice.
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
+|  | [2643](strategies/2643/) | OnChain-Gated Donchian BTC 1D | -10.19% | +142.85% | +16.17% | 14 | 2026-09-26 |
 |  | [2642](strategies/2642/) | Donchian Trend-Following BTC 1D | +34.68% | +275.28% | +25.94% | 25 | 2026-09-26 |
 |  | [2641](strategies/2641/) | Band-Bounce Mean Reversion ETH 4H | -53.64% | -22.93% | +57.56% | 256 | 2026-09-26 |
 |  | [2639](strategies/2639/) | Plain Band-Bounce BTC 4H control | +17.20% | +61.01% | +26.51% | 54 | 2026-09-26 |
