@@ -4,14 +4,14 @@ Every strategy whose backtest **finished and actually traded** is published here
 Nothing is filtered out by return — the ones that lost money are part of the record.
 Entries stay after a strategy is removed from our own workspace — this is a log, and deleting the record would leave only the survivors.
 
-**★ marks a strategy that out-returned buy & hold over the same window** — 304 of 986 right now.
+**★ marks a strategy that out-returned buy & hold over the same window** — 303 of 986 right now.
 `—` means the comparison **could not be made**: the engine does not compute a benchmark for multi-symbol, futures, or multi-leg runs. That is *unknown*, not *lost*, and it is 187 of them right now.
 
 Every figure comes from the last verifying backtest at publish time. These are past results over historical data. Nothing here is promised or assured about the future, and none of it is investment advice.
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
-| ★ | [2559](strategies/2559/) | Champion v2 Baseline BTC 4H | +91.86% | +59.36% | +39.81% | 200 | 2026-09-26 |
+|  | [2559](strategies/2559/) | Champion v2 Baseline BTC 4H | +17.03% | +75.35% | +49.43% | 199 | 2026-09-26 |
 |  | [2558](strategies/2558/) | Champion v2 OOS ADA 4H | +341.00% | +443.24% | +28.89% | 227 | 2026-09-26 |
 | — | [2557](strategies/2557/) | FearGreed Euphoria Short BTC 4H | -1.43% | — | +13.24% | 8 | 2026-09-26 |
 |  | [2556](strategies/2556/) | Champion v2 1H BTC | +4.20% | +27.16% | +24.65% | 206 | 2026-09-26 |
