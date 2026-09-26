@@ -9,13 +9,13 @@
  * Why this strategy: Mean reversion to the VWAP (volume-weighted average
  * price) — in an established uptrend, sharp dips back toward VWAP tend to
  * revert up as buyers step in. Builds on the previous soft-regime version
- * (block entries only when the 200-SMA is declining) and adds a PARTIAL
- * profit-taking step: once price has climbed ~2 ATR from entry, bank half
- * the position to lock in gains, leaving the rest on the wide trailing stop.
- * This cuts the large giveback on reversals that kept MDD near 30%.
+ * (block entries only when the 200-SMA is declining) and adds a MILD partial
+ * profit-taking step: once price has climbed ~3 ATR from entry, bank a third
+ * of the position to trim giveback, leaving most exposure to ride the trend.
+ * This lowers drawdown without giving up the big trend moves.
  * When it buys and sells: buys when price pulls back to/below VWAP while the
  * 50-SMA is rising, RSI is not overbought, and the 200-SMA is not declining.
- * Sells half at +2 ATR, then the rest on the 50-SMA turn-down or 10-ATR stop.
+ * Sells a third at +3 ATR, then the rest on the 50-SMA turn-down or 10-ATR.
  * When it does NOT work: fails in a true downtrend (pullbacks keep falling)
  * and in low-liquidity chop where VWAP gives no support. The remaining wide
  * stop still means giveback on sharp reversals.
@@ -50,13 +50,13 @@ function onUpdate(ctx) {
     }
     if (atr != null) {
       s.hi = s.hi == null ? price : Math.max(s.hi, price);
-      // Partial take-profit: once price is ~2 ATR above entry, bank half the
-      // position to lock in gains; the rest keeps riding the trend. 2 ATR is
-      // a modest but meaningful 4h move for a mean-reversion fill.
+      // Mild partial take-profit: at +3 ATR bank a third of the position.
+      // 3 ATR keeps most of the trend upside, a third of the size trims
+      // giveback without capping the winner like the half-at-2ATR version.
       if (s.entry != null && !s.halfTaken) {
-        if (price >= s.entry + atr * 2) {
+        if (price >= s.entry + atr * 3) {
           s.halfTaken = true;
-          return { side: 'sell', qty: pos / 2 };
+          return { side: 'sell', qty: pos / 3 };
         }
       }
       if (price <= s.hi - atr * 10) {
