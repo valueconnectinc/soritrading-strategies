@@ -11,12 +11,12 @@
  * but its weakness is HIGH DRAWDOWN (43-51% MDD) because it stays fully
  * invested through corrections. This version keeps the proven 30-day OBV trend
  * entry but scales position size DOWN only in extreme volatility (ATR% very
- * wide) and trims to half below the 50-day average, so exposure shrinks in
- * stress without giving up normal bull exposure.
+ * wide), so exposure shrinks in stress without giving up normal bull exposure.
+ * (A prior sma50 trim-to-half hurt ETH's bull capture and was removed.)
  * When it buys and sells: buys when 30-day OBV is clearly rising AND price is
  * above the 200-day average AND volume confirms. Position size is scaled by
  * inverse volatility, but only cuts in extreme stress (ATR > 6% of price).
- * Trims to half below the 50-day average; exits fully when OBV turns down.
+ * Exits fully when OBV turns down.
  * When it does NOT work: in a steady grinding bull where vol stays low it
  * under-risks slightly; and it still lags the sharpest V-shaped melt-ups.
  */
@@ -26,9 +26,8 @@ function onUpdate(ctx) {
   if (!Number.isFinite(price) || price <= 0) return null;
 
   const sma200 = ctx.sma(200, 1);
-  const sma50 = ctx.sma(50, 1);
   const atr = ctx.atr(14, 1);
-  if (sma200 == null || sma50 == null || atr == null) return null;
+  if (sma200 == null || atr == null) return null;
 
   const closes = ctx.closes;
   const vols = ctx.volumes;
@@ -58,9 +57,7 @@ function onUpdate(ctx) {
   ctx.state.cd = cd;
 
   // GENTLE volatility-target sizing: full size up to 6% ATR; scale linearly to
-  // 50% size at 12% ATR. (Judgement: crypto 1D range is normally 2-6%; only
-  // extreme stress above 6% warrants cutting, and never below half so we keep
-  // most of the trend's upside.)
+  // 50% size at 12% ATR. Only extreme stress cuts exposure, never below half.
   const atrPct = atr / price;
   let sizeFrac = 1.0;
   if (atrPct > 0.06) {
@@ -68,14 +65,6 @@ function onUpdate(ctx) {
   }
 
   if (pos > 0) {
-    // Drawdown-protection trim: if price falls below the 50-day average while
-    // holding, cut to half size (keeps some upside, caps the bleed).
-    if (price < sma50 && cd === 0) {
-      ctx.state.cd = 5;
-      const target = ctx.cash * 0.5 / price;
-      if (pos > target) return { side: 'sell', qty: pos - target };
-    }
-    // Full exit when the trend itself turns down.
     if (falling && cd === 0) {
       ctx.state.cd = 5;
       return { side: 'sell', qty: pos };
