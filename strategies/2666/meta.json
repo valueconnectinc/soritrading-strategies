@@ -3,16 +3,16 @@
   "name": "VWAP-Pullback SOL 4H TimeStop32",
   "kind": "custom",
   "verified": {
-    "backtestId": 11787,
-    "return": -12.51,
-    "mdd": 12.89,
-    "trades": 4,
+    "backtestId": 11790,
+    "return": -2.13,
+    "mdd": 42.77,
+    "trades": 16,
     "vsBuyHold": "lose",
-    "benchRet": 33.65,
+    "benchRet": 1658.04,
     "benchBasis": "price",
     "gapPct": 0,
-    "tFrom": 1646424000,
-    "tTo": 1718409600,
+    "tFrom": 1574409600,
+    "tTo": 1646409600,
     "approxNotes": [
       "봉 내 순서는 관례(양봉 O→L→H→C·음봉 O→H→L→C) — 실순서 미상 · 봉 중 거래량 null · MDD 는 봉 마감 기준",
       "거래량은 봉 마감에만 확정 — 봉 중 평가에서 ctx.vol/volumes 가 null 이라 거래량 조건이 걸러졌을 수 있음(봉 중에도 쓰려면 ctx.volPrev·ctx.avgVol)"
@@ -22,10 +22,10 @@
       "sym": "ETHUSDT",
       "interval": "4h",
       "bars": 5000,
-      "end": 1718424000
+      "end": 1646424000
     }
   },
   "config": null,
-  "updatedAt": "2026-09-26T14:28:46.550Z",
+  "updatedAt": "2026-09-26T14:35:17.151Z",
   "publishedBy": "scripts/publish-strategies.mjs"
 }
