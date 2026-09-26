@@ -3,10 +3,10 @@
   "name": "AI 전략",
   "kind": "custom",
   "verified": {
-    "backtestId": 11159,
-    "return": 495.17,
-    "mdd": 33.68,
-    "trades": 14,
+    "backtestId": 11162,
+    "return": 301.83,
+    "mdd": 30.33,
+    "trades": 20,
     "vsBuyHold": "win",
     "benchRet": 218.47,
     "benchBasis": "price",
@@ -25,6 +25,6 @@
     }
   },
   "config": null,
-  "updatedAt": "2026-09-26T02:49:47.317Z",
+  "updatedAt": "2026-09-26T02:53:32.253Z",
   "publishedBy": "scripts/publish-strategies.mjs"
 }
