@@ -1,26 +1,25 @@
 /*
  * @coinsori-strategy v1
- * name: Squeeze Breakout ETH 4H (Risk-Sized + MACD Gate)
+ * name: Squeeze Breakout ETH 4H (Vol-Adaptive Risk + MACD Gate)
  * ex: binance
  * syms: ETHUSDT
  * interval: 4h
  * cash: 10000
  *
- * Why this strategy: Combines the two best single improvements tested on the
- * validated ETH 4H squeeze-breakout. Risk-based sizing (2% of equity at risk
- * on the 2.5x-ATR stop) cut drawdown roughly in half in every walk-forward
- * window, and the MACD bullish-cross momentum gate improved capture in the
- * big melt-up window. Together they aim for the same defensive profile with
- * lower drawdown and slightly better trend capture than full-size buying.
- * When it buys and sells: buys when band-width is below its 20-bar average
- * AND price closes above the upper Bollinger band AND volume > 1.5x its
- * 20-bar average AND price is above the 200-bar SMA AND the MACD line is
- * above its signal. Position size risks 2% of equity on the 2.5x-ATR stop.
- * Exits on a 2.5x-ATR stop or a 20-bar low trail.
- * When it does NOT work: it deliberately stays out of deep bear markets
- * (below the 200-bar SMA), gives up the early bounce of a new bull run, and
- * lags the biggest melt-up rallies. Fixed 2% per-trade risk also caps upside
- * in strong trends.
+ * Why this strategy: Same validated ETH 4H squeeze-breakout entry/exit as the
+ * champion, but with volatility-regime adaptive position sizing. When the
+ * market is calm (ATR in a low percentile) the same 2.5x-ATR stop risks less
+ * capital per coin, so we can safely take a larger position; when volatility
+ * spikes we cut size. This targets the champion's remaining drawdown in
+ * volatile windows without changing the validated entry or exit.
+ * When it buys and sells: buys on a squeeze breakout (band-width below its
+ * 20-bar average, close above the upper Bollinger band, volume > 1.5x its
+ * 20-bar average, price above the 200-bar SMA, MACD above signal). Position
+ * size risks a volatility-adaptive budget (1-3% of equity) on the 2.5x-ATR
+ * stop. Exits on a 2.5x-ATR stop or a 20-bar low trail.
+ * When it does NOT work: it stays out of deep bears (below 200-SMA), gives up
+ * the early bounce of a new bull run, and lags the biggest melt-ups. Adaptive
+ * sizing adds no edge in a steady-volatility regime.
  */
 function onUpdate(ctx) {
   const bb = ctx.bb(20, 2, 1);
@@ -57,9 +56,21 @@ function onUpdate(ctx) {
   if (bw >= avgBw) return null;
 
   if (macd.macd > macd.signal && vol > avgVol * 1.5 && price > bb.upper) {
+    // volatility-regime adaptive risk: calm = bigger size, volatile = smaller
+    // rank current ATR among the last 100 ATR values -> percentile 0..1
+    let under = 0, n = 0;
+    for (let k = 1; k <= 100; k++) {
+      const a = ctx.atr(14, k);
+      if (a == null) break;
+      if (a <= atr) under++;
+      n++;
+    }
+    const pct = n > 0 ? under / n : 0.5;
+    // risk budget maps percentile 0->3%, 1->1% (linear)
+    const riskPct = 0.03 - pct * 0.02;
     const riskPerCoin = atr * 2.5;
     const equity = ctx.cash + pos * price;
-    const qty = (equity * 0.02) / riskPerCoin;
+    const qty = (equity * riskPct) / riskPerCoin;
     if (qty <= 0) return null;
     return { side: 'buy', qty: qty };
   }
