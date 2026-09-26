@@ -11,7 +11,7 @@ Every figure comes from the last verifying backtest at publish time. These are p
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
-| ★ | [2552](strategies/2552/) | Champion + DXY Regime Filter BTC 4H | +756.52% | +443.24% | +26.94% | 219 | 2026-09-26 |
+| ★ | [2552](strategies/2552/) | Champion + DXY Regime Filter BTC 4H | +9.41% | -36.06% | +40.09% | 222 | 2026-09-26 |
 | ★ | [2551](strategies/2551/) | EMA-Stack Trend Ride Vol Filter BTC 1D | +13.23% | -20.98% | +37.57% | 101 | 2026-09-26 |
 |  | [2550](strategies/2550/) | Stochastic Oversold Mean-Reversion BTC 4H | -97.39% | +443.24% | +97.39% | 539 | 2026-09-26 |
 |  | [2549](strategies/2549/) | Bollinger Squeeze Breakout BTC 4H | -49.27% | +28.36% | +55.82% | 126 | 2026-09-26 |
