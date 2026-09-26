@@ -11,7 +11,7 @@ Every figure comes from the last verifying backtest at publish time. These are p
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
-|  | [2544](strategies/2544/) | Champion + FedRegime Gate BTC 1D | -23.03% | -16.80% | +28.04% | 21 | 2026-09-26 |
+|  | [2544](strategies/2544/) | Champion + FedRegime Gate BTC 1D | +45.33% | +59.36% | +39.81% | 200 | 2026-09-26 |
 | ★ | [2543](strategies/2543/) | Champion v2 LTC 1D Generalization | +131.66% | +42.23% | +25.30% | 97 | 2026-09-26 |
 | ★ | [2541](strategies/2541/) | Champion v2 BTC 1D Robustness | +47.01% | +29.50% | +24.98% | 103 | 2026-09-25 |
 | ★ | [2540](strategies/2540/) | Champion v2 Final (FearDepth TwoTier) | -6.21% | -22.21% | +49.43% | 249 | 2026-09-25 |
