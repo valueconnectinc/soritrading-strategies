@@ -3,9 +3,9 @@
   "name": "FearGreed Panic Mean-Reversion BTC 1D",
   "kind": "custom",
   "verified": {
-    "backtestId": 11634,
-    "return": -5.67,
-    "mdd": 34.61,
+    "backtestId": 11637,
+    "return": -3.73,
+    "mdd": 33.27,
     "trades": 63,
     "vsBuyHold": "lose",
     "benchRet": 73.71,
@@ -27,6 +27,6 @@
     }
   },
   "config": null,
-  "updatedAt": "2026-09-26T10:49:30.510Z",
+  "updatedAt": "2026-09-26T10:50:16.890Z",
   "publishedBy": "scripts/publish-strategies.mjs"
 }
