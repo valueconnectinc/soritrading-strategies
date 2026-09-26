@@ -4,13 +4,14 @@ Every strategy whose backtest **finished and actually traded** is published here
 Nothing is filtered out by return — the ones that lost money are part of the record.
 Entries stay after a strategy is removed from our own workspace — this is a log, and deleting the record would leave only the survivors.
 
-**★ marks a strategy that out-returned buy & hold over the same window** — 345 of 1201 right now.
+**★ marks a strategy that out-returned buy & hold over the same window** — 345 of 1202 right now.
 `—` means the comparison **could not be made**: the engine does not compute a benchmark for multi-symbol, futures, or multi-leg runs. That is *unknown*, not *lost*, and it is 197 of them right now.
 
 Every figure comes from the last verifying backtest at publish time. These are past results over historical data. Nothing here is promised or assured about the future, and none of it is investment advice.
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
+|  | [2801](strategies/2801/) | ETH 1D Fed-Funds Rate Regime Gate | +234.20% | +324.12% | +72.21% | 66 | 2026-09-26 |
 |  | [2800](strategies/2800/) | BTC 1D Hashrate Fundamental + Trend Guard | -6.88% | +270.70% | +71.99% | 118 | 2026-09-26 |
 |  | [2799](strategies/2799/) | BTC 1D Fed-Gate + Trend Defense (two-state) | -84.22% | +270.70% | +91.63% | 134 | 2026-09-26 |
 | ★ | [2798](strategies/2798/) | BTC 1D Fed-Funds Gate + Trend-Scaled Size | +62.05% | +55.47% | +19.78% | 638 | 2026-09-26 |
