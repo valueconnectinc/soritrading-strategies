@@ -1,0 +1,30 @@
+{
+  "id": 2644,
+  "name": "FearGreed-Gated Donchian BTC 1D",
+  "kind": "custom",
+  "verified": {
+    "backtestId": 11574,
+    "return": -7.89,
+    "mdd": 16.17,
+    "trades": 14,
+    "vsBuyHold": "lose",
+    "benchRet": 142.85,
+    "benchBasis": "price",
+    "gapPct": 0,
+    "tFrom": 1600300800,
+    "tTo": 1695254400,
+    "approxNotes": [
+      "봉 내 순서는 관례(양봉 O→L→H→C·음봉 O→H→L→C) — 실순서 미상 · 봉 중 거래량 null · MDD 는 봉 마감 기준"
+    ],
+    "spec": {
+      "ex": "binance",
+      "sym": "BTCUSDT",
+      "interval": "1d",
+      "bars": 1100,
+      "end": 1695340800
+    }
+  },
+  "config": null,
+  "updatedAt": "2026-09-26T09:15:57.904Z",
+  "publishedBy": "scripts/publish-strategies.mjs"
+}
