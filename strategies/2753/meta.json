@@ -3,16 +3,16 @@
   "name": "Candle-Pattern Panic Reversal BTC 4H",
   "kind": "custom",
   "verified": {
-    "backtestId": 12152,
-    "return": -91.48,
-    "mdd": 91.48,
-    "trades": 1908,
+    "backtestId": 12162,
+    "return": -26.5,
+    "mdd": 33.1,
+    "trades": 62,
     "vsBuyHold": "lose",
-    "benchRet": -26.71,
+    "benchRet": 435.09,
     "benchBasis": "price",
     "gapPct": 0,
-    "tFrom": 1761652800,
-    "tTo": 1790438400,
+    "tFrom": 1574438400,
+    "tTo": 1646438400,
     "approxNotes": [
       "봉 내 순서는 관례(양봉 O→L→H→C·음봉 O→H→L→C) — 실순서 미상 · 봉 중 거래량 null · MDD 는 봉 마감 기준"
     ],
@@ -20,11 +20,11 @@
       "ex": "binance",
       "sym": "BTCUSDT",
       "interval": "4h",
-      "bars": 2000,
-      "end": 1790452800
+      "bars": 5000,
+      "end": 1646452800
     }
   },
   "config": null,
-  "updatedAt": "2026-09-26T20:07:47.992Z",
+  "updatedAt": "2026-09-26T20:08:29.117Z",
   "publishedBy": "scripts/publish-strategies.mjs"
 }
