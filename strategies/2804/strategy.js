@@ -34,21 +34,15 @@ function onUpdate(ctx) {
   const tightening = fedNow > fedLag + 0.5;
 
   const atr = ctx.atr(14, 1);
-  const atrAvg = ctx.sma(14, 1); // placeholder replaced below
-  const atr50 = ctx.atr(14, 1);  // placeholder
-  // Crash guard: current ATR vs its own 50-bar average (computed via closes range proxy).
-  // We approximate ATR's 50-bar norm using a slow ATR via avgVol-like helper: use sma of ATR.
   const pos = ctx.position;
+  const crash = crashGuard(ctx, atr);
 
-  // Exit handling first (always allow exits even in crash/tightening).
   if (pos > 0) {
     const bb = ctx.bb(20, 2, 1);
     const rsi = ctx.rsi(14, 1);
     if (bb == null || rsi == null || atr == null) return null;
     const mid = bb.mid;
     const entry = ctx.entryPx;
-    // In a high-volatility crash regime, tighten the stop (3.5x ATR instead of 6x).
-    const crash = crashGuard(ctx, atr);
     const stopMult = crash ? 3.5 : 6;
     if (price >= mid || rsi > 50 || (entry != null && price <= entry - stopMult * atr)) {
       return { side: 'sell', qty: pos };
@@ -56,8 +50,7 @@ function onUpdate(ctx) {
     return null;
   }
 
-  // Stand aside during tightening OR during a volatility spike (crash).
-  if (tightening || crashGuard(ctx, atr)) return null;
+  if (tightening || crash) return null;
 
   const sma200 = ctx.sma(200, 1);
   const bb = ctx.bb(20, 2, 1);
@@ -77,16 +70,20 @@ function onUpdate(ctx) {
 // True when current ATR is sharply above its recent norm -> a crash is underway.
 function crashGuard(ctx, atr) {
   if (atr == null) return false;
-  // 50-bar average of ATR (smoothed). sma() works on closes; approximate ATR norm
-  // by the average of the last 50 ATR values stored in state as we go.
-  const s = ctx.state.atrHist || [];
-  s.push(atr);
-  if (s.length > 50) s.shift();
-  ctx.state.atrHist = s;
+  // Rolling 50-bar window of ATR (pushed once per bar).
+  const hist = ctx.state.atrHist;
+  const lastBar = ctx.state.atrBar;
+  if (lastBar !== ctx.i) {
+    if (!hist) ctx.state.atrHist = [];
+    ctx.state.atrHist.push(atr);
+    if (ctx.state.atrHist.length > 50) ctx.state.atrHist.shift();
+    ctx.state.atrBar = ctx.i;
+  }
+  const s = ctx.state.atrHist;
   if (s.length < 50) return false;
   let sum = 0;
   for (let i = 0; i < s.length; i++) sum += s[i];
   const avg = sum / s.length;
-  // Spike = ATR more than 1.6x its 50-bar average.
-  return atr > 1.6 * avg;
+  // Spike = ATR more than 1.4x its 50-bar average (sensitive enough to fire on flushes).
+  return atr > 1.4 * avg;
 }
