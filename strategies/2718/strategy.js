@@ -1,15 +1,16 @@
 /*
  * @coinsori-strategy v1
- * name: Band-Bounce Mean Reversion BCH 4H
+ * name: Band-Bounce Mean Reversion XMR 4H
  * ex: binance
- * syms: BCHUSDT
+ * syms: XMRUSDT
  * interval: 4h
  * cash: 10000
  *
  * Why this strategy: The band-bounce mean-reversion champion recipe, validated
- * unchanged across 19+ crypto large-caps on 4h. BCH is a mature, relatively
- * stable large-cap with a long history — the type of asset where the family's
- * defensive edge is strongest — and has not yet been run through the recipe.
+ * unchanged across 19+ crypto large-caps on 4h. XMR (Monero) is a stable, mature,
+ * low-vol large-cap with a long history and strong mean-reverting character — the
+ * type of asset where the family's defensive edge is strongest — and has not yet
+ * been run through the recipe.
  * When it buys and sells: buys when price closes below the lower Bollinger(20,2)
  * with RSI<30 while price is above the 200-SMA; exits at the middle band / RSI>50
  * or a 6-ATR stop; waits 5 bars before re-entering.

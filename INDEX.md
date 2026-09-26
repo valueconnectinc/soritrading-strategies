@@ -11,7 +11,7 @@ Every figure comes from the last verifying backtest at publish time. These are p
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
-|  | [2718](strategies/2718/) | AI 전략 | +38.02% | +47.91% | +25.25% | 44 | 2026-09-26 |
+|  | [2718](strategies/2718/) | AI 전략 | +18.35% | +28.67% | +20.75% | 58 | 2026-09-26 |
 |  | [2717](strategies/2717/) | AI 전략 | -32.84% | +301.51% | +41.14% | 73 | 2026-09-26 |
 |  | [2716](strategies/2716/) | AI 전략 | +35.71% | +614.25% | +25.46% | 43 | 2026-09-26 |
 | ★ | [2715](strategies/2715/) | Band-Bounce Mean Reversion CRO 4H | -14.23% | -41.84% | +19.51% | 18 | 2026-09-26 |
