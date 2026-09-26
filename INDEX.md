@@ -11,7 +11,7 @@ Every figure comes from the last verifying backtest at publish time. These are p
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
-|  | [2752](strategies/2752/) | Bollinger Squeeze Breakout ETH 4H | -33.69% | +1670.97% | +41.99% | 50 | 2026-09-26 |
+|  | [2752](strategies/2752/) | Bollinger Squeeze Breakout ETH 4H | +16.09% | +32.58% | +22.83% | 42 | 2026-09-26 |
 |  | [2751](strategies/2751/) | RSI2 Short-Term Mean Reversion BTC 4H | -97.02% | +449.51% | +97.05% | 1289 | 2026-09-26 |
 |  | [2750](strategies/2750/) | Refined Trend-Scaled Band-Bounce BCH 1D | -2.46% | +32.58% | +30.56% | 69 | 2026-09-26 |
 |  | [2748](strategies/2748/) | Trend-Scaled Band-Bounce BCH 1D | +17.64% | +165.92% | +29.60% | 41 | 2026-09-26 |
