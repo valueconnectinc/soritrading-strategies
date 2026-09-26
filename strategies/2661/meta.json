@@ -1,0 +1,30 @@
+{
+  "id": 2661,
+  "name": "On-Chain Regime Momentum BTC 1D",
+  "kind": "custom",
+  "verified": {
+    "backtestId": 11665,
+    "return": 571.18,
+    "mdd": 35.93,
+    "trades": 20,
+    "vsBuyHold": "lose",
+    "benchRet": 824.29,
+    "benchBasis": "price",
+    "gapPct": 0,
+    "tFrom": 1531180800,
+    "tTo": 1617494400,
+    "approxNotes": [
+      "봉 내 순서는 관례(양봉 O→L→H→C·음봉 O→H→L→C) — 실순서 미상 · 봉 중 거래량 null · MDD 는 봉 마감 기준"
+    ],
+    "spec": {
+      "ex": "binance",
+      "sym": "BTCUSDT",
+      "interval": "1d",
+      "bars": 1000,
+      "end": 1617580800
+    }
+  },
+  "config": null,
+  "updatedAt": "2026-09-26T11:15:42.525Z",
+  "publishedBy": "scripts/publish-strategies.mjs"
+}
