@@ -1,0 +1,30 @@
+{
+  "id": 2580,
+  "name": "Donchian Vol-Adaptive Size BTC 1D (thr4)",
+  "kind": "custom",
+  "verified": {
+    "backtestId": 11110,
+    "return": 38.46,
+    "mdd": 57.02,
+    "trades": 18,
+    "vsBuyHold": "lose",
+    "benchRet": 177.69,
+    "benchBasis": "price",
+    "gapPct": 0,
+    "tFrom": 1505260800,
+    "tTo": 1600214400,
+    "approxNotes": [
+      "봉 내 순서는 관례(양봉 O→L→H→C·음봉 O→H→L→C) — 실순서 미상 · 봉 중 거래량 null · MDD 는 봉 마감 기준"
+    ],
+    "spec": {
+      "ex": "binance",
+      "sym": "BTCUSDT",
+      "interval": "1d",
+      "bars": 1100,
+      "end": 1600300800
+    }
+  },
+  "config": null,
+  "updatedAt": "2026-09-26T02:06:23.169Z",
+  "publishedBy": "scripts/publish-strategies.mjs"
+}
