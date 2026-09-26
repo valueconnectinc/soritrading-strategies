@@ -1,22 +1,21 @@
 /*
  * @coinsori-strategy v1
- * name: Band-Bounce Mean Reversion XLM 4H
+ * name: Band-Bounce Mean Reversion ADA 1D
  * ex: binance
- * syms: XLMUSDT
- * interval: 4h
+ * syms: ADAUSDT
+ * interval: 1d
  * cash: 10000
  *
- * Why this strategy: The validated band-bounce mean-reversion champion recipe
- * applied unchanged to XLM 4h — a fresh mature large-cap the recipe was never
- * tuned on. It buys rare panic bottoms above the 200-SMA and is defensive:
- * it protects capital in downtrends and has made money in most walk-forward
- * windows across 20+ assets.
+ * Why this strategy: Tests whether the validated 4h band-bounce mean-reversion
+ * champion recipe survives on the DAILY timeframe. The 4h edge is proven across
+ * 20+ assets; the 1D evidence is contradictory (LTC +834% vs LTC/XRP weaker), so
+ * this runs the EXACT unchanged recipe on a fresh mature asset (ADA) to settle it.
  * When it buys and sells: buys when price closes below the lower Bollinger(20,2)
- * with RSI<30 while price is above the 200-SMA; exits at the middle band /
- * RSI>50 or a 6-ATR stop; waits 5 bars before re-entering.
- * When it does NOT work: lags strong melt-ups (stays in cash and underperforms
- * buy-and-hold in a big bull); below the 200-SMA it never buys; a panic that
- * keeps falling still loses. Defensive, not a trend rider.
+ * with RSI<30 while price is above the 200-SMA; exits at the middle band / RSI>50
+ * or a 6-ATR stop; waits 5 bars before re-entering.
+ * When it does NOT work: 1D bars are slow — a deep lower-band touch that keeps
+ * falling still loses, and the 200-SMA gate can keep it in cash through a whole
+ * bull run. Daily MDD tends to be higher than 4h because positions are held longer.
  */
 function onUpdate(ctx) {
   const bb = ctx.bb(20, 2, 1);
