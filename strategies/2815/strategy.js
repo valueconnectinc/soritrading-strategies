@@ -1,61 +1,76 @@
 /*
  * @coinsori-strategy v1
- * name: ADA 4H Band-Bounce + Fed Tightening Gate
+ * name: OBV Volume-Flow Trend BTC 1D
  * ex: binance
- * syms: ADAUSDT
- * interval: 4h
+ * syms: BTCUSDT
+ * interval: 1d
  * cash: 10000
  *
- * Why this strategy: The band-bounce mean-reversion champion is validated on
- * 15+ assets, and the Fed tightening gate (stand aside while the Fed raises
- * rates) has now been confirmed to generalize on ETH 4H and BTC 4H. This is a
- * third-asset test on ADA 4H to confirm the macro overlay is cross-asset robust
- * rather than a BTC/ETH-specific fit.
- * When it buys and sells: buys a panic dip (price below the lower Bollinger
- * band, RSI<30, price above the 200-SMA) and sells at the mid-band, on RSI
- * recovery above 50, or a 6-ATR stop. It takes NO buy while the fed funds rate
- * is more than ~0.5pp above its level ~30 days earlier.
- * When it does NOT work: in a prolonged tightening cycle it stays in cash and
- * misses genuine panic-bottom bounces; during a non-policy-driven leverage
- * flush (Fed on hold) the champion's normal drawdown weakness returns.
+ * Why this strategy: A genuinely different signal source — volume flow instead
+ * of price. On-Balance Volume (OBV) accumulates up-day volume and subtracts
+ * down-day volume, so it tracks whether money is flowing in or out over time.
+ * Hypothesis: a rising OBV trend with price above its 200-day average confirms
+ * an accumulation-driven uptrend; a falling OBV trend warns of distribution.
+ * When it buys and sells: buys when smoothed OBV is clearly rising vs ~30 days
+ * earlier AND price is above its 200-day average (bull regime); sells when
+ * smoothed OBV turns down. Hysteresis + cooldown reduce churn.
+ * When it does NOT work: OBV can diverge from price for long stretches in
+ * choppy sideways markets (whipsaw), and like all trend signals it lags sharp
+ * V-shaped melt-ups where volume spikes before the average catches up.
  */
 function onUpdate(ctx) {
+  const pos = ctx.position;
   const price = ctx.price;
   if (!Number.isFinite(price) || price <= 0) return null;
 
-  const fedNow = ctx.data('fed');
-  const fedLag = ctx.data('fed_lag30');
-  if (fedNow == null || fedLag == null) return null;
-  const tightening = fedNow > fedLag + 0.5;
+  // 200-day trend gate: only hold longs in a confirmed bull regime.
+  const sma200 = ctx.sma(200, 1);
+  if (sma200 == null) return null;
 
-  const pos = ctx.position;
+  // Build OBV from volume and close direction.
+  const closes = ctx.closes;
+  const vols = ctx.volumes;
+  if (!closes || !vols || closes.length < 32) return null;
+
+  // Recompute OBV over available history each bar (cheap, deterministic).
+  let obv = 0;
+  const obvSeries = [];
+  for (let k = 1; k < closes.length; k++) {
+    const c = closes[k], p = closes[k - 1], v = vols[k];
+    if (!Number.isFinite(c) || !Number.isFinite(p) || !Number.isFinite(v)) continue;
+    if (c > p) obv += v;
+    else if (c < p) obv -= v;
+    obvSeries.push(obv);
+  }
+  if (obvSeries.length < 32) return null;
+  const obvNow = obvSeries[obvSeries.length - 1];
+  const obvPast = obvSeries[obvSeries.length - 31];
+
+  // Hysteresis: 1.0% instead of 0.5% to cut churn.
+  const rising = obvNow > obvPast * 1.01;
+  const falling = obvNow < obvPast * 0.99;
+
+  // Volume confirmation: only enter when today's volume is above its 30-day
+  // average — a rising OBV on quiet volume is a weak drift, not accumulation.
+  const avgV = ctx.avgVol(30);
+  const volOk = avgV != null && Number.isFinite(avgV) && avgV > 0 && ctx.vol > avgV;
+
+  // Cooldown: after a flip, wait 5 bars before flipping again (cuts whipsaw).
+  const st = ctx.state;
+  let cd = st.cd || 0;
+  if (cd > 0) cd--;
+  ctx.state.cd = cd;
 
   if (pos > 0) {
-    const bb = ctx.bb(20, 2, 1);
-    const rsi = ctx.rsi(14, 1);
-    const atr = ctx.atr(14, 1);
-    if (bb == null || rsi == null || atr == null) return null;
-    const mid = bb.mid;
-    const entry = ctx.entryPx;
-    if (price >= mid || rsi > 50 || (entry != null && price <= entry - 6 * atr)) {
+    if (falling && cd === 0) {
+      ctx.state.cd = 5;
       return { side: 'sell', qty: pos };
     }
     return null;
   }
-
-  if (tightening) return null;
-
-  const sma200 = ctx.sma(200, 1);
-  const bb = ctx.bb(20, 2, 1);
-  const rsi = ctx.rsi(14, 1);
-  if (sma200 == null || bb == null || rsi == null) return null;
-  if (price <= sma200) return null;
-  if (price > bb.lower) return null;
-  if (rsi >= 30) return null;
-
-  const lastTrade = ctx.state.lastTradeBar != null ? ctx.state.lastTradeBar : -1e9;
-  if (ctx.i - lastTrade < 5) return null;
-  ctx.state.lastTradeBar = ctx.i;
-
-  return { side: 'buy', qty: (ctx.cash / price) * 0.98 };
+  if (rising && price > sma200 && volOk && cd === 0) {
+    ctx.state.cd = 5;
+    return { side: 'buy', qty: ctx.cash / price * 0.95 };
+  }
+  return null;
 }

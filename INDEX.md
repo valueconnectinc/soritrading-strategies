@@ -11,7 +11,7 @@ Every figure comes from the last verifying backtest at publish time. These are p
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
-|  | [2815](strategies/2815/) | ADA 4H Band-Bounce + Fed Tightening Gate | +69.43% | +2118.10% | +25.56% | 40 | 2026-09-26 |
+|  | [2815](strategies/2815/) | ADA 4H Band-Bounce + Fed Tightening Gate | +137.82% | +262.64% | +23.11% | 53 | 2026-09-26 |
 |  | [2814](strategies/2814/) | BTC 4H Band-Bounce Champion (Control) | +34.79% | +435.09% | +18.24% | 49 | 2026-09-26 |
 |  | [2813](strategies/2813/) | BTC 4H Band-Bounce + Fed Tightening Gate | +12.64% | +26.69% | +13.39% | 48 | 2026-09-26 |
 |  | [2812](strategies/2812/) | BTC 4H Band-Bounce Champion (Control) | +13.70% | +34.16% | +26.21% | 38 | 2026-09-26 |
