@@ -3,7 +3,7 @@
   "name": "VWAP-Pullback SOL 4H Control",
   "kind": "custom",
   "verified": {
-    "backtestId": 11744,
+    "backtestId": 11747,
     "return": 504.93,
     "mdd": 19.43,
     "trades": 76,
