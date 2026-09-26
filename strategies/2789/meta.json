@@ -3,10 +3,10 @@
   "name": "Regime-Switch Hybrid SOL 4H Vol-Targeted",
   "kind": "custom",
   "verified": {
-    "backtestId": 12390,
-    "return": -59.65,
-    "mdd": 78.43,
-    "trades": 342,
+    "backtestId": 12393,
+    "return": -37.78,
+    "mdd": 70.14,
+    "trades": 274,
     "vsBuyHold": "lose",
     "benchRet": 62.63,
     "benchBasis": "price",
@@ -25,6 +25,6 @@
     }
   },
   "config": null,
-  "updatedAt": "2026-09-26T22:17:25.720Z",
+  "updatedAt": "2026-09-26T22:18:27.554Z",
   "publishedBy": "scripts/publish-strategies.mjs"
 }

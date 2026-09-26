@@ -11,7 +11,7 @@ Every figure comes from the last verifying backtest at publish time. These are p
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
-|  | [2789](strategies/2789/) | Regime-Switch Hybrid SOL 4H Vol-Targeted | -59.65% | +62.63% | +78.43% | 342 | 2026-09-26 |
+|  | [2789](strategies/2789/) | Regime-Switch Hybrid SOL 4H Vol-Targeted | -37.78% | +62.63% | +70.14% | 274 | 2026-09-26 |
 |  | [2779](strategies/2779/) | OBV Volume-Flow Trend BTC 1D | +137.82% | +262.64% | +23.11% | 53 | 2026-09-26 |
 |  | [2788](strategies/2788/) | Regime-Switch Hybrid SOL 4H (DD-reduced) | -75.35% | +62.63% | +86.82% | 380 | 2026-09-26 |
 |  | [2787](strategies/2787/) | Liquidation-Capitulation Contrarian BTC 4H | -0.25% | +8.75% | +20.31% | 13 | 2026-09-26 |

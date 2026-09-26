@@ -1,6 +1,6 @@
 /*
  * @coinsori-strategy v1
- * name: Regime-Switch Hybrid SOL 4H (fixed-size verify)
+ * name: Regime-Switch Hybrid SOL 4H (rising-EMA fix)
  * ex: binance
  * syms: SOLUSDT
  * interval: 4h
@@ -11,8 +11,8 @@
  * can't do both, so this switches between two validated modes.
  * When it buys and sells: in the BEAR leg it buys only at deep fear and exits
  * on a quick recovery or a 4x ATR stop. In the BULL leg it buys a pullback to
- * the 20-EMA only when the 20-EMA is above the 50-EMA (confirmed uptrend) and
- * exits on a 50-EMA break or a 3x ATR stop.
+ * the 20-EMA only when the 20-EMA is above the 50-EMA AND rising (confirmed,
+ * strengthening uptrend) and exits on a 50-EMA break or a 3x ATR stop.
  * When it does NOT work: in a calm grind-down the fear leg never triggers and
  * we sit in cash; and in a sharp V-crash even the wide stop takes a hit.
  */
@@ -23,8 +23,9 @@ function onUpdate(ctx) {
 
   const fg = ctx.data('fear_greed');
   const ema20 = ctx.ema(20, 1), ema50 = ctx.ema(50, 1);
+  const ema20prev = ctx.ema(20, 2);
   const atr = ctx.atr(14, 1);
-  if (ema20 == null || ema50 == null || atr == null) return null;
+  if (ema20 == null || ema50 == null || ema20prev == null || atr == null) return null;
 
   const st = ctx.state;
 
@@ -50,7 +51,8 @@ function onUpdate(ctx) {
     return { side: 'buy', qty: ctx.cash / price * 0.5 };
   }
 
-  if (ema20 > ema50 && price <= ema20 + 0.5 * atr) {
+  // Bull entry: confirmed uptrend (20>50), 20-EMA RISING (selectivity fix), pullback to it.
+  if (ema20 > ema50 && ema20 > ema20prev && price <= ema20 + 0.5 * atr) {
     st.peak = price; st.leg = 'bull';
     return { side: 'buy', qty: ctx.cash / price * 0.5 };
   }
