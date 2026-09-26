@@ -1,6 +1,6 @@
 /*
  * @coinsori-strategy v1
- * name: BTC 1D Regime-Switch Blend (Trend + Mean Reversion)
+ * name: BTC 1D Regime-Switch Blend + Fresh Trend Entry
  * ex: binance
  * syms: BTCUSDT
  * interval: 1d
@@ -12,16 +12,17 @@
  * chop) buying panic flushes and riding the snap-back has been the most
  * robust edge. Switching between the two based on where price sits relative
  * to the long average captures the trend in bulls AND the mean-reversion
- * edge in bears — solving each family's known weakness on its own.
+ * edge in bears.
  * When it buys and sells: above the 200-day it buys pullbacks to the lower
- * Donchian channel and rides the trend with a trailing stop; below the
- * 200-day it buys deep-oversold panic flushes (RSI<30 at the lower Bollinger
- * band) and sells on RSI recovery. Either mode exits if price crosses the
- * 200-day the wrong way.
+ * Donchian channel, AND buys immediately on a fresh cross above the 200-day
+ * (a trend turn) so it does not miss the start of a melt-up. It rides with a
+ * trailing stop. Below the 200-day it buys deep-oversold panic flushes and
+ * sells on RSI recovery. Either mode exits if price crosses the 200-day the
+ * wrong way.
  * When it does NOT work: in a long sideways market the regime can flip back
- * and forth and both modes whipsaw; and below the 200-day in a grinding
- * downtrend the oversold bounces can be weak. It also lags a straight-line
- * melt-up because the trend mode waits for pullbacks.
+ * and forth and both modes whipsaw; below the 200-day in a grinding
+ * downtrend the oversold bounces can be weak. It still lags a straight-line
+ * melt-up after the initial entry because the trailing stop gets ridden.
  */
 function onUpdate(ctx) {
   const pos = ctx.position;
@@ -76,7 +77,14 @@ function onUpdate(ctx) {
     const hi10 = ctx.high(10, 1), lo20 = ctx.low(20, 1);
     const hi10prev = ctx.high(10, 2);
     if (hi10 == null || lo20 == null || hi10prev == null) return null;
-    if (price <= lo20 && hi10 > hi10prev) {
+
+    // FRESH TREND TURN: was below the 200-day on the previous closed bar,
+    // now above -> buy immediately so we catch the start of a melt-up.
+    const closes = ctx.closes;
+    const prevPx = closes.length >= 2 ? closes[closes.length - 2] : price;
+    const freshTurn = prevPx <= sma200 && price > sma200;
+
+    if (freshTurn || (price <= lo20 && hi10 > hi10prev)) {
       st.mode = 'trend'; st.peak = price;
       return { side: 'buy', qty: ctx.cash / price * 0.9 };
     }
