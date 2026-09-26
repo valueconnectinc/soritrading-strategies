@@ -10,11 +10,11 @@
  * sharp dips toward VWAP tend to revert up as buyers step in. This version
  * adds a MOMENTUM CONFIRMATION (only buy when RSI is turning up), middle
  * vol-scaling, partial take-profit at +3 ATR, and a soft 200-SMA regime filter.
- * NEW this cycle: LOWER the RSI overbought entry filter from 65 to 60 so dips
- * are only bought when RSI is more subdued — avoiding entries near overbought
- * that often fail to revert. Keeps the 24-bar time-stop.
+ * PLUS a 24-bar TIME-STOP exit — a position held more than 24 bars (~4 days)
+ * without reaching the +3 ATR partial target is exited in full, cutting the
+ * "grinder" trades that never revert and just bleed.
  * When it buys and sells: buys when price pulls back to/below VWAP*1.02, 50-SMA
- * rising, 200-SMA not declining, RSI below 60 AND RSI turning up. Sells a
+ * rising, 200-SMA not declining, RSI not overbought AND RSI turning up. Sells a
  * third at +3 ATR, then the rest on the 50-SMA turn-down, 10-ATR trail, or the
  * 24-bar time-stop.
  * When it does NOT work: fails in a true downtrend (pullbacks keep falling) and
@@ -80,7 +80,7 @@ function onUpdate(ctx) {
   if (sma200 < sma200prev) return null;
   const lastExit = s.lastExit || 0;
   if (!uptrend) return null;
-  if (rsi > 60) return null;
+  if (rsi > 65) return null;
   if (rsi <= rsiPrev) return null;
   if (ctx.i - lastExit < 6) return null;
   if (price <= vwap * 1.02) {
