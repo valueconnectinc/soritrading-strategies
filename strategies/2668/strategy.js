@@ -8,12 +8,11 @@
  *
  * Why this strategy: Mean reversion to VWAP. In an established uptrend, sharp
  * dips back toward the volume-weighted average price tend to revert up as
- * buyers step in. This is the exact recipe validated as the SOL 4H champion
- * (regime filter + RSI momentum + vol-scaled sizing + time-stop + partial TP),
- * transferred unchanged to ETH to test whether the edge is cross-asset or
- * SOL-specific. ETH is a high-volatility major, the profile the recipe targets.
- * When it buys and sells: buys when price pulls back to/below VWAP*1.02 while
- * the 50-SMA is rising, RSI is turning up and below 65, and price is above the
+ * buyers step in. ETH version of the SOL champion recipe, with a stricter
+ * entry (price must actually reach VWAP) to cut the churn the loose 1.02
+ * threshold caused (204 trades vs SOL's ~70).
+ * When it buys and sells: buys when price pulls back to/below VWAP while the
+ * 50-SMA is rising, RSI is turning up and below 65, and price is above the
  * 200-SMA. Sells on a 10-ATR trailing stop, when the 50-SMA turns down, after
  * a 24-bar time stop, or takes partial profit at +3 ATR.
  * When it does NOT work: fails in a true downtrend below the 200-SMA (sits out
@@ -44,12 +43,10 @@ function onUpdate(ctx) {
   if (atr == null) return null;
 
   if (pos > 0) {
-    // time stop: exit after 24 bars in the trade (validated sweet spot on SOL)
     if (s.entryBar != null && ctx.i - s.entryBar >= 24) {
       s.lastExit = ctx.i;
       return { side: 'sell', qty: pos };
     }
-    // partial take-profit at +3 ATR: bank half, let the rest run
     if (s.tookTP == null && price >= ctx.entryPx + atr * 3) {
       s.tookTP = true;
       return { side: 'sell', qty: pos * 0.5 };
@@ -76,21 +73,18 @@ function onUpdate(ctx) {
   const lastExit = s.lastExit || 0;
   if (!uptrend) return null;
   if (rsi > 65) return null;
-  // momentum confirmation: RSI must be turning up (prev RSI < current RSI)
   const rsiPrev = ctx.rsi(14, 2);
   if (rsiPrev == null || rsi <= rsiPrev) return null;
   if (ctx.i - lastExit < 6) return null;
-  if (price <= vwap * 1.02) {
-    s.hi = price;
-    s.tookTP = null;
-    s.entryBar = ctx.i;
-    // moderate vol-scaled sizing: trim when ATR/price > 2.5%, floor at 45%
-    let frac = 0.95;
-    if (price > 0) {
-      const vol = atr / price;
-      if (vol > 0.025) frac = Math.max(0.45, 0.95 - (vol - 0.025) * 15);
-    }
-    return { side: 'buy', qty: ctx.cash / ctx.price * frac };
+  // stricter: price must actually reach VWAP to cut churn on ETH
+  if (price > vwap) return null;
+  s.hi = price;
+  s.tookTP = null;
+  s.entryBar = ctx.i;
+  let frac = 0.95;
+  if (price > 0) {
+    const vol = atr / price;
+    if (vol > 0.025) frac = Math.max(0.45, 0.95 - (vol - 0.025) * 15);
   }
-  return null;
+  return { side: 'buy', qty: ctx.cash / ctx.price * frac };
 }
