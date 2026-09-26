@@ -11,7 +11,7 @@ Every figure comes from the last verifying backtest at publish time. These are p
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
-|  | [2772](strategies/2772/) | Onchain Demand Trend BTC 1D | -2.31% | +55.47% | +2.31% | 2 | 2026-09-26 |
+|  | [2772](strategies/2772/) | Onchain Demand Trend BTC 1D | +134.03% | +262.64% | +42.13% | 85 | 2026-09-26 |
 |  | [2771](strategies/2771/) | Onchain Demand Trend BTC 1D | -15.59% | +55.47% | +69.15% | 198 | 2026-09-26 |
 |  | [2770](strategies/2770/) | Onchain Sma30 Probe | +247.17% | +262.64% | +52.47% | 1 | 2026-09-26 |
 |  | [2769](strategies/2769/) | Onchain Addr Probe | +247.17% | +262.64% | +52.47% | 1 | 2026-09-26 |
