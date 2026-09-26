@@ -4,13 +4,14 @@ Every strategy whose backtest **finished and actually traded** is published here
 Nothing is filtered out by return — the ones that lost money are part of the record.
 Entries stay after a strategy is removed from our own workspace — this is a log, and deleting the record would leave only the survivors.
 
-**★ marks a strategy that out-returned buy & hold over the same window** — 348 of 1207 right now.
+**★ marks a strategy that out-returned buy & hold over the same window** — 348 of 1208 right now.
 `—` means the comparison **could not be made**: the engine does not compute a benchmark for multi-symbol, futures, or multi-leg runs. That is *unknown*, not *lost*, and it is 197 of them right now.
 
 Every figure comes from the last verifying backtest at publish time. These are past results over historical data. Nothing here is promised or assured about the future, and none of it is investment advice.
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
+|  | [2808](strategies/2808/) | Liq Data Probe | +47.46% | +1620.25% | +46.11% | 54 | 2026-09-26 |
 |  | [2806](strategies/2806/) | AI 전략 | +45.97% | +1620.25% | +45.91% | 60 | 2026-09-26 |
 | ★ | [2805](strategies/2805/) | AI 전략 | +14.49% | -24.71% | +23.65% | 48 | 2026-09-26 |
 |  | [2804](strategies/2804/) | ETH 4H Band-Bounce Champion Control | +48.59% | +2723.53% | +46.11% | 48 | 2026-09-26 |
