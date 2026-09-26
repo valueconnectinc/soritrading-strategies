@@ -3,16 +3,16 @@
   "name": "Band-Bounce Mean Reversion ETH 4H",
   "kind": "custom",
   "verified": {
-    "backtestId": 11546,
-    "return": 32,
-    "mdd": 17.45,
-    "trades": 46,
-    "vsBuyHold": "win",
-    "benchRet": -22.8,
+    "backtestId": 11549,
+    "return": -53.64,
+    "mdd": 57.56,
+    "trades": 256,
+    "vsBuyHold": "lose",
+    "benchRet": -22.93,
     "benchBasis": "price",
     "gapPct": 0,
-    "tFrom": 1718395200,
-    "tTo": 1790380800,
+    "tFrom": 1617609600,
+    "tTo": 1675195200,
     "approxNotes": [
       "봉 내 순서는 관례(양봉 O→L→H→C·음봉 O→H→L→C) — 실순서 미상 · 봉 중 거래량 null · MDD 는 봉 마감 기준"
     ],
@@ -20,8 +20,8 @@
       "ex": "binance",
       "sym": "ETHUSDT",
       "interval": "4h",
-      "bars": 5000,
-      "end": 1790395200
+      "bars": 4000,
+      "end": 1675209600
     }
   },
   "config": null,
