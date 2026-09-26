@@ -6,25 +6,33 @@
  * interval: 1d
  * cash: 10000
  *
- * Why this strategy: Contrarian sentiment mean-reversion with a trend filter.
- * Bitcoin crowds get irrationally fearful at bottoms and greedy at tops. The
- * Fear & Greed index (0-100) quantifies this. But buying deep fear blindly
- * catches falling knives in persistent bears, so we only fade fear when the
- * long-term trend is still up (price above 200-day SMA) — deep fear in an
- * uptrend is a dip-buying opportunity, not a knife-catch. Different family
- * from trend-following Donchian, giving portfolio diversity.
- * When it buys and sells: buys when index<20 AND price>200-day SMA; exits
- * when index turns greedy (>60) or a 3x-ATR stop hits.
- * When it does NOT work: in prolonged bear markets the 200-day filter keeps
- * it in cash (misses nothing but also no dips to buy); in a bull that breaks
- * down it can still catch a dip that keeps falling. Requires agent online.
+ * Why this strategy: Contrarian sentiment mean-reversion. Buying at extreme
+ * fear (index<20) directly catches falling knives — the index stays fearful
+ * while price keeps dropping. Instead we wait for a CONFIRMED fear bottom:
+ * the index must first be below 20 (deep fear) and then recover above 25 on
+ * the next bar, signalling sentiment has turned. This buys the turn, not the
+ * knife.
+ * When it buys and sells: buys when index recovers above 25 after being <20
+ * on the prior bar; exits when index turns greedy (>60) or a 3x-ATR stop.
+ * When it does NOT work: in prolonged bears the index may never recover above
+ * 25 cleanly, so it sits in cash; a recovery that then reverses still loses.
+ * Requires the agent online (reads ctx.data 'fg').
  */
 function onUpdate(ctx) {
   const fg = ctx.data('fg');
-  if (fg == null) return null; // data unavailable -> stay flat, no signal
+  if (fg == null) return null;
 
   const price = ctx.price;
   const pos = ctx.position;
+
+  // Track the previous bar's fg value in state. onUpdate runs per tick, so
+  // only roll the snapshot when the bar index changes.
+  const st = ctx.state;
+  if (st.lastBarI !== ctx.i) {
+    st.prevFg = st.curFg ?? null;
+    st.lastBarI = ctx.i;
+  }
+  st.curFg = fg;
 
   if (pos > 0) {
     if (fg > 60) return { side: 'sell', qty: pos };
@@ -33,13 +41,9 @@ function onUpdate(ctx) {
     return null;
   }
 
-  // Only fade fear when the long-term trend is intact (price above 200-day
-  // SMA). Without this, buying deep fear in a bear = catching a falling knife.
-  const sma200 = ctx.sma(200, 1);
-  if (sma200 == null) return null;
-  if (price < sma200) return null;
-
-  if (fg < 20) {
+  // Bottom-confirmation entry: prior bar was deeply fearful (<20) and current
+  // bar has recovered above 25. Wait for the turn, don't catch the knife.
+  if (st.prevFg != null && st.prevFg < 20 && fg > 25) {
     return { side: 'buy', qty: ctx.cash / ctx.price * 0.95 };
   }
   return null;
