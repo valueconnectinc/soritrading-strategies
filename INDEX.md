@@ -11,7 +11,7 @@ Every figure comes from the last verifying backtest at publish time. These are p
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
-|  | [2574](strategies/2574/) | Donchian Hashrate Regime BTC 1D | -17.27% | +55.47% | +61.86% | 4 | 2026-09-26 |
+|  | [2574](strategies/2574/) | Donchian Hashrate Regime BTC 1D | -10.95% | +177.69% | +52.57% | 14 | 2026-09-26 |
 |  | [2573](strategies/2573/) | Defensive Donchian BTC 1D | +14.54% | +55.47% | +51.77% | 6 | 2026-09-26 |
 |  | [2572](strategies/2572/) | Defensive Donchian ChandelierExit ETH 1D | -47.65% | +56.20% | +66.90% | 10 | 2026-09-26 |
 |  | [2571](strategies/2571/) | Defensive Donchian SOL 1D | +18.28% | +45.78% | +44.05% | 29 | 2026-09-26 |
