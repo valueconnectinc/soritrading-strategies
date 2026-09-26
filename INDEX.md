@@ -11,7 +11,7 @@ Every figure comes from the last verifying backtest at publish time. These are p
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
-|  | [2791](strategies/2791/) | BTC 1D EMA50/200 Trend + Re-entry | +55.49% | +262.64% | +18.42% | 29 | 2026-09-26 |
+|  | [2791](strategies/2791/) | BTC 1D EMA50/200 Trend + Re-entry | -3.97% | +25.35% | +16.62% | 7 | 2026-09-26 |
 |  | [2790](strategies/2790/) | On-Chain Demand Trend BTC 1D | -100.00% | +1258.25% | +100.00% | 5125 | 2026-09-26 |
 |  | [2789](strategies/2789/) | Regime-Switch Hybrid SOL 4H Vol-Targeted | -37.78% | +62.63% | +70.14% | 274 | 2026-09-26 |
 |  | [2779](strategies/2779/) | OBV Volume-Flow Trend BTC 1D | +137.82% | +262.64% | +23.11% | 53 | 2026-09-26 |

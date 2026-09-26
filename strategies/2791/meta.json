@@ -3,15 +3,15 @@
   "name": "BTC 1D EMA50/200 Trend + Re-entry",
   "kind": "custom",
   "verified": {
-    "backtestId": 12401,
-    "return": 55.49,
-    "mdd": 18.42,
-    "trades": 29,
+    "backtestId": 12404,
+    "return": -3.97,
+    "mdd": 16.62,
+    "trades": 7,
     "vsBuyHold": "lose",
-    "benchRet": 262.64,
+    "benchRet": 25.35,
     "benchBasis": "price",
     "gapPct": 0,
-    "tFrom": 1660780800,
+    "tFrom": 1729900800,
     "tTo": 1790294400,
     "approxNotes": [
       "봉 내 순서는 관례(양봉 O→L→H→C·음봉 O→H→L→C) — 실순서 미상 · 봉 중 거래량 null · MDD 는 봉 마감 기준",
@@ -21,7 +21,7 @@
       "ex": "binance",
       "sym": "BTCUSDT",
       "interval": "1d",
-      "bars": 1500,
+      "bars": 700,
       "end": 1790380800
     }
   },
