@@ -1,99 +1,65 @@
 /*
  * @coinsori-strategy v1
- * name: VWAP-Pullback SOL 4H MomentumEntry+MidVolSize+TimeStop
+ * name: Volume-Confirmed Momentum ETH 4H
  * ex: binance
- * syms: SOLUSDT
+ * syms: ETHUSDT
  * interval: 4h
  * cash: 10000
  *
- * Why this strategy: Mean reversion to the VWAP in an established uptrend —
- * sharp dips toward VWAP tend to revert up as buyers step in. This version
- * adds a MOMENTUM CONFIRMATION (only buy when RSI is turning up), middle
- * vol-scaling, partial take-profit at +3 ATR, and a soft 200-SMA regime filter.
- * PLUS a 24-bar TIME-STOP exit — a position held more than 24 bars (~4 days)
- * without reaching the +3 ATR partial target is exited in full, cutting the
- * "grinder" trades that never revert and just bleed.
- * When it buys and sells: buys when price pulls back to/below VWAP*1.02, 50-SMA
- * rising, 200-SMA not declining, RSI not overbought AND RSI turning up. Sells a
- * third at +3 ATR, then the rest on the 50-SMA turn-down, 10-ATR trail, or the
- * 24-bar time-stop.
- * When it does NOT work: fails in a true downtrend (pullbacks keep falling) and
- * in low-liquidity chop where VWAP gives no support.
+ * Why this strategy: In crypto, a breakout that arrives on much higher than average
+ * volume is real participation and tends to continue; a quiet breakout is often a
+ * fake-out. We bet that momentum with a volume confirmation is worth riding.
+ * When it buys and sells: It buys when price is above a long trend line, crosses up
+ * through a short trend line, AND volume is at least 1.8x its 20-bar average. It
+ * sells when price falls back below the short trend line or hits a 3-ATR trailing stop.
+ * When it does NOT work: In a choppy sideways market many volume spikes are fake-outs
+ * that reverse immediately, so it can whipsaw. It also sits out long flat periods with
+ * no volume conviction.
  */
 function onUpdate(ctx) {
-  const s = ctx.state;
-  const price = ctx.price;
-  const pos = ctx.position;
-  const rsi = ctx.rsi(14, 1);
-  const rsiPrev = ctx.rsi(14, 2);
-  const sma50 = ctx.sma(50, 1);
-  if (rsi == null || rsiPrev == null || sma50 == null) return null;
-
-  const n = 50;
-  if (ctx.i < n) return null;
-  let pv = 0, vsum = 0;
-  for (let k = 1; k <= n; k++) {
-    const tp = (ctx.high(k) + ctx.low(k) + ctx.closes[ctx.closes.length - 1 - k]) / 3;
-    const v = ctx.volumes[ctx.volumes.length - 1 - k];
-    if (tp == null || v == null) continue;
-    pv += tp * v;
-    vsum += v;
-  }
-  if (vsum === 0) return null;
-  const vwap = pv / vsum;
+  const emaFast = ctx.ema(20, 1);
+  const emaSlow = ctx.ema(100, 1);
+  const avgVol = ctx.avgVol(20);
   const atr = ctx.atr(14, 1);
+  const vol = ctx.vol;
 
-  if (pos > 0) {
-    const prevSma = ctx.sma(50, 5);
-    if (prevSma != null && sma50 < prevSma) {
-      s.lastExit = ctx.i;
-      return { side: 'sell', qty: pos };
-    }
-    if (atr != null) {
-      s.hi = s.hi == null ? price : Math.max(s.hi, price);
-      if (s.entry != null && !s.halfTaken) {
-        if (price >= s.entry + atr * 3) {
-          s.halfTaken = true;
-          return { side: 'sell', qty: pos / 3 };
-        }
-      }
-      // TIME-STOP: if held too long without reaching the +3 ATR target, bail.
-      // 24 bars ~ 4 days on 4h — enough for a real reversion, cuts grinders.
-      if (s.entry != null && !s.halfTaken && ctx.i - s.entryBar > 24) {
-        s.lastExit = ctx.i;
-        return { side: 'sell', qty: pos };
-      }
-      if (price <= s.hi - atr * 10) {
-        s.lastExit = ctx.i;
-        return { side: 'sell', qty: pos };
-      }
+  if (emaFast == null || emaSlow == null || avgVol == null || atr == null || vol == null) return null;
+  if (avgVol <= 0) return null;
+
+  // need previous bar's fast/prev-slow to detect the crossover on CLOSED bars
+  const emaFastPrev = ctx.ema(20, 2);
+  const emaSlowPrev = ctx.ema(100, 2);
+  if (emaFastPrev == null || emaSlowPrev == null) return null;
+
+  const price = ctx.price;
+  const state = ctx.state || {};
+
+  // ---- ENTRY: bullish cross of fast over slow, price above slow, volume confirms ----
+  if (ctx.position <= 0) {
+    const crossedUp = emaFastPrev <= emaSlowPrev && emaFast > emaSlow;
+    const trendOk = emaSlow > emaSlowPrev;                 // slow EMA itself rising = healthy uptrend
+    const volOk = vol >= 1.8 * avgVol;                     // volume must be ~2x normal to confirm conviction
+    if (crossedUp && trendOk && volOk) {
+      // size a bit less than full to leave room for fees; risk is managed by the trail
+      const qty = (ctx.cash / price) * 0.98;
+      return { side: 'buy', qty };
     }
     return null;
   }
 
-  const prevSma = ctx.sma(50, 5);
-  if (prevSma == null) return null;
-  const uptrend = sma50 > prevSma;
-  const sma200 = ctx.sma(200, 1);
-  const sma200prev = ctx.sma(200, 5);
-  if (sma200 == null || sma200prev == null) return null;
-  if (sma200 < sma200prev) return null;
-  const lastExit = s.lastExit || 0;
-  if (!uptrend) return null;
-  if (rsi > 65) return null;
-  if (rsi <= rsiPrev) return null;
-  if (ctx.i - lastExit < 6) return null;
-  if (price <= vwap * 1.02) {
-    s.hi = price;
-    s.halfTaken = false;
-    s.entry = price;
-    s.entryBar = ctx.i;
-    let frac = 0.95;
-    if (atr != null && price > 0) {
-      const vol = atr / price;
-      if (vol > 0.022) frac = Math.max(0.38, 0.95 - (vol - 0.022) * 18);
-    }
-    return { side: 'buy', qty: ctx.cash / ctx.price * frac };
+  // ---- EXIT: trend break or trailing stop ----
+  // trailing stop rides the trend; tighten to 3 ATR (a full 3x daily range is a real reversal)
+  if (state.highest == null) state.highest = price;
+  if (price > state.highest) state.highest = price;
+  const trailStop = state.highest - 3 * atr;
+  if (price < trailStop) {
+    state.highest = null;
+    return { side: 'sell', qty: ctx.position };
+  }
+  // trend-break exit: fast EMA crossing back below slow = momentum exhausted
+  if (emaFast < emaSlow) {
+    state.highest = null;
+    return { side: 'sell', qty: ctx.position };
   }
   return null;
 }
