@@ -11,7 +11,7 @@ Every figure comes from the last verifying backtest at publish time. These are p
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
-|  | [2652](strategies/2652/) | Regime-Adaptive ETH 4H | +35.04% | +68.96% | +30.93% | 9 | 2026-09-26 |
+|  | [2652](strategies/2652/) | Regime-Adaptive ETH 4H | +23.34% | +31.85% | +39.04% | 10 | 2026-09-26 |
 |  | [2651](strategies/2651/) | Band-Bounce Mean Reversion AVAX 4H | +106.63% | +209.08% | +69.55% | 19 | 2026-09-26 |
 | ★ | [2650](strategies/2650/) | AI 전략 | -3.28% | -62.48% | +18.12% | 26 | 2026-09-26 |
 |  | [2649](strategies/2649/) | AI 전략 | -72.83% | -14.41% | +81.98% | 33 | 2026-09-26 |
