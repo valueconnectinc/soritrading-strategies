@@ -1,26 +1,26 @@
 /*
  * @coinsori-strategy v1
- * name: Panic-Flush Recovery Candle BTC 4H
+ * name: Panic-Flush Double-Green Recovery BTC 4H
  * ex: binance
  * syms: BTCUSDT
  * interval: 4h
  * cash: 10000
  *
  * Why this strategy: Defensive panic-bottom family like the band-bounce
- * champion, but the entry trigger is a PRICE-ACTION confirmation instead of
- * the RSI<30 oscillator filter: price must first CLOSE at/below the lower
- * Bollinger band (a genuine panic flush), then the very next bar must CLOSE
- * green (buyers stepped in = recovery started). Bet: the green recovery bar
- * right after a lower-band flush marks the capitulation point with fewer
- * false entries than a raw oversold reading.
- * When it buys and sells: buys when the previous bar closed at/below the
- * lower Bollinger band AND the just-closed bar closed green AND price holds
- * above the 200-SMA; sells back at the middle band or RSI>50, or on a 6x-ATR
- * stop. 5-bar cooldown.
+ * champion, but the entry is a PURE price-action confirmation instead of the
+ * RSI<30 filter: price must first close at/below the lower Bollinger band
+ * (panic flush), then the NEXT TWO bars must both close green (a confirmed
+ * recovery, not a one-bar dead-cat bounce). Bet: two consecutive green closes
+ * after a lower-band flush mark a real capitulation, filtering the false
+ * one-bar bounces that a single green bar admits.
+ * When it buys and sells: buys when the bar two back closed at/below the
+ * lower Bollinger band AND the two most recent bars both closed green AND
+ * price holds above the 200-SMA; sells back at the middle band or RSI>50, or
+ * on a 6x-ATR stop. 5-bar cooldown.
  * When it does NOT work: in a violent crash below the 200-SMA it still buys
- * falling knives after a green bounce bar; it lags strong melt-ups (sits in
- * cash during parabolic bulls). A single green bar can be a dead-cat bounce
- * in a strong downtrend that keeps selling off.
+ * falling knives after a two-bar bounce; it lags strong melt-ups (sits in
+ * cash during parabolic bulls). Two green bars can still be a bear-market
+ * relief rally that reverses.
  */
 function onUpdate(ctx) {
   const price = ctx.price;
@@ -48,17 +48,19 @@ function onUpdate(ctx) {
   if (ctx.i - lastExit < 5) return null;
   if (price < sma200) return null;
 
-  // Price-action entry: previous bar closed at/below the lower band (panic
-  // flush) AND the just-closed bar closed green (recovery started).
-  const prevClose = ctx.closes[ctx.i - 2];
-  const curClose = ctx.closes[ctx.i - 1];
-  const prevPrevClose = ctx.closes[ctx.i - 3];
-  if (prevClose == null || curClose == null || prevPrevClose == null) return null;
+  // Closes: closes[i-1] = most recent, [i-2] = previous, [i-3] = panic bar
+  const c1 = ctx.closes[ctx.i - 1];
+  const c2 = ctx.closes[ctx.i - 2];
+  const c3 = ctx.closes[ctx.i - 3];
+  const c4 = ctx.closes[ctx.i - 4];
+  if (c1 == null || c2 == null || c3 == null || c4 == null) return null;
 
-  const panicFlush = prevClose <= bb.lower;
-  const recoveryGreen = curClose > prevClose;
+  // Panic flush: the bar two back closed at/below the lower band
+  const panicFlush = c3 <= bb.lower;
+  // Confirmed recovery: the two most recent bars both closed green
+  const doubleGreen = c2 > c3 && c1 > c2;
 
-  if (panicFlush && recoveryGreen) {
+  if (panicFlush && doubleGreen) {
     return { side: 'buy', qty: ctx.cash / ctx.price * 0.95 };
   }
   return null;

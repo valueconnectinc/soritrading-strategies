@@ -3,10 +3,10 @@
   "name": "Candle-Pattern Panic Reversal BTC 4H",
   "kind": "custom",
   "verified": {
-    "backtestId": 12162,
-    "return": -26.5,
-    "mdd": 33.1,
-    "trades": 62,
+    "backtestId": 12165,
+    "return": -13.17,
+    "mdd": 25.97,
+    "trades": 38,
     "vsBuyHold": "lose",
     "benchRet": 435.09,
     "benchBasis": "price",
@@ -25,6 +25,6 @@
     }
   },
   "config": null,
-  "updatedAt": "2026-09-26T20:08:29.117Z",
+  "updatedAt": "2026-09-26T20:09:23.287Z",
   "publishedBy": "scripts/publish-strategies.mjs"
 }
