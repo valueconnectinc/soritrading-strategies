@@ -31,12 +31,16 @@ function onUpdate(ctx) {
 
   const price = ctx.price;
   const pos = ctx.position;
+  const volRatio = atr / price;
 
   if (pos > 0) {
     if (price <= ctx.entryPx - atr * 3) return { side: 'sell', qty: pos };
-    // Wide 60-day exit only in a confirmed bull (price above 100-day EMA),
-    // else tight 30-day. Pure-price proxy for the fed gate.
-    const exitLow = price > ema100 ? ctx.low(60, 1) : ll30;
+    // Wide 60-day exit only in a confirmed bull with NORMAL volatility.
+    // In high-volatility regimes (ATR>4% of price) the wide stop lets
+    // drawdowns run, so we tighten to 30-day even in a bull. This cuts
+    // MDD without blocking bull entries.
+    const useWide = price > ema100 && volRatio < 0.04;
+    const exitLow = useWide ? ctx.low(60, 1) : ll30;
     if (exitLow != null && price < exitLow) return { side: 'sell', qty: pos };
     return null;
   }
@@ -44,13 +48,7 @@ function onUpdate(ctx) {
   const inSteepDowntrend = price < ema50 - atr * 3;
   if (inSteepDowntrend) return null;
 
-  // Skip entry only at a TRUE blowoff top (4x ATR above the 100-day EMA).
-  // 2.5x was too tight and blocked normal bull entries (price legitimately
-  // stays far above EMA100 in strong trends); 4x only triggers at extremes.
-  if (price > ema100 + atr * 4) return null;
-
   if (price > hh55) {
-    const volRatio = atr / price;
     const size = Math.min(0.99, Math.max(0.25, 0.03 / volRatio));
     return { side: 'buy', qty: ctx.cash / ctx.price * size };
   }
