@@ -4,13 +4,14 @@ Every strategy whose backtest **finished and actually traded** is published here
 Nothing is filtered out by return — the ones that lost money are part of the record.
 Entries stay after a strategy is removed from our own workspace — this is a log, and deleting the record would leave only the survivors.
 
-**★ marks a strategy that out-returned buy & hold over the same window** — 318 of 1078 right now.
+**★ marks a strategy that out-returned buy & hold over the same window** — 318 of 1079 right now.
 `—` means the comparison **could not be made**: the engine does not compute a benchmark for multi-symbol, futures, or multi-leg runs. That is *unknown*, not *lost*, and it is 197 of them right now.
 
 Every figure comes from the last verifying backtest at publish time. These are past results over historical data. Nothing here is promised or assured about the future, and none of it is investment advice.
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
+|  | [2657](strategies/2657/) | Panic-Bounce LINK 4H | +160.39% | +477.73% | +24.03% | 80 | 2026-09-26 |
 |  | [2656](strategies/2656/) | VWAP-Pullback BTC 4H | -40.92% | +26.93% | +68.76% | 192 | 2026-09-26 |
 |  | [2655](strategies/2655/) | FearGreed Panic Mean-Reversion BTC 1D | +52.13% | +796.20% | +44.55% | 69 | 2026-09-26 |
 |  | [2654](strategies/2654/) | OnChain-Confirmed Band-Bounce BTC 4H | +7.70% | +26.93% | +13.00% | 44 | 2026-09-26 |
