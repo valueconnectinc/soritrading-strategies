@@ -11,7 +11,7 @@ Every figure comes from the last verifying backtest at publish time. These are p
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
-|  | [2637](strategies/2637/) | Regime-Switching Trend + Mean-Reversion BTC 4H | -28.45% | +61.01% | +60.72% | 146 | 2026-09-26 |
+|  | [2637](strategies/2637/) | Regime-Switching Trend + Mean-Reversion BTC 4H | -44.00% | +61.01% | +55.83% | 178 | 2026-09-26 |
 | ★ | [2636](strategies/2636/) | Multi-Asset Mean-Reversion Basket 4H | -21.82% | -74.59% | +24.50% | 41 | 2026-09-26 |
 |  | [2635](strategies/2635/) | Band-Bounce Mean Reversion ATOM 4H | +205.91% | +943.57% | +28.34% | 91 | 2026-09-26 |
 |  | [2634](strategies/2634/) | VWAP-Pullback Mean Reversion ETH 4H | +51.32% | +1613.96% | +52.12% | 358 | 2026-09-26 |
