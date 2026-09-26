@@ -4,13 +4,14 @@ Every strategy whose backtest **finished and actually traded** is published here
 Nothing is filtered out by return — the ones that lost money are part of the record.
 Entries stay after a strategy is removed from our own workspace — this is a log, and deleting the record would leave only the survivors.
 
-**★ marks a strategy that out-returned buy & hold over the same window** — 312 of 1039 right now.
+**★ marks a strategy that out-returned buy & hold over the same window** — 313 of 1040 right now.
 `—` means the comparison **could not be made**: the engine does not compute a benchmark for multi-symbol, futures, or multi-leg runs. That is *unknown*, not *lost*, and it is 197 of them right now.
 
 Every figure comes from the last verifying backtest at publish time. These are past results over historical data. Nothing here is promised or assured about the future, and none of it is investment advice.
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
+| ★ | [2616](strategies/2616/) | Squeeze Breakout SOL 1D (200-SMA Gate) | +21.48% | -8.49% | +13.16% | 3 | 2026-09-26 |
 | — | [2615](strategies/2615/) | BTC Trend-Pullback Dip Buyer 1D | -15.18% | — | +18.87% | 2 | 2026-09-26 |
 | — | [2614](strategies/2614/) | Squeeze Breakout BTC+ETH 1D (Hashrate Gate) | +108.14% | — | +59.90% | 28 | 2026-09-26 |
 | — | [2613](strategies/2613/) | Squeeze Breakout BTC+ETH 1D (Tight Squeeze) | +217.88% | — | +28.51% | 46 | 2026-09-26 |
