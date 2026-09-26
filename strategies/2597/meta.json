@@ -3,28 +3,29 @@
   "name": "Bollinger Squeeze Breakout BTC 1D",
   "kind": "custom",
   "verified": {
-    "backtestId": 11265,
-    "return": 20.13,
-    "mdd": 49.17,
-    "trades": 36,
+    "backtestId": 11267,
+    "return": 101.44,
+    "mdd": 34.73,
+    "trades": 23,
     "vsBuyHold": "lose",
-    "benchRet": 245.42,
+    "benchRet": 262.64,
     "benchBasis": "price",
     "gapPct": 0,
-    "tFrom": 1514764800,
-    "tTo": 1640908800,
+    "tFrom": 1660780800,
+    "tTo": 1790294400,
     "approxNotes": [
-      "봉 내 순서는 관례(양봉 O→L→H→C·음봉 O→H→L→C) — 실순서 미상 · 봉 중 거래량 null · MDD 는 봉 마감 기준"
+      "봉 내 순서는 관례(양봉 O→L→H→C·음봉 O→H→L→C) — 실순서 미상 · 봉 중 거래량 null · MDD 는 봉 마감 기준",
+      "기간 종료 시 미청산 포지션 1종목 (총자산의 99.36%) — 이 수익률은 **평가액**을 포함합니다. 퇴출 수수료·거래세를 안 냈고, 마지막 봉 가격에 실제로 팔 수 있다는 보장도 없습니다(얇은 호가·상장폐지). exec.endLiquidate 로 마지막 봉 청산을 켤 수 있습니다"
     ],
     "spec": {
       "ex": "binance",
       "sym": "BTCUSDT",
       "interval": "1d",
-      "bars": 1461,
-      "end": 1640995200
+      "bars": 1500,
+      "end": 1790380800
     }
   },
   "config": null,
-  "updatedAt": "2026-09-26T04:43:00.710Z",
+  "updatedAt": "2026-09-26T04:49:15.855Z",
   "publishedBy": "scripts/publish-strategies.mjs"
 }

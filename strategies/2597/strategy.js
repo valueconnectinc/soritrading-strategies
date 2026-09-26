@@ -1,61 +1,52 @@
 /*
  * @coinsori-strategy v1
- * name: Bollinger Squeeze Breakout BTC 1D
+ * name: Defensive Donchian Price-Bull Wide Exit BTC 1D
  * ex: binance
  * syms: BTCUSDT
  * interval: 1d
  * cash: 10000
  *
- * Why this strategy: Volatility-expansion family, distinct from both the
- * Donchian trend-follower and the Bollinger mean-reversion. Periods of
- * compressed volatility (narrow Bollinger bands) are often followed by a
- * directional breakout. Buying the squeeze-breakout in the direction of the
- * longer-term trend captures the expansion move.
- * When it buys and sells: buys when the Bollinger band width is in its lowest
- * quartile (squeeze) AND price closes above the 20-period upper band (upward
- * breakout) while price is above the 200-day SMA (bull regime); exits on a
- * 3x-ATR stop or when price falls back below the middle band (expansion done).
- * When it does NOT work: in a sideways chop the squeeze-breakout whipsaws
- * (false breakouts); in a bear market below the 200-SMA it never buys and
- * sits in cash; breakouts that immediately reverse lose on the stop.
+ * Why this strategy: The data-independent defensive Donchian family is the
+ * reliable offline fallback, but it exits too early on normal pullbacks in
+ * strong bull runs (the fed gate fixes this but needs external data). Here I
+ * replace the fed gate with a PURE-PRICE bull proxy: when price holds above
+ * its 100-day EMA, the market is in a confirmed uptrend, so we hold through
+ * normal pullbacks with a wider 60-day exit; below it we use the tight
+ * 30-day exit. This captures more bull upside with NO external data, so it
+ * runs identically whether or not the user's agent is online.
+ * When it buys and sells: buys a 55-day-high breakout (unless in a steep
+ * downtrend), sized by inverse volatility; exits on a 3x-ATR stop, or a
+ * 60-day low when price>EMA100, else a tight 30-day low.
+ * When it does NOT work: high drawdown in sharp reversals (MDD 40-60% is
+ * inherent); the EMA100 proxy is cruder than the fed gate and may keep the
+ * wide stop active into an early bear; underperforms in choppy sideways.
  */
 function onUpdate(ctx) {
-  const bb = ctx.bb(20, 2, 1);
-  const sma200 = ctx.sma(200, 1);
+  const hh55 = ctx.high(55, 1);
+  const ll30 = ctx.low(30, 1);
   const atr = ctx.atr(14, 1);
-  if (bb == null || sma200 == null || atr == null) return null;
+  const ema50 = ctx.ema(50, 1);
+  const ema100 = ctx.ema(100, 1);
+  if (hh55 == null || ll30 == null || atr == null || ema50 == null || ema100 == null) return null;
 
   const price = ctx.price;
   const pos = ctx.position;
-  const bandWidth = (bb.upper - bb.lower) / bb.mid;
 
   if (pos > 0) {
-    // Exit on a 3x-ATR stop, or when price falls back below the middle band
-    // (the expansion has completed / reversed).
     if (price <= ctx.entryPx - atr * 3) return { side: 'sell', qty: pos };
-    if (price < bb.mid) return { side: 'sell', qty: pos };
+    // Wide 60-day exit only in a confirmed bull (price above 100-day EMA),
+    // else tight 30-day. Pure-price proxy for the fed gate.
+    const exitLow = price > ema100 ? ctx.low(60, 1) : ll30;
+    if (exitLow != null && price < exitLow) return { side: 'sell', qty: pos };
     return null;
   }
 
-  // Only take squeeze-breakouts in a confirmed bull (above 200-SMA).
-  if (price < sma200) return null;
+  const inSteepDowntrend = price < ema50 - atr * 3;
+  if (inSteepDowntrend) return null;
 
-  // Squeeze: band width below its recent average (compressed volatility).
-  // Use a 50-bar rolling mean of band width as the "normal" reference.
-  let widthSum = 0, widthCount = 0;
-  for (let ago = 1; ago <= 50; ago++) {
-    const b = ctx.bb(20, 2, ago);
-    if (b == null) continue;
-    widthSum += (b.upper - b.lower) / b.mid;
-    widthCount++;
-  }
-  if (widthCount < 30) return null;
-  const avgWidth = widthSum / widthCount;
-  const isSqueeze = bandWidth < avgWidth * 0.8;
-
-  // Upward breakout: close above the upper band while in a squeeze, bull regime.
-  if (isSqueeze && price > bb.upper) {
-    const size = Math.min(0.95, 0.03 / (atr / price));
+  if (price > hh55) {
+    const volRatio = atr / price;
+    const size = Math.min(0.99, Math.max(0.25, 0.03 / volRatio));
     return { side: 'buy', qty: ctx.cash / ctx.price * size };
   }
   return null;
