@@ -11,7 +11,7 @@ Every figure comes from the last verifying backtest at publish time. These are p
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
-| ★ | [2695](strategies/2695/) | Band-Bounce Baseline DOT 4H | -10.31% | -79.29% | +29.14% | 34 | 2026-09-26 |
+| ★ | [2695](strategies/2695/) | Band-Bounce Baseline DOT 4H | +77.39% | +63.93% | +9.18% | 44 | 2026-09-26 |
 | ★ | [2694](strategies/2694/) | Band-Bounce Mean Reversion AAVE 4H | +2.11% | -79.29% | +2.17% | 8 | 2026-09-26 |
 |  | [2693](strategies/2693/) | Band-Bounce Mean Reversion HBAR 4H | +75.94% | +679.29% | +30.02% | 49 | 2026-09-26 |
 |  | [2692](strategies/2692/) | Band-Bounce Mean Reversion XTZ 4H | +135.91% | +173.13% | +23.05% | 63 | 2026-09-26 |
