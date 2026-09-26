@@ -3,14 +3,14 @@
   "name": "Relative-Strength Rotation BTC/ETH/SOL 1D",
   "kind": "custom",
   "verified": {
-    "backtestId": 11356,
-    "return": -22.75,
-    "mdd": 50.99,
-    "trades": 28,
+    "backtestId": 11358,
+    "return": 164.91,
+    "mdd": 54.52,
+    "trades": 32,
     "vsBuyHold": "unmeasured",
     "gapPct": 0,
-    "tFrom": 1513900800,
-    "tTo": 1582934400,
+    "tFrom": 1502928000,
+    "tTo": 1617494400,
     "approxNotes": [
       "거래량은 봉 마감에만 확정 — 봉 중 평가에서 ctx.vol/volumes 가 null 이라 거래량 조건이 걸러졌을 수 있음(봉 중에도 쓰려면 ctx.volPrev·ctx.avgVol)",
       "[생존 편향] 이 유니버스는 **지금 거래되는 종목**만입니다. 구간 중(또는 그 전에) 상장폐지된 종목은 **처음부터 들어 있지 않습니다** — 망한 종목이 빠져 있어 수익률이 **실제보다 좋게** 나옵니다. 스캐너·랭킹 전략일수록 그 차이가 큽니다."
@@ -19,12 +19,12 @@
       "ex": "binance",
       "sym": "BTCUSDT",
       "interval": "1d",
-      "bars": 800,
-      "end": 1583020800,
+      "bars": 2000,
+      "end": 1617580800,
       "syms": 2
     }
   },
   "config": null,
-  "updatedAt": "2026-09-26T05:55:47.963Z",
+  "updatedAt": "2026-09-26T05:58:45.576Z",
   "publishedBy": "scripts/publish-strategies.mjs"
 }
