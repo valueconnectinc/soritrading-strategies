@@ -1,18 +1,20 @@
 /*
  * @coinsori-strategy v1
- * name: Band-Bounce Baseline DOT 4H
+ * name: Band-Bounce Mean Reversion DOT 4H
  * ex: binance
  * syms: DOTUSDT
  * interval: 4h
  * cash: 10000
  *
- * Why this strategy: The un-gated champion band-bounce recipe on DOT 4h, used
- * as a CONTROL to isolate whether the Fear-Greed gate adds value. No external
- * data. Same entry/exit as the champion.
- * When it buys and sells: buys below lower Bollinger(20,2) with RSI<30 above the
- * 200-SMA; exits at the middle band / RSI>50 or a 6-ATR stop; waits 5 bars.
- * When it does NOT work: lags strong melt-ups; below the 200-SMA never buys;
- * a panic that keeps falling still loses.
+ * Why this strategy: The validated champion band-bounce mean-reversion recipe
+ * applied to DOT 4h. The Fear-Greed gate was tested and REJECTED (it over-filters
+ * and destroys the edge), so this is the clean un-gated champion: a defensive
+ * mean-reversion that buys rare panic bottoms above the 200-SMA.
+ * When it buys and sells: buys when price closes below the lower Bollinger(20,2)
+ * with RSI<30 while price is above the 200-SMA; exits at the middle band / RSI>50
+ * or a 6-ATR stop; then waits 5 bars before re-entering.
+ * When it does NOT work: lags strong melt-ups; below the 200-SMA it never buys;
+ * a panic that keeps falling still loses. Defensive, not a trend rider.
  */
 function onUpdate(ctx) {
   const bb = ctx.bb(20, 2, 1);
