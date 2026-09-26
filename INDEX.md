@@ -11,7 +11,7 @@ Every figure comes from the last verifying backtest at publish time. These are p
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
-|  | [2812](strategies/2812/) | BTC 4H Band-Bounce Champion (Control) | +12.64% | +26.69% | +13.39% | 48 | 2026-09-26 |
+|  | [2812](strategies/2812/) | BTC 4H Band-Bounce Champion (Control) | +13.70% | +34.16% | +26.21% | 38 | 2026-09-26 |
 |  | [2811](strategies/2811/) | BTC 4H Band-Bounce + On-Chain Demand Gate | +4.05% | +26.69% | +13.39% | 30 | 2026-09-26 |
 |  | [2808](strategies/2808/) | Liq Data Probe | +47.46% | +1620.25% | +46.11% | 54 | 2026-09-26 |
 |  | [2806](strategies/2806/) | AI 전략 | +45.97% | +1620.25% | +45.91% | 60 | 2026-09-26 |
