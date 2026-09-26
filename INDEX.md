@@ -11,7 +11,7 @@ Every figure comes from the last verifying backtest at publish time. These are p
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
-|  | [2629](strategies/2629/) | Band-Bounce Mean Reversion DOT 4H | +268.71% | +462.58% | +43.80% | 109 | 2026-09-26 |
+|  | [2629](strategies/2629/) | Band-Bounce Mean Reversion DOT 4H | +236.20% | +462.58% | +12.33% | 38 | 2026-09-26 |
 |  | [2628](strategies/2628/) | Trend-Gated Vol-Target ETH 1D | -17.86% | +56.20% | +75.06% | 368 | 2026-09-26 |
 |  | [2627](strategies/2627/) | Squeeze Breakout XRP 4H (Risk-Sized + MACD Gate) | +148.12% | +228.36% | +38.49% | 71 | 2026-09-26 |
 |  | [2626](strategies/2626/) | Squeeze Breakout BNB 4H (Risk-Sized + MACD Gate) | +210.73% | +2229.83% | +21.27% | 63 | 2026-09-26 |
