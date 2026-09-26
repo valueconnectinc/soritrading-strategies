@@ -3,29 +3,28 @@
   "name": "Donchian Pullback Uptrend ETH 4H",
   "kind": "custom",
   "verified": {
-    "backtestId": 12177,
-    "return": -15.01,
-    "mdd": 28.13,
-    "trades": 263,
-    "vsBuyHold": "lose",
-    "benchRet": 26.69,
+    "backtestId": 12180,
+    "return": 40.8,
+    "mdd": 22.89,
+    "trades": 186,
+    "vsBuyHold": "win",
+    "benchRet": -24.71,
     "benchBasis": "price",
     "gapPct": 0,
     "tFrom": 1718452800,
     "tTo": 1790438400,
     "approxNotes": [
-      "봉 내 순서는 관례(양봉 O→L→H→C·음봉 O→H→L→C) — 실순서 미상 · 봉 중 거래량 null · MDD 는 봉 마감 기준",
-      "기간 종료 시 미청산 포지션 1종목 (총자산의 95.21%) — 이 수익률은 **평가액**을 포함합니다. 퇴출 수수료·거래세를 안 냈고, 마지막 봉 가격에 실제로 팔 수 있다는 보장도 없습니다(얇은 호가·상장폐지). exec.endLiquidate 로 마지막 봉 청산을 켤 수 있습니다"
+      "봉 내 순서는 관례(양봉 O→L→H→C·음봉 O→H→L→C) — 실순서 미상 · 봉 중 거래량 null · MDD 는 봉 마감 기준"
     ],
     "spec": {
       "ex": "binance",
-      "sym": "BTCUSDT",
+      "sym": "ETHUSDT",
       "interval": "4h",
       "bars": 5000,
       "end": 1790452800
     }
   },
   "config": null,
-  "updatedAt": "2026-09-26T20:11:26.129Z",
+  "updatedAt": "2026-09-26T20:13:44.366Z",
   "publishedBy": "scripts/publish-strategies.mjs"
 }
