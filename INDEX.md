@@ -11,7 +11,7 @@ Every figure comes from the last verifying backtest at publish time. These are p
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
-| ★ | [2760](strategies/2760/) | Donchian Pullback Trend-Strength 0.10 ETH 4H | +50.75% | -24.71% | +17.12% | 154 | 2026-09-26 |
+| ★ | [2760](strategies/2760/) | Donchian Pullback Trend-Strength 0.10 ETH 4H | +20.57% | -24.71% | +11.62% | 80 | 2026-09-26 |
 |  | [2759](strategies/2759/) | Donchian Pullback Trend-Strength ETH 4H | +231.98% | +435.09% | +16.48% | 180 | 2026-09-26 |
 |  | [2758](strategies/2758/) | Regime-Switch Blend ETH 4H | -16.23% | +1620.25% | +69.77% | 225 | 2026-09-26 |
 | ★ | [2754](strategies/2754/) | Donchian Pullback Uptrend ETH 4H | +40.80% | -24.71% | +22.89% | 186 | 2026-09-26 |
