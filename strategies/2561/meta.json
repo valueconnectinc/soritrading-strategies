@@ -1,0 +1,29 @@
+{
+  "id": 2561,
+  "name": "Pure Bollinger Bear-Leg No FearGreed BTC 4H",
+  "kind": "custom",
+  "verified": {
+    "backtestId": 10994,
+    "return": 179.71,
+    "mdd": 21.12,
+    "trades": 290,
+    "vsBuyHold": "win",
+    "benchRet": 28.36,
+    "benchBasis": "price",
+    "gapPct": 0,
+    "tFrom": 1718380800,
+    "tTo": 1790366400,
+    "approxNotes": [
+      "봉 내 순서는 관례(양봉 O→L→H→C·음봉 O→H→L→C) — 실순서 미상 · 봉 중 거래량 null · MDD 는 봉 마감 기준"
+    ],
+    "spec": {
+      "ex": "binance",
+      "sym": "BTCUSDT",
+      "interval": "4h",
+      "bars": 5000
+    }
+  },
+  "config": null,
+  "updatedAt": "2026-09-26T01:11:19.079Z",
+  "publishedBy": "scripts/publish-strategies.mjs"
+}
