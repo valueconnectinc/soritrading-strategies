@@ -9,16 +9,16 @@
  * Why this strategy: Crypto spends long stretches trending (parabolic bull runs,
  * sustained bear slides). Instead of trying to catch reversals, this rides the
  * trend: it buys only after price has broken to a new multi-week high AND the
- * long-term trend is up, and sells only after price breaks to a new multi-week
- * low. This is classic turtle-style trend following — the opposite family from
+ * long-term trend is up, and sells when the trend breaks or gives back too much
+ * of its gains. Classic turtle-style trend following — the opposite family from
  * the mean-reversion strategies.
  * When it buys and sells: buys when the close exceeds the 55-day high while
- * price is above the 200-day average (long-term uptrend intact); sells when the
- * close falls below the 20-day low. Position is risk-sized to 3% of equity.
+ * price is above the 200-day average; sells when the close falls below the
+ * 20-day low OR when price drops 3-ATR below the highest point since entry
+ * (chandelier trailing stop, locks in profits). Position risk-sized to 3%.
  * When it does NOT work: in a sideways / choppy market with no sustained trend
  * it triggers false breakouts and gives back money. It also lags sharp
- * reversals because it needs a confirmed 20-day low before selling, giving back
- * a chunk of any peak-to-trough move.
+ * reversals because it needs a confirmed pullback before selling.
  */
 function onUpdate(ctx) {
   const px = ctx.price;
@@ -33,14 +33,20 @@ function onUpdate(ctx) {
   const atr = ctx.atr(14, 1);
 
   if (pos > 0) {
-    // exit: close below the 20-day channel low = trend broke down.
+    // track the highest close since entry to trail the stop
+    const peak = Math.max(ctx.state.peak || px, px);
+    ctx.state.peak = peak;
+
+    // chandelier exit: price fell 3-ATR below the running peak — lock in gains.
+    if (atr != null && px < peak - atr * 3) return { side: 'sell', qty: pos };
+    // channel exit: close below the 20-day low = trend broke down.
     if (px < lo20) return { side: 'sell', qty: pos };
     return null;
   }
 
   // entry: 55-day high breakout AND price above the 200-day average.
-  // The 200-SMA gate blocks buying breakouts in a confirmed downtrend.
   if (px > hi55 && px > sma200) {
+    ctx.state.peak = px; // start trailing from entry
     if (atr == null) return { side: 'buy', qty: ctx.cash / px * 0.99 };
     // risk 3% of equity per trade on a 2-ATR stop.
     const riskPerCoin = atr * 2;

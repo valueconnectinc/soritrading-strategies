@@ -3,10 +3,10 @@
   "name": "Donchian Trend-Following BTC 1D",
   "kind": "custom",
   "verified": {
-    "backtestId": 11561,
-    "return": 24.55,
-    "mdd": 20.72,
-    "trades": 8,
+    "backtestId": 11564,
+    "return": 2.37,
+    "mdd": 17.6,
+    "trades": 12,
     "vsBuyHold": "lose",
     "benchRet": 154.2,
     "benchBasis": "price",
@@ -25,6 +25,6 @@
     }
   },
   "config": null,
-  "updatedAt": "2026-09-26T08:39:36.330Z",
+  "updatedAt": "2026-09-26T08:43:10.730Z",
   "publishedBy": "scripts/publish-strategies.mjs"
 }
