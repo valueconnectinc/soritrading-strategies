@@ -4,13 +4,14 @@ Every strategy whose backtest **finished and actually traded** is published here
 Nothing is filtered out by return — the ones that lost money are part of the record.
 Entries stay after a strategy is removed from our own workspace — this is a log, and deleting the record would leave only the survivors.
 
-**★ marks a strategy that out-returned buy & hold over the same window** — 350 of 1222 right now.
+**★ marks a strategy that out-returned buy & hold over the same window** — 350 of 1223 right now.
 `—` means the comparison **could not be made**: the engine does not compute a benchmark for multi-symbol, futures, or multi-leg runs. That is *unknown*, not *lost*, and it is 197 of them right now.
 
 Every figure comes from the last verifying backtest at publish time. These are past results over historical data. Nothing here is promised or assured about the future, and none of it is investment advice.
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
+|  | [2825](strategies/2825/) | OBV Relaxed Gate + Fear-Greed De-risk 1D | +585.97% | +1129.04% | +48.02% | 17 | 2026-09-26 |
 | ★ | [2824](strategies/2824/) | OBV Relaxed Gate + ATR Trail 1D | +46.89% | +45.78% | +38.62% | 63 | 2026-09-26 |
 |  | [2823](strategies/2823/) | OBV Relaxed Gate + Short Rising Filter 1D | +310.15% | +386.92% | +44.50% | 42 | 2026-09-26 |
 |  | [2822](strategies/2822/) | OBV Relaxed Gate + Rising Trend Filter 1D | +341.83% | +1147.75% | +50.50% | 26 | 2026-09-26 |
