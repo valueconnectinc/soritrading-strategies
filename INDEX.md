@@ -4,13 +4,14 @@ Every strategy whose backtest **finished and actually traded** is published here
 Nothing is filtered out by return — the ones that lost money are part of the record.
 Entries stay after a strategy is removed from our own workspace — this is a log, and deleting the record would leave only the survivors.
 
-**★ marks a strategy that out-returned buy & hold over the same window** — 342 of 1168 right now.
+**★ marks a strategy that out-returned buy & hold over the same window** — 343 of 1169 right now.
 `—` means the comparison **could not be made**: the engine does not compute a benchmark for multi-symbol, futures, or multi-leg runs. That is *unknown*, not *lost*, and it is 197 of them right now.
 
 Every figure comes from the last verifying backtest at publish time. These are past results over historical data. Nothing here is promised or assured about the future, and none of it is investment advice.
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
+| ★ | [2765](strategies/2765/) | Donchian Pullback RSIFloor XRP 4H | -2.71% | -55.99% | +51.91% | 94 | 2026-09-26 |
 |  | [2764](strategies/2764/) | Bollinger Squeeze Breakout ETH 4H | -36.97% | +1620.25% | +63.87% | 102 | 2026-09-26 |
 |  | [2763](strategies/2763/) | VWAP-Pullback Wide-Stop Trend SOL 4H | -33.99% | -16.56% | +55.26% | 288 | 2026-09-26 |
 | ★ | [2762](strategies/2762/) | AI 전략 | +46.00% | -24.71% | +11.35% | 132 | 2026-09-26 |
