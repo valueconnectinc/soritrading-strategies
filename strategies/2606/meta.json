@@ -3,16 +3,16 @@
   "name": "AI 전략",
   "kind": "custom",
   "verified": {
-    "backtestId": 11363,
-    "return": 92.72,
-    "mdd": 56.24,
-    "trades": 66,
+    "backtestId": 11365,
+    "return": 74.1,
+    "mdd": 39.95,
+    "trades": 50,
     "vsBuyHold": "unmeasured",
     "gapPct": 0,
-    "tFrom": 1617580800,
+    "tFrom": 1640908800,
     "tTo": 1790294400,
     "approxNotes": [
-      "기간 종료 시 미청산 포지션 2종목 (총자산의 99.27%) — 이 수익률은 **평가액**을 포함합니다. 퇴출 수수료·거래세를 안 냈고, 마지막 봉 가격에 실제로 팔 수 있다는 보장도 없습니다(얇은 호가·상장폐지). exec.endLiquidate 로 마지막 봉 청산을 켤 수 있습니다",
+      "기간 종료 시 미청산 포지션 2종목 (총자산의 100%) — 이 수익률은 **평가액**을 포함합니다. 퇴출 수수료·거래세를 안 냈고, 마지막 봉 가격에 실제로 팔 수 있다는 보장도 없습니다(얇은 호가·상장폐지). exec.endLiquidate 로 마지막 봉 청산을 켤 수 있습니다",
       "거래량은 봉 마감에만 확정 — 봉 중 평가에서 ctx.vol/volumes 가 null 이라 거래량 조건이 걸러졌을 수 있음(봉 중에도 쓰려면 ctx.volPrev·ctx.avgVol)",
       "[생존 편향] 이 유니버스는 **지금 거래되는 종목**만입니다. 구간 중(또는 그 전에) 상장폐지된 종목은 **처음부터 들어 있지 않습니다** — 망한 종목이 빠져 있어 수익률이 **실제보다 좋게** 나옵니다. 스캐너·랭킹 전략일수록 그 차이가 큽니다."
     ],
@@ -20,12 +20,12 @@
       "ex": "binance",
       "sym": "BTCUSDT",
       "interval": "1d",
-      "bars": 2000,
+      "bars": 1730,
       "end": 1790380800,
       "syms": 2
     }
   },
   "config": null,
-  "updatedAt": "2026-09-26T06:01:45.593Z",
+  "updatedAt": "2026-09-26T06:03:27.024Z",
   "publishedBy": "scripts/publish-strategies.mjs"
 }
