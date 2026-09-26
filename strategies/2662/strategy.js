@@ -8,15 +8,15 @@
  *
  * Why this strategy: Mean reversion to the VWAP (volume-weighted average
  * price) — in an established uptrend, sharp dips back toward VWAP tend to
- * revert up as buyers step in. The prior VWAP-pullback version returned
- * strongly on SOL but with 63-88% drawdown; this version adds a tight
- * trailing stop and an overextension exit to control risk.
+ * revert up as buyers step in. The prior version returned strongly on SOL
+ * (W1 +1357%) but with 63-88% drawdown; a too-tight exit killed the edge,
+ * so this version lets winners run on a wide trailing stop only.
  * When it buys and sells: buys when price pulls back to/below VWAP while the
- * 50-SMA is rising and RSI is not overbought. Sells when price recovers above
- * VWAP, when RSI exceeds 70 (overextension), or on a 4-ATR trailing stop.
+ * 50-SMA is rising and RSI is not overbought. Sells only on a wide 10-ATR
+ * trailing stop (lets melt-ups run) or when the 50-SMA turns down.
  * When it does NOT work: fails in a true downtrend (pullbacks keep falling)
- * and in low-liquidity chop where VWAP gives no support. The tight stop cuts
- * winners short in fast melt-ups.
+ * and in low-liquidity chop where VWAP gives no support. The wide stop means
+ * large giveback on reversals.
  */
 function onUpdate(ctx) {
   const s = ctx.state;
@@ -26,8 +26,6 @@ function onUpdate(ctx) {
   const sma50 = ctx.sma(50, 1);
   if (rsi == null || sma50 == null) return null;
 
-  // VWAP proxy: cumulative typical-price * volume over a 50-bar window.
-  // Recompute the rolling VWAP on each bar.
   const n = 50;
   if (ctx.i < n) return null;
   let pv = 0, vsum = 0;
@@ -42,21 +40,18 @@ function onUpdate(ctx) {
   const vwap = pv / vsum;
 
   if (pos > 0) {
-    // Overextension exit: lock gains when RSI gets hot.
-    if (rsi > 70) {
+    // Trend break: exit if the 50-SMA turns down.
+    const prevSma = ctx.sma(50, 5);
+    if (prevSma != null && sma50 < prevSma) {
       s.lastExit = ctx.i;
       return { side: 'sell', qty: pos };
     }
-    // Reversion target: back above VWAP.
-    if (price > vwap) {
-      s.lastExit = ctx.i;
-      return { side: 'sell', qty: pos };
-    }
-    // Tight trailing stop: 4-ATR from the highest price since entry.
+    // Wide trailing stop: 10-ATR from the highest price since entry. Lets
+    // melt-ups run while capping the worst pullback.
     const atr = ctx.atr(14, 1);
     if (atr != null) {
       s.hi = s.hi == null ? price : Math.max(s.hi, price);
-      if (price <= s.hi - atr * 4) {
+      if (price <= s.hi - atr * 10) {
         s.lastExit = ctx.i;
         return { side: 'sell', qty: pos };
       }
