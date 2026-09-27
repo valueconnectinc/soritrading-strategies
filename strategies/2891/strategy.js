@@ -1,23 +1,17 @@
 /*
  * @coinsori-strategy v1
- * name: FearGreed-Timed Keltner MR BTC 1D
+ * name: FearGreed Diagnostic BTC 1D
  * ex: binance
  * syms: BTCUSDT
  * interval: 1d
  * cash: 10000
  *
- * Why this strategy: The ledger found pure fear-greed contrarian fails, but
- * sentiment can work as an ENTRY-TIMING tool. This adds a fear-greed filter to
- * the validated Keltner mean-reversion champion: only buy a flush when sentiment
- * is not euphoric (fear_greed < 75), so we avoid catching flushes during
- * blow-off-top greed where the snap-back is weaker. Uses the user's real
- * fear_greed data as a timing gate on top of the defensive champion.
- * When it buys and sells: buys a flush to the lower Keltner band (EMA20 - 2.5x
- * ATR) with RSI<40, price above the 200-day average, AND fear_greed < 75 (not
- * euphoric). Sells on the snap-back to the middle band (EMA20). If the fear_greed
- * feed is unavailable it degrades to the plain champion.
- * When it does NOT work: in a persistent downtrend below the 200-day average it
- * stays idle; and if the filter rarely triggers it simply trades less.
+ * Why this strategy: Diagnostic build to confirm whether ctx.data('fear_greed')
+ * returns real values in the backtest environment (the timing-gate result was
+ * identical to the plain champion, suggesting the feed may be null). Logs the
+ * fear_greed value periodically.
+ * When it buys and sells: same Keltner MR recipe as the champion.
+ * When it does NOT work: n/a (diagnostic).
  */
 function onUpdate(ctx) {
   const pos = ctx.position;
@@ -33,6 +27,12 @@ function onUpdate(ctx) {
   const lower = ema20 - 2.5 * atr;
   const st = ctx.state;
 
+  if (st.nextLog == null || ctx.i >= st.nextLog) {
+    const fg = ctx.data('fear_greed');
+    ctx.log('i=' + ctx.i + ' fear_greed=' + fg);
+    st.nextLog = ctx.i + 200;
+  }
+
   if (pos > 0) {
     if (price > ema20) {
       st.cooldown = ctx.i + 2;
@@ -42,11 +42,6 @@ function onUpdate(ctx) {
   }
 
   if (st.cooldown != null && ctx.i < st.cooldown) return null;
-
-  // Fear-greed timing gate: avoid buying flushes during euphoric greed.
-  // Degrade gracefully to the plain champion if the feed is unavailable.
-  const fg = ctx.data('fear_greed');
-  if (fg != null && fg >= 75) return null;
 
   if (price > sma200 && price <= lower && rsi < 40) {
     st.cooldown = null;
