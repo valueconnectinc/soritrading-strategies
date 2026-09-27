@@ -1,26 +1,22 @@
 /*
  * @coinsori-strategy v1
- * name: Keltner MR Daily + FearGreed Confirm
+ * name: Keltner MR Daily BTC/ETH/SOL
  * ex: binance
- * syms: BTCUSDT
+ * syms: BTCUSDT, ETHUSDT, SOLUSDT
  * interval: 1d
  * cash: 10000
  *
- * Why this strategy: The validated Keltner mean-reversion recipe buys deep
- * flushes to the lower band. This version adds a sentiment CONFIRMATION gate
- * (fear & greed index) on top of the price signal — the ledger showed
- * sentiment fails standalone but may work as a confirmation filter. The idea:
- * only buy a price flush when sentiment is actually fearful (index < 60), so
- * we skip flushes that happen while the crowd is still greedy (those flushes
- * are more likely to keep falling).
- * When it buys and sells: identical to the champion — buys a flush to the
- * lower Keltner band (EMA20 - 2.5x ATR) with RSI<40 above the 200-day average,
- * now also requiring the fear-greed index below 60. Sells on the snap-back to
- * the middle band. ATR-scaled position size.
- * When it does NOT work: in a persistent downtrend below the 200-day average
- * it stays idle, and it lags straight-line melt-ups (few deep flushes to
- * catch). The sentiment gate also cuts already-few trades, so it may simply
- * underperform the plain champion in markets where every flush reverts.
+ * Why this strategy: The ATR-adaptive Keltner mean-reversion recipe was validated
+ * positive across ~29/32 windows on 11 assets at 4h. This version moves the SAME
+ * proven logic to daily bars, where signals are cleaner and fees are far lower.
+ * Tests whether the defensive edge survives (and maybe improves) at a slower
+ * timeframe.
+ * When it buys and sells: buys a flush to the lower Keltner band (EMA20 - 2.5x
+ * ATR) with RSI<40 while price is above the 200-day average; sells on the
+ * snap-back to the middle band (EMA20). A 2-bar cooldown prevents re-buying.
+ * Position is ATR-scaled so volatile assets get smaller size.
+ * When it does NOT work: in a persistent downtrend below the 200-day average it
+ * stays idle, and it lags straight-line melt-ups (few deep flushes to catch).
  */
 function onUpdate(ctx) {
   const pos = ctx.position;
@@ -45,13 +41,6 @@ function onUpdate(ctx) {
   }
 
   if (st.cooldown != null && ctx.i < st.cooldown) return null;
-
-  // Sentiment confirmation: only buy a flush when the crowd is not greedy.
-  // Threshold 60 = the index's neutral line; a flush with fg>=60 (greed) is
-  // more likely a dip in a hype-driven move that keeps falling. If data is
-  // missing, fall back to the plain price signal (do not block trades).
-  const fg = Number(ctx.data('fear_greed'));
-  if (Number.isFinite(fg) && fg > 0 && fg >= 60) return null;
 
   if (price > sma200 && price <= lower && rsi < 40) {
     st.cooldown = null;
