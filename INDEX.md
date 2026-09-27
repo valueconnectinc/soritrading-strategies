@@ -11,7 +11,7 @@ Every figure comes from the last verifying backtest at publish time. These are p
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
-|  | [2901](strategies/2901/) | Long-Horizon Momentum 60d ROC BTC/ETH 1D | +4.61% | +27.65% | +33.43% | 49 | 2026-09-27 |
+|  | [2901](strategies/2901/) | Long-Horizon Momentum 60d ROC BTC/ETH 1D | +28.27% | +384.58% | +45.87% | 59 | 2026-09-27 |
 |  | [2900](strategies/2900/) | Long-Horizon Time-Series Momentum BTC 1D | +38.66% | +384.58% | +47.07% | 51 | 2026-09-27 |
 |  | [2899](strategies/2899/) | Trend-Gated Vol-Target CrashStop LINK 1D | -100.00% | +6514.73% | +100.00% | 927 | 2026-09-27 |
 |  | [2898](strategies/2898/) | CMF Money-Flow Trend BTC 1D | +188.21% | +1279.90% | +47.04% | 68 | 2026-09-27 |
