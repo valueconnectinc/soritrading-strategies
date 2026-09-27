@@ -1,18 +1,18 @@
 {
-  "id": 2887,
-  "name": "Macro-Gated Keltner MR BTC 1D",
+  "id": 2888,
+  "name": "RSI2 Capitulation BTC 1D",
   "kind": "custom",
   "verified": {
-    "backtestId": 13078,
-    "return": 19.61,
-    "mdd": 2.46,
-    "trades": 8,
+    "backtestId": 13080,
+    "return": 0.18,
+    "mdd": 0.22,
+    "trades": 86,
     "vsBuyHold": "lose",
-    "benchRet": 45.6,
+    "benchRet": 1279.9,
     "benchBasis": "price",
     "gapPct": 0,
-    "tFrom": 1617667200,
-    "tTo": 1790380800,
+    "tFrom": 1502928000,
+    "tTo": 1617580800,
     "approxNotes": [
       "봉 내 순서는 관례(양봉 O→L→H→C·음봉 O→H→L→C) — 실순서 미상 · 봉 중 거래량 null · MDD 는 봉 마감 기준"
     ],
@@ -21,10 +21,10 @@
       "sym": "BTCUSDT",
       "interval": "1d",
       "bars": 2000,
-      "end": 1790467200
+      "end": 1617667200
     }
   },
   "config": null,
-  "updatedAt": "2026-09-27T06:31:03.566Z",
+  "updatedAt": "2026-09-27T06:31:35.727Z",
   "publishedBy": "scripts/publish-strategies.mjs"
 }

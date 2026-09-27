@@ -4,14 +4,15 @@ Every strategy whose backtest **finished and actually traded** is published here
 Nothing is filtered out by return — the ones that lost money are part of the record.
 Entries stay after a strategy is removed from our own workspace — this is a log, and deleting the record would leave only the survivors.
 
-**★ marks a strategy that out-returned buy & hold over the same window** — 365 of 1274 right now.
+**★ marks a strategy that out-returned buy & hold over the same window** — 365 of 1275 right now.
 `—` means the comparison **could not be made**: the engine does not compute a benchmark for multi-symbol, futures, or multi-leg runs. That is *unknown*, not *lost*, and it is 197 of them right now.
 
 Every figure comes from the last verifying backtest at publish time. These are past results over historical data. Nothing here is promised or assured about the future, and none of it is investment advice.
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
-|  | [2887](strategies/2887/) | Macro-Gated Keltner MR BTC 1D | +2.41% | +1279.90% | +3.28% | 4 | 2026-09-27 |
+|  | [2888](strategies/2888/) | RSI2 Capitulation BTC 1D | +0.18% | +1279.90% | +0.22% | 86 | 2026-09-27 |
+|  | [2887](strategies/2887/) | Macro-Gated Keltner MR BTC 1D | +19.61% | +45.60% | +2.46% | 8 | 2026-09-27 |
 |  | [2886](strategies/2886/) | Keltner MR ATOM 1D | +4.69% | +18.54% | +5.79% | 6 | 2026-09-27 |
 |  | [2884](strategies/2884/) | Dual Onchain-Demand + OBV BTC 1D | -28.62% | +105.65% | +53.27% | 80 | 2026-09-27 |
 |  | [2883](strategies/2883/) | Hybrid OBV-Trend + Keltner-MR BTC 1D | +56.16% | +1279.90% | +23.54% | 290 | 2026-09-27 |

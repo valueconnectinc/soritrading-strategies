@@ -6,18 +6,11 @@
  * interval: 1d
  * cash: 10000
  *
- * Why this strategy: The validated Keltner mean-reversion champion buys deep
- * flushes to the lower band, but flush-buying is dangerous when risk appetite
- * is low (a strong dollar or falling equities makes flushes keep going). This
- * overlays a macro regime filter so mean-reversion buys only fire in risk-on
- * conditions, aiming to cut drawdowns while keeping the defensive edge.
- * When it buys and sells: buys a flush to the lower Keltner band (EMA20 - 2.5x
- * ATR) with RSI<40, price above the 200-day average, AND a risk-on macro regime
- * (DXY not sharply rising / NDX not sharply falling). Sells on the snap-back
- * to the middle band (EMA20). If macro data is unavailable it degrades to the
- * plain champion (no macro gate).
- * When it does NOT work: in a persistent downtrend below the 200-day average it
- * stays idle; and if the macro filter is too strict it simply trades less.
+ * Why this strategy: Diagnostic build — verify whether ctx.macro('dxy'/'ndx')
+ * returns real values in the backtest environment, by logging them periodically.
+ * The macro-gate idea only matters if the feed is actually available.
+ * When it buys and sells: same Keltner MR recipe as the champion.
+ * When it does NOT work: n/a (diagnostic).
  */
 function onUpdate(ctx) {
   const pos = ctx.position;
@@ -33,6 +26,14 @@ function onUpdate(ctx) {
   const lower = ema20 - 2.5 * atr;
   const st = ctx.state;
 
+  // Diagnostic: log macro availability every 250 bars
+  if (st.nextLog == null || ctx.i >= st.nextLog) {
+    const dxy = ctx.macro('dxy');
+    const ndx = ctx.macro('ndx');
+    ctx.log('i=' + ctx.i + ' dxy=' + dxy + ' ndx=' + ndx);
+    st.nextLog = ctx.i + 250;
+  }
+
   if (pos > 0) {
     if (price > ema20) {
       st.cooldown = ctx.i + 2;
@@ -42,26 +43,6 @@ function onUpdate(ctx) {
   }
 
   if (st.cooldown != null && ctx.i < st.cooldown) return null;
-
-  // Macro regime gate: only buy when risk-on. ctx.macro returns a scalar value
-  // (or null when unavailable). Compare against the value from 3 bars ago using
-  // a rolling ring buffer; degrade gracefully to the plain champion if null.
-  let riskOn = true;
-  const dxy = ctx.macro('dxy');
-  const ndx = ctx.macro('ndx');
-  if (Number.isFinite(dxy) && Number.isFinite(ndx)) {
-    if (!st.mRing) st.mRing = [];
-    st.mRing.push({ dxy, ndx });
-    if (st.mRing.length > 3) st.mRing.shift();
-    if (st.mRing.length === 3) {
-      const old = st.mRing[0];
-      const dxyChg = (dxy - old.dxy) / old.dxy * 100;
-      const ndxChg = (ndx - old.ndx) / old.ndx * 100;
-      if (dxyChg > 1.5) riskOn = false;   // strong dollar => avoid flush-buying
-      if (ndxChg < -2.0) riskOn = false;  // equities crashing => flushes continue
-    }
-  }
-  if (!riskOn) return null;
 
   if (price > sma200 && price <= lower && rsi < 40) {
     st.cooldown = null;
