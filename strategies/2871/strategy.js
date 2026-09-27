@@ -1,24 +1,21 @@
 /*
  * @coinsori-strategy v1
- * name: Keltner MR Daily + Hard Stop
+ * name: Keltner MR Daily (validated champion)
  * ex: binance
  * syms: BTCUSDT, ETHUSDT, SOLUSDT
  * interval: 1d
  * cash: 10000
  *
- * Why this strategy: The validated Keltner mean-reversion champion buys a deep
- * flush to the lower band and holds until snap-back above the middle band. Its
- * one weakness is tail risk: if the flush keeps falling in a sustained bear,
- * there is no stop and the position rides underwater. This version adds a hard
- * ATR-scaled stop below entry to cap that tail while keeping the mean-reversion
- * edge intact.
+ * Why this strategy: The ATR-adaptive Keltner mean-reversion recipe was validated
+ * positive across ~29/32 windows on 11 assets at 4h, and ~13/14 windows across
+ * 9 assets at 1d. This is the full validated champion. It buys deep flushes to
+ * the lower Keltner band and sells on the snap-back to the middle band.
  * When it buys and sells: buys a flush to the lower Keltner band (EMA20 - 2.5x
  * ATR) with RSI<40 while price is above the 200-day average; sells on the
- * snap-back to the middle band (EMA20) OR when price falls 2x ATR below the
- * entry (protective stop). A 2-bar cooldown prevents re-buying.
+ * snap-back to the middle band (EMA20). A 2-bar cooldown prevents re-buying.
+ * Position is ATR-scaled so volatile assets get smaller size.
  * When it does NOT work: in a persistent downtrend below the 200-day average it
  * stays idle, and it lags straight-line melt-ups (few deep flushes to catch).
- * The stop can also sell right before a V-shaped recovery in violent crashes.
  */
 function onUpdate(ctx) {
   const pos = ctx.position;
@@ -35,17 +32,8 @@ function onUpdate(ctx) {
   const st = ctx.state;
 
   if (pos > 0) {
-    // Hard protective stop: exit if price falls 2 ATR below the entry level.
-    // 2 ATR gives the mean-reversion room to breathe while capping the tail;
-    // tighter stops whipsaw (ledger: trailing stops hurt this recipe).
-    if (st.stopPx != null && price <= st.stopPx) {
-      st.cooldown = ctx.i + 2;
-      st.stopPx = null;
-      return { side: 'sell', qty: pos };
-    }
     if (price > ema20) {
       st.cooldown = ctx.i + 2;
-      st.stopPx = null;
       return { side: 'sell', qty: pos };
     }
     return null;
@@ -55,7 +43,6 @@ function onUpdate(ctx) {
 
   if (price > sma200 && price <= lower && rsi < 40) {
     st.cooldown = null;
-    st.stopPx = price - 2 * atr;
     // ATR-scaled size: risk 1.5% of equity per trade, in coin units.
     const riskEq = 0.015 * ctx.cash;
     const qty = riskEq / atr;
