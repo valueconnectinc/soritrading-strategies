@@ -1,22 +1,23 @@
 /*
  * @coinsori-strategy v1
- * name: OBV Trend + RSI Entry Filter BTC 1D
+ * name: OBV Trend + Drawdown Position Cap BTC 1D
  * ex: binance
  * syms: BTCUSDT
  * interval: 1d
  * cash: 10000
  *
- * Why this strategy: The OBV champion enters whenever OBV rises above the 100-day
- * average with volume, which lets it buy right at local tops (extended RSI), and
- * those top-buys are a big source of the family's high drawdown. This variant
- * keeps the champion's exact signals but SKIPS entries when RSI is already
- * overbought (>70) — a pure entry-timing filter, unlike all the failed exit
- * levers. Most strong trends start from a neutral/oversold base, so skipping
- * overbought entries should cut whipsaw without missing the bulk of the move.
- * When it buys and sells: buys on rising 30-day OBV above the 100-day average
- * with volume AND RSI(14) below 70; exits fully when OBV turns down.
- * When it does NOT work: in a relentless melt-up where OBV stays rising for
- * months with RSI pinned above 70, it can miss a large portion of the trend.
+ * Why this strategy: The OBV trend champion (2820) has high drawdown (~29-50%)
+ * because it stays fully invested through sharp reversals. This variant keeps
+ * the exact same buy/sell signals but GENTLY trims position size only when the
+ * account is in a deep drawdown from its peak — a persistent exposure reduction
+ * that lowers MDD while keeping most of the trend upside.
+ * When it buys and sells: same as the champion — buys rising 30-day OBV above
+ * the 100-day average with volume, exits on falling OBV. Position size is scaled
+ * down by volatility stress and, only beyond a 10% account drawdown, trimmed
+ * linearly to 60% size at a 30% drawdown.
+ * When it does NOT work: the cap still trims size during recoveries after a
+ * crash, so it misses part of the bounce; and in a long grinding bear it keeps
+ * size small just as the recovery starts.
  */
 function onUpdate(ctx) {
   const pos = ctx.position;
@@ -24,8 +25,8 @@ function onUpdate(ctx) {
   if (!Number.isFinite(price) || price <= 0) return null;
 
   const sma100 = ctx.sma(100, 1);
-  const rsi = ctx.rsi(14, 1);
-  if (sma100 == null || rsi == null) return null;
+  const atr = ctx.atr(14, 1);
+  if (sma100 == null || atr == null) return null;
 
   const closes = ctx.closes;
   const vols = ctx.volumes;
@@ -54,6 +55,25 @@ function onUpdate(ctx) {
   if (cd > 0) cd--;
   ctx.state.cd = cd;
 
+  // GENTLE drawdown cap: full size up to 10% drawdown, trim linearly to 60% at 30%.
+  const equity = ctx.cash + pos * price;
+  let peak = st.peak != null ? st.peak : equity;
+  if (equity > peak) peak = equity;
+  ctx.state.peak = peak;
+  const ddFromPeak = peak > 0 ? (peak - equity) / peak : 0;
+  let ddFrac = 1.0;
+  if (ddFromPeak > 0.10) {
+    ddFrac = 1.0 - ((ddFromPeak - 0.10) / 0.20) * 0.40; // 100% -> 60%
+  }
+  ddFrac = Math.max(0.60, Math.min(1.0, ddFrac));
+
+  const atrPct = atr / price;
+  let sizeFrac = 1.0;
+  if (atrPct > 0.06) {
+    sizeFrac = Math.max(0.5, 1.0 - (atrPct - 0.06) / 0.06);
+  }
+  sizeFrac = sizeFrac * ddFrac;
+
   if (pos > 0) {
     if (falling && cd === 0) {
       ctx.state.cd = 5;
@@ -62,10 +82,10 @@ function onUpdate(ctx) {
     return null;
   }
 
-  // Entry filter: skip when RSI(14) already overbought (>70) — avoids buying tops.
-  if (rising && price > sma100 && volOk && rsi < 70 && cd === 0) {
+  if (rising && price > sma100 && volOk && cd === 0) {
     ctx.state.cd = 5;
-    const qty = ctx.cash / price * 0.95;
+    const qty = ctx.cash / price * 0.95 * sizeFrac;
+    if (qty <= 0) return null;
     return { side: 'buy', qty: qty };
   }
   return null;
