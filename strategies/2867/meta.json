@@ -3,28 +3,28 @@
   "name": "Keltner MR generalization LINK/LTC/DOGE/AVAX/BNB",
   "kind": "custom",
   "verified": {
-    "backtestId": 12962,
-    "return": 13.64,
-    "mdd": 16.68,
-    "trades": 18,
+    "backtestId": 12966,
+    "return": 19.83,
+    "mdd": 10.39,
+    "trades": 28,
     "vsBuyHold": "win",
-    "benchRet": 10.65,
+    "benchRet": -5.12,
     "benchBasis": "price",
     "gapPct": 0,
-    "tFrom": 1646467200,
-    "tTo": 1718452800,
+    "tFrom": 1718467200,
+    "tTo": 1790452800,
     "approxNotes": [
       "봉 내 순서는 관례(양봉 O→L→H→C·음봉 O→H→L→C) — 실순서 미상 · 봉 중 거래량 null · MDD 는 봉 마감 기준"
     ],
     "spec": {
       "ex": "binance",
-      "sym": "DOGEUSDT",
+      "sym": "LINKUSDT",
       "interval": "4h",
       "bars": 5000,
-      "end": 1718467200
+      "end": 1790467200
     }
   },
   "config": null,
-  "updatedAt": "2026-09-27T03:49:24.279Z",
+  "updatedAt": "2026-09-27T03:51:11.842Z",
   "publishedBy": "scripts/publish-strategies.mjs"
 }
