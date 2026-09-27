@@ -3,7 +3,7 @@
   "name": "Macro-Gated Keltner MR BTC 1D",
   "kind": "custom",
   "verified": {
-    "backtestId": 13073,
+    "backtestId": 13077,
     "return": 2.41,
     "mdd": 3.28,
     "trades": 4,
@@ -25,6 +25,6 @@
     }
   },
   "config": null,
-  "updatedAt": "2026-09-27T06:29:20.447Z",
+  "updatedAt": "2026-09-27T06:30:04.457Z",
   "publishedBy": "scripts/publish-strategies.mjs"
 }

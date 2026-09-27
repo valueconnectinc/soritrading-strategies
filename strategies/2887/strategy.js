@@ -44,23 +44,23 @@ function onUpdate(ctx) {
   if (st.cooldown != null && ctx.i < st.cooldown) return null;
 
   // Macro regime gate: only buy when risk-on. ctx.macro returns a scalar value
-  // (or null when unavailable). Compute a short change vs the value stored in
-  // state a few bars ago; degrade gracefully to the plain champion if null.
+  // (or null when unavailable). Compare against the value from 3 bars ago using
+  // a rolling ring buffer; degrade gracefully to the plain champion if null.
   let riskOn = true;
   const dxy = ctx.macro('dxy');
   const ndx = ctx.macro('ndx');
   if (Number.isFinite(dxy) && Number.isFinite(ndx)) {
-    if (st.dxyPrev != null) {
-      const dxyChg = (dxy - st.dxyPrev) / st.dxyPrev * 100;
+    if (!st.mRing) st.mRing = [];
+    st.mRing.push({ dxy, ndx });
+    if (st.mRing.length > 3) st.mRing.shift();
+    if (st.mRing.length === 3) {
+      const old = st.mRing[0];
+      const dxyChg = (dxy - old.dxy) / old.dxy * 100;
+      const ndxChg = (ndx - old.ndx) / old.ndx * 100;
       if (dxyChg > 1.5) riskOn = false;   // strong dollar => avoid flush-buying
-    }
-    if (st.ndxPrev != null) {
-      const ndxChg = (ndx - st.ndxPrev) / st.ndxPrev * 100;
       if (ndxChg < -2.0) riskOn = false;  // equities crashing => flushes continue
     }
   }
-  st.dxyPrev = dxy;
-  st.ndxPrev = ndx;
   if (!riskOn) return null;
 
   if (price > sma200 && price <= lower && rsi < 40) {
