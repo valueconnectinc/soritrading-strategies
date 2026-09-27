@@ -1,22 +1,26 @@
 /*
  * @coinsori-strategy v1
- * name: OBV Champion Pure BTC 1D (baseline)
+ * name: OBV Champion + On-Chain Entry Gate BTC 1D
  * ex: binance
  * syms: BTCUSDT
  * interval: 1d
  * cash: 10000
  *
- * Why this strategy: OBV (on-balance volume) measures whether the volume is
- * flowing into or out of the market. A 30-day rising OBV with price above the
- * 100-day average and a volume spike is a reliable bull-momentum entry. The
- * trend is followed until OBV turns down.
+ * Why this strategy: The OBV volume-flow trend captures bull momentum but
+ * enters during choppy/bear regimes too. The on-chain demand signal (active
+ * addresses AND hashrate above their 30-day averages) filters ENTRIES only —
+ * it never forces an exit, so it cannot cause whipsaw. This keeps the
+ * champion's bull capture and long-trend ride while skipping entries that
+ * happen when network demand is weak.
  * When it buys and sells: buys when 30-day OBV is rising AND price is above
- * the 100-day average AND volume is above its 30-day average. Exits fully
- * when 30-day OBV turns down. Position size is cut when volatility (ATR) is
- * high, so big swings don't blow up the account.
- * When it does NOT work: in choppy sideways markets OBV whipsaws and the
- * strategy churns. It stays long through bearish regimes until OBV turns,
- * so it can give back large gains during crashes.
+ * the 100-day average AND volume confirms AND both active addresses and
+ * hashrate are above their 30-day averages. Exits only when 30-day OBV turns
+ * down (the on-chain gate never exits — exit-only whipsaw is what killed the
+ * previous version).
+ * When it does NOT work: on-chain data lags price, so in sharp V-shaped
+ * liquidity rallies the gate may keep the strategy in cash at the start of a
+ * bull (it can underperform pure buy-and-hold in strong bulls). The dual gate
+ * is strict, so entries are rarer than the pure champion.
  */
 function onUpdate(ctx) {
   const pos = ctx.position;
@@ -26,6 +30,17 @@ function onUpdate(ctx) {
   const sma100 = ctx.sma(100, 1);
   const atr = ctx.atr(14, 1);
   if (sma100 == null || atr == null) return null;
+
+  // on-chain entry gate: active addresses AND hashrate above 30-day avg
+  const addr = Number(ctx.data('addr'));
+  const addrSm = Number(ctx.data('addr_sma30'));
+  const hr = Number(ctx.data('hashrate'));
+  const hrSm = Number(ctx.data('hashrate_sma30'));
+  if (!Number.isFinite(addr) || addr <= 0) return null;
+  if (!Number.isFinite(addrSm) || addrSm <= 0) return null;
+  if (!Number.isFinite(hr) || hr <= 0) return null;
+  if (!Number.isFinite(hrSm) || hrSm <= 0) return null;
+  const gateOk = addr > addrSm * 1.01 && hr > hrSm * 1.01;
 
   const closes = ctx.closes;
   const vols = ctx.volumes;
@@ -68,7 +83,7 @@ function onUpdate(ctx) {
     return null;
   }
 
-  if (rising && price > sma100 && volOk && cd === 0) {
+  if (rising && price > sma100 && volOk && gateOk && cd === 0) {
     ctx.state.cd = 5;
     const qty = ctx.cash / price * 0.95 * sizeFrac;
     return { side: 'buy', qty: qty };
