@@ -1,26 +1,25 @@
 /*
  * @coinsori-strategy v1
- * name: OBV Trend + Fed & On-Chain Dual Gate BTC 1D
+ * name: Fed-Filtered OBV Trend BTC 1D
  * ex: binance
  * syms: BTCUSDT
  * interval: 1d
  * cash: 10000
  *
- * Why this strategy: The OBV volume-flow trend captures bull momentum but
- * carries high drawdown by staying long through hiking-period bears and weak
- * network-demand regimes. Two independent defensive gates each proved helpful
- * on their own: the Fed not-hiking macro gate (cut MDD 45->39 on the hiking
- * window) and the on-chain demand gate (active addresses AND hashrate above
- * their 30-day averages). Combining both filters ENTRIES only — neither ever
- * forces an exit — so they skip weak entries without adding exit whipsaw.
+ * Why this strategy: The OBV volume-flow trend family captures bull momentum
+ * but carries high drawdown (MDD ~29-50%) because it stays long through
+ * hiking-period bears. The Fed not-hiking regime is a slow macro gate that
+ * sits out tightening cycles. This combines them: only take OBV trend entries
+ * while the Fed is not hiking, so the macro gate filters out the worst
+ * hiking-bear drawdowns without giving up the trend family's bull capture.
  * When it buys and sells: buys when 30-day OBV is rising AND price is above
- * the 100-day average AND volume confirms AND the Fed is not hiking AND both
- * active addresses and hashrate are above their 30-day averages. Exits only
- * when 30-day OBV turns down.
- * When it does NOT work: both gates are slow and lag price, so in sharp
- * V-shaped liquidity rallies the strategy may sit in cash while price melts
- * up (it can underperform buy-and-hold in strong bulls). The dual gate is
- * strict, so entries are rarer than the pure champion.
+ * the 100-day average AND volume confirms AND the Fed is not hiking (current
+ * fed funds rate not above its level 30 days ago). Exits fully when OBV turns
+ * down OR a Fed hiking cycle begins.
+ * When it does NOT work: crypto can melt up even while the Fed hikes
+ * (liquidity-driven bulls), so the fed gate can sit out strong rallies the
+ * pure trend family would catch. And the fed signal is slow to flip back
+ * after a hike ends, so re-entry can be delayed.
  */
 function onUpdate(ctx) {
   const pos = ctx.position;
@@ -31,23 +30,13 @@ function onUpdate(ctx) {
   const atr = ctx.atr(14, 1);
   if (sma100 == null || atr == null) return null;
 
-  // Fed gate: hiking if current rate is above 30-day-ago level by 0.25pp
+  // Fed macro gate: hiking if current rate is above 30-day-ago level by a
+  // 0.25pp buffer (one typical hike) to avoid churn on tiny moves.
   const now = Number(ctx.data('fed'));
   const lag = Number(ctx.data('fed_lag30'));
   if (!Number.isFinite(now) || now <= 0) return null;
   if (!Number.isFinite(lag) || lag <= 0) return null;
   const hiking = now > lag + 0.25;
-
-  // On-chain entry gate: active addresses AND hashrate above 30-day avg
-  const addr = Number(ctx.data('addr'));
-  const addrSm = Number(ctx.data('addr_sma30'));
-  const hr = Number(ctx.data('hashrate'));
-  const hrSm = Number(ctx.data('hashrate_sma30'));
-  if (!Number.isFinite(addr) || addr <= 0) return null;
-  if (!Number.isFinite(addrSm) || addrSm <= 0) return null;
-  if (!Number.isFinite(hr) || hr <= 0) return null;
-  if (!Number.isFinite(hrSm) || hrSm <= 0) return null;
-  const gateOk = addr > addrSm * 1.01 && hr > hrSm * 1.01;
 
   const closes = ctx.closes;
   const vols = ctx.volumes;
@@ -76,7 +65,8 @@ function onUpdate(ctx) {
   if (cd > 0) cd--;
   ctx.state.cd = cd;
 
-  // Gentle volatility-target sizing: full size up to 6% ATR, scale to 50% at 12%.
+  // Gentle volatility-target sizing: full size up to 6% ATR, scale linearly
+  // to 50% size at 12% ATR. Only extreme stress cuts exposure.
   const atrPct = atr / price;
   let sizeFrac = 1.0;
   if (atrPct > 0.06) {
@@ -84,14 +74,14 @@ function onUpdate(ctx) {
   }
 
   if (pos > 0) {
-    if (falling && cd === 0) {
+    if ((falling || hiking) && cd === 0) {
       ctx.state.cd = 5;
       return { side: 'sell', qty: pos };
     }
     return null;
   }
 
-  if (rising && price > sma100 && volOk && !hiking && gateOk && cd === 0) {
+  if (rising && price > sma100 && volOk && !hiking && cd === 0) {
     ctx.state.cd = 5;
     const qty = ctx.cash / price * 0.95 * sizeFrac;
     return { side: 'buy', qty: qty };
