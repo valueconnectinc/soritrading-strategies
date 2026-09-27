@@ -3,10 +3,10 @@
   "name": "OBV Trend Generalization Test BNB/XRP 1D",
   "kind": "custom",
   "verified": {
-    "backtestId": 12702,
-    "return": 161.75,
-    "mdd": 38.48,
-    "trades": 26,
+    "backtestId": 12704,
+    "return": 94.5,
+    "mdd": 36.76,
+    "trades": 22,
     "vsBuyHold": "win",
     "benchRet": 69.62,
     "benchBasis": "price",
@@ -26,6 +26,6 @@
     }
   },
   "config": null,
-  "updatedAt": "2026-09-27T00:28:01.064Z",
+  "updatedAt": "2026-09-27T00:28:35.504Z",
   "publishedBy": "scripts/publish-strategies.mjs"
 }
