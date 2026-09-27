@@ -11,7 +11,7 @@ Every figure comes from the last verifying backtest at publish time. These are p
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
-|  | [2861](strategies/2861/) | 45d OBV Fast Re-Entry BTC 1D | +89.91% | +175.26% | +31.78% | 29 | 2026-09-27 |
+|  | [2861](strategies/2861/) | 45d OBV Fast Re-Entry BTC 1D | +65.13% | +220.15% | +26.82% | 33 | 2026-09-27 |
 |  | [2860](strategies/2860/) | 45d OBV No-Volume-Gate BTC 1D | +63.05% | +220.15% | +27.26% | 29 | 2026-09-27 |
 | ★ | [2859](strategies/2859/) | 45d OBV Partial Scale-Out BTC 1D | +728.32% | +574.98% | +40.98% | 36 | 2026-09-27 |
 | ★ | [2858](strategies/2858/) | AI 전략 | +591.58% | +574.98% | +41.75% | 29 | 2026-09-27 |

@@ -1,24 +1,23 @@
 /*
  * @coinsori-strategy v1
- * name: 45d OBV Much-Relaxed Exit BTC 1D
+ * name: 45d OBV Trend Relaxed Exit BTC 1D
  * ex: binance
  * syms: BTCUSDT
  * interval: 1d
  * cash: 10000
  *
- * Why this strategy: The champion 45d OBV trend (2858) only captures ~22% of
- * the recent 2023-26 melt-up (+81.6% vs hold +373%) because its 1.5% OBV exit
- * threshold (0.985) fires on minor pullbacks inside a strong uptrend, then
- * re-enters late. This relaxes the exit to 0.97 so the position holds through
- * deeper pullbacks and rides more of the melt-up, while keeping the 45d
- * lookback (the 60d-lookback variant failed, so lookback stays at 45d).
+ * Why this strategy: The no-Fed 45-day OBV trend works on all windows but
+ * still lags buy-and-hold on the recent 2023-26 melt-up (+81.6% vs +373%),
+ * capturing only ~22% of the rally. Hypothesis: the 1% exit threshold on
+ * 45-day OBV (0.99) fires on brief pullbacks inside a steady uptrend, then
+ * re-enters late. This relaxes the exit to 0.985 so the position holds
+ * through minor pullbacks and rides more of the melt-up.
  * When it buys and sells: buys when 45-day OBV is rising AND price is above
  * the 100-day average AND volume confirms. Exits fully only when 45-day OBV
- * falls by 3% (relaxed from 1.5%).
- * When it does NOT work: a much-relaxed exit holds longer into real downturns,
- * so drawdown is higher when OBV rolls over slowly — the risk is the 2022 bear
- * where a slow exit gives back gains. It also re-enters late after genuine
- * trend breaks.
+ * falls by 1.5% (relaxed from 1%).
+ * When it does NOT work: a relaxed exit holds longer into real downturns, so
+ * drawdown is higher when OBV rolls over slowly. It also re-enters late after
+ * genuine trend breaks.
  */
 function onUpdate(ctx) {
   const pos = ctx.position;
@@ -47,8 +46,8 @@ function onUpdate(ctx) {
   const obvNow = obvSeries[obvSeries.length - 1];
   const obvPast = obvSeries[obvSeries.length - 1 - LOOKBACK];
   const rising = obvNow > obvPast * 1.01;
-  // much-relaxed exit: 3% OBV drop instead of 1.5% (hold through deeper pullbacks to capture more melt-up)
-  const falling = obvNow < obvPast * 0.97;
+  // relaxed exit: 1.5% OBV drop instead of 1% (hold through minor pullbacks)
+  const falling = obvNow < obvPast * 0.985;
 
   const avgV = ctx.avgVol(30);
   const volOk = avgV != null && Number.isFinite(avgV) && avgV > 0 && ctx.vol > avgV;
