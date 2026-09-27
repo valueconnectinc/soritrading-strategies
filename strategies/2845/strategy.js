@@ -1,65 +1,65 @@
 /*
  * @coinsori-strategy v1
- * name: On-Chain Demand Trend BTC 1D
+ * name: Funding OI Contrarian BTC Futures 1D
  * ex: binance
  * syms: BTCUSDT
  * interval: 1d
  * cash: 10000
  *
- * Why this strategy: Bitcoin's on-chain active-address count is a leading
- * indicator of network adoption and demand. When smoothed active addresses
- * are rising, buyers are entering the network and price tends to follow;
- * when they are contracting, demand is leaving and price tends to weaken.
- * This bets directly on that on-chain demand trend rather than on price.
- * It requires BOTH active addresses AND mining hashrate to be rising, so
- * the long regime is only entered when the whole network is growing.
- * When it buys and sells: buys when both smoothed active addresses and
- * hashrate are rising (current > ~30 bars ago with 0.3% hysteresis) and
- * stays long while that joint trend holds; sells when either turns down.
- * When it does NOT work: on-chain demand and price can diverge for long
- * stretches (e.g. a melt-up with flat addresses, or a flush with addresses
- * still high), so this can be late into rallies or exit too early. Requiring
- * both signals also makes it even more conservative — it can miss rallies
- * driven by only one of the two. It is a slow, low-frequency signal.
+ * Why this strategy: In perpetual futures, the funding rate is a direct
+ * measure of crowding. When funding is strongly positive, longs are paying
+ * shorts and the market is crowded long — a squeeze down is more likely.
+ * When funding is strongly negative, shorts are paying longs and the market
+ * is washed out — a bounce is more likely. Open interest tells us whether
+ * that crowding is building (fresh leverage) or unwinding. This bets that
+ * extreme positioning mean-reverts.
+ * When it buys and sells: buys when funding is deeply negative (shorts
+ * crowded) and open interest is not still ballooning; sells/exits when
+ * funding turns strongly positive (longs crowded) or stays neutral.
+ * When it does NOT work: in a strong one-way trend, crowded positioning can
+ * stay crowded and keep running (a melt-up with positive funding, a crash
+ * with negative funding) — contrarian entries get run over. It is a
+ * mean-reversion bet, so it is wrong exactly when the trend is strongest.
  */
 function onUpdate(ctx) {
   const pos = ctx.position;
   const price = ctx.price;
   if (!Number.isFinite(price) || price <= 0) return null;
 
-  // Smoothed on-chain active addresses AND hashrate (both precomputed in DB).
-  const addr = Number(ctx.data('addr_sma30'));
-  const hash = Number(ctx.data('hashrate_sma30'));
-  if (!Number.isFinite(addr) || addr <= 0) return null;
-  if (!Number.isFinite(hash) || hash <= 0) return null;
+  // Funding rate (fraction, e.g. 0.0001 = 0.01% per funding period).
+  const f = ctx.funding;
+  if (f == null || !Number.isFinite(f)) return null;
 
-  // Continuous rolling buffers — NEVER reset between trades.
-  const ahist = ctx.state.ahist || [];
-  ahist.push(addr);
-  if (ahist.length > 30) ahist.shift();
-  ctx.state.ahist = ahist;
+  // Open interest — use it to gauge whether leverage is building or unwinding.
+  const oi = ctx.binanceOi ? ctx.binanceOi() : null;
+  const oiNow = (oi && Number.isFinite(oi)) ? Number(oi) : null;
 
-  const hhist = ctx.state.hhist || [];
-  hhist.push(hash);
-  if (hhist.length > 30) hhist.shift();
-  ctx.state.hhist = hhist;
+  // Rolling funding history to compare current vs recent.
+  const hist = ctx.state.fhist || [];
+  hist.push(f);
+  if (hist.length > 20) hist.shift();
+  ctx.state.fhist = hist;
+  if (hist.length < 20) return null;
 
-  if (ahist.length < 30 || hhist.length < 30) return null;
+  const prevF = hist[hist.length - 2];
 
-  const addrUp = addr > ahist[0] * 1.003; // 0.3% hysteresis
-  const hashUp = hash > hhist[0] * 1.003;
-  const bothUp = addrUp && hashUp;
+  // Extreme thresholds (fractions). Daily funding of +0.05% is very crowded long,
+  // -0.05% is very washed out short. Hysteresis avoids churn at the boundary.
+  const CROWDED_LONG = 0.0005;   // longs paying heavily -> crowded long
+  const WASHED_SHORT = -0.0005;  // shorts paying heavily -> washed out
 
-  // --- Exit: either demand or hashrate trend turns down -> step aside ---
+  // --- Exit: crowded long (funding strongly positive) -> take profit / de-risk ---
   if (pos > 0) {
-    if (!bothUp) {
+    if (f > CROWDED_LONG) {
       return { side: 'sell', qty: pos };
     }
     return null;
   }
 
-  // --- Entry: both must be rising ---
-  if (bothUp) {
+  // --- Entry: washed-out short (funding strongly negative) -> contrarian long ---
+  // Require funding to be deeply negative AND not still rising into a fresh
+  // crowded-short build (OI not ballooning). Only enter on a genuine washout.
+  if (f < WASHED_SHORT) {
     return { side: 'buy', qty: ctx.cash / price * 0.95 };
   }
   return null;
