@@ -4,13 +4,14 @@ Every strategy whose backtest **finished and actually traded** is published here
 Nothing is filtered out by return — the ones that lost money are part of the record.
 Entries stay after a strategy is removed from our own workspace — this is a log, and deleting the record would leave only the survivors.
 
-**★ marks a strategy that out-returned buy & hold over the same window** — 363 of 1253 right now.
+**★ marks a strategy that out-returned buy & hold over the same window** — 363 of 1254 right now.
 `—` means the comparison **could not be made**: the engine does not compute a benchmark for multi-symbol, futures, or multi-leg runs. That is *unknown*, not *lost*, and it is 197 of them right now.
 
 Every figure comes from the last verifying backtest at publish time. These are past results over historical data. Nothing here is promised or assured about the future, and none of it is investment advice.
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
+|  | [2861](strategies/2861/) | 45d OBV Fast Re-Entry BTC 1D | +89.91% | +175.26% | +31.78% | 29 | 2026-09-27 |
 |  | [2860](strategies/2860/) | 45d OBV No-Volume-Gate BTC 1D | +63.05% | +220.15% | +27.26% | 29 | 2026-09-27 |
 | ★ | [2859](strategies/2859/) | 45d OBV Partial Scale-Out BTC 1D | +728.32% | +574.98% | +40.98% | 36 | 2026-09-27 |
 | ★ | [2858](strategies/2858/) | AI 전략 | +591.58% | +574.98% | +41.75% | 29 | 2026-09-27 |
