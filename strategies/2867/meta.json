@@ -3,9 +3,9 @@
   "name": "Keltner MR generalization LINK/LTC/DOGE/AVAX/BNB",
   "kind": "custom",
   "verified": {
-    "backtestId": 12957,
-    "return": 11.38,
-    "mdd": 12.61,
+    "backtestId": 12962,
+    "return": 13.64,
+    "mdd": 16.68,
     "trades": 18,
     "vsBuyHold": "win",
     "benchRet": 10.65,
@@ -25,6 +25,6 @@
     }
   },
   "config": null,
-  "updatedAt": "2026-09-27T03:48:48.435Z",
+  "updatedAt": "2026-09-27T03:49:24.279Z",
   "publishedBy": "scripts/publish-strategies.mjs"
 }

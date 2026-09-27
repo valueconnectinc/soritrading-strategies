@@ -7,7 +7,7 @@
  * cash: 10000
  *
  * Why this strategy: The Keltner mean-reversion recipe was validated positive
- * ~29/32 windows across 11 assets on 4hches. Its one weak spot is HIGH DRAWDOWN
+ * ~29/32 windows across 11 assets on 4h. Its one weak spot is HIGH DRAWDOWN
  * on volatile assets (DOGE 30-33%, AVAX bear -15%). This version keeps the exact
  * proven entry/exit and adds ATR-based position sizing: risk a fixed dollar
  * fraction of equity per trade, so volatile coins automatically get smaller
@@ -44,9 +44,10 @@ function onUpdate(ctx) {
 
   if (price > sma200 && price <= lower && rsi < 40) {
     st.cooldown = null;
-    // ATR-scaled size: risk 1.5% of equity per trade, in coin units.
-    // High-vol assets have large ATR -> smaller position -> lower drawdown.
-    const riskEq = 0.015 * ctx.cash;
+    // ATR-scaled size: risk 2.0% of equity per trade, in coin units.
+    // Higher than 1.5% to keep more upside; still far smaller than 90%-of-cash
+    // on volatile coins, so drawdown stays well below the original recipe.
+    const riskEq = 0.02 * ctx.cash;
     const qty = riskEq / atr;
     const maxQty = ctx.cash / price * 0.9;
     return { side: 'buy', qty: Math.min(qty, maxQty) };
