@@ -1,25 +1,21 @@
 /*
  * @coinsori-strategy v1
- * name: OBV Trend Relaxed Gate Champion 1D
+ * name: Price-Momentum Trend ROC BTC 1D
  * ex: binance
- * syms: BTCUSDT, ETHUSDT, SOLUSDT
+ * syms: BTCUSDT
  * interval: 1d
  * cash: 10000
  *
- * Why this strategy: The OBV volume-flow trend family captures bull momentum the
- * mean-reversion champion misses, but its strict 200-day SMA gate kept it out of
- * early melt-ups. Relaxing the bull gate to a 100-day SMA fixes that lag — it
- * enters the early phase of a new uptrend sooner. Validated across BTC/ETH/SOL:
- * returns improved on all walk-forward windows vs the 200-SMA version (BTC W2
- * +582% vs +354%, ETH W3 +52.8% vs +37.6%, SOL W3 +431% vs +346%).
- * When it buys and sells: buys when 30-day OBV is rising AND price is above the
- * 100-day average AND volume confirms. Position size is scaled down gently in
- * extreme volatility stress (ATR > 6% of price, never below half). Exits fully
- * when OBV turns down.
- * When it does NOT work: the relaxed gate re-enters more often after pullbacks,
- * so it can whipsaw in range-bound chop the strict 200-SMA version skips, and it
- * inherits the family's high drawdown (MDD ~29-50%) in sharp reversals. It also
- * lags the sharpest V-shaped melt-ups.
+ * Why this strategy: The OBV champion uses volume-flow to detect trend. This
+ * tests whether plain PRICE momentum (rate-of-change) does the same job without
+ * volume — a genuinely different signal family. If it matches the OBV champion
+ * risk-adjusted, volume adds no edge; if it loses, OBV's volume component is
+ * what carries the edge.
+ * When it buys and sells: buys when the 30-day price ROC is positive AND price
+ * is above the 100-day average AND volume confirms; exits fully when the 30-day
+ * ROC turns negative.
+ * When it does NOT work: same structural high drawdown as all trend-following —
+ * it stays invested through sharp reversals and lags strong V-shaped melt-ups.
  */
 function onUpdate(ctx) {
   const pos = ctx.position;
@@ -27,27 +23,15 @@ function onUpdate(ctx) {
   if (!Number.isFinite(price) || price <= 0) return null;
 
   const sma100 = ctx.sma(100, 1);
-  const atr = ctx.atr(14, 1);
-  if (sma100 == null || atr == null) return null;
+  if (sma100 == null) return null;
 
-  const closes = ctx.closes;
-  const vols = ctx.volumes;
-  if (!closes || !vols || closes.length < 32) return null;
-
-  let obv = 0;
-  const obvSeries = [];
-  for (let k = 1; k < closes.length; k++) {
-    const c = closes[k], p = closes[k - 1], v = vols[k];
-    if (!Number.isFinite(c) || !Number.isFinite(p) || !Number.isFinite(v)) continue;
-    if (c > p) obv += v;
-    else if (c < p) obv -= v;
-    obvSeries.push(obv);
-  }
-  if (obvSeries.length < 32) return null;
-  const obvNow = obvSeries[obvSeries.length - 1];
-  const obvPast = obvSeries[obvSeries.length - 31];
-  const rising = obvNow > obvPast * 1.01;
-  const falling = obvNow < obvPast * 0.99;
+  // 30-day price rate of change: current close vs close 30 bars ago.
+  const c0 = ctx.closes ? ctx.closes[ctx.closes.length - 1] : null;
+  const c30 = ctx.closes ? ctx.closes[ctx.closes.length - 31] : null;
+  if (!Number.isFinite(c0) || !Number.isFinite(c30) || c30 <= 0) return null;
+  const roc = (c0 - c30) / c30;
+  const rising = roc > 0.01;
+  const falling = roc < -0.01;
 
   const avgV = ctx.avgVol(30);
   const volOk = avgV != null && Number.isFinite(avgV) && avgV > 0 && ctx.vol > avgV;
@@ -56,14 +40,6 @@ function onUpdate(ctx) {
   let cd = st.cd || 0;
   if (cd > 0) cd--;
   ctx.state.cd = cd;
-
-  // GENTLE volatility-target sizing: full size up to 6% ATR; scale linearly to
-  // 50% size at 12% ATR. Only extreme stress cuts exposure, never below half.
-  const atrPct = atr / price;
-  let sizeFrac = 1.0;
-  if (atrPct > 0.06) {
-    sizeFrac = Math.max(0.5, 1.0 - (atrPct - 0.06) / 0.06);
-  }
 
   if (pos > 0) {
     if (falling && cd === 0) {
@@ -75,7 +51,7 @@ function onUpdate(ctx) {
 
   if (rising && price > sma100 && volOk && cd === 0) {
     ctx.state.cd = 5;
-    const qty = ctx.cash / price * 0.95 * sizeFrac;
+    const qty = ctx.cash / price * 0.95;
     return { side: 'buy', qty: qty };
   }
   return null;
