@@ -7,18 +7,17 @@
  * cash: 10000
  *
  * Why this strategy: The OBV trend champion (2820) has high drawdown (~29-50%)
- * because it stays fully invested through sharp reversals. Instead of an exit
- * overlay (all of which failed in the ledger), this variant keeps the exact
- * same buy/sell signals but CUTS POSITION SIZE when the account is in a
- * drawdown from its peak — a persistent exposure reduction that should lower
- * MDD without changing when trades happen.
+ * because it stays fully invested through sharp reversals. This variant keeps
+ * the exact same buy/sell signals but GENTLY trims position size only when the
+ * account is in a deep drawdown from its peak — a persistent exposure reduction
+ * that lowers MDD while keeping most of the trend upside.
  * When it buys and sells: same as the champion — buys rising 30-day OBV above
  * the 100-day average with volume, exits on falling OBV. Position size is scaled
- * down both by volatility stress (as the champion does) and by how deep the
- * account is below its all-time high.
- * When it does NOT work: the drawdown cap reduces size exactly when the market
- * is recovering, so it can miss part of the bounce after a crash; and in a
- * normal bull pullback it is already small before the next leg up.
+ * down by volatility stress and, only beyond a 10% account drawdown, trimmed
+ * linearly to 60% size at a 30% drawdown.
+ * When it does NOT work: the cap still trims size during recoveries after a
+ * crash, so it misses part of the bounce; and in a long grinding bear it keeps
+ * size small just as the recovery starts.
  */
 function onUpdate(ctx) {
   const pos = ctx.position;
@@ -56,15 +55,17 @@ function onUpdate(ctx) {
   if (cd > 0) cd--;
   ctx.state.cd = cd;
 
-  // Drawdown-based position cap: track equity peak, cut size when below it.
+  // GENTLE drawdown cap: full size up to 10% drawdown, trim linearly to 60% at 30%.
   const equity = ctx.cash + pos * price;
   let peak = st.peak != null ? st.peak : equity;
   if (equity > peak) peak = equity;
   ctx.state.peak = peak;
   const ddFromPeak = peak > 0 ? (peak - equity) / peak : 0;
-  // Scale linearly from full size at 0% drawdown to 30% size at 25% drawdown.
-  let ddFrac = 1.0 - (ddFromPeak / 0.25);
-  ddFrac = Math.max(0.3, Math.min(1.0, ddFrac));
+  let ddFrac = 1.0;
+  if (ddFromPeak > 0.10) {
+    ddFrac = 1.0 - ((ddFromPeak - 0.10) / 0.20) * 0.40; // 100% -> 60%
+  }
+  ddFrac = Math.max(0.60, Math.min(1.0, ddFrac));
 
   const atrPct = atr / price;
   let sizeFrac = 1.0;
