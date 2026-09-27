@@ -11,7 +11,7 @@ Every figure comes from the last verifying backtest at publish time. These are p
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
-|  | [2843](strategies/2843/) | Hashrate Regime Gate BTC 1D | -80.66% | -27.09% | +86.67% | 275 | 2026-09-27 |
+|  | [2843](strategies/2843/) | Hashrate Regime Gate BTC 1D | -50.66% | +827.08% | +67.07% | 315 | 2026-09-27 |
 |  | [2842](strategies/2842/) | BTC 1D Blend + On-Chain Demand Gate | -49.00% | +45.60% | +76.11% | 377 | 2026-09-27 |
 |  | [2841](strategies/2841/) | On-Chain Demand Trend BTC 1D | +104.25% | +1279.90% | +67.77% | 87 | 2026-09-27 |
 |  | [2840](strategies/2840/) | BTC 1D Blend + On-Chain Demand Composite | +23.16% | +45.60% | +18.18% | 40 | 2026-09-27 |
