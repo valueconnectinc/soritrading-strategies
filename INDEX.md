@@ -11,7 +11,7 @@ Every figure comes from the last verifying backtest at publish time. These are p
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
-|  | [2865](strategies/2865/) | BTC 4H Keltner Mean-Reversion (generalization) | +38.93% | +69.48% | +5.48% | 42 | 2026-09-27 |
+|  | [2865](strategies/2865/) | BTC 4H Keltner Mean-Reversion (generalization) | +186.13% | +2940.31% | +13.63% | 21 | 2026-09-27 |
 |  | [2864](strategies/2864/) | ETH 4H Keltner Mean-Reversion | +90.51% | +1663.94% | +29.11% | 48 | 2026-09-27 |
 |  | [2863](strategies/2863/) | ETH 4H Stochastic Mean-Reversion | -90.37% | -51.44% | +90.41% | 256 | 2026-09-27 |
 |  | [2862](strategies/2862/) | BTC 1H Intraday Bollinger Mean-Reversion | +0.02% | +22.45% | +4.09% | 20 | 2026-09-27 |
