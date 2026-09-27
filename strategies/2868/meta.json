@@ -3,25 +3,24 @@
   "name": "Keltner MR Daily BTC/ETH/SOL",
   "kind": "custom",
   "verified": {
-    "backtestId": 13001,
-    "return": 1.88,
-    "mdd": 3.87,
-    "trades": 4,
+    "backtestId": 13002,
+    "return": 18.89,
+    "mdd": 2.46,
+    "trades": 6,
     "vsBuyHold": "lose",
-    "benchRet": 3530.23,
+    "benchRet": 190.11,
     "benchBasis": "price",
     "gapPct": 0,
-    "tFrom": 1547596800,
-    "tTo": 1643500800,
+    "tFrom": 1652227200,
+    "tTo": 1790380800,
     "approxNotes": [
       "봉 내 순서는 관례(양봉 O→L→H→C·음봉 O→H→L→C) — 실순서 미상 · 봉 중 거래량 null · MDD 는 봉 마감 기준"
     ],
     "spec": {
       "ex": "binance",
-      "sym": "LINKUSDT",
+      "sym": "BTCUSDT",
       "interval": "1d",
-      "bars": 1600,
-      "end": 1643587200
+      "bars": 1600
     }
   },
   "config": null,
