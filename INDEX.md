@@ -11,7 +11,7 @@ Every figure comes from the last verifying backtest at publish time. These are p
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
-|  | [2840](strategies/2840/) | BTC 1D Blend + On-Chain Demand Composite | -31.31% | +384.58% | +47.34% | 60 | 2026-09-27 |
+|  | [2840](strategies/2840/) | BTC 1D Blend + On-Chain Demand Composite | +60.68% | +6514.73% | +33.69% | 12 | 2026-09-27 |
 | ★ | [2839](strategies/2839/) | Regime-Blend Generalization LTC/BNB 1D | +17.15% | -22.57% | +23.70% | 42 | 2026-09-27 |
 | ★ | [2838](strategies/2838/) | OBV Trend Generalization ADA/LTC 1D | +178.72% | +50.89% | +52.51% | 67 | 2026-09-27 |
 |  | [2837](strategies/2837/) | OBV Trend Generalization Test BNB/XRP 1D | +514.89% | +1675.77% | +51.20% | 65 | 2026-09-27 |
