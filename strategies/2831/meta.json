@@ -3,19 +3,18 @@
   "name": "OBV Trend + MR Defense Regime Blend 1D",
   "kind": "custom",
   "verified": {
-    "backtestId": 12646,
-    "return": 116.6,
-    "mdd": 47.76,
-    "trades": 77,
+    "backtestId": 12649,
+    "return": -3.07,
+    "mdd": 8.62,
+    "trades": 8,
     "vsBuyHold": "lose",
-    "benchRet": 305.26,
+    "benchRet": 46.95,
     "benchBasis": "price",
     "gapPct": 0,
-    "tFrom": 1660867200,
-    "tTo": 1790380800,
+    "tFrom": 1502928000,
+    "tTo": 1531180800,
     "approxNotes": [
       "봉 내 순서는 관례(양봉 O→L→H→C·음봉 O→H→L→C) — 실순서 미상 · 봉 중 거래량 null · MDD 는 봉 마감 기준",
-      "기간 종료 시 미청산 포지션 1종목 (총자산의 95.26%) — 이 수익률은 **평가액**을 포함합니다. 퇴출 수수료·거래세를 안 냈고, 마지막 봉 가격에 실제로 팔 수 있다는 보장도 없습니다(얇은 호가·상장폐지). exec.endLiquidate 로 마지막 봉 청산을 켤 수 있습니다",
       "거래량은 봉 마감에만 확정 — 봉 중 평가에서 ctx.vol/volumes 가 null 이라 거래량 조건이 걸러졌을 수 있음(봉 중에도 쓰려면 ctx.volPrev·ctx.avgVol)"
     ],
     "spec": {
@@ -23,10 +22,10 @@
       "sym": "BTCUSDT",
       "interval": "1d",
       "bars": 1500,
-      "end": 1790467200
+      "end": 1531267200
     }
   },
   "config": null,
-  "updatedAt": "2026-09-27T00:08:05.637Z",
+  "updatedAt": "2026-09-27T00:09:03.982Z",
   "publishedBy": "scripts/publish-strategies.mjs"
 }

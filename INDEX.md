@@ -11,7 +11,7 @@ Every figure comes from the last verifying backtest at publish time. These are p
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
-|  | [2831](strategies/2831/) | OBV Trend + MR Defense Regime Blend 1D | +116.60% | +305.26% | +47.76% | 77 | 2026-09-27 |
+|  | [2831](strategies/2831/) | OBV Trend + MR Defense Regime Blend 1D | -3.07% | +46.95% | +8.62% | 8 | 2026-09-27 |
 |  | [2830](strategies/2830/) | Donchian Channel Breakout BTC 1D | +32.28% | +45.60% | +41.88% | 37 | 2026-09-27 |
 |  | [2829](strategies/2829/) | On-Chain Demand + Vol-Scaled Size BTC 1D | +33.23% | +263.61% | +60.37% | 47 | 2026-09-27 |
 | ★ | [2828](strategies/2828/) | OBV Trend + On-Chain Demand De-Risk BTC 1D | +63.75% | +42.23% | +27.95% | 171 | 2026-09-26 |

@@ -13,11 +13,12 @@
  * chasing trends in bear regimes and instead only buys deep panic dips.
  * When it buys and sells: above the 200-day average it follows OBV volume-flow
  * trend (buy rising OBV + volume, exit on falling OBV). Below the 200-day
- * average it switches to band-bounce mean reversion (buy panic dip to the lower
- * Bollinger band with RSI<30, exit at the mid-band or RSI>50).
+ * average it switches to band-bounce mean reversion (buy a deep panic dip to the
+ * lower Bollinger band with RSI<25, exit at the mid-band, RSI>50, a tight 3-ATR
+ * stop, or after 10 bars — half position because bear-mode dips are risky).
  * When it does NOT work: in a choppy sideways market that hovers around the
- * 200-day average the two modes can flip back and forth and whipsaw; and in a
- * slow grind-down the MR mode still buys dips that keep falling.
+ * 200-day average the two modes can flip and whipsaw; and in a slow grind-down
+ * the MR mode still buys dips that keep falling.
  */
 function onUpdate(ctx) {
   const price = ctx.price;
@@ -31,27 +32,29 @@ function onUpdate(ctx) {
 
   // ---- BEAR regime: defensive band-bounce mean reversion ----
   if (!bull) {
+    const bb = ctx.bb(20, 2, 1);
+    const rsi = ctx.rsi(14, 1);
+    const atr = ctx.atr(14, 1);
+    if (bb == null || rsi == null || atr == null) return null;
+
     if (pos > 0) {
-      const bb = ctx.bb(20, 2, 1);
-      const rsi = ctx.rsi(14, 1);
-      const atr = ctx.atr(14, 1);
-      if (bb == null || rsi == null || atr == null) return null;
-      const mid = bb.mid;
       const entry = ctx.entryPx;
-      if (price >= mid || rsi > 50 || (entry != null && price <= entry - 6 * atr)) {
+      const held = ctx.state.mrBar != null ? ctx.i - ctx.state.mrBar : 0;
+      if (price >= bb.mid || rsi > 50 || (entry != null && price <= entry - 3 * atr) || held >= 10) {
         return { side: 'sell', qty: pos };
       }
       return null;
     }
-    const bb = ctx.bb(20, 2, 1);
-    const rsi = ctx.rsi(14, 1);
-    if (bb == null || rsi == null) return null;
+
+    // Deep panic only: well below the lower band and very oversold.
     if (price > bb.lower) return null;
-    if (rsi >= 30) return null;
+    if (rsi >= 25) return null;
     const lastTrade = ctx.state.lastTradeBar != null ? ctx.state.lastTradeBar : -1e9;
-    if (ctx.i - lastTrade < 5) return null;
+    if (ctx.i - lastTrade < 10) return null;
     ctx.state.lastTradeBar = ctx.i;
-    return { side: 'buy', qty: (ctx.cash / price) * 0.95 };
+    ctx.state.mrBar = ctx.i;
+    // Half position: bear-mode dips are riskier than bull trends.
+    return { side: 'buy', qty: (ctx.cash / price) * 0.5 };
   }
 
   // ---- BULL regime: OBV volume-flow trend (port from champion 2820) ----
