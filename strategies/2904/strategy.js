@@ -1,24 +1,23 @@
 /*
  * @coinsori-strategy v1
- * name: Dual-Mode OBV+Keltner Hybrid v3 (trailing stop)
+ * name: Dual-Mode OBV+Keltner Hybrid (validated champion)
  * ex: binance
  * syms: BTCUSDT, ETHUSDT, SOLUSDT
  * interval: 1d
  * cash: 10000
  *
- * Why this strategy: Same validated dual-mode champion (OBV trend capture in
- * uptrends + Keltner mean-reversion in chop/downtrends), but with ONE addition:
- * an ATR-based trailing stop on the trend mode. The champion's known weakness is
- * that it waits for OBV to roll over before selling, giving back a chunk of the
- * melt-up. A trailing stop locks in more of the run while keeping the defensive
- * MR mode untouched.
- * When it buys and sells: UPTREND mode buys when OBV money-flow is rising +
- * price>200SMA + volume confirms, and sells either when OBV turns down OR when
- * price falls 3x ATR from its peak since entry (trailing stop). DOWNTREND mode
- * buys a flush to the lower Keltner band and sells on snap-back to EMA20.
- * When it does NOT work: in a long flat chop near the 200-day average the regime
- * flips and whipsaws; it lags a relentless straight-line bull; the trailing stop
- * can exit a strong trend early on a normal pullback.
+ * Why this strategy: Combines two validated champions from different families into
+ * one capital-allocation strategy. In a confirmed uptrend (price above the 200-day
+ * average AND 45-day OBV money-flow rising) it runs the OBV momentum trend capture
+ * that rides melt-ups. In a downtrend or sideways regime it switches to the Keltner
+ * mean-reversion mode that buys deep flushes to the lower band and sells the snap-back.
+ * The two modes never trade against each other because they operate in opposite regimes.
+ * When it buys and sells: UPTREND mode buys when OBV is rising + price>200SMA + volume
+ * confirms, sells when OBV turns down. DOWNTREND mode buys a flush to the lower Keltner
+ * band (EMA20 - 2.5x ATR) with RSI<40 while price>200SMA, sells on snap-back to EMA20.
+ * When it does NOT work: in a long flat chop near the 200-day average the regime flips
+ * repeatedly and can whipsaw; it never catches a melt-up while in defensive mode, and
+ * it cannot beat buy-and-hold in a relentless straight-line bull.
  */
 function onUpdate(ctx) {
   const pos = ctx.position;
@@ -71,28 +70,14 @@ function onUpdate(ctx) {
   if (uptrend) {
     st.mode = 'trend';
     if (pos > 0) {
-      // Track the peak price since entry for the trailing stop.
-      const peak = st.peak != null ? Math.max(st.peak, price) : price;
-      st.peak = peak;
-      // Trailing stop: exit if price falls 3x ATR from the post-entry peak.
-      // 3x ATR is wide enough to survive normal pullbacks but locks in melt-up
-      // reversals before OBV rolls over (which can lag by many bars).
-      const trailExit = price < peak - 3 * atr;
-      if (trailExit && cd === 0) {
-        ctx.state.cd = 5;
-        ctx.state.peak = null;
-        return { side: 'sell', qty: pos };
-      }
       if (obvFalling && cd === 0) {
         ctx.state.cd = 5;
-        ctx.state.peak = null;
         return { side: 'sell', qty: pos };
       }
       return null;
     }
     if (volOk && cd === 0) {
       ctx.state.cd = 5;
-      ctx.state.peak = price;
       const qty = ctx.cash / price * 0.95 * sizeFrac;
       return { side: 'buy', qty: qty };
     }
@@ -101,7 +86,6 @@ function onUpdate(ctx) {
 
   // ---- DOWNTREND/CHOP mode: Keltner mean-reversion flush-buying ----
   st.mode = 'mr';
-  st.peak = null;
   const lower = ema20 - 2.5 * atr;
   if (pos > 0) {
     if (price > ema20) {
