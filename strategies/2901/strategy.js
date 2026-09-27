@@ -1,6 +1,6 @@
 /*
  * @coinsori-strategy v1
- * name: Dual-Mode OBV-Trend + Keltner-MR BTC 1D
+ * name: Dual-Mode OBV-Trend + Keltner-MR w/ OnChain BTC 1D
  * ex: binance
  * syms: BTCUSDT
  * interval: 1d
@@ -11,10 +11,13 @@
  * average AND 45-day OBV money-flow rising) it runs the OBV momentum trend capture
  * that rides melt-ups. In a downtrend or sideways regime it switches to the Keltner
  * mean-reversion mode that buys deep flushes to the lower band and sells the snap-back.
- * The two modes never trade against each other because they operate in opposite regimes.
- * When it buys and sells: UPTREND mode buys when OBV is rising + price>200SMA + volume
- * confirms, sells when OBV turns down. DOWNTREND mode buys a flush to the lower Keltner
- * band (EMA20 - 2.5x ATR) with RSI<40 while price>200SMA, sells on snap-back to EMA20.
+ * NEW in this version: the uptrend mode also requires BTC on-chain network activity
+ * (active addresses) to be above its 30-day average — a melt-up not backed by growing
+ * organic on-chain use is treated as fragile and not chased.
+ * When it buys and sells: UPTREND mode buys when OBV is rising + price>200SMA +
+ * volume confirms + active addresses above their 30d average, sells when OBV turns
+ * down. DOWNTREND mode buys a flush to the lower Keltner band (EMA20 - 2.5x ATR)
+ * with RSI<40 while price>200SMA, sells on snap-back to EMA20.
  * When it does NOT work: in a long flat chop near the 200-day average the regime flips
  * repeatedly and can whipsaw; it never catches a melt-up while in defensive mode, and
  * it cannot beat buy-and-hold in a relentless straight-line bull.
@@ -55,6 +58,11 @@ function onUpdate(ctx) {
   const avgV = ctx.avgVol(30);
   const volOk = avgV != null && Number.isFinite(avgV) && avgV > 0 && ctx.vol > avgV;
 
+  // On-chain network-activity confirmation (additive: null data = no filter, not a block).
+  const addr = ctx.data('addr');
+  const addrSma = ctx.data('addr_sma30');
+  const onchainOk = addr == null || addrSma == null || (Number.isFinite(addr) && Number.isFinite(addrSma) && addr > addrSma);
+
   // Regime: uptrend = price above 200-day average AND OBV money-flow rising.
   const uptrend = price > sma200 && obvRising;
 
@@ -76,7 +84,7 @@ function onUpdate(ctx) {
       }
       return null;
     }
-    if (volOk && cd === 0) {
+    if (volOk && onchainOk && cd === 0) {
       ctx.state.cd = 5;
       const qty = ctx.cash / price * 0.95 * sizeFrac;
       return { side: 'buy', qty: qty };
