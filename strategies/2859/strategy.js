@@ -1,23 +1,23 @@
 /*
  * @coinsori-strategy v1
- * name: 45d OBV Trend Relaxed Exit BTC 1D
+ * name: 45d OBV Partial Scale-Out BTC 1D
  * ex: binance
  * syms: BTCUSDT
  * interval: 1d
  * cash: 10000
  *
- * Why this strategy: The no-Fed 45-day OBV trend works on all windows but
- * still lags buy-and-hold on the recent 2023-26 melt-up (+81.6% vs +373%),
- * capturing only ~22% of the rally. Hypothesis: the 1% exit threshold on
- * 45-day OBV (0.99) fires on brief pullbacks inside a steady uptrend, then
- * re-enters late. This relaxes the exit to 0.985 so the position holds
- * through minor pullbacks and rides more of the melt-up.
- * When it buys and sells: buys when 45-day OBV is rising AND price is above
- * the 100-day average AND volume confirms. Exits fully only when 45-day OBV
- * falls by 1.5% (relaxed from 1%).
- * When it does NOT work: a relaxed exit holds longer into real downturns, so
- * drawdown is higher when OBV rolls over slowly. It also re-enters late after
- * genuine trend breaks.
+ * Why this strategy: The 45-day OBV champion exits FULLY on an OBV pullback,
+ * then re-enters late, so it captures only ~22% of the 2023-26 melt-up. A full
+ * trailing stop was tried and failed. Instead of binary full-exit, this scales
+ * out to 50% on the first OBV pullback and only exits fully if OBV keeps
+ * falling — keeping partial exposure through minor pullbacks so it rides more
+ * of a sustained uptrend while still cutting risk on real reversals.
+ * When it buys and sells: buys full on rising 45-day OBV above the 100-day
+ * average. On a 1.5% OBV drop it sells HALF; on a further 3% drop it sells the
+ * rest. Re-buys when OBV turns up again.
+ * When it does NOT work: holding a half position through a genuine top means
+ * drawdown is higher than the full-exit champion on sharp reversals, and the
+ * scale-out adds extra trades (fees).
  */
 function onUpdate(ctx) {
   const pos = ctx.position;
@@ -46,8 +46,9 @@ function onUpdate(ctx) {
   const obvNow = obvSeries[obvSeries.length - 1];
   const obvPast = obvSeries[obvSeries.length - 1 - LOOKBACK];
   const rising = obvNow > obvPast * 1.01;
-  // relaxed exit: 1.5% OBV drop instead of 1% (hold through minor pullbacks)
-  const falling = obvNow < obvPast * 0.985;
+  // first pullback: 1.5% OBV drop -> sell half; deeper 3% drop -> sell all
+  const pullback = obvNow < obvPast * 0.985;
+  const deepFall = obvNow < obvPast * 0.97;
 
   const avgV = ctx.avgVol(30);
   const volOk = avgV != null && Number.isFinite(avgV) && avgV > 0 && ctx.vol > avgV;
@@ -64,9 +65,15 @@ function onUpdate(ctx) {
   }
 
   if (pos > 0) {
-    if (falling && cd === 0) {
+    // deep fall -> exit fully
+    if (deepFall && cd === 0) {
       ctx.state.cd = 5;
       return { side: 'sell', qty: pos };
+    }
+    // first pullback -> scale out to half (only if we still hold > half)
+    if (pullback && cd === 0 && pos > ctx.position / 2) {
+      ctx.state.cd = 5;
+      return { side: 'sell', qty: pos / 2 };
     }
     return null;
   }
