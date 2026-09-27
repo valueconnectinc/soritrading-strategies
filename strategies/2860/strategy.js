@@ -1,21 +1,24 @@
 /*
  * @coinsori-strategy v1
- * name: 45d OBV No-Volume-Gate BTC 1D
+ * name: 45d OBV Much-Relaxed Exit BTC 1D
  * ex: binance
  * syms: BTCUSDT
  * interval: 1d
  * cash: 10000
  *
- * Why this strategy: The 45-day OBV champion requires current volume above the
- * 30-day average to buy. On 1D bars this can block entries on low-volume days
- * even when the OBV trend is clearly up, contributing to the champion's lag on
- * the 2023-26 melt-up. This removes the volume gate to test whether it is
- * helping or hurting — the OBV trend + 100-SMA gate may be sufficient alone.
+ * Why this strategy: The champion 45d OBV trend (2858) only captures ~22% of
+ * the recent 2023-26 melt-up (+81.6% vs hold +373%) because its 1.5% OBV exit
+ * threshold (0.985) fires on minor pullbacks inside a strong uptrend, then
+ * re-enters late. This relaxes the exit to 0.97 so the position holds through
+ * deeper pullbacks and rides more of the melt-up, while keeping the 45d
+ * lookback (the 60d-lookback variant failed, so lookback stays at 45d).
  * When it buys and sells: buys when 45-day OBV is rising AND price is above
- * the 100-day average (no volume requirement). Exits fully when 45-day OBV
- * falls by 1.5%.
- * When it does NOT work: without the volume gate, entries can fire on weak,
- * low-conviction days, adding whipsaw and more losing trades in chop.
+ * the 100-day average AND volume confirms. Exits fully only when 45-day OBV
+ * falls by 3% (relaxed from 1.5%).
+ * When it does NOT work: a much-relaxed exit holds longer into real downturns,
+ * so drawdown is higher when OBV rolls over slowly — the risk is the 2022 bear
+ * where a slow exit gives back gains. It also re-enters late after genuine
+ * trend breaks.
  */
 function onUpdate(ctx) {
   const pos = ctx.position;
@@ -44,7 +47,11 @@ function onUpdate(ctx) {
   const obvNow = obvSeries[obvSeries.length - 1];
   const obvPast = obvSeries[obvSeries.length - 1 - LOOKBACK];
   const rising = obvNow > obvPast * 1.01;
-  const falling = obvNow < obvPast * 0.985;
+  // much-relaxed exit: 3% OBV drop instead of 1.5% (hold through deeper pullbacks to capture more melt-up)
+  const falling = obvNow < obvPast * 0.97;
+
+  const avgV = ctx.avgVol(30);
+  const volOk = avgV != null && Number.isFinite(avgV) && avgV > 0 && ctx.vol > avgV;
 
   const st = ctx.state;
   let cd = st.cd || 0;
@@ -65,8 +72,7 @@ function onUpdate(ctx) {
     return null;
   }
 
-  // no volume gate: OBV trend + 100-SMA only
-  if (rising && price > sma100 && cd === 0) {
+  if (rising && price > sma100 && volOk && cd === 0) {
     ctx.state.cd = 5;
     const qty = ctx.cash / price * 0.95 * sizeFrac;
     return { side: 'buy', qty: qty };
