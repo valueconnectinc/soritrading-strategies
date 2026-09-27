@@ -1,42 +1,78 @@
 /*
  * @coinsori-strategy v1
- * name: Fear-Greed Contrarian BTC 1D
+ * name: Momentum Rotation Defensive 1D
  * ex: binance
- * syms: BTCUSDT
+ * syms: BTCUSDT, ETHUSDT, BNBUSDT, ADAUSDT
  * interval: 1d
  * cash: 10000
  *
- * Why this strategy: A contrarian sentiment family — different from the momentum and
- * mean-reversion families already built. The Crypto Fear & Greed index measures crowd
- * emotion (0=extreme fear, 100=extreme greed). Crowds are systematically wrong at the
- * extremes: deep fear marks capitulation bottoms, euphoric greed marks blow-off tops.
- * This strategy buys only when fear is extreme AND price is below its 200-day average
- * (a real capitulation, not a dip in an uptrend), and exits when greed becomes extreme.
- * When it buys and sells: BUY when fear_greed < 20 and price < 200-day average (extreme
- * fear + downtrend = capitulation). SELL everything when fear_greed > 80 (extreme greed
- * = bubble exit). Between extremes it holds.
- * When it does NOT work: in a strong uptrend that never prints deep fear, it sits in
- * cash and misses the whole move; in a grinding bear market that stays in the 20-80
- * range it never buys the bottom. It only profits when sentiment swings to the poles.
+ * Why this strategy: Cross-sectional momentum — capital rotates to the strongest
+ * of several crypto assets, betting that relative strength persists from month to
+ * month. Unlike a single-asset trend strategy, rotation rides whichever asset is
+ * melting up, directly attacking the melt-up-lag weakness of the dual-mode champion.
+ * When it buys and sells: every 60 daily bars it ranks the basket by trailing 90-day
+ * return and holds the single strongest asset, but ONLY if that asset's momentum is
+ * positive. If the leader's momentum is negative (broad bear market), it holds cash.
+ * It sells any position that loses the lead or turns negative.
+ * When it does NOT work: in a tight chop where leadership flips every month it churns
+ * fees without edge; and the single-winner bet concentrates risk (no diversification).
  */
 function onUpdate(ctx) {
-  const fg = ctx.data('fear_greed');
-  const pos = ctx.position;
-  const price = ctx.price;
-  if (fg == null) return null;                     // no sentiment data yet — wait
-  if (!Number.isFinite(price) || price <= 0) return null;
+  const syms = ctx.syms;
+  if (!syms || syms.length < 2) return null;
 
-  const sma200 = ctx.sma(200, 1);
-  if (sma200 == null) return null;
+  const MOM = 90;    // momentum lookback in bars (3 months on 1d)
+  const REBAL = 60;  // rebalance every N bars
 
-  if (pos > 0) {
-    // Exit only at extreme greed — let the position ride the recovery, don't overtrade.
-    if (fg > 80) return { side: 'sell', qty: pos };
-    return null;
+  // Rebalance only on schedule; otherwise do nothing.
+  if (ctx.i % REBAL !== 0) return null;
+
+  // Score every symbol by trailing return.
+  const scored = [];
+  for (const s of syms) {
+    const m = ctx.market(s);
+    if (!m) continue;
+    const closes = m.closes;
+    if (!closes || closes.length < MOM + 1) continue;
+    const c0 = closes[closes.length - 1];
+    const c1 = closes[closes.length - 1 - MOM];
+    if (!Number.isFinite(c0) || !Number.isFinite(c1) || c1 <= 0) continue;
+    scored.push({ s: s, ret: c0 / c1 - 1 });
   }
-  // Buy only at extreme fear during a downtrend (capitulation, not a bull dip).
-  if (fg < 20 && price < sma200) {
-    return { side: 'buy', qty: ctx.cash / price * 0.95 };
+  if (scored.length < 2) return null;
+
+  scored.sort((a, b) => b.ret - a.ret);
+  const best = scored[0];
+
+  const orders = [];
+
+  // Defensive mode: if the strongest asset has negative momentum, stand in cash.
+  // (In a broad bear everything falls; holding the 'least-bad' still loses.)
+  if (best.ret <= 0) {
+    for (const s of syms) {
+      const p = ctx.pos(s);
+      if (p > 0) orders.push({ sym: s, side: 'sell', qty: p });
+    }
+    return orders.length ? orders : null;
   }
-  return null;
+
+  // Sell any position not in the lead.
+  for (const s of syms) {
+    const p = ctx.pos(s);
+    if (p > 0 && s !== best.s) {
+      orders.push({ sym: s, side: 'sell', qty: p });
+    }
+  }
+
+  // Buy/keep the leader with the full portfolio.
+  const m = ctx.market(best.s);
+  if (!m || !Number.isFinite(m.price) || m.price <= 0) return orders.length ? orders : null;
+  const have = ctx.pos(best.s) || 0;
+  const want = (ctx.cash / m.price) * 0.98;
+  const diff = want - have;
+  if (diff > 0.0001) {
+    orders.push({ sym: best.s, side: 'buy', qty: diff });
+  }
+
+  return orders.length ? orders : null;
 }
