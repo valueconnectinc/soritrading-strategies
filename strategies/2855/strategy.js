@@ -1,23 +1,19 @@
 /*
  * @coinsori-strategy v1
- * name: Fed-Filtered OBV Trend (45d lookback) BTC 1D
+ * name: Fed-Filtered OBV Trend (40d lookback) BTC 1D
  * ex: binance
  * syms: BTCUSDT
  * interval: 1d
  * cash: 10000
  *
- * Why this strategy: The Fed not-hiking macro gate cuts hiking-bear drawdown
- * (MDD 45->39 on the 2017-21 window) but the 30-day OBV trend flips often,
- * causing high turnover (129 trades on the 2021-26 window). A longer 45-day
- * OBV lookback smooths the trend signal so entries/exits happen on more
- * sustained volume flows rather than short-term noise.
- * When it buys and sells: buys when 45-day OBV is rising AND price is above
+ * Why this strategy: Sensitivity check for the OBV lookback length. The
+ * 45-day version beat buy-and-hold on all windows; this 40-day variant tests
+ * whether the edge is robust to a nearby parameter value or a knife-edge.
+ * When it buys and sells: buys when 40-day OBV is rising AND price is above
  * the 100-day average AND volume confirms AND the Fed is not hiking. Exits
- * fully when 45-day OBV turns down OR a Fed hiking cycle begins.
- * When it does NOT work: a slower OBV signal reacts later to trend changes,
- * so it can give back more of a rally before exiting and lag the start of a
- * new uptrend. Crypto can also melt up while the Fed hikes, which the gate
- * would sit out.
+ * when 40-day OBV turns down OR a Fed hiking cycle begins.
+ * When it does NOT work: same regime risks as the family — lags V-shaped
+ * liquidity rallies and sits out melt-ups while the Fed hikes.
  */
 function onUpdate(ctx) {
   const pos = ctx.position;
@@ -28,14 +24,13 @@ function onUpdate(ctx) {
   const atr = ctx.atr(14, 1);
   if (sma100 == null || atr == null) return null;
 
-  // Fed macro gate: hiking if current rate is above 30-day-ago level by 0.25pp
   const now = Number(ctx.data('fed'));
   const lag = Number(ctx.data('fed_lag30'));
   if (!Number.isFinite(now) || now <= 0) return null;
   if (!Number.isFinite(lag) || lag <= 0) return null;
   const hiking = now > lag + 0.25;
 
-  const LOOKBACK = 45; // 45-day OBV trend, smoother than 30 to cut churn
+  const LOOKBACK = 40; // sensitivity check vs 45
   const closes = ctx.closes;
   const vols = ctx.volumes;
   if (!closes || !vols || closes.length < LOOKBACK + 2) return null;
@@ -63,7 +58,6 @@ function onUpdate(ctx) {
   if (cd > 0) cd--;
   ctx.state.cd = cd;
 
-  // Gentle volatility-target sizing: full size up to 6% ATR, scale to 50% at 12%.
   const atrPct = atr / price;
   let sizeFrac = 1.0;
   if (atrPct > 0.06) {
