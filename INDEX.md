@@ -11,7 +11,7 @@ Every figure comes from the last verifying backtest at publish time. These are p
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
-|  | [2905](strategies/2905/) | Deep-Pullback Buy-the-Dip BTC 1D | -61.94% | +263.61% | +81.48% | 92 | 2026-09-27 |
+|  | [2905](strategies/2905/) | Deep-Pullback Buy-the-Dip BTC 1D | -24.57% | +1279.90% | +56.58% | 48 | 2026-09-27 |
 |  | [2904](strategies/2904/) | Vol-Targeted Long-Only BTC/ETH/SOL 1D | +58.61% | +263.61% | +62.06% | 68 | 2026-09-27 |
 |  | [2903](strategies/2903/) | Dual-Mode OBV+Keltner Hybrid v2 | +331.89% | +2566.62% | +61.79% | 42 | 2026-09-27 |
 | — | [2902](strategies/2902/) | Fear-Greed Contrarian BTC 1D | +143.90% | — | +68.82% | 18 | 2026-09-27 |
