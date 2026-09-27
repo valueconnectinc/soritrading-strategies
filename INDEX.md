@@ -11,7 +11,7 @@ Every figure comes from the last verifying backtest at publish time. These are p
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
-| ★ | [2867](strategies/2867/) | Keltner MR generalization LINK/LTC/DOGE/AVAX/BNB | +78.85% | +59.65% | +8.74% | 34 | 2026-09-27 |
+| ★ | [2867](strategies/2867/) | Keltner MR generalization LINK/LTC/DOGE/AVAX/BNB | +11.38% | +10.65% | +12.61% | 18 | 2026-09-27 |
 |  | [2866](strategies/2866/) | Keltner MR generalization ADA/DOT/XRP | +104.98% | +149.62% | +5.19% | 34 | 2026-09-27 |
 |  | [2865](strategies/2865/) | BTC 4H Keltner Mean-Reversion (generalization) | +186.13% | +2940.31% | +13.63% | 21 | 2026-09-27 |
 |  | [2864](strategies/2864/) | ETH 4H Keltner Mean-Reversion | +90.51% | +1663.94% | +29.11% | 48 | 2026-09-27 |

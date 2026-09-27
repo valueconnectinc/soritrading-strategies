@@ -1,15 +1,17 @@
 /*
  * @coinsori-strategy v1
- * name: Keltner MR generalization LINK/LTC/DOGE/AVAX/BNB
+ * name: Keltner MR ATR-VolTarget LINK/LTC/DOGE/AVAX/BNB
  * ex: binance
  * syms: LINKUSDT, LTCUSDT, DOGEUSDT, AVAXUSDT, BNBUSDT
  * interval: 4h
  * cash: 10000
  *
- * Why this strategy: The ATR-adaptive Keltner mean-reversion recipe was validated
- * positive ~20/22 windows on ETH/BTC/SOL/ADA/DOT/XRP 4h (only XLM failed). This
- * completes the family's coverage map by running the SAME recipe on 5 fresh
- * assets (LINK, LTC, DOGE, AVAX, BNB) — no asset-specific tuning.
+ * Why this strategy: The Keltner mean-reversion recipe was validated positive
+ * ~29/32 windows across 11 assets on 4hches. Its one weak spot is HIGH DRAWDOWN
+ * on volatile assets (DOGE 30-33%, AVAX bear -15%). This version keeps the exact
+ * proven entry/exit and adds ATR-based position sizing: risk a fixed dollar
+ * fraction of equity per trade, so volatile coins automatically get smaller
+ * positions. This attacks the MDD directly without touching the validated logic.
  * When it buys and sells: buys a flush to the lower Keltner band (EMA20 - 2.5x
  * ATR) with RSI<40 while price is above the 200-bar average; sells on the
  * snap-back to the middle band (EMA20). A 2-bar cooldown prevents re-buying.
@@ -25,7 +27,7 @@ function onUpdate(ctx) {
   const atr = ctx.atr(14, 1);
   const sma200 = ctx.sma(200, 1);
   const rsi = ctx.rsi(14, 1);
-  if (ema20 == null || atr == null || sma200 == null || rsi == null) return null;
+  if (ema20 == null || atr == null || sma200 == null || rsi == null || atr <= 0) return null;
 
   const lower = ema20 - 2.5 * atr;
   const st = ctx.state;
@@ -42,7 +44,12 @@ function onUpdate(ctx) {
 
   if (price > sma200 && price <= lower && rsi < 40) {
     st.cooldown = null;
-    return { side: 'buy', qty: ctx.cash / price * 0.9 };
+    // ATR-scaled size: risk 1.5% of equity per trade, in coin units.
+    // High-vol assets have large ATR -> smaller position -> lower drawdown.
+    const riskEq = 0.015 * ctx.cash;
+    const qty = riskEq / atr;
+    const maxQty = ctx.cash / price * 0.9;
+    return { side: 'buy', qty: Math.min(qty, maxQty) };
   }
   return null;
 }
