@@ -1,0 +1,30 @@
+{
+  "id": 2905,
+  "name": "Deep-Pullback Buy-the-Dip BTC 1D",
+  "kind": "custom",
+  "verified": {
+    "backtestId": 13204,
+    "return": -61.94,
+    "mdd": 81.48,
+    "trades": 92,
+    "vsBuyHold": "lose",
+    "benchRet": 263.61,
+    "benchBasis": "price",
+    "gapPct": 0,
+    "tFrom": 1531267200,
+    "tTo": 1660780800,
+    "approxNotes": [
+      "봉 내 순서는 관례(양봉 O→L→H→C·음봉 O→H→L→C) — 실순서 미상 · 봉 중 거래량 null · MDD 는 봉 마감 기준"
+    ],
+    "spec": {
+      "ex": "binance",
+      "sym": "BTCUSDT",
+      "interval": "1d",
+      "bars": 1500,
+      "end": 1660867200
+    }
+  },
+  "config": null,
+  "updatedAt": "2026-09-27T08:46:59.818Z",
+  "publishedBy": "scripts/publish-strategies.mjs"
+}
