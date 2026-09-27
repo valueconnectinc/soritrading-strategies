@@ -4,14 +4,14 @@ Every strategy whose backtest **finished and actually traded** is published here
 Nothing is filtered out by return — the ones that lost money are part of the record.
 Entries stay after a strategy is removed from our own workspace — this is a log, and deleting the record would leave only the survivors.
 
-**★ marks a strategy that out-returned buy & hold over the same window** — 365 of 1264 right now.
+**★ marks a strategy that out-returned buy & hold over the same window** — 364 of 1264 right now.
 `—` means the comparison **could not be made**: the engine does not compute a benchmark for multi-symbol, futures, or multi-leg runs. That is *unknown*, not *lost*, and it is 197 of them right now.
 
 Every figure comes from the last verifying backtest at publish time. These are past results over historical data. Nothing here is promised or assured about the future, and none of it is investment advice.
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
-| ★ | [2872](strategies/2872/) | Onchain Demand Trend BTC 1D (re-validate) | +68.99% | +46.95% | +38.99% | 18 | 2026-09-27 |
+|  | [2872](strategies/2872/) | Onchain Demand Trend BTC 1D (re-validate) | +118.58% | +190.11% | +42.13% | 91 | 2026-09-27 |
 |  | [2871](strategies/2871/) | DIAG multi-asset probe | +18.89% | +305.26% | +2.46% | 6 | 2026-09-27 |
 |  | [2870](strategies/2870/) | BB Squeeze Breakout BTC 1D | -4.49% | +133.21% | +28.57% | 14 | 2026-09-27 |
 |  | [2868](strategies/2868/) | Keltner MR Daily BTC/ETH/SOL | +18.89% | +190.11% | +2.46% | 6 | 2026-09-27 |
