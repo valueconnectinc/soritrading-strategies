@@ -11,7 +11,7 @@ Every figure comes from the last verifying backtest at publish time. These are p
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
-|  | [2904](strategies/2904/) | Vol-Targeted Long-Only BTC/ETH/SOL 1D | +35.67% | +239.04% | +16.99% | 12 | 2026-09-27 |
+|  | [2904](strategies/2904/) | Vol-Targeted Long-Only BTC/ETH/SOL 1D | +29.23% | +305.26% | +34.04% | 155 | 2026-09-27 |
 |  | [2903](strategies/2903/) | Dual-Mode OBV+Keltner Hybrid v2 | +331.89% | +2566.62% | +61.79% | 42 | 2026-09-27 |
 | — | [2902](strategies/2902/) | Fear-Greed Contrarian BTC 1D | +143.90% | — | +68.82% | 18 | 2026-09-27 |
 | ★ | [2901](strategies/2901/) | Long-Horizon Momentum 60d ROC BTC/ETH 1D | +189.93% | +45.60% | +17.46% | 107 | 2026-09-27 |
