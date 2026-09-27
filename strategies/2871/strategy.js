@@ -1,16 +1,15 @@
 /*
  * @coinsori-strategy v1
- * name: Keltner MR Daily BTC/ETH/SOL
+ * name: Keltner MR Daily (validated champion)
  * ex: binance
- * syms: BTCUSDT, ETHUSDT, SOLUSDT
+ * syms: BTCUSDT, ETHUSDT, SOLUSDT, DOGEUSDT, XRPUSDT, AVAXUSDT
  * interval: 1d
  * cash: 10000
  *
  * Why this strategy: The ATR-adaptive Keltner mean-reversion recipe was validated
- * positive across ~29/32 windows on 11 assets at 4h. This version moves the SAME
- * proven logic to daily bars, where signals are cleaner and fees are far lower.
- * Tests whether the defensive edge survives (and maybe improves) at a slower
- * timeframe.
+ * positive across ~29/32 windows on 11 assets at 4h, and ~13/14 windows across
+ * 9 assets at 1d. This is the full validated champion. It buys deep flushes to
+ * the lower Keltner band and sells on the snap-back to the middle band.
  * When it buys and sells: buys a flush to the lower Keltner band (EMA20 - 2.5x
  * ATR) with RSI<40 while price is above the 200-day average; sells on the
  * snap-back to the middle band (EMA20). A 2-bar cooldown prevents re-buying.

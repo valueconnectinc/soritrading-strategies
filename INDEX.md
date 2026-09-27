@@ -11,7 +11,7 @@ Every figure comes from the last verifying backtest at publish time. These are p
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
-|  | [2871](strategies/2871/) | DIAG multi-asset probe | +1.76% | +1831.22% | +6.66% | 11 | 2026-09-27 |
+|  | [2871](strategies/2871/) | DIAG multi-asset probe | +4.72% | +105.04% | +3.91% | 4 | 2026-09-27 |
 |  | [2870](strategies/2870/) | BB Squeeze Breakout BTC 1D | -4.49% | +133.21% | +28.57% | 14 | 2026-09-27 |
 |  | [2868](strategies/2868/) | Keltner MR Daily BTC/ETH/SOL | +18.89% | +190.11% | +2.46% | 6 | 2026-09-27 |
 | ★ | [2867](strategies/2867/) | Keltner MR generalization LINK/LTC/DOGE/AVAX/BNB | +35.09% | -23.39% | +6.30% | 30 | 2026-09-27 |
