@@ -3,24 +3,25 @@
   "name": "DIAG multi-asset probe",
   "kind": "custom",
   "verified": {
-    "backtestId": 13017,
-    "return": 4.72,
-    "mdd": 3.91,
-    "trades": 4,
+    "backtestId": 13022,
+    "return": 4.63,
+    "mdd": 4.38,
+    "trades": 10,
     "vsBuyHold": "lose",
-    "benchRet": 105.04,
+    "benchRet": 265.75,
     "benchBasis": "price",
     "gapPct": 0,
-    "tFrom": 1660867200,
-    "tTo": 1790380800,
+    "tFrom": 1513987200,
+    "tTo": 1652140800,
     "approxNotes": [
       "봉 내 순서는 관례(양봉 O→L→H→C·음봉 O→H→L→C) — 실순서 미상 · 봉 중 거래량 null · MDD 는 봉 마감 기준"
     ],
     "spec": {
       "ex": "binance",
-      "sym": "LINKUSDT",
+      "sym": "ETHUSDT",
       "interval": "1d",
-      "bars": 1500
+      "bars": 1600,
+      "end": 1652227200
     }
   },
   "config": null,
