@@ -3,7 +3,7 @@
   "name": "45d OBV Fast Re-Entry BTC 1D",
   "kind": "custom",
   "verified": {
-    "backtestId": 12904,
+    "backtestId": 12907,
     "return": 89.91,
     "mdd": 31.78,
     "trades": 29,
