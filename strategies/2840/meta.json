@@ -3,24 +3,24 @@
   "name": "BTC 1D Blend + On-Chain Demand Composite",
   "kind": "custom",
   "verified": {
-    "backtestId": 12727,
-    "return": 31.87,
-    "mdd": 30.33,
+    "backtestId": 12730,
+    "return": -31.31,
+    "mdd": 47.34,
     "trades": 60,
     "vsBuyHold": "lose",
-    "benchRet": 1223.8,
+    "benchRet": 384.58,
     "benchBasis": "price",
     "gapPct": 0,
-    "tFrom": 1531267200,
+    "tFrom": 1617667200,
     "tTo": 1790380800,
     "approxNotes": [
       "봉 내 순서는 관례(양봉 O→L→H→C·음봉 O→H→L→C) — 실순서 미상 · 봉 중 거래량 null · MDD 는 봉 마감 기준"
     ],
     "spec": {
       "ex": "binance",
-      "sym": "BTCUSDT",
+      "sym": "SOLUSDT",
       "interval": "1d",
-      "bars": 3000,
+      "bars": 2000,
       "end": 1790467200
     }
   },
