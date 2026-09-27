@@ -13,8 +13,10 @@
  * mean-reversion mode that buys deep flushes to the lower band and sells the snap-back.
  * The two modes never trade against each other because they operate in opposite regimes.
  * When it buys and sells: UPTREND mode buys when OBV is rising + price>200SMA + volume
- * confirms, sells when OBV turns down. DOWNTREND mode buys a flush to the lower Keltner
- * band (EMA20 - 2.5x ATR) with RSI<40 while price>200SMA, sells on snap-back to EMA20.
+ * confirms, sells when OBV turns down OR price drops below the 100-day average (a
+ * trend-following exit that cuts deep drawdowns). DOWNTREND mode buys a flush to the
+ * lower Keltner band (EMA20 - 2.5x ATR) with RSI<40 while price>200SMA, sells on
+ * snap-back to EMA20.
  * When it does NOT work: in a long flat chop near the 200-day average the regime flips
  * repeatedly and can whipsaw; it never catches a melt-up while in defensive mode, and
  * it cannot beat buy-and-hold in a relentless straight-line bull.
@@ -27,8 +29,9 @@ function onUpdate(ctx) {
   const ema20 = ctx.ema(20, 1);
   const atr = ctx.atr(14, 1);
   const sma200 = ctx.sma(200, 1);
+  const sma100 = ctx.sma(100, 1);
   const rsi = ctx.rsi(14, 1);
-  if (ema20 == null || atr == null || sma200 == null || rsi == null || atr <= 0) return null;
+  if (ema20 == null || atr == null || sma200 == null || sma100 == null || rsi == null || atr <= 0) return null;
 
   const st = ctx.state;
   const closes = ctx.closes;
@@ -70,7 +73,10 @@ function onUpdate(ctx) {
   if (uptrend) {
     st.mode = 'trend';
     if (pos > 0) {
-      if (obvFalling && cd === 0) {
+      // Exit when money-flow turns down OR price breaks the 100-day average.
+      // The 100-SMA exit cuts deep bear drawdowns (2021-22 top, 2018 bear) that
+      // cost the bull-window MDD 51-62%; a healthy bull stays above it.
+      if ((obvFalling || price < sma100) && cd === 0) {
         ctx.state.cd = 5;
         return { side: 'sell', qty: pos };
       }
