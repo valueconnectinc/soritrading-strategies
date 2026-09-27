@@ -11,7 +11,7 @@ Every figure comes from the last verifying backtest at publish time. These are p
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
-| ★ | [2838](strategies/2838/) | OBV Trend Generalization ADA/LTC 1D | -26.09% | -84.75% | +62.53% | 14 | 2026-09-27 |
+| ★ | [2838](strategies/2838/) | OBV Trend Generalization ADA/LTC 1D | +178.72% | +50.89% | +52.51% | 67 | 2026-09-27 |
 |  | [2837](strategies/2837/) | OBV Trend Generalization Test BNB/XRP 1D | +514.89% | +1675.77% | +51.20% | 65 | 2026-09-27 |
 | ★ | [2836](strategies/2836/) | OBV Trend + RSI Entry Filter BTC 1D | +328.47% | +263.61% | +39.14% | 34 | 2026-09-27 |
 | ★ | [2835](strategies/2835/) | Price-Momentum Trend ROC BTC 1D | +597.04% | +263.61% | +44.62% | 44 | 2026-09-27 |
