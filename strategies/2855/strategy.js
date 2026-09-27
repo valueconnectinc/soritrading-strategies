@@ -1,26 +1,26 @@
 /*
  * @coinsori-strategy v1
- * name: OBV Champion + On-Chain Entry Gate BTC 1D
+ * name: OBV Trend + Fed & On-Chain Dual Gate BTC 1D
  * ex: binance
  * syms: BTCUSDT
  * interval: 1d
  * cash: 10000
  *
  * Why this strategy: The OBV volume-flow trend captures bull momentum but
- * enters during choppy/bear regimes too. The on-chain demand signal (active
- * addresses AND hashrate above their 30-day averages) filters ENTRIES only —
- * it never forces an exit, so it cannot cause whipsaw. This keeps the
- * champion's bull capture and long-trend ride while skipping entries that
- * happen when network demand is weak.
+ * carries high drawdown by staying long through hiking-period bears and weak
+ * network-demand regimes. Two independent defensive gates each proved helpful
+ * on their own: the Fed not-hiking macro gate (cut MDD 45->39 on the hiking
+ * window) and the on-chain demand gate (active addresses AND hashrate above
+ * their 30-day averages). Combining both filters ENTRIES only — neither ever
+ * forces an exit — so they skip weak entries without adding exit whipsaw.
  * When it buys and sells: buys when 30-day OBV is rising AND price is above
- * the 100-day average AND volume confirms AND both active addresses and
- * hashrate are above their 30-day averages. Exits only when 30-day OBV turns
- * down (the on-chain gate never exits — exit-only whipsaw is what killed the
- * previous version).
- * When it does NOT work: on-chain data lags price, so in sharp V-shaped
- * liquidity rallies the gate may keep the strategy in cash at the start of a
- * bull (it can underperform pure buy-and-hold in strong bulls). The dual gate
- * is strict, so entries are rarer than the pure champion.
+ * the 100-day average AND volume confirms AND the Fed is not hiking AND both
+ * active addresses and hashrate are above their 30-day averages. Exits only
+ * when 30-day OBV turns down.
+ * When it does NOT work: both gates are slow and lag price, so in sharp
+ * V-shaped liquidity rallies the strategy may sit in cash while price melts
+ * up (it can underperform buy-and-hold in strong bulls). The dual gate is
+ * strict, so entries are rarer than the pure champion.
  */
 function onUpdate(ctx) {
   const pos = ctx.position;
@@ -31,7 +31,14 @@ function onUpdate(ctx) {
   const atr = ctx.atr(14, 1);
   if (sma100 == null || atr == null) return null;
 
-  // on-chain entry gate: active addresses AND hashrate above 30-day avg
+  // Fed gate: hiking if current rate is above 30-day-ago level by 0.25pp
+  const now = Number(ctx.data('fed'));
+  const lag = Number(ctx.data('fed_lag30'));
+  if (!Number.isFinite(now) || now <= 0) return null;
+  if (!Number.isFinite(lag) || lag <= 0) return null;
+  const hiking = now > lag + 0.25;
+
+  // On-chain entry gate: active addresses AND hashrate above 30-day avg
   const addr = Number(ctx.data('addr'));
   const addrSm = Number(ctx.data('addr_sma30'));
   const hr = Number(ctx.data('hashrate'));
@@ -69,6 +76,7 @@ function onUpdate(ctx) {
   if (cd > 0) cd--;
   ctx.state.cd = cd;
 
+  // Gentle volatility-target sizing: full size up to 6% ATR, scale to 50% at 12%.
   const atrPct = atr / price;
   let sizeFrac = 1.0;
   if (atrPct > 0.06) {
@@ -83,7 +91,7 @@ function onUpdate(ctx) {
     return null;
   }
 
-  if (rising && price > sma100 && volOk && gateOk && cd === 0) {
+  if (rising && price > sma100 && volOk && !hiking && gateOk && cd === 0) {
     ctx.state.cd = 5;
     const qty = ctx.cash / price * 0.95 * sizeFrac;
     return { side: 'buy', qty: qty };
