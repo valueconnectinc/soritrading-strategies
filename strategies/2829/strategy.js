@@ -1,26 +1,24 @@
 /*
  * @coinsori-strategy v1
- * name: On-Chain Demand + Vol-Scaled Size BTC 1D
+ * name: Composite On-Chain Demand BTC 1D
  * ex: binance
  * syms: BTCUSDT
  * interval: 1d
  * cash: 10000
  *
- * Why this strategy: On-chain active-address demand (30-day smoothed) is a
- * validated defensive trend signal — it rises in healthy bulls and leads price
- * in capitulation, so it loses less in bears than holding. Its known weakness is
- * high drawdown in the sharpest reversals (demand lags price). This version keeps
- * the pure demand signal but adds GENTLE volatility-scaled sizing: full position
- * in normal volatility, scaled down only in extreme ATR stress (never below half).
- * Sizing is a lever not yet tried on this family — it should trim the tail
- * drawdown without cutting off the demand trend early.
- * When it buys and sells: holds Bitcoin while 30-day-smoothed active addresses
- * are rising vs ~30 days earlier; sells to cash when they turn down. Position
- * size is scaled down linearly when ATR exceeds 6% of price, never below half.
+ * Why this strategy: Two independent on-chain fundamentals — active network
+ * addresses (user demand) and miner hashrate (producer commitment) — each rise
+ * in healthy bull phases and stall or fall in capitulation. Requiring BOTH to
+ * confirm is a stronger, more selective signal than either alone, and selling
+ * when EITHER turns down exits faster than a single-signal version. A short
+ * cooldown after each exit prevents re-entry whipsaw when the signals flicker.
+ * When it buys and sells: holds Bitcoin only while BOTH the 30-day-smoothed
+ * active-address count AND the 30-day-smoothed hashrate are rising vs ~30 days
+ * earlier. Sells to cash when EITHER signal turns down, then waits a cooldown
+ * before re-entering.
  * When it does NOT work: on-chain data is daily and lags price, so in a sharp
- * V-shaped melt-up it re-enters late and trails buy-and-hold; and the demand
- * signal can stay high for a while after price tops (drawdown remains in the
- * first leg of a crash).
+ * V-shaped melt-up it re-enters late and trails buy-and-hold; and requiring both
+ * signals means it is fully out during mixed regimes where only one is rising.
  */
 function onUpdate(ctx) {
   const pos = ctx.position;
@@ -28,38 +26,44 @@ function onUpdate(ctx) {
   if (!Number.isFinite(price) || price <= 0) return null;
 
   const addr = Number(ctx.data('addr_sma30'));
+  const hr = Number(ctx.data('hashrate_sma30'));
   if (!Number.isFinite(addr) || addr <= 0) return null;
+  if (!Number.isFinite(hr) || hr <= 0) return null;
 
+  // Rolling history of both smoothed series for the "vs ~30 bars ago" comparison.
   const st = ctx.state;
   if (!st.aHist) st.aHist = [];
+  if (!st.hHist) st.hHist = [];
   st.aHist.push(addr);
+  st.hHist.push(hr);
   if (st.aHist.length > 30) st.aHist.shift();
-  if (st.aHist.length < 30) return null;
+  if (st.hHist.length > 30) st.hHist.shift();
+  if (st.aHist.length < 30 || st.hHist.length < 30) return null;
   const aPast = st.aHist[0];
+  const hPast = st.hHist[0];
 
-  const rising = addr > aPast * 1.01;
-  const falling = addr < aPast * 0.99;
+  // Hysteresis band on the smoothed series (1%) — fewer, more decisive flips.
+  const aRising = addr > aPast * 1.01;
+  const aFalling = addr < aPast * 0.99;
+  const hRising = hr > hPast * 1.01;
+  const hFalling = hr < hPast * 0.99;
 
-  // GENTLE volatility-target sizing: full size up to 6% ATR; scale linearly to
-  // 50% size at 12% ATR. Only extreme stress cuts exposure, never below half.
-  const atr = ctx.atr(14, 1);
-  let sizeFrac = 1.0;
-  if (atr != null && Number.isFinite(atr) && atr > 0) {
-    const atrPct = atr / price;
-    if (atrPct > 0.06) {
-      sizeFrac = Math.max(0.5, 1.0 - (atrPct - 0.06) / 0.06);
-    }
-  }
+  // Cooldown after each exit to avoid re-entry whipsaw (10 bars).
+  let cd = st.cd || 0;
+  if (cd > 0) cd--;
+  st.cd = cd;
 
   if (pos > 0) {
-    if (falling) {
+    if (aFalling || hFalling) {
+      st.cd = 10;
       return { side: 'sell', qty: pos };
     }
     return null;
   }
 
-  if (rising) {
-    return { side: 'buy', qty: ctx.cash / price * 0.95 * sizeFrac };
+  if (cd > 0) return null;
+  if (aRising && hRising) {
+    return { side: 'buy', qty: ctx.cash / price * 0.95 };
   }
   return null;
 }
