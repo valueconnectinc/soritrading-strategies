@@ -11,7 +11,7 @@ Every figure comes from the last verifying backtest at publish time. These are p
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
-|  | [2884](strategies/2884/) | Dual Onchain-Demand + OBV BTC 1D | +426.11% | +1279.90% | +57.42% | 95 | 2026-09-27 |
+|  | [2884](strategies/2884/) | Dual Onchain-Demand + OBV BTC 1D | -28.62% | +105.65% | +53.27% | 80 | 2026-09-27 |
 |  | [2883](strategies/2883/) | Hybrid OBV-Trend + Keltner-MR BTC 1D | +56.16% | +1279.90% | +23.54% | 290 | 2026-09-27 |
 | ★ | [2882](strategies/2882/) | 45d OBV Trend SMA50-Gate BTC 1D | +1810.62% | +1279.90% | +43.09% | 46 | 2026-09-27 |
 |  | [2881](strategies/2881/) | Donchian Breakout BTC 1D | +6.25% | +45.60% | +43.33% | 45 | 2026-09-27 |
