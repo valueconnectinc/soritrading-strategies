@@ -3,11 +3,11 @@
   "name": "Hashrate Demand Trend BTC 1D",
   "kind": "custom",
   "verified": {
-    "backtestId": 12782,
-    "return": 47.17,
-    "mdd": 57.99,
-    "trades": 203,
-    "vsBuyHold": "win",
+    "backtestId": 12786,
+    "return": -7.61,
+    "mdd": 66.77,
+    "trades": 117,
+    "vsBuyHold": "lose",
     "benchRet": 1.14,
     "benchBasis": "price",
     "gapPct": 0,
@@ -26,6 +26,6 @@
     }
   },
   "config": null,
-  "updatedAt": "2026-09-27T00:53:45.755Z",
+  "updatedAt": "2026-09-27T00:55:20.276Z",
   "publishedBy": "scripts/publish-strategies.mjs"
 }
