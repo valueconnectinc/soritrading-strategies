@@ -3,10 +3,10 @@
   "name": "OBV Champion Pure BTC 1D (baseline)",
   "kind": "custom",
   "verified": {
-    "backtestId": 12860,
-    "return": 1464.99,
-    "mdd": 43.3,
-    "trades": 26,
+    "backtestId": 12862,
+    "return": 1399.55,
+    "mdd": 37.12,
+    "trades": 38,
     "vsBuyHold": "win",
     "benchRet": 1279.9,
     "benchBasis": "price",
@@ -26,6 +26,6 @@
     }
   },
   "config": null,
-  "updatedAt": "2026-09-27T02:15:45.834Z",
+  "updatedAt": "2026-09-27T02:18:03.125Z",
   "publishedBy": "scripts/publish-strategies.mjs"
 }
