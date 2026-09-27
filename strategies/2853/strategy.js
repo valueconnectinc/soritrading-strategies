@@ -1,6 +1,6 @@
 /*
  * @coinsori-strategy v1
- * name: Fed-Filtered OBV Trend BTC 1D v2 (less churn)
+ * name: Fed-Filtered OBV Trend BTC 1D v3
  * ex: binance
  * syms: BTCUSDT
  * interval: 1d
@@ -9,17 +9,15 @@
  * Why this strategy: The OBV volume-flow trend family captures bull momentum
  * but carries high drawdown because it stays long through hiking-period bears.
  * The Fed not-hiking regime is a slow macro gate that sits out tightening
- * cycles. v2 reduces the 129-trade churn seen in the 2021-26 window by using
- * a stronger OBV confirmation, a longer post-trade cooldown, and only using
- * the fed gate as an entry filter (not an exit trigger, so winners are not
- * cut short by a slow macro signal).
+ * cycles. v3 keeps the fed-hike exit (it proved to cut whipsaw) and only adds
+ * a stronger OBV confirmation plus a longer cooldown to reduce the excess
+ * trade count seen in the 2021-26 window.
  * When it buys and sells: buys when 30-day OBV is clearly rising AND price is
  * above the 100-day average AND volume confirms AND the Fed is not hiking.
- * Exits fully when OBV turns down (trend broken). The fed gate only blocks new
- * entries, it does not force exits.
+ * Exits fully when OBV turns down OR a Fed hiking cycle begins.
  * When it does NOT work: crypto can melt up even while the Fed hikes, so the
- * fed entry gate can sit out strong liquidity-driven rallies. And trend
- * following always loses in choppy range-bound markets regardless of the gate.
+ * fed gate can sit out strong liquidity-driven rallies. And the fed signal is
+ * slow to flip back after a hike ends, so re-entry can be delayed.
  */
 function onUpdate(ctx) {
   const pos = ctx.position;
@@ -52,7 +50,6 @@ function onUpdate(ctx) {
   if (obvSeries.length < 32) return null;
   const obvNow = obvSeries[obvSeries.length - 1];
   const obvPast = obvSeries[obvSeries.length - 31];
-  // stronger confirmation: 2% instead of 1% to cut whipsaw
   const rising = obvNow > obvPast * 1.02;
   const falling = obvNow < obvPast * 0.98;
 
@@ -71,8 +68,7 @@ function onUpdate(ctx) {
   }
 
   if (pos > 0) {
-    // exit only on OBV trend break, not on fed hike (keeps winners)
-    if (falling && cd === 0) {
+    if ((falling || hiking) && cd === 0) {
       ctx.state.cd = 10;
       return { side: 'sell', qty: pos };
     }
