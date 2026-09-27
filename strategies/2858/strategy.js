@@ -1,23 +1,22 @@
 /*
  * @coinsori-strategy v1
- * name: 45d OBV Trend Relaxed Exit BTC 1D
+ * name: 60d OBV Trend Relaxed Exit BTC 1D
  * ex: binance
  * syms: BTCUSDT
  * interval: 1d
  * cash: 10000
  *
- * Why this strategy: The no-Fed 45-day OBV trend works on all windows but
- * still lags buy-and-hold on the recent 2023-26 melt-up (+81.6% vs +373%),
- * capturing only ~22% of the rally. Hypothesis: the 1% exit threshold on
- * 45-day OBV (0.99) fires on brief pullbacks inside a steady uptrend, then
- * re-enters late. This relaxes the exit to 0.985 so the position holds
- * through minor pullbacks and rides more of the melt-up.
- * When it buys and sells: buys when 45-day OBV is rising AND price is above
- * the 100-day average AND volume confirms. Exits fully only when 45-day OBV
- * falls by 1.5% (relaxed from 1%).
- * When it does NOT work: a relaxed exit holds longer into real downturns, so
- * drawdown is higher when OBV rolls over slowly. It also re-enters late after
- * genuine trend breaks.
+ * Why this strategy: The 45-day OBV champion lags buy-and-hold on the recent
+ * 2023-26 melt-up (captures ~22% of the rally) because its 45-day OBV signal
+ * rolls over on multi-week pullbacks, exiting then re-entering late. A slower
+ * 60-day OBV lookback smooths the signal further so the position holds through
+ * medium pullbacks and rides more of a sustained uptrend.
+ * When it buys and sells: buys when 60-day OBV is rising AND price is above the
+ * 100-day average AND volume confirms. Exits fully only when 60-day OBV falls
+ * by 1.5% (relaxed exit).
+ * When it does NOT work: a slower signal holds longer into real downturns, so
+ * drawdown is higher when OBV rolls over gradually. It also re-enters very late
+ * after genuine trend breaks.
  */
 function onUpdate(ctx) {
   const pos = ctx.position;
@@ -28,7 +27,7 @@ function onUpdate(ctx) {
   const atr = ctx.atr(14, 1);
   if (sma100 == null || atr == null) return null;
 
-  const LOOKBACK = 45;
+  const LOOKBACK = 60;
   const closes = ctx.closes;
   const vols = ctx.volumes;
   if (!closes || !vols || closes.length < LOOKBACK + 2) return null;
@@ -46,7 +45,6 @@ function onUpdate(ctx) {
   const obvNow = obvSeries[obvSeries.length - 1];
   const obvPast = obvSeries[obvSeries.length - 1 - LOOKBACK];
   const rising = obvNow > obvPast * 1.01;
-  // relaxed exit: 1.5% OBV drop instead of 1% (hold through minor pullbacks)
   const falling = obvNow < obvPast * 0.985;
 
   const avgV = ctx.avgVol(30);

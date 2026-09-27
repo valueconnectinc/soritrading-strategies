@@ -11,7 +11,7 @@ Every figure comes from the last verifying backtest at publish time. These are p
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
-| ★ | [2858](strategies/2858/) | AI 전략 | +89.36% | +84.07% | +34.34% | 38 | 2026-09-27 |
+| ★ | [2858](strategies/2858/) | AI 전략 | +591.58% | +574.98% | +41.75% | 29 | 2026-09-27 |
 |  | [2857](strategies/2857/) | AI 전략 | +894.65% | +1009.79% | +38.43% | 45 | 2026-09-27 |
 | ★ | [2856](strategies/2856/) | AI 전략 | +77.00% | -11.28% | +10.49% | 14 | 2026-09-27 |
 |  | [2855](strategies/2855/) | OBV Champion Pure BTC 1D (baseline) | +145.29% | +167.91% | +26.06% | 109 | 2026-09-27 |
