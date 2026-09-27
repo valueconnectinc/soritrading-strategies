@@ -11,7 +11,7 @@ Every figure comes from the last verifying backtest at publish time. These are p
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
-| ★ | [2855](strategies/2855/) | OBV Champion Pure BTC 1D (baseline) | +108.08% | +45.60% | +28.09% | 129 | 2026-09-27 |
+| ★ | [2855](strategies/2855/) | OBV Champion Pure BTC 1D (baseline) | +155.66% | +45.60% | +26.35% | 93 | 2026-09-27 |
 |  | [2853](strategies/2853/) | OBV Champion Pure BTC 1D (A/B) | -11.21% | +35.51% | +29.52% | 158 | 2026-09-27 |
 | ★ | [2852](strategies/2852/) | Fed-Filtered OBV Trend BTC 1D | +108.08% | +45.60% | +28.09% | 129 | 2026-09-27 |
 |  | [2851](strategies/2851/) | Fed Regime + OnChain Demand Overlay BTC 1D | +410.89% | +1279.90% | +73.95% | 407 | 2026-09-27 |
