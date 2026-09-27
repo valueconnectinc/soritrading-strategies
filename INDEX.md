@@ -11,7 +11,7 @@ Every figure comes from the last verifying backtest at publish time. These are p
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
-|  | [2900](strategies/2900/) | Long-Horizon Time-Series Momentum BTC 1D | +125.08% | +1279.90% | +57.17% | 49 | 2026-09-27 |
+|  | [2900](strategies/2900/) | Long-Horizon Time-Series Momentum BTC 1D | +13.93% | +45.60% | +29.66% | 29 | 2026-09-27 |
 |  | [2899](strategies/2899/) | Trend-Gated Vol-Target CrashStop LINK 1D | -100.00% | +6514.73% | +100.00% | 927 | 2026-09-27 |
 |  | [2898](strategies/2898/) | CMF Money-Flow Trend BTC 1D | +188.21% | +1279.90% | +47.04% | 68 | 2026-09-27 |
 | ★ | [2897](strategies/2897/) | Keltner MR Deep-Flush 3ATR | +0.74% | -79.71% | +3.02% | 2 | 2026-09-27 |
