@@ -10,10 +10,9 @@
  * positive on 10/10 windows across 5 assets on 4h (MDD cut from 30%+ to 4-11%).
  * Its one residual weakness is individual trades that go deep underwater before
  * the mid-band snap-back exit. This version keeps the exact proven entry and the
- * mid-band exit, and ADDS a wide protective ATR stop as a floor: if a position
- * drops 3.5x ATR below its entry, we cut it early to cap the worst single-trade
- * loss. The stop is deliberately wide so it does not fire on normal noise and
- * does not replace the mid-band exit (which is the primary, validated exit).
+ * mid-band exit, and ADDS a protective ATR stop as a floor: if a position drops
+ * 2.0x ATR below its entry, we cut it early to cap the worst single-trade loss.
+ * The stop is a floor only — the mid-band exit remains the primary exit.
  * When it buys and sells: buys a flush to the lower Keltner band (EMA20 - 2.5x
  * ATR) with RSI<40 while price is above the 200-bar average; sells on the
  * snap-back to the middle band (EMA20), or earlier if the protective stop trips.
@@ -40,11 +39,11 @@ function onUpdate(ctx) {
       st.cooldown = ctx.i + 2;
       return { side: 'sell', qty: pos };
     }
-    // Protective stop: cut if the trade drops 3.5x ATR below entry.
-    // 3.5x chosen (vs 3.0) so it only trips on true failures, not normal noise,
-    // and never pre-empts the mid-band exit on routine flushes.
+    // Protective stop: cut if the trade drops 2.0x ATR below entry.
+    // 2.0x chosen as a compromise: wide enough to survive normal flush noise,
+    // tight enough to actually trip on genuine failures (3.5x never fired).
     const entry = ctx.entryPx;
-    if (Number.isFinite(entry) && entry > 0 && price < entry - 3.5 * atr) {
+    if (Number.isFinite(entry) && entry > 0 && price < entry - 2.0 * atr) {
       st.cooldown = ctx.i + 2;
       return { side: 'sell', qty: pos };
     }
