@@ -3,16 +3,16 @@
   "name": "20d OBV Trend Faster-Entry BTC 1D",
   "kind": "custom",
   "verified": {
-    "backtestId": 13037,
-    "return": 27.68,
-    "mdd": 35.84,
-    "trades": 10,
+    "backtestId": 13039,
+    "return": 210.9,
+    "mdd": 44.57,
+    "trades": 44,
     "vsBuyHold": "lose",
-    "benchRet": 46.95,
+    "benchRet": 263.61,
     "benchBasis": "price",
     "gapPct": 0,
-    "tFrom": 1502928000,
-    "tTo": 1531180800,
+    "tFrom": 1531267200,
+    "tTo": 1660780800,
     "approxNotes": [
       "봉 내 순서는 관례(양봉 O→L→H→C·음봉 O→H→L→C) — 실순서 미상 · 봉 중 거래량 null · MDD 는 봉 마감 기준",
       "거래량은 봉 마감에만 확정 — 봉 중 평가에서 ctx.vol/volumes 가 null 이라 거래량 조건이 걸러졌을 수 있음(봉 중에도 쓰려면 ctx.volPrev·ctx.avgVol)"
@@ -22,7 +22,7 @@
       "sym": "BTCUSDT",
       "interval": "1d",
       "bars": 1500,
-      "end": 1531267200
+      "end": 1660867200
     }
   },
   "config": null,
