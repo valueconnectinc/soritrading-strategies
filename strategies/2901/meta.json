@@ -3,7 +3,7 @@
   "name": "Long-Horizon Momentum 60d ROC BTC/ETH 1D",
   "kind": "custom",
   "verified": {
-    "backtestId": 13138,
+    "backtestId": 13142,
     "return": 189.93,
     "mdd": 17.46,
     "trades": 107,
