@@ -1,0 +1,30 @@
+{
+  "id": 2886,
+  "name": "Keltner MR ATOM 1D",
+  "kind": "custom",
+  "verified": {
+    "backtestId": 13066,
+    "return": 4.69,
+    "mdd": 5.79,
+    "trades": 6,
+    "vsBuyHold": "lose",
+    "benchRet": 18.54,
+    "benchBasis": "price",
+    "gapPct": 0,
+    "tFrom": 1660867200,
+    "tTo": 1790380800,
+    "approxNotes": [
+      "봉 내 순서는 관례(양봉 O→L→H→C·음봉 O→H→L→C) — 실순서 미상 · 봉 중 거래량 null · MDD 는 봉 마감 기준"
+    ],
+    "spec": {
+      "ex": "binance",
+      "sym": "NEARUSDT",
+      "interval": "1d",
+      "bars": 1500,
+      "end": 1790467200
+    }
+  },
+  "config": null,
+  "updatedAt": "2026-09-27T06:23:13.479Z",
+  "publishedBy": "scripts/publish-strategies.mjs"
+}
