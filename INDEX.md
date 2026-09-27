@@ -11,7 +11,7 @@ Every figure comes from the last verifying backtest at publish time. These are p
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
-|  | [2897](strategies/2897/) | Keltner MR Deep-Flush 3ATR | +2.41% | +133.21% | +3.28% | 4 | 2026-09-27 |
+|  | [2897](strategies/2897/) | Keltner MR Deep-Flush 3ATR | -6.77% | +597.81% | +10.25% | 4 | 2026-09-27 |
 |  | [2896](strategies/2896/) | OBV Trend BTC 4H (timeframe test) | +53.14% | +68.93% | +28.57% | 92 | 2026-09-27 |
 |  | [2893](strategies/2893/) | FedGate Keltner MR Daily | +18.89% | +190.11% | +2.46% | 6 | 2026-09-27 |
 |  | [2892](strategies/2892/) | FearGreed-Gated OBV Trend BTC 1D | +1185.53% | +1279.90% | +40.98% | 40 | 2026-09-27 |

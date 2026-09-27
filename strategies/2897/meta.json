@@ -3,25 +3,25 @@
   "name": "Keltner MR Deep-Flush 3ATR",
   "kind": "custom",
   "verified": {
-    "backtestId": 13105,
-    "return": 2.41,
-    "mdd": 3.28,
+    "backtestId": 13108,
+    "return": -6.77,
+    "mdd": 10.25,
     "trades": 4,
     "vsBuyHold": "lose",
-    "benchRet": 133.21,
+    "benchRet": 597.81,
     "benchBasis": "price",
     "gapPct": 0,
-    "tFrom": 1513987200,
-    "tTo": 1652140800,
+    "tFrom": 1502928000,
+    "tTo": 1617580800,
     "approxNotes": [
       "봉 내 순서는 관례(양봉 O→L→H→C·음봉 O→H→L→C) — 실순서 미상 · 봉 중 거래량 null · MDD 는 봉 마감 기준"
     ],
     "spec": {
       "ex": "binance",
-      "sym": "BTCUSDT",
+      "sym": "ETHUSDT",
       "interval": "1d",
-      "bars": 1600,
-      "end": 1652227200
+      "bars": 2000,
+      "end": 1617667200
     }
   },
   "config": null,
