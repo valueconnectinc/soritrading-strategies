@@ -11,7 +11,7 @@ Every figure comes from the last verifying backtest at publish time. These are p
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
-|  | [2876](strategies/2876/) | 45d OBV Trend Champion BTC 1D | +205.83% | +305.26% | +21.62% | 49 | 2026-09-27 |
+|  | [2876](strategies/2876/) | 45d OBV Trend Champion BTC 1D | +178.00% | +239.04% | +51.17% | 33 | 2026-09-27 |
 |  | [2875](strategies/2875/) | 20d OBV Trend Faster-Entry BTC 1D | +210.90% | +263.61% | +44.57% | 44 | 2026-09-27 |
 |  | [2872](strategies/2872/) | Onchain Demand Trend BTC 1D (re-validate) | +118.58% | +190.11% | +42.13% | 91 | 2026-09-27 |
 |  | [2871](strategies/2871/) | DIAG multi-asset probe | +18.89% | +305.26% | +2.46% | 6 | 2026-09-27 |
