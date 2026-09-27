@@ -11,7 +11,7 @@ Every figure comes from the last verifying backtest at publish time. These are p
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
-|  | [2902](strategies/2902/) | Fear-Greed Contrarian BTC 1D | -56.98% | +45.60% | +65.75% | 10 | 2026-09-27 |
+|  | [2902](strategies/2902/) | Fear-Greed Contrarian BTC 1D | +67.90% | +911.40% | +51.90% | 2 | 2026-09-27 |
 | ★ | [2901](strategies/2901/) | Long-Horizon Momentum 60d ROC BTC/ETH 1D | +189.93% | +45.60% | +17.46% | 107 | 2026-09-27 |
 |  | [2900](strategies/2900/) | Long-Horizon Time-Series Momentum BTC 1D | +38.66% | +384.58% | +47.07% | 51 | 2026-09-27 |
 |  | [2899](strategies/2899/) | Trend-Gated Vol-Target CrashStop LINK 1D | -100.00% | +6514.73% | +100.00% | 927 | 2026-09-27 |

@@ -3,16 +3,16 @@
   "name": "Fear-Greed Contrarian BTC 1D",
   "kind": "custom",
   "verified": {
-    "backtestId": 13165,
-    "return": -56.98,
-    "mdd": 65.75,
-    "trades": 10,
+    "backtestId": 13167,
+    "return": 67.9,
+    "mdd": 51.9,
+    "trades": 2,
     "vsBuyHold": "lose",
-    "benchRet": 45.6,
+    "benchRet": 911.4,
     "benchBasis": "price",
     "gapPct": 0,
-    "tFrom": 1617667200,
-    "tTo": 1790380800,
+    "tFrom": 1557187200,
+    "tTo": 1617580800,
     "approxNotes": [
       "봉 내 순서는 관례(양봉 O→L→H→C·음봉 O→H→L→C) — 실순서 미상 · 봉 중 거래량 null · MDD 는 봉 마감 기준"
     ],
@@ -20,8 +20,8 @@
       "ex": "binance",
       "sym": "BTCUSDT",
       "interval": "1d",
-      "bars": 2000,
-      "end": 1790467200
+      "bars": 700,
+      "end": 1617667200
     }
   },
   "config": null,
