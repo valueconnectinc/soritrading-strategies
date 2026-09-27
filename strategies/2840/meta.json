@@ -3,7 +3,7 @@
   "name": "BTC 1D Blend + On-Chain Demand Composite",
   "kind": "custom",
   "verified": {
-    "backtestId": 12725,
+    "backtestId": 12727,
     "return": 31.87,
     "mdd": 30.33,
     "trades": 60,
