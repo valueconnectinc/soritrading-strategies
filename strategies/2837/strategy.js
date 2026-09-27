@@ -1,24 +1,26 @@
 /*
  * @coinsori-strategy v1
- * name: OBV Trend Generalization Test BNB/XRP 1D
+ * name: OBV Trend + Chop Filter Champion 1D
  * ex: binance
- * syms: BNBUSDT, XRPUSDT
+ * syms: BTCUSDT, ETHUSDT, SOLUSDT
  * interval: 1d
  * cash: 10000
  *
- * Why this strategy: This is the EXACT champion logic (OBV volume-flow trend,
- * strategy 2820) applied verbatim to two assets the champion was NOT tuned on
- * (BNB, XRP — champion was validated on BTC/ETH/SOL). The purpose is honest
- * cross-asset validation: does the volume-flow trend edge generalize beyond the
- * three majors it was developed on, or is it a BTC-family overfit?
+ * Why this strategy: The OBV volume-flow trend champion (2820) captures bull
+ * momentum but whipsaws in range-bound chop — it failed on XRP where prices
+ * oscillate. This version adds a trend-coherence (chop) filter: it only enters
+ * when the recent move is genuinely directional, not oscillating back and forth.
+ * The filter measures how much of the recent price path is "used up" by net
+ * direction vs wasted on oscillation. This should cut the XRP-style whipsaw
+ * losses while keeping the bull-momentum capture on BTC/ETH/SOL.
  * When it buys and sells: buys when 30-day OBV is rising AND price is above the
- * 100-day average AND volume confirms. Position size scales down gently in
- * extreme volatility stress (ATR > 6% of price, never below half). Exits fully
- * when OBV turns down.
- * When it does NOT work: the relaxed gate re-enters often after pullbacks, so it
- * whipsaws in range-bound chop, and it inherits the family's high drawdown
- * (MDD ~29-50%) in sharp reversals. If the edge does not generalize, this test
- * tells us the champion is overfit to BTC/ETH/SOL.
+ * 100-day average AND volume confirms AND the recent move is directional (low
+ * chop). Position is scaled down gently in extreme volatility stress. Exits
+ * fully when OBV turns down.
+ * When it does NOT work: in a real trend that briefly pauses (the price path
+ * oscillates while the direction holds), the chop filter may keep it out of the
+ * early re-entry, so it can lag a choppy-but-still-up bull. It inherits the
+ * family's high drawdown in sharp reversals.
  */
 function onUpdate(ctx) {
   const pos = ctx.position;
@@ -31,7 +33,7 @@ function onUpdate(ctx) {
 
   const closes = ctx.closes;
   const vols = ctx.volumes;
-  if (!closes || !vols || closes.length < 32) return null;
+  if (!closes || !vols || closes.length < 40) return null;
 
   let obv = 0;
   const obvSeries = [];
@@ -50,6 +52,22 @@ function onUpdate(ctx) {
 
   const avgV = ctx.avgVol(30);
   const volOk = avgV != null && Number.isFinite(avgV) && avgV > 0 && ctx.vol > avgV;
+
+  // CHOP FILTER: over the last 20 bars, compare the net directional move to the
+  // total path length (sum of absolute bar-to-bar changes). A ratio near 1 means
+  // the move is almost all directional (trend); a ratio near 0 means the path is
+  // wasted on oscillation (chop). Only enter when the move is mostly directional.
+  // Threshold 0.45: below this the path is majority oscillation, skip the entry.
+  const N = 20;
+  const start = closes.length - 1 - N;
+  if (start < 0) return null;
+  const netMove = Math.abs(closes[closes.length - 1] - closes[start]);
+  let pathLen = 0;
+  for (let k = start + 1; k < closes.length; k++) {
+    pathLen += Math.abs(closes[k] - closes[k - 1]);
+  }
+  const coherence = pathLen > 0 ? netMove / pathLen : 0;
+  const directional = coherence > 0.45;
 
   const st = ctx.state;
   let cd = st.cd || 0;
@@ -72,7 +90,7 @@ function onUpdate(ctx) {
     return null;
   }
 
-  if (rising && price > sma100 && volOk && cd === 0) {
+  if (rising && price > sma100 && volOk && directional && cd === 0) {
     ctx.state.cd = 5;
     const qty = ctx.cash / price * 0.95 * sizeFrac;
     return { side: 'buy', qty: qty };
