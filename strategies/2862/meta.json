@@ -3,28 +3,29 @@
   "name": "BTC 1H Intraday Bollinger Mean-Reversion",
   "kind": "custom",
   "verified": {
-    "backtestId": 12917,
-    "return": 0.22,
-    "mdd": 4.79,
-    "trades": 40,
+    "backtestId": 12920,
+    "return": -11.64,
+    "mdd": 13.51,
+    "trades": 26,
     "vsBuyHold": "lose",
-    "benchRet": 22.45,
+    "benchRet": 41.13,
     "benchBasis": "price",
     "gapPct": 0,
-    "tFrom": 1772478000,
-    "tTo": 1790474400,
+    "tFrom": 1718478000,
+    "tTo": 1736474400,
     "approxNotes": [
-      "봉 내 순서는 관례(양봉 O→L→H→C·음봉 O→H→L→C) — 실순서 미상 · 봉 중 거래량 null · MDD 는 봉 마감 기준"
+      "봉 내 순서는 관례(양봉 O→L→H→C·음봉 O→H→L→C) — 실순서 미상 · 봉 중 거래량 null · MDD 는 봉 마감 기준",
+      "거래량은 봉 마감에만 확정 — 봉 중 평가에서 ctx.vol/volumes 가 null 이라 거래량 조건이 걸러졌을 수 있음(봉 중에도 쓰려면 ctx.volPrev·ctx.avgVol)"
     ],
     "spec": {
       "ex": "binance",
       "sym": "BTCUSDT",
       "interval": "1h",
       "bars": 5000,
-      "end": 1790478000
+      "end": 1736478000
     }
   },
   "config": null,
-  "updatedAt": "2026-09-27T03:15:51.822Z",
+  "updatedAt": "2026-09-27T03:19:48.337Z",
   "publishedBy": "scripts/publish-strategies.mjs"
 }
