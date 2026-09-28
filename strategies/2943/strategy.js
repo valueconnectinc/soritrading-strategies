@@ -21,6 +21,7 @@ function onUpdate(ctx) {
   const closes = ctx.closes;
   const volumes = ctx.volumes;
   const i = ctx.i;
+  if (!closes || !volumes) return null;
   const look = 14;
   if (closes.length < 60 || volumes.length < 60 || i < 60) return null;
 
