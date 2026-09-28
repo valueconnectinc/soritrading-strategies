@@ -3,9 +3,9 @@
   "name": "ETH 4H Keltner ATR-Adaptive Mean-Reversion (Champion)",
   "kind": "custom",
   "verified": {
-    "backtestId": 13286,
-    "return": 13.77,
-    "mdd": 30.24,
+    "backtestId": 13289,
+    "return": 9.97,
+    "mdd": 14.6,
     "trades": 70,
     "vsBuyHold": "lose",
     "benchRet": 1641.86,
@@ -25,6 +25,6 @@
     }
   },
   "config": null,
-  "updatedAt": "2026-09-28T07:49:46.443Z",
+  "updatedAt": "2026-09-28T07:53:04.654Z",
   "publishedBy": "scripts/publish-strategies.mjs"
 }
