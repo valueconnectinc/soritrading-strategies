@@ -7,15 +7,13 @@
  * cash: 10000
  *
  * Why this strategy: ETH overshoots to the downside on fear and snaps back.
- * Buying a deep dip to the lower Bollinger band when the market is deeply
- * oversold (low RSI), and only while price is above its 200-bar average (so it
- * does not catch a falling knife in a real crash), then selling the bounce back
- * to the middle band harvests that snap-back. This is the defensive
- * mean-reversion recipe that validated positively on ETH. The RSI threshold is
- * tightened to 30 (deeper capitulation) so only more extreme, more reliable
- * snap-backs are taken, cutting the whipsaw seen in choppy 2022-24.
+ * Buying a deep dip to the lower Bollinger band when the market is oversold
+ * (low RSI), and only while price is above its 200-bar average (so it does not
+ * catch a falling knife in a real crash), then selling the bounce back to the
+ * middle band harvests that snap-back. This is the defensive mean-reversion
+ * recipe that validated positively on ETH and BTC.
  * When it buys and sells: it buys when price closes below the 20-bar lower
- * Bollinger band with RSI below 30 and price above the 200-bar average. It sells
+ * Bollinger band with RSI below 35 and price above the 200-bar average. It sells
  * when price returns to the middle band (20-bar average) or RSI climbs above 60.
  * Position size scales with how far price has fallen below the band, so deeper
  * dips get larger positions.
@@ -23,7 +21,7 @@
  * buy-and-hold (defensive by design). In a sustained bear it rarely buys because
  * price stays below the 200-bar average. In very tight chop the band touch
  * happens rarely, so returns are small. In a choppy period like 2022-24 it can
- * still lose on dips that keep falling.
+ * lose money on dips that keep falling.
  */
 function onUpdate(ctx) {
   const bb = ctx.bb(20, 2, 1);
@@ -39,8 +37,8 @@ function onUpdate(ctx) {
     return null;
   }
 
-  // Entry: deep dip to lower band + deeply oversold, only above the 200-bar trend line.
-  if (px <= bb.lower && rsi < 30 && px > sma200) {
+  // Entry: deep dip to lower band + oversold, only above the 200-bar trend line.
+  if (px <= bb.lower && rsi < 35 && px > sma200) {
     // Size by band depth: risk 4% of equity on the band-to-mid distance.
     const equity = ctx.cash + ctx.position * ctx.price;
     const bandDist = Math.max(bb.mid - bb.lower, atr);
