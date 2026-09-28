@@ -4,14 +4,14 @@ Every strategy whose backtest **finished and actually traded** is published here
 Nothing is filtered out by return — the ones that lost money are part of the record.
 Entries stay after a strategy is removed from our own workspace — this is a log, and deleting the record would leave only the survivors.
 
-**★ marks a strategy that out-returned buy & hold over the same window** — 372 of 1318 right now.
+**★ marks a strategy that out-returned buy & hold over the same window** — 371 of 1318 right now.
 `—` means the comparison **could not be made**: the engine does not compute a benchmark for multi-symbol, futures, or multi-leg runs. That is *unknown*, not *lost*, and it is 198 of them right now.
 
 Every figure comes from the last verifying backtest at publish time. These are past results over historical data. Nothing here is promised or assured about the future, and none of it is investment advice.
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
-| ★ | [2938](strategies/2938/) | BTC 1D Fear-Greed Contrarian | +35.12% | -26.18% | +7.37% | 32 | 2026-09-28 |
+|  | [2938](strategies/2938/) | BTC 1D Fear-Greed Contrarian | +53.62% | +1658.97% | +46.17% | 66 | 2026-09-28 |
 |  | [2937](strategies/2937/) | BTC 1D OBV Trend Fed-Gated 45d | -1.95% | +139.84% | +22.11% | 16 | 2026-09-28 |
 |  | [2936](strategies/2936/) | ETH 4H Bollinger MR Macro-Risk Gated | +19.45% | +71.94% | +30.90% | 42 | 2026-09-28 |
 |  | [2935](strategies/2935/) | ETH 4H Bollinger MR Full-Cash (no gate) | +53.62% | +1658.97% | +46.17% | 66 | 2026-09-28 |
