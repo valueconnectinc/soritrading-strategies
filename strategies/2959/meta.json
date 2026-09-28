@@ -1,11 +1,11 @@
 {
-  "id": 2958,
-  "name": "BTC 1D Defensive Bollinger-RSI + Trend Ride (Vol-Scaled)",
+  "id": 2959,
+  "name": "BTC 1D Defensive Bollinger-RSI + Trend Ride (CHAMPION BASELI",
   "kind": "custom",
   "verified": {
-    "backtestId": 13638,
-    "return": 12.77,
-    "mdd": 15.18,
+    "backtestId": 13641,
+    "return": 12.76,
+    "mdd": 15.81,
     "trades": 22,
     "vsBuyHold": "lose",
     "benchRet": 116.17,
@@ -25,6 +25,6 @@
     }
   },
   "config": null,
-  "updatedAt": "2026-09-28T13:26:08.761Z",
+  "updatedAt": "2026-09-28T13:26:47.799Z",
   "publishedBy": "scripts/publish-strategies.mjs"
 }

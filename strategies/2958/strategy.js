@@ -12,15 +12,15 @@
  * inside a healthy uptrend — and we are out of the market the rest of the time,
  * so drawdown stays small. In a confirmed strong bull we allow a slightly milder
  * oversold entry (RSI<40) because deep RSI<30 flushes are rare during melt-ups.
- * This version adds ATR-based position sizing: when volatility is elevated we
- * commit less cash, because an oversold flush in a high-volatility regime is more
- * likely to keep falling (catching a falling knife). The goal is a smaller max
- * drawdown than the fixed-95%-size version.
+ * This version adds ATR-based position sizing: in genuinely extreme volatility we
+ * commit a bit less cash, because an oversold flush in a violent regime is more
+ * likely to keep falling. The sizing is deliberately gentle so it trims the worst
+ * drawdowns without giving away most of the return.
  * When it buys and sells: Buys when price is below the lower Bollinger band and
  * RSI is oversold (below 30 normally, below 40 in a confirmed strong uptrend)
- * while price is above a rising 200-day average, sizing down when ATR is high.
- * In a strong trend it rides until price breaks its 10-day low; otherwise it
- * sells on the snap-back above the mid band or when RSI climbs above 60.
+ * while price is above a rising 200-day average, sizing down only in extreme
+ * volatility. In a strong trend it rides until price breaks its 10-day low;
+ * otherwise it sells on the snap-back above the mid band or when RSI climbs above 60.
  * When it does NOT work: It systematically misses straight-line melt-ups — it
  * sits in cash while BTC rallies without a pullback, so it badly lags buy-and-hold
  * in relentless bull markets. It is a defensive, capital-preserving strategy, not
@@ -68,16 +68,15 @@ function onUpdate(ctx) {
   const rsiBar = strongTrend ? 40 : 30;
   if (uptrend && price < bb.lower && rsi < rsiBar) {
     st.cd = null;
-    // ATR-based size: scale down when volatility is high. ATR/price above ~4% is
-    // an elevated-vol regime where a flush can keep falling, so we commit less.
-    // Baseline 95% of cash; high-vol regimes get 60%. Numbers chosen to keep the
-    // defensive character while cutting the worst-case drawdown.
+    // Gentle ATR sizing: only in extreme volatility (ATR/price > 6%) do we cut to
+    // 75%; between 4.5% and 6% we trim to 90%. Below that, full 95%. This trims
+    // the rare violent falling-knife cases without giving away normal returns.
     const atr = ctx.atr(14, 1);
     let sizeFrac = 0.95;
     if (atr != null) {
       const atrPct = atr / price;
-      if (atrPct > 0.04) sizeFrac = 0.60;
-      else if (atrPct > 0.03) sizeFrac = 0.80;
+      if (atrPct > 0.06) sizeFrac = 0.75;
+      else if (atrPct > 0.045) sizeFrac = 0.90;
     }
     return { side: 'buy', qty: (ctx.cash / price) * sizeFrac };
   }

@@ -1,0 +1,51 @@
+/*
+ * @coinsori-strategy v1
+ * name: BTC 1D Defensive Bollinger-RSI + Trend Ride (CHAMPION BASELINE)
+ * ex: binance
+ * syms: BTCUSDT
+ * interval: 1d
+ * cash: 10000
+ *
+ * Benchmark copy of the validated defensive champion, unchanged, for a fair
+ * comparison against the vol-scaled variant on identical windows.
+ */
+function onUpdate(ctx) {
+  const pos = ctx.position;
+  const price = ctx.price;
+  if (!Number.isFinite(price) || price <= 0) return null;
+
+  const sma200 = ctx.sma(200, 1);
+  const sma200prev = ctx.sma(200, 2);
+  const bb = ctx.bb(20, 2, 1);
+  const rsi = ctx.rsi(14, 1);
+  if (sma200 == null || sma200prev == null || bb == null || rsi == null) return null;
+
+  const uptrend = sma200 > sma200prev;
+  const strongTrend = price > sma200 * 1.05;
+
+  const st = ctx.state;
+  if (pos > 0) {
+    if (strongTrend) {
+      const low10 = ctx.low(10, 1);
+      if (low10 != null && price < low10) {
+        st.cd = ctx.i + 3;
+        return { side: 'sell', qty: pos };
+      }
+      return null;
+    }
+    if (price > bb.mid || rsi > 60) {
+      st.cd = ctx.i + 3;
+      return { side: 'sell', qty: pos };
+    }
+    return null;
+  }
+
+  if (st.cd != null && ctx.i < st.cd) return null;
+
+  const rsiBar = strongTrend ? 40 : 30;
+  if (uptrend && price < bb.lower && rsi < rsiBar) {
+    st.cd = null;
+    return { side: 'buy', qty: (ctx.cash / price) * 0.95 };
+  }
+  return null;
+}
