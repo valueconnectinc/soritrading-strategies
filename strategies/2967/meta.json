@@ -1,0 +1,30 @@
+{
+  "id": 2967,
+  "name": "DOGE 1D ATR-Adaptive Keltner MR",
+  "kind": "custom",
+  "verified": {
+    "backtestId": 13705,
+    "return": 16.15,
+    "mdd": 13.37,
+    "trades": 6,
+    "vsBuyHold": "lose",
+    "benchRet": 56.51,
+    "benchBasis": "price",
+    "gapPct": 0,
+    "tFrom": 1617753600,
+    "tTo": 1704067200,
+    "approxNotes": [
+      "봉 내 순서는 관례(양봉 O→L→H→C·음봉 O→H→L→C) — 실순서 미상 · 봉 중 거래량 null · MDD 는 봉 마감 기준"
+    ],
+    "spec": {
+      "ex": "binance",
+      "sym": "DOGEUSDT",
+      "interval": "1d",
+      "bars": 1000,
+      "end": 1704153600
+    }
+  },
+  "config": null,
+  "updatedAt": "2026-09-28T14:31:22.960Z",
+  "publishedBy": "scripts/publish-strategies.mjs"
+}
