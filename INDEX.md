@@ -4,14 +4,14 @@ Every strategy whose backtest **finished and actually traded** is published here
 Nothing is filtered out by return — the ones that lost money are part of the record.
 Entries stay after a strategy is removed from our own workspace — this is a log, and deleting the record would leave only the survivors.
 
-**★ marks a strategy that out-returned buy & hold over the same window** — 373 of 1339 right now.
+**★ marks a strategy that out-returned buy & hold over the same window** — 374 of 1339 right now.
 `—` means the comparison **could not be made**: the engine does not compute a benchmark for multi-symbol, futures, or multi-leg runs. That is *unknown*, not *lost*, and it is 198 of them right now.
 
 Every figure comes from the last verifying backtest at publish time. These are past results over historical data. Nothing here is promised or assured about the future, and none of it is investment advice.
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
-|  | [2960](strategies/2960/) | AI 전략 | +17.68% | +827.77% | +15.18% | 24 | 2026-09-28 |
+| ★ | [2960](strategies/2960/) | AI 전략 | +3.21% | -21.04% | +19.38% | 28 | 2026-09-28 |
 |  | [2959](strategies/2959/) | BTC 1D Defensive Bollinger-RSI + Trend Ride (CHAMPION BASELI | +12.76% | +116.17% | +15.81% | 22 | 2026-09-28 |
 |  | [2958](strategies/2958/) | BTC 1D Defensive Bollinger-RSI + Trend Ride (Vol-Scaled) | +12.77% | +116.17% | +15.18% | 22 | 2026-09-28 |
 |  | [2957](strategies/2957/) | ETH 1D Defensive Bollinger-RSI | +20.27% | +116.17% | +14.42% | 10 | 2026-09-28 |
