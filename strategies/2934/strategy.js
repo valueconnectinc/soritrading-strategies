@@ -23,29 +23,39 @@ function onUpdate(ctx) {
   const s200 = ctx.sma(200, 1);
   const bb = ctx.bb(20, 2, 1);
   const rsi = ctx.rsi(14, 1);
-  // DXY from the platform macro feed (runs in browser runner, unlike ctx.data)
   const dxy = ctx.macro('dxy');
   if (s200 == null || bb == null || rsi == null) return null;
 
-  // 6% uptrend margin: price must be comfortably above the 200-SMA to avoid bears
+  // DIAGNOSTIC: reveal the dxy shape and how often the gate blocks
+  const st = ctx.state || {};
+  st.n = (st.n || 0) + 1;
+  if (st.n % 500 === 1) {
+    ctx.log('dxyRaw=' + JSON.stringify(dxy) + ' px=' + px.toFixed(2));
+  }
+
   const marginOk = px > s200 * 1.06;
-  // Risk-on gate: DXY not rising. Compare current vs value ~5 bars ago.
-  // dxy may be null on some bars; treat null as "unknown" -> block entry (safe).
   let riskOn = true;
+  let gateBlocked = false;
   if (dxy != null && dxy.value != null) {
-    // We only know the current DXY; use its recent change direction if available.
     riskOn = dxy.value < (dxy.prev != null ? dxy.prev : dxy.value + 0.5);
+    if (!riskOn) gateBlocked = true;
+  } else if (dxy == null) {
+    // dxy unknown -> block entry (conservative)
+    riskOn = false;
+    gateBlocked = true;
+  }
+  st.gateBlocks = (st.gateBlocks || 0) + (gateBlocked ? 1 : 0);
+  if (st.n % 500 === 1) {
+    ctx.log('gateBlocks so far=' + st.gateBlocks + ' / ' + st.n);
   }
 
   if (ctx.position === 0) {
-    // Buy: oversold dip in an uptrend, and macro risk-on
     if (marginOk && riskOn && px < bb.lower && rsi < 35) {
       return { side: 'buy', qty: ctx.cash / px * 0.99 };
     }
     return null;
   }
 
-  // Exit: price reclaims mid-band or RSI overbought
   if (px > bb.mid || rsi > 65) {
     return { side: 'sell', qty: ctx.position };
   }

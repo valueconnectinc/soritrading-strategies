@@ -3,16 +3,16 @@
   "name": "ETH 4H Bollinger MR Macro-Risk Gated",
   "kind": "custom",
   "verified": {
-    "backtestId": 13359,
-    "return": -3.28,
-    "mdd": 30.9,
-    "trades": 30,
-    "vsBuyHold": "lose",
-    "benchRet": 39.02,
+    "backtestId": 13360,
+    "return": 35.12,
+    "mdd": 7.37,
+    "trades": 32,
+    "vsBuyHold": "win",
+    "benchRet": -26.18,
     "benchBasis": "price",
     "gapPct": 0,
-    "tFrom": 1646582400,
-    "tTo": 1718568000,
+    "tFrom": 1718582400,
+    "tTo": 1790568000,
     "approxNotes": [
       "봉 내 순서는 관례(양봉 O→L→H→C·음봉 O→H→L→C) — 실순서 미상 · 봉 중 거래량 null · MDD 는 봉 마감 기준"
     ],
@@ -21,10 +21,10 @@
       "sym": "ETHUSDT",
       "interval": "4h",
       "bars": 5000,
-      "end": 1718582400
+      "end": 1790582400
     }
   },
   "config": null,
-  "updatedAt": "2026-09-28T08:42:56.777Z",
+  "updatedAt": "2026-09-28T08:47:09.098Z",
   "publishedBy": "scripts/publish-strategies.mjs"
 }
