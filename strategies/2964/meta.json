@@ -3,16 +3,16 @@
   "name": "SOL 1D ATR-Adaptive Keltner MR (Vol-Scaled)",
   "kind": "custom",
   "verified": {
-    "backtestId": 13678,
-    "return": 11.31,
-    "mdd": 26.01,
+    "backtestId": 13681,
+    "return": 39.75,
+    "mdd": 16.35,
     "trades": 6,
     "vsBuyHold": "lose",
-    "benchRet": 830.66,
+    "benchRet": 1226.05,
     "benchBasis": "price",
     "gapPct": 0,
-    "tFrom": 1609113600,
-    "tTo": 1669507200,
+    "tFrom": 1669593600,
+    "tTo": 1729987200,
     "approxNotes": [
       "봉 내 순서는 관례(양봉 O→L→H→C·음봉 O→H→L→C) — 실순서 미상 · 봉 중 거래량 null · MDD 는 봉 마감 기준"
     ],
@@ -21,10 +21,10 @@
       "sym": "SOLUSDT",
       "interval": "1d",
       "bars": 700,
-      "end": 1669593600
+      "end": 1730073600
     }
   },
   "config": null,
-  "updatedAt": "2026-09-28T14:04:51.173Z",
+  "updatedAt": "2026-09-28T14:05:30.551Z",
   "publishedBy": "scripts/publish-strategies.mjs"
 }

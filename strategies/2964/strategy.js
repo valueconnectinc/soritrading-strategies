@@ -49,9 +49,10 @@ function onUpdate(ctx) {
 
   // Defensive entry: oversold flush below the ATR-adaptive band in an uptrend.
   if (uptrend && price < lowerBand && rsi < 40) {
-    // Volatility-scaled sizing: target ~5% of equity as daily ATR exposure.
-    // qty = equity*targetVol/atr — full position at ~5% ATR, smaller when volatile.
-    const targetVol = 0.05;
+    // Volatility-scaled sizing: target ~9% of equity as daily ATR exposure.
+    // qty = equity*targetVol/atr — full position at ~9% ATR, smaller only in
+    // extreme-vol spikes (SOL's typical ATR is ~5-9%, so positions stay near full).
+    const targetVol = 0.09;
     let qty = (ctx.cash * targetVol) / atr;
     // Never risk more than 95% of cash on one entry.
     qty = Math.min(qty, (ctx.cash / price) * 0.95);

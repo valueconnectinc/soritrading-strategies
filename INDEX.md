@@ -11,7 +11,7 @@ Every figure comes from the last verifying backtest at publish time. These are p
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
-|  | [2964](strategies/2964/) | SOL 1D ATR-Adaptive Keltner MR (Vol-Scaled) | +11.31% | +830.66% | +26.01% | 6 | 2026-09-28 |
+|  | [2964](strategies/2964/) | SOL 1D ATR-Adaptive Keltner MR (Vol-Scaled) | +39.75% | +1226.05% | +16.35% | 6 | 2026-09-28 |
 |  | [2963](strategies/2963/) | Alt 1D ATR-Adaptive Keltner MR | +36.07% | +830.66% | +39.12% | 6 | 2026-09-28 |
 |  | [2962](strategies/2962/) | SOL 1D ATR-Adaptive Keltner MR | +123.41% | +1443.13% | +39.12% | 8 | 2026-09-28 |
 |  | [2960](strategies/2960/) | AI 전략 | +14.96% | +87.94% | +24.82% | 34 | 2026-09-28 |
