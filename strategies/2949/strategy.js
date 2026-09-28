@@ -6,21 +6,18 @@
  * interval: 1d
  * cash: 10000
  *
- * Why this strategy: The strongest validated result in this job's ledger. Two
- * strategies that capture DIFFERENT regimes are combined: OBV volume-flow trend
- * rides accumulation-driven melt-ups, while Keltner mean-reversion buys deep
- * oversold flushes in chop/bear markets. A rising 200-day average decides which
- * mode is active. Validated to beat buy-and-hold ~4x on the most recent window
- * with low drawdown (BTC +178-190%/MDD17-21 vs hold +45-51).
- * When it buys and sells: In a strong melt-up (price well above a rising 200-day
- * average) it buys when 45-day OBV is rising with volume confirmation and sells
- * when OBV rolls over. In normal conditions it buys a flush to the lower Keltner
- * band (EMA20 - 2.5x ATR) with RSI<40 above the 200-day average, and sells on
- * the snap-back to the mid band.
- * When it does NOT work: It structurally LAGS straight-line melt-ups (2017-21)
- * because it waits for confirmation, so it underperforms buy-and-hold in
- * relentless bulls. It stays in cash during crashes (no shorting). It is a
- * defensive long-only strategy, not a crash profiteer.
+ * Why this strategy: Two strategies that capture DIFFERENT regimes are combined.
+ * OBV volume-flow trend rides accumulation-driven melt-ups, while Keltner
+ * mean-reversion buys deep oversold flushes in chop/bear markets. A rising
+ * 200-day average picks the mode: uptrend → OBV trend, downtrend/chop → Keltner
+ * MR. This captures melt-up upside while staying productive in chop.
+ * When it buys and sells: In an uptrend it buys when 45-day OBV is rising with
+ * volume confirmation and sells when OBV rolls over. In a downtrend/chop regime
+ * it buys a flush to the lower Keltner band (EMA20 - 2.5x ATR) with RSI<40 and
+ * sells on the snap-back to the mid band.
+ * When it does NOT work: It structurally LAGS straight-line melt-ups because it
+ * waits for confirmation, and the mean-reversion leg can catch falling knives in
+ * a persistent crash. It is a long-only strategy, not a crash profiteer.
  */
 function onUpdate(ctx) {
   const pos = ctx.position;
@@ -34,9 +31,9 @@ function onUpdate(ctx) {
   const rsi = ctx.rsi(14, 1);
   if (sma200 == null || sma200prev == null || ema20 == null || atr == null || rsi == null || atr <= 0) return null;
 
-  const rising200 = sma200 > sma200prev;
-  // Strong melt-up regime: price well above a rising 200-day average.
-  const strongTrend = rising200 && price > sma200 * 1.2;
+  // Regime switch: rising 200-day average = uptrend (OBV trend mode),
+  // falling/flat = downtrend/chop (Keltner MR mode).
+  const uptrend = sma200 > sma200prev;
 
   // Build OBV from close direction and volume.
   const LOOKBACK = 45;
@@ -68,14 +65,14 @@ function onUpdate(ctx) {
   const lower = ema20 - 2.5 * atr;
 
   if (pos > 0) {
-    if (strongTrend) {
-      // Melt-up mode: exit when OBV rolls over (money flow leaving).
+    if (uptrend) {
+      // Uptrend mode: exit when OBV rolls over (money flow leaving).
       if (obvFalling) {
         return { side: 'sell', qty: pos };
       }
       return null;
     }
-    // Normal mode: sell on the snap-back to the mid band (Keltner exit).
+    // Downtrend/chop mode: sell on the snap-back to the mid band.
     if (price > ema20) {
       st.cooldown = ctx.i + 2;
       return { side: 'sell', qty: pos };
@@ -85,8 +82,8 @@ function onUpdate(ctx) {
 
   if (st.cooldown != null && ctx.i < st.cooldown) return null;
 
-  if (strongTrend) {
-    // Melt-up entry: OBV rising + volume confirmation.
+  if (uptrend) {
+    // Uptrend entry: OBV rising + volume confirmation.
     if (obvRising && volOk) {
       st.cooldown = null;
       return { side: 'buy', qty: (ctx.cash / price) * 0.95 };
@@ -94,8 +91,8 @@ function onUpdate(ctx) {
     return null;
   }
 
-  // Normal mode: Keltner mean-reversion entry (deep flush above 200-day avg).
-  if (price > sma200 && price <= lower && rsi < 40) {
+  // Downtrend/chop entry: Keltner MR — deep flush to the lower band with RSI<40.
+  if (price <= lower && rsi < 40) {
     st.cooldown = null;
     // ATR-scaled size: risk 1.5% of equity per trade, capped at 90% of cash.
     const riskEq = 0.015 * ctx.cash;
