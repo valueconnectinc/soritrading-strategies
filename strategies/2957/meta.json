@@ -3,16 +3,16 @@
   "name": "ETH 1D Defensive Bollinger-RSI",
   "kind": "custom",
   "verified": {
-    "backtestId": 13615,
-    "return": 11.8,
-    "mdd": 24.95,
-    "trades": 4,
+    "backtestId": 13621,
+    "return": 20.27,
+    "mdd": 14.42,
+    "trades": 10,
     "vsBuyHold": "lose",
-    "benchRet": 48.84,
+    "benchRet": 116.17,
     "benchBasis": "price",
     "gapPct": 0,
-    "tFrom": 1502928000,
-    "tTo": 1531267200,
+    "tFrom": 1514764800,
+    "tTo": 1609372800,
     "approxNotes": [
       "봉 내 순서는 관례(양봉 O→L→H→C·음봉 O→H→L→C) — 실순서 미상 · 봉 중 거래량 null · MDD 는 봉 마감 기준"
     ],
@@ -20,8 +20,8 @@
       "ex": "binance",
       "sym": "BTCUSDT",
       "interval": "1d",
-      "bars": 1500,
-      "end": 1531353600
+      "bars": 1096,
+      "end": 1609459200
     }
   },
   "config": null,
