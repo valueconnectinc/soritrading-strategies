@@ -3,16 +3,16 @@
   "name": "AI 전략",
   "kind": "custom",
   "verified": {
-    "backtestId": 13317,
-    "return": -27.61,
-    "mdd": 31.05,
-    "trades": 226,
+    "backtestId": 13320,
+    "return": 9.97,
+    "mdd": 14.6,
+    "trades": 70,
     "vsBuyHold": "lose",
-    "benchRet": -26.18,
+    "benchRet": 1658.97,
     "benchBasis": "price",
     "gapPct": 0,
-    "tFrom": 1718582400,
-    "tTo": 1790568000,
+    "tFrom": 1574568000,
+    "tTo": 1646568000,
     "approxNotes": [
       "봉 내 순서는 관례(양봉 O→L→H→C·음봉 O→H→L→C) — 실순서 미상 · 봉 중 거래량 null · MDD 는 봉 마감 기준"
     ],
@@ -21,7 +21,7 @@
       "sym": "ETHUSDT",
       "interval": "4h",
       "bars": 5000,
-      "end": 1790582400
+      "end": 1646582400
     }
   },
   "config": null,
