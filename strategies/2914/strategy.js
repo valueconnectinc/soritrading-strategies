@@ -14,9 +14,9 @@
  * recipe that validated positively on ETH and BTC.
  * When it buys and sells: it buys when price closes below the 20-bar lower
  * Bollinger band with RSI below 35 and price above the 200-bar average. It sells
- * when price returns to the middle band (20-bar average) or RSI climbs above 60.
- * A 2-bar cooldown after each exit avoids re-buying the same dip. Position size
- * scales with how far price has fallen below the band.
+ * when price returns to the middle band (20-bar average), RSI climbs above 60,
+ * or price falls 3 ATR below the entry (a volatility stop that cuts losers).
+ * Position size scales with how far price has fallen below the band.
  * When it does NOT work: in a strong melt-up it sits in cash and badly lags
  * buy-and-hold (defensive by design). In a sustained bear it rarely buys because
  * price stays below the 200-bar average. In very tight chop the band touch
@@ -30,18 +30,12 @@ function onUpdate(ctx) {
   const px = ctx.closes[ctx.closes.length - 2];
   if (bb == null || bb.lower == null || rsi == null || sma200 == null || atr == null || px == null) return null;
 
-  // Exit: bounce back to the middle band, or RSI no longer oversold.
+  // Exit: bounce back to the middle band, RSI no longer oversold, or hard stop.
   if (ctx.position > 0) {
-    if (px >= bb.mid || rsi > 60) {
-      ctx.state.lastExit = ctx.i; // record exit bar for the cooldown
-      return { side: 'sell', qty: ctx.position };
-    }
+    const stop = (ctx.entryPx || 0) - 3 * atr; // volatility stop cuts losers
+    if (px >= bb.mid || rsi > 60 || px < stop) return { side: 'sell', qty: ctx.position };
     return null;
   }
-
-  // Cooldown: wait 2 bars after the last exit before re-entering.
-  const since = ctx.i - (ctx.state.lastExit || -999);
-  if (since < 2) return null;
 
   // Entry: deep dip to lower band + oversold, only above the 200-bar trend line.
   if (px <= bb.lower && rsi < 35 && px > sma200) {

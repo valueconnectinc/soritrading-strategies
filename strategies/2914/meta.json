@@ -3,16 +3,16 @@
   "name": "ETH 4H ATR-Adaptive Mean-Reversion",
   "kind": "custom",
   "verified": {
-    "backtestId": 13265,
-    "return": 1.59,
-    "mdd": 17.57,
-    "trades": 48,
-    "vsBuyHold": "win",
-    "benchRet": -26.83,
+    "backtestId": 13268,
+    "return": 13.77,
+    "mdd": 30.24,
+    "trades": 70,
+    "vsBuyHold": "lose",
+    "benchRet": 1641.86,
     "benchBasis": "price",
     "gapPct": 0,
-    "tFrom": 1718568000,
-    "tTo": 1790553600,
+    "tFrom": 1574553600,
+    "tTo": 1646553600,
     "approxNotes": [
       "봉 내 순서는 관례(양봉 O→L→H→C·음봉 O→H→L→C) — 실순서 미상 · 봉 중 거래량 null · MDD 는 봉 마감 기준"
     ],
@@ -21,10 +21,10 @@
       "sym": "ETHUSDT",
       "interval": "4h",
       "bars": 5000,
-      "end": 1790568000
+      "end": 1646568000
     }
   },
   "config": null,
-  "updatedAt": "2026-09-28T07:28:17.930Z",
+  "updatedAt": "2026-09-28T07:30:06.295Z",
   "publishedBy": "scripts/publish-strategies.mjs"
 }
