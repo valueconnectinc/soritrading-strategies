@@ -11,7 +11,7 @@ Every figure comes from the last verifying backtest at publish time. These are p
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
-|  | [2947](strategies/2947/) | BTC 1D Bollinger-RSI Mean Reversion | -4.87% | +1253.33% | +19.18% | 4 | 2026-09-28 |
+|  | [2947](strategies/2947/) | BTC 1D Bollinger-RSI Mean Reversion | +27.68% | +87.94% | +0.42% | 8 | 2026-09-28 |
 |  | [2946](strategies/2946/) | BTC 1D Donchian Breakout with ATR Trailing Stop | -89.65% | +50.97% | +90.81% | 143 | 2026-09-28 |
 |  | [2945](strategies/2945/) | BTC 1D On-Chain Network-Health Trend | -45.83% | +50.97% | +72.75% | 160 | 2026-09-28 |
 |  | [2944](strategies/2944/) | SOL 1D Vol-Scaled Mean Reversion | -28.84% | +985.64% | +40.82% | 10 | 2026-09-28 |
