@@ -10,12 +10,15 @@
  * deep oversold flushes (below the lower Bollinger band with RSI below 30) while
  * the long-term 200-day average is still rising means we buy fear at a discount
  * inside a healthy uptrend — and we are out of the market the rest of the time,
- * so drawdown stays small. In strong trends we let winners run with a trailing
- * stop; in chop we take the quick snap-back profit.
- * When it buys and sells: Buys when price is below the lower Bollinger band, RSI
- * is below 30, and price is above a rising 200-day average, using nearly full
- * cash. In a strong trend it rides until price breaks its 10-day low; otherwise
- * it sells on the snap-back above the mid band or when RSI climbs above 60.
+ * so drawdown stays small. In a confirmed strong bull we allow a slightly milder
+ * oversold entry (RSI<40) because deep RSI<30 flushes are rare during melt-ups,
+ * so we catch more of the bull-run pullbacks. In strong trends we let winners
+ * run with a trailing stop; in chop we take the quick snap-back profit.
+ * When it buys and sells: Buys when price is below the lower Bollinger band and
+ * RSI is oversold (below 30 normally, below 40 in a confirmed strong uptrend)
+ * while price is above a rising 200-day average, using nearly full cash. In a
+ * strong trend it rides until price breaks its 10-day low; otherwise it sells
+ * on the snap-back above the mid band or when RSI climbs above 60.
  * When it does NOT work: It systematically misses straight-line melt-ups — it
  * sits in cash while BTC rallies without a pullback, so it badly lags buy-and-hold
  * in relentless bull markets. It is a defensive, capital-preserving strategy, not
@@ -58,8 +61,10 @@ function onUpdate(ctx) {
 
   if (st.cd != null && ctx.i < st.cd) return null;
 
-  // Entry: deep oversold flush inside a rising long-term uptrend.
-  if (uptrend && price < bb.lower && rsi < 30) {
+  // Entry: oversold flush inside a rising long-term uptrend. In a strong bull we
+  // use a milder RSI<40 bar because deep RSI<30 flushes are rare during melt-ups.
+  const rsiBar = strongTrend ? 40 : 30;
+  if (uptrend && price < bb.lower && rsi < rsiBar) {
     st.cd = null;
     // Entries are rare, so commit nearly full cash to make the trade count.
     return { side: 'buy', qty: (ctx.cash / price) * 0.95 };

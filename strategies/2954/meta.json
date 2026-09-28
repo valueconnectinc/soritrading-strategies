@@ -3,16 +3,16 @@
   "name": "BTC 1D Volatility-Scaled Long Exposure",
   "kind": "custom",
   "verified": {
-    "backtestId": 13598,
-    "return": 8.34,
-    "mdd": 24.82,
-    "trades": 16,
+    "backtestId": 13601,
+    "return": 11.22,
+    "mdd": 20.46,
+    "trades": 36,
     "vsBuyHold": "lose",
-    "benchRet": 87.94,
+    "benchRet": 133.94,
     "benchBasis": "price",
     "gapPct": 0,
-    "tFrom": 1704153600,
-    "tTo": 1790467200,
+    "tFrom": 1597622400,
+    "tTo": 1692144000,
     "approxNotes": [
       "봉 내 순서는 관례(양봉 O→L→H→C·음봉 O→H→L→C) — 실순서 미상 · 봉 중 거래량 null · MDD 는 봉 마감 기준"
     ],
@@ -20,10 +20,11 @@
       "ex": "binance",
       "sym": "BTCUSDT",
       "interval": "1d",
-      "bars": 1000
+      "bars": 1095,
+      "end": 1692230400
     }
   },
   "config": null,
-  "updatedAt": "2026-09-28T12:53:39.554Z",
+  "updatedAt": "2026-09-28T12:55:33.391Z",
   "publishedBy": "scripts/publish-strategies.mjs"
 }
