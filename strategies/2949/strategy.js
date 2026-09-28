@@ -8,15 +8,17 @@
  *
  * Why this strategy: Two strategies that capture DIFFERENT regimes are combined.
  * OBV volume-flow trend rides accumulation-driven melt-ups, while Keltner
- * mean-reversion buys deep oversold flushes in chop/bear markets. A rising
- * 200-day average picks the mode: uptrend → OBV trend, downtrend/chop → Keltner
- * MR. This captures melt-up upside while staying productive in chop.
+ * mean-reversion buys deep oversold flushes in confirmed bear/chop markets.
+ * A rising 200-day average picks the mode: above the 200-day line → OBV trend;
+ * clearly below it → Keltner MR. This captures melt-up upside while staying
+ * productive in crashes.
  * When it buys and sells: In an uptrend it buys when 45-day OBV is rising with
- * volume confirmation and sells when OBV rolls over. In a downtrend/chop regime
- * it buys a flush to the lower Keltner band (EMA20 - 2.5x ATR) with RSI<40 and
- * sells on the snap-back to the mid band.
+ * volume confirmation and sells when OBV rolls over. In a confirmed downtrend
+ * (price clearly below the 200-day average) it buys an EXTREME flush to the
+ * lower Keltner band (EMA20 - 3x ATR) with RSI<30 and sells on the snap-back
+ * to the mid band.
  * When it does NOT work: It structurally LAGS straight-line melt-ups because it
- * waits for confirmation, and the mean-reversion leg can catch falling knives in
+ * waits for confirmation, and even the extreme MR can catch a falling knife in
  * a persistent crash. It is a long-only strategy, not a crash profiteer.
  */
 function onUpdate(ctx) {
@@ -31,9 +33,11 @@ function onUpdate(ctx) {
   const rsi = ctx.rsi(14, 1);
   if (sma200 == null || sma200prev == null || ema20 == null || atr == null || rsi == null || atr <= 0) return null;
 
-  // Regime switch: rising 200-day average = uptrend (OBV trend mode),
-  // falling/flat = downtrend/chop (Keltner MR mode).
-  const uptrend = sma200 > sma200prev;
+  // Regime: above the 200-day line = OBV trend mode; clearly below = Keltner MR.
+  // Using price vs the 200-day line (not just the line's slope) stops the MR
+  // leg from firing on pullbacks inside a bull market, which caused whipsaw.
+  const uptrendMode = price > sma200;
+  const bearMode = price < sma200 * 0.98;
 
   // Build OBV from close direction and volume.
   const LOOKBACK = 45;
@@ -62,40 +66,44 @@ function onUpdate(ctx) {
   const volOk = avgV != null && Number.isFinite(avgV) && avgV > 0 && ctx.vol > avgV;
 
   const st = ctx.state;
-  const lower = ema20 - 2.5 * atr;
+  // Deeper band (3x ATR) + RSI<30 = only true capitulation flushes trigger MR,
+  // cutting the churn that a 2.5x/40 threshold produced.
+  const lower = ema20 - 3.0 * atr;
 
   if (pos > 0) {
-    if (uptrend) {
+    if (uptrendMode) {
       // Uptrend mode: exit when OBV rolls over (money flow leaving).
       if (obvFalling) {
+        st.cd = ctx.i + 2;
         return { side: 'sell', qty: pos };
       }
       return null;
     }
-    // Downtrend/chop mode: sell on the snap-back to the mid band.
+    // Bear/chop mode: sell on the snap-back to the mid band.
     if (price > ema20) {
-      st.cooldown = ctx.i + 2;
+      st.cd = ctx.i + 3;
       return { side: 'sell', qty: pos };
     }
     return null;
   }
 
-  if (st.cooldown != null && ctx.i < st.cooldown) return null;
+  if (st.cd != null && ctx.i < st.cd) return null;
 
-  if (uptrend) {
+  if (uptrendMode) {
     // Uptrend entry: OBV rising + volume confirmation.
     if (obvRising && volOk) {
-      st.cooldown = null;
+      st.cd = null;
       return { side: 'buy', qty: (ctx.cash / price) * 0.95 };
     }
     return null;
   }
 
-  // Downtrend/chop entry: Keltner MR — deep flush to the lower band with RSI<40.
-  if (price <= lower && rsi < 40) {
-    st.cooldown = null;
-    // ATR-scaled size: risk 1.5% of equity per trade, capped at 90% of cash.
-    const riskEq = 0.015 * ctx.cash;
+  // Bear/chop entry: only an EXTREME capitulation flush, and only when clearly
+  // below the 200-day line (no falling-knife catching in a bull pullback).
+  if (bearMode && price <= lower && rsi < 30) {
+    st.cd = null;
+    // ATR-scaled size: risk 1% of equity per trade, capped at 90% of cash.
+    const riskEq = 0.01 * ctx.cash;
     const qty = riskEq / atr;
     const maxQty = (ctx.cash / price) * 0.9;
     return { side: 'buy', qty: Math.min(qty, maxQty) };
