@@ -3,12 +3,12 @@
   "name": "ETH 4H Slow Trend Ride",
   "kind": "custom",
   "verified": {
-    "backtestId": 13229,
-    "return": 1452.62,
-    "mdd": 43.36,
-    "trades": 78,
+    "backtestId": 13232,
+    "return": 405.43,
+    "mdd": 35.02,
+    "trades": 66,
     "vsBuyHold": "lose",
-    "benchRet": 1641.86,
+    "benchRet": 432.52,
     "benchBasis": "price",
     "gapPct": 0,
     "tFrom": 1574553600,
@@ -18,7 +18,7 @@
     ],
     "spec": {
       "ex": "binance",
-      "sym": "ETHUSDT",
+      "sym": "BTCUSDT",
       "interval": "4h",
       "bars": 5000,
       "end": 1646568000
