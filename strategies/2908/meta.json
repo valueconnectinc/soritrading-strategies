@@ -1,0 +1,30 @@
+{
+  "id": 2908,
+  "name": "ETH 4H Slow Trend Ride",
+  "kind": "custom",
+  "verified": {
+    "backtestId": 13226,
+    "return": 9.15,
+    "mdd": 9.87,
+    "trades": 46,
+    "vsBuyHold": "win",
+    "benchRet": -26.83,
+    "benchBasis": "price",
+    "gapPct": 0,
+    "tFrom": 1718568000,
+    "tTo": 1790553600,
+    "approxNotes": [
+      "봉 내 순서는 관례(양봉 O→L→H→C·음봉 O→H→L→C) — 실순서 미상 · 봉 중 거래량 null · MDD 는 봉 마감 기준"
+    ],
+    "spec": {
+      "ex": "binance",
+      "sym": "ETHUSDT",
+      "interval": "4h",
+      "bars": 5000,
+      "end": 1790568000
+    }
+  },
+  "config": null,
+  "updatedAt": "2026-09-28T06:58:53.469Z",
+  "publishedBy": "scripts/publish-strategies.mjs"
+}

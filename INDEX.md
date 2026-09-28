@@ -4,13 +4,14 @@ Every strategy whose backtest **finished and actually traded** is published here
 Nothing is filtered out by return — the ones that lost money are part of the record.
 Entries stay after a strategy is removed from our own workspace — this is a log, and deleting the record would leave only the survivors.
 
-**★ marks a strategy that out-returned buy & hold over the same window** — 367 of 1292 right now.
+**★ marks a strategy that out-returned buy & hold over the same window** — 368 of 1293 right now.
 `—` means the comparison **could not be made**: the engine does not compute a benchmark for multi-symbol, futures, or multi-leg runs. That is *unknown*, not *lost*, and it is 198 of them right now.
 
 Every figure comes from the last verifying backtest at publish time. These are past results over historical data. Nothing here is promised or assured about the future, and none of it is investment advice.
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
+| ★ | [2908](strategies/2908/) | ETH 4H Slow Trend Ride | +9.15% | -26.83% | +9.87% | 46 | 2026-09-28 |
 |  | [2907](strategies/2907/) | ETH 4H Bollinger Mean-Reversion | +26.63% | +432.52% | +8.37% | 69 | 2026-09-28 |
 |  | [2906](strategies/2906/) | Dual-Mode OBV+Keltner Hybrid v2 | +42.21% | +659.58% | +10.02% | 1 | 2026-09-28 |
 |  | [2905](strategies/2905/) | Deep-Pullback Buy-the-Dip BTC 1D | -24.57% | +1279.90% | +56.58% | 48 | 2026-09-27 |
