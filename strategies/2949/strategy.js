@@ -57,7 +57,10 @@ function onUpdate(ctx) {
       const obvNow = obvSeries[obvSeries.length - 1];
       const obvPast = obvSeries[obvSeries.length - 1 - LOOKBACK];
       obvRising = obvNow > obvPast * 1.01;
-      obvFalling = obvNow < obvPast * 0.985;
+      // Tighter exit: OBV must fall 4% below its 45-day-ago level to trigger
+      // an exit (was 1.5%). Holds winners through normal pullbacks, so the
+      // trend leg captures more of a straight-line melt-up.
+      obvFalling = obvNow < obvPast * 0.96;
     }
   }
   const avgV = ctx.avgVol(30);
@@ -70,8 +73,6 @@ function onUpdate(ctx) {
   if (pos > 0) {
     if (uptrendMode) {
       // Uptrend mode: exit when OBV rolls over (money flow leaving).
-      // Tighter exit threshold (0.985 -> 0.96): hold winners through normal
-      // pullbacks so the trend leg captures more of a straight-line melt-up.
       if (obvFalling) {
         st.cd = ctx.i + 2;
         return { side: 'sell', qty: pos };
