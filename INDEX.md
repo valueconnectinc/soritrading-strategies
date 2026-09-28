@@ -11,7 +11,7 @@ Every figure comes from the last verifying backtest at publish time. These are p
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
-|  | [2963](strategies/2963/) | Alt 1D ATR-Adaptive Keltner MR | +39.11% | +6993.97% | +39.08% | 14 | 2026-09-28 |
+|  | [2963](strategies/2963/) | Alt 1D ATR-Adaptive Keltner MR | +3.54% | +708.21% | +0.00% | 1 | 2026-09-28 |
 |  | [2962](strategies/2962/) | SOL 1D ATR-Adaptive Keltner MR | +123.41% | +1443.13% | +39.12% | 8 | 2026-09-28 |
 |  | [2960](strategies/2960/) | AI 전략 | +14.96% | +87.94% | +24.82% | 34 | 2026-09-28 |
 |  | [2959](strategies/2959/) | BTC 1D Defensive Bollinger-RSI + Trend Ride (CHAMPION BASELI | +12.76% | +116.17% | +15.81% | 22 | 2026-09-28 |
