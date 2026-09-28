@@ -10,47 +10,36 @@
  * mean-reversion strategies systematically miss because they sell into strength.
  * This strategy rides confirmed up-trends instead of fading them, aiming to
  * capture the upside the defensive strategies give up.
- * When it buys and sells: it buys when the slow 60-bar average climbs above the
- * 200-bar average (a confirmed uptrend) while price is above the 200-bar line.
- * It sells when price falls below a volatility-based trailing stop, or when the
- * trend itself turns down (60-bar average drops below the 200-bar average).
- * When it does NOT work: in choppy sideways markets the trend is false and it
- * whipsaws in and out, paying fees without progress. It also gives back part of
- * every crash because it only reacts after price falls through the trailing stop.
+ * When it buys and sells: it buys while price is above the 200-bar average (a
+ * long-term uptrend) once the 50-bar average turns up above the 200-bar line.
+ * It sells when price closes back below the 200-bar average (the trend broke).
+ * When it does NOT work: in choppy sideways markets the 200-bar line is crossed
+ * repeatedly and it whipsaws, and in a crash it only exits after price falls
+ * back below the 200-bar average, giving back a chunk of the drop.
  */
 function onUpdate(ctx) {
-  const fast = ctx.ema(60, 1);
-  const slow = ctx.ema(200, 1);
+  const ema50 = ctx.ema(50, 1);
+  const ema200 = ctx.ema(200, 1);
   const px = ctx.closes[ctx.closes.length - 2];
-  const atr = ctx.atr(14, 1);
-  if (fast == null || slow == null || atr == null || px == null) return null;
+  if (ema50 == null || ema200 == null || px == null) return null;
 
-  // ATR-scaled position: risk a fixed fraction of equity per trade, smaller
-  // size when volatility is high so a single stop-out is cheap.
-  const equity = ctx.cash + ctx.position * ctx.price;
-  const riskPerTrade = 0.01; // risk 1% of equity on a stop loss
-  const stopDist = 2 * atr; // stop is 2 ATR below entry
-  const qty = Math.max(0, Math.min(equity * riskPerTrade / stopDist, (ctx.cash / ctx.price) * 0.99));
-
-  // Exit: volatility trailing stop, or trend rollover.
-  if (ctx.position > 0) {
-    const trailStop = ctx.price - 2 * atr;
-    const entry = ctx.entryPx || 0;
-    const stop = Math.max(entry - 2 * atr, trailStop); // ratchet the stop up
-    if (px < stop || fast < slow) {
-      return { side: 'sell', qty: ctx.position };
-    }
-    return null;
+  // Exit when the long-term trend breaks (price closes below the 200-bar line).
+  if (ctx.position > 0 && px < ema200) {
+    return { side: 'sell', qty: ctx.position };
   }
 
-  // Enter only on a confirmed uptrend with a fresh golden cross (slow, avoids
-  // the whipsaw that kills fast crossovers in crypto).
-  const fastPrev = ctx.ema(60, 2);
-  const slowPrev = ctx.ema(200, 2);
-  if (fastPrev == null || slowPrev == null) return null;
-  const crossedUp = fastPrev <= slowPrev && fast > slow;
-  if (crossedUp && px > slow && qty > 0) {
-    return { side: 'buy', qty: qty };
+  // Enter on a confirmed uptrend: price above 200-bar line and 50-bar average
+  // above it (trend aligned). Size a fixed fraction of equity.
+  if (ctx.position === 0) {
+    const ema50Prev = ctx.ema(50, 2);
+    const ema200Prev = ctx.ema(200, 2);
+    if (ema50Prev == null || ema200Prev == null) return null;
+    // require the 50-bar average to be rising (above its own previous value)
+    // and price above the long-term line — a slow, confirmed uptrend.
+    if (px > ema200 && ema50 > ema200 && ema50 > ema50Prev) {
+      const qty = (ctx.cash / ctx.price) * 0.99;
+      return { side: 'buy', qty: qty };
+    }
   }
   return null;
 }
