@@ -13,9 +13,9 @@
  * so drawdown stays small. In strong trends we let winners run with a trailing
  * stop; in chop we take the quick snap-back profit.
  * When it buys and sells: Buys when price is below the lower Bollinger band, RSI
- * is below 30, and price is above a rising 200-day average. In a strong trend it
- * rides the position until price breaks its 10-day low; otherwise it sells on
- * the snap-back above the mid band or when RSI climbs above 60.
+ * is below 30, and price is above a rising 200-day average, using nearly full
+ * cash. In a strong trend it rides until price breaks its 10-day low; otherwise
+ * it sells on the snap-back above the mid band or when RSI climbs above 60.
  * When it does NOT work: It systematically misses straight-line melt-ups — it
  * sits in cash while BTC rallies without a pullback, so it badly lags buy-and-hold
  * in relentless bull markets. It is a defensive, capital-preserving strategy, not
@@ -61,14 +61,8 @@ function onUpdate(ctx) {
   // Entry: deep oversold flush inside a rising long-term uptrend.
   if (uptrend && price < bb.lower && rsi < 30) {
     st.cd = null;
-    // ATR-scaled size: risk ~1.5% of equity per trade, capped at 90% of cash.
-    const atr = ctx.atr(14, 1);
-    let qty = 0;
-    if (atr != null && Number.isFinite(atr) && atr > 0) {
-      qty = (0.015 * ctx.cash) / atr;
-    }
-    const maxQty = (ctx.cash / price) * 0.9;
-    return { side: 'buy', qty: Math.min(qty || maxQty, maxQty) };
+    // Entries are rare, so commit nearly full cash to make the trade count.
+    return { side: 'buy', qty: (ctx.cash / price) * 0.95 };
   }
   return null;
 }
