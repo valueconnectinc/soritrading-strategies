@@ -3,16 +3,16 @@
   "name": "BTC 1D Bollinger-RSI Mean Reversion",
   "kind": "custom",
   "verified": {
-    "backtestId": 13458,
-    "return": 11.97,
-    "mdd": 39.77,
-    "trades": 40,
+    "backtestId": 13463,
+    "return": -4.87,
+    "mdd": 19.18,
+    "trades": 4,
     "vsBuyHold": "lose",
-    "benchRet": 50.97,
+    "benchRet": 1253.33,
     "benchBasis": "price",
     "gapPct": 0,
-    "tFrom": 1617753600,
-    "tTo": 1790467200,
+    "tFrom": 1502928000,
+    "tTo": 1617667200,
     "approxNotes": [
       "봉 내 순서는 관례(양봉 O→L→H→C·음봉 O→H→L→C) — 실순서 미상 · 봉 중 거래량 null · MDD 는 봉 마감 기준"
     ],
@@ -21,7 +21,7 @@
       "sym": "BTCUSDT",
       "interval": "1d",
       "bars": 2000,
-      "end": 1790553600
+      "end": 1617753600
     }
   },
   "config": null,
