@@ -11,7 +11,7 @@ Every figure comes from the last verifying backtest at publish time. These are p
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
-|  | [2914](strategies/2914/) | ETH 4H ATR-Adaptive Mean-Reversion | -25.46% | +37.01% | +35.43% | 56 | 2026-09-28 |
+|  | [2914](strategies/2914/) | ETH 4H ATR-Adaptive Mean-Reversion | -43.27% | +37.01% | +60.99% | 168 | 2026-09-28 |
 |  | [2913](strategies/2913/) | ETH 4H Bollinger Mean-Reversion | +10.94% | +1641.86% | +12.61% | 70 | 2026-09-28 |
 |  | [2912](strategies/2912/) | SOL 4H ATR-Adaptive Mean-Reversion | -0.39% | +892.85% | +2.91% | 36 | 2026-09-28 |
 | ★ | [2911](strategies/2911/) | SOL 4H Bollinger Mean-Reversion | -2.03% | -50.04% | +3.80% | 40 | 2026-09-28 |

@@ -3,10 +3,10 @@
   "name": "ETH 4H ATR-Adaptive Mean-Reversion",
   "kind": "custom",
   "verified": {
-    "backtestId": 13259,
-    "return": -25.46,
-    "mdd": 35.43,
-    "trades": 56,
+    "backtestId": 13262,
+    "return": -43.27,
+    "mdd": 60.99,
+    "trades": 168,
     "vsBuyHold": "lose",
     "benchRet": 37.01,
     "benchBasis": "price",
@@ -25,6 +25,6 @@
     }
   },
   "config": null,
-  "updatedAt": "2026-09-28T07:26:10.491Z",
+  "updatedAt": "2026-09-28T07:27:34.608Z",
   "publishedBy": "scripts/publish-strategies.mjs"
 }
