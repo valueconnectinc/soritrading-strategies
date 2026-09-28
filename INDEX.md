@@ -11,7 +11,7 @@ Every figure comes from the last verifying backtest at publish time. These are p
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
-| ★ | [2943](strategies/2943/) | BTC 1D OBV Flow Trend Fast | +367.44% | +201.80% | +34.01% | 70 | 2026-09-28 |
+| ★ | [2943](strategies/2943/) | BTC 1D OBV Flow Trend Fast | +118.17% | +50.97% | +45.45% | 171 | 2026-09-28 |
 | ★ | [2942](strategies/2942/) | BTC 1D OBV Money-Flow Trend | +493.88% | +483.86% | +34.49% | 26 | 2026-09-28 |
 |  | [2941](strategies/2941/) | BTC 4H Volume-Surge Breakout | -28.90% | +72.42% | +44.24% | 160 | 2026-09-28 |
 |  | [2940](strategies/2940/) | BTC 1D Golden-Cross Trend | -56.68% | +50.97% | +61.73% | 91 | 2026-09-28 |
