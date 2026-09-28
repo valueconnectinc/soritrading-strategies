@@ -3,7 +3,7 @@
   "name": "BTC 1D OBV Money-Flow Trend",
   "kind": "custom",
   "verified": {
-    "backtestId": 13492,
+    "backtestId": 13496,
     "return": 25.93,
     "mdd": 39.29,
     "trades": 203,
