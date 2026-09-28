@@ -11,7 +11,7 @@ Every figure comes from the last verifying backtest at publish time. These are p
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
-|  | [2960](strategies/2960/) | AI 전략 | +18.99% | +827.77% | +15.81% | 24 | 2026-09-28 |
+|  | [2960](strategies/2960/) | AI 전략 | +14.96% | +87.94% | +24.82% | 34 | 2026-09-28 |
 |  | [2959](strategies/2959/) | BTC 1D Defensive Bollinger-RSI + Trend Ride (CHAMPION BASELI | +12.76% | +116.17% | +15.81% | 22 | 2026-09-28 |
 |  | [2958](strategies/2958/) | BTC 1D Defensive Bollinger-RSI + Trend Ride (Vol-Scaled) | +12.77% | +116.17% | +15.18% | 22 | 2026-09-28 |
 |  | [2957](strategies/2957/) | ETH 1D Defensive Bollinger-RSI | +20.27% | +116.17% | +14.42% | 10 | 2026-09-28 |
