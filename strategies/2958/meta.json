@@ -3,16 +3,16 @@
   "name": "BTC 1D Defensive Bollinger-RSI + Trend Ride (Vol-Scaled)",
   "kind": "custom",
   "verified": {
-    "backtestId": 13630,
-    "return": 42.99,
+    "backtestId": 13635,
+    "return": 9.3,
     "mdd": 22.17,
-    "trades": 114,
+    "trades": 32,
     "vsBuyHold": "lose",
-    "benchRet": 1871.31,
+    "benchRet": 77.87,
     "benchBasis": "price",
     "gapPct": 0,
-    "tFrom": 1502928000,
-    "tTo": 1790467200,
+    "tFrom": 1704067200,
+    "tTo": 1788134400,
     "approxNotes": [
       "봉 내 순서는 관례(양봉 O→L→H→C·음봉 O→H→L→C) — 실순서 미상 · 봉 중 거래량 null · MDD 는 봉 마감 기준"
     ],
@@ -20,8 +20,8 @@
       "ex": "binance",
       "sym": "BTCUSDT",
       "interval": "1d",
-      "bars": 5000,
-      "end": 1790553600
+      "bars": 974,
+      "end": 1788220800
     }
   },
   "config": null,
