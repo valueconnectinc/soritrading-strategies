@@ -11,7 +11,7 @@ Every figure comes from the last verifying backtest at publish time. These are p
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
-|  | [2954](strategies/2954/) | BTC 1D Volatility-Scaled Long Exposure | -38.89% | +177.96% | +55.84% | 510 | 2026-09-28 |
+|  | [2954](strategies/2954/) | BTC 1D Volatility-Scaled Long Exposure | +8.34% | +87.94% | +24.82% | 16 | 2026-09-28 |
 |  | [2953](strategies/2953/) | BTC 1D Dual-Mode OBV Trend + Keltner MR | +17.67% | +217.28% | +22.48% | 39 | 2026-09-28 |
 |  | [2952](strategies/2952/) | BTC 1D Fear-Greed Contrarian | -4.18% | +176.62% | +28.46% | 10 | 2026-09-28 |
 |  | [2951](strategies/2951/) | AI 전략 | +107.90% | +1253.33% | +51.32% | 69 | 2026-09-28 |
