@@ -11,7 +11,7 @@ Every figure comes from the last verifying backtest at publish time. These are p
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
-|  | [2936](strategies/2936/) | ETH 4H Bollinger MR Macro-Risk Gated | +53.62% | +1658.97% | +46.17% | 66 | 2026-09-28 |
+|  | [2936](strategies/2936/) | ETH 4H Bollinger MR Macro-Risk Gated | +19.45% | +71.94% | +30.90% | 42 | 2026-09-28 |
 |  | [2935](strategies/2935/) | ETH 4H Bollinger MR Full-Cash (no gate) | +53.62% | +1658.97% | +46.17% | 66 | 2026-09-28 |
 | ★ | [2934](strategies/2934/) | ETH 4H Bollinger MR Macro-Risk Gated | +35.12% | -26.18% | +7.37% | 32 | 2026-09-28 |
 |  | [2931](strategies/2931/) | BTC 4H Bollinger MR Uptrend-6pct | -15.64% | +71.94% | +20.64% | 28 | 2026-09-28 |
