@@ -1,21 +1,21 @@
 /*
  * @coinsori-strategy v1
- * name: BTC 1D Dual-Mode Mean-Reversion + Trend Ride
+ * name: BTC 1D Dual-Mode MR + Trend Ride v2
  * ex: binance
  * syms: BTCUSDT
  * interval: 1d
  * cash: 10000
  *
  * Why this strategy: Combines two market behaviors. In choppy/bear markets, sharp drops
- * to oversold levels bounce, so we buy dips and sell rebounds. In strong melt-ups, we
- * instead let a winning position ride with a trailing stop to capture the upside. A
- * rising 200-day average decides which regime we are in.
- * When it buys and sells: Buys when the close is below the lower Bollinger band, RSI is
- * oversold (<30), and the 200-day average is rising. If the uptrend is strong (price well
- * above the 200-day average), it exits on a trailing stop (breaking the 10-day low) to
- * ride the rally; otherwise it exits on a rebound to the mid-band or RSI>60.
- * When it does NOT work: In a straight-line crash it stays in cash (good) but it can be
- * late re-entering after a trend. It is a counter-trend strategy that needs either a
+ * to oversold levels bounce, so we buy dips and sell rebounds. In strong melt-ups, price
+ * rarely dips to oversold, so we add a trend-following breakout entry to participate in
+ * the rally instead of sitting in cash. A rising 200-day average decides the regime.
+ * When it buys and sells: Buys either (a) on an oversold dip (close below lower Bollinger,
+ * RSI<30, rising 200-day avg) or (b) on a 20-day-high breakout while the 200-day average
+ * is strongly rising (melt-up participation). In a strong trend it rides with a 10-day-low
+ * trailing stop; otherwise it exits on a rebound to the mid-band or RSI>60.
+ * When it does NOT work: In a straight-line crash it stays in cash (good) but can be late
+ * re-entering. A false breakout in a weak uptrend can cause a quick loss. Needs either a
  * bounce or a sustained uptrend to profit.
  */
 function onUpdate(ctx) {
@@ -27,14 +27,23 @@ function onUpdate(ctx) {
   const bb = ctx.bb(20, 2, 1);
   const rsi = ctx.rsi(14, 1);
   const lo10 = ctx.low(10, 1);
-  if (s200 == null || s200prev == null || bb == null || rsi == null || lo10 == null) return null;
+  const hi20 = ctx.high(20, 1);
+  if (s200 == null || s200prev == null || bb == null || rsi == null || lo10 == null || hi20 == null) return null;
 
   const rising = s200 > s200prev;
   // Strong trend: price well above a rising 200-day average (melt-up regime).
   const strongTrend = rising && px > s200 * 1.2;
 
   if (ctx.position <= 0) {
+    // Mean-reversion entry: oversold dip in a rising regime.
     if (rising && px > s200 && px < bb.lower && rsi < 30) {
+      ctx.state.entryPx = px;
+      return { side: 'buy', qty: (ctx.cash / px) * 0.99 };
+    }
+    // Trend-following entry: breakout above 20-day high in a strong rising regime.
+    // pxPrev is the previous close; breakout means prev close was below the 20-day high.
+    const pxPrev = ctx.closes[ctx.closes.length - 2];
+    if (strongTrend && pxPrev != null && pxPrev < hi20 && px > hi20) {
       ctx.state.entryPx = px;
       return { side: 'buy', qty: (ctx.cash / px) * 0.99 };
     }
