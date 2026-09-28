@@ -11,7 +11,7 @@ Every figure comes from the last verifying backtest at publish time. These are p
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
-|  | [2916](strategies/2916/) | ETH 4H Keltner ATR-Adaptive Mean-Reversion (Champion) | -15.88% | +37.01% | +22.05% | 20 | 2026-09-28 |
+|  | [2916](strategies/2916/) | ETH 4H Keltner ATR-Adaptive Mean-Reversion (Champion) | -26.61% | +37.01% | +36.81% | 38 | 2026-09-28 |
 |  | [2915](strategies/2915/) | BTC 4H Keltner ATR-Adaptive Mean-Reversion | -13.32% | +24.99% | +28.14% | 84 | 2026-09-28 |
 |  | [2914](strategies/2914/) | ETH 4H ATR-Adaptive Mean-Reversion | +13.77% | +1641.86% | +30.24% | 70 | 2026-09-28 |
 |  | [2913](strategies/2913/) | ETH 4H Bollinger Mean-Reversion | +10.94% | +1641.86% | +12.61% | 70 | 2026-09-28 |
