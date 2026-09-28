@@ -4,14 +4,14 @@ Every strategy whose backtest **finished and actually traded** is published here
 Nothing is filtered out by return — the ones that lost money are part of the record.
 Entries stay after a strategy is removed from our own workspace — this is a log, and deleting the record would leave only the survivors.
 
-**★ marks a strategy that out-returned buy & hold over the same window** — 374 of 1327 right now.
+**★ marks a strategy that out-returned buy & hold over the same window** — 373 of 1327 right now.
 `—` means the comparison **could not be made**: the engine does not compute a benchmark for multi-symbol, futures, or multi-leg runs. That is *unknown*, not *lost*, and it is 198 of them right now.
 
 Every figure comes from the last verifying backtest at publish time. These are past results over historical data. Nothing here is promised or assured about the future, and none of it is investment advice.
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
-| ★ | [2947](strategies/2947/) | BTC 1D Bollinger-RSI Mean Reversion | +22.81% | -21.04% | +9.00% | 6 | 2026-09-28 |
+|  | [2947](strategies/2947/) | BTC 1D Bollinger-RSI Mean Reversion | -4.87% | +1253.33% | +19.18% | 4 | 2026-09-28 |
 |  | [2946](strategies/2946/) | BTC 1D Donchian Breakout with ATR Trailing Stop | -89.65% | +50.97% | +90.81% | 143 | 2026-09-28 |
 |  | [2945](strategies/2945/) | BTC 1D On-Chain Network-Health Trend | -45.83% | +50.97% | +72.75% | 160 | 2026-09-28 |
 |  | [2944](strategies/2944/) | SOL 1D Vol-Scaled Mean Reversion | -28.84% | +985.64% | +40.82% | 10 | 2026-09-28 |
