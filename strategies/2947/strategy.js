@@ -11,9 +11,9 @@
  * rarely dips to oversold, so we add a trend-following breakout entry to participate in
  * the rally instead of sitting in cash. A rising 200-day average decides the regime.
  * When it buys and sells: Buys either (a) on an oversold dip (close below lower Bollinger,
- * RSI<30, rising 200-day avg) or (b) on a 20-day-high breakout while the 200-day average
- * is strongly rising (melt-up participation). In a strong trend it rides with a 10-day-low
- * trailing stop; otherwise it exits on a rebound to the mid-band or RSI>60.
+ * RSI<30, rising 200-day avg) or (b) on a 20-day-high breakout only in a genuine melt-up
+ * (price far above a rising 200-day avg AND RSI strong). In a strong trend it rides with a
+ * 10-day-low trailing stop; otherwise it exits on a rebound to the mid-band or RSI>60.
  * When it does NOT work: In a straight-line crash it stays in cash (good) but can be late
  * re-entering. A false breakout in a weak uptrend can cause a quick loss. Needs either a
  * bounce or a sustained uptrend to profit.
@@ -40,10 +40,10 @@ function onUpdate(ctx) {
       ctx.state.entryPx = px;
       return { side: 'buy', qty: (ctx.cash / px) * 0.99 };
     }
-    // Trend-following entry: breakout above 20-day high in a strong rising regime.
-    // pxPrev is the previous close; breakout means prev close was below the 20-day high.
+    // Trend-following entry: only in a GENUINE melt-up (price far above rising 200-day avg
+    // AND RSI already strong) to filter out false breakouts in choppy strong markets.
     const pxPrev = ctx.closes[ctx.closes.length - 2];
-    if (strongTrend && pxPrev != null && pxPrev < hi20 && px > hi20) {
+    if (rising && px > s200 * 1.4 && rsi > 55 && pxPrev != null && pxPrev < hi20 && px > hi20) {
       ctx.state.entryPx = px;
       return { side: 'buy', qty: (ctx.cash / px) * 0.99 };
     }
