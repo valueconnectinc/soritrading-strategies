@@ -1,0 +1,30 @@
+{
+  "id": 2913,
+  "name": "ETH 4H Bollinger Mean-Reversion",
+  "kind": "custom",
+  "verified": {
+    "backtestId": 13250,
+    "return": -4.48,
+    "mdd": 6.04,
+    "trades": 56,
+    "vsBuyHold": "lose",
+    "benchRet": 37.01,
+    "benchBasis": "price",
+    "gapPct": 0,
+    "tFrom": 1646568000,
+    "tTo": 1718553600,
+    "approxNotes": [
+      "봉 내 순서는 관례(양봉 O→L→H→C·음봉 O→H→L→C) — 실순서 미상 · 봉 중 거래량 null · MDD 는 봉 마감 기준"
+    ],
+    "spec": {
+      "ex": "binance",
+      "sym": "ETHUSDT",
+      "interval": "4h",
+      "bars": 5000,
+      "end": 1718568000
+    }
+  },
+  "config": null,
+  "updatedAt": "2026-09-28T07:22:45.224Z",
+  "publishedBy": "scripts/publish-strategies.mjs"
+}
