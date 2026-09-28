@@ -9,13 +9,13 @@
  * Why this strategy: Combines two families that the ledger shows are each robust
  * on BTC 1D but capture different regimes. Mean-reversion buys sharp oversold
  * dips in chop/bear (defensive, low drawdown). OBV volume-flow trend catches
- * accumulation-driven melt-ups that mean-reversion sits out. Switching between
- * them on a rising 200-day average lets us profit in both regimes.
+ * accumulation-driven melt-ups that mean-reversion sits out. The OBV leg is
+ * gated to fire ONLY in a strong uptrend so it does not add whipsaw in chop.
  * When it buys and sells: Buys either (1) mean-reversion: close below the lower
  * Bollinger band with RSI<30 above a rising 200-day average, or (2) trend: OBV
- * rising vs 30 days ago with volume confirmation above a rising 200-day average.
- * Sells on a mid-band/RSI>60 rebound in chop, or when OBV turns down in a strong
- * trend.
+ * rising vs 30 days ago with volume confirmation, but only when price is well
+ * above a rising 200-day average (melt-up regime). Sells on a mid-band/RSI>60
+ * rebound in chop, or on a trailing stop / OBV turn-down in a strong trend.
  * When it does NOT work: In a straight-line crash it stays in cash (good) but
  * the OBV trend leg can be late entering after a sharp V-reversal, and the
  * mean-reversion leg needs either a bounce or a sustained uptrend. It is not a
@@ -67,8 +67,8 @@ function onUpdate(ctx) {
       ctx.state.entryPx = px;
       return { side: 'buy', qty: (ctx.cash / px) * 0.99 };
     }
-    // OBV trend entry: money flowing in with volume, above rising 200-day avg.
-    if (rising && px > s200 && obvRising && volOk) {
+    // OBV trend entry: ONLY in a strong melt-up regime, with volume confirmation.
+    if (strongTrend && obvRising && volOk) {
       ctx.state.entryPx = px;
       return { side: 'buy', qty: (ctx.cash / px) * 0.99 };
     }
