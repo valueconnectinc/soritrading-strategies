@@ -13,10 +13,10 @@
  * clearly below it → Keltner MR. This captures melt-up upside while staying
  * productive in crashes.
  * When it buys and sells: In an uptrend it buys when 45-day OBV is rising with
- * volume confirmation and sells only when OBV rolls over clearly. In a
- * confirmed downtrend (price clearly below the 200-day average) it buys an
- * EXTREME flush to the lower Keltner band (EMA20 - 3x ATR) with RSI<30 and
- * sells on the snap-back to the mid band.
+ * volume confirmation and sells when OBV rolls over. In a confirmed downtrend
+ * (price clearly below the 200-day average) it buys an EXTREME flush to the
+ * lower Keltner band (EMA20 - 3x ATR) with RSI<30 and sells on the snap-back
+ * to the mid band.
  * When it does NOT work: It structurally LAGS straight-line melt-ups because it
  * waits for confirmation, and even the extreme MR can catch a falling knife in
  * a persistent crash. It is a long-only strategy, not a crash profiteer.
@@ -33,6 +33,9 @@ function onUpdate(ctx) {
   const rsi = ctx.rsi(14, 1);
   if (sma200 == null || sma200prev == null || ema20 == null || atr == null || rsi == null || atr <= 0) return null;
 
+  // Regime: above the 200-day line = OBV trend mode; clearly below = Keltner MR.
+  // Using price vs the 200-day line (not just the line's slope) stops the MR
+  // leg from firing on pullbacks inside a bull market, which caused whipsaw.
   const uptrendMode = price > sma200;
   const bearMode = price < sma200 * 0.98;
 
@@ -55,26 +58,28 @@ function onUpdate(ctx) {
     if (obvSeries.length >= LOOKBACK + 1) {
       const obvNow = obvSeries[obvSeries.length - 1];
       const obvPast = obvSeries[obvSeries.length - 1 - LOOKBACK];
-      // Looser hysteresis: enter on a bigger rise, exit only on a bigger fall,
-      // so the position holds through minor bull pullbacks (less melt-up lag).
-      obvRising = obvNow > obvPast * 1.02;
-      obvFalling = obvNow < obvPast * 0.97;
+      obvRising = obvNow > obvPast * 1.01;
+      obvFalling = obvNow < obvPast * 0.985;
     }
   }
   const avgV = ctx.avgVol(30);
   const volOk = avgV != null && Number.isFinite(avgV) && avgV > 0 && ctx.vol > avgV;
 
   const st = ctx.state;
+  // Deeper band (3x ATR) + RSI<30 = only true capitulation flushes trigger MR,
+  // cutting the churn that a 2.5x/40 threshold produced.
   const lower = ema20 - 3.0 * atr;
 
   if (pos > 0) {
     if (uptrendMode) {
+      // Uptrend mode: exit when OBV rolls over (money flow leaving).
       if (obvFalling) {
         st.cd = ctx.i + 2;
         return { side: 'sell', qty: pos };
       }
       return null;
     }
+    // Bear/chop mode: sell on the snap-back to the mid band.
     if (price > ema20) {
       st.cd = ctx.i + 3;
       return { side: 'sell', qty: pos };
@@ -85,6 +90,7 @@ function onUpdate(ctx) {
   if (st.cd != null && ctx.i < st.cd) return null;
 
   if (uptrendMode) {
+    // Uptrend entry: OBV rising + volume confirmation.
     if (obvRising && volOk) {
       st.cd = null;
       return { side: 'buy', qty: (ctx.cash / price) * 0.95 };
@@ -92,8 +98,11 @@ function onUpdate(ctx) {
     return null;
   }
 
+  // Bear/chop entry: only an EXTREME capitulation flush, and only when clearly
+  // below the 200-day line (no falling-knife catching in a bull pullback).
   if (bearMode && price <= lower && rsi < 30) {
     st.cd = null;
+    // ATR-scaled size: risk 1% of equity per trade, capped at 90% of cash.
     const riskEq = 0.01 * ctx.cash;
     const qty = riskEq / atr;
     const maxQty = (ctx.cash / price) * 0.9;
