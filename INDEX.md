@@ -11,7 +11,7 @@ Every figure comes from the last verifying backtest at publish time. These are p
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
-|  | [2907](strategies/2907/) | ETH 4H Bollinger Mean-Reversion | +33.81% | +1641.86% | +21.92% | 173 | 2026-09-28 |
+|  | [2907](strategies/2907/) | ETH 4H Bollinger Mean-Reversion | +38.64% | +1641.86% | +11.39% | 88 | 2026-09-28 |
 |  | [2906](strategies/2906/) | Dual-Mode OBV+Keltner Hybrid v2 | +42.21% | +659.58% | +10.02% | 1 | 2026-09-28 |
 |  | [2905](strategies/2905/) | Deep-Pullback Buy-the-Dip BTC 1D | -24.57% | +1279.90% | +56.58% | 48 | 2026-09-27 |
 |  | [2904](strategies/2904/) | Vol-Targeted Long-Only BTC/ETH/SOL 1D | +58.61% | +263.61% | +62.06% | 68 | 2026-09-27 |
