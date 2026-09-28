@@ -3,7 +3,7 @@
   "name": "SOL 1D Dual-Mode Keltner MR + Trend Ride",
   "kind": "custom",
   "verified": {
-    "backtestId": 13693,
+    "backtestId": 13696,
     "return": 79.55,
     "mdd": 23.13,
     "trades": 5,
@@ -26,6 +26,6 @@
     }
   },
   "config": null,
-  "updatedAt": "2026-09-28T14:25:02.925Z",
+  "updatedAt": "2026-09-28T14:26:46.391Z",
   "publishedBy": "scripts/publish-strategies.mjs"
 }

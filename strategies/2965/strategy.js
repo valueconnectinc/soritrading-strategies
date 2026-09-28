@@ -1,25 +1,28 @@
 /*
  * @coinsori-strategy v1
- * name: SOL 1D Dual-Mode Trend Ride + Defensive MR
+ * name: SOL 1D Strong-Trend Ride + Defensive MR
  * ex: binance
  * syms: SOLUSDT
  * interval: 1d
  * cash: 10000
  *
  * Why this strategy: The validated ATR-adaptive Keltner mean-reversion core defends
- * in chop/bear but sits in cash during melt-ups. This dual-mode version rides strong
- * uptrends with a trailing stop (capturing the melt-up) and falls back to the
- * defensive MR core when not in a strong trend. The two modes are mutually exclusive
- * with separate entry/exit paths so they never clash.
- * When it buys and sells: TREND mode holds long when price is above a rising 100-day
- * average (a slow, robust uptrend signal), exiting only on a 3x-ATR trailing stop
- * below the recent high or a close below the 100-day average. MR mode (only when not
- * trend-riding) buys oversold flushes below the ATR-adaptive lower Keltner band with
- * RSI<40 inside a rising 200-day uptrend, selling on snap-back above the mid band.
- * When it does NOT work: In a choppy range-bound market the trend gate whipsaws and
- * the trailing stop churns some fees — the pure MR is better there. In a violent
- * crash the trailing stop still realizes a loss before the defensive mode re-engages.
- * It trades more than the pure MR and pays more fees.
+ * in chop/bear but sits in cash during melt-ups. This dual-mode version rides ONLY
+ * strong sustained uptrends (a strict golden-cross-style filter that stays out of
+ * chop) with a trailing stop, capturing the melt-up, and otherwise uses the
+ * defensive MR core. The strict trend gate is the key: it must not whipsaw in the
+ * ranges that dominate SOL's recent history.
+ * When it buys and sells: TREND mode requires price above the 200-day average, the
+ * 50-day average above the 200-day (golden-cross structure) and both rising — a rare,
+ * strong signal. It holds with a 3x-ATR trailing stop below the recent high and exits
+ * when the golden-cross structure breaks. MR mode (only when not trend-riding) buys
+ * oversold flushes below the ATR-adaptive lower Keltner band with RSI<40 inside a
+ * rising 200-day uptrend, selling on snap-back above the mid band.
+ * When it does NOT work: In a choppy range-bound market the trend gate rarely fires
+ * so it mostly behaves like the pure MR (good), but when it does trigger on a false
+ * breakout the trailing stop takes a hit. In a violent crash the trailing stop
+ * realizes a loss before the defensive mode re-engages. It still trades more than
+ * the pure MR.
  */
 function onUpdate(ctx) {
   const pos = ctx.position;
@@ -31,38 +34,39 @@ function onUpdate(ctx) {
   const rsi = ctx.rsi(14, 1);
   const sma200 = ctx.sma(200, 1);
   const sma200prev = ctx.sma(200, 2);
-  const sma100 = ctx.sma(100, 1);
-  const sma100prev = ctx.sma(100, 2);
+  const sma50 = ctx.sma(50, 1);
+  const sma50prev = ctx.sma(50, 2);
   if (ema20 == null || atr == null || rsi == null || sma200 == null || sma200prev == null ||
-      sma100 == null || sma100prev == null) return null;
+      sma50 == null || sma50prev == null) return null;
 
-  // TREND MODE gate: slow robust uptrend — price above a rising 100-day average.
-  const trendUp = price > sma100 && sma100 > sma100prev;
+  // STRONG-TREND gate: golden-cross structure (50>200) with price above both and
+  // both averages rising — rare, only fires in sustained melt-ups, stays out of chop.
+  const trendUp = price > sma200 && sma50 > sma200 && sma50 > sma50prev && sma200 > sma200prev;
 
   // MR MODE gate: defensive mean reversion inside healthy long-term uptrend.
   const lowerBand = ema20 - 2.5 * atr;
   const uptrend = sma200 > sma200prev;
 
   if (pos > 0) {
-    // If we are in a trend ride, exit on a 3x-ATR trailing stop below the recent high
-    // or a close below the 100-day average (trend broken).
+    // In a trend ride: exit on 3x-ATR trailing stop below recent high or if the
+    // golden-cross structure breaks.
     if (trendUp) {
-      const hi = ctx.high(50, 1); // highest high over last 50 closed bars
+      const hi = ctx.high(50, 1);
       if (hi == null) return null;
       const trailStop = hi - 3 * atr;
-      if (price < trailStop || price < sma100) {
+      if (price < trailStop || price < sma50 || sma50 < sma200) {
         return { side: 'sell', qty: pos };
       }
       return null;
     }
-    // Otherwise we are in an MR position — exit on snap-back above mid band or RSI up.
+    // In an MR position: exit on snap-back above mid band or RSI up.
     if (price > ema20 || rsi > 60) {
       return { side: 'sell', qty: pos };
     }
     return null;
   }
 
-  // Enter trend mode on a confirmed strong uptrend.
+  // Enter trend mode only on a confirmed strong sustained uptrend.
   if (trendUp) {
     return { side: 'buy', qty: (ctx.cash / price) * 0.95 };
   }
