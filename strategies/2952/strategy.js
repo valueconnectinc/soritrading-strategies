@@ -1,22 +1,25 @@
 /*
  * @coinsori-strategy v1
- * name: BTC 1D OBV Volume-Flow Trend v3
+ * name: BTC 1D Defensive Bollinger-RSI + Trend Ride
  * ex: binance
  * syms: BTCUSDT
  * interval: 1d
  * cash: 10000
  *
- * Why this strategy: Sustained rallies in BTC are driven by real accumulation —
- * price rising on above-average volume (money flowing in). OBV tracks that flow.
- * When OBV is climbing AND volume is above its 30-day average, a genuine uptrend
- * is underway and worth riding; when OBV rolls over, the money is leaving.
- * When it buys and sells: Buys when 30-day OBV is rising, price is above the
- * 200-day average (or within 5% below it — a relaxed gate so it catches the
- * early rally), and volume is above its 30-day average. Sells when OBV falls.
- * When it does NOT work: It lags the sharpest V-shaped melt-ups because it waits
- * for OBV confirmation, and it carries meaningful drawdown (23-44%) in choppy
- * trend-less markets where OBV whipsaws. Long-only, so it does not profit from
- * crashes on their own.
+ * Why this strategy: BTC is volatile but trends up over years. Buying only at
+ * deep oversold flushes (below the lower Bollinger band with RSI below 30) while
+ * the long-term 200-day average is still rising means we buy fear at a discount
+ * inside a healthy uptrend — and we are out of the market the rest of the time,
+ * so drawdown stays small. In strong trends we let winners run with a trailing
+ * stop; in chop we take the quick snap-back profit.
+ * When it buys and sells: Buys when price is below the lower Bollinger band, RSI
+ * is below 30, and price is above a rising 200-day average. In a strong trend it
+ * rides the position until price breaks its 10-day low; otherwise it sells on
+ * the snap-back above the mid band or when RSI climbs above 60.
+ * When it does NOT work: It systematically misses straight-line melt-ups — it
+ * sits in cash while BTC rallies without a pullback, so it badly lags buy-and-hold
+ * in relentless bull markets. It is a defensive, capital-preserving strategy, not
+ * a melt-up capture machine.
  */
 function onUpdate(ctx) {
   const pos = ctx.position;
@@ -24,40 +27,30 @@ function onUpdate(ctx) {
   if (!Number.isFinite(price) || price <= 0) return null;
 
   const sma200 = ctx.sma(200, 1);
-  if (sma200 == null) return null;
+  const sma200prev = ctx.sma(200, 2);
+  const bb = ctx.bb(20, 2, 1);
+  const rsi = ctx.rsi(14, 1);
+  if (sma200 == null || sma200prev == null || bb == null || rsi == null) return null;
 
-  // Build OBV from close direction and volume.
-  const LOOKBACK = 30;
-  const closes = ctx.closes;
-  const vols = ctx.volumes;
-  let obvRising = false;
-  let obvFalling = false;
-  if (closes && vols && closes.length >= LOOKBACK + 2) {
-    let obv = 0;
-    const obvSeries = [];
-    for (let k = 1; k < closes.length; k++) {
-      const c = closes[k], p = closes[k - 1], v = vols[k];
-      if (!Number.isFinite(c) || !Number.isFinite(p) || !Number.isFinite(v)) continue;
-      if (c > p) obv += v;
-      else if (c < p) obv -= v;
-      obvSeries.push(obv);
-    }
-    if (obvSeries.length >= LOOKBACK + 1) {
-      const obvNow = obvSeries[obvSeries.length - 1];
-      const obvPast = obvSeries[obvSeries.length - 1 - LOOKBACK];
-      // 1% buffer avoids noise flipping the signal daily.
-      obvRising = obvNow > obvPast * 1.01;
-      obvFalling = obvNow < obvPast * 0.985;
-    }
-  }
-  const avgV = ctx.avgVol(30);
-  const volOk = avgV != null && Number.isFinite(avgV) && avgV > 0 && ctx.vol > avgV;
+  // Regime: rising 200-day average = healthy long-term uptrend.
+  const uptrend = sma200 > sma200prev;
+  // Strong trend = price well above the 200-day line -> let winners ride.
+  const strongTrend = price > sma200 * 1.05;
 
   const st = ctx.state;
   if (pos > 0) {
-    // Exit when money flow rolls over — the trend is ending.
-    if (obvFalling) {
-      st.cd = ctx.i + 2;
+    if (strongTrend) {
+      // Ride with a 10-day-low trailing stop in strong trends.
+      const low10 = ctx.low(10, 1);
+      if (low10 != null && price < low10) {
+        st.cd = ctx.i + 3;
+        return { side: 'sell', qty: pos };
+      }
+      return null;
+    }
+    // Chop/bear: take the snap-back profit above the mid band or RSI>60.
+    if (price > bb.mid || rsi > 60) {
+      st.cd = ctx.i + 3;
       return { side: 'sell', qty: pos };
     }
     return null;
@@ -65,11 +58,17 @@ function onUpdate(ctx) {
 
   if (st.cd != null && ctx.i < st.cd) return null;
 
-  // Relaxed gate: allow entry within 5% below the 200-SMA to catch early rally.
-  const gatePass = price > sma200 * 0.95;
-  if (gatePass && obvRising && volOk) {
+  // Entry: deep oversold flush inside a rising long-term uptrend.
+  if (uptrend && price < bb.lower && rsi < 30) {
     st.cd = null;
-    return { side: 'buy', qty: (ctx.cash / price) * 0.95 };
+    // ATR-scaled size: risk ~1.5% of equity per trade, capped at 90% of cash.
+    const atr = ctx.atr(14, 1);
+    let qty = 0;
+    if (atr != null && Number.isFinite(atr) && atr > 0) {
+      qty = (0.015 * ctx.cash) / atr;
+    }
+    const maxQty = (ctx.cash / price) * 0.9;
+    return { side: 'buy', qty: Math.min(qty || maxQty, maxQty) };
   }
   return null;
 }
