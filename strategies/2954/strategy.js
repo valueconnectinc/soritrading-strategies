@@ -1,50 +1,68 @@
 /*
  * @coinsori-strategy v1
- * name: BTC 1D Volatility-Regime Long Overlay
+ * name: BTC 1D Defensive Bollinger-RSI + Trend Ride
  * ex: binance
  * syms: BTCUSDT
  * interval: 1d
  * cash: 10000
  *
- * Why this strategy: BTC trends up over the long run, so timing entries keeps
- * losing to buy-and-hold. Instead we stay long but switch between a small number
- * of exposure REGIMES based on 30-day realized volatility (ATR% of price). When
- * volatility is calm we are nearly fully invested; when it spikes (crashes) we
- * cut to a small defensive position. The key is we only change exposure when the
- * regime actually shifts — not every bar — so fees stay low.
- * When it buys and sells: Exposure is full when ATR% is below 4%, half when it
- * is 4-7%, and a small 20% defensive position when it exceeds 7%. It only
- * rebalances when the target regime changes, using a hysteresis band to avoid
- * churn at the boundaries. It never shorts.
- * When it does NOT work: Volatility spikes AFTER a crash starts, so it always
- * cuts exposure a step late and still eats part of the drawdown. In a long
- * grinding bear with moderate (non-spiking) vol it stays meaningfully invested
- * and bleeds. It also lags pure hold in smooth low-vol bull runs.
+ * Why this strategy: BTC is volatile but trends up over years. Buying only at
+ * deep oversold flushes (below the lower Bollinger band with RSI below 30) while
+ * the long-term 200-day average is still rising means we buy fear at a discount
+ * inside a healthy uptrend — and we are out of the market the rest of the time,
+ * so drawdown stays small. In strong trends we let winners run with a trailing
+ * stop; in chop we take the quick snap-back profit.
+ * When it buys and sells: Buys when price is below the lower Bollinger band, RSI
+ * is below 30, and price is above a rising 200-day average, using nearly full
+ * cash. In a strong trend it rides until price breaks its 10-day low; otherwise
+ * it sells on the snap-back above the mid band or when RSI climbs above 60.
+ * When it does NOT work: It systematically misses straight-line melt-ups — it
+ * sits in cash while BTC rallies without a pullback, so it badly lags buy-and-hold
+ * in relentless bull markets. It is a defensive, capital-preserving strategy, not
+ * a melt-up capture machine.
  */
 function onUpdate(ctx) {
+  const pos = ctx.position;
   const price = ctx.price;
   if (!Number.isFinite(price) || price <= 0) return null;
 
-  const atr = ctx.atr(30, 1);
-  if (atr == null || atr <= 0) return null;
-  const atrPct = atr / price;
+  const sma200 = ctx.sma(200, 1);
+  const sma200prev = ctx.sma(200, 2);
+  const bb = ctx.bb(20, 2, 1);
+  const rsi = ctx.rsi(14, 1);
+  if (sma200 == null || sma200prev == null || bb == null || rsi == null) return null;
 
-  // Three discrete exposure regimes, mapped from 30-day ATR%.
-  let target = 1.0;
-  if (atrPct > 0.07) target = 0.2;
-  else if (atrPct > 0.04) target = 0.5;
+  // Regime: rising 200-day average = healthy long-term uptrend.
+  const uptrend = sma200 > sma200prev;
+  // Strong trend = price well above the 200-day line -> let winners ride.
+  const strongTrend = price > sma200 * 1.05;
 
-  const pos = ctx.position;
-  const cash = ctx.cash;
-  const targetQty = (cash / price) * target * 0.98;
-
-  // Only act when the current position is far from the regime target (hysteresis
-  // keeps us from trading every bar and bleeding fees).
-  if (pos < targetQty * 0.7) {
-    return { side: 'buy', qty: targetQty - pos };
+  const st = ctx.state;
+  if (pos > 0) {
+    if (strongTrend) {
+      // Ride with a 10-day-low trailing stop in strong trends.
+      const low10 = ctx.low(10, 1);
+      if (low10 != null && price < low10) {
+        st.cd = ctx.i + 3;
+        return { side: 'sell', qty: pos };
+      }
+      return null;
+    }
+    // Chop/bear: take the snap-back profit above the mid band or RSI>60.
+    if (price > bb.mid || rsi > 60) {
+      st.cd = ctx.i + 3;
+      return { side: 'sell', qty: pos };
+    }
+    return null;
   }
-  if (pos > targetQty * 1.3) {
-    return { side: 'sell', qty: pos - targetQty };
+
+  if (st.cd != null && ctx.i < st.cd) return null;
+
+  // Entry: deep oversold flush inside a rising long-term uptrend.
+  if (uptrend && price < bb.lower && rsi < 30) {
+    st.cd = null;
+    // Entries are rare, so commit nearly full cash to make the trade count.
+    return { side: 'buy', qty: (ctx.cash / price) * 0.95 };
   }
   return null;
 }
