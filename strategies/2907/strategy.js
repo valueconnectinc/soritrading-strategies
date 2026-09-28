@@ -1,67 +1,56 @@
 /*
  * @coinsori-strategy v1
- * name: ETH 4H Bollinger Mean-Reversion
+ * name: ETH 4H Slow Trend Ride
  * ex: binance
  * syms: ETHUSDT
  * interval: 4h
  * cash: 10000
  *
- * Why this strategy: On the 4-hour timeframe ETH swings hard between overbought and
- * oversold extremes around its moving average. Buying a sharp flush to the lower
- * Bollinger band and selling the snap-back to the middle band captures that
- * reversion — the same family that is the account's validated 1-day champion, but
- * on a faster timeframe with different regime exposure.
- * When it buys and sells: Buys only when price is above the 200-bar average (a
- * confirmed uptrend, so we are not catching a falling knife) AND touches the lower
- * Bollinger band (20-bar, 2.0 std) with RSI oversold (<35). Sells when price snaps
- * back up to the middle band (the 20-bar average). Position size is scaled by
- * volatility so a violent market risks a similar dollar amount per trade.
- * When it does NOT work: in a strong one-way trend price keeps riding the band and
- * the snap-back never comes; in a deep bear where price falls below the 200-bar
- * average it simply stops trading (stays in cash, which protects capital but misses
- * a recovery). It is a chop/uptrend-pullback strategy, not a trend-rider and not a
- * bear-market bottom-picker.
+ * Why this strategy: Crypto has long persistent up-trends (melt-ups) that
+ * mean-reversion strategies systematically miss because they sell into strength.
+ * This strategy rides confirmed up-trends instead of fading them, aiming to
+ * capture the upside the defensive strategies give up.
+ * When it buys and sells: it buys when the slow 60-bar average climbs above the
+ * 200-bar average (a confirmed uptrend) while price is above the 200-bar line.
+ * It sells when price falls below a volatility-based trailing stop, or when the
+ * trend itself turns down (60-bar average drops below the 200-bar average).
+ * When it does NOT work: in choppy sideways markets the trend is false and it
+ * whipsaws in and out, paying fees without progress. It also gives back part of
+ * every crash because it only reacts after price falls through the trailing stop.
  */
 function onUpdate(ctx) {
-  const price = ctx.price;
-  if (!Number.isFinite(price) || price <= 0) return null;
-
-  const bb = ctx.bb(20, 2.0, 1);
-  const rsi = ctx.rsi(14, 1);
+  const fast = ctx.ema(60, 1);
+  const slow = ctx.ema(200, 1);
+  const px = ctx.closes[ctx.closes.length - 2];
   const atr = ctx.atr(14, 1);
-  const sma200 = ctx.sma(200, 1);
-  if (bb == null || rsi == null || atr == null || sma200 == null || atr <= 0) return null;
-  const mid = bb.mid;
-  const lower = bb.lower;
-  if (!Number.isFinite(mid) || !Number.isFinite(lower)) return null;
+  if (fast == null || slow == null || atr == null || px == null) return null;
 
-  const pos = ctx.position;
-  const st = ctx.state;
+  // ATR-scaled position: risk a fixed fraction of equity per trade, smaller
+  // size when volatility is high so a single stop-out is cheap.
+  const equity = ctx.cash + ctx.position * ctx.price;
+  const riskPerTrade = 0.01; // risk 1% of equity on a stop loss
+  const stopDist = 2 * atr; // stop is 2 ATR below entry
+  const qty = Math.max(0, Math.min(equity * riskPerTrade / stopDist, (ctx.cash / ctx.price) * 0.99));
 
-  // Exit: sell when price snaps back up to the middle band (the mean we bet it reverts to).
-  if (pos > 0) {
-    if (price >= mid) {
-      st.cd = ctx.i + 3; // small cooldown after a round trip to avoid immediate re-entry
-      return { side: 'sell', qty: pos };
+  // Exit: volatility trailing stop, or trend rollover.
+  if (ctx.position > 0) {
+    const trailStop = ctx.price - 2 * atr;
+    const entry = ctx.entryPx || 0;
+    const stop = Math.max(entry - 2 * atr, trailStop); // ratchet the stop up
+    if (px < stop || fast < slow) {
+      return { side: 'sell', qty: ctx.position };
     }
     return null;
   }
 
-  // Cooldown: wait a few bars after a completed trade before buying again.
-  if (st.cd != null && ctx.i < st.cd) return null;
-
-  // Only mean-revert in an uptrend (price above 200-bar average) — avoids catching
-  // the falling knife in a deep bear, which was the weakness of the no-gate version.
-  if (price <= sma200) return null;
-
-  // Entry: buy a flush to the lower band while RSI confirms oversold.
-  if (price <= lower && rsi < 35) {
-    st.cd = null;
-    // ATR-scaled size: risk ~1.2% of equity per trade against the 2.0-sigma move.
-    const riskEq = 0.012 * ctx.cash;
-    const qty = riskEq / atr;
-    const maxQty = ctx.cash / price * 0.9;
-    return { side: 'buy', qty: Math.min(qty, maxQty) };
+  // Enter only on a confirmed uptrend with a fresh golden cross (slow, avoids
+  // the whipsaw that kills fast crossovers in crypto).
+  const fastPrev = ctx.ema(60, 2);
+  const slowPrev = ctx.ema(200, 2);
+  if (fastPrev == null || slowPrev == null) return null;
+  const crossedUp = fastPrev <= slowPrev && fast > slow;
+  if (crossedUp && px > slow && qty > 0) {
+    return { side: 'buy', qty: qty };
   }
   return null;
 }
