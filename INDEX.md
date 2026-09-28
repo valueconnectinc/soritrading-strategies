@@ -11,7 +11,7 @@ Every figure comes from the last verifying backtest at publish time. These are p
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
-|  | [2949](strategies/2949/) | BTC 1D OBV Money-Flow Trend | +2.94% | +167.91% | +38.37% | 94 | 2026-09-28 |
+|  | [2949](strategies/2949/) | BTC 1D OBV Money-Flow Trend | +4.82% | +50.97% | +34.50% | 96 | 2026-09-28 |
 |  | [2948](strategies/2948/) | BTC 1D Dual-Family MR + OBV Trend | -35.34% | +1253.33% | +73.10% | 72 | 2026-09-28 |
 |  | [2947](strategies/2947/) | BTC 1D Bollinger-RSI Mean Reversion | -4.87% | +1253.33% | +19.18% | 4 | 2026-09-28 |
 |  | [2946](strategies/2946/) | BTC 1D Donchian Breakout with ATR Trailing Stop | -89.65% | +50.97% | +90.81% | 143 | 2026-09-28 |
