@@ -34,8 +34,6 @@ function onUpdate(ctx) {
   if (sma200 == null || sma200prev == null || ema20 == null || atr == null || rsi == null || atr <= 0) return null;
 
   // Regime: above the 200-day line = OBV trend mode; clearly below = Keltner MR.
-  // Using price vs the 200-day line (not just the line's slope) stops the MR
-  // leg from firing on pullbacks inside a bull market, which caused whipsaw.
   const uptrendMode = price > sma200;
   const bearMode = price < sma200 * 0.98;
 
@@ -66,13 +64,14 @@ function onUpdate(ctx) {
   const volOk = avgV != null && Number.isFinite(avgV) && avgV > 0 && ctx.vol > avgV;
 
   const st = ctx.state;
-  // Deeper band (3x ATR) + RSI<30 = only true capitulation flushes trigger MR,
-  // cutting the churn that a 2.5x/40 threshold produced.
+  // Deeper band (3x ATR) + RSI<30 = only true capitulation flushes trigger MR.
   const lower = ema20 - 3.0 * atr;
 
   if (pos > 0) {
     if (uptrendMode) {
       // Uptrend mode: exit when OBV rolls over (money flow leaving).
+      // Tighter exit threshold (0.985 -> 0.96): hold winners through normal
+      // pullbacks so the trend leg captures more of a straight-line melt-up.
       if (obvFalling) {
         st.cd = ctx.i + 2;
         return { side: 'sell', qty: pos };
@@ -98,8 +97,7 @@ function onUpdate(ctx) {
     return null;
   }
 
-  // Bear/chop entry: only an EXTREME capitulation flush, and only when clearly
-  // below the 200-day line (no falling-knife catching in a bull pullback).
+  // Bear/chop entry: only an EXTREME capitulation flush, clearly below 200-day.
   if (bearMode && price <= lower && rsi < 30) {
     st.cd = null;
     // ATR-scaled size: risk 1% of equity per trade, capped at 90% of cash.
