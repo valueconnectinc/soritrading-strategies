@@ -1,25 +1,25 @@
 /*
  * @coinsori-strategy v1
- * name: DOGE 1D ATR-Adaptive Keltner MR (Risk-Sized)
+ * name: DOGE 1D ATR-Adaptive Keltner MR (Full-Cash)
  * ex: binance
  * syms: DOGEUSDT
  * interval: 1d
  * cash: 10000
  *
  * Why this strategy: The ATR-adaptive Keltner mean-reversion recipe is the one
- * robust edge in this ledger — positive on nearly every window across 6+ assets.
- * DOGE is the highest-beta asset in the family, so this version keeps the exact
- * proven entry/exit but sizes each position by its own volatility (ATR) instead
- * of buying near-full cash. A fixed risk per trade means a wild DOGE flush risks
- * the same dollar amount as a calm one, cutting drawdown without changing the edge.
+ * robust edge in this ledger — positive on nearly every window across 9+ assets.
+ * This DOGE 1D version keeps the exact proven entry/exit but sizes each entry with
+ * nearly full cash. The ledger showed the previous 1.5%-risk-per-trade ATR sizing
+ * starved the returns (cut a +254% window to +13%) while only trimming MDD from
+ * 13% to 2% — a terrible trade-off for a strategy whose entries are rare.
  * When it buys and sells: Buys an oversold flush below the ATR-adaptive lower Keltner
- * band (EMA20 - 2.5x ATR) with RSI<40 inside a rising 200-day uptrend. Position is
- * sized so a 2.5-ATR adverse move equals a fixed 1.5% of equity. Sells on snap-back
- * above the mid band (EMA20) or RSI above 60.
+ * band (EMA20 - 2.5x ATR) with RSI<40 inside a rising 200-day uptrend, using nearly
+ * full cash. Sells on snap-back above the mid band (EMA20) or RSI above 60.
  * When it does NOT work: In a broad bear DOGE falls hardest and the 200-day gate keeps
  * it out of most trades (capital-preserving but captures little). It lags buy-and-hold
- * in a relentless meme melt-up because it sits in cash waiting for a pullback. Risk
- * sizing keeps drawdown low but also caps the size of winning trades on calm entries.
+ * in a relentless meme melt-up because it sits in cash waiting for a pullback. MDD is
+ * low (single digits to ~13%) but a meme asset can still gap; this is not a melt-up
+ * capture machine.
  */
 function onUpdate(ctx) {
   const pos = ctx.position;
@@ -43,12 +43,11 @@ function onUpdate(ctx) {
     return null;
   }
   if (uptrend && price < lowerBand && rsi < 40) {
-    // Size so a 2.5-ATR adverse move = 1.5% of equity (risk-based sizing).
-    // DOGE is high-beta, so this keeps every trade's dollar risk equal.
-    const riskPerTrade = 0.015;
-    const stopDist = 2.5 * atr;
-    const qty = (ctx.cash * riskPerTrade) / stopDist;
-    return { side: 'buy', qty: Math.min(qty, (ctx.cash / price) * 0.95) };
+    // Full-cash sizing: entries are rare (only deep oversold flushes in an uptrend),
+    // and the full-cash version already holds MDD to ~13%. A small 0.95 cap leaves
+    // room for fees/slippage. Risk-sizing was proven to starve returns (see note).
+    const qty = (ctx.cash / price) * 0.95;
+    return { side: 'buy', qty: qty };
   }
   return null;
 }
