@@ -11,7 +11,7 @@ Every figure comes from the last verifying backtest at publish time. These are p
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
-|  | [2946](strategies/2946/) | BTC 1D Donchian Breakout with ATR Trailing Stop | +73.26% | +1253.33% | +76.15% | 77 | 2026-09-28 |
+|  | [2946](strategies/2946/) | BTC 1D Donchian Breakout with ATR Trailing Stop | -89.65% | +50.97% | +90.81% | 143 | 2026-09-28 |
 |  | [2945](strategies/2945/) | BTC 1D On-Chain Network-Health Trend | -45.83% | +50.97% | +72.75% | 160 | 2026-09-28 |
 |  | [2944](strategies/2944/) | SOL 1D Vol-Scaled Mean Reversion | -28.84% | +985.64% | +40.82% | 10 | 2026-09-28 |
 | ★ | [2943](strategies/2943/) | BTC 1D OBV Flow Trend Fast | +1428.38% | +1253.33% | +40.27% | 119 | 2026-09-28 |
