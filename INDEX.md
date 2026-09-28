@@ -11,7 +11,7 @@ Every figure comes from the last verifying backtest at publish time. These are p
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
-|  | [2931](strategies/2931/) | BTC 4H Bollinger MR Uptrend-6pct | -1.14% | +104.00% | +9.30% | 26 | 2026-09-28 |
+|  | [2931](strategies/2931/) | BTC 4H Bollinger MR Uptrend-6pct | -15.64% | +71.94% | +20.64% | 28 | 2026-09-28 |
 |  | [2930](strategies/2930/) | ETH 4H Bollinger MR Uptrend6+RisingSMA | +5.73% | +1658.97% | +11.66% | 44 | 2026-09-28 |
 |  | [2929](strategies/2929/) | ETH 4H Bollinger MR Uptrend-7pct | +5.28% | +1658.97% | +11.66% | 44 | 2026-09-28 |
 | ★ | [2927](strategies/2927/) | ETH 4H Bollinger MR Uptrend-10pct | +2.33% | -26.18% | +6.43% | 14 | 2026-09-28 |
