@@ -57,10 +57,7 @@ function onUpdate(ctx) {
       const obvNow = obvSeries[obvSeries.length - 1];
       const obvPast = obvSeries[obvSeries.length - 1 - LOOKBACK];
       obvRising = obvNow > obvPast * 1.01;
-      // Tighter exit: OBV must fall 4% below its 45-day-ago level to trigger
-      // an exit (was 1.5%). Holds winners through normal pullbacks, so the
-      // trend leg captures more of a straight-line melt-up.
-      obvFalling = obvNow < obvPast * 0.96;
+      obvFalling = obvNow < obvPast * 0.985;
     }
   }
   const avgV = ctx.avgVol(30);
