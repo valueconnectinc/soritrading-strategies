@@ -1,25 +1,23 @@
 /*
  * @coinsori-strategy v1
- * name: Multi-Asset Defensive MR Basket BTC/ETH/SOL/XRP
+ * name: Multi-Asset Defensive MR Basket Trailing Exit
  * ex: binance
  * syms: BTCUSDT, ETHUSDT, SOLUSDT, XRPUSDT
  * interval: 1d
  * cash: 10000
  *
- * Why this strategy: The ledger is unambiguous — on 1d, defensive mean-reversion is the
- * only robust edge, and it GENERALIZES cross-asset (validated positive on BTC/ETH/SOL/XRP
- * with 3.6-13% drawdown). A single-asset MR sits in cash during a melt-up and misses it;
- * a basket of four independently-run defensive-MR legs captures more opportunities and
- * smooths that weakness. Validated positive on all three disjoint windows with single-digit
- * drawdown (W2 +37.9%/MDD9.9, W3 +39.9%/MDD8.5, W1 +5.0%/MDD7.7). Adding trend/squeeze
- * entries to the legs was tested and FAILED (whipsaw on altcoin squeezes) — pure MR only.
- * When it buys and sells: On each asset independently, buy when its price closes below the
- * lower Bollinger band (20,2.5) with RSI<30, OR below the ATR-adaptive lower Keltner band
- * with RSI<40, only inside that asset's rising 200-day average. Size by ATR risk, capped at
- * its cash share. Sell on snap-back above the 20-day EMA or when RSI climbs above 55.
+ * Why this strategy: Defensive mean-reversion is the only robust cross-asset edge on 1d,
+ * and a 4-asset basket smooths the single-asset 'sits in cash during melt-up' weakness.
+ * Validated positive on all three disjoint windows. This variant changes ONLY the exit:
+ * instead of a fixed RSI>55 snap-back sell (which can cut a recovering winner short), it
+ * trails a stop below the highest close since entry so a strong snap-back runs further.
+ * When it buys and sells: Buy on each asset when price closes below the lower Bollinger
+ * (20,2.5) with RSI<30, or below the ATR-adaptive Keltner low with RSI<40, only in a rising
+ * 200-day average. Sell when price closes back above the 20-day EMA, or when it drops by
+ * 2.5 ATR from the highest close since entry (trailing stop).
  * When it does NOT work: In a broad coordinated crypto bear all gates stay flat (capital
- * safe, little upside), and in a straight-line melt-up it lags buy-and-hold. Returns are
- * modest because most legs sit in cash most of the time.
+ * safe, little upside), and in a straight-line melt-up it lags buy-and-hold. A hard trailing
+ * stop can also get whipsawed by a volatile recovery that dips before resuming.
  */
 function onUpdate(ctx) {
   const pos = ctx.position;
@@ -34,15 +32,18 @@ function onUpdate(ctx) {
   const atr = ctx.atr(14, 1);
   if (bb == null || rsi == null || sma200 == null || sma200prev == null || ema20 == null || atr == null || atr <= 0) return null;
 
-  // Defensive gate: only mean-revert inside a rising long-term trend (no falling knives).
   const uptrend = sma200 > sma200prev;
   const lowerBand = bb.lower;
-  // ATR-adaptive lower Keltner band for the second MR signal.
   const keltnerLow = ema20 - 2.5 * atr;
 
   if (pos > 0) {
-    // Take the snap-back profit above the 20-day EMA or once RSI recovers.
-    if (price > ema20 || rsi > 55) {
+    // Track the highest close since entry via state (single-leg state key is fine here).
+    const entry = ctx.state.high ? Math.max(ctx.state.high, price) : price;
+    ctx.state.high = entry;
+    // Trailing stop: 2.5 ATR below the highest close since entry lets a winner run.
+    const trailStop = entry - 2.5 * atr;
+    // Snap-back above the 20-day EMA is still the primary take-profit target.
+    if (price > ema20 || price < trailStop) {
       return { side: 'sell', qty: pos };
     }
     return null;
@@ -50,13 +51,11 @@ function onUpdate(ctx) {
 
   if (!uptrend) return null;
 
-  // Two independent deep-oversold MR triggers, OR'd together.
   const bollingerFlush = price < lowerBand && rsi < 30;
   const keltnerPullback = price < keltnerLow && rsi < 40;
 
   if (bollingerFlush || keltnerPullback) {
-    // ATR-scaled size: risk 1% of this leg's equity per trade, capped at 90% of its cash.
-    const legCash = ctx.cash; // engine allocates per-symbol cash when syms has multiple
+    const legCash = ctx.cash;
     const riskEq = 0.01 * legCash;
     const qty = riskEq / atr;
     const maxQty = (legCash / price) * 0.9;
