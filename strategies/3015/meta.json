@@ -3,13 +3,13 @@
   "name": "Multi-Asset Defensive MR Basket BTC/ETH/SOL/XRP",
   "kind": "custom",
   "verified": {
-    "backtestId": 14166,
-    "return": 100.91,
-    "mdd": 4.03,
-    "trades": 328,
+    "backtestId": 14175,
+    "return": 10.94,
+    "mdd": 0.7,
+    "trades": 24,
     "vsBuyHold": "unmeasured",
     "gapPct": 0,
-    "tFrom": 1617840000,
+    "tFrom": 1730160000,
     "tTo": 1790553600,
     "approxNotes": [
       "[생존 편향] 이 유니버스는 **지금 거래되는 종목**만입니다. 구간 중(또는 그 전에) 상장폐지된 종목은 **처음부터 들어 있지 않습니다** — 망한 종목이 빠져 있어 수익률이 **실제보다 좋게** 나옵니다. 스캐너·랭킹 전략일수록 그 차이가 큽니다."
@@ -18,12 +18,12 @@
       "ex": "binance",
       "sym": "BTCUSDT",
       "interval": "1d",
-      "bars": 2000,
+      "bars": 700,
       "end": 1790640000,
       "syms": 4
     }
   },
   "config": null,
-  "updatedAt": "2026-09-29T23:21:59.782Z",
+  "updatedAt": "2026-09-29T23:26:01.679Z",
   "publishedBy": "scripts/publish-strategies.mjs"
 }
