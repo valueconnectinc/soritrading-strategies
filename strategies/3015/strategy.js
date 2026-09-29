@@ -8,17 +8,14 @@
  *
  * Why this strategy: Defensive mean-reversion is the only robust cross-asset edge on 1d,
  * and a 4-asset basket smooths the single-asset 'sits in cash during melt-up' weakness.
- * Validated positive on all three disjoint windows. This variant adds a TIME-BASED exit:
- * if a mean-reversion position has not snapped back within 45 days, it is cut regardless of
- * price. A pullback that has not reverted in 45 days is likely a regime change, not a dip,
- * and holding it bleeds capital slowly (the trailing stop only catches sharp drops).
+ * Validated positive on all three disjoint windows.
  * When it buys and sells: Buy on each asset when price closes below the lower Bollinger
  * (20,2.5) with RSI<30, or below the ATR-adaptive Keltner low with RSI<40, only in a rising
- * 200-day average. Sell when price closes back above the 20-day EMA, when it drops by 2.5 ATR
- * from the highest close since entry (trailing stop), or when it has been held 45 days.
+ * 200-day average. Sell when price closes back above the 20-day EMA, or when it drops by
+ * 2.5 ATR from the highest close since entry (trailing stop).
  * When it does NOT work: In a broad coordinated crypto bear all gates stay flat (capital
- * safe, little upside), and in a straight-line melt-up it lags buy-and-hold. The time stop can
- * cut a slow-but-eventually-winning recovery just before it turns.
+ * safe, little upside), and in a straight-line melt-up it lags buy-and-hold. A hard trailing
+ * stop can also get whipsawed by a volatile recovery that dips before resuming.
  */
 function onUpdate(ctx) {
   const pos = ctx.position;
@@ -41,16 +38,10 @@ function onUpdate(ctx) {
     // Track the highest close since entry via state.
     const entry = ctx.state.high ? Math.max(ctx.state.high, price) : price;
     ctx.state.high = entry;
-    // Count days held since entry.
-    const days = (ctx.state.days || 0) + 1;
-    ctx.state.days = days;
     // Trailing stop: 2.5 ATR below the highest close since entry lets a winner run.
     const trailStop = entry - 2.5 * atr;
-    // Time stop: a pullback not reverted in 45 days is a regime change, not a dip
-    // (45d chosen as ~2x the typical 20-day mean-reversion cycle on 1d data).
-    const timeStop = days >= 45;
     // Snap-back above the 20-day EMA is still the primary take-profit target.
-    if (price > ema20 || price < trailStop || timeStop) {
+    if (price > ema20 || price < trailStop) {
       return { side: 'sell', qty: pos };
     }
     return null;
