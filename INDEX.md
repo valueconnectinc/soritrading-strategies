@@ -11,7 +11,7 @@ Every figure comes from the last verifying backtest at publish time. These are p
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
-|  | [2976](strategies/2976/) | BTC 1D Bollinger-RSI Defensive MR | -18.27% | +45.87% | +19.95% | 4 | 2026-09-29 |
+|  | [2976](strategies/2976/) | BTC 1D Bollinger-RSI Defensive MR | +6.75% | +240.17% | +6.17% | 20 | 2026-09-29 |
 |  | [2975](strategies/2975/) | BTC 1D On-Chain Network-Health Trend | -79.39% | +240.17% | +85.94% | 902 | 2026-09-29 |
 |  | [2974](strategies/2974/) | BTC 1D Fear-Greed Contrarian v2 | -22.80% | +240.17% | +23.16% | 20 | 2026-09-29 |
 | ★ | [2971](strategies/2971/) | XRP 1D ATR-Adaptive Keltner MR | +67.31% | +2.87% | +36.60% | 4 | 2026-09-29 |
