@@ -1,23 +1,25 @@
 /*
  * @coinsori-strategy v1
- * name: BTC 1D Hybrid MR + Squeeze w/ Chandelier Exit
+ * name: BTC 1D Hybrid MR + Squeeze Breakout
  * ex: binance
  * syms: BTCUSDT
  * interval: 1d
  * cash: 10000
  *
- * Why this strategy: Combines my two validated BTC 1D edges — mean-reversion pullback and
- * volatility-squeeze breakout — inside one rising 200-day trend gate. The change this cycle:
- * the old exit (price below the 20-day EMA) was too tight and gave back bull gains. This
- * version uses a chandelier ATR trailing stop (highest high since entry minus a multiple of
- * ATR), which lets winners run further in a bull while still cutting losers short.
+ * Why this strategy: This combines my two validated edges on BTC 1D. The mean-reversion
+ * family buys pullbacks (defensive, works in chop) and the volatility-squeeze breakout buys
+ * expansions (captures bull moves). Inside a single rising 200-day trend gate, it takes BOTH
+ * entries: a squeeze breakout (price closes above the 20-day high while Bollinger width is
+ * compressed) and a mean-reversion pullback (price closes below the ATR-adaptive lower
+ * Keltner band with RSI < 40). This captures more of a bull than either family alone while
+ * the trend gate keeps us out of bear false moves.
  * When it buys and sells: Buy when the 200-day average is rising AND either (a) price closes
- * above the 20-day high during a Bollinger squeeze, or (b) price dips below the ATR-adaptive
- * lower Keltner band with weak RSI. Sell when price closes below the trailing chandelier stop
- * (max high since entry minus 3x ATR) or the long-term trend turns down.
+ * above the 20-day high during a Bollinger squeeze, or (b) price dips below the lower Keltner
+ * band with weak RSI. Sell when price closes back below the 20-day EMA or the 200-day trend
+ * turns down.
  * When it does NOT work: In a broad bear the rising-trend gate keeps us flat (capital-safe
- * but little upside). A squeeze resolved downward is missed (long-only). A sudden crash can
- * gap through the trailing stop. In a flat tight range the squeeze can fire then reverse.
+ * but little upside). A squeeze that resolves DOWN is missed (long-only). It can whipsaw in
+ * a flat, tight range where the squeeze fires then immediately reverses.
  */
 function onUpdate(ctx) {
   const price = ctx.price;
@@ -36,26 +38,22 @@ function onUpdate(ctx) {
   const pos = ctx.position;
 
   if (pos > 0) {
-    // Track the highest close since entry (chandelier trailing stop).
-    const entryI = ctx.state.entryI != null ? ctx.state.entryI : ctx.i;
-    let highSince = price;
-    for (let k = 1; k <= (ctx.i - entryI); k++) {
-      const h = ctx.high(1, k);
-      if (h != null && h > highSince) highSince = h;
-    }
-    const stop = highSince - 3 * atr; // 3x ATR trail: wide enough to avoid noise, tight enough to protect.
-    if (price < stop || sma200 < sma200prev) {
+    // Exit below the 20-day EMA or when the long-term trend turns down.
+    if (price < ema20 || sma200 < sma200prev) {
       return { side: 'sell', qty: pos };
     }
     return null;
   }
 
+  // Only trade inside a rising long-term trend (the shared defensive gate).
   const uptrend = sma200 > sma200prev;
   if (!uptrend) return null;
 
+  // Mean-reversion pullback entry: price under the ATR-adaptive lower Keltner band + weak RSI.
   const lowerBand = ema20 - 2.5 * atr;
   const mrEntry = price < lowerBand && rsi < 40;
 
+  // Squeeze-breakout entry: Bollinger width in quietest 20% of last 100 bars + 20-day high break.
   const width = (bb.upper - bb.lower) / ((bb.upper + bb.lower) / 2);
   let pctile = 0.5;
   const lookback = 100;
