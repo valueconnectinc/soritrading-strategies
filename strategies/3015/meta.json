@@ -3,7 +3,7 @@
   "name": "Multi-Asset Defensive MR Basket BTC/ETH/SOL/XRP",
   "kind": "custom",
   "verified": {
-    "backtestId": 14195,
+    "backtestId": 14204,
     "return": 17.42,
     "mdd": 6.34,
     "trades": 86,
