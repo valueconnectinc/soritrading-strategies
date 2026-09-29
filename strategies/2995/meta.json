@@ -1,0 +1,30 @@
+{
+  "id": 2995,
+  "name": "Multi-Sym Defensive MR Basket",
+  "kind": "custom",
+  "verified": {
+    "backtestId": 13942,
+    "return": -0.69,
+    "mdd": 8.48,
+    "trades": 28,
+    "vsBuyHold": "lose",
+    "benchRet": 111.91,
+    "benchBasis": "price",
+    "gapPct": 0,
+    "tFrom": 1514160000,
+    "tTo": 1652313600,
+    "approxNotes": [
+      "봉 내 순서는 관례(양봉 O→L→H→C·음봉 O→H→L→C) — 실순서 미상 · 봉 중 거래량 null · MDD 는 봉 마감 기준"
+    ],
+    "spec": {
+      "ex": "binance",
+      "sym": "BTCUSDT",
+      "interval": "1d",
+      "bars": 1600,
+      "end": 1652400000
+    }
+  },
+  "config": null,
+  "updatedAt": "2026-09-29T21:48:46.617Z",
+  "publishedBy": "scripts/publish-strategies.mjs"
+}
