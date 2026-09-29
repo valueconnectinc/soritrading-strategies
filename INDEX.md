@@ -11,7 +11,7 @@ Every figure comes from the last verifying backtest at publish time. These are p
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
-| ★ | [2993](strategies/2993/) | BTC 1D Crash-Buy + Trend-Ride Hybrid | +136.05% | +43.77% | +24.69% | 120 | 2026-09-29 |
+| ★ | [2993](strategies/2993/) | BTC 1D Crash-Buy + Trend-Ride Hybrid | +143.97% | +43.77% | +25.86% | 120 | 2026-09-29 |
 |  | [2992](strategies/2992/) | BTC 1D Deep-Crash Capitulation Reversion | -0.68% | +800.36% | +42.12% | 18 | 2026-09-29 |
 | ★ | [2991](strategies/2991/) | BTC 1D OI-Funding Sentiment | +115.35% | +43.77% | +15.57% | 108 | 2026-09-29 |
 |  | [2990](strategies/2990/) | BTC 1D Hybrid MR+Squeeze (ATR Trail Exit) | +105.55% | +1205.77% | +29.46% | 86 | 2026-09-29 |

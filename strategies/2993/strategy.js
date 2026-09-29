@@ -1,25 +1,25 @@
 /*
  * @coinsori-strategy v1
- * name: BTC 1D Hybrid MR+Squeeze (Vol-Target Size 6%)
+ * name: BTC 1D Hybrid MR + Squeeze Breakout
  * ex: binance
  * syms: BTCUSDT
  * interval: 1d
  * cash: 10000
  *
- * Why this strategy: This is my validated champion (Hybrid MR + Squeeze Breakout,
- * +144%/MDD26 on 2021-26 vs hold +43.8) with volatility-targeted position sizing.
- * The champion always buys ~98% of equity, so its 26% drawdown comes from full-size
- * positions in volatile regimes. Here I scale position size so every trade risks the
- * SAME dollar amount (6% of equity) measured to the 20-day-EMA stop — small size in
- * wild swings, larger in calm trends. This milder target (vs the 4% test) keeps more
- * of the champion's upside while still trimming drawdown.
- * When it buys and sells: Same as champion — buy on a rising 200-day trend via
- * (a) a Bollinger squeeze breakout above the 20-day high, or
- * (b) an RSI<40 pullback below the ATR-adaptive lower Keltner band. Sell when
- * price closes below the 20-day EMA or the 200-day trend turns down.
- * When it does NOT work: Vol-targeting caps upside in strong low-volatility bull
- * runs (smaller size than the champion would use). The rising-trend gate keeps us
- * flat in bears (capital-safe but little upside), and squeeze-downs are missed.
+ * Why this strategy: This combines my two validated edges on BTC 1D. The mean-reversion
+ * family buys pullbacks (defensive, works in chop) and the volatility-squeeze breakout buys
+ * expansions (captures bull moves). Inside a single rising 200-day trend gate, it takes BOTH
+ * entries: a squeeze breakout (price closes above the 20-day high while Bollinger width is
+ * compressed) and a mean-reversion pullback (price closes below the ATR-adaptive lower
+ * Keltner band with RSI < 40). This captures more of a bull than either family alone while
+ * the trend gate keeps us out of bear false moves.
+ * When it buys and sells: Buy when the 200-day average is rising AND either (a) price closes
+ * above the 20-day high during a Bollinger squeeze, or (b) price dips below the lower Keltner
+ * band with weak RSI. Sell when price closes back below the 20-day EMA or the 200-day trend
+ * turns down.
+ * When it does NOT work: In a broad bear the rising-trend gate keeps us flat (capital-safe
+ * but little upside). A squeeze that resolves DOWN is missed (long-only). It can whipsaw in
+ * a flat, tight range where the squeeze fires then immediately reverses.
  */
 function onUpdate(ctx) {
   const price = ctx.price;
@@ -38,7 +38,7 @@ function onUpdate(ctx) {
   const pos = ctx.position;
 
   if (pos > 0) {
-    // Exit below the 20-day EMA or when the long-term trend turns down (validated, untouched).
+    // Exit below the 20-day EMA or when the long-term trend turns down.
     if (price < ema20 || sma200 < sma200prev) {
       return { side: 'sell', qty: pos };
     }
@@ -46,7 +46,8 @@ function onUpdate(ctx) {
   }
 
   // Only trade inside a rising long-term trend (the shared defensive gate).
-  if (sma200 <= sma200prev) return null;
+  const uptrend = sma200 > sma200prev;
+  if (!uptrend) return null;
 
   // Mean-reversion pullback entry: price under the ATR-adaptive lower Keltner band + weak RSI.
   const lowerBand = ema20 - 2.5 * atr;
@@ -72,13 +73,8 @@ function onUpdate(ctx) {
 
   if (mrEntry || squeezeBreakout) {
     const equity = ctx.cash + ctx.uPnl;
-    const base = (Number.isFinite(equity) && equity > 0 ? equity : ctx.cash);
-
-    // Milder vol-target: risk 6% of equity to the EMA20 stop (between 4% test and full size).
-    const distPct = Math.max((price - ema20) / price, 0.02); // floor at 2% to avoid oversized bets
-    const riskFrac = 0.06;
-    const qty = (base * riskFrac) / (price * distPct);
-    return { side: 'buy', qty: qty };
+    const qty = (Number.isFinite(equity) && equity > 0 ? equity : ctx.cash) / price;
+    return { side: 'buy', qty: qty * 0.98 };
   }
   return null;
 }
