@@ -3,28 +3,28 @@
   "name": "BTC 1D Hybrid MR + Squeeze (BASELINE control)",
   "kind": "custom",
   "verified": {
-    "backtestId": 13876,
-    "return": 105.55,
-    "mdd": 29.46,
-    "trades": 86,
+    "backtestId": 13879,
+    "return": -2.36,
+    "mdd": 31.57,
+    "trades": 82,
     "vsBuyHold": "lose",
-    "benchRet": 1205.77,
+    "benchRet": 66.16,
     "benchBasis": "price",
     "gapPct": 0,
-    "tFrom": 1502928000,
-    "tTo": 1617753600,
+    "tFrom": 1661040000,
+    "tTo": 1790553600,
     "approxNotes": [
       "봉 내 순서는 관례(양봉 O→L→H→C·음봉 O→H→L→C) — 실순서 미상 · 봉 중 거래량 null · MDD 는 봉 마감 기준"
     ],
     "spec": {
       "ex": "binance",
-      "sym": "BTCUSDT",
+      "sym": "ETHUSDT",
       "interval": "1d",
-      "bars": 2000,
-      "end": 1617840000
+      "bars": 1500,
+      "end": 1790640000
     }
   },
   "config": null,
-  "updatedAt": "2026-09-29T21:01:46.550Z",
+  "updatedAt": "2026-09-29T21:03:55.976Z",
   "publishedBy": "scripts/publish-strategies.mjs"
 }

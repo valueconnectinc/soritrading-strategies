@@ -11,7 +11,7 @@ Every figure comes from the last verifying backtest at publish time. These are p
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
-|  | [2986](strategies/2986/) | BTC 1D Hybrid MR + Squeeze (BASELINE control) | +105.55% | +1205.77% | +29.46% | 86 | 2026-09-29 |
+|  | [2986](strategies/2986/) | BTC 1D Hybrid MR + Squeeze (BASELINE control) | -2.36% | +66.16% | +31.57% | 82 | 2026-09-29 |
 |  | [2985](strategies/2985/) | BTC 1D Hybrid MR + Squeeze Breakout | +166.97% | +240.17% | +25.17% | 110 | 2026-09-29 |
 |  | [2984](strategies/2984/) | BTC 1D Volatility Squeeze Breakout | +37.95% | +1205.77% | +33.08% | 14 | 2026-09-29 |
 |  | [2983](strategies/2983/) | BTC 1D ATR Chandelier Trend Rider | -38.86% | +43.77% | +59.49% | 47 | 2026-09-29 |
