@@ -11,7 +11,7 @@ Every figure comes from the last verifying backtest at publish time. These are p
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
-|  | [3008](strategies/3008/) | ETH 1D Dual-MR Defensive Full-Cash | +0.51% | +13.21% | +30.44% | 6 | 2026-09-29 |
+|  | [3008](strategies/3008/) | ETH 1D Dual-MR Defensive Full-Cash | +29.33% | +1205.77% | +18.41% | 12 | 2026-09-29 |
 |  | [3007](strategies/3007/) | BTC 1D Dual-MR Defensive Full-Cash | +51.49% | +94.89% | +10.83% | 12 | 2026-09-29 |
 | ★ | [3005](strategies/3005/) | ADA 1D Dual-MR Defensive (Bollinger+Keltner) | +3.57% | -79.60% | +3.36% | 8 | 2026-09-29 |
 |  | [3004](strategies/3004/) | BNB 1D Dual-MR Defensive (Bollinger+Keltner) | +3.16% | +141.91% | +10.53% | 16 | 2026-09-29 |
