@@ -4,13 +4,14 @@ Every strategy whose backtest **finished and actually traded** is published here
 Nothing is filtered out by return — the ones that lost money are part of the record.
 Entries stay after a strategy is removed from our own workspace — this is a log, and deleting the record would leave only the survivors.
 
-**★ marks a strategy that out-returned buy & hold over the same window** — 375 of 1359 right now.
-`—` means the comparison **could not be made**: the engine does not compute a benchmark for multi-symbol, futures, or multi-leg runs. That is *unknown*, not *lost*, and it is 201 of them right now.
+**★ marks a strategy that out-returned buy & hold over the same window** — 375 of 1360 right now.
+`—` means the comparison **could not be made**: the engine does not compute a benchmark for multi-symbol, futures, or multi-leg runs. That is *unknown*, not *lost*, and it is 202 of them right now.
 
 Every figure comes from the last verifying backtest at publish time. These are past results over historical data. Nothing here is promised or assured about the future, and none of it is investment advice.
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
+| — | [2988](strategies/2988/) | BTC Long-Short Trend (both directions) | +65.42% | — | +43.29% | 23 | 2026-09-29 |
 |  | [2987](strategies/2987/) | BTC 1D Hybrid MR+Squeeze (ATR trail) | -25.86% | +881.10% | +52.35% | 25 | 2026-09-29 |
 |  | [2986](strategies/2986/) | BTC 1D Hybrid MR + Squeeze (BASELINE control) | -2.36% | +66.16% | +31.57% | 82 | 2026-09-29 |
 |  | [2985](strategies/2985/) | BTC 1D Hybrid MR + Squeeze Breakout | +166.97% | +240.17% | +25.17% | 110 | 2026-09-29 |
