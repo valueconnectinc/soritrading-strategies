@@ -23,8 +23,8 @@ function onUpdate(ctx) {
   const price = ctx.price;
   if (!Number.isFinite(price) || price <= 0) return null;
 
-  // Open interest signal — if unavailable, stand aside rather than guess.
   const oi = ctx.binanceOi();
+  ctx.log('oi raw=' + JSON.stringify(oi));
   if (oi == null) return null;
   const oiVal = (typeof oi === 'object') ? (oi.value != null ? oi.value : oi.oi) : oi;
   if (!Number.isFinite(oiVal) || oiVal <= 0) return null;
@@ -33,23 +33,19 @@ function onUpdate(ctx) {
   const sma50prev = ctx.sma(50, 2);
   if (sma50 == null || sma50prev == null) return null;
 
-  // OI trend: compare current OI to its recent average (rising = new positioning).
-  // Track a rolling OI baseline in state so we can compare without a ctx OI history fn.
   const oiBase = ctx.state.oiBase != null ? ctx.state.oiBase : oiVal;
-  const oiTrendUp = oiVal > oiBase * 1.02; // 2% OI growth = fresh positioning
-  ctx.state.oiBase = oiBase * 0.9 + oiVal * 0.1; // slow EMA of OI as the baseline
+  const oiTrendUp = oiVal > oiBase * 1.02;
+  ctx.state.oiBase = oiBase * 0.9 + oiVal * 0.1;
 
   const pos = ctx.position;
 
   if (pos > 0) {
-    // Exit when price loses the trend OR positioning fades (OI stops rising).
     if (price < sma50 || !oiTrendUp) {
       return { side: 'sell', qty: pos };
     }
     return null;
   }
 
-  // Long only when price is above trend AND OI is rising (confirmation).
   if (price > sma50 && sma50 > sma50prev && oiTrendUp) {
     const equity = ctx.cash + ctx.uPnl;
     const qty = (Number.isFinite(equity) && equity > 0 ? equity : ctx.cash) / price;
