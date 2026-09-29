@@ -1,0 +1,30 @@
+{
+  "id": 3007,
+  "name": "BTC 1D Dual-MR Defensive Full-Cash",
+  "kind": "custom",
+  "verified": {
+    "backtestId": 14010,
+    "return": 4.41,
+    "mdd": 18.41,
+    "trades": 8,
+    "vsBuyHold": "lose",
+    "benchRet": 800.36,
+    "benchBasis": "price",
+    "gapPct": 0,
+    "tFrom": 1531440000,
+    "tTo": 1617753600,
+    "approxNotes": [
+      "봉 내 순서는 관례(양봉 O→L→H→C·음봉 O→H→L→C) — 실순서 미상 · 봉 중 거래량 null · MDD 는 봉 마감 기준"
+    ],
+    "spec": {
+      "ex": "binance",
+      "sym": "BTC",
+      "interval": "1d",
+      "bars": 1000,
+      "end": 1617840000
+    }
+  },
+  "config": null,
+  "updatedAt": "2026-09-29T22:28:20.117Z",
+  "publishedBy": "scripts/publish-strategies.mjs"
+}
