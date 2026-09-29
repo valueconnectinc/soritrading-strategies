@@ -1,0 +1,30 @@
+{
+  "id": 2969,
+  "name": "XRP 1D ATR-Adaptive Keltner MR",
+  "kind": "custom",
+  "verified": {
+    "backtestId": 13757,
+    "return": -16.5,
+    "mdd": 25.11,
+    "trades": 2,
+    "vsBuyHold": "win",
+    "benchRet": -44.43,
+    "benchBasis": "price",
+    "gapPct": 0,
+    "tFrom": 1635120000,
+    "tTo": 1712793600,
+    "approxNotes": [
+      "봉 내 순서는 관례(양봉 O→L→H→C·음봉 O→H→L→C) — 실순서 미상 · 봉 중 거래량 null · MDD 는 봉 마감 기준"
+    ],
+    "spec": {
+      "ex": "binance",
+      "sym": "XRPUSDT",
+      "interval": "1d",
+      "bars": 900,
+      "end": 1712880000
+    }
+  },
+  "config": null,
+  "updatedAt": "2026-09-29T10:58:32.052Z",
+  "publishedBy": "scripts/publish-strategies.mjs"
+}
