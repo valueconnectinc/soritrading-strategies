@@ -11,7 +11,7 @@ Every figure comes from the last verifying backtest at publish time. These are p
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
-|  | [3013](strategies/3013/) | BTC 1D Baseline Hybrid (EMA20 exit both) | +174.53% | +800.36% | +36.15% | 16 | 2026-09-29 |
+|  | [3013](strategies/3013/) | BTC 1D Baseline Hybrid (EMA20 exit both) | +13.02% | +94.89% | +33.02% | 25 | 2026-09-29 |
 |  | [3012](strategies/3012/) | BTC 1D Hybrid Dual-Exit (MR snap-back + Trend ride) | +174.53% | +800.36% | +36.15% | 16 | 2026-09-29 |
 |  | [3011](strategies/3011/) | BTC 1D Dual-MR + Dollar Risk-Off Gate | +24.48% | +1205.77% | +18.41% | 10 | 2026-09-29 |
 |  | [3010](strategies/3010/) | BTC 1D Macro Dollar-Regime Trend | -59.95% | +43.77% | +67.50% | 220 | 2026-09-29 |
