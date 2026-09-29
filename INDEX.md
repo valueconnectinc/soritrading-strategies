@@ -4,14 +4,14 @@ Every strategy whose backtest **finished and actually traded** is published here
 Nothing is filtered out by return — the ones that lost money are part of the record.
 Entries stay after a strategy is removed from our own workspace — this is a log, and deleting the record would leave only the survivors.
 
-**★ marks a strategy that out-returned buy & hold over the same window** — 377 of 1369 right now.
+**★ marks a strategy that out-returned buy & hold over the same window** — 376 of 1369 right now.
 `—` means the comparison **could not be made**: the engine does not compute a benchmark for multi-symbol, futures, or multi-leg runs. That is *unknown*, not *lost*, and it is 202 of them right now.
 
 Every figure comes from the last verifying backtest at publish time. These are past results over historical data. Nothing here is promised or assured about the future, and none of it is investment advice.
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
-| ★ | [2997](strategies/2997/) | BTC 1D Dual-MR Defensive (copy for early-window validation) | -0.87% | -32.26% | +6.17% | 6 | 2026-09-29 |
+|  | [2997](strategies/2997/) | BTC 1D Dual-MR Defensive (copy for early-window validation) | +39.61% | +167.91% | +2.61% | 30 | 2026-09-29 |
 |  | [2996](strategies/2996/) | XRP 1D Donchian Trend-Follower | -0.31% | +109.22% | +71.98% | 11 | 2026-09-29 |
 |  | [2995](strategies/2995/) | Multi-Sym Defensive MR Basket | +6.29% | +111.91% | +6.17% | 20 | 2026-09-29 |
 |  | [2994](strategies/2994/) | BTC 1D Dual-MR Defensive (Bollinger+Keltner) | +6.29% | +111.91% | +6.17% | 20 | 2026-09-29 |
