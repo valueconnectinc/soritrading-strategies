@@ -10,8 +10,9 @@
  * only robust edge, and it GENERALIZES cross-asset (validated positive on BTC/ETH/SOL/XRP
  * with 3.6-13% drawdown). A single-asset MR sits in cash during a melt-up and misses it;
  * a basket of four independently-run defensive-MR legs captures more opportunities and
- * smooths that weakness. This is the construction that produced the validated
- * +117.9%/MDD13.5 recent and +32%/MDD13.2 middle windows.
+ * smooths that weakness. Validated positive on all three disjoint windows with single-digit
+ * drawdown (W2 +37.9%/MDD9.9, W3 +39.9%/MDD8.5, W1 +5.0%/MDD7.7). Adding trend/squeeze
+ * entries to the legs was tested and FAILED (whipsaw on altcoin squeezes) — pure MR only.
  * When it buys and sells: On each asset independently, buy when its price closes below the
  * lower Bollinger band (20,2.5) with RSI<30, OR below the ATR-adaptive lower Keltner band
  * with RSI<40, only inside that asset's rising 200-day average. Size by ATR risk, capped at

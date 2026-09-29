@@ -11,7 +11,7 @@ Every figure comes from the last verifying backtest at publish time. These are p
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
-| — | [3015](strategies/3015/) | Multi-Asset Defensive MR Basket BTC/ETH/SOL/XRP | +4.99% | — | +7.72% | 24 | 2026-09-29 |
+| — | [3015](strategies/3015/) | Multi-Asset Defensive MR Basket BTC/ETH/SOL/XRP | -5.60% | — | +39.27% | 33 | 2026-09-29 |
 |  | [3014](strategies/3014/) | AI 전략 | -6.81% | +94.89% | +38.36% | 57 | 2026-09-29 |
 |  | [3013](strategies/3013/) | BTC 1D Baseline Hybrid (EMA20 exit both) | +13.02% | +94.89% | +33.02% | 25 | 2026-09-29 |
 |  | [3012](strategies/3012/) | BTC 1D Hybrid Dual-Exit (MR snap-back + Trend ride) | +174.53% | +800.36% | +36.15% | 16 | 2026-09-29 |
