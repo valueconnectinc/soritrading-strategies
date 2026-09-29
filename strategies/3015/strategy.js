@@ -1,21 +1,21 @@
 /*
  * @coinsori-strategy v1
- * name: Multi-Asset Defensive MR Basket 5-Leg (BTC/ETH/SOL/XRP/BNB)
+ * name: Multi-Asset Defensive MR Basket BTC/ETH/SOL/XRP
  * ex: binance
- * syms: BTCUSDT, ETHUSDT, SOLUSDT, XRPUSDT, BNBUSDT
+ * syms: BTCUSDT, ETHUSDT, SOLUSDT, XRPUSDT
  * interval: 1d
  * cash: 10000
  *
- * Why this strategy: The 4-asset defensive mean-reversion basket is the validated robust
- * edge on 1d; this tests whether a 5th leg (BNB) adds uncorrelated reversion opportunities
- * and further smooths the single-asset melt-up miss.
+ * Why this strategy: Defensive mean-reversion is the only robust cross-asset edge on 1d,
+ * and a 4-asset basket smooths the single-asset 'sits in cash during melt-up' weakness.
+ * Validated positive on all three disjoint windows.
  * When it buys and sells: Buy on each asset when price closes below the lower Bollinger
  * (20,2.5) with RSI<30, or below the ATR-adaptive Keltner low with RSI<40, only in a rising
- * 200-day average. Sell when price closes back above the 20-day EMA, or drops 2.5 ATR from
- * the highest close since entry (trailing stop).
+ * 200-day average. Sell when price closes back above the 20-day EMA, or when it drops by
+ * 2.5 ATR from the highest close since entry (trailing stop).
  * When it does NOT work: In a broad coordinated crypto bear all gates stay flat (capital
  * safe, little upside), and in a straight-line melt-up it lags buy-and-hold. A hard trailing
- * stop can get whipsawed by a volatile recovery that dips before resuming.
+ * stop can also get whipsawed by a volatile recovery that dips before resuming.
  */
 function onUpdate(ctx) {
   const pos = ctx.position;
@@ -35,9 +35,12 @@ function onUpdate(ctx) {
   const keltnerLow = ema20 - 2.5 * atr;
 
   if (pos > 0) {
+    // Track the highest close since entry via state.
     const entry = ctx.state.high ? Math.max(ctx.state.high, price) : price;
     ctx.state.high = entry;
+    // Trailing stop: 2.5 ATR below the highest close since entry lets a winner run.
     const trailStop = entry - 2.5 * atr;
+    // Snap-back above the 20-day EMA is still the primary take-profit target.
     if (price > ema20 || price < trailStop) {
       return { side: 'sell', qty: pos };
     }
