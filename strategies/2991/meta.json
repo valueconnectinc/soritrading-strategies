@@ -3,16 +3,16 @@
   "name": "BTC 1D OI-Funding Sentiment",
   "kind": "custom",
   "verified": {
-    "backtestId": 13907,
-    "return": 52.59,
-    "mdd": 14.24,
-    "trades": 84,
-    "vsBuyHold": "lose",
-    "benchRet": 953.32,
+    "backtestId": 13909,
+    "return": 115.35,
+    "mdd": 15.57,
+    "trades": 108,
+    "vsBuyHold": "win",
+    "benchRet": 43.77,
     "benchBasis": "price",
     "gapPct": 0,
-    "tFrom": 1502928000,
-    "tTo": 1614470400,
+    "tFrom": 1617840000,
+    "tTo": 1790553600,
     "approxNotes": [
       "봉 내 순서는 관례(양봉 O→L→H→C·음봉 O→H→L→C) — 실순서 미상 · 봉 중 거래량 null · MDD 는 봉 마감 기준",
       "거래량은 봉 마감에만 확정 — 봉 중 평가에서 ctx.vol/volumes 가 null 이라 거래량 조건이 걸러졌을 수 있음(봉 중에도 쓰려면 ctx.volPrev·ctx.avgVol)"
@@ -21,8 +21,7 @@
       "ex": "binance",
       "sym": "BTCUSDT",
       "interval": "1d",
-      "bars": 1520,
-      "end": 1614556800
+      "bars": 2000
     }
   },
   "config": null,
