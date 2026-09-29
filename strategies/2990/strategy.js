@@ -1,24 +1,25 @@
 /*
  * @coinsori-strategy v1
- * name: BTC 1D Hybrid MR+Squeeze (ATR Trail Exit)
+ * name: BTC 1D Hybrid MR + Squeeze Breakout
  * ex: binance
  * syms: BTCUSDT
  * interval: 1d
  * cash: 10000
  *
- * Why this strategy: This is the validated champion (Hybrid MR + Squeeze: 200-day trend
- * gate, Keltner pullback + squeeze breakout entries). Its one documented weakness is that
- * the 20-day EMA exit can give back profit in a fast reversal. I replace that exit with a
- * volatility-adaptive ATR trailing stop: we exit only when price falls more than N×ATR from
- * the running high since entry. This adapts to volatility — a wide stop in a volatile bull,
- * a tight stop in calm chop — so it locks in more profit in strong trends and cuts losses
- * faster in sharp reversals, attacking the champion's drawdown.
- * When it buys and sells: Same two entries as the champion (Keltner pullback + squeeze
- * breakout, both inside a rising 200-day trend). Sell when price closes more than N×ATR
- * below the highest high since entry, OR when the 200-day trend turns down.
- * When it does NOT work: The ATR trail can be too wide in a long slow grind, giving back
- * more than the EMA20 exit would. In a violent V-reversal the first bar can gape past the
- * stop. It still misses down-resolving squeezes (long-only).
+ * Why this strategy: This combines my two validated edges on BTC 1D. The mean-reversion
+ * family buys pullbacks (defensive, works in chop) and the volatility-squeeze breakout buys
+ * expansions (captures bull moves). Inside a single rising 200-day trend gate, it takes BOTH
+ * entries: a squeeze breakout (price closes above the 20-day high while Bollinger width is
+ * compressed) and a mean-reversion pullback (price closes below the ATR-adaptive lower
+ * Keltner band with RSI < 40). This captures more of a bull than either family alone while
+ * the trend gate keeps us out of bear false moves.
+ * When it buys and sells: Buy when the 200-day average is rising AND either (a) price closes
+ * above the 20-day high during a Bollinger squeeze, or (b) price dips below the lower Keltner
+ * band with weak RSI. Sell when price closes back below the 20-day EMA or the 200-day trend
+ * turns down.
+ * When it does NOT work: In a broad bear the rising-trend gate keeps us flat (capital-safe
+ * but little upside). A squeeze that resolves DOWN is missed (long-only). It can whipsaw in
+ * a flat, tight range where the squeeze fires then immediately reverses.
  */
 function onUpdate(ctx) {
   const price = ctx.price;
@@ -35,17 +36,10 @@ function onUpdate(ctx) {
       high20 == null || bb == null || bb.upper == null || bb.lower == null || atr <= 0) return null;
 
   const pos = ctx.position;
-  const st = ctx.state;
 
   if (pos > 0) {
-    // Track the highest high since entry.
-    if (st.hh == null || price > st.hh) st.hh = price;
-    // ATR trailing stop: exit if price closes N×ATR below the running high.
-    // N=3.0 gives a wide-enough stop to avoid normal volatility but still cuts
-    // meaningful reversals faster than waiting for the EMA20 cross.
-    const trail = st.hh - 3.0 * atr;
-    if (price < trail || sma200 < sma200prev) {
-      st.hh = null;
+    // Exit below the 20-day EMA or when the long-term trend turns down.
+    if (price < ema20 || sma200 < sma200prev) {
       return { side: 'sell', qty: pos };
     }
     return null;
@@ -80,7 +74,6 @@ function onUpdate(ctx) {
   if (mrEntry || squeezeBreakout) {
     const equity = ctx.cash + ctx.uPnl;
     const qty = (Number.isFinite(equity) && equity > 0 ? equity : ctx.cash) / price;
-    st.hh = price;
     return { side: 'buy', qty: qty * 0.98 };
   }
   return null;

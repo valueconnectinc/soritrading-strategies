@@ -3,16 +3,16 @@
   "name": "BTC 1D Hybrid MR+Squeeze (ATR Trail Exit)",
   "kind": "custom",
   "verified": {
-    "backtestId": 13898,
-    "return": 11.8,
-    "mdd": 40.85,
-    "trades": 54,
+    "backtestId": 13900,
+    "return": 105.55,
+    "mdd": 29.46,
+    "trades": 86,
     "vsBuyHold": "lose",
-    "benchRet": 43.77,
+    "benchRet": 1205.77,
     "benchBasis": "price",
     "gapPct": 0,
-    "tFrom": 1617840000,
-    "tTo": 1790553600,
+    "tFrom": 1502928000,
+    "tTo": 1617753600,
     "approxNotes": [
       "봉 내 순서는 관례(양봉 O→L→H→C·음봉 O→H→L→C) — 실순서 미상 · 봉 중 거래량 null · MDD 는 봉 마감 기준"
     ],
@@ -21,10 +21,10 @@
       "sym": "BTCUSDT",
       "interval": "1d",
       "bars": 2000,
-      "end": 1790640000
+      "end": 1617840000
     }
   },
   "config": null,
-  "updatedAt": "2026-09-29T21:19:35.249Z",
+  "updatedAt": "2026-09-29T21:21:28.550Z",
   "publishedBy": "scripts/publish-strategies.mjs"
 }
