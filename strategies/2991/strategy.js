@@ -7,20 +7,19 @@
  * cash: 10000
  *
  * Why this strategy: This is my validated champion (Hybrid MR + Squeeze Breakout,
- * +144%/MDD26 on 2021-26 vs hold +43.8) with ONE change: volatility-targeted
- * position sizing. The champion always buys ~98% of equity, so its 26% drawdown
- * comes from full-size positions in volatile regimes. Here I scale position size
- * so every trade risks the SAME dollar amount (default 2% of equity) measured to
- * the 20-day-EMA stop — small size in wild swings, larger in calm trends. This
- * should cut drawdown while keeping the validated entries and EMA20 exit unchanged.
+ * +144%/MDD26 on 2021-26 vs hold +43.8) with volatility-targeted position sizing.
+ * The champion always buys ~98% of equity, so its 26% drawdown comes from full-size
+ * positions in volatile regimes. Here I scale position size so every trade risks the
+ * SAME dollar amount (4% of equity) measured to the 20-day-EMA stop — small size in
+ * wild swings, larger in calm trends. This mild target keeps more of the champion's
+ * upside than the 2% version while still trimming drawdown.
  * When it buys and sells: Same as champion — buy on a rising 200-day trend via
  * (a) a volume-confirmed Bollinger squeeze breakout above the 20-day high, or
  * (b) an RSI<40 pullback below the ATR-adaptive lower Keltner band. Sell when
  * price closes below the 20-day EMA or the 200-day trend turns down.
- * When it does NOT work: Vol-targeting caps upside in strong low-volatility
- * bull runs (smaller size than the champion would use). The rising-trend gate
- * keeps us flat in bears (capital-safe but little upside), and squeeze-downs
- * are missed (long-only).
+ * When it does NOT work: Vol-targeting caps upside in strong low-volatility bull
+ * runs (smaller size than the champion would use). The rising-trend gate keeps us
+ * flat in bears (capital-safe but little upside), and squeeze-downs are missed.
  */
 function onUpdate(ctx) {
   const price = ctx.price;
@@ -80,10 +79,9 @@ function onUpdate(ctx) {
     const equity = ctx.cash + ctx.uPnl;
     const base = (Number.isFinite(equity) && equity > 0 ? equity : ctx.cash);
 
-    // Vol-target sizing: risk a fixed 2% of equity to the EMA20 stop.
-    // distance to stop in %; size inversely proportional so dollar risk is constant.
+    // Milder vol-target: risk 4% of equity to the EMA20 stop (test of the sizing sweet spot).
     const distPct = Math.max((price - ema20) / price, 0.02); // floor at 2% to avoid oversized bets
-    const riskFrac = 0.02;
+    const riskFrac = 0.04;
     const qty = (base * riskFrac) / (price * distPct);
     return { side: 'buy', qty: qty };
   }
