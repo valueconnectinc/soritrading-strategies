@@ -1,25 +1,28 @@
 /*
  * @coinsori-strategy v1
- * name: BTC 1D Defensive MR + Baseline Long
+ * name: BTC 1D Bollinger-RSI Defensive Mean Reversion
  * ex: binance
  * syms: BTCUSDT
  * interval: 1d
  * cash: 10000
  *
- * Why this strategy: Defensive mean reversion is the ONLY validated edge on BTC 1D,
- * but it sits in cash during melt-ups. A full trend mode whipsawed (-39%). This version
- * instead holds a small 40% baseline long whenever price is above a rising 200-day
- * average — enough to capture part of a melt-up, small enough that a 200-day whipsaw
- * costs little. The defensive MR core (buy deep oversold flushes, sell on snap-back)
- * runs on top for the extra edge.
- * When it buys and sells: Baseline: 40% of equity is long while price is above the
- * 200-day average and the average is rising; it is sold when price closes back below.
- * MR: on top, buys a close below the lower Bollinger band (20,2.5) with RSI<30, sells
- * on snap-back above the 20-day average. MR adds to the baseline, never exceeding 95% cash.
- * When it does NOT work: In a choppy sideways market that crosses the 200-day average
- * repeatedly, the baseline whipsaws (bounded at 40% size so the cost is limited). In a
- * broad bear the baseline is flat and it mostly just waits. It still lags a full
- * buy-and-hold in a clean melt-up because only 40% is exposed.
+ * Why this strategy: The ledger shows mean reversion is the ONLY validated edge on
+ * BTC 1D (every trend/momentum family failed, including all-in trend capture and a
+ * 40% baseline long — both lost money this cycle). This is a defensive mean-reversion
+ * flavor: buy a deep oversold flush to the lower Bollinger band with RSI crushed, but
+ * ONLY inside a healthy long-term uptrend so we never catch a falling knife in a broad
+ * bear. Uses only core indicators (Bollinger, RSI, ATR, SMA) that are always available.
+ * It trades rarely — that is the point: defensive MR wins because it stays flat and
+ * avoids the whipsaw that every trend mode produces on crypto 1D.
+ * When it buys and sells: Buys when price closes below the lower Bollinger band (20, 2.5)
+ * with RSI below 30, while price is above a rising 200-day average, sized by ATR risk
+ * (1% of equity) capped at 90% of cash. Sells on the snap-back above the 20-day average
+ * or when RSI climbs above 55.
+ * When it does NOT work: In a broad crypto bear the 200-day gate keeps us out of most
+ * trades (capital-preserving but captures little). It lags buy-and-hold in a relentless
+ * melt-up because it sits in cash waiting for a pullback — every attempt to add trend
+ * capture to fix this has lost money, so this is accepted as the honest trade-off.
+ * Low trade count means the edge depends on the few flushes that actually mark a bottom.
  */
 function onUpdate(ctx) {
   const pos = ctx.position;
@@ -34,40 +37,26 @@ function onUpdate(ctx) {
   const atr = ctx.atr(14, 1);
   if (bb == null || rsi == null || sma200 == null || sma200prev == null || ema20 == null || atr == null || atr <= 0) return null;
 
+  // Only mean-revert inside a rising long-term trend — the gate that makes this
+  // family safe (per ledger, ungated MR on alts was a disaster).
   const uptrend = sma200 > sma200prev;
-  const above200 = price > sma200;
-
-  // Baseline target: 40% of equity when in a healthy uptrend regime.
-  const baselineQty = above200 ? (ctx.cash / price) * 0.40 : 0;
-
-  // MR target: an oversold-flush add, sized by ATR risk, on top of baseline.
   const lowerBand = bb.lower;
-  let mrQty = 0;
-  if (uptrend && price < lowerBand && rsi < 30) {
-    mrQty = Math.min((0.01 * ctx.cash) / atr, (ctx.cash / price) * 0.55);
-  }
-
-  const targetQty = baselineQty + mrQty;
-  const maxQty = (ctx.cash / price) * 0.95;
 
   if (pos > 0) {
-    // If we hold an MR add and the snap-back fired, drop that add.
-    if (mrQty === 0 && (price > ema20 || rsi > 55)) {
-      // Sell down to the baseline target (or to zero if no baseline).
-      const sellQty = pos - baselineQty;
-      if (sellQty > 0) return { side: 'sell', qty: sellQty };
-      return null;
-    }
-    // Otherwise rebalance toward the target (small drift).
-    if (targetQty < pos - baselineQty * 0.1) {
-      return { side: 'sell', qty: pos - targetQty };
+    // Take the snap-back profit above the mid band or once RSI turns up.
+    if (price > ema20 || rsi > 55) {
+      return { side: 'sell', qty: pos };
     }
     return null;
   }
 
-  // Flat: establish the baseline if in an uptrend regime.
-  if (targetQty > 0) {
-    return { side: 'buy', qty: Math.min(targetQty, maxQty) };
+  // Defensive entry: deep oversold flush below the lower Bollinger band in an uptrend.
+  if (uptrend && price < lowerBand && rsi < 30) {
+    // ATR-scaled size: risk 1% of equity per trade, capped at 90% of cash.
+    const riskEq = 0.01 * ctx.cash;
+    const qty = riskEq / atr;
+    const maxQty = (ctx.cash / price) * 0.9;
+    return { side: 'buy', qty: Math.min(qty, maxQty) };
   }
   return null;
 }
