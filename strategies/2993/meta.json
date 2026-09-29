@@ -3,7 +3,7 @@
   "name": "BTC 1D Crash-Buy + Trend-Ride Hybrid",
   "kind": "custom",
   "verified": {
-    "backtestId": 13917,
+    "backtestId": 13919,
     "return": -80.48,
     "mdd": 81.08,
     "trades": 441,
