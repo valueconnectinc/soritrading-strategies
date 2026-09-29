@@ -3,12 +3,12 @@
   "name": "Multi-Asset MR Basket Higher-Risk Sizing",
   "kind": "custom",
   "verified": {
-    "backtestId": 14251,
-    "return": 44.7,
-    "mdd": 11.28,
-    "trades": 70,
-    "vsBuyHold": "lose",
-    "benchRet": 341.34,
+    "backtestId": 14254,
+    "return": 60.34,
+    "mdd": 10.6,
+    "trades": 52,
+    "vsBuyHold": "win",
+    "benchRet": 41.74,
     "benchBasis": "price",
     "gapPct": 0,
     "tFrom": 1617840000,
@@ -18,7 +18,7 @@
     ],
     "spec": {
       "ex": "binance",
-      "sym": "SOLUSDT",
+      "sym": "XRPUSDT",
       "interval": "1d",
       "bars": 2000
     }
