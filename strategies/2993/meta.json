@@ -3,29 +3,28 @@
   "name": "BTC 1D Crash-Buy + Trend-Ride Hybrid",
   "kind": "custom",
   "verified": {
-    "backtestId": 13922,
-    "return": 55.03,
-    "mdd": 14.24,
-    "trades": 84,
-    "vsBuyHold": "lose",
-    "benchRet": 1205.77,
+    "backtestId": 13924,
+    "return": 136.05,
+    "mdd": 24.69,
+    "trades": 120,
+    "vsBuyHold": "win",
+    "benchRet": 43.77,
     "benchBasis": "price",
     "gapPct": 0,
-    "tFrom": 1502928000,
-    "tTo": 1617753600,
+    "tFrom": 1617840000,
+    "tTo": 1790553600,
     "approxNotes": [
-      "봉 내 순서는 관례(양봉 O→L→H→C·음봉 O→H→L→C) — 실순서 미상 · 봉 중 거래량 null · MDD 는 봉 마감 기준",
-      "거래량은 봉 마감에만 확정 — 봉 중 평가에서 ctx.vol/volumes 가 null 이라 거래량 조건이 걸러졌을 수 있음(봉 중에도 쓰려면 ctx.volPrev·ctx.avgVol)"
+      "봉 내 순서는 관례(양봉 O→L→H→C·음봉 O→H→L→C) — 실순서 미상 · 봉 중 거래량 null · MDD 는 봉 마감 기준"
     ],
     "spec": {
       "ex": "binance",
       "sym": "BTCUSDT",
       "interval": "1d",
       "bars": 2000,
-      "end": 1617840000
+      "end": 1790640000
     }
   },
   "config": null,
-  "updatedAt": "2026-09-29T21:33:49.437Z",
+  "updatedAt": "2026-09-29T21:34:37.164Z",
   "publishedBy": "scripts/publish-strategies.mjs"
 }

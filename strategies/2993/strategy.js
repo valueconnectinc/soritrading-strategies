@@ -1,6 +1,6 @@
 /*
  * @coinsori-strategy v1
- * name: BTC 1D Hybrid MR+Squeeze (Vol-Target Size)
+ * name: BTC 1D Hybrid MR+Squeeze (Vol-Target Size 6%)
  * ex: binance
  * syms: BTCUSDT
  * interval: 1d
@@ -10,11 +10,11 @@
  * +144%/MDD26 on 2021-26 vs hold +43.8) with volatility-targeted position sizing.
  * The champion always buys ~98% of equity, so its 26% drawdown comes from full-size
  * positions in volatile regimes. Here I scale position size so every trade risks the
- * SAME dollar amount (4% of equity) measured to the 20-day-EMA stop — small size in
- * wild swings, larger in calm trends. This mild target keeps more of the champion's
- * upside than the 2% version while still trimming drawdown.
+ * SAME dollar amount (6% of equity) measured to the 20-day-EMA stop — small size in
+ * wild swings, larger in calm trends. This milder target (vs the 4% test) keeps more
+ * of the champion's upside while still trimming drawdown.
  * When it buys and sells: Same as champion — buy on a rising 200-day trend via
- * (a) a volume-confirmed Bollinger squeeze breakout above the 20-day high, or
+ * (a) a Bollinger squeeze breakout above the 20-day high, or
  * (b) an RSI<40 pullback below the ATR-adaptive lower Keltner band. Sell when
  * price closes below the 20-day EMA or the 200-day trend turns down.
  * When it does NOT work: Vol-targeting caps upside in strong low-volatility bull
@@ -68,20 +68,15 @@ function onUpdate(ctx) {
     }
     if (total > 0) pctile = countBelow / total;
   }
-  const squeezed = pctile <= 0.2 && price > high20 && width > 0;
-
-  // Volume confirmation on the squeeze breakout (whipsaw-prone entry).
-  const avgVol = ctx.avgVol(20);
-  const volOk = avgVol != null && avgVol > 0 && ctx.vol > 1.2 * avgVol;
-  const squeezeBreakout = squeezed && volOk;
+  const squeezeBreakout = pctile <= 0.2 && price > high20 && width > 0;
 
   if (mrEntry || squeezeBreakout) {
     const equity = ctx.cash + ctx.uPnl;
     const base = (Number.isFinite(equity) && equity > 0 ? equity : ctx.cash);
 
-    // Milder vol-target: risk 4% of equity to the EMA20 stop (test of the sizing sweet spot).
+    // Milder vol-target: risk 6% of equity to the EMA20 stop (between 4% test and full size).
     const distPct = Math.max((price - ema20) / price, 0.02); // floor at 2% to avoid oversized bets
-    const riskFrac = 0.04;
+    const riskFrac = 0.06;
     const qty = (base * riskFrac) / (price * distPct);
     return { side: 'buy', qty: qty };
   }
