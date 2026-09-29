@@ -3,16 +3,16 @@
   "name": "BTC 1D Hybrid MR + Squeeze Breakout",
   "kind": "custom",
   "verified": {
-    "backtestId": 13856,
-    "return": 143.97,
-    "mdd": 25.86,
-    "trades": 120,
-    "vsBuyHold": "win",
-    "benchRet": 43.77,
+    "backtestId": 13857,
+    "return": 160.43,
+    "mdd": 29.46,
+    "trades": 82,
+    "vsBuyHold": "lose",
+    "benchRet": 845.76,
     "benchBasis": "price",
     "gapPct": 0,
-    "tFrom": 1617840000,
-    "tTo": 1790553600,
+    "tFrom": 1546300800,
+    "tTo": 1624924800,
     "approxNotes": [
       "봉 내 순서는 관례(양봉 O→L→H→C·음봉 O→H→L→C) — 실순서 미상 · 봉 중 거래량 null · MDD 는 봉 마감 기준"
     ],
@@ -20,10 +20,11 @@
       "ex": "binance",
       "sym": "BTCUSDT",
       "interval": "1d",
-      "bars": 2000
+      "bars": 911,
+      "end": 1625011200
     }
   },
   "config": null,
-  "updatedAt": "2026-09-29T20:49:46.176Z",
+  "updatedAt": "2026-09-29T20:51:42.938Z",
   "publishedBy": "scripts/publish-strategies.mjs"
 }
