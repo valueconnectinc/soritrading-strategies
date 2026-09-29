@@ -11,7 +11,7 @@ Every figure comes from the last verifying backtest at publish time. These are p
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
-| — | [2982](strategies/2982/) | AI 전략 | -11.55% | — | +13.40% | 140 | 2026-09-29 |
+| — | [2982](strategies/2982/) | AI 전략 | +140.08% | — | +13.53% | 80 | 2026-09-29 |
 | — | [2980](strategies/2980/) | Multi-Asset Defensive Keltner MR Basket | +140.08% | — | +13.53% | 80 | 2026-09-29 |
 |  | [2978](strategies/2978/) | AI 전략 | +27.99% | +43.77% | +1.62% | 22 | 2026-09-29 |
 |  | [2977](strategies/2977/) | BTC 1D Fear-Greed Contrarian v3 | -39.46% | +43.77% | +50.04% | 55 | 2026-09-29 |
