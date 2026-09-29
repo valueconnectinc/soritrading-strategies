@@ -11,7 +11,7 @@ Every figure comes from the last verifying backtest at publish time. These are p
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
-|  | [2984](strategies/2984/) | BTC 1D Volatility Squeeze Breakout | +27.79% | +43.77% | +31.28% | 32 | 2026-09-29 |
+|  | [2984](strategies/2984/) | BTC 1D Volatility Squeeze Breakout | +37.95% | +1205.77% | +33.08% | 14 | 2026-09-29 |
 |  | [2983](strategies/2983/) | BTC 1D ATR Chandelier Trend Rider | -38.86% | +43.77% | +59.49% | 47 | 2026-09-29 |
 | — | [2982](strategies/2982/) | AI 전략 | +140.08% | — | +13.53% | 80 | 2026-09-29 |
 | — | [2980](strategies/2980/) | Multi-Asset Defensive Keltner MR Basket | +140.08% | — | +13.53% | 80 | 2026-09-29 |
