@@ -1,14 +1,15 @@
 /*
  * @coinsori-strategy v1
- * name: Multi-Asset Defensive MR Basket BTC/ETH/SOL/XRP
+ * name: Multi-Asset Defensive MR Basket BTC/ETH/SOL/XRP/BNB
  * ex: binance
- * syms: BTCUSDT, ETHUSDT, SOLUSDT, XRPUSDT
+ * syms: BTCUSDT, ETHUSDT, SOLUSDT, XRPUSDT, BNBUSDT
  * interval: 1d
  * cash: 10000
  *
  * Why this strategy: Defensive mean-reversion is the only robust cross-asset edge on 1d,
- * and a 4-asset basket smooths the single-asset 'sits in cash during melt-up' weakness.
- * Validated positive on all three disjoint windows.
+ * and a 5-asset basket smooths the single-asset 'sits in cash during melt-up' weakness
+ * even further than the validated 4-asset version (3015). Adding BNB tests whether a 5th
+ * uncorrelated-ish leg adds diversification without adding whipsaw.
  * When it buys and sells: Buy on each asset when price closes below the lower Bollinger
  * (20,2.5) with RSI<30, or below the ATR-adaptive Keltner low with RSI<40, only in a rising
  * 200-day average. Sell when price closes back above the 20-day EMA, or when it drops by
