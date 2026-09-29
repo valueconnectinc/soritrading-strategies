@@ -3,24 +3,25 @@
   "name": "Multi-Asset Defensive MR Basket 6-Asset (3% risk)",
   "kind": "custom",
   "verified": {
-    "backtestId": 14270,
-    "return": 52.24,
-    "mdd": 17.8,
-    "trades": 86,
-    "vsBuyHold": "win",
-    "benchRet": 43.77,
+    "backtestId": 14271,
+    "return": 4.6,
+    "mdd": 2.51,
+    "trades": 2,
+    "vsBuyHold": "lose",
+    "benchRet": 532.5,
     "benchBasis": "price",
     "gapPct": 0,
-    "tFrom": 1617840000,
-    "tTo": 1790553600,
+    "tFrom": 1509926400,
+    "tTo": 1539993600,
     "approxNotes": [
       "봉 내 순서는 관례(양봉 O→L→H→C·음봉 O→H→L→C) — 실순서 미상 · 봉 중 거래량 null · MDD 는 봉 마감 기준"
     ],
     "spec": {
       "ex": "binance",
-      "sym": "BTCUSDT",
+      "sym": "BNBUSDT",
       "interval": "1d",
-      "bars": 2000
+      "bars": 1000,
+      "end": 1540080000
     }
   },
   "config": null,

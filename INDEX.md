@@ -4,14 +4,14 @@ Every strategy whose backtest **finished and actually traded** is published here
 Nothing is filtered out by return — the ones that lost money are part of the record.
 Entries stay after a strategy is removed from our own workspace — this is a log, and deleting the record would leave only the survivors.
 
-**★ marks a strategy that out-returned buy & hold over the same window** — 379 of 1384 right now.
+**★ marks a strategy that out-returned buy & hold over the same window** — 378 of 1384 right now.
 `—` means the comparison **could not be made**: the engine does not compute a benchmark for multi-symbol, futures, or multi-leg runs. That is *unknown*, not *lost*, and it is 202 of them right now.
 
 Every figure comes from the last verifying backtest at publish time. These are past results over historical data. Nothing here is promised or assured about the future, and none of it is investment advice.
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
-| ★ | [3017](strategies/3017/) | Multi-Asset Defensive MR Basket 6-Asset (3% risk) | +52.24% | +43.77% | +17.80% | 86 | 2026-09-29 |
+|  | [3017](strategies/3017/) | Multi-Asset Defensive MR Basket 6-Asset (3% risk) | +4.60% | +532.50% | +2.51% | 2 | 2026-09-29 |
 |  | [3016](strategies/3016/) | Multi-Asset MR Basket Higher-Risk Sizing | +36.50% | +394.35% | +11.28% | 34 | 2026-09-29 |
 |  | [3015](strategies/3015/) | Multi-Asset Defensive MR Basket BTC/ETH/SOL/XRP | +17.42% | +43.77% | +6.34% | 86 | 2026-09-29 |
 |  | [3014](strategies/3014/) | AI 전략 | -6.81% | +94.89% | +38.36% | 57 | 2026-09-29 |
