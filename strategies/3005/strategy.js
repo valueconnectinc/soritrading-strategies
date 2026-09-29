@@ -1,22 +1,24 @@
 /*
  * @coinsori-strategy v1
- * name: ADA 1D Dual-MR Defensive (Bollinger+Keltner)
+ * name: BTC 1D Dual-MR Defensive Full-Cash
  * ex: binance
- * syms: ADAUSDT
+ * syms: BTCUSDT
  * interval: 1d
  * cash: 10000
  *
- * Why this strategy: The validated Dual-MR defensive recipe (2995) already generalizes to
- * ETH/SOL/BNB. This tests whether it also holds on ADA — a slower, established alt with a
- * different market character than the high-beta large-caps. Mapping where the edge holds
- * and where it breaks is as useful as confirming it again.
- * When it buys and sells: Buy when price closes below the lower Bollinger band (20,2.5) with
- * RSI<30, OR below the ATR-adaptive lower Keltner band (EMA20-2.5*ATR) with RSI<40, only inside
- * a rising 200-day average. Size by ATR risk (1% equity) capped at 90% cash. Sell on snap-back
- * above the 20-day EMA or when RSI>55.
- * When it does NOT work: In a sustained bear the rising-trend gate keeps it flat, and it lags
- * buy-and-hold in a relentless melt-up. ADA has had long flat/choppy stretches where the strict
- * RSI<30 trigger fires rarely and the edge may be too weak to matter.
+ * Why this strategy: The ledger is unambiguous — on BTC 1D every trend-following and
+ * trend-capture family fails, while defensive mean-reversion is the only validated edge.
+ * This is the validated Dual-MR core (Bollinger-RSI flush OR ATR-Keltner pullback, rising
+ * 200-day gate) but with the documented FULL-CASH sizing upgrade: rare MR entries should
+ * be sized with full cash, not starved by per-trade risk caps (validated on DOGE 1d and
+ * ETH 4h in the ledger). It trades rarely and only buys genuine deep-oversold flushes.
+ * When it buys and sells: Buy when price closes below the lower Bollinger band (20,2.5)
+ * with RSI<30, OR below the ATR-adaptive lower Keltner band with RSI<40, all only inside a
+ * rising 200-day average. Size with ~95% of cash. Sell on the snap-back above the 20-day
+ * EMA or when RSI climbs above 55.
+ * When it does NOT work: In a sustained bear the rising-trend gate keeps us flat
+ * (capital-safe but little upside), and it lags buy-and-hold in a relentless melt-up.
+ * Full-cash sizing means a single wrong flush costs more than the risk-sized version.
  */
 function onUpdate(ctx) {
   const pos = ctx.position;
@@ -31,11 +33,14 @@ function onUpdate(ctx) {
   const atr = ctx.atr(14, 1);
   if (bb == null || rsi == null || sma200 == null || sma200prev == null || ema20 == null || atr == null || atr <= 0) return null;
 
+  // The shared defensive gate: only mean-revert inside a rising long-term trend.
   const uptrend = sma200 > sma200prev;
   const lowerBand = bb.lower;
+  // ATR-adaptive lower Keltner band (EMA20 - 2.5*ATR) for the second MR signal.
   const keltnerLow = ema20 - 2.5 * atr;
 
   if (pos > 0) {
+    // Take the snap-back profit above the 20-day EMA or once RSI recovers.
     if (price > ema20 || rsi > 55) {
       return { side: 'sell', qty: pos };
     }
@@ -44,14 +49,14 @@ function onUpdate(ctx) {
 
   if (!uptrend) return null;
 
+  // Two independent deep-oversold MR triggers, OR'd together.
   const bollingerFlush = price < lowerBand && rsi < 30;
   const keltnerPullback = price < keltnerLow && rsi < 40;
 
   if (bollingerFlush || keltnerPullback) {
-    const riskEq = 0.01 * ctx.cash;
-    const qty = riskEq / atr;
-    const maxQty = (ctx.cash / price) * 0.9;
-    return { side: 'buy', qty: Math.min(qty, maxQty) };
+    // FULL-CASH sizing: rare MR entries get ~95% of cash (ledger-validated upgrade).
+    const qty = (ctx.cash / price) * 0.95;
+    return { side: 'buy', qty: qty };
   }
   return null;
 }
