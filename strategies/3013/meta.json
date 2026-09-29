@@ -3,10 +3,10 @@
   "name": "BTC 1D Baseline Hybrid (EMA20 exit both)",
   "kind": "custom",
   "verified": {
-    "backtestId": 14069,
-    "return": 68.51,
-    "mdd": 29.46,
-    "trades": 72,
+    "backtestId": 14091,
+    "return": 174.53,
+    "mdd": 36.15,
+    "trades": 16,
     "vsBuyHold": "lose",
     "benchRet": 800.36,
     "benchBasis": "price",
@@ -25,6 +25,6 @@
     }
   },
   "config": null,
-  "updatedAt": "2026-09-29T22:53:51.861Z",
+  "updatedAt": "2026-09-29T22:55:54.339Z",
   "publishedBy": "scripts/publish-strategies.mjs"
 }

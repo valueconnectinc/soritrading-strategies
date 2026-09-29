@@ -1,24 +1,25 @@
 /*
  * @coinsori-strategy v1
- * name: BTC 1D Hybrid Dual-Exit + Hard Stop
+ * name: BTC 1D Hybrid Dual-Exit + Tighter Hard Stop
  * ex: binance
  * syms: BTCUSDT
  * interval: 1d
  * cash: 10000
  *
- * Why this strategy: The validated Dual-Exit (3012) beat the baseline hybrid on all
- * three disjoint BTC 1D windows, but its weakest period (2024-26) showed +13%/MDD33 —
- * the trend-ride exit (50-day EMA) gives back too much in a sharp crash before selling.
- * This version keeps the proven dual exit but adds a hard ATR-based protective stop on
- * trend entries so a sudden crash is cut before the slow EMA50 exit triggers.
+ * Why this strategy: The 3.5*ATR hard stop added to Dual-Exit (3013) was a complete
+ * no-op — results were byte-identical, meaning the slow EMA50 exit always fires before
+ * a 3.5*ATR drop. The real MDD source in the weak 2024-26 window is whipsaw: the trend
+ * entry rides back down in choppy markets. This version tightens the hard stop to
+ * 2.2*ATR below entry so a trend trade that reverses hard is cut before the slow exit
+ * gives back the whole move, targeting the W3 MDD33 weakness.
  * When it buys and sells: Same two entries inside a rising 200-day trend — a Bollinger
  * squeeze breakout above the 20-day high, and an ATR-Keltner oversold pullback. MR
  * trades exit on the EMA20/RSI55 snap-back; trend trades exit on a 50-day EMA break, a
- * 200-day trend turn-down, OR a hard 3.5*ATR stop below entry (whichever first).
+ * 200-day trend turn-down, OR a hard 2.2*ATR stop below entry (whichever first).
  * When it does NOT work: In a broad bear the rising-trend gate keeps it flat. A squeeze
- * that resolves down is missed (long-only). The hard stop can be tripped by a normal
- * volatile shakeout before the trend resumes, costing a small loss that the slow exit
- * would have ridden through.
+ * that resolves down is missed (long-only). A tighter stop can be tripped by a normal
+ * volatile shakeout before the trend resumes, costing a loss the slow exit would have
+ * ridden through — this is the trade-off being tested.
  */
 function onUpdate(ctx) {
   const price = ctx.price;
@@ -41,10 +42,9 @@ function onUpdate(ctx) {
 
   if (pos > 0) {
     const entryPx = ctx.entryPx && ctx.entryPx > 0 ? ctx.entryPx : price;
-    // Hard stop on trend entries: 3.5*ATR below entry caps crash drawdown before the
-    // slow EMA50 exit triggers (the 2024-26 MDD33 weakness). MR entries keep no hard
-    // stop — their snap-back exit is already fast and tight.
-    const hardStop = entryType === 1 && (entryPx - price) > 3.5 * atr;
+    // Tighter 2.2*ATR hard stop on trend entries to cut whipsaw drawdown in the weak
+    // 2024-26 window (the 3.5*ATR version was a no-op because EMA50 always fired first).
+    const hardStop = entryType === 1 && (entryPx - price) > 2.2 * atr;
     const trendExit = entryType === 1 && (price < ema50 || sma200 < sma200prev);
     const mrExit = entryType === 2 && (price > ema20 || rsi > 55);
     if (hardStop || trendExit || mrExit) {
