@@ -1,23 +1,22 @@
 /*
  * @coinsori-strategy v1
- * name: Multi-Asset Defensive MR Basket Trailing Exit
+ * name: Multi-Asset Defensive MR Basket Pure-Trail Exit
  * ex: binance
  * syms: BTCUSDT, ETHUSDT, SOLUSDT, XRPUSDT
  * interval: 1d
  * cash: 10000
  *
  * Why this strategy: Defensive mean-reversion is the only robust cross-asset edge on 1d,
- * and a 4-asset basket smooths the single-asset 'sits in cash during melt-up' weakness.
- * Validated positive on all three disjoint windows. This variant changes ONLY the exit:
- * instead of a fixed RSI>55 snap-back sell (which can cut a recovering winner short), it
- * trails a stop below the highest close since entry so a strong snap-back runs further.
+ * and a 4-asset basket smooths single-asset 'sits in cash' weakness. This variant removes
+ * the EMA20 snap-back take-profit entirely and exits ONLY on the ATR trailing stop, so a
+ * strong recovery is never cut short by an early bounce sell. Test: does pure-trailing beat
+ * the mixed (EMA20 OR trail) exit that won last cycle?
  * When it buys and sells: Buy on each asset when price closes below the lower Bollinger
  * (20,2.5) with RSI<30, or below the ATR-adaptive Keltner low with RSI<40, only in a rising
- * 200-day average. Sell when price closes back above the 20-day EMA, or when it drops by
- * 2.5 ATR from the highest close since entry (trailing stop).
- * When it does NOT work: In a broad coordinated crypto bear all gates stay flat (capital
- * safe, little upside), and in a straight-line melt-up it lags buy-and-hold. A hard trailing
- * stop can also get whipsawed by a volatile recovery that dips before resuming.
+ * 200-day average. Sell only when price drops 2.5 ATR below the highest close since entry.
+ * When it does NOT work: In a broad crypto bear all gates stay flat (capital safe, little
+ * upside), and in a straight-line melt-up it lags buy-and-hold. A pure trailing stop gives
+ * back more of a peak before exiting than a fixed snap-back sell does.
  */
 function onUpdate(ctx) {
   const pos = ctx.position;
@@ -37,13 +36,12 @@ function onUpdate(ctx) {
   const keltnerLow = ema20 - 2.5 * atr;
 
   if (pos > 0) {
-    // Track the highest close since entry via state (single-leg state key is fine here).
+    // Track the highest close since entry.
     const entry = ctx.state.high ? Math.max(ctx.state.high, price) : price;
     ctx.state.high = entry;
-    // Trailing stop: 2.5 ATR below the highest close since entry lets a winner run.
+    // PURE trailing stop: no EMA20 snap-back sell. Only exit on a 2.5 ATR pullback.
     const trailStop = entry - 2.5 * atr;
-    // Snap-back above the 20-day EMA is still the primary take-profit target.
-    if (price > ema20 || price < trailStop) {
+    if (price < trailStop) {
       return { side: 'sell', qty: pos };
     }
     return null;
