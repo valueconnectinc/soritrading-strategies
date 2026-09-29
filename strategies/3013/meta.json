@@ -1,0 +1,30 @@
+{
+  "id": 3013,
+  "name": "BTC 1D Baseline Hybrid (EMA20 exit both)",
+  "kind": "custom",
+  "verified": {
+    "backtestId": 14069,
+    "return": 68.51,
+    "mdd": 29.46,
+    "trades": 72,
+    "vsBuyHold": "lose",
+    "benchRet": 800.36,
+    "benchBasis": "price",
+    "gapPct": 0,
+    "tFrom": 1531440000,
+    "tTo": 1617753600,
+    "approxNotes": [
+      "봉 내 순서는 관례(양봉 O→L→H→C·음봉 O→H→L→C) — 실순서 미상 · 봉 중 거래량 null · MDD 는 봉 마감 기준"
+    ],
+    "spec": {
+      "ex": "binance",
+      "sym": "BTCUSDT",
+      "interval": "1d",
+      "bars": 1000,
+      "end": 1617840000
+    }
+  },
+  "config": null,
+  "updatedAt": "2026-09-29T22:52:52.504Z",
+  "publishedBy": "scripts/publish-strategies.mjs"
+}
