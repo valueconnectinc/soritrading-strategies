@@ -1,24 +1,23 @@
 /*
  * @coinsori-strategy v1
- * name: BTC 1D MR Champion + Trend Trail Exit
+ * name: BTC 1D Dual-MR Defensive (Bollinger+Keltner)
  * ex: binance
  * syms: BTCUSDT
  * interval: 1d
  * cash: 10000
  *
- * Why this strategy: The defensive champion (Bollinger-RSI + Keltner MR entries, rising-200d
- * gate) is my most validated BTC 1D strategy, but its tight snap-back exit (EMA20/RSI55)
- * gives back most of a melt-up. This variant keeps the exact same defensive MR entries but
- * replaces the exit with an ATR trailing stop, so in a strong uptrend winners ride while in
- * chop the trail still locks in gains. Goal: capture more of a bull without the whipsaw of
- * adding a separate squeeze-breakout entry.
- * When it buys and sells: Same buy as the champion — deep-oversold flush below the lower
- * Bollinger band (RSI<30) or below the ATR-adaptive lower Keltner band (RSI<40), inside a
- * rising 200-day average, sized by ATR risk. Exit: a 3x-ATR trailing stop below the highest
- * close since entry, or when the 200-day trend turns down.
- * When it does NOT work: A trailing stop can be tripped by a sharp intraday dip then price
- * recovers (whipsaw). In a broad bear the rising-trend gate keeps us flat. It still lags a
- * relentless melt-up that never pulls back to the bands.
+ * Why this strategy: The ledger is unambiguous — on BTC 1D every trend-following and
+ * trend-capture family fails, while defensive mean-reversion is the only validated edge.
+ * This strategy combines my two independently-validated MR signals (Bollinger-RSI flush
+ * and ATR-adaptive Keltner pullback) into one defensive core, still gated by a rising
+ * 200-day trend so we never catch a falling knife in a broad bear. It trades rarely.
+ * When it buys and sells: Buy when price closes below the lower Bollinger band (20,2.5)
+ * with RSI<30, OR below the ATR-adaptive lower Keltner band with RSI<40, all only inside a
+ * rising 200-day average. Size by ATR risk (1% equity) capped at 90% cash. Sell on the
+ * snap-back above the 20-day EMA or when RSI climbs above 55.
+ * When it does NOT work: In a sustained bear the rising-trend gate keeps us flat
+ * (capital-safe but little upside), and it lags buy-and-hold in a relentless melt-up.
+ * Low trade count means the edge depends on the few flushes that mark a local bottom.
  */
 function onUpdate(ctx) {
   const pos = ctx.position;
@@ -33,31 +32,28 @@ function onUpdate(ctx) {
   const atr = ctx.atr(14, 1);
   if (bb == null || rsi == null || sma200 == null || sma200prev == null || ema20 == null || atr == null || atr <= 0) return null;
 
+  // The shared defensive gate: only mean-revert inside a rising long-term trend.
   const uptrend = sma200 > sma200prev;
+  const lowerBand = bb.lower;
+  // ATR-adaptive lower Keltner band (EMA20 - 2.5*ATR) for the second MR signal.
+  const keltnerLow = ema20 - 2.5 * atr;
 
   if (pos > 0) {
-    // Trailing stop: exit if price closes below 3x ATR below the best close since entry.
-    // 3 ATR chosen so a normal pullback doesn't trip it but a real reversal does.
-    const best = ctx.state.bestHigh || price;
-    const newBest = Math.max(best, price);
-    ctx.state.bestHigh = newBest;
-    const trailStop = newBest - 3 * atr;
-    if (price < trailStop || !uptrend) {
-      ctx.state.bestHigh = 0;
+    // Take the snap-back profit above the 20-day EMA or once RSI recovers.
+    if (price > ema20 || rsi > 55) {
       return { side: 'sell', qty: pos };
     }
     return null;
   }
 
-  ctx.state.bestHigh = 0;
   if (!uptrend) return null;
 
-  const lowerBand = bb.lower;
-  const keltnerLow = ema20 - 2.5 * atr;
+  // Two independent deep-oversold MR triggers, OR'd together.
   const bollingerFlush = price < lowerBand && rsi < 30;
   const keltnerPullback = price < keltnerLow && rsi < 40;
 
   if (bollingerFlush || keltnerPullback) {
+    // ATR-scaled size: risk 1% of equity per trade, capped at 90% of cash.
     const riskEq = 0.01 * ctx.cash;
     const qty = riskEq / atr;
     const maxQty = (ctx.cash / price) * 0.9;
