@@ -11,7 +11,7 @@ Every figure comes from the last verifying backtest at publish time. These are p
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
-|  | [2974](strategies/2974/) | BTC 1D Fear-Greed Contrarian v2 | -30.97% | +288.09% | +35.34% | 112 | 2026-09-29 |
+|  | [2974](strategies/2974/) | BTC 1D Fear-Greed Contrarian v2 | -22.80% | +240.17% | +23.16% | 20 | 2026-09-29 |
 | ★ | [2971](strategies/2971/) | XRP 1D ATR-Adaptive Keltner MR | +67.31% | +2.87% | +36.60% | 4 | 2026-09-29 |
 |  | [2970](strategies/2970/) | BTC 1D Fear-Greed Sentiment Contrarian | -28.80% | +1205.77% | +28.80% | 4 | 2026-09-29 |
 | ★ | [2969](strategies/2969/) | XRP 1D ATR-Adaptive Keltner MR | +178.15% | +41.74% | +35.02% | 12 | 2026-09-29 |
