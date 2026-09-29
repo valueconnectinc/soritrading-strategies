@@ -3,28 +3,28 @@
   "name": "SOL 1D Dual-MR Defensive (Bollinger+Keltner)",
   "kind": "custom",
   "verified": {
-    "backtestId": 13987,
-    "return": -3.79,
-    "mdd": 6.77,
-    "trades": 2,
-    "vsBuyHold": "win",
-    "benchRet": -59.38,
+    "backtestId": 13992,
+    "return": 6.04,
+    "mdd": 5.29,
+    "trades": 10,
+    "vsBuyHold": "lose",
+    "benchRet": 202.26,
     "benchBasis": "price",
     "gapPct": 0,
-    "tFrom": 1619827200,
+    "tFrom": 1597104000,
     "tTo": 1672444800,
     "approxNotes": [
       "봉 내 순서는 관례(양봉 O→L→H→C·음봉 O→H→L→C) — 실순서 미상 · 봉 중 거래량 null · MDD 는 봉 마감 기준"
     ],
     "spec": {
       "ex": "binance",
-      "sym": "ETHUSDT",
+      "sym": "SOLUSDT",
       "interval": "1d",
-      "bars": 610,
+      "bars": 883,
       "end": 1672531200
     }
   },
   "config": null,
-  "updatedAt": "2026-09-29T22:08:59.575Z",
+  "updatedAt": "2026-09-29T22:11:43.886Z",
   "publishedBy": "scripts/publish-strategies.mjs"
 }
