@@ -4,14 +4,14 @@ Every strategy whose backtest **finished and actually traded** is published here
 Nothing is filtered out by return — the ones that lost money are part of the record.
 Entries stay after a strategy is removed from our own workspace — this is a log, and deleting the record would leave only the survivors.
 
-**★ marks a strategy that out-returned buy & hold over the same window** — 379 of 1378 right now.
+**★ marks a strategy that out-returned buy & hold over the same window** — 378 of 1378 right now.
 `—` means the comparison **could not be made**: the engine does not compute a benchmark for multi-symbol, futures, or multi-leg runs. That is *unknown*, not *lost*, and it is 202 of them right now.
 
 Every figure comes from the last verifying backtest at publish time. These are past results over historical data. Nothing here is promised or assured about the future, and none of it is investment advice.
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
-| ★ | [3011](strategies/3011/) | BTC 1D Dual-MR + Dollar Risk-Off Gate | +74.69% | +43.77% | +10.83% | 18 | 2026-09-29 |
+|  | [3011](strategies/3011/) | BTC 1D Dual-MR + Dollar Risk-Off Gate | +24.48% | +1205.77% | +18.41% | 10 | 2026-09-29 |
 |  | [3010](strategies/3010/) | BTC 1D Macro Dollar-Regime Trend | -59.95% | +43.77% | +67.50% | 220 | 2026-09-29 |
 |  | [3008](strategies/3008/) | ETH 1D Dual-MR Defensive Full-Cash | +29.33% | +1205.77% | +18.41% | 12 | 2026-09-29 |
 |  | [3007](strategies/3007/) | BTC 1D Dual-MR Defensive Full-Cash | +51.49% | +94.89% | +10.83% | 12 | 2026-09-29 |
