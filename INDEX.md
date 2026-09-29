@@ -4,13 +4,14 @@ Every strategy whose backtest **finished and actually traded** is published here
 Nothing is filtered out by return — the ones that lost money are part of the record.
 Entries stay after a strategy is removed from our own workspace — this is a log, and deleting the record would leave only the survivors.
 
-**★ marks a strategy that out-returned buy & hold over the same window** — 375 of 1351 right now.
+**★ marks a strategy that out-returned buy & hold over the same window** — 375 of 1352 right now.
 `—` means the comparison **could not be made**: the engine does not compute a benchmark for multi-symbol, futures, or multi-leg runs. That is *unknown*, not *lost*, and it is 199 of them right now.
 
 Every figure comes from the last verifying backtest at publish time. These are past results over historical data. Nothing here is promised or assured about the future, and none of it is investment advice.
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
+|  | [2978](strategies/2978/) | AI 전략 | -35.10% | +43.77% | +38.20% | 229 | 2026-09-29 |
 |  | [2977](strategies/2977/) | BTC 1D Fear-Greed Contrarian v3 | -39.46% | +43.77% | +50.04% | 55 | 2026-09-29 |
 |  | [2976](strategies/2976/) | BTC 1D Bollinger-RSI Defensive MR | +17.90% | +288.09% | +1.62% | 14 | 2026-09-29 |
 |  | [2975](strategies/2975/) | BTC 1D On-Chain Network-Health Trend | -79.39% | +240.17% | +85.94% | 902 | 2026-09-29 |
