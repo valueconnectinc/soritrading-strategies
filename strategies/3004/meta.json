@@ -1,0 +1,30 @@
+{
+  "id": 3004,
+  "name": "BNB 1D Dual-MR Defensive (Bollinger+Keltner)",
+  "kind": "custom",
+  "verified": {
+    "backtestId": 13996,
+    "return": 3.16,
+    "mdd": 10.53,
+    "trades": 16,
+    "vsBuyHold": "lose",
+    "benchRet": 141.91,
+    "benchBasis": "price",
+    "gapPct": 0,
+    "tFrom": 1704240000,
+    "tTo": 1790553600,
+    "approxNotes": [
+      "봉 내 순서는 관례(양봉 O→L→H→C·음봉 O→H→L→C) — 실순서 미상 · 봉 중 거래량 null · MDD 는 봉 마감 기준"
+    ],
+    "spec": {
+      "ex": "binance",
+      "sym": "BNBUSDT",
+      "interval": "1d",
+      "bars": 1000,
+      "end": 1790640000
+    }
+  },
+  "config": null,
+  "updatedAt": "2026-09-29T22:13:34.966Z",
+  "publishedBy": "scripts/publish-strategies.mjs"
+}
