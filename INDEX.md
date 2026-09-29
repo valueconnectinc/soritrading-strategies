@@ -11,7 +11,7 @@ Every figure comes from the last verifying backtest at publish time. These are p
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
-|  | [2995](strategies/2995/) | Multi-Sym Defensive MR Basket | -0.69% | +111.91% | +8.48% | 28 | 2026-09-29 |
+|  | [2995](strategies/2995/) | Multi-Sym Defensive MR Basket | +6.29% | +111.91% | +6.17% | 20 | 2026-09-29 |
 |  | [2994](strategies/2994/) | BTC 1D Dual-MR Defensive (Bollinger+Keltner) | +6.29% | +111.91% | +6.17% | 20 | 2026-09-29 |
 |  | [2993](strategies/2993/) | BTC 1D Crash-Buy + Trend-Ride Hybrid | -1.98% | +94.89% | +25.86% | 42 | 2026-09-29 |
 |  | [2992](strategies/2992/) | BTC 1D Deep-Crash Capitulation Reversion | -0.68% | +800.36% | +42.12% | 18 | 2026-09-29 |

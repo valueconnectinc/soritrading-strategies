@@ -14,8 +14,7 @@
  * When it buys and sells: Buy when price closes below the lower Bollinger band (20,2.5)
  * with RSI<30, OR below the ATR-adaptive lower Keltner band with RSI<40, all only inside a
  * rising 200-day average. Size by ATR risk (1% equity) capped at 90% cash. Sell on the
- * snap-back above the 20-day EMA, once RSI climbs above 55, or if price falls below a
- * 2.5-ATR trailing stop from the entry (lets a strong flush run, cuts a weak one).
+ * snap-back above the 20-day EMA or when RSI climbs above 55.
  * When it does NOT work: In a sustained bear the rising-trend gate keeps us flat
  * (capital-safe but little upside), and it lags buy-and-hold in a relentless melt-up.
  * Low trade count means the edge depends on the few flushes that mark a local bottom.
@@ -40,12 +39,8 @@ function onUpdate(ctx) {
   const keltnerLow = ema20 - 2.5 * atr;
 
   if (pos > 0) {
-    // Track the highest price since entry to place a trailing stop below it.
-    if (ctx.state.hi == null || price > ctx.state.hi) ctx.state.hi = price;
-    // Trailing stop: 2.5 ATR below the running high — lets a strong snap-back run.
-    const trailStop = ctx.state.hi - 2.5 * atr;
-    // Exit on snap-back above the 20-day EMA, RSI recovery, or the trailing stop.
-    if (price > ema20 || rsi > 55 || price < trailStop) {
+    // Take the snap-back profit above the 20-day EMA or once RSI recovers.
+    if (price > ema20 || rsi > 55) {
       return { side: 'sell', qty: pos };
     }
     return null;
@@ -62,8 +57,6 @@ function onUpdate(ctx) {
     const riskEq = 0.01 * ctx.cash;
     const qty = riskEq / atr;
     const maxQty = (ctx.cash / price) * 0.9;
-    // Reset the trailing-stop high at entry.
-    ctx.state.hi = price;
     return { side: 'buy', qty: Math.min(qty, maxQty) };
   }
   return null;

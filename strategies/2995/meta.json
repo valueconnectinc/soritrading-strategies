@@ -3,10 +3,10 @@
   "name": "Multi-Sym Defensive MR Basket",
   "kind": "custom",
   "verified": {
-    "backtestId": 13942,
-    "return": -0.69,
-    "mdd": 8.48,
-    "trades": 28,
+    "backtestId": 13944,
+    "return": 6.29,
+    "mdd": 6.17,
+    "trades": 20,
     "vsBuyHold": "lose",
     "benchRet": 111.91,
     "benchBasis": "price",
@@ -25,6 +25,6 @@
     }
   },
   "config": null,
-  "updatedAt": "2026-09-29T21:48:46.617Z",
+  "updatedAt": "2026-09-29T21:51:00.236Z",
   "publishedBy": "scripts/publish-strategies.mjs"
 }
