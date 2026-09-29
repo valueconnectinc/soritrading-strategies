@@ -9,8 +9,8 @@
  * Why this strategy: The ledger is unambiguous — on BTC 1D every trend-following and
  * trend-capture family fails, while defensive mean-reversion is the only validated edge.
  * This is the validated Dual-MR core (Bollinger-RSI flush OR ATR-Keltner pullback, rising
- * 200-day gate) but with the documented FULL-CASH sizing upgrade: rare MR entries should
- * be sized with full cash, not starved by per-trade risk caps (validated on DOGE 1d and
+ * 200-day gate) with the documented FULL-CASH sizing upgrade: rare MR entries should be
+ * sized with full cash, not starved by per-trade risk caps (validated on DOGE 1d and
  * ETH 4h in the ledger). It trades rarely and only buys genuine deep-oversold flushes.
  * When it buys and sells: Buy when price closes below the lower Bollinger band (20,2.5)
  * with RSI<30, OR below the ATR-adaptive lower Keltner band with RSI<40, all only inside a
