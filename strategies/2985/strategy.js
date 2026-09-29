@@ -1,25 +1,25 @@
 /*
  * @coinsori-strategy v1
- * name: BTC 1D Hybrid MR + Squeeze Breakout
+ * name: BTC 1D Hybrid MR + Squeeze Breakout (Vol-Confirmed)
  * ex: binance
  * syms: BTCUSDT
  * interval: 1d
  * cash: 10000
  *
- * Why this strategy: This combines my two validated edges on BTC 1D. The mean-reversion
- * family buys pullbacks (defensive, works in chop) and the volatility-squeeze breakout buys
- * expansions (captures bull moves). Inside a single rising 200-day trend gate, it takes BOTH
- * entries: a squeeze breakout (price closes above the 20-day high while Bollinger width is
- * compressed) and a mean-reversion pullback (price closes below the ATR-adaptive lower
- * Keltner band with RSI < 40). This captures more of a bull than either family alone while
- * the trend gate keeps us out of bear false moves.
- * When it buys and sells: Buy when the 200-day average is rising AND either (a) price closes
- * above the 20-day high during a Bollinger squeeze, or (b) price dips below the lower Keltner
- * band with weak RSI. Sell when price closes back below the 20-day EMA or the 200-day trend
- * turns down.
- * When it does NOT work: In a broad bear the rising-trend gate keeps us flat (capital-safe
- * but little upside). A squeeze that resolves DOWN is missed (long-only). It can whipsaw in
- * a flat, tight range where the squeeze fires then immediately reverses.
+ * Why this strategy: This builds on my validated champion (Hybrid MR + Squeeze).
+ * The squeeze-breakout entry's documented weakness is whipsaw in a flat range where
+ * the squeeze fires then immediately reverses. I add a volume-confirmation filter:
+ * the breakout is only taken when today's volume is meaningfully above its recent
+ * average — a real expansion is backed by volume, a fake-out is not. The validated
+ * 20-day-EMA exit is left untouched.
+ * When it buys and sells: Buy when the 200-day trend is rising AND either (a) a
+ * Bollinger squeeze breakout above the 20-day high WITH above-average volume, or
+ * (b) a mean-reversion pullback below the lower Keltner band with weak RSI (unchanged).
+ * Sell when price closes below the 20-day EMA or the 200-day trend turns down.
+ * When it does NOT work: The volume filter can delay or skip a legitimate low-volume
+ * squeeze breakout, so it may enter a strong move slightly later or miss a quiet
+ * grind. In a broad bear the rising-trend gate keeps us flat (capital-safe but little
+ * upside), and a squeeze resolving DOWN is missed (long-only).
  */
 function onUpdate(ctx) {
   const price = ctx.price;
@@ -38,7 +38,7 @@ function onUpdate(ctx) {
   const pos = ctx.position;
 
   if (pos > 0) {
-    // Exit below the 20-day EMA or when the long-term trend turns down.
+    // Exit below the 20-day EMA or when the long-term trend turns down (validated, untouched).
     if (price < ema20 || sma200 < sma200prev) {
       return { side: 'sell', qty: pos };
     }
@@ -69,7 +69,13 @@ function onUpdate(ctx) {
     }
     if (total > 0) pctile = countBelow / total;
   }
-  const squeezeBreakout = pctile <= 0.2 && price > high20 && width > 0;
+  const squeezed = pctile <= 0.2 && price > high20 && width > 0;
+
+  // Volume confirmation: today's volume must exceed its 20-day average by a factor.
+  // Only applied to the squeeze breakout (the whipsaw-prone entry), not the MR pullback.
+  const avgVol = ctx.avgVol(20);
+  const volOk = avgVol != null && avgVol > 0 && ctx.vol > 1.2 * avgVol;
+  const squeezeBreakout = squeezed && volOk;
 
   if (mrEntry || squeezeBreakout) {
     const equity = ctx.cash + ctx.uPnl;
