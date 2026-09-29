@@ -3,14 +3,14 @@
   "name": "Multi-Asset Defensive Keltner MR Basket",
   "kind": "custom",
   "verified": {
-    "backtestId": 13824,
-    "return": 32.04,
-    "mdd": 13.23,
-    "trades": 28,
+    "backtestId": 13826,
+    "return": 140.08,
+    "mdd": 13.53,
+    "trades": 80,
     "vsBuyHold": "unmeasured",
     "gapPct": 0,
-    "tFrom": 1502928000,
-    "tTo": 1617753600,
+    "tFrom": 1609459200,
+    "tTo": 1767139200,
     "approxNotes": [
       "[생존 편향] 이 유니버스는 **지금 거래되는 종목**만입니다. 구간 중(또는 그 전에) 상장폐지된 종목은 **처음부터 들어 있지 않습니다** — 망한 종목이 빠져 있어 수익률이 **실제보다 좋게** 나옵니다. 스캐너·랭킹 전략일수록 그 차이가 큽니다."
     ],
@@ -18,12 +18,12 @@
       "ex": "binance",
       "sym": "BTCUSDT",
       "interval": "1d",
-      "bars": 2000,
-      "end": 1617840000,
+      "bars": 1826,
+      "end": 1767225600,
       "syms": 4
     }
   },
   "config": null,
-  "updatedAt": "2026-09-29T20:30:55.589Z",
+  "updatedAt": "2026-09-29T20:32:24.747Z",
   "publishedBy": "scripts/publish-strategies.mjs"
 }

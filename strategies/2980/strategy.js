@@ -1,26 +1,27 @@
 /*
  * @coinsori-strategy v1
- * name: Multi-Asset Defensive Keltner MR Basket
+ * name: Multi-Asset Defensive Keltner MR Basket v2 (with stops)
  * ex: binance
  * syms: BTCUSDT, ETHUSDT, SOLUSDT, XRPUSDT
  * interval: 1d
  * cash: 10000
  *
- * Why this strategy: The ledger shows the ATR-adaptive Keltner mean-reversion recipe is
- * the most robust cross-asset defensive edge (validated on 12+ assets), while single-asset
- * BTC MR sits in cash during BTC melt-ups. Running the SAME validated recipe on a basket of
- * four large cryptos (BTC/ETH/SOL/XRP) lets the basket catch a mean-reversion flush in
- * WHICHEVER asset is dipping, instead of being stuck in one. Each asset is traded
- * independently at a fixed fraction of total equity, so the basket can hold several
- * positions at once and is never fully idle.
- * When it buys and sells: For each asset, buy when price closes below the ATR-adaptive
- * lower Keltner band (EMA20 - 2.5x ATR) with RSI below 40, but ONLY while that asset's
- * 200-day average is rising (no falling knives). Size each buy at 25% of total equity.
- * Sell when price snaps back above the 20-day EMA or RSI climbs above 60.
+ * Why this strategy: The ATR-adaptive Keltner mean-reversion recipe is the most robust
+ * cross-asset defensive edge in the ledger. v1 (no stops) validated at +117.9%/-13.5% MDD
+ * (recent) and +32.0%/-13.2% (middle), but had one structural gap: a falling-knife loser
+ * had no hard stop and could ride all the way down. v2 keeps the same entry recipe and adds
+ * a hard stop (exit at ~2 ATR below entry) plus a take-profit at the upper Keltner band, so
+ * winners are banked and losers are cut.
+ * When it buys and sells: For each asset, buy when price closes below the ATR-adaptive lower
+ * Keltner band (EMA20 - 2.5x ATR) with RSI below 40, but ONLY while that asset's 200-day
+ * average is rising. Size each buy at 25% of total equity. Sell when price snaps back above
+ * the 20-day EMA, RSI climbs above 60, price hits the upper Keltner band, OR price falls
+ * ~2 ATR below the entry (hard stop-loss).
  * When it does NOT work: In a broad crypto-wide bear where ALL four assets fall together,
  * the rising-200-day gate keeps us flat (capital-preserving but captures little). It lags a
- * relentless single-asset melt-up because it only buys pullbacks. The basket is defensive —
- * it protects capital and beats buy-and-hold in chop/bear, not in straight-line bulls.
+ * relentless single-asset melt-up because it only buys pullbacks. The hard stop can also
+ * exit a position right before a sharp V-reversal, locking in a small loss. Defensive by
+ * design — protects capital and beats buy-and-hold in chop/bear, not straight-line bulls.
  */
 function onUpdate(ctx) {
   const price = ctx.price;
@@ -36,10 +37,17 @@ function onUpdate(ctx) {
 
   const pos = ctx.position;
   const lowerBand = ema20 - 2.5 * atr;
+  const upperBand = ema20 + 2.5 * atr;
 
   if (pos > 0) {
-    // Snap-back exit above the 20-day EMA or once RSI turns up.
-    if (price > ema20 || rsi > 60) {
+    // Hard stop-loss: cut any position that falls ~2 ATR below its entry.
+    // 2 ATR = the same distance as the entry band, so a loser is cut before it doubles down.
+    const stopPx = ctx.entryPx - 2.0 * atr;
+    if (Number.isFinite(stopPx) && price < stopPx) {
+      return { side: 'sell', qty: pos };
+    }
+    // Take-profit at the upper Keltner band, or the v1 snap-back exits (EMA20 / RSI>60).
+    if (price > upperBand || price > ema20 || rsi > 60) {
       return { side: 'sell', qty: pos };
     }
     return null;
