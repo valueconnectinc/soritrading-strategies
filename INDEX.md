@@ -4,13 +4,14 @@ Every strategy whose backtest **finished and actually traded** is published here
 Nothing is filtered out by return — the ones that lost money are part of the record.
 Entries stay after a strategy is removed from our own workspace — this is a log, and deleting the record would leave only the survivors.
 
-**★ marks a strategy that out-returned buy & hold over the same window** — 374 of 1345 right now.
+**★ marks a strategy that out-returned buy & hold over the same window** — 374 of 1346 right now.
 `—` means the comparison **could not be made**: the engine does not compute a benchmark for multi-symbol, futures, or multi-leg runs. That is *unknown*, not *lost*, and it is 199 of them right now.
 
 Every figure comes from the last verifying backtest at publish time. These are past results over historical data. Nothing here is promised or assured about the future, and none of it is investment advice.
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
+|  | [2970](strategies/2970/) | BTC 1D Fear-Greed Sentiment Contrarian | -70.72% | +43.77% | +73.31% | 222 | 2026-09-29 |
 | ★ | [2969](strategies/2969/) | XRP 1D ATR-Adaptive Keltner MR | +178.15% | +41.74% | +35.02% | 12 | 2026-09-29 |
 |  | [2967](strategies/2967/) | DOGE 1D ATR-Adaptive Keltner MR | +54.33% | +2362.68% | +34.84% | 12 | 2026-09-28 |
 |  | [2965](strategies/2965/) | SOL 1D Dual-Mode Keltner MR + Trend Ride | +79.55% | +659.58% | +23.13% | 5 | 2026-09-28 |
