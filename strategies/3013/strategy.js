@@ -1,40 +1,54 @@
 /*
  * @coinsori-strategy v1
- * name: BTC 1D Baseline Hybrid (EMA20 exit both)
+ * name: BTC 1D Hybrid Dual-Exit + Hard Stop
  * ex: binance
  * syms: BTCUSDT
  * interval: 1d
  * cash: 10000
  *
- * Why this strategy: Baseline copy of the validated Crash-Buy + Trend-Ride Hybrid (2998)
- * used purely as a control arm in the same-window comparison against the Dual-Exit variant.
- * Inside a rising 200-day trend gate it takes a squeeze-breakout entry (price closes above
- * the 20-day high during a Bollinger squeeze) and a mean-reversion pullback (price closes
- * below the ATR-adaptive lower Keltner band with RSI < 40), and exits both on the tight
- * EMA20 break or a 200-day trend turn-down.
- * When it buys and sells: Buy on squeeze breakout or oversold pullback inside a rising
- * 200-day trend. Sell on a close back below the 20-day EMA or when the 200-day trend turns.
+ * Why this strategy: The validated Dual-Exit (3012) beat the baseline hybrid on all
+ * three disjoint BTC 1D windows, but its weakest period (2024-26) showed +13%/MDD33 —
+ * the trend-ride exit (50-day EMA) gives back too much in a sharp crash before selling.
+ * This version keeps the proven dual exit but adds a hard ATR-based protective stop on
+ * trend entries so a sudden crash is cut before the slow EMA50 exit triggers.
+ * When it buys and sells: Same two entries inside a rising 200-day trend — a Bollinger
+ * squeeze breakout above the 20-day high, and an ATR-Keltner oversold pullback. MR
+ * trades exit on the EMA20/RSI55 snap-back; trend trades exit on a 50-day EMA break, a
+ * 200-day trend turn-down, OR a hard 3.5*ATR stop below entry (whichever first).
  * When it does NOT work: In a broad bear the rising-trend gate keeps it flat. A squeeze
- * that resolves down is missed (long-only). Tight EMA20 exit can cut bull winners short.
+ * that resolves down is missed (long-only). The hard stop can be tripped by a normal
+ * volatile shakeout before the trend resumes, costing a small loss that the slow exit
+ * would have ridden through.
  */
 function onUpdate(ctx) {
   const price = ctx.price;
   if (!Number.isFinite(price) || price <= 0) return null;
 
   const ema20 = ctx.ema(20, 1);
+  const ema50 = ctx.ema(50, 1);
   const atr = ctx.atr(14, 1);
   const rsi = ctx.rsi(14, 1);
   const sma200 = ctx.sma(200, 1);
   const sma200prev = ctx.sma(200, 2);
   const high20 = ctx.high(20, 1);
   const bb = ctx.bb(20, 2, 1);
-  if (ema20 == null || atr == null || rsi == null || sma200 == null || sma200prev == null ||
-      high20 == null || bb == null || bb.upper == null || bb.lower == null || atr <= 0) return null;
+  if (ema20 == null || ema50 == null || atr == null || rsi == null || sma200 == null ||
+      sma200prev == null || high20 == null || bb == null || bb.upper == null ||
+      bb.lower == null || atr <= 0) return null;
 
   const pos = ctx.position;
+  const entryType = ctx.state.entryType || 0;
 
   if (pos > 0) {
-    if (price < ema20 || sma200 < sma200prev) {
+    const entryPx = ctx.entryPx && ctx.entryPx > 0 ? ctx.entryPx : price;
+    // Hard stop on trend entries: 3.5*ATR below entry caps crash drawdown before the
+    // slow EMA50 exit triggers (the 2024-26 MDD33 weakness). MR entries keep no hard
+    // stop — their snap-back exit is already fast and tight.
+    const hardStop = entryType === 1 && (entryPx - price) > 3.5 * atr;
+    const trendExit = entryType === 1 && (price < ema50 || sma200 < sma200prev);
+    const mrExit = entryType === 2 && (price > ema20 || rsi > 55);
+    if (hardStop || trendExit || mrExit) {
+      ctx.state.entryType = 0;
       return { side: 'sell', qty: pos };
     }
     return null;
@@ -63,10 +77,15 @@ function onUpdate(ctx) {
   }
   const squeezeBreakout = pctile <= 0.2 && price > high20 && width > 0;
 
-  if (mrEntry || squeezeBreakout) {
-    const equity = ctx.cash + ctx.uPnl;
-    const qty = (Number.isFinite(equity) && equity > 0 ? equity : ctx.cash) / price;
-    return { side: 'buy', qty: qty * 0.98 };
+  if (squeezeBreakout) {
+    ctx.state.entryType = 1;
+    const qty = (ctx.cash / price) * 0.98;
+    return { side: 'buy', qty: qty };
+  }
+  if (mrEntry) {
+    ctx.state.entryType = 2;
+    const qty = (ctx.cash / price) * 0.98;
+    return { side: 'buy', qty: qty };
   }
   return null;
 }
