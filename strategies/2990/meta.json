@@ -3,7 +3,7 @@
   "name": "BTC 1D Hybrid MR+Squeeze (ATR Trail Exit)",
   "kind": "custom",
   "verified": {
-    "backtestId": 13894,
+    "backtestId": 13898,
     "return": 11.8,
     "mdd": 40.85,
     "trades": 54,
