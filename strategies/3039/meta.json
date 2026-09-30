@@ -3,15 +3,15 @@
   "name": "BTC 1D Volatility-Targeted Long",
   "kind": "custom",
   "verified": {
-    "backtestId": 14503,
-    "return": 53.75,
+    "backtestId": 14506,
+    "return": 125.08,
     "mdd": 6.79,
-    "trades": 16,
-    "vsBuyHold": "lose",
-    "benchRet": 211.97,
+    "trades": 28,
+    "vsBuyHold": "win",
+    "benchRet": 43.89,
     "benchBasis": "price",
     "gapPct": 0,
-    "tFrom": 1685577600,
+    "tFrom": 1617926400,
     "tTo": 1790640000,
     "approxNotes": [
       "봉 내 순서는 관례(양봉 O→L→H→C·음봉 O→H→L→C) — 실순서 미상 · 봉 중 거래량 null · MDD 는 봉 마감 기준"
@@ -20,11 +20,11 @@
       "ex": "binance",
       "sym": "BTCUSDT",
       "interval": "1d",
-      "bars": 1218,
-      "end": 1790742558
+      "bars": 2000,
+      "end": 1790726400
     }
   },
   "config": null,
-  "updatedAt": "2026-09-30T04:30:25.507Z",
+  "updatedAt": "2026-09-30T04:31:54.314Z",
   "publishedBy": "scripts/publish-strategies.mjs"
 }
