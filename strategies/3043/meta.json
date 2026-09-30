@@ -3,7 +3,7 @@
   "name": "BTC 1D On-Chain + Momentum Override",
   "kind": "custom",
   "verified": {
-    "backtestId": 14524,
+    "backtestId": 14525,
     "return": 171.04,
     "mdd": 66.21,
     "trades": 19,
