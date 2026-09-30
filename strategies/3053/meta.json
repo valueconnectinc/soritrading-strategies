@@ -3,7 +3,7 @@
   "name": "Multi-Asset Defensive MR Basket 5-Asset DXY-Gated",
   "kind": "custom",
   "verified": {
-    "backtestId": 14619,
+    "backtestId": 14622,
     "return": 133.29,
     "mdd": 6.57,
     "trades": 132,
@@ -25,6 +25,6 @@
     }
   },
   "config": null,
-  "updatedAt": "2026-09-30T06:10:10.701Z",
+  "updatedAt": "2026-09-30T06:11:22.488Z",
   "publishedBy": "scripts/publish-strategies.mjs"
 }
