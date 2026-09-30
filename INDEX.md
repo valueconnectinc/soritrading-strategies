@@ -4,13 +4,14 @@ Every strategy whose backtest **finished and actually traded** is published here
 Nothing is filtered out by return — the ones that lost money are part of the record.
 Entries stay after a strategy is removed from our own workspace — this is a log, and deleting the record would leave only the survivors.
 
-**★ marks a strategy that out-returned buy & hold over the same window** — 385 of 1428 right now.
-`—` means the comparison **could not be made**: the engine does not compute a benchmark for multi-symbol, futures, or multi-leg runs. That is *unknown*, not *lost*, and it is 215 of them right now.
+**★ marks a strategy that out-returned buy & hold over the same window** — 385 of 1429 right now.
+`—` means the comparison **could not be made**: the engine does not compute a benchmark for multi-symbol, futures, or multi-leg runs. That is *unknown*, not *lost*, and it is 216 of them right now.
 
 Every figure comes from the last verifying backtest at publish time. These are past results over historical data. Nothing here is promised or assured about the future, and none of it is investment advice.
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
+| — | [3068](strategies/3068/) | Multi-Asset Stop-Protected Bear MR Basket 5-Asset | +112.23% | — | +9.88% | 187 | 2026-09-30 |
 | — | [3067](strategies/3067/) | Multi-Asset MR Basket 5-Asset Level-Gate | -7.74% | — | +8.20% | 6 | 2026-09-30 |
 | — | [3052](strategies/3052/) | Multi-Asset Defensive MR Basket 5-Asset | +119.65% | — | +6.57% | 126 | 2026-09-30 |
 | — | [3065](strategies/3065/) | Multi-Asset MR Basket 5-Asset 4H Tiered-Profit Exit | +30.26% | — | +1.15% | 104 | 2026-09-30 |
