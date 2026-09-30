@@ -1,25 +1,22 @@
 /*
  * @coinsori-strategy v1
- * name: BTC 1D Dual-MR Hybrid Sizing
+ * name: BTC 1D Dual-MR Hybrid Sizing RSI25
  * ex: binance
  * syms: BTCUSDT
  * interval: 1d
  * cash: 10000
  *
- * Why this strategy: The validated ATR-sized Dual-MR champion (3036) is consistently
- * positive with tiny drawdown but its small ATR-sized positions starve returns in rallies
- * (every trade risks only 2.5% of cash). This is a principled sizing split: the rare,
- * deepest Bollinger flush (price far below lower band + RSI<30) gets FULL cash because
- * these are the highest-conviction capitulation entries; the more frequent ATR-Keltner
- * pullback keeps the inverse-ATR sizing to limit the number of moderate positions. Only
- * the sizing changes — the validated entry/exit logic is untouched.
- * When it buys and sells: Buy on a deep Bollinger flush (close below lower band 20,2.5
- * with RSI<30) at full ~95% cash, OR on an ATR-Keltner pullback (below EMA20-2.5*ATR with
- * RSI<40) sized inversely to ATR, both only inside a rising 200-day average. Sell on the
- * snap-back above the 20-day EMA or RSI>55.
- * When it does NOT work: In a sustained bear the rising-trend gate keeps us flat, and it
- * lags buy-and-hold in a relentless melt-up. Full-cash entry on a wrong deep flush costs
- * more than the pure ATR-sized version.
+ * Why this strategy: Champion 3037's only real risk is the full-cash deep-flush entry
+ * when a bottom turns out wrong. This tightens that entry: full cash is reserved for a
+ * MORE extreme capitulation (RSI<25 instead of <30), so we only go all-in on true
+ * flush-outs and keep the moderate Keltner pullback sized inversely to ATR as before.
+ * The validated EMA20/RSI55 snap-back exit is untouched.
+ * When it buys and sells: Buy full cash on a deep Bollinger flush with RSI<25, or a
+ * risk-scaled pullback below EMA20-2.5*ATR with RSI<40, both only in a rising 200-day
+ * average. Sell on snap-back above the 20-day EMA or RSI>55.
+ * When it does NOT work: In a sustained bear the rising-trend gate keeps us flat; it
+ * lags in a relentless melt-up. Fewer full-cash entries may give up some upside in
+ * fast V-recoveries.
  */
 function onUpdate(ctx) {
   const pos = ctx.position;
@@ -47,16 +44,14 @@ function onUpdate(ctx) {
 
   if (!uptrend) return null;
 
-  const bollingerFlush = price < lowerBand && rsi < 30;
+  const bollingerFlush = price < lowerBand && rsi < 25; // stricter: true capitulation only
   const keltnerPullback = price < keltnerLow && rsi < 40;
 
   if (bollingerFlush) {
-    // Deepest capitulation flush: highest conviction, size at full ~95% cash.
     const qty = (ctx.cash / price) * 0.95;
     return { side: 'buy', qty: qty };
   }
   if (keltnerPullback) {
-    // Moderate pullback: risk-scaled inverse-ATR to limit position count/drawdown.
     const riskBudget = 0.025 * ctx.cash;
     let qty = riskBudget / atr;
     const maxQty = (ctx.cash / price) * 0.95;
