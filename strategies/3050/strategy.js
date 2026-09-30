@@ -1,26 +1,25 @@
 /*
  * @coinsori-strategy v1
- * name: BTC 1D Macro-Gated OBV Trend + Keltner MR
+ * name: BTC 1D Dual-Mode OBV Trend + Keltner MR
  * ex: binance
  * syms: BTCUSDT
  * interval: 1d
  * cash: 10000
  *
- * Why this strategy: The validated champion's trend leg buys on OBV money-flow
- * confirmation, but it can enter right before a dollar-strength (risk-off) reversal
- * that kills the trend. Adding a MACRO regime filter — the DXY dollar index — is a
- * different family (macro) than the champion's price/volume logic. When DXY is
- * strongly RISING, risk assets like BTC tend to weaken, so this version refuses
- * NEW trend entries until the dollar stops strengthening. The defensive Keltner
- * mean-reversion leg is unchanged (it already only buys extreme capitulation).
- * When it buys and sells: Above the 200-day line it enters on rising 45-day OBV
- * with volume ONLY IF the dollar is not strongly rising (DXY below its own 20-day
- * average), and exits on OBV rollover. Clearly below the 200-day line it buys an
- * extreme flush to the lower Keltner band (EMA20 - 3x ATR) with RSI<30, sized at
- * 1% equity risk, and sells on the snap-back to the mid band.
- * When it does NOT work: If DXY data is unavailable (null) the gate is disabled so
- * it degrades to the plain champion. A persistent dollar rally that BTC ignores
- * could keep it out of a real uptrend. It still lags the very start of melt-ups.
+ * Why this strategy: Two strategies that capture DIFFERENT regimes are combined.
+ * OBV volume-flow trend rides accumulation-driven melt-ups, while Keltner
+ * mean-reversion buys deep oversold flushes in confirmed bear/chop markets.
+ * A rising 200-day average picks the mode: above the 200-day line → OBV trend;
+ * clearly below it → Keltner MR. This captures melt-up upside while staying
+ * productive in crashes.
+ * When it buys and sells: In an uptrend it buys when 45-day OBV is rising with
+ * volume confirmation and sells when OBV rolls over. In a confirmed downtrend
+ * (price clearly below the 200-day average) it buys an EXTREME flush to the
+ * lower Keltner band (EMA20 - 3x ATR) with RSI<30 and sells on the snap-back
+ * to the mid band.
+ * When it does NOT work: It structurally LAGS straight-line melt-ups because it
+ * waits for confirmation, and even the extreme MR can catch a falling knife in
+ * a persistent crash. It is a long-only strategy, not a crash profiteer.
  */
 function onUpdate(ctx) {
   const pos = ctx.position;
@@ -28,10 +27,11 @@ function onUpdate(ctx) {
   if (!Number.isFinite(price) || price <= 0) return null;
 
   const sma200 = ctx.sma(200, 1);
+  const sma200prev = ctx.sma(200, 2);
   const ema20 = ctx.ema(20, 1);
   const atr = ctx.atr(14, 1);
   const rsi = ctx.rsi(14, 1);
-  if (sma200 == null || ema20 == null || atr == null || rsi == null || atr <= 0) return null;
+  if (sma200 == null || sma200prev == null || ema20 == null || atr == null || rsi == null || atr <= 0) return null;
 
   const uptrendMode = price > sma200;
   const bearMode = price < sma200 * 0.98;
@@ -61,25 +61,7 @@ function onUpdate(ctx) {
   const avgV = ctx.avgVol(30);
   const volOk = avgV != null && Number.isFinite(avgV) && avgV > 0 && ctx.vol > avgV;
 
-  // Macro regime: DXY (dollar index) risk filter. Gate = DXY below its own 20-day avg.
-  // Build a rolling DXY history in state so we can average it ourselves.
   const st = ctx.state;
-  let dollarOk = true;   // default: allow (gate disabled if data missing)
-  try {
-    const dxy = ctx.macro('dxy');
-    if (dxy != null && Number.isFinite(dxy)) {
-      if (!Array.isArray(st.dxyHist)) st.dxyHist = [];
-      st.dxyHist.push(dxy);
-      if (st.dxyHist.length > 20) st.dxyHist.shift();
-      if (st.dxyHist.length >= 20) {
-        let sum = 0;
-        for (let k = 0; k < st.dxyHist.length; k++) sum += st.dxyHist[k];
-        const avg = sum / st.dxyHist.length;
-        dollarOk = dxy < avg;   // dollar NOT strengthening = risk-on = allow trend entry
-      }
-    }
-  } catch (e) { dollarOk = true; }
-
   const lower = ema20 - 3.0 * atr;
 
   if (pos > 0) {
@@ -100,8 +82,7 @@ function onUpdate(ctx) {
   if (st.cd != null && ctx.i < st.cd) return null;
 
   if (uptrendMode) {
-    // Trend entry gated by dollar regime: only buy when dollar is not strengthening.
-    if (obvRising && volOk && dollarOk) {
+    if (obvRising && volOk) {
       st.cd = null;
       return { side: 'buy', qty: (ctx.cash / price) * 0.95 };
     }
