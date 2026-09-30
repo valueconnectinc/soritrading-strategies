@@ -11,7 +11,7 @@
  * (big red candle on a volume spike) marks genuine panic sellers exhausting, which
  * historically snaps back. Volume is backfilled in this environment, so it is testable.
  * When it buys and sells: Buy when price closes below its 20-day lower Bollinger, RSI<30,
- * AND today's volume is at least 2x the 20-day average (panic volume), only inside a rising
+ * AND today's volume is at least 1.5x the 20-day average (panic volume), only inside a rising
  * 200-day average. Sell on the snap-back above the 20-day EMA or when RSI recovers above 55.
  * When it does NOT work: In a sustained bear the rising-trend gate keeps us flat. It lags
  * buy-and-hold in a straight-line melt-up. Requiring a volume spike makes entries rarer, so
@@ -45,7 +45,7 @@ function onUpdate(ctx) {
 
   if (!uptrend) return null;
 
-  const volumeSpike = vol >= 2.0 * avgVol;   // panic volume: 2x the 20-day average
+  const volumeSpike = vol >= 1.5 * avgVol;   // panic volume: 1.5x the 20-day average (relaxed from 2x)
   const capitulation = price < lowerBand && rsi < 30 && volumeSpike;
 
   if (capitulation) {
