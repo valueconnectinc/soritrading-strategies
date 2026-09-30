@@ -3,25 +3,25 @@
   "name": "BTC 1D Dual-MR Hybrid Sizing",
   "kind": "custom",
   "verified": {
-    "backtestId": 14461,
-    "return": 144.21,
-    "mdd": 20.47,
-    "trades": 20,
+    "backtestId": 14466,
+    "return": 64.97,
+    "mdd": 28.12,
+    "trades": 32,
     "vsBuyHold": "lose",
-    "benchRet": 273.54,
+    "benchRet": 198.82,
     "benchBasis": "price",
     "gapPct": 0,
-    "tFrom": 1531526400,
-    "tTo": 1661040000,
+    "tFrom": 1609459200,
+    "tTo": 1767139200,
     "approxNotes": [
       "봉 내 순서는 관례(양봉 O→L→H→C·음봉 O→H→L→C) — 실순서 미상 · 봉 중 거래량 null · MDD 는 봉 마감 기준"
     ],
     "spec": {
       "ex": "binance",
-      "sym": "ETHUSDT",
+      "sym": "BTCUSDT",
       "interval": "1d",
-      "bars": 1500,
-      "end": 1661126400
+      "bars": 1826,
+      "end": 1767225600
     }
   },
   "config": null,
