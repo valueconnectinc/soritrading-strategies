@@ -1,24 +1,21 @@
 /*
  * @coinsori-strategy v1
- * name: Multi-Asset Defensive MR Basket 7-Asset (3% risk)
+ * name: Multi-Asset Defensive MR Basket 7-Asset (1% risk)
  * ex: binance
  * syms: BTCUSDT, ETHUSDT, SOLUSDT, XRPUSDT, BNBUSDT, ADAUSDT, LTCUSDT
  * interval: 1d
  * cash: 10000
  *
- * Why this strategy: The 6-asset defensive MR basket is the validated champion. LTC is a
- * clean 7th leg: it independently responded to the same defensive MR recipe on LTC 1d
- * (+49.3%/MDD2.5 where buy-and-hold lost 13.4% in 2023-26, +17.0%/MDD3.8 in 2020-23),
- * the same profile as the ADA leg that already improved the basket. Adding it smooths the
- * equity curve and reduces single-asset concentration — a diversification change, not a
- * parameter fit.
+ * Why this strategy: The validated defensive champion uses 1% risk per leg and keeps
+ * single-digit drawdown. This tests whether adding LTC as a 7th leg to that 1% construction
+ * improves return without raising drawdown — a pure diversification change on the validated
+ * defensive line, not a parameter fit.
  * When it buys and sells: Buy on each asset when price closes below the lower Bollinger
  * (20,2.5) with RSI<30, or below the ATR-adaptive Keltner low with RSI<40, only in a rising
  * 200-day average. Sell when price closes back above the 20-day EMA, or drops 2.5 ATR from
  * the highest close since entry.
  * When it does NOT work: In a broad coordinated crypto bear all gates stay flat (capital
- * safe, little upside), and in a straight-line melt-up it lags buy-and-hold. The 3% sizing
- * means deeper drawdowns in a volatile whipsaw recovery than a 1% version.
+ * safe, little upside), and in a straight-line melt-up it lags buy-and-hold.
  */
 function onUpdate(ctx) {
   const pos = ctx.position;
@@ -54,7 +51,7 @@ function onUpdate(ctx) {
 
   if (bollingerFlush || keltnerPullback) {
     const legCash = ctx.cash;
-    const riskEq = 0.03 * legCash;
+    const riskEq = 0.01 * legCash;
     const qty = riskEq / atr;
     const maxQty = (legCash / price) * 0.9;
     return { side: 'buy', qty: Math.min(qty, maxQty) };
