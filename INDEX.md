@@ -4,13 +4,14 @@ Every strategy whose backtest **finished and actually traded** is published here
 Nothing is filtered out by return — the ones that lost money are part of the record.
 Entries stay after a strategy is removed from our own workspace — this is a log, and deleting the record would leave only the survivors.
 
-**★ marks a strategy that out-returned buy & hold over the same window** — 382 of 1406 right now.
+**★ marks a strategy that out-returned buy & hold over the same window** — 382 of 1407 right now.
 `—` means the comparison **could not be made**: the engine does not compute a benchmark for multi-symbol, futures, or multi-leg runs. That is *unknown*, not *lost*, and it is 204 of them right now.
 
 Every figure comes from the last verifying backtest at publish time. These are past results over historical data. Nothing here is promised or assured about the future, and none of it is investment advice.
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
+|  | [3043](strategies/3043/) | BTC 1D On-Chain + Momentum Override | +171.04% | +1255.34% | +66.21% | 19 | 2026-09-30 |
 |  | [3042](strategies/3042/) | BTC 1D Dual On-Chain Trend | +126.83% | +1255.34% | +69.17% | 21 | 2026-09-30 |
 | ★ | [3041](strategies/3041/) | BTC 1D On-Chain Network Trend | +143.19% | +86.67% | +69.17% | 26 | 2026-09-30 |
 |  | [3040](strategies/3040/) | BTC 1D On-Chain Network Trend | -99.99% | +1852.44% | +99.99% | 2175 | 2026-09-30 |
