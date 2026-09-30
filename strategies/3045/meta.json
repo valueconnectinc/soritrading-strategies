@@ -1,0 +1,30 @@
+{
+  "id": 3045,
+  "name": "BTC 1D Dual-Mode + Melt-Up Fast Leg",
+  "kind": "custom",
+  "verified": {
+    "backtestId": 14542,
+    "return": -10.03,
+    "mdd": 11.86,
+    "trades": 6,
+    "vsBuyHold": "lose",
+    "benchRet": 45.03,
+    "benchBasis": "price",
+    "gapPct": 0,
+    "tFrom": 1502928000,
+    "tTo": 1531440000,
+    "approxNotes": [
+      "봉 내 순서는 관례(양봉 O→L→H→C·음봉 O→H→L→C) — 실순서 미상 · 봉 중 거래량 null · MDD 는 봉 마감 기준"
+    ],
+    "spec": {
+      "ex": "binance",
+      "sym": "BTCUSDT",
+      "interval": "1d",
+      "bars": 1500,
+      "end": 1531526400
+    }
+  },
+  "config": null,
+  "updatedAt": "2026-09-30T04:58:42.161Z",
+  "publishedBy": "scripts/publish-strategies.mjs"
+}
