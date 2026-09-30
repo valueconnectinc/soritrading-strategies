@@ -11,7 +11,7 @@ Every figure comes from the last verifying backtest at publish time. These are p
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
-|  | [3018](strategies/3018/) | Cross-Asset Momentum Rotation Basket | -28.69% | +58.35% | +59.83% | 57 | 2026-09-29 |
+|  | [3018](strategies/3018/) | Cross-Asset Momentum Rotation Basket | -28.69% | +58.35% | +59.83% | 57 | 2026-09-30 |
 |  | [3017](strategies/3017/) | Multi-Asset Defensive MR Basket 6-Asset (3% risk) | +4.60% | +532.50% | +2.51% | 2 | 2026-09-29 |
 |  | [3016](strategies/3016/) | Multi-Asset MR Basket Higher-Risk Sizing | +36.50% | +394.35% | +11.28% | 34 | 2026-09-29 |
 |  | [3015](strategies/3015/) | Multi-Asset Defensive MR Basket BTC/ETH/SOL/XRP | +17.42% | +43.77% | +6.34% | 86 | 2026-09-29 |
