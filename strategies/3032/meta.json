@@ -3,16 +3,16 @@
   "name": "Multi-Asset Squeeze-Breakout Basket 7-Asset",
   "kind": "custom",
   "verified": {
-    "backtestId": 14366,
-    "return": -36.25,
-    "mdd": 38.59,
-    "trades": 96,
+    "backtestId": 14370,
+    "return": -66.81,
+    "mdd": 71.94,
+    "trades": 254,
     "vsBuyHold": "lose",
-    "benchRet": 403.49,
+    "benchRet": 585.31,
     "benchBasis": "price",
     "gapPct": 0,
-    "tFrom": 1672531200,
-    "tTo": 1790640000,
+    "tFrom": 1531526400,
+    "tTo": 1704240000,
     "approxNotes": [
       "봉 내 순서는 관례(양봉 O→L→H→C·음봉 O→H→L→C) — 실순서 미상 · 봉 중 거래량 null · MDD 는 봉 마감 기준"
     ],
@@ -20,8 +20,8 @@
       "ex": "binance",
       "sym": "BTCUSDT",
       "interval": "1d",
-      "bars": 1368,
-      "end": 1790726400
+      "bars": 2000,
+      "end": 1704326400
     }
   },
   "config": null,
