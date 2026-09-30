@@ -5,13 +5,13 @@ Nothing is filtered out by return — the ones that lost money are part of the r
 Entries stay after a strategy is removed from our own workspace — this is a log, and deleting the record would leave only the survivors.
 
 **★ marks a strategy that out-returned buy & hold over the same window** — 385 of 1416 right now.
-`—` means the comparison **could not be made**: the engine does not compute a benchmark for multi-symbol, futures, or multi-leg runs. That is *unknown*, not *lost*, and it is 205 of them right now.
+`—` means the comparison **could not be made**: the engine does not compute a benchmark for multi-symbol, futures, or multi-leg runs. That is *unknown*, not *lost*, and it is 204 of them right now.
 
 Every figure comes from the last verifying backtest at publish time. These are past results over historical data. Nothing here is promised or assured about the future, and none of it is investment advice.
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
-| — | [3052](strategies/3052/) | Multi-Asset Defensive MR Basket 5-Asset | +114.30% | — | +12.89% | 70 | 2026-09-30 |
+|  | [3052](strategies/3052/) | Multi-Asset Defensive MR Basket 5-Asset | +12.50% | +315.19% | +2.30% | 16 | 2026-09-30 |
 | ★ | [3051](strategies/3051/) | BTC 1D Long-Short 200-Day Trend | +116.66% | +43.89% | +28.23% | 129 | 2026-09-30 |
 |  | [3050](strategies/3050/) | BTC 1D Macro-Gated OBV Trend + Keltner MR | -91.59% | +43.89% | +91.85% | 283 | 2026-09-30 |
 | ★ | [3049](strategies/3049/) | BTC 1D Dual-Mode + Melt-Up Pyramiding | -46.86% | -56.05% | +61.77% | 9 | 2026-09-30 |
