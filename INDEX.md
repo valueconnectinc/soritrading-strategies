@@ -11,7 +11,7 @@ Every figure comes from the last verifying backtest at publish time. These are p
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
-|  | [3032](strategies/3032/) | Multi-Asset Squeeze-Breakout Basket 7-Asset | -81.01% | +46.54% | +81.01% | 204 | 2026-09-30 |
+|  | [3032](strategies/3032/) | Multi-Asset Squeeze-Breakout Basket 7-Asset | -67.59% | +43.89% | +67.80% | 202 | 2026-09-30 |
 |  | [3031](strategies/3031/) | DOT 1D Defensive MR Single-Leg Test | +1.64% | +107.37% | +4.54% | 30 | 2026-09-30 |
 |  | [3029](strategies/3029/) | AVAX 1D Defensive MR Single-Leg Test | +16.05% | +37.27% | +3.17% | 74 | 2026-09-30 |
 | — | [3027](strategies/3027/) | Multi-Asset Defensive MR Basket 6-Asset (1% risk) | +61.47% | — | +2.46% | 256 | 2026-09-30 |

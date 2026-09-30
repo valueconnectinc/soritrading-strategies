@@ -3,12 +3,12 @@
   "name": "Multi-Asset Squeeze-Breakout Basket 7-Asset",
   "kind": "custom",
   "verified": {
-    "backtestId": 14358,
-    "return": -81.01,
-    "mdd": 81.01,
-    "trades": 204,
+    "backtestId": 14361,
+    "return": -67.59,
+    "mdd": 67.8,
+    "trades": 202,
     "vsBuyHold": "lose",
-    "benchRet": 46.54,
+    "benchRet": 43.89,
     "benchBasis": "price",
     "gapPct": 0,
     "tFrom": 1617926400,
@@ -18,7 +18,7 @@
     ],
     "spec": {
       "ex": "binance",
-      "sym": "XRPUSDT",
+      "sym": "BTCUSDT",
       "interval": "1d",
       "bars": 2000,
       "end": 1790726400
