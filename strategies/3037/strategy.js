@@ -1,26 +1,25 @@
 /*
  * @coinsori-strategy v1
- * name: BTC 1D Dual-MR Hybrid Sizing + Wide-Band Flush
+ * name: BTC 1D Dual-MR Hybrid Sizing
  * ex: binance
  * syms: BTCUSDT
  * interval: 1d
  * cash: 10000
  *
- * Why this strategy: The validated champion (3037) is consistently positive with tiny
- * drawdown but its highest-risk trade is the full-cash deep Bollinger flush — a wrong
- * flush costs more than the ATR-sized pullbacks. This adds ONE principled filter: only
- * take the full-cash flush when the Bollinger band is WIDE (bandwidth above its own
- * 50-day average), i.e. a genuine high-volatility dislocation that snaps back hard,
- * and skip quiet low-volatility grinds where a "flush" is just drift. The ATR-Keltner
- * pullback entry and the fast snap-back exit are untouched.
- * When it buys and sells: Buy at full ~95% cash on a deep Bollinger flush (close below
- * lower band 20,2.5 with RSI<30) ONLY when the band is wide (bandwidth > its 50-day
- * average), or ATR-sized on an ATR-Keltner pullback (below EMA20-2.5*ATR with RSI<40),
- * both only inside a rising 200-day average. Sell on the snap-back above the 20-day EMA
- * or RSI>55.
+ * Why this strategy: The validated ATR-sized Dual-MR champion (3036) is consistently
+ * positive with tiny drawdown but its small ATR-sized positions starve returns in rallies
+ * (every trade risks only 2.5% of cash). This is a principled sizing split: the rare,
+ * deepest Bollinger flush (price far below lower band + RSI<30) gets FULL cash because
+ * these are the highest-conviction capitulation entries; the more frequent ATR-Keltner
+ * pullback keeps the inverse-ATR sizing to limit the number of moderate positions. Only
+ * the sizing changes — the validated entry/exit logic is untouched.
+ * When it buys and sells: Buy on a deep Bollinger flush (close below lower band 20,2.5
+ * with RSI<30) at full ~95% cash, OR on an ATR-Keltner pullback (below EMA20-2.5*ATR with
+ * RSI<40) sized inversely to ATR, both only inside a rising 200-day average. Sell on the
+ * snap-back above the 20-day EMA or RSI>55.
  * When it does NOT work: In a sustained bear the rising-trend gate keeps us flat, and it
- * lags buy-and-hold in a relentless melt-up. If the band-width filter is too strict it
- * may skip some good full-cash flush entries (fewer full-cash trades, lower upside).
+ * lags buy-and-hold in a relentless melt-up. Full-cash entry on a wrong deep flush costs
+ * more than the pure ATR-sized version.
  */
 function onUpdate(ctx) {
   const pos = ctx.position;
@@ -39,25 +38,6 @@ function onUpdate(ctx) {
   const lowerBand = bb.lower;
   const keltnerLow = ema20 - 2.5 * atr;
 
-  // Bollinger bandwidth = (upper-lower)/mid; wide band = high-vol dislocation.
-  const bw = (bb.upper - bb.lower) / ((bb.upper + bb.lower) / 2);
-  if (!Number.isFinite(bw) || bw <= 0) {
-    ctx.state.bwHist = [];
-    return null;
-  }
-
-  // Maintain a rolling 50-bar history of bandwidth in state to compute its own average.
-  const s = ctx.state;
-  if (!Array.isArray(s.bwHist)) s.bwHist = [];
-  s.bwHist.push(bw);
-  if (s.bwHist.length > 50) s.bwHist.shift();
-
-  let wideBand = false;
-  if (s.bwHist.length >= 50) {
-    const avg = s.bwHist.reduce((a, b) => a + b, 0) / s.bwHist.length;
-    wideBand = bw > avg; // current band wider than its recent average = vol expansion
-  }
-
   if (pos > 0) {
     if (price > ema20 || rsi > 55) {
       return { side: 'sell', qty: pos };
@@ -71,8 +51,6 @@ function onUpdate(ctx) {
   const keltnerPullback = price < keltnerLow && rsi < 40;
 
   if (bollingerFlush) {
-    // Full-cash flush only on a WIDE band (real dislocation). Quiet grinds get skipped.
-    if (!wideBand) return null;
     const qty = (ctx.cash / price) * 0.95;
     return { side: 'buy', qty: qty };
   }
