@@ -1,0 +1,29 @@
+{
+  "id": 3023,
+  "name": "Multi-Asset Defensive MR Basket 6-Asset + Exit Cooldown",
+  "kind": "custom",
+  "verified": {
+    "backtestId": 14319,
+    "return": 24.41,
+    "mdd": 8.68,
+    "trades": 22,
+    "vsBuyHold": "lose",
+    "benchRet": 29.57,
+    "benchBasis": "price",
+    "gapPct": 0,
+    "tFrom": 1617926400,
+    "tTo": 1790640000,
+    "approxNotes": [
+      "봉 내 순서는 관례(양봉 O→L→H→C·음봉 O→H→L→C) — 실순서 미상 · 봉 중 거래량 null · MDD 는 봉 마감 기준"
+    ],
+    "spec": {
+      "ex": "binance",
+      "sym": "ETHUSDT",
+      "interval": "1d",
+      "bars": 2000
+    }
+  },
+  "config": null,
+  "updatedAt": "2026-09-30T00:26:27.375Z",
+  "publishedBy": "scripts/publish-strategies.mjs"
+}
