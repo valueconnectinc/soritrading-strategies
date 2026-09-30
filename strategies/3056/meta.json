@@ -1,16 +1,16 @@
 {
-  "id": 3055,
-  "name": "Multi-Asset MR Basket Cross-Sectional Confirmation",
+  "id": 3056,
+  "name": "AI 전략",
   "kind": "custom",
   "verified": {
-    "backtestId": 14628,
-    "return": 17.34,
-    "mdd": 15.49,
-    "trades": 108,
+    "backtestId": 14631,
+    "return": 64.26,
+    "mdd": 10.08,
+    "trades": 262,
     "vsBuyHold": "unmeasured",
     "gapPct": 0,
-    "tFrom": 1502928000,
-    "tTo": 1617840000,
+    "tFrom": 1617926400,
+    "tTo": 1790640000,
     "approxNotes": [
       "[생존 편향] 이 유니버스는 **지금 거래되는 종목**만입니다. 구간 중(또는 그 전에) 상장폐지된 종목은 **처음부터 들어 있지 않습니다** — 망한 종목이 빠져 있어 수익률이 **실제보다 좋게** 나옵니다. 스캐너·랭킹 전략일수록 그 차이가 큽니다."
     ],
@@ -19,11 +19,11 @@
       "sym": "BTCUSDT",
       "interval": "1d",
       "bars": 2000,
-      "end": 1617926400,
+      "end": 1790726400,
       "syms": 5
     }
   },
   "config": null,
-  "updatedAt": "2026-09-30T06:22:33.762Z",
+  "updatedAt": "2026-09-30T06:23:31.244Z",
   "publishedBy": "scripts/publish-strategies.mjs"
 }
