@@ -3,16 +3,16 @@
   "name": "BTC 1D Volume-Capitulation MR",
   "kind": "custom",
   "verified": {
-    "backtestId": 14434,
-    "return": 10.07,
-    "mdd": 3.59,
+    "backtestId": 14438,
+    "return": -2.91,
+    "mdd": 6.74,
     "trades": 4,
     "vsBuyHold": "lose",
-    "benchRet": 89.49,
+    "benchRet": 828.94,
     "benchBasis": "price",
     "gapPct": 0,
-    "tFrom": 1704326400,
-    "tTo": 1790640000,
+    "tFrom": 1531526400,
+    "tTo": 1617840000,
     "approxNotes": [
       "봉 내 순서는 관례(양봉 O→L→H→C·음봉 O→H→L→C) — 실순서 미상 · 봉 중 거래량 null · MDD 는 봉 마감 기준",
       "거래량은 봉 마감에만 확정 — 봉 중 평가에서 ctx.vol/volumes 가 null 이라 거래량 조건이 걸러졌을 수 있음(봉 중에도 쓰려면 ctx.volPrev·ctx.avgVol)"
@@ -22,7 +22,7 @@
       "sym": "BTCUSDT",
       "interval": "1d",
       "bars": 1000,
-      "end": 1790726400
+      "end": 1617926400
     }
   },
   "config": null,

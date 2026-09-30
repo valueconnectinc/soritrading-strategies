@@ -11,7 +11,7 @@ Every figure comes from the last verifying backtest at publish time. These are p
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
-|  | [3035](strategies/3035/) | BTC 1D Volume-Capitulation MR | +10.07% | +89.49% | +3.59% | 4 | 2026-09-30 |
+|  | [3035](strategies/3035/) | BTC 1D Volume-Capitulation MR | -2.91% | +828.94% | +6.74% | 4 | 2026-09-30 |
 |  | [3034](strategies/3034/) | BTC 4h Volume-Surge Breakout | +0.20% | +828.94% | +15.43% | 8 | 2026-09-30 |
 |  | [3033](strategies/3033/) | BTC 1D Dual-MR Risk-Scaled (ATR-sized) | +32.57% | +77.87% | +6.50% | 12 | 2026-09-30 |
 |  | [3032](strategies/3032/) | Multi-Asset Squeeze-Breakout Basket 7-Asset | -66.81% | +585.31% | +71.94% | 254 | 2026-09-30 |
