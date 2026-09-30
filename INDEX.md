@@ -4,14 +4,14 @@ Every strategy whose backtest **finished and actually traded** is published here
 Nothing is filtered out by return — the ones that lost money are part of the record.
 Entries stay after a strategy is removed from our own workspace — this is a log, and deleting the record would leave only the survivors.
 
-**★ marks a strategy that out-returned buy & hold over the same window** — 380 of 1400 right now.
+**★ marks a strategy that out-returned buy & hold over the same window** — 379 of 1400 right now.
 `—` means the comparison **could not be made**: the engine does not compute a benchmark for multi-symbol, futures, or multi-leg runs. That is *unknown*, not *lost*, and it is 204 of them right now.
 
 Every figure comes from the last verifying backtest at publish time. These are past results over historical data. Nothing here is promised or assured about the future, and none of it is investment advice.
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
-| ★ | [3036](strategies/3036/) | BTC 1D Dual-MR + Squeeze Trend Leg (ATR-sized) | +105.55% | +44.75% | +6.50% | 28 | 2026-09-30 |
+|  | [3036](strategies/3036/) | BTC 1D Dual-MR + Squeeze Trend Leg (ATR-sized) | +15.51% | +244.14% | +15.43% | 20 | 2026-09-30 |
 |  | [3035](strategies/3035/) | BTC 1D Volume-Capitulation MR | -2.91% | +828.94% | +6.74% | 4 | 2026-09-30 |
 |  | [3034](strategies/3034/) | BTC 4h Volume-Surge Breakout | +0.20% | +828.94% | +15.43% | 8 | 2026-09-30 |
 |  | [3033](strategies/3033/) | BTC 1D Dual-MR Risk-Scaled (ATR-sized) | +32.57% | +77.87% | +6.50% | 12 | 2026-09-30 |
