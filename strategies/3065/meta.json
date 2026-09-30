@@ -3,14 +3,14 @@
   "name": "Multi-Asset MR Basket 5-Asset 4H Tiered-Profit Exit",
   "kind": "custom",
   "verified": {
-    "backtestId": 14673,
-    "return": 20.44,
-    "mdd": 0.8,
-    "trades": 358,
+    "backtestId": 14676,
+    "return": 30.26,
+    "mdd": 1.15,
+    "trades": 104,
     "vsBuyHold": "unmeasured",
     "gapPct": 0,
-    "tFrom": 1704067200,
-    "tTo": 1790712000,
+    "tFrom": 1609459200,
+    "tTo": 1640980800,
     "approxNotes": [
       "[생존 편향] 이 유니버스는 **지금 거래되는 종목**만입니다. 구간 중(또는 그 전에) 상장폐지된 종목은 **처음부터 들어 있지 않습니다** — 망한 종목이 빠져 있어 수익률이 **실제보다 좋게** 나옵니다. 스캐너·랭킹 전략일수록 그 차이가 큽니다."
     ],
@@ -18,8 +18,8 @@
       "ex": "binance",
       "sym": "BTCUSDT",
       "interval": "4h",
-      "bars": 6018,
-      "end": 1790726400,
+      "bars": 2190,
+      "end": 1640995200,
       "syms": 5
     }
   },
