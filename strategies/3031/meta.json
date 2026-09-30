@@ -1,0 +1,30 @@
+{
+  "id": 3031,
+  "name": "DOT 1D Defensive MR Single-Leg Test",
+  "kind": "custom",
+  "verified": {
+    "backtestId": 14352,
+    "return": 1.64,
+    "mdd": 4.54,
+    "trades": 30,
+    "vsBuyHold": "lose",
+    "benchRet": 107.37,
+    "benchBasis": "price",
+    "gapPct": 0,
+    "tFrom": 1661126400,
+    "tTo": 1790640000,
+    "approxNotes": [
+      "봉 내 순서는 관례(양봉 O→L→H→C·음봉 O→H→L→C) — 실순서 미상 · 봉 중 거래량 null · MDD 는 봉 마감 기준"
+    ],
+    "spec": {
+      "ex": "binance",
+      "sym": "LINKUSDT",
+      "interval": "1d",
+      "bars": 1500,
+      "end": 1790726400
+    }
+  },
+  "config": null,
+  "updatedAt": "2026-09-30T01:32:54.537Z",
+  "publishedBy": "scripts/publish-strategies.mjs"
+}
