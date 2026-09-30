@@ -3,16 +3,16 @@
   "name": "BTC 1D Squeeze-Breakout Trend-Gated",
   "kind": "custom",
   "verified": {
-    "backtestId": 14555,
-    "return": -24.21,
-    "mdd": 31.34,
-    "trades": 26,
+    "backtestId": 14558,
+    "return": -35.37,
+    "mdd": 42.41,
+    "trades": 22,
     "vsBuyHold": "lose",
-    "benchRet": 290.95,
+    "benchRet": 244.14,
     "benchBasis": "price",
     "gapPct": 0,
-    "tFrom": 1661126400,
-    "tTo": 1790640000,
+    "tFrom": 1531526400,
+    "tTo": 1661040000,
     "approxNotes": [
       "봉 내 순서는 관례(양봉 O→L→H→C·음봉 O→H→L→C) — 실순서 미상 · 봉 중 거래량 null · MDD 는 봉 마감 기준"
     ],
@@ -21,7 +21,7 @@
       "sym": "BTCUSDT",
       "interval": "1d",
       "bars": 1500,
-      "end": 1790726400
+      "end": 1661126400
     }
   },
   "config": null,

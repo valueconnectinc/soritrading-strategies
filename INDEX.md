@@ -11,7 +11,7 @@ Every figure comes from the last verifying backtest at publish time. These are p
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
-|  | [3048](strategies/3048/) | BTC 1D Squeeze-Breakout Trend-Gated | -24.21% | +290.95% | +31.34% | 26 | 2026-09-30 |
+|  | [3048](strategies/3048/) | BTC 1D Squeeze-Breakout Trend-Gated | -35.37% | +244.14% | +42.41% | 22 | 2026-09-30 |
 |  | [3047](strategies/3047/) | ETH 1D Dual-Mode OBV Trend + Keltner MR | +57.19% | +64.83% | +37.52% | 49 | 2026-09-30 |
 | ★ | [3046](strategies/3046/) | BTC 1D Dual-Mode MR Risk-Scaled | +678.32% | +244.14% | +51.31% | 44 | 2026-09-30 |
 |  | [3045](strategies/3045/) | BTC 1D Dual-Mode + Melt-Up Fast Leg | -10.03% | +45.03% | +11.86% | 6 | 2026-09-30 |
