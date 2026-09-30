@@ -1,25 +1,25 @@
 /*
  * @coinsori-strategy v1
- * name: BTC 1D Dual-MR Hybrid Sizing + Deep Stop
+ * name: BTC 1D Dual-MR Hybrid Sizing
  * ex: binance
  * syms: BTCUSDT
  * interval: 1d
  * cash: 10000
  *
- * Why this strategy: The hybrid-sizing Dual-MR champion (3037) is validated with no losing
- * window, but its one documented weakness is that a full-cash deep-flush entry on a WRONG
- * capitulation bottom (the flush keeps falling) draws down the whole position until the
- * EMA20 snap-back exit. This version keeps every entry and the validated snap-back profit
- * exit identical, and only adds a protective stop-loss on the deep full-cash position so a
- * wrong flush is cut early instead of riding all the way back to the 20-day EMA.
- * When it buys and sells: Same entries as the champion — deep Bollinger flush (RSI<30) buys
- * full cash, ATR-Keltner pullback (RSI<40) buys ATR-sized, both only in a rising 200-day
- * average. Deep positions exit on the snap-back above EMA20 / RSI>55, OR are stopped out if
- * price falls more than 3*ATR below entry (protective cut). Pullback positions keep the
- * snap-back exit only.
- * When it does NOT work: In a normal flush that dips slightly below the stop before snapping
- * back, the stop cuts a position that would have recovered — the stop only helps when flushes
- * genuinely keep falling. Loses to buy-and-hold in a straight melt-up with no flush to enter.
+ * Why this strategy: The validated ATR-sized Dual-MR champion (3036) is consistently
+ * positive with tiny drawdown but its small ATR-sized positions starve returns in rallies
+ * (every trade risks only 2.5% of cash). This is a principled sizing split: the rare,
+ * deepest Bollinger flush (price far below lower band + RSI<30) gets FULL cash because
+ * these are the highest-conviction capitulation entries; the more frequent ATR-Keltner
+ * pullback keeps the inverse-ATR sizing to limit the number of moderate positions. Only
+ * the sizing changes — the validated entry/exit logic is untouched.
+ * When it buys and sells: Buy on a deep Bollinger flush (close below lower band 20,2.5
+ * with RSI<30) at full ~95% cash, OR on an ATR-Keltner pullback (below EMA20-2.5*ATR with
+ * RSI<40) sized inversely to ATR, both only inside a rising 200-day average. Sell on the
+ * snap-back above the 20-day EMA or RSI>55.
+ * When it does NOT work: In a sustained bear the rising-trend gate keeps us flat, and it
+ * lags buy-and-hold in a relentless melt-up. Full-cash entry on a wrong deep flush costs
+ * more than the pure ATR-sized version.
  */
 function onUpdate(ctx) {
   const pos = ctx.position;
@@ -39,17 +39,7 @@ function onUpdate(ctx) {
   const keltnerLow = ema20 - 2.5 * atr;
 
   if (pos > 0) {
-    // Deep full-cash entry: protective stop below entry (cap the wrong-flush cost).
-    if (ctx.state.deep === 1 && ctx.state.entryPx > 0) {
-      // Stop 3*ATR below the entry price — only for the full-cash deep position.
-      if (price < ctx.state.entryPx - 3 * atr) {
-        ctx.state.deep = 0;
-        return { side: 'sell', qty: pos };
-      }
-    }
-    // Validated snap-back profit exit for all positions.
     if (price > ema20 || rsi > 55) {
-      ctx.state.deep = 0;
       return { side: 'sell', qty: pos };
     }
     return null;
@@ -61,13 +51,12 @@ function onUpdate(ctx) {
   const keltnerPullback = price < keltnerLow && rsi < 40;
 
   if (bollingerFlush) {
-    ctx.state.deep = 1;
-    ctx.state.entryPx = price;
+    // Deepest capitulation flush: highest conviction, size at full ~95% cash.
     const qty = (ctx.cash / price) * 0.95;
     return { side: 'buy', qty: qty };
   }
   if (keltnerPullback) {
-    ctx.state.deep = 0;
+    // Moderate pullback: risk-scaled inverse-ATR to limit position count/drawdown.
     const riskBudget = 0.025 * ctx.cash;
     let qty = riskBudget / atr;
     const maxQty = (ctx.cash / price) * 0.95;
