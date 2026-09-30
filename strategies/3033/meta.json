@@ -3,16 +3,16 @@
   "name": "BTC 1D Dual-MR Risk-Scaled (ATR-sized)",
   "kind": "custom",
   "verified": {
-    "backtestId": 14404,
-    "return": 39.73,
-    "mdd": 3.01,
+    "backtestId": 14407,
+    "return": 32.57,
+    "mdd": 6.5,
     "trades": 12,
-    "vsBuyHold": "win",
-    "benchRet": -27.99,
+    "vsBuyHold": "lose",
+    "benchRet": 77.87,
     "benchBasis": "price",
     "gapPct": 0,
-    "tFrom": 1617235200,
-    "tTo": 1703980800,
+    "tFrom": 1704067200,
+    "tTo": 1788134400,
     "approxNotes": [
       "봉 내 순서는 관례(양봉 O→L→H→C·음봉 O→H→L→C) — 실순서 미상 · 봉 중 거래량 null · MDD 는 봉 마감 기준"
     ],
@@ -20,8 +20,8 @@
       "ex": "binance",
       "sym": "BTCUSDT",
       "interval": "1d",
-      "bars": 1005,
-      "end": 1704067200
+      "bars": 974,
+      "end": 1788220800
     }
   },
   "config": null,
