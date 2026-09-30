@@ -11,7 +11,7 @@ Every figure comes from the last verifying backtest at publish time. These are p
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
-| — | [3052](strategies/3052/) | Multi-Asset Defensive MR Basket 5-Asset | +36.66% | — | +8.59% | 90 | 2026-09-30 |
+| — | [3052](strategies/3052/) | Multi-Asset Defensive MR Basket 5-Asset | +119.65% | — | +6.57% | 126 | 2026-09-30 |
 | ★ | [3051](strategies/3051/) | BTC 1D Long-Short 200-Day Trend | +116.66% | +43.89% | +28.23% | 129 | 2026-09-30 |
 |  | [3050](strategies/3050/) | BTC 1D Macro-Gated OBV Trend + Keltner MR | -91.59% | +43.89% | +91.85% | 283 | 2026-09-30 |
 | ★ | [3049](strategies/3049/) | BTC 1D Dual-Mode + Melt-Up Pyramiding | -46.86% | -56.05% | +61.77% | 9 | 2026-09-30 |
