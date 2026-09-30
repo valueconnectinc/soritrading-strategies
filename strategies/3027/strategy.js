@@ -1,20 +1,21 @@
 /*
  * @coinsori-strategy v1
- * name: Multi-Asset Defensive MR Basket 6-Asset (1% risk)
+ * name: Multi-Asset Defensive MR Basket 7-Asset (1% risk)
  * ex: binance
- * syms: BTCUSDT, ETHUSDT, SOLUSDT, XRPUSDT, BNBUSDT, ADAUSDT
+ * syms: BTCUSDT, ETHUSDT, SOLUSDT, XRPUSDT, BNBUSDT, ADAUSDT, LTCUSDT
  * interval: 1d
  * cash: 10000
  *
- * Why this strategy: Control leg for isolating the LTC effect on the validated 1% defensive
- * line — same logic as the 7-asset 1% version but without LTC. Comparing these two isolates
- * exactly what adding LTC contributes to return and drawdown.
+ * Why this strategy: The validated defensive champion uses 1% risk per leg and keeps
+ * single-digit drawdown. This tests whether adding LTC as a 7th leg to that 1% construction
+ * improves return without raising drawdown — a pure diversification change on the validated
+ * defensive line, not a parameter fit.
  * When it buys and sells: Buy on each asset when price closes below the lower Bollinger
  * (20,2.5) with RSI<30, or below the ATR-adaptive Keltner low with RSI<40, only in a rising
  * 200-day average. Sell when price closes back above the 20-day EMA, or drops 2.5 ATR from
  * the highest close since entry.
- * When it does NOT work: In a broad coordinated crypto bear all gates stay flat, and in a
- * straight-line melt-up it lags buy-and-hold.
+ * When it does NOT work: In a broad coordinated crypto bear all gates stay flat (capital
+ * safe, little upside), and in a straight-line melt-up it lags buy-and-hold.
  */
 function onUpdate(ctx) {
   const pos = ctx.position;
