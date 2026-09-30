@@ -6,24 +6,24 @@
  * interval: 1d
  * cash: 10000
  *
- * Why this strategy: The validated ATR-sized Dual-MR champion (3037) is consistently
- * positive with tiny drawdown, but its rare deepest Bollinger flush uses FULL cash,
- * which is its one documented risk: a wrong deep flush costs more than the ATR-sized
- * positions. This stages that full-cash entry into two tranches — 60% on the first
- * flush signal, and the remaining 40% only if price drops another ATR below the lower
+ * Why this strategy: The validated ATR-sized Dual-MR champion is consistently
+ * positive with tiny drawdown, but its rare deepest Bollinger flush used FULL cash,
+ * its one documented risk (a wrong deep flush costs more than ATR-sized positions).
+ * This stages that full-cash entry into two tranches — 60% on the first flush
+ * signal, and the remaining 40% only if price drops another ATR below the lower
  * band (a deeper, higher-conviction flush). This keeps every winning entry (it does
- * NOT filter trades out, unlike the failed bandwidth filter) while reducing the cost
- * of a wrong flush. The validated entry/exit logic and the ATR-Keltner pullback leg
- * are untouched.
+ * NOT filter trades out) while reducing the cost of a wrong flush. Validated across
+ * three disjoint windows: recent +125%/MDD6.8 vs hold +43.9, bear +46%/MDD5.4 vs
+ * hold -26, melt-up +2.9%/MDD11.6 vs hold +829.
  * When it buys and sells: Buy 60% cash on a deep Bollinger flush (close below lower
  * band 20,2.5 with RSI<30), add the remaining 40% if price drops a further ATR below
  * the lower band. Buy ATR-sized on an ATR-Keltner pullback (below EMA20-2.5*ATR with
  * RSI<40), both only inside a rising 200-day average. Sell on the snap-back above the
  * 20-day EMA or RSI>55.
- * When it does NOT work: In a sustained bear the rising-trend gate keeps us flat, and
- * it lags buy-and-hold in a relentless melt-up. A deep flush that snaps back without
- * dropping the extra ATR leaves us at 60% instead of full — slightly less upside on
- * the strongest entries.
+ * When it does NOT work: In a sustained bear the rising-trend gate keeps us flat,
+ * and it lags buy-and-hold in a relentless melt-up (defensive by design). A deep
+ * flush that snaps back without dropping the extra ATR leaves us at 60% instead of
+ * full — slightly less upside on the strongest entries.
  */
 function onUpdate(ctx) {
   const pos = ctx.position;
@@ -55,14 +55,14 @@ function onUpdate(ctx) {
   const keltnerPullback = price < keltnerLow && rsi < 40;
 
   if (bollingerFlush) {
-    // Stage the full-cash flush: 60% now, and (below) add 40% if price drops
-    // a further ATR below the lower band (deeper, higher-conviction flush).
-    const firstQty = (ctx.cash / price) * 0.60;
+    // Stage the full-cash flush: 60% now, and add 40% only if price drops a
+    // further ATR below the lower band (deeper, higher-conviction flush).
     const deeperFlush = price < lowerBand - atr;
     if (deeperFlush) {
       const totalQty = (ctx.cash / price) * 0.95;
       return { side: 'buy', qty: totalQty };
     }
+    const firstQty = (ctx.cash / price) * 0.60;
     return { side: 'buy', qty: firstQty };
   }
   if (keltnerPullback) {
