@@ -3,26 +3,25 @@
   "name": "Cross-Asset Momentum Rotation Basket",
   "kind": "custom",
   "verified": {
-    "backtestId": 14297,
-    "return": -28.69,
-    "mdd": 59.83,
-    "trades": 57,
+    "backtestId": 14302,
+    "return": 4.97,
+    "mdd": 26.63,
+    "trades": 64,
     "vsBuyHold": "lose",
-    "benchRet": 58.35,
+    "benchRet": 1255.34,
     "benchBasis": "price",
     "gapPct": 0,
-    "tFrom": 1614556800,
-    "tTo": 1690761600,
+    "tFrom": 1502928000,
+    "tTo": 1617840000,
     "approxNotes": [
-      "봉 내 순서는 관례(양봉 O→L→H→C·음봉 O→H→L→C) — 실순서 미상 · 봉 중 거래량 null · MDD 는 봉 마감 기준",
-      "기간 종료 시 미청산 포지션 1종목 (총자산의 89.77%) — 이 수익률은 **평가액**을 포함합니다. 퇴출 수수료·거래세를 안 냈고, 마지막 봉 가격에 실제로 팔 수 있다는 보장도 없습니다(얇은 호가·상장폐지). exec.endLiquidate 로 마지막 봉 청산을 켤 수 있습니다"
+      "봉 내 순서는 관례(양봉 O→L→H→C·음봉 O→H→L→C) — 실순서 미상 · 봉 중 거래량 null · MDD 는 봉 마감 기준"
     ],
     "spec": {
       "ex": "binance",
-      "sym": "SOLUSDT",
+      "sym": "BTCUSDT",
       "interval": "1d",
-      "bars": 883,
-      "end": 1690848000
+      "bars": 2000,
+      "end": 1617926400
     }
   },
   "config": null,
