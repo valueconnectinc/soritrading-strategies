@@ -3,11 +3,11 @@
   "name": "BTC 1D Dual-MR + Squeeze Trend Leg (ATR-sized)",
   "kind": "custom",
   "verified": {
-    "backtestId": 14445,
-    "return": -12.66,
-    "mdd": 33.89,
-    "trades": 214,
-    "vsBuyHold": "lose",
+    "backtestId": 14448,
+    "return": 105.55,
+    "mdd": 6.5,
+    "trades": 28,
+    "vsBuyHold": "win",
     "benchRet": 44.75,
     "benchBasis": "price",
     "gapPct": 0,
@@ -25,6 +25,6 @@
     }
   },
   "config": null,
-  "updatedAt": "2026-09-30T03:06:24.063Z",
+  "updatedAt": "2026-09-30T03:11:36.798Z",
   "publishedBy": "scripts/publish-strategies.mjs"
 }
