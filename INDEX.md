@@ -11,7 +11,7 @@ Every figure comes from the last verifying backtest at publish time. These are p
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
-| — | [3026](strategies/3026/) | Multi-Asset Defensive MR Basket 7-Asset (3% risk) | +333.46% | — | +7.32% | 280 | 2026-09-30 |
+| — | [3026](strategies/3026/) | Multi-Asset Defensive MR Basket 7-Asset (3% risk) | +464.02% | — | +12.81% | 314 | 2026-09-30 |
 | ★ | [3025](strategies/3025/) | LTC 1D Defensive MR Single-Leg Test | +49.33% | -13.42% | +2.48% | 33 | 2026-09-30 |
 |  | [3024](strategies/3024/) | Multi-Asset Defensive MR Basket 6-Asset + Volume Capitulatio | -20.78% | +29.57% | +22.76% | 24 | 2026-09-30 |
 |  | [3023](strategies/3023/) | Multi-Asset Defensive MR Basket 6-Asset + Exit Cooldown | +24.41% | +29.57% | +8.68% | 22 | 2026-09-30 |
