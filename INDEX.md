@@ -11,7 +11,7 @@ Every figure comes from the last verifying backtest at publish time. These are p
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
-|  | [3039](strategies/3039/) | BTC 1D Volatility-Targeted Long | +10.19% | +1255.34% | +11.63% | 12 | 2026-09-30 |
+|  | [3039](strategies/3039/) | BTC 1D Volatility-Targeted Long | +53.75% | +211.97% | +6.79% | 16 | 2026-09-30 |
 |  | [3038](strategies/3038/) | BTC 1D Fast-Momentum Trend Ride | +100.60% | +1255.34% | +64.90% | 159 | 2026-09-30 |
 | ★ | [3037](strategies/3037/) | BTC 1D Dual-MR Hybrid Sizing | +129.73% | +32.09% | +8.41% | 28 | 2026-09-30 |
 |  | [3036](strategies/3036/) | BTC 1D Dual-MR + Squeeze Trend Leg (ATR-sized) | +15.51% | +244.14% | +15.43% | 20 | 2026-09-30 |
