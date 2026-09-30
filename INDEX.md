@@ -11,6 +11,7 @@ Every figure comes from the last verifying backtest at publish time. These are p
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
+| — | [3052](strategies/3052/) | Multi-Asset Defensive MR Basket 5-Asset | +119.65% | — | +6.57% | 126 | 2026-09-30 |
 | — | [3065](strategies/3065/) | Multi-Asset MR Basket 5-Asset 4H Tiered-Profit Exit | +30.26% | — | +1.15% | 104 | 2026-09-30 |
 |  | [3064](strategies/3064/) | BTC 1D Regime-Switch MR Core + Melt-Up Leg | -31.24% | +1246.40% | +65.23% | 113 | 2026-09-30 |
 |  | [3063](strategies/3063/) | Multi-Asset Defensive MR Basket 5-Asset 4H EMA30-Stop | +4.42% | +44.75% | +1.97% | 48 | 2026-09-30 |
@@ -22,7 +23,6 @@ Every figure comes from the last verifying backtest at publish time. These are p
 | — | [3056](strategies/3056/) | AI 전략 | +64.26% | — | +10.08% | 262 | 2026-09-30 |
 | — | [3055](strategies/3055/) | Multi-Asset MR Basket Cross-Sectional Confirmation | +17.34% | — | +15.49% | 108 | 2026-09-30 |
 | — | [3053](strategies/3053/) | Multi-Asset Defensive MR Basket 5-Asset DXY-Gated | +133.29% | — | +6.57% | 132 | 2026-09-30 |
-| — | [3052](strategies/3052/) | Multi-Asset Defensive MR Basket 5-Asset | +119.65% | — | +6.57% | 126 | 2026-09-30 |
 | ★ | [3051](strategies/3051/) | BTC 1D Long-Short 200-Day Trend | +116.66% | +43.89% | +28.23% | 129 | 2026-09-30 |
 |  | [3050](strategies/3050/) | BTC 1D Macro-Gated OBV Trend + Keltner MR | -91.59% | +43.89% | +91.85% | 283 | 2026-09-30 |
 | ★ | [3049](strategies/3049/) | BTC 1D Dual-Mode + Melt-Up Pyramiding | -46.86% | -56.05% | +61.77% | 9 | 2026-09-30 |
