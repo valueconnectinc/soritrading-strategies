@@ -12,9 +12,9 @@
  * on-chain data (a different signal family than price mean-reversion).
  * When it buys and sells: Buy when the 30-day smoothed active-address level is above
  * its ~90-day average (sustained network growth) AND price is above its 200-day
- * average. Sell when network growth fades OR price breaks below the 50-day EMA (a
- * protective trend stop that limits deep drawdowns). A 20-bar cooldown after each
- * exit prevents churn.
+ * average. Sell only when network growth fades (address level falls below its ~90-day
+ * average) — a slow, decisive exit that avoids daily noise. A 20-bar cooldown after
+ * each exit prevents churn.
  * When it does NOT work: In a bear market addresses decline and we stay flat (we lag
  * a sharp V-reversal off the bottom). It lags a melt-up where price soars but address
  * growth is already saturated. On-chain data updates daily, so it cannot react to
@@ -34,15 +34,14 @@ function onUpdate(ctx) {
 
   const sma200 = ctx.sma(200, 1);
   const sma200prev = ctx.sma(200, 2);
-  const ema50 = ctx.ema(50, 1);
-  if (sma200 == null || sma200prev == null || ema50 == null) return null;
+  if (sma200 == null || sma200prev == null) return null;
 
   const addrGrowing = addrSma > ema90;          // sustained network growth
   const uptrend = sma200 > sma200prev;           // price in established uptrend
 
   if (pos > 0) {
-    // Protective trend stop: exit on fading network growth OR price below EMA50.
-    if (!addrGrowing || price < ema50) {
+    // Decisive, slow exit: only when network growth fades.
+    if (!addrGrowing) {
       ctx.state.cooldown = ctx.i + 20;           // 20-bar cooldown to stop churn
       return { side: 'sell', qty: pos };
     }
