@@ -3,14 +3,14 @@
   "name": "Multi-Asset Defensive MR Basket 5-Asset 4H Profit-Target",
   "kind": "custom",
   "verified": {
-    "backtestId": 14647,
-    "return": 19.62,
-    "mdd": 0.85,
-    "trades": 176,
+    "backtestId": 14650,
+    "return": 10.96,
+    "mdd": 1,
+    "trades": 252,
     "vsBuyHold": "unmeasured",
     "gapPct": 0,
-    "tFrom": 1560312000,
-    "tTo": 1617926400,
+    "tFrom": 1675540800,
+    "tTo": 1733126400,
     "approxNotes": [
       "[생존 편향] 이 유니버스는 **지금 거래되는 종목**만입니다. 구간 중(또는 그 전에) 상장폐지된 종목은 **처음부터 들어 있지 않습니다** — 망한 종목이 빠져 있어 수익률이 **실제보다 좋게** 나옵니다. 스캐너·랭킹 전략일수록 그 차이가 큽니다."
     ],
@@ -19,7 +19,7 @@
       "sym": "BTCUSDT",
       "interval": "4h",
       "bars": 4000,
-      "end": 1617940800,
+      "end": 1733140800,
       "syms": 5
     }
   },
