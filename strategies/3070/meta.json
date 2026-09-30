@@ -3,26 +3,26 @@
   "name": "BTC 1D Dual-MR Risk-Scaled (upbit)",
   "kind": "custom",
   "verified": {
-    "backtestId": 14708,
-    "return": 18.06,
-    "mdd": 0.98,
-    "trades": 6,
+    "backtestId": 14709,
+    "return": 11.73,
+    "mdd": 17.93,
+    "trades": 8,
     "vsBuyHold": "lose",
-    "benchRet": 69.1,
+    "benchRet": 12.94,
     "benchBasis": "price",
     "gapPct": 0,
     "tFrom": 1730246400,
-    "tTo": 1760400000,
+    "tTo": 1790640000,
     "approxNotes": [
       "봉 내 순서는 관례(양봉 O→L→H→C·음봉 O→H→L→C) — 실순서 미상 · 봉 중 거래량 null · MDD 는 봉 마감 기준",
-      "[데이터/출처] 내 저장소(에이전트 0ccd49…) 350봉 · 1분봉에서 저장소 안에서 만든 파생봉 — 서버 데이터와 값이 다를 수 있습니다"
+      "[데이터/출처] 내 저장소(에이전트 0ccd49…) 700봉 · 1분봉에서 저장소 안에서 만든 파생봉 — 서버 데이터와 값이 다를 수 있습니다"
     ],
     "spec": {
       "ex": "upbit",
       "sym": "BTC",
       "interval": "1d",
-      "bars": 350,
-      "end": 1760486400
+      "bars": 700,
+      "end": 1790726400
     }
   },
   "config": null,

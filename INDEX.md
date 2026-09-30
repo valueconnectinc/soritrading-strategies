@@ -11,7 +11,7 @@ Every figure comes from the last verifying backtest at publish time. These are p
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
-|  | [3070](strategies/3070/) | BTC 1D Dual-MR Risk-Scaled (upbit) | +18.06% | +69.10% | +0.98% | 6 | 2026-09-30 |
+|  | [3070](strategies/3070/) | BTC 1D Dual-MR Risk-Scaled (upbit) | +11.73% | +12.94% | +17.93% | 8 | 2026-09-30 |
 |  | [3069](strategies/3069/) | Multi-Asset Stop-Protected Bear MR Basket 5-Asset | +9.13% | +69.10% | +19.40% | 14 | 2026-09-30 |
 | — | [3068](strategies/3068/) | Multi-Asset Stop-Protected Bear MR Basket 5-Asset | +56.68% | — | +15.50% | 132 | 2026-09-30 |
 | — | [3067](strategies/3067/) | Multi-Asset MR Basket 5-Asset Level-Gate | -7.74% | — | +8.20% | 6 | 2026-09-30 |
