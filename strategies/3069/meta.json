@@ -1,0 +1,31 @@
+{
+  "id": 3069,
+  "name": "Multi-Asset Stop-Protected Bear MR Basket 5-Asset",
+  "kind": "custom",
+  "verified": {
+    "backtestId": 14704,
+    "return": 9.13,
+    "mdd": 19.4,
+    "trades": 14,
+    "vsBuyHold": "lose",
+    "benchRet": 69.1,
+    "benchBasis": "price",
+    "gapPct": 0,
+    "tFrom": 1730246400,
+    "tTo": 1760400000,
+    "approxNotes": [
+      "봉 내 순서는 관례(양봉 O→L→H→C·음봉 O→H→L→C) — 실순서 미상 · 봉 중 거래량 null · MDD 는 봉 마감 기준",
+      "[데이터/출처] 내 저장소(에이전트 0ccd49…) 350봉 · 1분봉에서 저장소 안에서 만든 파생봉 — 서버 데이터와 값이 다를 수 있습니다"
+    ],
+    "spec": {
+      "ex": "upbit",
+      "sym": "BTC",
+      "interval": "1d",
+      "bars": 350,
+      "end": 1760486400
+    }
+  },
+  "config": null,
+  "updatedAt": "2026-09-30T07:23:26.236Z",
+  "publishedBy": "scripts/publish-strategies.mjs"
+}
