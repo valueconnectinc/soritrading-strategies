@@ -1,20 +1,18 @@
 /*
  * @coinsori-strategy v1
- * name: Multi-Asset Defensive MR Basket 5-Asset 4H Wide-Target
+ * name: Multi-Asset Defensive MR Basket 5-Asset 4H ATR-Trail
  * ex: binance
  * syms: BTCUSDT, ETHUSDT, SOLUSDT, XRPUSDT, BNBUSDT
  * interval: 4h
  * cash: 10000
  *
- * Why this strategy: The 2.0x ATR profit-target keeps drawdown ultra-low (sub-1.3%) but
- * only captures about half the return of the ATR-trail version. A WIDER flat target
- * (3.0x ATR) lets each bounce run further before the defined take-profit — testing
- * whether raising the target captures more of the ATR-trail upside while keeping the
- * low-drawdown signature of a defined profit target.
+ * Why this strategy: Direct comparison of the ATR-trail exit against the profit-target
+ * family on identical windows. Buys oversold flushes in uptrends, exits via an ATR-trail
+ * (2.5 ATR below peak) or when price closes back above the 20 EMA.
  * When it buys and sells: buy below lower Bollinger (20,2.5) RSI<27 or Keltner low RSI<37
- * in a rising 200-bar avg with 3-bar cooldown; sell at entry+3.0x ATR or below EMA20.
- * When it does NOT work: a wider target is hit less often, so more trades exit via the
- * EMA20 stop — in slow grinds it may give back gains waiting for a target that never comes.
+ * in a rising 200-bar avg with 3-bar cooldown; sell on 2.5-ATR trail below peak or above EMA20.
+ * When it does NOT work: the trailing exit rides winners but gives back more in sharp reversals
+ * than a fixed target, so drawdown is higher.
  */
 function onUpdate(ctx) {
   const sym = ctx.sym;
@@ -35,10 +33,11 @@ function onUpdate(ctx) {
 
   const pos = ctx.pos(sym);
   if (pos > 0) {
-    const entry = ctx.entryPx != null ? ctx.entryPx : ctx.state.entry;
-    const target = entry + 3.0 * atr;   // wider profit target: 3.0 ATR above entry
-    if (price >= target || price < ema20) {
-      ctx.state.entry = null;
+    const peak = ctx.state.peak != null ? Math.max(ctx.state.peak, price) : price;
+    ctx.state.peak = peak;
+    const trailStop = peak - 2.5 * atr;
+    if (price < trailStop || price > ema20) {
+      ctx.state.peak = null;
       ctx.state.cooldown = ctx.i;
       return { side: 'sell', qty: pos };
     }
@@ -58,7 +57,7 @@ function onUpdate(ctx) {
     const maxQty = (ctx.cash / price) * 0.20;
     qty = Math.min(qty, maxQty);
     if (qty <= 0) return null;
-    ctx.state.entry = price;
+    ctx.state.peak = price;
     ctx.state.cooldown = null;
     return { side: 'buy', qty: qty };
   }
