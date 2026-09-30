@@ -11,7 +11,7 @@ Every figure comes from the last verifying backtest at publish time. These are p
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
-| — | [3065](strategies/3065/) | Multi-Asset MR Basket 5-Asset 4H Tiered-Profit Exit | +7.37% | — | +1.23% | 248 | 2026-09-30 |
+| — | [3065](strategies/3065/) | Multi-Asset MR Basket 5-Asset 4H Tiered-Profit Exit | +20.44% | — | +0.80% | 358 | 2026-09-30 |
 |  | [3064](strategies/3064/) | BTC 1D Regime-Switch MR Core + Melt-Up Leg | -31.24% | +1246.40% | +65.23% | 113 | 2026-09-30 |
 |  | [3063](strategies/3063/) | Multi-Asset Defensive MR Basket 5-Asset 4H EMA30-Stop | +4.42% | +44.75% | +1.97% | 48 | 2026-09-30 |
 | — | [3062](strategies/3062/) | Multi-Asset Defensive MR Basket 5-Asset 4H Profit-Target (ba | +10.79% | — | +1.00% | 246 | 2026-09-30 |
