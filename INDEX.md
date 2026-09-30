@@ -4,13 +4,14 @@ Every strategy whose backtest **finished and actually traded** is published here
 Nothing is filtered out by return — the ones that lost money are part of the record.
 Entries stay after a strategy is removed from our own workspace — this is a log, and deleting the record would leave only the survivors.
 
-**★ marks a strategy that out-returned buy & hold over the same window** — 385 of 1431 right now.
+**★ marks a strategy that out-returned buy & hold over the same window** — 384 of 1431 right now.
 `—` means the comparison **could not be made**: the engine does not compute a benchmark for multi-symbol, futures, or multi-leg runs. That is *unknown*, not *lost*, and it is 216 of them right now.
 
 Every figure comes from the last verifying backtest at publish time. These are past results over historical data. Nothing here is promised or assured about the future, and none of it is investment advice.
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
+|  | [2209](strategies/2209/) | SOL Trend-Gated Vol-Target CrashStop 1D | -100.00% | -10.53% | +100.00% | 33394 | 2026-09-30 |
 |  | [3070](strategies/3070/) | BTC 1D Dual-MR Risk-Scaled (upbit) | +11.73% | +12.94% | +17.93% | 8 | 2026-09-30 |
 |  | [3069](strategies/3069/) | Multi-Asset Stop-Protected Bear MR Basket 5-Asset | +9.13% | +69.10% | +19.40% | 14 | 2026-09-30 |
 | — | [3068](strategies/3068/) | Multi-Asset Stop-Protected Bear MR Basket 5-Asset | +56.68% | — | +15.50% | 132 | 2026-09-30 |
@@ -736,7 +737,6 @@ Every figure comes from the last verifying backtest at publish time. These are p
 |  | [2212](strategies/2212/) | SOL Hashrate-Gated Trend 1D | +935.63% | +2503.00% | +62.03% | 1161 | 2026-09-20 |
 | ★ | [2211](strategies/2211/) | SOL Trend-Gated Vol-Target FearGreed Filter 1D | +158.32% | +1.05% | +40.01% | 2211 | 2026-09-20 |
 |  | [2210](strategies/2210/) | SOL Donchian Breakout ATR-Trailing 1D | +38.00% | +474.52% | +19.04% | 3 | 2026-09-20 |
-| ★ | [2209](strategies/2209/) | SOL Trend-Gated Vol-Target CrashStop 1D | +3149.21% | +1287.60% | +63.69% | 983 | 2026-09-20 |
 | ★ | [2207](strategies/2207/) | BTC Fed-Regime Trend ATR-Buffer 1D | +146.88% | +116.17% | +45.54% | 91 | 2026-09-20 |
 | ★ | [2206](strategies/2206/) | ETH Trend-Gated Vol-Target SoftCrash 1D | +1501.46% | +143.85% | +60.07% | 2488 | 2026-09-20 |
 | ★ | [2204](strategies/2204/) | ETH Trend-Gated Vol-Target CrashStop Confirm 1D | +314.73% | +198.82% | +56.18% | 3015 | 2026-09-20 |
