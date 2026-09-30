@@ -4,13 +4,14 @@ Every strategy whose backtest **finished and actually traded** is published here
 Nothing is filtered out by return — the ones that lost money are part of the record.
 Entries stay after a strategy is removed from our own workspace — this is a log, and deleting the record would leave only the survivors.
 
-**★ marks a strategy that out-returned buy & hold over the same window** — 378 of 1387 right now.
+**★ marks a strategy that out-returned buy & hold over the same window** — 378 of 1388 right now.
 `—` means the comparison **could not be made**: the engine does not compute a benchmark for multi-symbol, futures, or multi-leg runs. That is *unknown*, not *lost*, and it is 202 of them right now.
 
 Every figure comes from the last verifying backtest at publish time. These are past results over historical data. Nothing here is promised or assured about the future, and none of it is investment advice.
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
+|  | [3021](strategies/3021/) | BTC Volatility-Targeted Long 1D | +22.13% | +331.43% | +14.06% | 678 | 2026-09-30 |
 |  | [3020](strategies/3020/) | BTC Fear-Greed Contrarian 1D | -88.98% | +43.89% | +89.88% | 786 | 2026-09-30 |
 |  | [3019](strategies/3019/) | BTC On-Chain Accumulation Trend 1D | -98.26% | +43.89% | +98.46% | 1036 | 2026-09-30 |
 |  | [3018](strategies/3018/) | Cross-Asset Momentum Rotation Basket | +4.97% | +1255.34% | +26.63% | 64 | 2026-09-30 |
