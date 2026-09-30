@@ -4,14 +4,14 @@ Every strategy whose backtest **finished and actually traded** is published here
 Nothing is filtered out by return — the ones that lost money are part of the record.
 Entries stay after a strategy is removed from our own workspace — this is a log, and deleting the record would leave only the survivors.
 
-**★ marks a strategy that out-returned buy & hold over the same window** — 385 of 1414 right now.
+**★ marks a strategy that out-returned buy & hold over the same window** — 384 of 1414 right now.
 `—` means the comparison **could not be made**: the engine does not compute a benchmark for multi-symbol, futures, or multi-leg runs. That is *unknown*, not *lost*, and it is 204 of them right now.
 
 Every figure comes from the last verifying backtest at publish time. These are past results over historical data. Nothing here is promised or assured about the future, and none of it is investment advice.
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
-| ★ | [3050](strategies/3050/) | BTC 1D Macro-Gated OBV Trend + Keltner MR | +116.66% | +43.89% | +28.23% | 129 | 2026-09-30 |
+|  | [3050](strategies/3050/) | BTC 1D Macro-Gated OBV Trend + Keltner MR | -91.59% | +43.89% | +91.85% | 283 | 2026-09-30 |
 | ★ | [3049](strategies/3049/) | BTC 1D Dual-Mode + Melt-Up Pyramiding | -46.86% | -56.05% | +61.77% | 9 | 2026-09-30 |
 |  | [3048](strategies/3048/) | BTC 1D Squeeze-Breakout Trend-Gated | -35.37% | +244.14% | +42.41% | 22 | 2026-09-30 |
 |  | [3047](strategies/3047/) | ETH 1D Dual-Mode OBV Trend + Keltner MR | +57.19% | +64.83% | +37.52% | 49 | 2026-09-30 |
