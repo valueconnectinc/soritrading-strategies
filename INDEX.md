@@ -11,7 +11,7 @@ Every figure comes from the last verifying backtest at publish time. These are p
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
-| ★ | [3037](strategies/3037/) | BTC 1D Dual-MR Hybrid Sizing | +5.85% | -49.42% | +2.77% | 4 | 2026-09-30 |
+| ★ | [3037](strategies/3037/) | BTC 1D Dual-MR Hybrid Sizing | +129.73% | +32.09% | +8.41% | 28 | 2026-09-30 |
 |  | [3036](strategies/3036/) | BTC 1D Dual-MR + Squeeze Trend Leg (ATR-sized) | +15.51% | +244.14% | +15.43% | 20 | 2026-09-30 |
 |  | [3035](strategies/3035/) | BTC 1D Volume-Capitulation MR | -2.91% | +828.94% | +6.74% | 4 | 2026-09-30 |
 |  | [3034](strategies/3034/) | BTC 4h Volume-Surge Breakout | +0.20% | +828.94% | +15.43% | 8 | 2026-09-30 |
