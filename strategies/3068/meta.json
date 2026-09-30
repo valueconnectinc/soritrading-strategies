@@ -3,14 +3,14 @@
   "name": "Multi-Asset Stop-Protected Bear MR Basket 5-Asset",
   "kind": "custom",
   "verified": {
-    "backtestId": 14696,
-    "return": 58.1,
-    "mdd": 7.26,
-    "trades": 64,
+    "backtestId": 14701,
+    "return": 56.68,
+    "mdd": 15.5,
+    "trades": 132,
     "vsBuyHold": "unmeasured",
     "gapPct": 0,
-    "tFrom": 1704067200,
-    "tTo": 1767139200,
+    "tFrom": 1640995200,
+    "tTo": 1703980800,
     "approxNotes": [
       "[생존 편향] 이 유니버스는 **지금 거래되는 종목**만입니다. 구간 중(또는 그 전에) 상장폐지된 종목은 **처음부터 들어 있지 않습니다** — 망한 종목이 빠져 있어 수익률이 **실제보다 좋게** 나옵니다. 스캐너·랭킹 전략일수록 그 차이가 큽니다."
     ],
@@ -18,8 +18,8 @@
       "ex": "binance",
       "sym": "BTCUSDT",
       "interval": "1d",
-      "bars": 731,
-      "end": 1767225600,
+      "bars": 730,
+      "end": 1704067200,
       "syms": 5
     }
   },
