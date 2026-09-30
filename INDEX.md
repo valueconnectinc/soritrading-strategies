@@ -11,7 +11,7 @@ Every figure comes from the last verifying backtest at publish time. These are p
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
-| ★ | [3033](strategies/3033/) | BTC 1D Dual-MR Risk-Scaled (ATR-sized) | +39.73% | -26.31% | +3.01% | 12 | 2026-09-30 |
+| ★ | [3033](strategies/3033/) | BTC 1D Dual-MR Risk-Scaled (ATR-sized) | +105.55% | +43.89% | +6.50% | 28 | 2026-09-30 |
 |  | [3032](strategies/3032/) | Multi-Asset Squeeze-Breakout Basket 7-Asset | -66.81% | +585.31% | +71.94% | 254 | 2026-09-30 |
 |  | [3031](strategies/3031/) | DOT 1D Defensive MR Single-Leg Test | +1.64% | +107.37% | +4.54% | 30 | 2026-09-30 |
 |  | [3029](strategies/3029/) | AVAX 1D Defensive MR Single-Leg Test | +16.05% | +37.27% | +3.17% | 74 | 2026-09-30 |
