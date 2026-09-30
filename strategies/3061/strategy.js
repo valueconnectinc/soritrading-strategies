@@ -1,23 +1,25 @@
 /*
  * @coinsori-strategy v1
- * name: Multi-Asset Defensive MR Basket 5-Asset 4H Profit-Target
+ * name: Multi-Asset Defensive MR Basket 5-Asset 4H Hybrid-Exit
  * ex: binance
  * syms: BTCUSDT, ETHUSDT, SOLUSDT, XRPUSDT, BNBUSDT
  * interval: 4h
  * cash: 10000
  *
- * Why this strategy: The 4h MR basket's edge is buying oversold flushes in uptrends. The
- * champion exits on an ATR-trail or EMA20. This version tests a DIFFERENT exit family:
- * a fixed profit target (2.0x ATR above entry) — a classic mean-reversion exit that takes
- * the bounce and leaves, rather than riding a trend. Tests whether the edge is sensitive
- * to the exit mechanism.
+ * Why this strategy: The 4h MR basket has a validated edge buying oversold flushes in
+ * uptrends. Two exits were validated: a fixed 2.0x ATR target (ultra-low drawdown,
+ * ~half the return) and an ATR-trail (higher return, higher drawdown). This version
+ * tests a HYBRID exit that splits the difference: bank half the position at the fixed
+ * profit target (which is what keeps drawdown low), then trail the remaining half with
+ * a wider ATR-trail to capture more of the bounce.
  * When it buys and sells: On each asset, buy when price closes below the lower Bollinger
- * (20,2.5) with RSI<27, or below the ATR-adaptive Keltner low with RSI<37, inside a rising
- * 200-bar average, with a 3-bar cooldown. Sell when price reaches entry + 2.0x ATR
- * (profit target) or when price closes below the 20 EMA (stop loss).
- * When it does NOT work: Fixed targets cap winners in strong bounces that would have run
- * much further under a trailing exit. In a fast recovery the target is hit quickly (good),
- * but in a slow grind it may never reach the target and the EMA stop exits early.
+ * (20,2.5) with RSI<27, or below the ATR-adaptive Keltner low with RSI<37, inside a
+ * rising 200-bar average, with a 3-bar cooldown. Sell half at entry + 2.0x ATR (fixed
+ * target), then trail the rest at 2.5 ATR below the post-target peak, or close all below
+ * the 20 EMA.
+ * When it does NOT work: The trailing half can give back gains in a fast reversal after
+ * the target is hit, and the fixed half caps the winner in strong bounces. In sustained
+ * chop the trail whipsaws the remaining position.
  */
 function onUpdate(ctx) {
   const sym = ctx.sym;
@@ -40,15 +42,43 @@ function onUpdate(ctx) {
   if (pos > 0) {
     const entry = ctx.entryPx != null ? ctx.entryPx : ctx.state.entry;
     const target = entry + 2.0 * atr;   // fixed profit target: 2.0 ATR above entry
-    if (price >= target || price < ema20) { // take profit or stop below EMA20
+    const targetHit = ctx.state.targetHit === true;
+
+    // Stop loss always: close everything below the 20 EMA
+    if (price < ema20) {
       ctx.state.entry = null;
+      ctx.state.targetHit = null;
+      ctx.state.peak = null;
       ctx.state.cooldown = ctx.i;
       return { side: 'sell', qty: pos };
+    }
+
+    if (!targetHit && price >= target) {
+      // Bank half the position at the fixed target, keep the rest to trail
+      ctx.state.targetHit = true;
+      ctx.state.peak = price;
+      const half = pos / 2;
+      if (half > 0) return { side: 'sell', qty: half };
+      return null;
+    }
+
+    if (targetHit) {
+      // Trail the remaining half: 2.5 ATR below the post-target peak
+      const peak = ctx.state.peak != null ? Math.max(ctx.state.peak, price) : price;
+      ctx.state.peak = peak;
+      const trailStop = peak - 2.5 * atr;
+      if (price < trailStop) {
+        ctx.state.entry = null;
+        ctx.state.targetHit = null;
+        ctx.state.peak = null;
+        ctx.state.cooldown = ctx.i;
+        return { side: 'sell', qty: pos };
+      }
     }
     return null;
   }
 
-  if (ctx.state.cooldown != null && ctx.i - ctx.state.cooldown < 3) return null;
+  if (ctx.state.cooldown != null && ctx.i - ctx.state.cooldown < 3) return null; // 3-bar cooldown
 
   if (!uptrend) return null;
 
@@ -62,6 +92,8 @@ function onUpdate(ctx) {
     qty = Math.min(qty, maxQty);
     if (qty <= 0) return null;
     ctx.state.entry = price;
+    ctx.state.targetHit = false;
+    ctx.state.peak = null;
     ctx.state.cooldown = null;
     return { side: 'buy', qty: qty };
   }
