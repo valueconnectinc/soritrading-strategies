@@ -1,54 +1,60 @@
 /*
  * @coinsori-strategy v1
- * name: BTC 4h Volume-Surge Breakout
+ * name: BTC 1D Dual-MR Risk-Scaled (ATR-sized)
  * ex: binance
  * syms: BTCUSDT
- * interval: 4h
+ * interval: 1d
  * cash: 10000
  *
- * Why this strategy: The ledger flagged a volume-surge breakout on BTC 4h as PROMISING
- * but it was never developed into a champion. This is a genuinely different family from
- * the validated 1d mean-reversion champion — it rides momentum breakouts that MR
- * structurally misses. Volume confirmation separates real breakouts from noise. This
- * revision adds ATR-risk scaling so high-volatility breakouts take smaller positions,
- * cutting the drawdown that made earlier versions lag buy-and-hold.
- * When it buys and sells: Buy when price closes above the 20-bar high on volume at least
- * 1.5x the 20-bar average, only inside a rising long-term trend (EMA200 rising), sized to
- * a fixed risk budget per ATR. Sell when price closes below the 20-bar low OR the 20-bar EMA.
- * When it does NOT work: In sideways chop the breakout+volume filter still whipsaws and
- * bleeds fees; it lags in slow grind-ups with no volume surges; fully invested in crashes
- * so drawdown can still be steep on a sudden reversal.
+ * Why this strategy: The validated BTC 1D Dual-MR champion (3007) is the only edge that
+ * reproduces across disjoint windows, but its full-cash sizing gives ~26% drawdown on a
+ * single deep flush. This is a principled improvement: size each rare MR entry inversely
+ * to ATR (smaller position when volatility is high) to cut drawdown while keeping the
+ * validated entry/exit logic untouched. Only the sizing changes — no new parameters fit.
+ * When it buys and sells: Buy when price closes below the lower Bollinger (20,2.5) with
+ * RSI<30, OR below the ATR-adaptive Keltner low with RSI<40, only inside a rising 200-day
+ * average. Size = risk-budget divided by ATR so high-vol flushes get smaller positions.
+ * Sell on the snap-back above the 20-day EMA or when RSI climbs above 55.
+ * When it does NOT work: In a sustained bear the rising-trend gate keeps us flat (little
+ * upside), and it lags buy-and-hold in a relentless melt-up. ATR-sizing also reduces
+ * position (and profit) in high-volatility recoveries.
  */
 function onUpdate(ctx) {
   const pos = ctx.position;
   const price = ctx.price;
   if (!Number.isFinite(price) || price <= 0) return null;
 
-  const high20 = ctx.high(20, 1);
-  const low20 = ctx.low(20, 1);
-  const avgVol = ctx.avgVol(20);
-  const curVol = ctx.vol;
-  const ema200 = ctx.ema(200, 1);
-  const ema200prev = ctx.ema(200, 2);
+  const bb = ctx.bb(20, 2.5, 1);
+  const rsi = ctx.rsi(14, 1);
+  const sma200 = ctx.sma(200, 1);
+  const sma200prev = ctx.sma(200, 2);
   const ema20 = ctx.ema(20, 1);
   const atr = ctx.atr(14, 1);
-  if (high20 == null || low20 == null || avgVol == null || avgVol <= 0 || curVol == null || ema200 == null || ema200prev == null || ema20 == null || atr == null || atr <= 0) return null;
+  if (bb == null || rsi == null || sma200 == null || sma200prev == null || ema20 == null || atr == null || atr <= 0) return null;
+
+  // The shared defensive gate: only mean-revert inside a rising long-term trend.
+  const uptrend = sma200 > sma200prev;
+  const lowerBand = bb.lower;
+  // ATR-adaptive lower Keltner band (EMA20 - 2.5*ATR) for the second MR signal.
+  const keltnerLow = ema20 - 2.5 * atr;
 
   if (pos > 0) {
-    // Trailing exit: close below the 20-bar low or the 20-bar EMA (momentum loss).
-    if (price < low20 || price < ema20) {
+    // Take the snap-back profit above the 20-day EMA or once RSI recovers.
+    if (price > ema20 || rsi > 55) {
       return { side: 'sell', qty: pos };
     }
     return null;
   }
 
-  if (!(ema200 > ema200prev)) return null;
+  if (!uptrend) return null;
 
-  const volSurge = curVol >= 1.5 * avgVol;
-  if (price > high20 && volSurge) {
-    // ATR-risk scaling: risk a fixed 3% of cash per trade, converted to coins via ATR.
-    // High-volatility breakouts get smaller positions, cutting drawdown on sharp reversals.
-    const riskBudget = 0.03 * ctx.cash;
+  const bollingerFlush = price < lowerBand && rsi < 30;
+  const keltnerPullback = price < keltnerLow && rsi < 40;
+
+  if (bollingerFlush || keltnerPullback) {
+    // RISK-SCALED sizing: risk a fixed 2.5% of cash per trade, converted to coins via ATR.
+    // High-volatility flushes get smaller positions, cutting the full-cash drawdown risk.
+    const riskBudget = 0.025 * ctx.cash;
     let qty = riskBudget / atr;
     const maxQty = (ctx.cash / price) * 0.95;
     qty = Math.min(qty, maxQty);
