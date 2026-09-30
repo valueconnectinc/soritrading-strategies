@@ -35,16 +35,28 @@ function onUpdate(ctx) {
   const atr = ctx.atr(14, 1);
   if (bb == null || rsi == null || sma200 == null || sma200prev == null || ema20 == null || atr == null || atr <= 0) return null;
 
+  const uptrend = sma200 > sma200prev;
+  const lowerBand = bb.lower;
+  const keltnerLow = ema20 - 2.5 * atr;
+
   // Bollinger bandwidth = (upper-lower)/mid; wide band = high-vol dislocation.
   const bw = (bb.upper - bb.lower) / ((bb.upper + bb.lower) / 2);
-  if (!Number.isFinite(bw) || bw <= 0) return null;
-  const bwSma = ctx.sma(50, 1);
-  const bwSmaPrev = bwSma; // reuse; only need current relation
-  // We need a 50-bar history of bandwidth — approximate with a long SMA on price range
-  // is not available, so use band-width SMA via a coarse proxy: require current band
-  // width to exceed its own recent average. We approximate recent average by the ATR
-  // normalized to price vs the band width.
-  const atrPct = atr / price;
+  if (!Number.isFinite(bw) || bw <= 0) {
+    ctx.state.bwHist = [];
+    return null;
+  }
+
+  // Maintain a rolling 50-bar history of bandwidth in state to compute its own average.
+  const s = ctx.state;
+  if (!Array.isArray(s.bwHist)) s.bwHist = [];
+  s.bwHist.push(bw);
+  if (s.bwHist.length > 50) s.bwHist.shift();
+
+  let wideBand = false;
+  if (s.bwHist.length >= 50) {
+    const avg = s.bwHist.reduce((a, b) => a + b, 0) / s.bwHist.length;
+    wideBand = bw > avg; // current band wider than its recent average = vol expansion
+  }
 
   if (pos > 0) {
     if (price > ema20 || rsi > 55) {
@@ -59,6 +71,8 @@ function onUpdate(ctx) {
   const keltnerPullback = price < keltnerLow && rsi < 40;
 
   if (bollingerFlush) {
+    // Full-cash flush only on a WIDE band (real dislocation). Quiet grinds get skipped.
+    if (!wideBand) return null;
     const qty = (ctx.cash / price) * 0.95;
     return { side: 'buy', qty: qty };
   }
