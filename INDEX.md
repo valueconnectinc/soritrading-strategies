@@ -4,13 +4,14 @@ Every strategy whose backtest **finished and actually traded** is published here
 Nothing is filtered out by return — the ones that lost money are part of the record.
 Entries stay after a strategy is removed from our own workspace — this is a log, and deleting the record would leave only the survivors.
 
-**★ marks a strategy that out-returned buy & hold over the same window** — 385 of 1422 right now.
-`—` means the comparison **could not be made**: the engine does not compute a benchmark for multi-symbol, futures, or multi-leg runs. That is *unknown*, not *lost*, and it is 211 of them right now.
+**★ marks a strategy that out-returned buy & hold over the same window** — 385 of 1423 right now.
+`—` means the comparison **could not be made**: the engine does not compute a benchmark for multi-symbol, futures, or multi-leg runs. That is *unknown*, not *lost*, and it is 212 of them right now.
 
 Every figure comes from the last verifying backtest at publish time. These are past results over historical data. Nothing here is promised or assured about the future, and none of it is investment advice.
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
+| — | [3061](strategies/3061/) | Multi-Asset Defensive MR Basket 5-Asset 4H Profit-Target | +19.62% | — | +0.85% | 176 | 2026-09-30 |
 | — | [3060](strategies/3060/) | AI 전략 | +27.61% | — | +8.84% | 202 | 2026-09-30 |
 | — | [3059](strategies/3059/) | AI 전략 | +62.36% | — | +10.08% | 262 | 2026-09-30 |
 | — | [3057](strategies/3057/) | AI 전략 | +63.31% | — | +16.75% | 109 | 2026-09-30 |
