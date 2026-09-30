@@ -1,16 +1,20 @@
 /*
  * @coinsori-strategy v1
- * name: Multi-Asset Defensive MR Basket 5-Asset 4H Profit-Target (baseline)
+ * name: Multi-Asset Defensive MR Basket 5-Asset 4H Wide-Target
  * ex: binance
  * syms: BTCUSDT, ETHUSDT, SOLUSDT, XRPUSDT, BNBUSDT
  * interval: 4h
  * cash: 10000
  *
- * Why this strategy: Baseline pure profit-target exit for comparison against the hybrid.
- * Buys oversold flushes in uptrends, exits at a fixed 2.0x ATR target or below EMA20.
+ * Why this strategy: The 2.0x ATR profit-target keeps drawdown ultra-low (sub-1.3%) but
+ * only captures about half the return of the ATR-trail version. A WIDER flat target
+ * (3.0x ATR) lets each bounce run further before the defined take-profit — testing
+ * whether raising the target captures more of the ATR-trail upside while keeping the
+ * low-drawdown signature of a defined profit target.
  * When it buys and sells: buy below lower Bollinger (20,2.5) RSI<27 or Keltner low RSI<37
- * in a rising 200-bar avg with 3-bar cooldown; sell at entry+2.0x ATR or below EMA20.
- * When it does NOT work: fixed target caps winners in strong bounces that would run further.
+ * in a rising 200-bar avg with 3-bar cooldown; sell at entry+3.0x ATR or below EMA20.
+ * When it does NOT work: a wider target is hit less often, so more trades exit via the
+ * EMA20 stop — in slow grinds it may give back gains waiting for a target that never comes.
  */
 function onUpdate(ctx) {
   const sym = ctx.sym;
@@ -32,7 +36,7 @@ function onUpdate(ctx) {
   const pos = ctx.pos(sym);
   if (pos > 0) {
     const entry = ctx.entryPx != null ? ctx.entryPx : ctx.state.entry;
-    const target = entry + 2.0 * atr;
+    const target = entry + 3.0 * atr;   // wider profit target: 3.0 ATR above entry
     if (price >= target || price < ema20) {
       ctx.state.entry = null;
       ctx.state.cooldown = ctx.i;

@@ -11,7 +11,7 @@ Every figure comes from the last verifying backtest at publish time. These are p
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
-| — | [3062](strategies/3062/) | Multi-Asset Defensive MR Basket 5-Asset 4H Profit-Target (ba | +20.25% | — | +1.23% | 180 | 2026-09-30 |
+| — | [3062](strategies/3062/) | Multi-Asset Defensive MR Basket 5-Asset 4H Profit-Target (ba | +10.61% | — | +1.00% | 246 | 2026-09-30 |
 | — | [3061](strategies/3061/) | Multi-Asset Defensive MR Basket 5-Asset 4H Profit-Target | +10.96% | — | +1.00% | 252 | 2026-09-30 |
 | — | [3060](strategies/3060/) | AI 전략 | +27.61% | — | +8.84% | 202 | 2026-09-30 |
 | — | [3059](strategies/3059/) | AI 전략 | +62.36% | — | +10.08% | 262 | 2026-09-30 |
