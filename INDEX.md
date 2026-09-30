@@ -11,7 +11,7 @@ Every figure comes from the last verifying backtest at publish time. These are p
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
-|  | [3021](strategies/3021/) | BTC Volatility-Targeted Long 1D | +22.13% | +331.43% | +14.06% | 678 | 2026-09-30 |
+|  | [3021](strategies/3021/) | BTC Volatility-Targeted Long 1D | +23.08% | +29.57% | +15.56% | 76 | 2026-09-30 |
 |  | [3020](strategies/3020/) | BTC Fear-Greed Contrarian 1D | -88.98% | +43.89% | +89.88% | 786 | 2026-09-30 |
 |  | [3019](strategies/3019/) | BTC On-Chain Accumulation Trend 1D | -98.26% | +43.89% | +98.46% | 1036 | 2026-09-30 |
 |  | [3018](strategies/3018/) | Cross-Asset Momentum Rotation Basket | +4.97% | +1255.34% | +26.63% | 64 | 2026-09-30 |
