@@ -11,7 +11,7 @@ Every figure comes from the last verifying backtest at publish time. These are p
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
-|  | [3044](strategies/3044/) | BTC 1D Volatility-Scaled Trend | -46.68% | +43.89% | +63.94% | 279 | 2026-09-30 |
+|  | [3044](strategies/3044/) | BTC 1D Volatility-Scaled Trend | -8.01% | +45.03% | +29.62% | 30 | 2026-09-30 |
 |  | [3043](strategies/3043/) | BTC 1D On-Chain + Momentum Override | +171.04% | +1255.34% | +66.21% | 19 | 2026-09-30 |
 |  | [3042](strategies/3042/) | BTC 1D Dual On-Chain Trend | +126.83% | +1255.34% | +69.17% | 21 | 2026-09-30 |
 | ★ | [3041](strategies/3041/) | BTC 1D On-Chain Network Trend | +143.19% | +86.67% | +69.17% | 26 | 2026-09-30 |
