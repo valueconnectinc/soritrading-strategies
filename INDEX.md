@@ -4,14 +4,14 @@ Every strategy whose backtest **finished and actually traded** is published here
 Nothing is filtered out by return — the ones that lost money are part of the record.
 Entries stay after a strategy is removed from our own workspace — this is a log, and deleting the record would leave only the survivors.
 
-**★ marks a strategy that out-returned buy & hold over the same window** — 380 of 1397 right now.
+**★ marks a strategy that out-returned buy & hold over the same window** — 379 of 1397 right now.
 `—` means the comparison **could not be made**: the engine does not compute a benchmark for multi-symbol, futures, or multi-leg runs. That is *unknown*, not *lost*, and it is 204 of them right now.
 
 Every figure comes from the last verifying backtest at publish time. These are past results over historical data. Nothing here is promised or assured about the future, and none of it is investment advice.
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
-| ★ | [3033](strategies/3033/) | BTC 1D Dual-MR Risk-Scaled (ATR-sized) | +105.55% | +43.89% | +6.50% | 28 | 2026-09-30 |
+|  | [3033](strategies/3033/) | BTC 1D Dual-MR Risk-Scaled (ATR-sized) | +7.30% | +574.98% | +15.43% | 12 | 2026-09-30 |
 |  | [3032](strategies/3032/) | Multi-Asset Squeeze-Breakout Basket 7-Asset | -66.81% | +585.31% | +71.94% | 254 | 2026-09-30 |
 |  | [3031](strategies/3031/) | DOT 1D Defensive MR Single-Leg Test | +1.64% | +107.37% | +4.54% | 30 | 2026-09-30 |
 |  | [3029](strategies/3029/) | AVAX 1D Defensive MR Single-Leg Test | +16.05% | +37.27% | +3.17% | 74 | 2026-09-30 |
