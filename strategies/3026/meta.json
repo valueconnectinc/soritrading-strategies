@@ -3,13 +3,13 @@
   "name": "Multi-Asset Defensive MR Basket 7-Asset (3% risk)",
   "kind": "custom",
   "verified": {
-    "backtestId": 14341,
-    "return": 65.67,
-    "mdd": 2.46,
-    "trades": 278,
+    "backtestId": 14343,
+    "return": 36.41,
+    "mdd": 1.5,
+    "trades": 148,
     "vsBuyHold": "unmeasured",
     "gapPct": 0,
-    "tFrom": 1577836800,
+    "tFrom": 1609459200,
     "tTo": 1672444800,
     "approxNotes": [
       "[생존 편향] 이 유니버스는 **지금 거래되는 종목**만입니다. 구간 중(또는 그 전에) 상장폐지된 종목은 **처음부터 들어 있지 않습니다** — 망한 종목이 빠져 있어 수익률이 **실제보다 좋게** 나옵니다. 스캐너·랭킹 전략일수록 그 차이가 큽니다."
@@ -18,7 +18,7 @@
       "ex": "binance",
       "sym": "BTCUSDT",
       "interval": "1d",
-      "bars": 1096,
+      "bars": 730,
       "end": 1672531200,
       "syms": 7
     }
