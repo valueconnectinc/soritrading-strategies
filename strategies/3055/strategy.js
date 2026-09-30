@@ -1,23 +1,24 @@
 /*
  * @coinsori-strategy v1
- * name: Multi-Asset Defensive MR Basket 5-Asset ATR-Trail
+ * name: Multi-Asset Defensive MR Basket 5-Asset Conviction-Scaled
  * ex: binance
  * syms: BTCUSDT, ETHUSDT, SOLUSDT, XRPUSDT, BNBUSDT
  * interval: 1d
  * cash: 10000
  *
- * Why this strategy: The 5-asset defensive MR basket is the validated champion, but its
- * fixed EMA20/RSI55 snap-back exit cuts winners before a full recovery. The ledger showed
- * that an ATR-trailing stop (2.5 ATR below the highest close since entry) cuts drawdown by
- * more than half while raising return on the same basket. Each leg runs the champion recipe
- * independently, sized to a share of equity.
+ * Why this strategy: The 5-asset defensive MR basket is the validated champion, but it
+ * sizes every qualifying flush the same way. Deeper oversold flushes (lower RSI, wider
+ * band break) are stronger mean-reversion signals, so this version scales the position
+ * up with conviction — putting more capital behind the most extreme dips.
  * When it buys and sells: On each asset, buy when price closes below the lower Bollinger
- * (20,2.5) with RSI<30, or below the ATR-adaptive Keltner low (EMA20-2.5*ATR) with RSI<40,
- * only inside a rising 200-day average. Sell via an ATR-trailing stop (2.5 ATR below the
- * highest close since entry) or when price closes back above the 20-day EMA.
+ * (20,2.5) with RSI<30 (deep = bigger), or below the ATR-adaptive Keltner low with RSI<40,
+ * only inside a rising 200-day average. Position is scaled by how deep the RSI flush is.
+ * Sell via an ATR-trailing stop (2.5 ATR below the highest close since entry) or when price
+ * closes back above the 20-day EMA.
  * When it does NOT work: In a broad coordinated crypto bear all rising-trend gates stay
- * flat (capital safe, little upside); a single straight-line melt-up of one asset still
- * lags buy-and-hold of that asset. The trail can whipsaw an early volatile recovery.
+ * flat (capital safe, little upside); a straight-line melt-up of one asset still lags
+ * buy-and-hold of that asset. Deep-flush over-concentration can hurt when a flush keeps
+ * falling (no recovery).
  */
 function onUpdate(ctx) {
   const sym = ctx.sym;
@@ -53,17 +54,15 @@ function onUpdate(ctx) {
   const bollingerFlush = price < lowerBand && rsi < 30;
   const keltnerPullback = price < keltnerLow && rsi < 40;
 
-  if (bollingerFlush) {
-    const qty = (ctx.cash / price) * 0.20;
-    if (qty <= 0) return null;
-    ctx.state.peak = price;
-    return { side: 'buy', qty: qty };
-  }
-  if (keltnerPullback) {
-    const riskBudget = 0.025 * ctx.cash;
-    let qty = riskBudget / atr;
-    const maxQty = (ctx.cash / price) * 0.20;
-    qty = Math.min(qty, maxQty);
+  if (bollingerFlush || keltnerPullback) {
+    // Conviction scale: the deeper the RSI flush (lower RSI), the bigger the position.
+    // RSI 40 -> 0.5x, RSI 20 -> 1.0x, RSI 10 -> 1.3x. Linear ramp capped at 1.3x.
+    const r = Math.max(10, Math.min(40, rsi));
+    const conv = 0.5 + (40 - r) / (40 - 10) * 0.8;
+    const maxQty = (ctx.cash / price) * 0.20 * conv; // 20% leg share scaled by conviction
+    // Also scale the risk budget so deeper flushes risk proportionally more.
+    const riskBudget = 0.025 * ctx.cash * conv;
+    let qty = Math.min(riskBudget / atr, maxQty);
     if (qty <= 0) return null;
     ctx.state.peak = price;
     return { side: 'buy', qty: qty };
