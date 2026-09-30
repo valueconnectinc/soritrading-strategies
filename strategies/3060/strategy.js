@@ -9,13 +9,12 @@
  * Why this strategy: The 1d 7-asset MR champion is at a strong optimum. Its 4h sibling
  * (3060) showed the same defensive edge with even lower drawdown (4.95% on the middle
  * window) but traded 567+ times, so fees ate the return. This version cuts trade
- * frequency with a per-asset cooldown and a deeper entry threshold, keeping the
+ * frequency with a short cooldown and slightly deeper entry thresholds, keeping the
  * low-drawdown mean-reversion edge while reducing fee drag.
  * When it buys and sells: On each asset, buy when price closes below the lower Bollinger
- * (20,2.5) with RSI<25 (deeper than before), or below the ATR-adaptive Keltner low with
- * RSI<35, only inside a rising 200-bar average, and only if that asset has not traded in
- * the last 6 bars (cooldown). Sell via an ATR-trail (2.5 ATR below peak) or when price
- * closes back above the 20-bar EMA.
+ * (20,2.5) with RSI<27, or below the ATR-adaptive Keltner low with RSI<37, only inside a
+ * rising 200-bar average, and only if that asset has not traded in the last 3 bars.
+ * Sell via an ATR-trail (2.5 ATR below peak) or when price closes back above the 20 EMA.
  * When it does NOT work: The cooldown and deeper thresholds mean it misses shallow,
  * quickly-recovering flushes. In a straight-line bull it still lags buy-and-hold of any
  * single asset. 4h whipsaws can still erode the edge in sustained chop.
@@ -44,20 +43,18 @@ function onUpdate(ctx) {
     const trailStop = peak - 2.5 * atr;
     if (price < trailStop || price > ema20) {
       ctx.state.peak = null;
-      ctx.state.cooldown = ctx.i; // set cooldown timestamp on exit
+      ctx.state.cooldown = ctx.i;
       return { side: 'sell', qty: pos };
     }
     return null;
   }
 
-  // Cooldown: skip new entries for 6 bars after an exit on this asset (cuts churn).
-  if (ctx.state.cooldown != null && ctx.i - ctx.state.cooldown < 6) return null;
+  if (ctx.state.cooldown != null && ctx.i - ctx.state.cooldown < 3) return null; // 3-bar cooldown
 
   if (!uptrend) return null;
 
-  // Deeper thresholds than the 4h v1 (RSI<25 / <35 vs <30 / <40) to trade less often.
-  const bollingerFlush = price < lowerBand && rsi < 25;
-  const keltnerPullback = price < keltnerLow && rsi < 35;
+  const bollingerFlush = price < lowerBand && rsi < 27;
+  const keltnerPullback = price < keltnerLow && rsi < 37;
 
   if (bollingerFlush) {
     const qty = (ctx.cash / price) * 0.20;
