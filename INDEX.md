@@ -4,13 +4,14 @@ Every strategy whose backtest **finished and actually traded** is published here
 Nothing is filtered out by return — the ones that lost money are part of the record.
 Entries stay after a strategy is removed from our own workspace — this is a log, and deleting the record would leave only the survivors.
 
-**★ marks a strategy that out-returned buy & hold over the same window** — 385 of 1417 right now.
-`—` means the comparison **could not be made**: the engine does not compute a benchmark for multi-symbol, futures, or multi-leg runs. That is *unknown*, not *lost*, and it is 206 of them right now.
+**★ marks a strategy that out-returned buy & hold over the same window** — 385 of 1418 right now.
+`—` means the comparison **could not be made**: the engine does not compute a benchmark for multi-symbol, futures, or multi-leg runs. That is *unknown*, not *lost*, and it is 207 of them right now.
 
 Every figure comes from the last verifying backtest at publish time. These are past results over historical data. Nothing here is promised or assured about the future, and none of it is investment advice.
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
+| — | [3055](strategies/3055/) | Multi-Asset MR Basket Cross-Sectional Confirmation | +133.29% | — | +6.57% | 132 | 2026-09-30 |
 | — | [3053](strategies/3053/) | Multi-Asset Defensive MR Basket 5-Asset DXY-Gated | +133.29% | — | +6.57% | 132 | 2026-09-30 |
 | — | [3052](strategies/3052/) | Multi-Asset Defensive MR Basket 5-Asset | +119.65% | — | +6.57% | 126 | 2026-09-30 |
 | ★ | [3051](strategies/3051/) | BTC 1D Long-Short 200-Day Trend | +116.66% | +43.89% | +28.23% | 129 | 2026-09-30 |
