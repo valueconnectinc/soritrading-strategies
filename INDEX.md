@@ -11,7 +11,7 @@ Every figure comes from the last verifying backtest at publish time. These are p
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
-|  | [3087](strategies/3087/) | Data Probe BTC 1D | +40.14% | +1092.48% | +14.14% | 15 | 2026-10-01 |
+|  | [3087](strategies/3087/) | Data Probe BTC 1D | +106.27% | +403.20% | +19.36% | 49 | 2026-10-01 |
 |  | [3086](strategies/3086/) | Defensive Mean Reversion BTC | +8.82% | +90.62% | +1.91% | 20 | 2026-10-01 |
 |  | [3085](strategies/3085/) | BTC 1D Long-Term SMA100 Trend (upbit) | -31.56% | +39.49% | +58.38% | 63 | 2026-10-01 |
 |  | [3084](strategies/3084/) | BTC 1D Squeeze-Breakout Only (upbit) | -8.00% | +39.49% | +21.12% | 24 | 2026-10-01 |
