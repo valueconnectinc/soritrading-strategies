@@ -4,17 +4,19 @@ Every strategy whose backtest **finished and actually traded** is published here
 Nothing is filtered out by return — the ones that lost money are part of the record.
 Entries stay after a strategy is removed from our own workspace — this is a log, and deleting the record would leave only the survivors.
 
-**★ marks a strategy that out-returned buy & hold over the same window** — 385 of 1442 right now.
+**★ marks a strategy that out-returned buy & hold over the same window** — 385 of 1444 right now.
 `—` means the comparison **could not be made**: the engine does not compute a benchmark for multi-symbol, futures, or multi-leg runs. That is *unknown*, not *lost*, and it is 216 of them right now.
 
 Every figure comes from the last verifying backtest at publish time. These are past results over historical data. Nothing here is promised or assured about the future, and none of it is investment advice.
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
+|  | [3085](strategies/3085/) | BTC 1D Long-Term SMA100 Trend (upbit) | -31.56% | +39.49% | +58.38% | 63 | 2026-10-01 |
+|  | [3084](strategies/3084/) | BTC 1D Squeeze-Breakout Only (upbit) | -8.00% | +39.49% | +21.12% | 24 | 2026-10-01 |
 |  | [3083](strategies/3083/) | BTC 1D Trend-Gated Vol-Target (upbit) | -71.15% | +39.49% | +84.78% | 1063 | 2026-10-01 |
 |  | [3082](strategies/3082/) | BTC 1D EMA Trend-Ride (upbit) | -7.55% | +39.49% | +20.73% | 26 | 2026-10-01 |
 |  | [3081](strategies/3081/) | BTC 1D Hybrid MR + Squeeze-Breakout | -6.50% | +81.42% | +17.26% | 10 | 2026-10-01 |
-|  | [3080](strategies/3080/) | Claude 실환경 테스트 2026-10-01 (삭제해도 됨) | -10.55% | -2.48% | +10.69% | 74 | 2026-10-01 |
+|  | [3080](strategies/3080/) | Claude 실환경 테스트 2026-10-01 (삭제해도 됨) | -2.23% | -0.25% | +2.50% | 11 | 2026-10-01 |
 |  | [3079](strategies/3079/) | BTC Daily Defensive Mean Reversion | +32.04% | +91.00% | +5.25% | 34 | 2026-10-01 |
 | ★ | [3078](strategies/3078/) | Upbit BTC 1D Defensive Mean-Reversion | +2.13% | -42.11% | +1.56% | 42 | 2026-10-01 |
 |  | [3077](strategies/3077/) | ETH 4H Volatility-Scaled Trend Rider | -19.35% | +175.13% | +21.20% | 71 | 2026-10-01 |
