@@ -3,12 +3,12 @@
   "name": "Upbit BTC 1D Defensive Mean-Reversion",
   "kind": "custom",
   "verified": {
-    "backtestId": 14740,
-    "return": 6.09,
-    "mdd": 0.49,
-    "trades": 50,
+    "backtestId": 14744,
+    "return": 2.13,
+    "mdd": 1.56,
+    "trades": 42,
     "vsBuyHold": "win",
-    "benchRet": -26.87,
+    "benchRet": -42.11,
     "benchBasis": "price",
     "gapPct": 0,
     "tFrom": 1756252800,
@@ -19,7 +19,7 @@
     ],
     "spec": {
       "ex": "upbit",
-      "sym": "BTC",
+      "sym": "ETH",
       "interval": "1d",
       "bars": 400,
       "end": 1790812800
