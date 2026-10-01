@@ -4,13 +4,14 @@ Every strategy whose backtest **finished and actually traded** is published here
 Nothing is filtered out by return — the ones that lost money are part of the record.
 Entries stay after a strategy is removed from our own workspace — this is a log, and deleting the record would leave only the survivors.
 
-**★ marks a strategy that out-returned buy & hold over the same window** — 385 of 1444 right now.
+**★ marks a strategy that out-returned buy & hold over the same window** — 386 of 1445 right now.
 `—` means the comparison **could not be made**: the engine does not compute a benchmark for multi-symbol, futures, or multi-leg runs. That is *unknown*, not *lost*, and it is 216 of them right now.
 
 Every figure comes from the last verifying backtest at publish time. These are past results over historical data. Nothing here is promised or assured about the future, and none of it is investment advice.
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
+| ★ | [3086](strategies/3086/) | Defensive Mean Reversion BTC | +1.32% | -13.30% | +5.75% | 60 | 2026-10-01 |
 |  | [3085](strategies/3085/) | BTC 1D Long-Term SMA100 Trend (upbit) | -31.56% | +39.49% | +58.38% | 63 | 2026-10-01 |
 |  | [3084](strategies/3084/) | BTC 1D Squeeze-Breakout Only (upbit) | -8.00% | +39.49% | +21.12% | 24 | 2026-10-01 |
 |  | [3083](strategies/3083/) | BTC 1D Trend-Gated Vol-Target (upbit) | -71.15% | +39.49% | +84.78% | 1063 | 2026-10-01 |
