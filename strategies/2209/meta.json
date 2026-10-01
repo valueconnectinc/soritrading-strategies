@@ -3,7 +3,7 @@
   "name": "SOL Trend-Gated Vol-Target CrashStop 1D",
   "kind": "custom",
   "verified": {
-    "backtestId": 14713,
+    "backtestId": 14714,
     "return": -100,
     "mdd": 100,
     "trades": 33388,
