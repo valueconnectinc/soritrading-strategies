@@ -11,7 +11,7 @@ Every figure comes from the last verifying backtest at publish time. These are p
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
-|  | [2209](strategies/2209/) | SOL Trend-Gated Vol-Target CrashStop 1D | -100.00% | -10.53% | +100.00% | 33394 | 2026-10-01 |
+|  | [2209](strategies/2209/) | SOL Trend-Gated Vol-Target CrashStop 1D | -100.00% | -10.70% | +100.00% | 33388 | 2026-10-01 |
 |  | [3070](strategies/3070/) | BTC 1D Dual-MR Risk-Scaled (upbit) | +11.73% | +12.94% | +17.93% | 8 | 2026-09-30 |
 |  | [3069](strategies/3069/) | Multi-Asset Stop-Protected Bear MR Basket 5-Asset | +9.13% | +69.10% | +19.40% | 14 | 2026-09-30 |
 | — | [3068](strategies/3068/) | Multi-Asset Stop-Protected Bear MR Basket 5-Asset | +56.68% | — | +15.50% | 132 | 2026-09-30 |
