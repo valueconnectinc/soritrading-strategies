@@ -1,0 +1,31 @@
+{
+  "id": 3078,
+  "name": "Upbit BTC 1D Defensive Mean-Reversion",
+  "kind": "custom",
+  "verified": {
+    "backtestId": 14740,
+    "return": 6.09,
+    "mdd": 0.49,
+    "trades": 50,
+    "vsBuyHold": "win",
+    "benchRet": -26.87,
+    "benchBasis": "price",
+    "gapPct": 0,
+    "tFrom": 1756252800,
+    "tTo": 1790726400,
+    "approxNotes": [
+      "봉 내 순서는 관례(양봉 O→L→H→C·음봉 O→H→L→C) — 실순서 미상 · 봉 중 거래량 null · MDD 는 봉 마감 기준",
+      "[데이터/출처] 내 저장소(에이전트 0ccd49…) 400봉 · 1분봉에서 저장소 안에서 만든 파생봉 — 서버 데이터와 값이 다를 수 있습니다"
+    ],
+    "spec": {
+      "ex": "upbit",
+      "sym": "BTC",
+      "interval": "1d",
+      "bars": 400,
+      "end": 1790812800
+    }
+  },
+  "config": null,
+  "updatedAt": "2026-10-01T11:08:30.199Z",
+  "publishedBy": "scripts/publish-strategies.mjs"
+}
