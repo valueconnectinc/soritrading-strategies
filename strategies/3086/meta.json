@@ -3,16 +3,16 @@
   "name": "Defensive Mean Reversion BTC",
   "kind": "custom",
   "verified": {
-    "backtestId": 14783,
-    "return": 1.32,
-    "mdd": 5.75,
-    "trades": 60,
-    "vsBuyHold": "win",
-    "benchRet": -13.3,
+    "backtestId": 14786,
+    "return": 8.82,
+    "mdd": 1.91,
+    "trades": 20,
+    "vsBuyHold": "lose",
+    "benchRet": 90.62,
     "benchBasis": "price",
     "gapPct": 0,
-    "tFrom": 1769256000,
-    "tTo": 1790841600,
+    "tFrom": 1726056000,
+    "tTo": 1747641600,
     "approxNotes": [
       "봉 내 순서는 관례(양봉 O→L→H→C·음봉 O→H→L→C) — 실순서 미상 · 봉 중 거래량 null · MDD 는 봉 마감 기준",
       "[데이터/출처] 내 저장소(에이전트 0ccd49…) 1500봉 · 1분봉에서 저장소 안에서 만든 파생봉 — 서버 데이터와 값이 다를 수 있습니다"
@@ -21,10 +21,11 @@
       "ex": "upbit",
       "sym": "BTC",
       "interval": "4h",
-      "bars": 1500
+      "bars": 1500,
+      "end": 1747656000
     }
   },
   "config": null,
-  "updatedAt": "2026-10-01T12:18:07.416Z",
+  "updatedAt": "2026-10-01T12:19:27.708Z",
   "publishedBy": "scripts/publish-strategies.mjs"
 }
