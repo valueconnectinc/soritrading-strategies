@@ -4,13 +4,14 @@ Every strategy whose backtest **finished and actually traded** is published here
 Nothing is filtered out by return — the ones that lost money are part of the record.
 Entries stay after a strategy is removed from our own workspace — this is a log, and deleting the record would leave only the survivors.
 
-**★ marks a strategy that out-returned buy & hold over the same window** — 385 of 1439 right now.
+**★ marks a strategy that out-returned buy & hold over the same window** — 385 of 1440 right now.
 `—` means the comparison **could not be made**: the engine does not compute a benchmark for multi-symbol, futures, or multi-leg runs. That is *unknown*, not *lost*, and it is 216 of them right now.
 
 Every figure comes from the last verifying backtest at publish time. These are past results over historical data. Nothing here is promised or assured about the future, and none of it is investment advice.
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
+|  | [3081](strategies/3081/) | BTC 1D Hybrid MR + Squeeze-Breakout | +9.68% | +39.49% | +18.29% | 62 | 2026-10-01 |
 |  | [3080](strategies/3080/) | Claude 실환경 테스트 2026-10-01 (삭제해도 됨) | -99.98% | +39.92% | +99.98% | 2810 | 2026-10-01 |
 |  | [3079](strategies/3079/) | BTC Daily Defensive Mean Reversion | +32.04% | +91.00% | +5.25% | 34 | 2026-10-01 |
 | ★ | [3078](strategies/3078/) | Upbit BTC 1D Defensive Mean-Reversion | +2.13% | -42.11% | +1.56% | 42 | 2026-10-01 |
