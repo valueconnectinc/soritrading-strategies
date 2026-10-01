@@ -11,7 +11,7 @@ Every figure comes from the last verifying backtest at publish time. These are p
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
-|  | [3081](strategies/3081/) | BTC 1D Hybrid MR + Squeeze-Breakout | +9.68% | +39.49% | +18.29% | 62 | 2026-10-01 |
+|  | [3081](strategies/3081/) | BTC 1D Hybrid MR + Squeeze-Breakout | -6.50% | +81.42% | +17.26% | 10 | 2026-10-01 |
 |  | [3080](strategies/3080/) | Claude 실환경 테스트 2026-10-01 (삭제해도 됨) | -99.98% | +39.92% | +99.98% | 2810 | 2026-10-01 |
 |  | [3079](strategies/3079/) | BTC Daily Defensive Mean Reversion | +32.04% | +91.00% | +5.25% | 34 | 2026-10-01 |
 | ★ | [3078](strategies/3078/) | Upbit BTC 1D Defensive Mean-Reversion | +2.13% | -42.11% | +1.56% | 42 | 2026-10-01 |
