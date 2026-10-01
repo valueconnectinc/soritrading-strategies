@@ -11,9 +11,9 @@ Every figure comes from the last verifying backtest at publish time. These are p
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
-|  | [3082](strategies/3082/) | BTC 1D EMA Trend-Ride (upbit) | -78.81% | +39.49% | +84.99% | 313 | 2026-10-01 |
+|  | [3082](strategies/3082/) | BTC 1D EMA Trend-Ride (upbit) | -7.55% | +39.49% | +20.73% | 26 | 2026-10-01 |
 |  | [3081](strategies/3081/) | BTC 1D Hybrid MR + Squeeze-Breakout | -6.50% | +81.42% | +17.26% | 10 | 2026-10-01 |
-|  | [3080](strategies/3080/) | Claude 실환경 테스트 2026-10-01 (삭제해도 됨) | -12.47% | +8.33% | +13.52% | 62 | 2026-10-01 |
+|  | [3080](strategies/3080/) | Claude 실환경 테스트 2026-10-01 (삭제해도 됨) | -10.55% | -2.48% | +10.69% | 74 | 2026-10-01 |
 |  | [3079](strategies/3079/) | BTC Daily Defensive Mean Reversion | +32.04% | +91.00% | +5.25% | 34 | 2026-10-01 |
 | ★ | [3078](strategies/3078/) | Upbit BTC 1D Defensive Mean-Reversion | +2.13% | -42.11% | +1.56% | 42 | 2026-10-01 |
 |  | [3077](strategies/3077/) | ETH 4H Volatility-Scaled Trend Rider | -19.35% | +175.13% | +21.20% | 71 | 2026-10-01 |
