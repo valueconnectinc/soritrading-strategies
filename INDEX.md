@@ -11,7 +11,7 @@ Every figure comes from the last verifying backtest at publish time. These are p
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
-|  | [3077](strategies/3077/) | ETH 4H Volatility-Scaled Trend Rider | -18.73% | +25.25% | +24.74% | 137 | 2026-10-01 |
+|  | [3077](strategies/3077/) | ETH 4H Volatility-Scaled Trend Rider | -19.35% | +175.13% | +21.20% | 71 | 2026-10-01 |
 |  | [3076](strategies/3076/) | Upbit BTC 1D Slow Regime Filter | +11.61% | +99.56% | +8.62% | 3 | 2026-10-01 |
 |  | [3075](strategies/3075/) | Upbit BTC 1D Defensive MR v2 | -12.12% | +15.93% | +17.00% | 20 | 2026-10-01 |
 |  | [3074](strategies/3074/) | Upbit BTC 1D Defensive Mean-Reversion | -1.43% | +15.93% | +9.69% | 8 | 2026-10-01 |
