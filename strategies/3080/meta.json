@@ -3,7 +3,7 @@
   "name": "Claude 실환경 테스트 2026-10-01 (삭제해도 됨)",
   "kind": "custom",
   "verified": {
-    "backtestId": 14779,
+    "backtestId": 14780,
     "return": -2.23,
     "mdd": 2.5,
     "trades": 11,
@@ -20,7 +20,7 @@
     ],
     "spec": {
       "ex": "binance",
-      "sym": "SOL",
+      "sym": "SOLUSDT",
       "interval": "5m",
       "bars": 150
     }
