@@ -3,7 +3,7 @@
   "name": "BTC 1D Hybrid MR + Squeeze-Breakout",
   "kind": "custom",
   "verified": {
-    "backtestId": 14756,
+    "backtestId": 14758,
     "return": 9.68,
     "mdd": 18.29,
     "trades": 62,
@@ -21,7 +21,7 @@
       "ex": "upbit",
       "sym": "BTC",
       "interval": "1d",
-      "bars": 1000
+      "bars": 3000
     }
   },
   "config": null,
