@@ -11,7 +11,7 @@ Every figure comes from the last verifying backtest at publish time. These are p
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
-|  | [3079](strategies/3079/) | BTC Daily Defensive Mean Reversion | +3.84% | +81.49% | +16.62% | 4 | 2026-10-01 |
+|  | [3079](strategies/3079/) | BTC Daily Defensive Mean Reversion | +32.04% | +91.00% | +5.25% | 34 | 2026-10-01 |
 | ★ | [3078](strategies/3078/) | Upbit BTC 1D Defensive Mean-Reversion | +2.13% | -42.11% | +1.56% | 42 | 2026-10-01 |
 |  | [3077](strategies/3077/) | ETH 4H Volatility-Scaled Trend Rider | -19.35% | +175.13% | +21.20% | 71 | 2026-10-01 |
 |  | [3076](strategies/3076/) | Upbit BTC 1D Slow Regime Filter | +11.61% | +99.56% | +8.62% | 3 | 2026-10-01 |
