@@ -11,7 +11,7 @@ Every figure comes from the last verifying backtest at publish time. These are p
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
-| ★ | [3093](strategies/3093/) | SOL Trend-Ride Momentum 1D | +53.53% | -22.60% | +58.23% | 42 | 2026-10-02 |
+| ★ | [3093](strategies/3093/) | SOL Trend-Ride Momentum 1D | -13.90% | -14.51% | +46.70% | 15 | 2026-10-02 |
 | ★ | [3088](strategies/3088/) | SOL Defensive MR ATR-Trail 1D | +14.63% | -91.63% | +0.00% | 14 | 2026-10-01 |
 |  | [3087](strategies/3087/) | Data Probe BTC 1D | +106.27% | +403.20% | +19.36% | 49 | 2026-10-01 |
 |  | [3086](strategies/3086/) | Defensive Mean Reversion BTC | +8.82% | +90.62% | +1.91% | 20 | 2026-10-01 |
