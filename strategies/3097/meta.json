@@ -3,7 +3,7 @@
   "name": "SOL OBV Volume-Flow Trend 1D",
   "kind": "custom",
   "verified": {
-    "backtestId": 14830,
+    "backtestId": 14833,
     "return": -22.9,
     "mdd": 52.84,
     "trades": 41,
@@ -28,6 +28,6 @@
     }
   },
   "config": null,
-  "updatedAt": "2026-10-02T04:33:39.007Z",
+  "updatedAt": "2026-10-02T04:35:24.803Z",
   "publishedBy": "scripts/publish-strategies.mjs"
 }
