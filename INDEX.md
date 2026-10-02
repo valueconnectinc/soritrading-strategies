@@ -5,12 +5,13 @@ Nothing is filtered out by return — the ones that lost money are part of the r
 Entries stay after a strategy is removed from our own workspace — this is a log, and deleting the record would leave only the survivors.
 
 **★ marks a strategy that out-returned buy & hold over the same window** — 388 of 1452 right now.
-`—` means the comparison **could not be made**: the engine does not compute a benchmark for multi-symbol, futures, or multi-leg runs. That is *unknown*, not *lost*, and it is 217 of them right now.
+`—` means the comparison **could not be made**: the engine does not compute a benchmark for multi-symbol, futures, or multi-leg runs. That is *unknown*, not *lost*, and it is 218 of them right now.
 
 Every figure comes from the last verifying backtest at publish time. These are past results over historical data. Nothing here is promised or assured about the future, and none of it is investment advice.
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
+| — | [3080](strategies/3080/) | Claude 실환경 테스트 2026-10-01 (삭제해도 됨) | -89.81% | — | +90.58% | 147 | 2026-10-02 |
 | ★ | [3097](strategies/3097/) | SOL OBV Volume-Flow Trend 1D | -22.90% | -28.90% | +52.84% | 41 | 2026-10-02 |
 | — | [3096](strategies/3096/) | SOL Funding-Squeeze Long 1D | -15.05% | — | +15.05% | 8 | 2026-10-02 |
 |  | [3095](strategies/3095/) | SOL Defensive Mean Reversion 1D | +106.27% | +404.43% | +19.36% | 49 | 2026-10-02 |
@@ -24,7 +25,6 @@ Every figure comes from the last verifying backtest at publish time. These are p
 |  | [3083](strategies/3083/) | BTC 1D Trend-Gated Vol-Target (upbit) | -71.15% | +39.49% | +84.78% | 1063 | 2026-10-01 |
 |  | [3082](strategies/3082/) | BTC 1D EMA Trend-Ride (upbit) | -7.55% | +39.49% | +20.73% | 26 | 2026-10-01 |
 |  | [3081](strategies/3081/) | BTC 1D Hybrid MR + Squeeze-Breakout | -6.50% | +81.42% | +17.26% | 10 | 2026-10-01 |
-|  | [3080](strategies/3080/) | Claude 실환경 테스트 2026-10-01 (삭제해도 됨) | -2.23% | -0.25% | +2.50% | 11 | 2026-10-01 |
 |  | [3079](strategies/3079/) | BTC Daily Defensive Mean Reversion | +32.04% | +91.00% | +5.25% | 34 | 2026-10-01 |
 | ★ | [3078](strategies/3078/) | Upbit BTC 1D Defensive Mean-Reversion | +2.13% | -42.11% | +1.56% | 42 | 2026-10-01 |
 |  | [3077](strategies/3077/) | ETH 4H Volatility-Scaled Trend Rider | -19.35% | +175.13% | +21.20% | 71 | 2026-10-01 |
