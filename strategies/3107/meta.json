@@ -3,25 +3,26 @@
   "name": "Data Probe SOL 1D MR",
   "kind": "custom",
   "verified": {
-    "backtestId": 14964,
-    "return": 30.38,
-    "mdd": 42.16,
-    "trades": 54,
-    "vsBuyHold": "win",
-    "benchRet": 10.56,
+    "backtestId": 14974,
+    "return": 0.02,
+    "mdd": 22.95,
+    "trades": 96,
+    "vsBuyHold": "lose",
+    "benchRet": 67.82,
     "benchBasis": "price",
     "gapPct": 0,
-    "tFrom": 1618099200,
-    "tTo": 1790812800,
+    "tFrom": 1661313600,
+    "tTo": 1704499200,
     "approxNotes": [
       "봉 내 순서는 관례(양봉 O→L→H→C·음봉 O→H→L→C) — 실순서 미상 · 봉 중 거래량 null · MDD 는 봉 마감 기준",
-      "[데이터/출처] 내 저장소(에이전트 0ccd49…) 2000봉 · 1분봉에서 저장소 안에서 만든 파생봉 — 서버 데이터와 값이 다를 수 있습니다"
+      "[데이터/출처] 내 저장소(에이전트 0ccd49…) 3000봉 · 1분봉에서 저장소 안에서 만든 파생봉 — 서버 데이터와 값이 다를 수 있습니다"
     ],
     "spec": {
       "ex": "binance",
       "sym": "XRP",
-      "interval": "1d",
-      "bars": 2000
+      "interval": "4h",
+      "bars": 3000,
+      "end": 1704513600
     }
   },
   "config": null,
