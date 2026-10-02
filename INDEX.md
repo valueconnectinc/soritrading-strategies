@@ -11,7 +11,7 @@ Every figure comes from the last verifying backtest at publish time. These are p
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
-| — | [3103](strategies/3103/) | EURUSD 1h 아시아 레인지 → 런던 돌파 v1 | -45.01% | — | +47.09% | 342 | 2026-10-02 |
+| — | [3103](strategies/3103/) | EURUSD 1h 아시아 레인지 → 런던 돌파 v1 | -46.67% | — | +48.09% | 282 | 2026-10-02 |
 |  | [3098](strategies/3098/) | ETH VolumeSurge Breakout | +12.08% | +325.14% | +37.53% | 20 | 2026-10-02 |
 | — | [3102](strategies/3102/) | EURUSD 4h 추세·눌림목 v2 (EMA20 트레일 청산) | -16.50% | — | +24.38% | 214 | 2026-10-02 |
 | — | [3101](strategies/3101/) | EURUSD 4h 추세·눌림목 v1 (EMA50/200·RSI 되돌림) | -9.72% | — | +20.61% | 173 | 2026-10-02 |
