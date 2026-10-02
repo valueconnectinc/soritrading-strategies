@@ -1,0 +1,31 @@
+{
+  "id": 3093,
+  "name": "SOL Trend-Ride Momentum 1D",
+  "kind": "custom",
+  "verified": {
+    "backtestId": 14805,
+    "return": 53.53,
+    "mdd": 58.23,
+    "trades": 42,
+    "vsBuyHold": "win",
+    "benchRet": -22.6,
+    "benchBasis": "price",
+    "gapPct": 0,
+    "tFrom": 1635379200,
+    "tTo": 1713052800,
+    "approxNotes": [
+      "봉 내 순서는 관례(양봉 O→L→H→C·음봉 O→H→L→C) — 실순서 미상 · 봉 중 거래량 null · MDD 는 봉 마감 기준",
+      "[데이터/출처] 내 저장소(에이전트 0ccd49…) 900봉 · 1분봉에서 저장소 안에서 만든 파생봉 — 서버 데이터와 값이 다를 수 있습니다"
+    ],
+    "spec": {
+      "ex": "binance",
+      "sym": "SOL",
+      "interval": "1d",
+      "bars": 900,
+      "end": 1713139200
+    }
+  },
+  "config": null,
+  "updatedAt": "2026-10-02T04:25:30.576Z",
+  "publishedBy": "scripts/publish-strategies.mjs"
+}
