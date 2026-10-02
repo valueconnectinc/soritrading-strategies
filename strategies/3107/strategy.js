@@ -1,52 +1,57 @@
 /*
  * @coinsori-strategy v1
- * name: SOL-XRP 1D Defensive MR Basket
+ * name: SOL-XRP 4H Trend-Gated Keltner MR
  * ex: binance
  * syms: SOLUSDT, XRPUSDT
- * interval: 1d
+ * interval: 4h
  * cash: 10000
  *
- * Why this strategy: The single-asset defensive mean-reversion champion is validated
- * but lags melt-ups because one asset rarely has a deep dip to buy while it is rallying.
- * Running the same recipe on TWO assets (SOL + XRP) with shared equity means that when
- * one melts up, the other is often pulling back to buy — diversifying away the
- * single-asset lag while keeping the low-drawdown defensive profile.
+ * Why this strategy: The base Keltner mean-reversion is positive on all ten disjoint
+ * SOL/XRP 4h windows in the ledger, but it carries a 22-49% drawdown because it buys
+ * pullbacks even while the market is falling. Adding a rising 200-bar SMA gate (the
+ * defensive filter that made the Bollinger champion work) should keep it out of
+ * downtrends and cut that drawdown.
  * When it buys and sells: on each asset, buy only when price closes below the lower
- * Bollinger (20,2) with RSI<30 while the 200-day average is still rising; sell when price
- * recovers above the 20-day average or the long-term trend rolls over. Each leg is capped
- * at 50% of equity so the two never double the risk.
- * When it does NOT work: in a broad coordinated crypto bear both rising-trend gates stay
- * flat (capital safe, but little upside); a single straight-line melt-up of both assets at
- * once still leaves it mostly in cash. It is defensive, not a momentum winner.
+ * Keltner band (EMA20 - 2.5x ATR) with RSI<40 AND the 200-bar SMA is rising; sell when
+ * price closes back above the 20-EMA. A 2-bar cooldown cuts whipsaw.
+ * When it does NOT work: in a broad coordinated bear both rising-trend gates stay flat
+ * (capital safe but little upside); it still lags a straight-line melt-up of one asset.
  */
 function onUpdate(ctx) {
   const sym = ctx.sym;
   const price = ctx.price;
   if (!Number.isFinite(price) || price <= 0) return null;
 
-  const bb = ctx.bb(20, 2, 1);
+  const ema20 = ctx.ema(20, 1);
+  const atr = ctx.atr(14, 1);
   const rsi = ctx.rsi(14, 1);
   const sma200 = ctx.sma(200, 1);
   const sma200prev = ctx.sma(200, 2);
-  const ema20 = ctx.ema(20, 1);
-  if (bb == null || rsi == null || sma200 == null || sma200prev == null || ema20 == null) return null;
+  if (ema20 == null || atr == null || atr <= 0 || rsi == null || sma200 == null || sma200prev == null) return null;
 
   const pos = ctx.pos(sym);
+  const st = ctx.state;
+  let cd = st.cd || 0;
+  if (cd > 0) cd--;
+  ctx.state.cd = cd;
 
   if (pos > 0) {
-    // Exit: recovered above the 20-day average, or the long-term trend rolled over.
-    if (price > ema20 || price < sma200) {
+    // Exit once price recovers back above the 20-EMA (channel mid). No hard stop:
+    // the mid-band exit is what makes this recipe work (a hard stop whipsaws on 4h).
+    if (price > ema20 && cd === 0) {
+      ctx.state.cd = 2;
       return { side: 'sell', qty: pos };
     }
     return null;
   }
 
-  // Buy only a deep oversold flush inside a rising long-term trend.
-  if (sma200 > sma200prev && rsi < 30 && price < bb.lower) {
-    // Cap each leg at 50% of equity so the two legs never double up the risk.
-    const maxQty = (ctx.cash / price) * 0.50;
-    if (maxQty <= 0) return null;
-    return { side: 'buy', qty: maxQty };
+  const uptrend = sma200 > sma200prev; // only buy in a confirmed rising 200-bar regime
+  if (!uptrend) return null;
+
+  const keltnerLow = ema20 - 2.5 * atr; // 2.5 ATR below EMA20 = volatility-adaptive lower band
+  if (price < keltnerLow && rsi < 40 && cd === 0) {
+    ctx.state.cd = 2;
+    return { side: 'buy', qty: (ctx.cash / price) * 0.95 };
   }
   return null;
 }
