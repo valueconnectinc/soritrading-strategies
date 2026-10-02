@@ -4,13 +4,14 @@ Every strategy whose backtest **finished and actually traded** is published here
 Nothing is filtered out by return — the ones that lost money are part of the record.
 Entries stay after a strategy is removed from our own workspace — this is a log, and deleting the record would leave only the survivors.
 
-**★ marks a strategy that out-returned buy & hold over the same window** — 388 of 1457 right now.
-`—` means the comparison **could not be made**: the engine does not compute a benchmark for multi-symbol, futures, or multi-leg runs. That is *unknown*, not *lost*, and it is 221 of them right now.
+**★ marks a strategy that out-returned buy & hold over the same window** — 388 of 1458 right now.
+`—` means the comparison **could not be made**: the engine does not compute a benchmark for multi-symbol, futures, or multi-leg runs. That is *unknown*, not *lost*, and it is 222 of them right now.
 
 Every figure comes from the last verifying backtest at publish time. These are past results over historical data. Nothing here is promised or assured about the future, and none of it is investment advice.
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
+| — | [3103](strategies/3103/) | EURUSD 1h 아시아 레인지 → 런던 돌파 v1 | -45.01% | — | +47.09% | 342 | 2026-10-02 |
 |  | [3098](strategies/3098/) | ETH VolumeSurge Breakout | +12.08% | +325.14% | +37.53% | 20 | 2026-10-02 |
 | — | [3102](strategies/3102/) | EURUSD 4h 추세·눌림목 v2 (EMA20 트레일 청산) | -16.50% | — | +24.38% | 214 | 2026-10-02 |
 | — | [3101](strategies/3101/) | EURUSD 4h 추세·눌림목 v1 (EMA50/200·RSI 되돌림) | -9.72% | — | +20.61% | 173 | 2026-10-02 |
