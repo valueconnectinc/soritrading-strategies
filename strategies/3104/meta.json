@@ -3,26 +3,26 @@
   "name": "Keltner MR BTC-SOL 4H",
   "kind": "custom",
   "verified": {
-    "backtestId": 14932,
-    "return": 53.02,
-    "mdd": 44.8,
-    "trades": 76,
-    "vsBuyHold": "lose",
-    "benchRet": 182.77,
+    "backtestId": 14938,
+    "return": 592.24,
+    "mdd": 40.52,
+    "trades": 38,
+    "vsBuyHold": "win",
+    "benchRet": 239.38,
     "benchBasis": "price",
     "gapPct": 0,
-    "tFrom": 1661313600,
-    "tTo": 1704499200,
+    "tFrom": 1661299200,
+    "tTo": 1790812800,
     "approxNotes": [
       "봉 내 순서는 관례(양봉 O→L→H→C·음봉 O→H→L→C) — 실순서 미상 · 봉 중 거래량 null · MDD 는 봉 마감 기준",
-      "[데이터/출처] 내 저장소(에이전트 0ccd49…) 3000봉 · 1분봉에서 저장소 안에서 만든 파생봉 — 서버 데이터와 값이 다를 수 있습니다"
+      "[데이터/출처] 내 저장소(에이전트 0ccd49…) 1500봉 · 1분봉에서 저장소 안에서 만든 파생봉 — 서버 데이터와 값이 다를 수 있습니다"
     ],
     "spec": {
       "ex": "binance",
       "sym": "SOL",
-      "interval": "4h",
-      "bars": 3000,
-      "end": 1704513600
+      "interval": "1d",
+      "bars": 1500,
+      "end": 1790899200
     }
   },
   "config": null,
