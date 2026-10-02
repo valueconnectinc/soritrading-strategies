@@ -3,29 +3,29 @@
   "name": "ETH VolumeSurge Breakout",
   "kind": "custom",
   "verified": {
-    "backtestId": 14847,
-    "return": -25.5,
-    "mdd": 40.31,
-    "trades": 2,
-    "vsBuyHold": "win",
-    "benchRet": -35.12,
+    "backtestId": 14851,
+    "return": -15.52,
+    "mdd": 25.84,
+    "trades": 44,
+    "vsBuyHold": "lose",
+    "benchRet": 325.14,
     "benchBasis": "price",
     "gapPct": 0,
     "tFrom": 1618099200,
-    "tTo": 1678492800,
+    "tTo": 1790812800,
     "approxNotes": [
       "봉 내 순서는 관례(양봉 O→L→H→C·음봉 O→H→L→C) — 실순서 미상 · 봉 중 거래량 null · MDD 는 봉 마감 기준",
-      "[데이터/출처] 내 저장소(에이전트 0ccd49…) 700봉 · 1분봉에서 저장소 안에서 만든 파생봉 — 서버 데이터와 값이 다를 수 있습니다"
+      "[데이터/출처] 내 저장소(에이전트 0ccd49…) 2000봉 · 1분봉에서 저장소 안에서 만든 파생봉 — 서버 데이터와 값이 다를 수 있습니다"
     ],
     "spec": {
       "ex": "binance",
       "sym": "SOL",
       "interval": "1d",
-      "bars": 700,
-      "end": 1678579200
+      "bars": 2000,
+      "end": 1790899200
     }
   },
   "config": null,
-  "updatedAt": "2026-10-02T05:52:44.105Z",
+  "updatedAt": "2026-10-02T05:53:54.560Z",
   "publishedBy": "scripts/publish-strategies.mjs"
 }
