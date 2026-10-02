@@ -9,12 +9,11 @@
  * Why this strategy: Sharp panic sell-offs in crypto often overshoot and snap
  * back. Buying at the bottom of the Bollinger band when RSI is oversold, and
  * ONLY while price is still above the long-term 200-day average, catches the
- * rebound while staying out of real bear markets. A hard volatility stop cuts
- * the rare losing dip before it becomes a big loss.
+ * rebound while staying out of real bear markets.
  * When it buys and sells: Buys when price touches the lower Bollinger band
  * (20,2) AND RSI(14) is below 40 AND price is above the 200-day average.
- * Sells when price climbs back above the 20-day average, or below the 200-day
- * average, or drops 3x ATR from the entry price.
+ * Sells when price climbs back above the 20-day average, or immediately if
+ * price falls below the 200-day average.
  * When it does NOT work: In a genuine long bear market the trend gate keeps it
  * in cash (no return), and in a melt-up the oversold entries are rare so it
  * lags holding the asset the whole way up.
@@ -24,8 +23,7 @@ function onUpdate(ctx) {
   const r = ctx.rsi(14, 1);
   const ma200 = ctx.sma(200, 1);
   const ema20 = ctx.ema(20, 1);
-  const atr = ctx.atr(14, 1);
-  if (bb == null || r == null || ma200 == null || ema20 == null || atr == null) return null;
+  if (bb == null || r == null || ma200 == null || ema20 == null) return null;
 
   const px = ctx.price;
   const prevClose = ctx.closes[ctx.closes.length - 2];
@@ -39,10 +37,6 @@ function onUpdate(ctx) {
     return null;
   }
 
-  // hard stop: price dropped 3x ATR below our entry (cuts the loser fast)
-  if (ctx.entryPx != null && px < ctx.entryPx - 3 * atr) {
-    return { side: 'sell', qty: ctx.position };
-  }
   // hard stop: below the 200-day average, get out fast
   if (prevClose < ma200) {
     return { side: 'sell', qty: ctx.position };
