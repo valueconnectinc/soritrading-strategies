@@ -1,40 +1,52 @@
 /*
  * @coinsori-strategy v1
- * name: SOL Keltner Pullback
+ * name: SOL Hybrid MR + Squeeze
  * ex: binance
  * syms: SOLUSDT
  * interval: 1d
  * cash: 10000
  *
- * Why this strategy: In an uptrend, price often pulls back to a volatility
- * band (Keltner channel) before resuming. Buying that pullback near the lower
- * band, only while above the 200-day average, gets a good entry with a tight
- * risk and rides the resumption.
- * When it buys and sells: Buys when price touches the lower Keltner band
- * (20-day EMA minus 2.5x ATR) while price is above the 200-day average.
- * Sells when price climbs back above the 20-day EMA, or immediately if price
- * falls below the 200-day average.
- * When it does NOT work: In a real bear market the trend gate keeps it in cash
- * (no return), and in a melt-up the pullbacks are shallow so entries are rare
- * and it lags holding the whole way up.
+ * Why this strategy: Combines two proven ideas. (1) Mean reversion: buy deep
+ * oversold dips at the bottom Bollinger band while above the long-term trend.
+ * (2) Squeeze breakout: when volatility compresses (Bollinger band inside a
+ * wider volatility band) and price breaks upward, that often starts a strong
+ * move. Together they catch both panic rebounds and quiet breakouts.
+ * When it buys and sells: Buys on an oversold dip at the lower band, OR on a
+ * squeeze breakout above the 20-day high, both only while price is above the
+ * 200-day average. Sells above the 20-day average or below the 200-day.
+ * When it does NOT work: In a real bear market the trend gate keeps it in cash,
+ * and a squeeze breakout in a topping market can be a false breakout that
+ * reverses.
  */
 function onUpdate(ctx) {
+  const bb = ctx.bb(20, 2, 1);
+  const r = ctx.rsi(14, 1);
+  const ma200 = ctx.sma(200, 1);
   const ema20 = ctx.ema(20, 1);
   const atr = ctx.atr(14, 1);
-  const ma200 = ctx.sma(200, 1);
-  if (ema20 == null || atr == null || ma200 == null) return null;
+  if (bb == null || r == null || ma200 == null || ema20 == null || atr == null) return null;
 
   const px = ctx.price;
   const prevClose = ctx.closes[ctx.closes.length - 2];
-  if (prevClose == null) return null;
+  const prevHigh = ctx.high(20, 2);
+  if (prevClose == null || prevHigh == null) return null;
 
-  // lower Keltner band = 20-EMA minus 2.5x ATR (a volatility pullback level)
-  const lower = ema20 - 2.5 * atr;
+  // squeeze: Bollinger band is narrower than the 2.5x ATR volatility band
+  const bbWidth = bb.upper - bb.lower;
+  const keltnerWidth = 2.5 * atr;
+  const squeeze = bbWidth < keltnerWidth;
 
   if (ctx.position === 0) {
-    // pullback to the lower band, but only while above the long-term trend
-    if (prevClose > ma200 && prevClose <= lower) {
-      return { side: 'buy', qty: ctx.cash / px * 0.98 };
+    // only buy while above the long-term trend
+    if (prevClose > ma200) {
+      // entry 1: deep oversold dip at the bottom band
+      if (prevClose <= bb.lower && r < 35) {
+        return { side: 'buy', qty: ctx.cash / px * 0.98 };
+      }
+      // entry 2: squeeze breakout above the 20-day high
+      if (squeeze && prevClose > prevHigh) {
+        return { side: 'buy', qty: ctx.cash / px * 0.98 };
+      }
     }
     return null;
   }
@@ -43,7 +55,7 @@ function onUpdate(ctx) {
   if (prevClose < ma200) {
     return { side: 'sell', qty: ctx.position };
   }
-  // normal exit: price recovered back above the 20-day EMA
+  // normal exit: price recovered back above the 20-day average
   if (prevClose > ema20) {
     return { side: 'sell', qty: ctx.position };
   }

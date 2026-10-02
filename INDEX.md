@@ -11,8 +11,8 @@ Every figure comes from the last verifying backtest at publish time. These are p
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
+|  | [3098](strategies/3098/) | ETH VolumeSurge Breakout | +12.08% | +325.14% | +37.53% | 20 | 2026-10-02 |
 | — | [3099](strategies/3099/) | EURUSD 1h 돌파추세 v1 (ATR 손절·세션 필터) | -35.03% | — | +36.01% | 160 | 2026-10-02 |
-|  | [3098](strategies/3098/) | ETH VolumeSurge Breakout | -1.82% | +325.14% | +11.01% | 2 | 2026-10-02 |
 |  | [3080](strategies/3080/) | Claude 실환경 테스트 2026-10-01 (삭제해도 됨) | -11.63% | -11.05% | +36.12% | 1 | 2026-10-02 |
 | ★ | [3097](strategies/3097/) | SOL OBV Volume-Flow Trend 1D | -22.90% | -28.90% | +52.84% | 41 | 2026-10-02 |
 | — | [3096](strategies/3096/) | SOL Funding-Squeeze Long 1D | -15.05% | — | +15.05% | 8 | 2026-10-02 |
