@@ -11,7 +11,7 @@ Every figure comes from the last verifying backtest at publish time. These are p
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
-|  | [3108](strategies/3108/) | BTC 1D Bollinger Squeeze-Breakout | +903.93% | +5493.15% | +30.32% | 6 | 2026-10-02 |
+|  | [3108](strategies/3108/) | BTC 1D Bollinger Squeeze-Breakout | +83.80% | +5493.15% | +8.02% | 8 | 2026-10-02 |
 | — | [3107](strategies/3107/) | Data Probe SOL 1D MR | +7.22% | — | +33.64% | 118 | 2026-10-02 |
 |  | [3106](strategies/3106/) | BTC 1D Defensive Mean-Reversion (trend-gated) | +120.09% | +325.14% | +21.24% | 69 | 2026-10-02 |
 | ★ | [3105](strategies/3105/) | Keltner MR Trend-Gated 4H | +7.68% | -27.55% | +26.59% | 30 | 2026-10-02 |
