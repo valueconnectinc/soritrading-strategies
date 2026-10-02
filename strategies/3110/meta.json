@@ -3,30 +3,30 @@
   "name": "SOL 1D Defensive MR Volume-Confirmed",
   "kind": "custom",
   "verified": {
-    "backtestId": 15033,
-    "return": 6.37,
+    "backtestId": 15035,
+    "return": 32.91,
     "mdd": 40.74,
-    "trades": 6,
+    "trades": 14,
     "vsBuyHold": "lose",
-    "benchRet": 258.83,
+    "benchRet": 325.14,
     "benchBasis": "price",
     "gapPct": 0,
     "tFrom": 1618099200,
-    "tTo": 1704412800,
+    "tTo": 1790812800,
     "approxNotes": [
       "봉 내 순서는 관례(양봉 O→L→H→C·음봉 O→H→L→C) — 실순서 미상 · 봉 중 거래량 null · MDD 는 봉 마감 기준",
       "거래량은 봉 마감에만 확정 — 봉 중 평가에서 ctx.vol/volumes 가 null 이라 거래량 조건이 걸러졌을 수 있음(봉 중에도 쓰려면 ctx.volPrev·ctx.avgVol)",
-      "[데이터/출처] 내 저장소(에이전트 0ccd49…) 1000봉 · 1분봉에서 저장소 안에서 만든 파생봉 — 서버 데이터와 값이 다를 수 있습니다"
+      "[데이터/출처] 내 저장소(에이전트 0ccd49…) 2000봉 · 1분봉에서 저장소 안에서 만든 파생봉 — 서버 데이터와 값이 다를 수 있습니다"
     ],
     "spec": {
       "ex": "binance",
       "sym": "SOL",
       "interval": "1d",
-      "bars": 1000,
-      "end": 1704499200
+      "bars": 2000,
+      "end": 1790899200
     }
   },
   "config": null,
-  "updatedAt": "2026-10-02T07:18:01.061Z",
+  "updatedAt": "2026-10-02T07:19:34.949Z",
   "publishedBy": "scripts/publish-strategies.mjs"
 }
