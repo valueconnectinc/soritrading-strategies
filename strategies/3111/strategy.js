@@ -1,10 +1,10 @@
 /*
  * @coinsori-strategy v1
  * name: BTC 1D Defensive Mean Reversion
- * ex: binance
- * syms: BTCUSDT
+ * ex: upbit
+ * syms: BTC
  * interval: 1d
- * cash: 10000
+ * cash: 10000000
  *
  * Why this strategy: In a confirmed uptrend, sharp panic dips to the lower
  * Bollinger band with an oversold RSI tend to snap back up. Buying these
