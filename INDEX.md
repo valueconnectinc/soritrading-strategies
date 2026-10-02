@@ -4,14 +4,15 @@ Every strategy whose backtest **finished and actually traded** is published here
 Nothing is filtered out by return — the ones that lost money are part of the record.
 Entries stay after a strategy is removed from our own workspace — this is a log, and deleting the record would leave only the survivors.
 
-**★ marks a strategy that out-returned buy & hold over the same window** — 388 of 1453 right now.
-`—` means the comparison **could not be made**: the engine does not compute a benchmark for multi-symbol, futures, or multi-leg runs. That is *unknown*, not *lost*, and it is 217 of them right now.
+**★ marks a strategy that out-returned buy & hold over the same window** — 388 of 1454 right now.
+`—` means the comparison **could not be made**: the engine does not compute a benchmark for multi-symbol, futures, or multi-leg runs. That is *unknown*, not *lost*, and it is 218 of them right now.
 
 Every figure comes from the last verifying backtest at publish time. These are past results over historical data. Nothing here is promised or assured about the future, and none of it is investment advice.
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
-|  | [3098](strategies/3098/) | ETH VolumeSurge Breakout | -1.12% | +77.95% | +11.66% | 4 | 2026-10-02 |
+| — | [3099](strategies/3099/) | EURUSD 1h 돌파추세 v1 (ATR 손절·세션 필터) | -35.03% | — | +36.01% | 160 | 2026-10-02 |
+|  | [3098](strategies/3098/) | ETH VolumeSurge Breakout | -1.82% | +325.14% | +11.01% | 2 | 2026-10-02 |
 |  | [3080](strategies/3080/) | Claude 실환경 테스트 2026-10-01 (삭제해도 됨) | -11.63% | -11.05% | +36.12% | 1 | 2026-10-02 |
 | ★ | [3097](strategies/3097/) | SOL OBV Volume-Flow Trend 1D | -22.90% | -28.90% | +52.84% | 41 | 2026-10-02 |
 | — | [3096](strategies/3096/) | SOL Funding-Squeeze Long 1D | -15.05% | — | +15.05% | 8 | 2026-10-02 |
