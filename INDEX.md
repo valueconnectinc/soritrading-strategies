@@ -11,7 +11,7 @@ Every figure comes from the last verifying backtest at publish time. These are p
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
-| ★ | [3104](strategies/3104/) | Keltner MR BTC-SOL 4H | +592.24% | +239.38% | +40.52% | 38 | 2026-10-02 |
+| ★ | [3104](strategies/3104/) | Keltner MR BTC-SOL 4H | +121.88% | +43.35% | +39.10% | 28 | 2026-10-02 |
 |  | [3101](strategies/3101/) | EURUSD 4h 추세·눌림목 v1 (EMA50/200·RSI 되돌림) | +31.73% | +109.48% | +13.48% | 542 | 2026-10-02 |
 | — | [3103](strategies/3103/) | EURUSD 1h 아시아 레인지 → 런던 돌파 v1 | -34.28% | — | +36.20% | 282 | 2026-10-02 |
 |  | [3098](strategies/3098/) | ETH VolumeSurge Breakout | +12.08% | +325.14% | +37.53% | 20 | 2026-10-02 |
