@@ -1,51 +1,53 @@
 /*
  * @coinsori-strategy v1
- * name: BTC Keltner Pullback
- * ex: upbit
- * syms: BTC
- * interval: 4h
- * cash: 10000000
+ * name: SOL Defensive Mean Reversion
+ * ex: binance
+ * syms: SOLUSDT
+ * interval: 1d
+ * cash: 10000
  *
- * Why this strategy: In an uptrend, price often pulls back to a volatility
- * band (Keltner channel) before resuming. Buying that pullback near the lower
- * band, only while the long-term trend is rising, gets a good entry with tight
- * risk and rides the resumption.
- * When it buys and sells: Buys when price touches the lower Keltner band
- * (20-period EMA minus 2.5x ATR) while the 200-period average is rising.
- * Sells when price climbs back above the 20-period EMA, or immediately if
- * price falls below the 200-period average.
- * When it does NOT work: In a real bear market the trend gate keeps it in cash,
- * and in a melt-up the pullbacks are shallow so entries are rare and it lags
- * holding the whole way up.
+ * Why this strategy: Sharp panic sell-offs in crypto often overshoot and snap
+ * back. Buying at the bottom of the Bollinger band when RSI is oversold, and
+ * ONLY while price is still above the long-term 200-day average, catches the
+ * rebound while staying out of real bear markets. A hard volatility stop cuts
+ * the rare losing dip before it becomes a big loss.
+ * When it buys and sells: Buys when price touches the lower Bollinger band
+ * (20,2) AND RSI(14) is below 40 AND price is above the 200-day average.
+ * Sells when price climbs back above the 20-day average, or below the 200-day
+ * average, or drops 3x ATR from the entry price.
+ * When it does NOT work: In a genuine long bear market the trend gate keeps it
+ * in cash (no return), and in a melt-up the oversold entries are rare so it
+ * lags holding the asset the whole way up.
  */
 function onUpdate(ctx) {
+  const bb = ctx.bb(20, 2, 1);
+  const r = ctx.rsi(14, 1);
+  const ma200 = ctx.sma(200, 1);
   const ema20 = ctx.ema(20, 1);
   const atr = ctx.atr(14, 1);
-  const ma200 = ctx.sma(200, 1);
-  const ma200prev = ctx.sma(200, 2);
-  if (ema20 == null || atr == null || ma200 == null || ma200prev == null) return null;
+  if (bb == null || r == null || ma200 == null || ema20 == null || atr == null) return null;
 
   const px = ctx.price;
   const prevClose = ctx.closes[ctx.closes.length - 2];
   if (prevClose == null) return null;
 
-  // lower Keltner band = 20-EMA minus 2.5x ATR (a volatility pullback level)
-  const lower = ema20 - 2.5 * atr;
-  const rising = ma200 > ma200prev;
-
   if (ctx.position === 0) {
-    // pullback to the lower band, only while the long-term trend is rising
-    if (rising && prevClose <= lower) {
+    // oversold at the bottom band, but only while above the long-term trend
+    if (prevClose > ma200 && prevClose <= bb.lower && r < 40) {
       return { side: 'buy', qty: ctx.cash / px * 0.98 };
     }
     return null;
   }
 
-  // hard stop: below the 200-period average, get out fast
+  // hard stop: price dropped 3x ATR below our entry (cuts the loser fast)
+  if (ctx.entryPx != null && px < ctx.entryPx - 3 * atr) {
+    return { side: 'sell', qty: ctx.position };
+  }
+  // hard stop: below the 200-day average, get out fast
   if (prevClose < ma200) {
     return { side: 'sell', qty: ctx.position };
   }
-  // normal exit: price recovered back above the 20-period EMA
+  // normal exit: price recovered back above the 20-day average
   if (prevClose > ema20) {
     return { side: 'sell', qty: ctx.position };
   }
