@@ -1,47 +1,52 @@
 /*
  * @coinsori-strategy v1
- * name: SOL Gated Volume Breakout
+ * name: SOL Defensive Mean Reversion
  * ex: binance
  * syms: SOLUSDT
  * interval: 1d
  * cash: 10000
  *
- * Why this strategy: Big volume spikes usually mark a real move, but buying
- * them blindly in a downtrend catches falling knives. Restricting the breakout
- * to when the 200-day average is still rising keeps us on the right side of the
- * long-term trend and avoids the deep drawdowns of a plain breakout.
- * When it buys and sells: Buys only when price breaks a 20-bar high with 1.5x
- * volume AND the 200-day average is rising. Sells when price drops below the
- * 20-bar low.
- * When it does NOT work: It stays in cash during long bear markets (no return,
- * but no loss either), and it lags a melt-up that happens without volume spikes.
+ * Why this strategy: Sharp panic sell-offs in crypto often overshoot and snap
+ * back. Buying only at the very bottom of the Bollinger band when RSI is
+ * deeply oversold, and ONLY while the long-term trend is still intact, catches
+ * the rebound while staying out of real bear markets.
+ * When it buys and sells: Buys when price touches the lower Bollinger band
+ * (20,2) AND RSI(14) is below 30 AND the 200-day average is rising. Sells when
+ * price climbs back above the 20-day average, OR immediately if price falls
+ * below the 200-day average (cuts losses fast in a real crash).
+ * When it does NOT work: In a genuine long bear market the trend gate keeps us
+ * in cash (no loss but no return), and in a melt-up the oversold entries are
+ * rare so it lags holding the asset the whole way up.
  */
 function onUpdate(ctx) {
-  const s20 = ctx.high(20, 1);
-  const l20 = ctx.low(20, 1);
-  const v = ctx.vol;
-  const av = ctx.avgVol(20);
+  const bb = ctx.bb(20, 2, 1);
+  const r = ctx.rsi(14, 1);
   const ma200 = ctx.sma(200, 1);
   const ma200prev = ctx.sma(200, 2);
-  if (s20 == null || l20 == null || v == null || av == null || ma200 == null || ma200prev == null) return null;
+  const ema20 = ctx.ema(20, 1);
+  if (bb == null || r == null || ma200 == null || ma200prev == null || ema20 == null) return null;
 
   const px = ctx.price;
   const prevClose = ctx.closes[ctx.closes.length - 2];
-  const prevHigh = ctx.high(20, 2);
-  const prevLow = ctx.low(20, 2);
-  if (prevClose == null || prevHigh == null || prevLow == null) return null;
+  if (prevClose == null) return null;
 
-  // only buy when the long-term trend is rising (cuts drawdown in bears)
+  // only buy while the long-term trend is rising (avoids catching falling knives)
   const rising = ma200 > ma200prev;
 
   if (ctx.position === 0) {
-    if (rising && prevClose > prevHigh && v > av * 1.5) {
+    // deep oversold at the bottom band, in an intact uptrend
+    if (rising && prevClose <= bb.lower && r < 30) {
       return { side: 'buy', qty: ctx.cash / px * 0.98 };
     }
     return null;
   }
 
-  if (prevClose < prevLow) {
+  // hard stop: if price breaks below the 200-day average, get out fast
+  if (prevClose < ma200) {
+    return { side: 'sell', qty: ctx.position };
+  }
+  // normal exit: price recovered back above the 20-day average
+  if (prevClose > ema20) {
     return { side: 'sell', qty: ctx.position };
   }
   return null;
