@@ -11,7 +11,7 @@ Every figure comes from the last verifying backtest at publish time. These are p
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
-| — | [3080](strategies/3080/) | Claude 실환경 테스트 2026-10-01 (삭제해도 됨) | -89.81% | — | +90.58% | 147 | 2026-10-02 |
+| — | [3080](strategies/3080/) | Claude 실환경 테스트 2026-10-01 (삭제해도 됨) | -95.05% | — | +95.41% | 1 | 2026-10-02 |
 | ★ | [3097](strategies/3097/) | SOL OBV Volume-Flow Trend 1D | -22.90% | -28.90% | +52.84% | 41 | 2026-10-02 |
 | — | [3096](strategies/3096/) | SOL Funding-Squeeze Long 1D | -15.05% | — | +15.05% | 8 | 2026-10-02 |
 |  | [3095](strategies/3095/) | SOL Defensive Mean Reversion 1D | +106.27% | +404.43% | +19.36% | 49 | 2026-10-02 |
