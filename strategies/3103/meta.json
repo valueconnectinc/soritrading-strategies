@@ -3,9 +3,9 @@
   "name": "EURUSD 1h 아시아 레인지 → 런던 돌파 v1",
   "kind": "custom",
   "verified": {
-    "backtestId": 14915,
-    "return": -46.67,
-    "mdd": 48.09,
+    "backtestId": 14919,
+    "return": -34.28,
+    "mdd": 36.2,
     "trades": 282,
     "vsBuyHold": "unmeasured",
     "gapPct": 29,

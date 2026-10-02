@@ -3,9 +3,9 @@
   "name": "EURUSD 4h 추세·눌림목 v1 (EMA50/200·RSI 되돌림)",
   "kind": "custom",
   "verified": {
-    "backtestId": 14895,
-    "return": -9.72,
-    "mdd": 20.61,
+    "backtestId": 14923,
+    "return": -5.85,
+    "mdd": 16.65,
     "trades": 173,
     "vsBuyHold": "unmeasured",
     "gapPct": 26.8,
@@ -29,6 +29,6 @@
     }
   },
   "config": null,
-  "updatedAt": "2026-10-02T05:59:43.912Z",
+  "updatedAt": "2026-10-02T06:09:18.167Z",
   "publishedBy": "scripts/publish-strategies.mjs"
 }
