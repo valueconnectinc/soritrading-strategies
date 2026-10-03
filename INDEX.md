@@ -11,7 +11,7 @@ Every figure comes from the last verifying backtest at publish time. These are p
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
-|  | [3120](strategies/3120/) | BTC 4H Keltner MR baseline | +371.23% | +420.44% | +24.77% | 128 | 2026-10-03 |
+|  | [3120](strategies/3120/) | BTC 4H Keltner MR baseline | +148.60% | +420.44% | +28.42% | 90 | 2026-10-03 |
 | ★ | [3119](strategies/3119/) | BTC 4H US-Session Mean Reversion | +10.20% | -21.09% | +25.37% | 52 | 2026-10-03 |
 | ★ | [3117](strategies/3117/) | ADA Keltner MR 4H Trend-Gated | -9.92% | -34.68% | +20.90% | 18 | 2026-10-03 |
 |  | [3116](strategies/3116/) | BTC Funding-Extreme Reversal 1D | +406.07% | +1834.47% | +14.05% | 47 | 2026-10-03 |
