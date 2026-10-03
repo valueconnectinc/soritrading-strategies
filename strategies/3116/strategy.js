@@ -1,16 +1,16 @@
 /*
  * @coinsori-strategy v1
- * name: LINK Keltner MR 1D Trend-Gated
+ * name: ADA Keltner MR 1D Trend-Gated
  * ex: binance
- * syms: LINKUSDT
+ * syms: ADAUSDT
  * interval: 1d
  * cash: 10000
  *
  * Why this strategy: The ATR-adaptive Keltner mean-reversion recipe is the most robust
- * edge in this environment — validated positive across BTC/ETH/SOL/LINK/ADA/BNB. Daily
- * bars give the lowest drawdown (2.5-10%). This applies the recipe to LINK 1d with the
- * 200-SMA trend gate that cuts drawdown in half. Buys deep pullbacks only in an uptrend,
- * sells snap-backs.
+ * edge in this environment, and daily bars give the lowest drawdown. This applies the
+ * recipe to ADA on 1d with the 200-SMA trend gate — a new (asset, timeframe) data point.
+ * The ungated ADA 1d was already validated at +361%/MDD15; this checks whether the gate
+ * (which halved drawdown on 4h) also helps daily.
  * When it buys and sells: buys when price closes below EMA20 minus 2.5x ATR with
  * RSI(14)<40 AND price above the 200-SMA (uptrend only); sells when price recovers
  * above the 20-EMA. 2-bar cooldown cuts whipsaw.
