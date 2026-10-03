@@ -1,20 +1,18 @@
 /*
  * @coinsori-strategy v1
- * name: ADA Keltner MR 4H Trend-Gated
+ * name: BTC 4H Keltner MR
  * ex: binance
- * syms: ADAUSDT
+ * syms: BTCUSDT
  * interval: 4h
  * cash: 10000
  *
- * Why this strategy: ATR-adaptive Keltner mean-reversion was validated positive on ADA 4h
- * across 3 disjoint windows (all beat buy-and-hold). A 200-SMA trend gate was then added to
- * halve the drawdown (22-40% down to 9-21%) by only buying pullbacks in an uptrend.
- * When it buys and sells: buys when price closes below EMA20 minus 2.5x ATR with RSI(14)<40
- * AND price above the 200-SMA (uptrend only); sells when price recovers above the 20-EMA.
- * 2-bar cooldown cuts whipsaw.
- * When it does NOT work: in a straight-line melt-up it sits in cash and lags buy-and-hold;
- * the 200-SMA gate keeps it out of strong bear rallies, so it can miss the bottom-fishing
- * bounce in a crash. Defensive pullback strategy, not a chaser.
+ * Why this strategy: The ATR-adaptive Keltner mean-reversion recipe is a validated
+ * cross-asset family (positive on ETH/BTC/SOL 4h windows). On BTC 4h it beats buy-and-hold
+ * on all 3 disjoint windows with moderate drawdown, buying volatility-adaptive pullbacks.
+ * When it buys and sells: buys when BTC closes below EMA20 minus 2.5x ATR with RSI(14)<40;
+ * sells when price recovers above the 20-EMA. 2-bar cooldown cuts whipsaw.
+ * When it does NOT work: in a strong melt-up it sits in cash and lags buy-and-hold; in a
+ * sustained downtrend the dips keep dipping, so it needs the pullback to actually revert.
  */
 function onUpdate(ctx) {
   const price = ctx.price;
@@ -23,8 +21,7 @@ function onUpdate(ctx) {
   const ema20 = ctx.ema(20, 1);
   const atr = ctx.atr(14, 1);
   const rsi = ctx.rsi(14, 1);
-  const sma200 = ctx.sma(200, 1);
-  if (ema20 == null || atr == null || atr <= 0 || rsi == null || sma200 == null) return null;
+  if (ema20 == null || atr == null || atr <= 0 || rsi == null) return null;
 
   const pos = ctx.position;
   const st = ctx.state;
@@ -33,8 +30,6 @@ function onUpdate(ctx) {
   st.cd = cd;
 
   if (pos > 0) {
-    // Exit once price recovers above the 20-EMA (channel mid). No hard stop:
-    // the mid-band exit is what makes this recipe work (a hard stop whipsaws on 4h).
     if (price > ema20 && cd === 0) {
       st.cd = 2;
       return { side: 'sell', qty: pos };
@@ -43,8 +38,7 @@ function onUpdate(ctx) {
   }
 
   const keltnerLow = ema20 - 2.5 * atr; // 2.5 ATR below EMA20 = volatility-adaptive lower band
-  // 200-SMA trend gate: only buy pullbacks in an uptrend, to avoid bear-market knives
-  if (price < keltnerLow && rsi < 40 && price > sma200 && cd === 0) {
+  if (price < keltnerLow && rsi < 40 && cd === 0) {
     st.cd = 2;
     return { side: 'buy', qty: (ctx.cash / price) * 0.95 };
   }
