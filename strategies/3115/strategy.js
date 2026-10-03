@@ -1,6 +1,6 @@
 /*
  * @coinsori-strategy v1
- * name: ADA Keltner MR 4H Trend-Gated Vol-Confirmed
+ * name: ADA Keltner MR 4H Trend-Gated + Stop
  * ex: binance
  * syms: ADAUSDT
  * interval: 4h
@@ -8,16 +8,15 @@
  *
  * Why this strategy: The 200-SMA trend-gated Keltner mean-reversion already cut ADA's
  * drawdown in half and beat buy-and-hold on all windows, but the recent 2024-26 window
- * still lost ~10%. That loss comes from buying pullbacks that keep falling. This version
- * adds a volume filter: only buy a pullback when it arrives on BELOW-average volume —
- * a healthy dip in an uptrend, not a high-volume breakdown. Low-volume pullbacks in an
- * uptrend are more likely to snap back to the mid-band.
+ * still lost ~10% because some pullback positions kept falling with no stop. This version
+ * adds a hard stop 1.5x ATR below the entry price to cap the losers, while keeping the
+ * mid-band exit for winners.
  * When it buys and sells: buys when price closes below EMA20 minus 2.5x ATR, RSI(14)<40,
- * price above the 200-SMA (uptrend), AND the bar's volume is below the 20-bar average.
- * Sells when price recovers back above the 20-EMA. 2-bar cooldown cuts whipsaw.
- * When it does NOT work: in a straight-line melt-up it lags buy-and-hold (sits in cash);
- * in a slow grinding bear it may never get the low-volume pullback it wants, so it stays
- * flat. Defensive pullback strategy, not a chaser.
+ * and price above the 200-SMA (uptrend only). Sells when price recovers above the 20-EMA
+ * OR drops 1.5x ATR below the entry price (stop). 2-bar cooldown cuts whipsaw.
+ * When it does NOT work: in a straight-line melt-up it lags buy-and-hold; the stop can
+ * whipsaw out of a position that would have recovered, so it may exit a few bars early.
+ * Defensive pullback strategy, not a chaser.
  */
 function onUpdate(ctx) {
   const price = ctx.price;
@@ -27,10 +26,7 @@ function onUpdate(ctx) {
   const atr = ctx.atr(14, 1);
   const rsi = ctx.rsi(14, 1);
   const sma200 = ctx.sma(200, 1);
-  const avgVol = ctx.avgVol(20);
-  const vol = ctx.vol;
-  if (ema20 == null || atr == null || atr <= 0 || rsi == null || sma200 == null || avgVol == null || avgVol <= 0) return null;
-  if (vol == null) return null;
+  if (ema20 == null || atr == null || atr <= 0 || rsi == null || sma200 == null) return null;
 
   const pos = ctx.position;
   const st = ctx.state;
@@ -39,10 +35,23 @@ function onUpdate(ctx) {
   st.cd = cd;
 
   if (pos > 0) {
-    // Exit once price recovers above the 20-EMA (channel mid). No hard stop:
-    // the mid-band exit is what makes this recipe work on 4h.
+    // Stop-loss: 1.5x ATR below entry, fixed at entry time (stored in state).
+    // 1.5x chosen because 2.5x ATR is the entry depth; this caps a losing trade
+    // at roughly the size of the expected winning move, keeping risk symmetric.
+    let stop = st.stop;
+    if (stop == null || !Number.isFinite(stop)) {
+      stop = ctx.entryPx - 1.5 * ctx.atr(14, 1);
+      st.stop = stop;
+    }
+    if (price <= stop) {
+      st.cd = 2;
+      st.stop = null;
+      return { side: 'sell', qty: pos };
+    }
+    // Exit once price recovers above the 20-EMA (channel mid).
     if (price > ema20 && cd === 0) {
       st.cd = 2;
+      st.stop = null;
       return { side: 'sell', qty: pos };
     }
     return null;
@@ -50,10 +59,9 @@ function onUpdate(ctx) {
 
   const keltnerLow = ema20 - 2.5 * atr; // 2.5 ATR below EMA20 = volatility-adaptive lower band
   // 200-SMA trend gate: only buy pullbacks in an uptrend, to avoid bear-market knives
-  // Volume filter: only take the pullback if it is NOT a high-volume breakdown
-  // (below-average volume = healthy dip, more likely to mean-revert)
-  if (price < keltnerLow && rsi < 40 && price > sma200 && vol <= avgVol && cd === 0) {
+  if (price < keltnerLow && rsi < 40 && price > sma200 && cd === 0) {
     st.cd = 2;
+    st.stop = null;
     return { side: 'buy', qty: (ctx.cash / price) * 0.95 };
   }
   return null;
