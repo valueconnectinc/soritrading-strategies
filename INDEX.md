@@ -11,7 +11,7 @@ Every figure comes from the last verifying backtest at publish time. These are p
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
-| ★ | [3114](strategies/3114/) | ADA Keltner MR 4H | +2730.46% | +1834.47% | +22.65% | 177 | 2026-10-03 |
+| ★ | [3114](strategies/3114/) | ADA Keltner MR 4H | -7.85% | -34.68% | +20.90% | 20 | 2026-10-03 |
 |  | [3111](strategies/3111/) | BTC 1D Defensive Mean Reversion | +3.46% | +18.88% | +1.44% | 6 | 2026-10-02 |
 |  | [3110](strategies/3110/) | SOL 1D Defensive MR Volume-Confirmed | +32.91% | +325.14% | +40.74% | 14 | 2026-10-02 |
 | ★ | [3109](strategies/3109/) | SOL 1D MR Half-TP + Trend-Ride | -7.64% | -40.93% | +13.84% | 2 | 2026-10-02 |
