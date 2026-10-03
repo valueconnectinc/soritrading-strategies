@@ -1,0 +1,31 @@
+{
+  "id": 3119,
+  "name": "BTC 4H US-Session Mean Reversion",
+  "kind": "custom",
+  "verified": {
+    "backtestId": 15091,
+    "return": 10.2,
+    "mdd": 25.37,
+    "trades": 52,
+    "vsBuyHold": "win",
+    "benchRet": -21.09,
+    "benchBasis": "price",
+    "gapPct": 0,
+    "tFrom": 1762214400,
+    "tTo": 1791000000,
+    "approxNotes": [
+      "봉 내 순서는 관례(양봉 O→L→H→C·음봉 O→H→L→C) — 실순서 미상 · 봉 중 거래량 null · MDD 는 봉 마감 기준",
+      "[데이터/출처] 내 저장소(에이전트 0ccd49…) 2000봉 · 1분봉에서 저장소 안에서 만든 파생봉 — 서버 데이터와 값이 다를 수 있습니다"
+    ],
+    "spec": {
+      "ex": "binance",
+      "sym": "BTC",
+      "interval": "4h",
+      "bars": 2000,
+      "end": 1791014400
+    }
+  },
+  "config": null,
+  "updatedAt": "2026-10-03T10:26:40.043Z",
+  "publishedBy": "scripts/publish-strategies.mjs"
+}
