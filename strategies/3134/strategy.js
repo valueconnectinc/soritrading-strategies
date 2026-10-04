@@ -1,23 +1,23 @@
 /*
  * @coinsori-strategy v1
- * name: BTC 4H Keltner MR HalfTP + TrendRide
+ * name: BTC 4H Trend-Gated Keltner MR
  * ex: binance
  * syms: BTCUSDT
  * interval: 4h
  * cash: 10000
  *
- * Why this strategy: The validated BTC 4h champion (200-SMA gated Keltner MR) sells 100% at
- * the EMA20 mid-band, which leaves the continued melt-up on the table after a bull pullback.
- * This variant keeps the exact same entry but splits the exit: half take-profit at the
- * mid-band (locks the validated gain), half keeps riding until price falls back below the
- * mid-band. Tests whether capturing the continuation improves the champion without adding
- * drawdown — one mechanism change, no curve fit.
+ * Why this strategy: The ATR-adaptive Keltner mean-reversion recipe was validated as a
+ * robust defensive family on ADA/ETH/SOL/XRP 4h. This applies it to BTC 4h with a 200-SMA
+ * trend gate so it only buys pullbacks in an uptrend — cutting bear-market knives and
+ * keeping drawdown tolerable on the largest, most liquid crypto. Two cycle variants
+ * (faster 100-SMA gate and half-TP + trend-ride exit) both failed to beat this version,
+ * confirming it as the family optimum.
  * When it buys and sells: buys when price closes below EMA20 minus 2.5x ATR with RSI(14)<40
- * AND price is above the 200-SMA (uptrend only). Sells half when price recovers above the
- * 20-EMA, sells the rest when price later closes back below the 20-EMA. 2-bar cooldown.
- * When it does NOT work: the riding half gives back gains in a choppy recovery that rolls
- * over just above the mid-band; in a straight-line melt-up it still sits in cash between
- * pullbacks. Defensive pullback strategy, not a chaser.
+ * AND price is above the 200-SMA (uptrend only); sells when price recovers above the 20-EMA.
+ * 2-bar cooldown cuts whipsaw.
+ * When it does NOT work: in a straight-line melt-up it sits in cash and lags buy-and-hold;
+ * the 200-SMA gate keeps it out of strong bear rallies, so it misses the bottom-fishing
+ * bounce in a crash. Defensive pullback strategy, not a chaser.
  */
 function onUpdate(ctx) {
   const price = ctx.price;
@@ -36,14 +36,9 @@ function onUpdate(ctx) {
   st.cd = cd;
 
   if (pos > 0) {
-    // Phase 1 (full position): half take-profit at the mid-band, keep the rest riding.
-    if (st.phase === 1 && price > ema20 && cd === 0) {
-      st.phase = 2;
-      return { side: 'sell', qty: pos * 0.5 };
-    }
-    // Phase 2 (riding half): exit when price falls back below the mid-band.
-    if (st.phase === 2 && price < ema20 && cd === 0) {
-      st.phase = 0;
+    // Exit once price recovers above the 20-EMA (channel mid). No hard stop:
+    // the mid-band exit is what makes this recipe work (a hard stop whipsaws on 4h).
+    if (price > ema20 && cd === 0) {
       st.cd = 2;
       return { side: 'sell', qty: pos };
     }
@@ -53,7 +48,6 @@ function onUpdate(ctx) {
   const keltnerLow = ema20 - 2.5 * atr; // 2.5 ATR below EMA20 = volatility-adaptive lower band
   // 200-SMA trend gate: only buy pullbacks in an uptrend, to avoid bear-market knives
   if (price < keltnerLow && rsi < 40 && price > sma200 && cd === 0) {
-    st.phase = 1;
     st.cd = 2;
     return { side: 'buy', qty: (ctx.cash / price) * 0.95 };
   }
