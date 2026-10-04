@@ -11,7 +11,7 @@ Every figure comes from the last verifying backtest at publish time. These are p
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
-| — | [3127](strategies/3127/) | 5-Asset 4H Trend-Gated Keltner MR Basket | +166.61% | — | +8.19% | 197 | 2026-10-04 |
+| — | [3127](strategies/3127/) | 5-Asset 4H Trend-Gated Keltner MR Basket | +11.58% | — | +8.17% | 156 | 2026-10-04 |
 |  | [3126](strategies/3126/) | BTC 4H US-Session Keltner MR | +101.19% | +420.44% | +16.51% | 40 | 2026-10-03 |
 |  | [3123](strategies/3123/) | ADA Keltner MR 4H Trend-Gated HalfTP | +277.43% | +1834.47% | +14.05% | 68 | 2026-10-03 |
 |  | [3122](strategies/3122/) | ADA Keltner MR 4H Trend-Gated VolFilter | +5.41% | +1834.47% | +1.55% | 2 | 2026-10-03 |
