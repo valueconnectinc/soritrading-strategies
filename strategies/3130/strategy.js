@@ -12,8 +12,8 @@
  * capture trending bull markets instead of waiting for capitulation.
  * When it buys and sells: on each asset, buy when price is above a rising 200-SMA (uptrend)
  * and pulls back to the 20-EMA with RSI(14) in the 40-60 zone (a healthy dip, not a crash);
- * sell when RSI climbs over 70 (overbought) or price closes back below the 20-EMA (trend
- * broke). 2-bar cooldown cuts whipsaw. Each leg is sized to ~20% of equity.
+ * sell when RSI climbs over 70 (overbought) or price closes below the 50-EMA (the trend
+ * actually broke). 3-bar cooldown cuts whipsaw. Each leg is sized to ~20% of equity.
  * When it does NOT work: in a choppy sideways market with no sustained trend, the shallow
  * pullbacks keep failing and it churns (many small losses); in a broad bear it stays flat
  * (capital safe, no upside). This is a trend-riding basket, not a crash buyer.
@@ -24,10 +24,11 @@ function onUpdate(ctx) {
   if (!Number.isFinite(price) || price <= 0) return null;
 
   const ema20 = ctx.ema(20, 1);
+  const ema50 = ctx.ema(50, 1);
   const sma200 = ctx.sma(200, 1);
   const sma200prev = ctx.sma(200, 2);
   const rsi = ctx.rsi(14, 1);
-  if (ema20 == null || sma200 == null || sma200prev == null || rsi == null) return null;
+  if (ema20 == null || ema50 == null || sma200 == null || sma200prev == null || rsi == null) return null;
 
   const pos = ctx.pos(sym);
   const st = ctx.state;
@@ -36,10 +37,10 @@ function onUpdate(ctx) {
   st.cd = cd;
 
   if (pos > 0) {
-    // Exit on overbought (RSI>70) or trend break (close below 20-EMA).
-    // RSI>70 catches the run-up top; below-EMA catches a broken pullback trend.
-    if ((rsi > 70 || price < ema20) && cd === 0) {
-      st.cd = 2;
+    // Exit on overbought (RSI>70 = run-up top) or a real trend break (close below 50-EMA).
+    // NOT below 20-EMA: entry is AT the 20-EMA so that would exit the same bar we bought.
+    if ((rsi > 70 || price < ema50) && cd === 0) {
+      st.cd = 3;
       return { side: 'sell', qty: pos };
     }
     return null;
@@ -52,7 +53,7 @@ function onUpdate(ctx) {
   const shallowDip = price <= ema20 && rsi >= 40 && rsi <= 60;
 
   if (uptrend && shallowDip && cd === 0) {
-    st.cd = 2;
+    st.cd = 3;
     const qty = (ctx.cash / price) * 0.20; // 20% of equity per leg, same sizing as MR basket
     if (qty <= 0) return null;
     return { side: 'buy', qty: qty };
