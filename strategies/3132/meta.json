@@ -3,7 +3,7 @@
   "name": "BTC 4H Trend-Gated Keltner MR SMA100",
   "kind": "custom",
   "verified": {
-    "backtestId": 15160,
+    "backtestId": 15164,
     "return": 24.49,
     "mdd": 16.51,
     "trades": 12,
