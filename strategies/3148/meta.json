@@ -3,19 +3,18 @@
   "name": "AI 전략",
   "kind": "custom",
   "verified": {
-    "backtestId": 15275,
-    "return": 8.01,
-    "mdd": 14.61,
-    "trades": 6,
+    "backtestId": 15278,
+    "return": 3.1,
+    "mdd": 13.71,
+    "trades": 4,
     "vsBuyHold": "lose",
-    "benchRet": 1076.05,
+    "benchRet": 450.4,
     "benchBasis": "price",
     "gapPct": 0,
-    "tFrom": 1670198400,
-    "tTo": 1730592000,
+    "tFrom": 1609718400,
+    "tTo": 1670112000,
     "approxNotes": [
       "봉 내 순서는 관례(양봉 O→L→H→C·음봉 O→H→L→C) — 실순서 미상 · 봉 중 거래량 null · MDD 는 봉 마감 기준",
-      "거래량은 봉 마감에만 확정 — 봉 중 평가에서 ctx.vol/volumes 가 null 이라 거래량 조건이 걸러졌을 수 있음(봉 중에도 쓰려면 ctx.volPrev·ctx.avgVol)",
       "[데이터/출처] 내 저장소(에이전트 0ccd49…) 700봉 · 1분봉에서 저장소 안에서 만든 파생봉 — 서버 데이터와 값이 다를 수 있습니다"
     ],
     "spec": {
@@ -23,10 +22,10 @@
       "sym": "SOL",
       "interval": "1d",
       "bars": 700,
-      "end": 1730678400
+      "end": 1670198400
     }
   },
   "config": null,
-  "updatedAt": "2026-10-05T15:59:03.767Z",
+  "updatedAt": "2026-10-05T16:04:33.703Z",
   "publishedBy": "scripts/publish-strategies.mjs"
 }
