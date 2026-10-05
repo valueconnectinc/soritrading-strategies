@@ -13,7 +13,7 @@
  * the long-term mean after a huge rally.
  * When it buys and sells: buys when SOL touches the lower Bollinger band AND
  * RSI < 35 AND its 200-day average is rising, price is above it, and price is
- * not more than 1.6x that average (so the dip is not a late-extension buy).
+ * not more than 2.0x that average (so the dip is not a late-extension buy).
  * Sells when price recovers above the 20-day EMA or drops below the 200-day
  * average (trend broken).
  * When it does NOT work: in a sustained bear market the rising-200d gate keeps
@@ -49,8 +49,8 @@ function onUpdate(ctx) {
   }
 
   const trendRising = sma200 >= sma200_20ago;
-  // Extension filter 1.6x: W2 (2023-25 melt-up) losses came from buying dips still ~2-3x above the 200d mean; cap the buy zone.
-  const notExtended = price <= 1.6 * sma200;
+  // Extension cap 2.0x: 1.6x fixed the W2 melt-up losses but blocked the 2021 bull-run trades; 2.0x is the compromise.
+  const notExtended = price <= 2.0 * sma200;
   if (price <= lower && rsi < 35 && price > sma200 && trendRising && notExtended) {
     return { side: 'buy', qty: (ctx.cash / price) * 0.95 };
   }
