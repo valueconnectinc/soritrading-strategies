@@ -7,17 +7,19 @@
  * cash: 10000
  *
  * Why this strategy: In an uptrend, a sharp drop to the lower volatility band
- * together with a deeply oversold stochastic is usually an overreaction that
- * snaps back to the middle band. Uses standard-deviation bands (Bollinger) and
- * the stochastic oscillator — a different mechanism from the ATR-Keltner recipe.
+ * together with an oversold stochastic is usually an overreaction that snaps
+ * back to the middle band. Uses standard-deviation bands (Bollinger) and the
+ * stochastic oscillator — a different mechanism from the ATR-Keltner recipe.
  * When it buys and sells: buys only when ETH is above its 200-bar average
  * (uptrend) AND price touches the lower Bollinger band AND the stochastic is
- * deeply oversold (K below 10, not just 20 — fewer, higher-quality dips). Sells
- * when price recovers to the middle band or the stochastic turns overbought
- * (K above 80). No stop-loss: waiting for the snap-back beats any stop on 4h
- * (a time stop and a 3.5x ATR stop both made results worse or did nothing).
+ * oversold (K below 20). Sells when price recovers to the middle band or the
+ * stochastic turns overbought (K above 80). No stop-loss: waiting for the
+ * snap-back beats any stop on 4h (a time stop and a 3.5x ATR stop both made
+ * results worse or did nothing; a deeper K<10 entry also added nothing).
  * When it does NOT work: in a sustained bear market the uptrend gate keeps it in
- * cash (it misses the bounce); in long sideways chop the snap-back can be slow.
+ * cash (it misses the bounce); in long sideways chop the snap-back can be slow,
+ * and it holds through sharp crashes waiting for the recovery (drawdown up to
+ * ~44% in the 2020 COVID crash window).
  */
 function onUpdate(ctx) {
   const price = ctx.price;
@@ -55,8 +57,8 @@ function onUpdate(ctx) {
     return null;
   }
 
-  // 200-SMA trend gate + touch lower band + DEEP oversold stochastic (closed bars).
-  if (price <= lower && k < 10 && price > sma200 && cd === 0) {
+  // 200-SMA trend gate + touch lower band + oversold stochastic (closed bars).
+  if (price <= lower && k < 20 && price > sma200 && cd === 0) {
     S.cd = 2;
     return { side: 'buy', qty: (ctx.cash / price) * 0.95 };
   }
