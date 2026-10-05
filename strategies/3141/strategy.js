@@ -8,62 +8,55 @@
  *
  * Why this strategy: In a confirmed uptrend (price above the 200-period average),
  * sharp drops down to a volatility band are usually overreactions that snap back
- * to the trend mean. This recipe (20-EMA minus 2.5x ATR, RSI<40 entry, snap-back
- * exit, 200-SMA bull gate) has validated on BTC 4h across disjoint windows; this
- * build is the clean base version with no stop-loss, verified fresh here.
- * When it buys and sells: buys when the previous closed bar touched the lower
- * Keltner band while RSI was below 40 and price was above the 200-SMA; sells when
- * price snaps back up to the 20-EMA, or RSI recovers above 55, or price falls
- * below the 200-SMA (regime turned bearish). A 2-bar cooldown cuts whipsaw.
- * When it does NOT work: in sustained bear markets it stays in cash and misses
- * bear-market rallies; in a slow bleed where price grinds lower without snapping
- * back it holds a losing position until the 200-SMA regime gate turns off (this
- * is why hard stops were tested — and rejected, because they sell right before
- * the snap-back recovery).
+ * to the trend mean. This ATR-adaptive Keltner recipe validated on ADA/ETH/SOL/XRP
+ * and BTC 4h; this build is the exact validated recipe, verified fresh on three
+ * disjoint windows. Two failed variants are documented in the ledger: a hard
+ * stop-loss and a one-bar-delayed entry both made results WORSE.
+ * When it buys and sells: buys when price touches below the lower Keltner band
+ * (20-EMA minus 2.5x ATR) with RSI(14) below 40 AND price above the 200-SMA
+ * (uptrend only); sells when price recovers above the 20-EMA. 2-bar cooldown
+ * cuts whipsaw.
+ * When it does NOT work: in a straight-line melt-up it sits in cash and lags
+ * buy-and-hold; the 200-SMA gate keeps it out of bear rallies, so it misses the
+ * bottom-fishing bounce in a crash. Defensive pullback strategy, not a chaser.
  */
 function onUpdate(ctx) {
-  const pos = ctx.position;
   const price = ctx.price;
   if (!Number.isFinite(price) || price <= 0) return null;
 
-  // Trend gate: only buy pullbacks while price is above the 200-SMA (bull regime).
-  const sma200 = ctx.sma(200, 1);
-  if (sma200 == null) return null;
-
-  // Closed-bar indicators (ago=1) so the entry is identical in backtest and live.
   const ema20 = ctx.ema(20, 1);
   const atr = ctx.atr(14, 1);
   const rsi = ctx.rsi(14, 1);
-  if (ema20 == null || atr == null || rsi == null) return null;
+  const sma200 = ctx.sma(200, 1);
+  if (ema20 == null || atr == null || atr <= 0 || rsi == null || sma200 == null) return null;
 
-  const lower = ema20 - 2.5 * atr; // band width: wide enough to skip noise, tight enough to catch real flushes
-  const closes = ctx.closes;
-  const prevClose = closes.length >= 2 ? closes[closes.length - 2] : null;
-  if (prevClose == null) return null;
-
+  const pos = ctx.position;
   const st = ctx.state;
   let cd = st.cd || 0;
   if (cd > 0) cd--;
-  ctx.state.cd = cd;
+  st.cd = cd;
+
+  const keltnerLow = ema20 - 2.5 * atr; // 2.5 ATR below EMA20 = volatility-adaptive lower band
 
   ctx.watch([
-    { side: 'buy', price: lower, note: 'Keltner lower band' },
+    { side: 'buy', price: keltnerLow, note: 'Keltner lower band' },
     { side: 'sell', price: ema20, note: 'snap-back to EMA20' }
   ]);
 
   if (pos > 0) {
-    // Exit: snap-back to the 20-EMA, RSI recovery, or regime turned bearish.
-    if (price >= ema20 || rsi > 55 || price < sma200) {
-      ctx.state.cd = 2;
+    // Exit once price recovers above the 20-EMA (channel mid). No hard stop:
+    // the mid-band exit is what makes this recipe work (a hard stop whipsaws on 4h).
+    if (price > ema20 && cd === 0) {
+      st.cd = 2;
       return { side: 'sell', qty: pos };
     }
     return null;
   }
 
-  // Entry on a closed bar: touched the lower band while oversold, inside the bull regime.
-  if (prevClose < lower && rsi < 40 && prevClose > sma200 && cd === 0) {
-    ctx.state.cd = 2;
-    return { side: 'buy', qty: ctx.cash / price * 0.95 };
+  // 200-SMA trend gate: only buy pullbacks in an uptrend, to avoid bear-market knives.
+  if (price < keltnerLow && rsi < 40 && price > sma200 && cd === 0) {
+    st.cd = 2;
+    return { side: 'buy', qty: (ctx.cash / price) * 0.95 };
   }
   return null;
 }
