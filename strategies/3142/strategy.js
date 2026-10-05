@@ -12,10 +12,10 @@
  * stochastic oscillator — a different mechanism from the ATR-Keltner recipe.
  * When it buys and sells: buys only when ETH is above its 200-bar average
  * (uptrend) AND price touches the lower Bollinger band AND the stochastic is
- * oversold (K below 20). Sells when price recovers to the middle band or the
- * stochastic turns overbought (K above 80). No time stop: like the validated
- * BTC recipe, waiting for the snap-back beats forcing an exit (a 24-bar time
- * stop made drawdown worse on ETH 4h).
+ * oversold (K below 20). Sells when price recovers to the middle band, when the
+ * stochastic turns overbought (K above 80), or on a WIDE protective stop at
+ * entry minus 3.5x ATR (tail-risk cap only — a narrow stop whipsaws; a wide one
+ * only cuts the worst crashes).
  * When it does NOT work: in a sustained bear market the uptrend gate keeps it in
  * cash (it misses the bounce); in long sideways chop the snap-back can be slow.
  */
@@ -26,7 +26,8 @@ function onUpdate(ctx) {
   const bb = ctx.bb(20, 2, 1);
   const stc = ctx.stoch(14, 3, 1);
   const sma200 = ctx.sma(200, 1);
-  if (bb == null || stc == null || sma200 == null) return null;
+  const atr = ctx.atr(14, 1);
+  if (bb == null || stc == null || sma200 == null || atr == null || atr <= 0) return null;
 
   // bb may come back as {upper,mid,lower} or [upper,mid,lower] — accept both.
   const lower = Array.isArray(bb) ? bb[2] : bb.lower;
@@ -47,7 +48,11 @@ function onUpdate(ctx) {
 
   const pos = ctx.position;
   if (pos > 0) {
-    // Exit on snap-back to mid band or overbought stochastic (closed bars).
+    const stop = ctx.entryPx - 3.5 * atr; // wide tail-risk cap (3.5x ATR, not a tight stop)
+    if (price < stop && cd === 0) {
+      S.cd = 2;
+      return { side: 'sell', qty: pos };
+    }
     if ((price >= mid || k > 80) && cd === 0) {
       S.cd = 2;
       return { side: 'sell', qty: pos };
