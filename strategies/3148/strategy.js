@@ -8,12 +8,12 @@
  *
  * Why this strategy: Defensive mean-reversion — buy a sharp drop to the lower
  * Bollinger band while the daily trend is still up, ride the snap-back to the
- * 20-day average. The rising-200d gate keeps it out of bear markets; the RSI
- * floor makes sure it only buys genuine weakness, not a quiet drift.
+ * 20-day average. The rising-200d gate keeps it out of bear markets; RSI + a
+ * mild volume bump confirm the drop is real, not a quiet drift.
  * When it buys and sells: buys when SOL touches the lower Bollinger band AND
- * RSI < 35 AND its 200-day average is rising (price above it too). Sells when
- * price recovers above the 20-day EMA or drops below the 200-day average
- * (trend broken).
+ * RSI < 35 AND its 200-day average is rising (price above it too) AND today's
+ * volume is at least 1.2x the 20-day average. Sells when price recovers above
+ * the 20-day EMA or drops below the 200-day average (trend broken).
  * When it does NOT work: in a sustained bear market the rising-200d gate keeps
  * it in cash (misses bounces); it underperforms buy-and-hold in melt-up windows
  * because it exits at the 20-day EMA instead of riding the full trend.
@@ -27,7 +27,9 @@ function onUpdate(ctx) {
   const sma200 = ctx.sma(200, 1);
   const sma200_20ago = ctx.sma(200, 21);
   const ema20 = ctx.ema(20, 1);
-  if (bb == null || rsi == null || sma200 == null || sma200_20ago == null || ema20 == null) return null;
+  const avgVol = ctx.avgVol(20);
+  const vol = ctx.vol;
+  if (bb == null || rsi == null || sma200 == null || sma200_20ago == null || ema20 == null || avgVol == null || vol == null) return null;
 
   const lower = Array.isArray(bb) ? bb[2] : bb.lower;
   if (!Number.isFinite(lower)) return null;
@@ -47,8 +49,9 @@ function onUpdate(ctx) {
   }
 
   const trendRising = sma200 >= sma200_20ago;
-  // RSI<35 (was 30) + no volume gate: baseline had only 2-4 trades/2yr, too restrictive to matter.
-  if (price <= lower && rsi < 35 && price > sma200 && trendRising) {
+  const volConfirms = vol >= 1.2 * avgVol;
+  // RSI<35 + 1.2x volume: middle ground between too-strict (2 trades) and RSI-only (-10% on W2).
+  if (price <= lower && rsi < 35 && price > sma200 && trendRising && volConfirms) {
     return { side: 'buy', qty: (ctx.cash / price) * 0.95 };
   }
   return null;
