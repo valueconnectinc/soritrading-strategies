@@ -12,8 +12,10 @@
  * windows (positive everywhere, low drawdown). Adds a 1d asset to a portfolio
  * of 4h mean-reversion legs and the ADA trend leg.
  * When it buys and sells: buys when SOL touches the lower Bollinger band AND
- * RSI < 30 AND its 200-day average is rising. Sells when price recovers above
- * the 20-day EMA or drops below the 200-day average (trend broken).
+ * RSI < 30 AND its 200-day average is rising AND today's volume is at least
+ * 1.3x the 20-day average (confirmation the drop is real, not a quiet drift).
+ * Sells when price recovers above the 20-day EMA or drops below the 200-day
+ * average (trend broken).
  * When it does NOT work: in a sustained bear market the rising-200d gate keeps
  * it in cash (misses bounces); it underperforms buy-and-hold in melt-up windows
  * because it exits at the 20-day EMA instead of riding the full trend.
@@ -27,7 +29,9 @@ function onUpdate(ctx) {
   const sma200 = ctx.sma(200, 1);
   const sma200_20ago = ctx.sma(200, 21);
   const ema20 = ctx.ema(20, 1);
-  if (bb == null || rsi == null || sma200 == null || sma200_20ago == null || ema20 == null) return null;
+  const avgVol = ctx.avgVol(20);
+  const vol = ctx.vol;
+  if (bb == null || rsi == null || sma200 == null || sma200_20ago == null || ema20 == null || avgVol == null || vol == null) return null;
 
   const lower = Array.isArray(bb) ? bb[2] : bb.lower;
   if (!Number.isFinite(lower)) return null;
@@ -47,7 +51,9 @@ function onUpdate(ctx) {
   }
 
   const trendRising = sma200 >= sma200_20ago;
-  if (price <= lower && rsi < 30 && price > sma200 && trendRising) {
+  const volConfirms = vol >= 1.3 * avgVol;
+  // Volume gate 1.3x: ledger 1742/1743 showed 1.2-1.5x improved the champion; 1.3x is a middle ground.
+  if (price <= lower && rsi < 30 && price > sma200 && trendRising && volConfirms) {
     return { side: 'buy', qty: (ctx.cash / price) * 0.95 };
   }
   return null;
