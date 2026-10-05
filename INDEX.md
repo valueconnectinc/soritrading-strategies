@@ -11,7 +11,7 @@ Every figure comes from the last verifying backtest at publish time. These are p
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
-|  | [3144](strategies/3144/) | ADA 1D Defensive Donchian | -18.92% | -11.18% | +77.63% | 11 | 2026-10-05 |
+|  | [3144](strategies/3144/) | ADA 1D Defensive Donchian | -69.07% | +57.18% | +70.98% | 14 | 2026-10-05 |
 | ★ | [3143](strategies/3143/) | ADA 1D Donchian Breakout Trend | +50.20% | -60.05% | +45.78% | 13 | 2026-10-05 |
 | ★ | [3142](strategies/3142/) | ETH 4H Bollinger-Stoch Mean Reversion | +26.34% | -52.02% | +40.27% | 73 | 2026-10-05 |
 |  | [3141](strategies/3141/) | BTC 4H Trend-Gated Keltner Mean-Reversion | +18.46% | +38.04% | +9.05% | 46 | 2026-10-05 |
