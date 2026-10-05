@@ -3,11 +3,11 @@
   "name": "AI 전략",
   "kind": "custom",
   "verified": {
-    "backtestId": 15244,
-    "return": 260.27,
-    "mdd": 15.52,
-    "trades": 20,
-    "vsBuyHold": "win",
+    "backtestId": 15247,
+    "return": 151.83,
+    "mdd": 13.29,
+    "trades": 16,
+    "vsBuyHold": "lose",
     "benchRet": 221.34,
     "benchBasis": "price",
     "gapPct": 0,
@@ -22,7 +22,7 @@
       "sym": "XRP",
       "interval": "1d",
       "bars": 1193,
-      "end": 1791213733
+      "end": 1791213771
     }
   },
   "config": null,
