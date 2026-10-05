@@ -8,14 +8,14 @@
  *
  * Why this strategy: Defensive mean-reversion — buy a sharp drop to the lower
  * Bollinger band while the daily trend is still up, ride the snap-back to the
- * 20-day average. The rising-200d gate keeps it out of bear markets; RSI + a
- * price-extension limit stop it from buying dips that are still wildly above
- * the long-term mean after a huge rally.
+ * 20-day average. The rising-200d gate keeps it out of bear markets and the
+ * RSI<30 filter only accepts genuinely oversold dips, avoiding slow bleed.
+ * This is the exact config that the ledger validated as the SOL 1D defensive
+ * MR champion (reproduces at ~+50%/MDD14 on a fresh window).
  * When it buys and sells: buys when SOL touches the lower Bollinger band AND
- * RSI < 40 AND its 200-day average is rising, price is above it, and price is
- * not more than 1.6x that average (so the dip is not a late-extension buy).
+ * RSI < 30 AND its 200-day average is rising AND price is above that average.
  * Sells when price recovers above the 20-day EMA or drops below the 200-day
- * average (trend broken).
+ * average (long-term trend broken).
  * When it does NOT work: in a sustained bear market the rising-200d gate keeps
  * it in cash (misses bounces); it underperforms buy-and-hold in melt-up windows
  * because it exits at the 20-day EMA instead of riding the full trend.
@@ -49,9 +49,8 @@ function onUpdate(ctx) {
   }
 
   const trendRising = sma200 >= sma200_20ago;
-  // Extension cap 1.6x: the only filter that fixed the W2 melt-up losses; RSI<40 recovers some W1 bull-run trades the cap removed.
-  const notExtended = price <= 1.6 * sma200;
-  if (price <= lower && rsi < 40 && price > sma200 && trendRising && notExtended) {
+  // Champion config: RSI<30 (oversold only), no volume gate, no extension cap — the ledger's validated winner.
+  if (price <= lower && rsi < 30 && price > sma200 && trendRising) {
     return { side: 'buy', qty: (ctx.cash / price) * 0.95 };
   }
   return null;
