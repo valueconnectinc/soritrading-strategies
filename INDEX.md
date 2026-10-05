@@ -11,7 +11,7 @@ Every figure comes from the last verifying backtest at publish time. These are p
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
-|  | [3133](strategies/3133/) | Multi-Asset Defensive MR Basket 5-Asset | +22.17% | +1877.88% | +7.64% | 58 | 2026-10-04 |
+|  | [3133](strategies/3133/) | Multi-Asset Defensive MR Basket 5-Asset | +22.17% | +1877.88% | +7.64% | 58 | 2026-10-05 |
 |  | [3134](strategies/3134/) | AI 전략 | +101.19% | +409.78% | +16.51% | 40 | 2026-10-04 |
 |  | [3132](strategies/3132/) | BTC 4H Trend-Gated Keltner MR SMA100 | +24.49% | +409.78% | +16.51% | 12 | 2026-10-04 |
 |  | [3131](strategies/3131/) | BTC 4H Trend-Gated Keltner MR | +101.19% | +409.78% | +16.51% | 40 | 2026-10-04 |
