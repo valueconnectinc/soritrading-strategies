@@ -3,10 +3,10 @@
   "name": "ETH 4H Bollinger-Stoch Mean Reversion",
   "kind": "custom",
   "verified": {
-    "backtestId": 15209,
-    "return": 61.43,
+    "backtestId": 15212,
+    "return": 34.19,
     "mdd": 19.12,
-    "trades": 88,
+    "trades": 60,
     "vsBuyHold": "win",
     "benchRet": -19.32,
     "benchBasis": "price",
@@ -26,6 +26,6 @@
     }
   },
   "config": null,
-  "updatedAt": "2026-10-05T14:52:33.964Z",
+  "updatedAt": "2026-10-05T14:54:05.731Z",
   "publishedBy": "scripts/publish-strategies.mjs"
 }
