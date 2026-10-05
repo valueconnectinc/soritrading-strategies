@@ -3,7 +3,7 @@
   "name": "Multi-Asset Defensive MR Basket 5-Asset",
   "kind": "custom",
   "verified": {
-    "backtestId": 15183,
+    "backtestId": 15185,
     "return": 122.61,
     "mdd": 17.71,
     "trades": 270,
@@ -24,6 +24,6 @@
     }
   },
   "config": null,
-  "updatedAt": "2026-10-05T10:56:48.292Z",
+  "updatedAt": "2026-10-05T11:29:45.228Z",
   "publishedBy": "scripts/publish-strategies.mjs"
 }
