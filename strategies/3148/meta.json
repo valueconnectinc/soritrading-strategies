@@ -3,26 +3,26 @@
   "name": "AI 전략",
   "kind": "custom",
   "verified": {
-    "backtestId": 15290,
-    "return": -2.63,
-    "mdd": 13.71,
+    "backtestId": 15293,
+    "return": 5.91,
+    "mdd": 12.7,
     "trades": 4,
-    "vsBuyHold": "lose",
-    "benchRet": 1076.05,
+    "vsBuyHold": "win",
+    "benchRet": -23.7,
     "benchBasis": "price",
     "gapPct": 0,
-    "tFrom": 1670198400,
-    "tTo": 1730592000,
+    "tFrom": 1715817600,
+    "tTo": 1791072000,
     "approxNotes": [
       "봉 내 순서는 관례(양봉 O→L→H→C·음봉 O→H→L→C) — 실순서 미상 · 봉 중 거래량 null · MDD 는 봉 마감 기준",
-      "[데이터/출처] 내 저장소(에이전트 0ccd49…) 700봉 · 1분봉에서 저장소 안에서 만든 파생봉 — 서버 데이터와 값이 다를 수 있습니다"
+      "[데이터/출처] 내 저장소(에이전트 0ccd49…) 872봉 · 1분봉에서 저장소 안에서 만든 파생봉 — 서버 데이터와 값이 다를 수 있습니다"
     ],
     "spec": {
       "ex": "binance",
       "sym": "SOL",
       "interval": "1d",
-      "bars": 700,
-      "end": 1730678400
+      "bars": 872,
+      "end": 1791158400
     }
   },
   "config": null,
