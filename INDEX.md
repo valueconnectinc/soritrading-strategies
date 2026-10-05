@@ -11,7 +11,7 @@ Every figure comes from the last verifying backtest at publish time. These are p
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
-|  | [3141](strategies/3141/) | BTC 4H Trend-Gated Keltner Mean-Reversion | -16.09% | +38.04% | +16.79% | 26 | 2026-10-05 |
+|  | [3141](strategies/3141/) | BTC 4H Trend-Gated Keltner Mean-Reversion | +18.46% | +38.04% | +9.05% | 46 | 2026-10-05 |
 |  | [3140](strategies/3140/) | BTC 4H Keltner MR with Hard Stop | -18.05% | +38.04% | +18.73% | 32 | 2026-10-05 |
 |  | [3139](strategies/3139/) | XRP 4H Trend-Gated Keltner Mean-Reversion | +17.06% | +255.56% | +10.38% | 10 | 2026-10-05 |
 | — | [3133](strategies/3133/) | Multi-Asset Defensive MR Basket 5-Asset | +122.61% | — | +17.71% | 270 | 2026-10-05 |
