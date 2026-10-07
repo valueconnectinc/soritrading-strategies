@@ -11,7 +11,7 @@ Every figure comes from the last verifying backtest at publish time. These are p
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
-|  | [3169](strategies/3169/) | BTC Sentiment-Gated OBV Trend 1D | +16.21% | +39.48% | +38.16% | 268 | 2026-10-07 |
+|  | [3169](strategies/3169/) | BTC Sentiment-Gated OBV Trend 1D | +216.14% | +1373.95% | +44.88% | 39 | 2026-10-07 |
 |  | [3167](strategies/3167/) | AI 전략 | +105.50% | +164.31% | +70.44% | 14 | 2026-10-07 |
 |  | [3166](strategies/3166/) | AI 전략 | +300.39% | +2237.42% | +72.05% | 25 | 2026-10-07 |
 |  | [3164](strategies/3164/) | AI 전략 | +590.77% | +753.65% | +61.81% | 7 | 2026-10-07 |

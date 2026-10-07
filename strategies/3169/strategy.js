@@ -10,13 +10,14 @@
  * (OBV) tracks whether money is flowing in or out, and the Fear & Greed index
  * measures crowd sentiment. When volume flow is rising AND sentiment is not
  * extremely greedy, BTC tends to keep grinding up; extreme greed marks a
- * crowded top where buys are risky.
+ * crowded top where new buys are risky.
  * When it buys and sells: Buys when 30-day OBV trend is rising, price is above
  * its 200-day average, and Fear & Greed is below 80 (not extreme greed). Sells
- * when OBV turns down OR Fear & Greed exceeds 88 (panic-top exit).
+ * when the OBV trend turns down. Sentiment only blocks NEW entries; it never
+ * forces an exit, so it does not whipsaw a strong trend.
  * When it does NOT work: In a quiet drift where OBV stays flat, or when Fear &
  * Greed data is missing (then the gate is skipped). Extreme-greed tops can run
- * for weeks, so you may exit early and miss the final melt-up.
+ * for weeks, so you may miss the final melt-up by not buying into greed.
  */
 function onUpdate(ctx) {
   const pos = ctx.position;
@@ -54,17 +55,16 @@ function onUpdate(ctx) {
   const fg = ctx.data('fg');
   const fgOk = fg != null && Number.isFinite(fg);
 
-  // Cooldown: after a flip, wait 5 bars before flipping again (cuts whipsaw).
+  // Cooldown: after a flip, wait 8 bars before flipping again (cuts whipsaw).
   const st = ctx.state;
   let cd = st.cd || 0;
   if (cd > 0) cd--;
   ctx.state.cd = cd;
 
   if (pos > 0) {
-    // Exit on OBV turn-down OR extreme greed (>=88). Extreme greed = crowded top.
-    const greedyTop = fgOk && fg >= 88;
-    if ((falling || greedyTop) && cd === 0) {
-      ctx.state.cd = 5;
+    // Exit ONLY on OBV turn-down. Sentiment never forces an exit.
+    if (falling && cd === 0) {
+      ctx.state.cd = 8;
       return { side: 'sell', qty: pos };
     }
     return null;
@@ -72,7 +72,7 @@ function onUpdate(ctx) {
   // Enter only when not at extreme greed (fg < 80). 80 = crowded, risky to buy.
   const notGreedy = !fgOk || fg < 80;
   if (rising && price > sma200 && notGreedy && cd === 0) {
-    ctx.state.cd = 5;
+    ctx.state.cd = 8;
     return { side: 'buy', qty: ctx.cash / price * 0.95 };
   }
   return null;
