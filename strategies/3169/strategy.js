@@ -12,9 +12,9 @@
  * extremely greedy, BTC tends to keep grinding up; extreme greed marks a
  * crowded top where new buys are risky.
  * When it buys and sells: Buys when 30-day OBV trend is rising, price is above
- * its 200-day average, and Fear & Greed is below 80 (not extreme greed). Sells
- * when the OBV trend turns down. Sentiment only blocks NEW entries; it never
- * forces an exit, so it does not whipsaw a strong trend.
+ * its 200-day average, and Fear & Greed is below 90 (only extreme greed blocks
+ * new entries, so normal bull markets still get bought). Sells when the OBV
+ * trend turns down. Sentiment only blocks NEW entries; it never forces an exit.
  * When it does NOT work: In a quiet drift where OBV stays flat, or when Fear &
  * Greed data is missing (then the gate is skipped). Extreme-greed tops can run
  * for weeks, so you may miss the final melt-up by not buying into greed.
@@ -69,8 +69,8 @@ function onUpdate(ctx) {
     }
     return null;
   }
-  // Enter only when not at extreme greed (fg < 80). 80 = crowded, risky to buy.
-  const notGreedy = !fgOk || fg < 80;
+  // Enter only when not at EXTREME greed (fg < 90). 90 = rare crowded blow-off.
+  const notGreedy = !fgOk || fg < 90;
   if (rising && price > sma200 && notGreedy && cd === 0) {
     ctx.state.cd = 8;
     return { side: 'buy', qty: ctx.cash / price * 0.95 };
