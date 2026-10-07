@@ -1,41 +1,34 @@
 /*
  * @coinsori-strategy v1
- * name: BTC Long-Horizon Momentum Hysteresis 1D
+ * name: BTC 200-Day Trend Rider 1D
  * ex: binance
  * syms: BTCUSDT
  * interval: 1d
  * cash: 10000
  *
- * Why this strategy: BTC's big moves are long-horizon trends. A 90-day rate of
- * change tells whether the market has been moving up or down over a quarter,
- * filtering out the daily noise that whipsaws short-term signals. A hysteresis
- * band (enter only above +5%, exit only below -5%) stops the signal flipping on
- * small wiggles, and the 200-day average confirms the trend is intact. This is
- * the only family that held up in this job's tests.
- * When it buys and sells: Buys when the 90-day change is above +5% AND price is
- * above the 200-day average. Sells when the 90-day change falls below -5% OR
- * price drops below the 200-day average. A 10-bar cooldown prevents flip-flopping.
- * When it does NOT work: In a long flat/choppy range with no sustained move the
- * signal stays near zero and does nothing (opportunity cost), and in a slow
- * grinding bear market the 200-day gate keeps it mostly in cash but it still
- * suffers the -5% exit drawdown before leaving.
+ * Why this strategy: The single most robust edge in BTC is the long-term trend.
+ * The 200-day average cleanly separates bull from bear: when price is above it
+ * the market tends to keep climbing, when below it tends to keep falling. A tiny
+ * hysteresis band avoids the whipsaw of crossing exactly at the line.
+ * When it buys and sells: Buys when a CLOSED bar settles above 105% of the
+ * 200-day average. Sells when a CLOSED bar settles below 95% of it. The band
+ * means you only flip on a real 5% move, not on noise at the line.
+ * When it does NOT work: In a long flat range the band keeps you in and out
+ * repeatedly at small loss. It also gives back the -5% move before each exit
+ * during a real bear, so it never tops exactly.
  */
 function onUpdate(ctx) {
   const pos = ctx.position;
   const price = ctx.price;
   if (!Number.isFinite(price) || price <= 0) return null;
 
-  // 200-day trend gate on the CLOSED bar (ago=1 -> identical live/backtest).
+  // 200-day average on the CLOSED bar (ago=1 -> identical live/backtest).
   const sma200 = ctx.sma(200, 1);
   if (sma200 == null) return null;
 
-  // 90-day rate of change, computed on closed bars only.
-  const closes = ctx.closes;
-  if (!closes || closes.length < 92) return null;
-  const cNow = closes[closes.length - 2];   // last CLOSED bar
-  const c90 = closes[closes.length - 92];   // 90 bars before it
-  if (!Number.isFinite(cNow) || !Number.isFinite(c90) || c90 <= 0) return null;
-  const roc = (cNow - c90) / c90 * 100;
+  // Hysteresis band: buy above 105%, sell below 95% of the 200-day.
+  const upper = sma200 * 1.05;
+  const lower = sma200 * 0.95;
 
   const st = ctx.state;
   let cd = st.cd || 0;
@@ -43,16 +36,14 @@ function onUpdate(ctx) {
   ctx.state.cd = cd;
 
   if (pos > 0) {
-    // Exit: momentum died (roc < -5%) or the long-term trend broke.
-    if (roc < -5 || price < sma200) {
+    if (price < lower) {
       ctx.state.cd = 10;
       return { side: 'sell', qty: pos };
     }
     return null;
   }
 
-  // Enter only after a real quarter-long advance, confirmed by the 200-day.
-  if (roc > 5 && price > sma200 && cd === 0) {
+  if (price > upper && cd === 0) {
     ctx.state.cd = 10;
     return { side: 'buy', qty: ctx.cash / price * 0.95 };
   }
