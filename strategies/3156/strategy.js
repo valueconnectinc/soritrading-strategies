@@ -6,9 +6,9 @@
  * interval: 1d
  * cash: 10000
  *
- * Why this strategy: The Crypto Fear & Greed Index measures crowd emotion. Extreme fear (<20) has historically marked panic-selling bottoms and extreme greed (>80) euphoric tops.
- * When it buys and sells: Buys when the index drops below 20 while flat. Sells when the index climbs above 80, when price falls 15% below the entry (stop-loss), or after 90 days in the trade.
- * When it does NOT work: In a long bear market the index can sit in extreme fear for months while price keeps dropping, so the stop-loss takes small losses repeatedly. It also underperforms in a steady bull where sentiment stays neutral and never triggers.
+ * Why this strategy: The Crypto Fear & Greed Index measures crowd emotion. Extreme fear (<20) marks panic-selling bottoms; the bounce from panic back to neutral sentiment is the trade.
+ * When it buys and sells: Buys when the index drops below 20 while flat. Sells when sentiment recovers above 55 (panic over, mean reversion complete) or after 150 days in the trade.
+ * When it does NOT work: In a prolonged bear the index can stay in extreme fear for months while price keeps falling — there is no stop, so a deep bear means a deep drawdown. It also misses neutral-sentiment rallies entirely.
  */
 function onUpdate(ctx) {
   const fg = ctx.data('fear_greed');
@@ -29,9 +29,8 @@ function onUpdate(ctx) {
   const barsIn = (ctx.state.barsIn == null ? 0 : ctx.state.barsIn) + 1;
   ctx.state.barsIn = barsIn;
 
-  const stop = ctx.entryPx * 0.85; // 15% stop caps damage in prolonged bears
-  ctx.watch([{ side: 'sell', price: stop, note: '15% stop-loss' }]);
-  if (fg > 80 || price < stop || barsIn >= 90) { // greed exit, stop, or time exit
+  // exit when sentiment normalizes (mean reversion complete) or after 150 days
+  if (fg > 55 || barsIn >= 150) {
     return { side: 'sell', qty: ctx.position };
   }
   return null;
