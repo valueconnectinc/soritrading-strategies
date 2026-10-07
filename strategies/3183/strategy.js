@@ -1,37 +1,41 @@
 /*
  * @coinsori-strategy v1
- * name: BTC 4H Momentum-Confirmed EMA Trend
+ * name: BTC 4H EMA Trend + ATR Trail
  * ex: binance
  * syms: BTCUSDT
  * interval: 4h
  * cash: 10000
  *
- * Why this strategy: crypto trends in 4h waves, and EMA20/50 crossovers catch them.
- * Adding a momentum filter (price above its 20-bar ago level) skips the choppy
- * whipsaw entries that pure crossovers take.
- * When it buys and sells: Buy when the fast EMA crosses above the slow EMA AND price is
- * above its level 20 bars ago. Sell when the fast EMA crosses back below the slow EMA.
- * When it does NOT work: In flat range-bound markets the two EMAs still cross on noise;
- * and in a fast crash the exit lags, so a hard stop would be safer than the EMA exit.
+ * Why this strategy: EMA20/50 crossover catches 4h trends, but the previous version
+ * whipsawed on exits. An ATR trailing stop locks in profits and exits faster on reversals.
+ * A long-term trend gate (price above 200-bar SMA) keeps us out of chop.
+ * When it buys and sells: Buy on EMA20/50 golden cross when price is above the 200-bar SMA.
+ * Sell when the ATR trailing stop is hit (2.5x ATR below highest price since entry).
+ * When it does NOT work: In a long bear market the trend gate keeps us mostly in cash
+ * (good), but a sharp V-reversal after a bear trap can trigger a false golden cross.
  */
 function onUpdate(ctx) {
   const f = ctx.ema(20, 1), s = ctx.ema(50, 1);
   const fp = ctx.ema(20, 2), sp = ctx.ema(50, 2);
-  if (f == null || s == null || fp == null || sp == null) return null;
+  const sma200 = ctx.sma(200, 1);
+  const atr = ctx.atr(14, 1);
+  if (f == null || s == null || fp == null || sp == null || sma200 == null || atr == null) return null;
 
-  // exit first: fast EMA crossing below slow EMA on closed bars
-  if (ctx.position > 0 && fp >= sp && f < s) {
-    return { side: 'sell', qty: ctx.position };
+  // exit via ATR trailing stop: track highest close since entry
+  if (ctx.position > 0) {
+    const hi = ctx.state && ctx.state.hi ? Math.max(ctx.state.hi, ctx.price) : ctx.price;
+    ctx.state.hi = hi;
+    // 2.5x ATR trail below the peak
+    if (ctx.price < hi - 2.5 * atr) {
+      return { side: 'sell', qty: ctx.position };
+    }
+    return null;
   }
 
-  // momentum confirmation: current price above the close 20 bars ago
-  const closes = ctx.closes;
-  if (ctx.position === 0 && fp <= sp && f > s) {
-    const nowPx = closes[closes.length - 2];
-    const pastPx = closes[closes.length - 22];
-    if (nowPx != null && pastPx != null && nowPx > pastPx) {
-      return { side: 'buy', qty: ctx.cash / ctx.price * 0.99 };
-    }
+  // entry: golden cross + price above long-term trend
+  if (fp <= sp && f > s && ctx.price > sma200) {
+    ctx.state.hi = ctx.price;
+    return { side: 'buy', qty: ctx.cash / ctx.price * 0.99 };
   }
   return null;
 }
