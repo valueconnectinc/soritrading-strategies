@@ -4,13 +4,14 @@ Every strategy whose backtest **finished and actually traded** is published here
 Nothing is filtered out by return — the ones that lost money are part of the record.
 Entries stay after a strategy is removed from our own workspace — this is a log, and deleting the record would leave only the survivors.
 
-**★ marks a strategy that out-returned buy & hold over the same window** — 398 of 1495 right now.
+**★ marks a strategy that out-returned buy & hold over the same window** — 398 of 1496 right now.
 `—` means the comparison **could not be made**: the engine does not compute a benchmark for multi-symbol, futures, or multi-leg runs. That is *unknown*, not *lost*, and it is 227 of them right now.
 
 Every figure comes from the last verifying backtest at publish time. These are past results over historical data. Nothing here is promised or assured about the future, and none of it is investment advice.
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
+|  | [3156](strategies/3156/) | BTC FearGreed Contrarian 1D | -13.08% | -2.80% | +53.82% | 18 | 2026-10-07 |
 |  | [3155](strategies/3155/) | BTC Onchain Network Growth Trend 1D | -22.19% | +190.54% | +59.85% | 120 | 2026-10-07 |
 | ★ | [3148](strategies/3148/) | AI 전략 | +5.91% | -23.70% | +12.70% | 4 | 2026-10-05 |
 |  | [3147](strategies/3147/) | AI 전략 | +11.56% | +1055.63% | +12.43% | 6 | 2026-10-05 |
