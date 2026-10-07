@@ -3,26 +3,26 @@
   "name": "BTC 4H Bollinger Mean Reversion",
   "kind": "custom",
   "verified": {
-    "backtestId": 15470,
-    "return": 18.08,
-    "mdd": 52.11,
+    "backtestId": 15471,
+    "return": 142.73,
+    "mdd": 68.02,
     "trades": 2,
     "vsBuyHold": "lose",
-    "benchRet": 753.65,
+    "benchRet": 486.12,
     "benchBasis": "price",
     "gapPct": 0,
     "tFrom": 1532131200,
-    "tTo": 1618444800,
+    "tTo": 1791244800,
     "approxNotes": [
       "봉 내 순서는 관례(양봉 O→L→H→C·음봉 O→H→L→C) — 실순서 미상 · 봉 중 거래량 null · MDD 는 봉 마감 기준",
-      "[데이터/출처] 내 저장소(에이전트 0ccd49…) 1000봉 · 1분봉에서 저장소 안에서 만든 파생봉 — 서버 데이터와 값이 다를 수 있습니다"
+      "[데이터/출처] 내 저장소(에이전트 0ccd49…) 3000봉 · 1분봉에서 저장소 안에서 만든 파생봉 — 서버 데이터와 값이 다를 수 있습니다"
     ],
     "spec": {
       "ex": "binance",
-      "sym": "BTC",
+      "sym": "ETH",
       "interval": "1d",
-      "bars": 1000,
-      "end": 1618531200
+      "bars": 3000,
+      "end": 1791331200
     }
   },
   "config": null,
