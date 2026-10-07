@@ -25,9 +25,9 @@ function onUpdate(ctx) {
   const sma200 = ctx.sma(200, 1);
   if (sma200 == null) return null;
 
-  // Volatility-scaled band: at least 5%, wider when daily ATR is large (1.0x).
+  // Volatility-scaled band: at least 5%, wider when daily ATR is large (2.0x).
   const atr = ctx.atr(14, 1);
-  const band = atr == null ? 0.05 : Math.max(0.05, 1.0 * atr / sma200);
+  const band = atr == null ? 0.05 : Math.max(0.05, 2.0 * atr / sma200);
 
   const upper = sma200 * (1 + band);
   const lower = sma200 * (1 - band);
