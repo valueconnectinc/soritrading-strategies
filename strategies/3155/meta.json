@@ -3,25 +3,26 @@
   "name": "BTC Onchain Network Growth Trend 1D",
   "kind": "custom",
   "verified": {
-    "backtestId": 15332,
-    "return": -39.02,
-    "mdd": 79.23,
-    "trades": 234,
+    "backtestId": 15334,
+    "return": -22.19,
+    "mdd": 59.85,
+    "trades": 120,
     "vsBuyHold": "lose",
-    "benchRet": 482.96,
+    "benchRet": 190.54,
     "benchBasis": "price",
     "gapPct": 0,
-    "tFrom": 1514851200,
+    "tFrom": 1653091200,
     "tTo": 1791244800,
     "approxNotes": [
       "봉 내 순서는 관례(양봉 O→L→H→C·음봉 O→H→L→C) — 실순서 미상 · 봉 중 거래량 null · MDD 는 봉 마감 기준",
-      "[데이터/출처] 내 저장소(에이전트 0ccd49…) 3200봉 · 1분봉에서 저장소 안에서 만든 파생봉 — 서버 데이터와 값이 다를 수 있습니다"
+      "[데이터/출처] 내 저장소(에이전트 0ccd49…) 1600봉 · 1분봉에서 저장소 안에서 만든 파생봉 — 서버 데이터와 값이 다를 수 있습니다"
     ],
     "spec": {
       "ex": "binance",
       "sym": "BTC",
       "interval": "1d",
-      "bars": 3200
+      "bars": 1600,
+      "end": 1791331200
     }
   },
   "config": null,

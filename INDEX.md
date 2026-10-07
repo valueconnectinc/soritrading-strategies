@@ -11,7 +11,7 @@ Every figure comes from the last verifying backtest at publish time. These are p
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
-|  | [3155](strategies/3155/) | BTC Onchain Network Growth Trend 1D | -39.02% | +482.96% | +79.23% | 234 | 2026-10-07 |
+|  | [3155](strategies/3155/) | BTC Onchain Network Growth Trend 1D | -22.19% | +190.54% | +59.85% | 120 | 2026-10-07 |
 | ★ | [3148](strategies/3148/) | AI 전략 | +5.91% | -23.70% | +12.70% | 4 | 2026-10-05 |
 |  | [3147](strategies/3147/) | AI 전략 | +11.56% | +1055.63% | +12.43% | 6 | 2026-10-05 |
 |  | [3146](strategies/3146/) | AI 전략 | +151.83% | +221.34% | +13.29% | 16 | 2026-10-05 |
