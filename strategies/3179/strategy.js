@@ -47,7 +47,7 @@ function onUpdate(ctx) {
     return null;
   }
 
-  if (price > upper) {
+  if (price > upper && cd === 0) {
     ctx.state.cd = 10;
     return { side: 'buy', qty: ctx.cash / price * 0.95 };
   }
