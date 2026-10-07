@@ -11,7 +11,7 @@ Every figure comes from the last verifying backtest at publish time. These are p
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
-|  | [3184](strategies/3184/) | BTC 4H Donchian Turtle Trend | -5.11% | +35.82% | +31.57% | 144 | 2026-10-07 |
+|  | [3184](strategies/3184/) | BTC 4H Donchian Turtle Trend | +229.69% | +435.49% | +33.42% | 106 | 2026-10-07 |
 |  | [3183](strategies/3183/) | BTC 4H Momentum-Confirmed EMA Trend | -51.89% | +435.49% | +56.61% | 78 | 2026-10-07 |
 |  | [3181](strategies/3181/) | BTC 4H Bollinger Mean Reversion | +142.73% | +486.12% | +68.02% | 2 | 2026-10-07 |
 |  | [3179](strategies/3179/) | BTC Long-Horizon Momentum Hysteresis 1D | +7.04% | +194.38% | +59.44% | 9 | 2026-10-07 |
