@@ -11,7 +11,7 @@ Every figure comes from the last verifying backtest at publish time. These are p
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
-|  | [3179](strategies/3179/) | BTC Long-Horizon Momentum Hysteresis 1D | +12.96% | +84.62% | +27.80% | 7 | 2026-10-07 |
+|  | [3179](strategies/3179/) | BTC Long-Horizon Momentum Hysteresis 1D | -3.29% | +84.62% | +28.79% | 7 | 2026-10-07 |
 |  | [3174](strategies/3174/) | ETH Trend Ride ATR Trailing 4H | -95.18% | -23.98% | +95.60% | 354 | 2026-10-07 |
 |  | [3173](strategies/3173/) | BTC RSI2 Panic Reversion 1D | -7.46% | +446.26% | +64.59% | 138 | 2026-10-07 |
 |  | [3171](strategies/3171/) | BTC OBV Trend + Slope Regime 1D | +31.04% | +84.62% | +20.13% | 30 | 2026-10-07 |

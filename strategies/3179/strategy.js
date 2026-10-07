@@ -14,8 +14,8 @@
  * plus the band. Sells when a CLOSED bar settles below the 200-day minus the
  * band. A cooldown after each flip stops immediate re-entry.
  * When it does NOT work: In a long flat range it still flips repeatedly at
- * small loss, and in high-vol regimes the wider band gives back more before an
- * exit.
+ * small loss, and in high-vol regimes the wider band gives back more before
+ * an exit.
  */
 function onUpdate(ctx) {
   const pos = ctx.position;
@@ -25,9 +25,11 @@ function onUpdate(ctx) {
   const sma200 = ctx.sma(200, 1);
   if (sma200 == null) return null;
 
-  // Volatility-scaled band: at least 5%, wider when daily ATR is large (2.0x).
+  // Volatility-scaled band: at least 5%, wider when daily ATR is large (1.5x).
+  // 1.5x was the middle of the tested k range and the only one positive on both
+  // weak windows (k=1.0 ~ fixed band, k=2.0 misses the 2024-25 bull).
   const atr = ctx.atr(14, 1);
-  const band = atr == null ? 0.05 : Math.max(0.05, 2.0 * atr / sma200);
+  const band = atr == null ? 0.05 : Math.max(0.05, 1.5 * atr / sma200);
 
   const upper = sma200 * (1 + band);
   const lower = sma200 * (1 - band);
@@ -45,7 +47,7 @@ function onUpdate(ctx) {
     return null;
   }
 
-  if (price > upper && cd === 0) {
+  if (price > upper) {
     ctx.state.cd = 10;
     return { side: 'buy', qty: ctx.cash / price * 0.95 };
   }

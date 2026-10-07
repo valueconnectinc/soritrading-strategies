@@ -3,9 +3,9 @@
   "name": "BTC Long-Horizon Momentum Hysteresis 1D",
   "kind": "custom",
   "verified": {
-    "backtestId": 15458,
-    "return": 12.96,
-    "mdd": 27.8,
+    "backtestId": 15460,
+    "return": -3.29,
+    "mdd": 28.79,
     "trades": 7,
     "vsBuyHold": "lose",
     "benchRet": 84.62,
@@ -27,6 +27,6 @@
     }
   },
   "config": null,
-  "updatedAt": "2026-10-07T17:05:40.796Z",
+  "updatedAt": "2026-10-07T17:06:34.412Z",
   "publishedBy": "scripts/publish-strategies.mjs"
 }
