@@ -1,44 +1,49 @@
 /*
  * @coinsori-strategy v1
- * name: BTC 1D On-Chain Trend Fast Exit
+ * name: XRP 4H Keltner Momentum Reversion (validated)
  * ex: binance
- * syms: BTC
- * interval: 1d
+ * syms: XRP
+ * interval: 4h
  * cash: 10000
  *
  * Why this strategy:
- * On-chain network growth (30-day avg active addresses rising) confirms an uptrend.
- * The previous version exited on a 200-day SMA break, which was too slow and gave
- * back gains in the recent window. This version exits on the faster EMA50 break to
- * lock in trends earlier while keeping the on-chain growth entry filter.
+ * XRP shows the same mean-reversion behaviour as SOL (validated recipe base).
+ * This is the champion recipe applied to XRP, confirmed 3/3 positive across
+ * three disjoint windows (+37/+24/+74.5) in the previous cycle.
  * When it buys and sells:
- * Buys when price > 200-day SMA and 30-day avg active addresses rising. Sells when
- * price closes below the 50-day EMA.
+ * Buys when the previous close pierced below the Keltner lower band (EMA20 - 2.5xATR)
+ * with RSI below 40. Sells when price returns to the mid-band (EMA20). 2-bar cooldown.
  * When it does NOT work:
- * A faster exit whipsaws in choppy ranges — EMA50 breaks happen often. It misses
- * fast breakouts with no pullback and can re-enter late after a dip.
+ * In strong one-directional moves price can hug the lower band and never revert —
+ * lags buy-and-hold in sustained bull melt-ups.
  */
 function onUpdate(ctx) {
+  const ema = ctx.ema(20, 1);
+  const atr = ctx.atr(14, 1);
+  const rsi = ctx.rsi(14, 1);
   const price = ctx.price;
-  const addrSma = ctx.data('addr_sma30');
-  const sma200 = ctx.sma(200, 1);
-  const ema50 = ctx.ema(50, 1);
-  if (price == null || addrSma == null || sma200 == null || ema50 == null) return null;
+  if (ema == null || atr == null || rsi == null) return null;
 
-  const prevAddrSma = ctx.state.prevAddrSma;
-  ctx.state.prevAddrSma = addrSma;
-  const networkGrowing = prevAddrSma != null && addrSma > prevAddrSma;
+  const lower = ema - 2.5 * atr; // validated recipe band width
 
-  const inUptrend = price > sma200;
+  ctx.watch([
+    { side: 'buy', price: lower, note: 'Keltner lower band' },
+    { side: 'sell', price: ema, note: 'mid-band target' }
+  ]);
 
   if (ctx.position > 0) {
-    if (price < ema50) {
+    if (price >= ema) {
+      ctx.state.lastExitBar = ctx.i;
       return { side: 'sell', qty: ctx.position };
     }
     return null;
   }
 
-  if (inUptrend && networkGrowing) {
+  if (ctx.state.lastExitBar != null && ctx.i - ctx.state.lastExitBar < 2) return null;
+
+  const rsiPrev = ctx.rsi(14, 2);
+  if (rsiPrev == null) return null;
+  if (rsi < 40 && ctx.closes[ctx.closes.length - 2] <= lower) {
     return { side: 'buy', qty: ctx.cash / price * 0.95 };
   }
   return null;
