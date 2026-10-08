@@ -4,13 +4,14 @@ Every strategy whose backtest **finished and actually traded** is published here
 Nothing is filtered out by return — the ones that lost money are part of the record.
 Entries stay after a strategy is removed from our own workspace — this is a log, and deleting the record would leave only the survivors.
 
-**★ marks a strategy that out-returned buy & hold over the same window** — 398 of 1513 right now.
+**★ marks a strategy that out-returned buy & hold over the same window** — 398 of 1514 right now.
 `—` means the comparison **could not be made**: the engine does not compute a benchmark for multi-symbol, futures, or multi-leg runs. That is *unknown*, not *lost*, and it is 227 of them right now.
 
 Every figure comes from the last verifying backtest at publish time. These are past results over historical data. Nothing here is promised or assured about the future, and none of it is investment advice.
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
+|  | [3190](strategies/3190/) | BTC 4H Macro-Gated Trend | +13.45% | +469.54% | +6.91% | 2 | 2026-10-08 |
 |  | [3184](strategies/3184/) | BTC 4H Donchian Turtle Trend | +229.05% | +469.54% | +33.42% | 107 | 2026-10-07 |
 |  | [3183](strategies/3183/) | BTC 4H Momentum-Confirmed EMA Trend | -51.89% | +435.49% | +56.61% | 78 | 2026-10-07 |
 |  | [3181](strategies/3181/) | BTC 4H Bollinger Mean Reversion | +142.73% | +486.12% | +68.02% | 2 | 2026-10-07 |
