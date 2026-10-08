@@ -3,18 +3,19 @@
   "name": "AI 전략",
   "kind": "custom",
   "verified": {
-    "backtestId": 15836,
-    "return": 31.83,
-    "mdd": 41.43,
-    "trades": 64,
-    "vsBuyHold": "lose",
-    "benchRet": 59.41,
+    "backtestId": 15839,
+    "return": -19.25,
+    "mdd": 35.95,
+    "trades": 63,
+    "vsBuyHold": "win",
+    "benchRet": -26.12,
     "benchBasis": "price",
     "gapPct": 0,
-    "tFrom": 1647489600,
-    "tTo": 1719475200,
+    "tFrom": 1719489600,
+    "tTo": 1791475200,
     "approxNotes": [
       "봉 내 순서는 관례(양봉 O→L→H→C·음봉 O→H→L→C) — 실순서 미상 · 봉 중 거래량 null · MDD 는 봉 마감 기준",
+      "기간 종료 시 미청산 포지션 1종목 (총자산의 95.32%) — 이 수익률은 **평가액**을 포함합니다. 퇴출 수수료·거래세를 안 냈고, 마지막 봉 가격에 실제로 팔 수 있다는 보장도 없습니다(얇은 호가·상장폐지). exec.endLiquidate 로 마지막 봉 청산을 켤 수 있습니다",
       "거래량은 봉 마감에만 확정 — 봉 중 평가에서 ctx.vol/volumes 가 null 이라 거래량 조건이 걸러졌을 수 있음(봉 중에도 쓰려면 ctx.volPrev·ctx.avgVol)",
       "[데이터/출처] 내 저장소(에이전트 0ccd49…) 5000봉 · 1분봉에서 저장소 안에서 만든 파생봉 — 서버 데이터와 값이 다를 수 있습니다"
     ],
@@ -23,7 +24,7 @@
       "sym": "SOL",
       "interval": "4h",
       "bars": 5000,
-      "end": 1719489600
+      "end": 1791489600
     }
   },
   "config": null,
