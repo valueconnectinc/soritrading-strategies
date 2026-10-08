@@ -1,0 +1,31 @@
+{
+  "id": 3234,
+  "name": "BNB 1D Band-Bounce Mean Reversion",
+  "kind": "custom",
+  "verified": {
+    "backtestId": 15738,
+    "return": 150.2,
+    "mdd": 33.06,
+    "trades": 24,
+    "vsBuyHold": "lose",
+    "benchRet": 3538.92,
+    "benchBasis": "price",
+    "gapPct": 0,
+    "tFrom": 1549497600,
+    "tTo": 1670371200,
+    "approxNotes": [
+      "봉 내 순서는 관례(양봉 O→L→H→C·음봉 O→H→L→C) — 실순서 미상 · 봉 중 거래량 null · MDD 는 봉 마감 기준",
+      "[데이터/출처] 내 저장소(에이전트 0ccd49…) 1400봉 · 1분봉에서 저장소 안에서 만든 파생봉 — 서버 데이터와 값이 다를 수 있습니다"
+    ],
+    "spec": {
+      "ex": "binance",
+      "sym": "BNB",
+      "interval": "1d",
+      "bars": 1400,
+      "end": 1670457600
+    }
+  },
+  "config": null,
+  "updatedAt": "2026-10-08T20:45:53.140Z",
+  "publishedBy": "scripts/publish-strategies.mjs"
+}
