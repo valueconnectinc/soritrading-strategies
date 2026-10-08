@@ -1,22 +1,22 @@
 /*
  * @coinsori-strategy v1
- * name: BNB 1D Momentum + Wide Trailing Stop
+ * name: BNB 1D Momentum + Fed Filter
  * ex: binance
  * syms: BNBUSDT
  * interval: 1d
  * cash: 10000
  *
  * Why this strategy: the 90-day momentum + 200-day average core is the validated
- * champion on BNB. A 30% trailing stop from the entry-peak (wider than the 25%
- * version) cuts the 2022 crash leg while avoiding the whipsaw that a tighter
- * stop caused on the 2018-2021 window. 30% is near the historical max daily
- * pullback BNB shows inside a bull trend before resuming.
- * When it buys and sells: buys when 90-day momentum is above +20% and price is
- * above the 200-day average. Sells when momentum fades below +5%, price breaks
- * the 200-day average, or price falls 30% below its peak since entry.
- * When it does NOT work: in a violent but recoverable crash the stop locks in a
- * loss and the strategy re-enters only after momentum recovers, missing the
- * rebound. Single-symbol means no diversification.
+ * champion on BNB. Adding the Fed not-hiking filter targets the 2018/2022 crypto
+ * bears, which were both Fed-hiking periods — BNB's worst drawdowns. (Note: the
+ * Fed data comes from the user's external DB; if that alias is not connected the
+ * filter is inactive and the strategy behaves as pure momentum.)
+ * When it buys and sells: buys when 90-day momentum is above +20%, price is above
+ * the 200-day average, AND the Fed is not hiking. Sells when momentum fades below
+ * +5% or price breaks the 200-day average.
+ * When it does NOT work: in a Fed-easing regime that is still a crypto bear (late
+ * 2018) the filter cannot help, and it can lag a raging bull by waiting for the
+ * 200-day break. Single-symbol means no diversification across coins.
  */
 function onUpdate(ctx) {
   const sma200 = ctx.sma(200, 1);
@@ -28,20 +28,18 @@ function onUpdate(ctx) {
   if (base == null || base <= 0) return null;
   const roc90 = (prevClose / base - 1) * 100;
 
-  const pos = ctx.position;
-  const st = ctx.state;
+  // Hiking = rate now is higher than 30 days ago. Missing Fed data treated as
+  // not hiking so the strategy still trades (baseline behaviour).
+  const fedNow = ctx.data('macro_fed_funds');
+  const fedLag = ctx.data('fed_lag30');
+  const hiking = (fedNow != null && fedLag != null) ? (fedNow > fedLag) : false;
 
-  if (pos > 0) {
-    st.hi = (st.hi == null || prevClose > st.hi) ? prevClose : st.hi;
-    // 30% trailing stop: a BNB crash, not a normal pullback
-    if (roc90 < 5 || prevClose < sma200 || prevClose < st.hi * 0.70) {
-      st.hi = null;
-      return { side: 'sell', qty: pos };
-    }
-    return null;
+  const pos = ctx.position;
+
+  if (pos > 0 && (roc90 < 5 || prevClose < sma200)) {
+    return { side: 'sell', qty: pos };
   }
-  st.hi = null;
-  if (roc90 > 20 && prevClose > sma200) {
+  if (pos === 0 && roc90 > 20 && prevClose > sma200 && !hiking) {
     return { side: 'buy', qty: ctx.cash / ctx.price * 0.99 };
   }
   return null;
