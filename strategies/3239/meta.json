@@ -3,16 +3,16 @@
   "name": "SOL 4H Keltner Mean Reversion",
   "kind": "custom",
   "verified": {
-    "backtestId": 15807,
-    "return": -7.42,
-    "mdd": 13.78,
-    "trades": 6,
-    "vsBuyHold": "win",
-    "benchRet": -37.59,
+    "backtestId": 15811,
+    "return": -19.18,
+    "mdd": 40.97,
+    "trades": 34,
+    "vsBuyHold": "lose",
+    "benchRet": 202.54,
     "benchBasis": "price",
     "gapPct": 0,
-    "tFrom": 1748289600,
-    "tTo": 1791475200,
+    "tFrom": 1661889600,
+    "tTo": 1705075200,
     "approxNotes": [
       "봉 내 순서는 관례(양봉 O→L→H→C·음봉 O→H→L→C) — 실순서 미상 · 봉 중 거래량 null · MDD 는 봉 마감 기준",
       "[데이터/출처] 내 저장소(에이전트 0ccd49…) 3000봉 · 1분봉에서 저장소 안에서 만든 파생봉 — 서버 데이터와 값이 다를 수 있습니다"
@@ -22,10 +22,10 @@
       "sym": "SOL",
       "interval": "4h",
       "bars": 3000,
-      "end": 1791489600
+      "end": 1705089600
     }
   },
   "config": null,
-  "updatedAt": "2026-10-08T22:44:14.851Z",
+  "updatedAt": "2026-10-08T22:48:07.858Z",
   "publishedBy": "scripts/publish-strategies.mjs"
 }
