@@ -11,7 +11,7 @@ Every figure comes from the last verifying backtest at publish time. These are p
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
-| — | [3205](strategies/3205/) | API Probe Multi-Sym | +287.38% | — | +43.99% | 44 | 2026-10-08 |
+| — | [3205](strategies/3205/) | API Probe Multi-Sym | -6.79% | — | +7.25% | 2 | 2026-10-08 |
 | ★ | [3202](strategies/3202/) | BASELINE BTC 1D Momentum Hysteresis | +500.07% | +174.32% | +46.01% | 20 | 2026-10-08 |
 |  | [3201](strategies/3201/) | BTC 1D Momentum Hysteresis + On-Chain Regime Gate | +28.46% | +320.57% | +17.32% | 64 | 2026-10-08 |
 |  | [3200](strategies/3200/) | SOL 1D Momentum Hysteresis | +387.37% | +882.87% | +57.45% | 10 | 2026-10-08 |
