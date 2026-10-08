@@ -17,13 +17,14 @@ function onUpdate(ctx) {
   const px = ctx.price;
   if (px == null) return null;
 
-  const ema20 = ctx.ema(20, 1);
-  const ema50 = ctx.ema(50, 1);
-  const atr = ctx.atr(14, 1);
-  if (ema20 == null || ema50 == null || atr == null) return null;
-
-  // --- measure long-liquidation flow over the last 4 bars ---
+  const st = ctx.state;
   const raw = ctx.binanceLiqs(4);
+  if (st && !st.logged && raw != null) {
+    st.logged = true;
+    ctx.log('liqs raw sample:', Array.isArray(raw) ? JSON.stringify(raw.slice(0, 3)) : String(raw), 'typeof', typeof raw);
+  }
+  if (raw == null) return null;
+
   let liqSum = 0;
   if (Array.isArray(raw)) {
     for (const r of raw) {
@@ -34,18 +35,18 @@ function onUpdate(ctx) {
   } else if (typeof raw === 'number') {
     liqSum = raw;
   } else {
-    ctx.log('liqs shape', typeof raw, Array.isArray(raw) ? raw.slice(0,2) : raw);
-    return null; // liquidation feed unavailable -> stay flat
+    return null;
   }
 
-  // rolling EMA of liquidation flow so "spike" is relative, not absolute
-  const st = ctx.state;
+  const ema20 = ctx.ema(20, 1);
+  const ema50 = ctx.ema(50, 1);
+  const atr = ctx.atr(14, 1);
+  if (ema20 == null || ema50 == null || atr == null) return null;
+
   if (st.liqEma == null) st.liqEma = liqSum;
   else st.liqEma = st.liqEma * 0.95 + liqSum * 0.05;
-
   const spike = st.liqEma > 0 && liqSum > 3 * st.liqEma;
 
-  // --- exit: mean reversion or stop ---
   if (ctx.position > 0) {
     const stopPx = ctx.entryPx - 3 * atr;
     ctx.watch([
@@ -58,12 +59,10 @@ function onUpdate(ctx) {
     return null;
   }
 
-  // --- entry: capitulation on a dip ---
   if (!spike) return null;
   if (liqSum <= 0) return null;
-  if (px >= ema50) return null; // only buy dips below the 50-EMA trend line
+  if (px >= ema50) return null;
 
-  ctx.log('entry liqSum', liqSum, 'liqEma', st.liqEma, 'px', px, 'ema50', ema50);
   const qty = (ctx.cash / px) * 0.99;
   return { side: 'buy', qty };
 }
