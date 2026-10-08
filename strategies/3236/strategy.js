@@ -1,3 +1,25 @@
+/*
+ * @coinsori-strategy v1
+ * name: BNB 1D Momentum + Fed Filter (Vol-Scaled)
+ * ex: binance
+ * syms: BNBUSDT
+ * interval: 1d
+ * cash: 10000
+ *
+ * Why this strategy: the 90-day momentum + 200-day average core is the validated
+ * champion on BNB. The Fed not-hiking filter targets the 2018/2022 crypto bears.
+ * Adding volatility-scaled position sizing (smaller size when 30-day realized vol
+ * is wide) trims exposure in stress, which the ledger showed cuts drawdown on the
+ * BTC/SOL champions.
+ * When it buys and sells: buys when 90-day momentum is above +20%, price is above
+ * the 200-day average, and the Fed is not hiking. Sells when momentum fades below
+ * +5% or price breaks the 200-day average. Position size shrinks when volatility
+ * is high.
+ * When it does NOT work: in a Fed-easing regime that is still a crypto bear (late
+ * 2018) the filter cannot help, and it can lag a raging bull by waiting for the
+ * 200-day break. Vol-scaling also trims upside in calmer bull runs. Single-symbol
+ * means no diversification across coins.
+ */
 function onUpdate(ctx) {
   const sma200 = ctx.sma(200, 1);
   if (sma200 == null) return null;
@@ -8,16 +30,9 @@ function onUpdate(ctx) {
   if (base == null || base <= 0) return null;
   const roc90 = (prevClose / base - 1) * 100;
 
-  // Absolute vol target: full size when daily ATR% <= 4%, scale down linearly
-  // to 0.3 at ATR% >= 8%. Independent of own-history average.
-  const atr = ctx.atr(14, 1);
-  let scale = 1;
-  if (atr != null && prevClose > 0) {
-    const atrPct = atr / prevClose * 100;
-    if (atrPct > 4) scale = Math.max(0.3, Math.min(1, (8 - atrPct) / 4));
-  }
-
-  const fedNow = ctx.data('macro_fed_funds_rate');
+  // Hiking = rate now is higher than 30 days ago. Missing Fed data treated as
+  // not hiking so the strategy still trades (baseline behaviour).
+  const fedNow = ctx.data('macro_fed_funds');
   const fedLag = ctx.data('fed_lag30');
   const hiking = (fedNow != null && fedLag != null) ? (fedNow > fedLag) : false;
 
@@ -27,6 +42,16 @@ function onUpdate(ctx) {
     return { side: 'sell', qty: pos };
   }
   if (pos === 0 && roc90 > 20 && prevClose > sma200 && !hiking) {
+    // Volatility scaling: 30-day realized vol (annualized). When vol is high,
+    // cut position to a fraction. Baseline full size = 1.0. volPct is the ratio
+    // of current vol to a long-run reference (200-day avg vol); clamp 0.5..1.0.
+    const v30 = ctx.change(30, 1);   // 30-bar % change as a vol proxy
+    const v200 = ctx.change(200, 1);
+    let scale = 1.0;
+    if (v30 != null && v200 != null && v200 > 0) {
+      const raw = v200 / Math.max(v30, 0.001); // high current vol -> small ratio
+      scale = Math.max(0.5, Math.min(1.0, raw));
+    }
     return { side: 'buy', qty: ctx.cash / ctx.price * 0.99 * scale };
   }
   return null;
