@@ -1,50 +1,67 @@
 /*
  * @coinsori-strategy v1
- * name: XRP 4H Keltner Momentum Reversion (validated)
+ * name: BTC 4H Liquidation Capitulation Contrarian
  * ex: binance
- * syms: XRP
+ * syms: BTC
  * interval: 4h
  * cash: 10000
  *
- * Why this strategy:
- * XRP shows the same mean-reversion behaviour as SOL (validated recipe base).
- * This is the champion recipe applied to XRP, confirmed 3/3 positive across
- * three disjoint windows (+37/+24/+74.5) in the previous cycle.
- * When it buys and sells:
- * Buys when the previous close pierced below the Keltner lower band (EMA20 - 2.5xATR)
- * with RSI below 40. Sells when price returns to the mid-band (EMA20). 2-bar cooldown.
- * When it does NOT work:
- * In strong one-directional moves price can hug the lower band and never revert —
- * lags buy-and-hold in sustained bull melt-ups.
+ * Why this strategy: Long-liquidation cascades mark short-term capitulation; price tends to revert
+ * after the flush. We buy the flush on a dip and exit back to the mean.
+ * When it buys and sells: Buy when a big long-liquidation spike happens while price is below its
+ * 50-EMA (a dip). Sell when price returns to the 20-EMA or hits a 3xATR stop.
+ * When it does NOT work: In sustained bear trends "capitulation" keeps happening — repeated buying
+ * bleeds. Also quiet low-volatility markets produce no signals so it sits in cash.
  */
 function onUpdate(ctx) {
-  const ema = ctx.ema(20, 1);
+  const px = ctx.price;
+  if (px == null) return null;
+
+  const ema20 = ctx.ema(20, 1);
+  const ema50 = ctx.ema(50, 1);
   const atr = ctx.atr(14, 1);
-  const rsi = ctx.rsi(14, 1);
-  const price = ctx.price;
-  if (ema == null || atr == null || rsi == null) return null;
+  if (ema20 == null || ema50 == null || atr == null) return null;
 
-  const lower = ema - 2.5 * atr; // validated recipe band width
+  // --- measure long-liquidation flow over the last 4 bars ---
+  const raw = ctx.binanceLiqs(4);
+  let liqSum = 0;
+  if (Array.isArray(raw)) {
+    for (const r of raw) {
+      if (typeof r === 'number') liqSum += r;
+      else if (r && typeof r.value === 'number') liqSum += r.value;
+      else if (r && typeof r.qty === 'number') liqSum += r.qty;
+    }
+  } else if (typeof raw === 'number') {
+    liqSum = raw;
+  } else {
+    return null; // liquidation feed unavailable -> stay flat
+  }
 
-  ctx.watch([
-    { side: 'buy', price: lower, note: 'Keltner lower band' },
-    { side: 'sell', price: ema, note: 'mid-band target' }
-  ]);
+  // rolling EMA of liquidation flow so "spike" is relative, not absolute
+  const st = ctx.state;
+  if (st.liqEma == null) st.liqEma = liqSum;
+  else st.liqEma = st.liqEma * 0.95 + liqSum * 0.05;
 
+  const spike = st.liqEma > 0 && liqSum > 3 * st.liqEma;
+
+  // --- exit: mean reversion or stop ---
   if (ctx.position > 0) {
-    if (price >= ema) {
-      ctx.state.lastExitBar = ctx.i;
+    const stopPx = ctx.entryPx - 3 * atr;
+    ctx.watch([
+      { side: 'sell', price: ema20, note: 'revert to EMA20' },
+      { side: 'sell', price: stopPx, note: '3xATR stop' }
+    ]);
+    if (px < stopPx || px >= ema20) {
       return { side: 'sell', qty: ctx.position };
     }
     return null;
   }
 
-  if (ctx.state.lastExitBar != null && ctx.i - ctx.state.lastExitBar < 2) return null;
+  // --- entry: capitulation on a dip ---
+  if (!spike) return null;
+  if (liqSum <= 0) return null;
+  if (px >= ema50) return null; // only buy dips below the 50-EMA trend line
 
-  const rsiPrev = ctx.rsi(14, 2);
-  if (rsiPrev == null) return null;
-  if (rsi < 40 && ctx.closes[ctx.closes.length - 2] <= lower) {
-    return { side: 'buy', qty: ctx.cash / price * 0.95 };
-  }
-  return null;
+  const qty = (ctx.cash / px) * 0.99;
+  return { side: 'buy', qty };
 }
