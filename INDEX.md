@@ -11,7 +11,7 @@ Every figure comes from the last verifying backtest at publish time. These are p
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
-|  | [3236](strategies/3236/) | BNB 1D Funding-Gated Momentum | +1997.35% | +49069.32% | +61.07% | 36 | 2026-10-08 |
+|  | [3236](strategies/3236/) | BNB 1D Funding-Gated Momentum | +2931.39% | +4070.11% | +45.59% | 138 | 2026-10-08 |
 |  | [3235](strategies/3235/) | BNB 1D OI-Confirmed Momentum | +1125.87% | +2245.65% | +73.23% | 38 | 2026-10-08 |
 |  | [3234](strategies/3234/) | BNB 1D Band-Bounce Mean Reversion | +150.20% | +3538.92% | +33.06% | 24 | 2026-10-08 |
 |  | [3233](strategies/3233/) | BNB 1D Momentum + 30% Hard Stop | +77.87% | +227.17% | +41.79% | 42 | 2026-10-08 |
