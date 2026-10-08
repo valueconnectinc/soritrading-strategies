@@ -25,18 +25,15 @@ function onUpdate(ctx) {
   const price = ctx.price;
   if (rsi == null || bb == null || atr == null || avgV == null || ema50 == null || ema200 == null) return null;
   const prevClose = ctx.closes[ctx.i - 1];
-  const s = ctx.state;
-  if (s.entryBar == null) s.entryBar = -1;
 
   if (ctx.position > 0) {
     const entry = ctx.entryPx;
     ctx.watch([
       { side: 'sell', price: bb.mid, note: 'bounce target' },
-      { side: 'sell', price: entry - 1.5 * atr, note: 'stop' }
+      { side: 'sell', price: entry - 2 * atr, note: 'stop' }
     ]);
-    if (price <= entry - 1.5 * atr) return { side: 'sell', qty: ctx.position }; // stop: 1.5x ATR (was 2x — too wide, bled through 2018)
+    if (price <= entry - 2 * atr) return { side: 'sell', qty: ctx.position }; // stop: 2x ATR
     if (rsi > 55 || prevClose > bb.mid) return { side: 'sell', qty: ctx.position };
-    if (s.entryBar >= 0 && ctx.i - s.entryBar > 20) return { side: 'sell', qty: ctx.position }; // time exit: MR should resolve in ~3 weeks
     return null;
   }
 
@@ -46,7 +43,6 @@ function onUpdate(ctx) {
   const belowBand = prevClose < bb.lower;
   const volSpike = volPrev > 1.5 * avgV;
   if (upTrend && oversold && belowBand && volSpike) {
-    s.entryBar = ctx.i;
     return { side: 'buy', qty: ctx.cash / price * 0.98 };
   }
   return null;
