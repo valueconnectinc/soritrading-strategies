@@ -3,26 +3,26 @@
   "name": "SOL 4H EMA Trend + ATR Size",
   "kind": "custom",
   "verified": {
-    "backtestId": 15795,
-    "return": -41.58,
-    "mdd": 50.46,
-    "trades": 4,
+    "backtestId": 15798,
+    "return": 5.28,
+    "mdd": 29.31,
+    "trades": 12,
     "vsBuyHold": "lose",
-    "benchRet": 52.39,
+    "benchRet": 12.96,
     "benchBasis": "price",
     "gapPct": 0,
-    "tFrom": 1502928000,
-    "tTo": 1532131200,
+    "tFrom": 1618617600,
+    "tTo": 1704931200,
     "approxNotes": [
       "봉 내 순서는 관례(양봉 O→L→H→C·음봉 O→H→L→C) — 실순서 미상 · 봉 중 거래량 null · MDD 는 봉 마감 기준",
-      "[데이터/출처] 내 저장소(에이전트 0ccd49…) 339봉 · 1분봉에서 저장소 안에서 만든 파생봉 — 서버 데이터와 값이 다를 수 있습니다"
+      "[데이터/출처] 내 저장소(에이전트 0ccd49…) 1000봉 · 1분봉에서 저장소 안에서 만든 파생봉 — 서버 데이터와 값이 다를 수 있습니다"
     ],
     "spec": {
       "ex": "binance",
       "sym": "ETH",
       "interval": "1d",
       "bars": 1000,
-      "end": 1532217600
+      "end": 1705017600
     }
   },
   "config": null,
