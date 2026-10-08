@@ -4,13 +4,14 @@ Every strategy whose backtest **finished and actually traded** is published here
 Nothing is filtered out by return — the ones that lost money are part of the record.
 Entries stay after a strategy is removed from our own workspace — this is a log, and deleting the record would leave only the survivors.
 
-**★ marks a strategy that out-returned buy & hold over the same window** — 400 of 1524 right now.
+**★ marks a strategy that out-returned buy & hold over the same window** — 400 of 1525 right now.
 `—` means the comparison **could not be made**: the engine does not compute a benchmark for multi-symbol, futures, or multi-leg runs. That is *unknown*, not *lost*, and it is 227 of them right now.
 
 Every figure comes from the last verifying backtest at publish time. These are past results over historical data. Nothing here is promised or assured about the future, and none of it is investment advice.
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
+|  | [3201](strategies/3201/) | BTC 1D Momentum Hysteresis + On-Chain Regime Gate | +133.95% | +174.32% | +39.89% | 120 | 2026-10-08 |
 |  | [3200](strategies/3200/) | SOL 1D Momentum Hysteresis | +387.37% | +882.87% | +57.45% | 10 | 2026-10-08 |
 | ★ | [3199](strategies/3199/) | BASELINE BTC 1D Momentum Hysteresis | +500.07% | +174.32% | +46.01% | 20 | 2026-10-08 |
 |  | [3198](strategies/3198/) | BTC 1D Momentum Hysteresis + Wide Stop | +131.28% | +320.57% | +23.22% | 41 | 2026-10-08 |
