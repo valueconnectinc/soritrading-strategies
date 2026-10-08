@@ -11,9 +11,9 @@
  * classic "calm before the storm" pattern. This family showed the only promising
  * non-momentum result in this job's ledger on SOL 4H.
  * When it buys and sells: buys when a closed bar closes above the highest close
- * of the PRIOR 20 bars (breakout bar excluded) while the band was in a squeeze
- * just before. Sells when a closed bar closes below the lowest close of the
- * prior 20 bars.
+ * of the PRIOR 20 bars (breakout bar excluded), the band was in a squeeze just
+ * before, AND price is above its 200-bar average (uptrend only). Sells when a
+ * closed bar closes below the lowest close of the prior 20 bars.
  * When it does NOT work: in a slow grind that never squeezes (few trades), and in
  * chop where every squeeze breaks out and immediately reverses — the 20-bar-low
  * exit gives back part of the move. Single symbol = no diversification.
@@ -24,6 +24,8 @@ function onUpdate(ctx) {
   if (n < 80) return null;
 
   const prev = closes[n - 2];        // closed bar: identical in backtest and live
+  const sma200 = ctx.sma(200, 1);
+  if (sma200 == null) return null;
 
   // Donchian 20-bar high/low from CLOSED bars, EXCLUDING the breakout bar itself.
   let hh = -Infinity, ll = Infinity;
@@ -57,7 +59,7 @@ function onUpdate(ctx) {
   if (pos > 0 && prev < ll) {
     return { side: 'sell', qty: pos };
   }
-  if (pos === 0 && prev > hh && squeeze) {
+  if (pos === 0 && prev > hh && squeeze && prev > sma200) {
     return { side: 'buy', qty: ctx.cash / ctx.price * 0.99 };
   }
   return null;
