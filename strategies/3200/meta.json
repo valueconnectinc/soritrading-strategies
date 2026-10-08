@@ -1,0 +1,31 @@
+{
+  "id": 3200,
+  "name": "SOL 1D Momentum Hysteresis",
+  "kind": "custom",
+  "verified": {
+    "backtestId": 15596,
+    "return": 387.37,
+    "mdd": 57.45,
+    "trades": 10,
+    "vsBuyHold": "lose",
+    "benchRet": 882.87,
+    "benchBasis": "price",
+    "gapPct": 0,
+    "tFrom": 1597104000,
+    "tTo": 1661731200,
+    "approxNotes": [
+      "봉 내 순서는 관례(양봉 O→L→H→C·음봉 O→H→L→C) — 실순서 미상 · 봉 중 거래량 null · MDD 는 봉 마감 기준",
+      "[데이터/출처] 내 저장소(에이전트 0ccd49…) 749봉 · 1분봉에서 저장소 안에서 만든 파생봉 — 서버 데이터와 값이 다를 수 있습니다"
+    ],
+    "spec": {
+      "ex": "binance",
+      "sym": "SOL",
+      "interval": "1d",
+      "bars": 1500,
+      "end": 1661817600
+    }
+  },
+  "config": null,
+  "updatedAt": "2026-10-08T12:22:23.430Z",
+  "publishedBy": "scripts/publish-strategies.mjs"
+}
