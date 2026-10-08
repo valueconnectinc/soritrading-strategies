@@ -1,6 +1,6 @@
 /*
  * @coinsori-strategy v1
- * name: BNB 1D Momentum + Fed Filter (Vol-Scaled)
+ * name: BNB 1D Momentum + Fed Filter (ATR-Scaled)
  * ex: binance
  * syms: BNBUSDT
  * interval: 1d
@@ -8,9 +8,9 @@
  *
  * Why this strategy: the 90-day momentum + 200-day average core is the validated
  * champion on BNB. The Fed not-hiking filter targets the 2018/2022 crypto bears.
- * Adding volatility-scaled position sizing (smaller size when 30-day realized vol
- * is wide) trims exposure in stress, which the ledger showed cuts drawdown on the
- * BTC/SOL champions.
+ * Adding ATR-scaled position sizing (smaller size when the daily range is wide)
+ * trims exposure in stress, which the ledger showed cuts drawdown on the BTC/SOL
+ * champions.
  * When it buys and sells: buys when 90-day momentum is above +20%, price is above
  * the 200-day average, and the Fed is not hiking. Sells when momentum fades below
  * +5% or price breaks the 200-day average. Position size shrinks when volatility
@@ -42,15 +42,13 @@ function onUpdate(ctx) {
     return { side: 'sell', qty: pos };
   }
   if (pos === 0 && roc90 > 20 && prevClose > sma200 && !hiking) {
-    // Volatility scaling: 30-day realized vol (annualized). When vol is high,
-    // cut position to a fraction. Baseline full size = 1.0. volPct is the ratio
-    // of current vol to a long-run reference (200-day avg vol); clamp 0.5..1.0.
-    const v30 = ctx.change(30, 1);   // 30-bar % change as a vol proxy
-    const v200 = ctx.change(200, 1);
+    // ATR-based vol scaling: target daily range 3.5% of price, floor at 50%.
+    // Wide ATR% -> smaller position. 3.5% is BNB's typical daily range.
+    const atr = ctx.atr(14, 1);
     let scale = 1.0;
-    if (v30 != null && v200 != null && v200 > 0) {
-      const raw = v200 / Math.max(v30, 0.001); // high current vol -> small ratio
-      scale = Math.max(0.5, Math.min(1.0, raw));
+    if (atr != null && atr > 0) {
+      const atrPct = (atr / prevClose) * 100;
+      scale = Math.max(0.5, Math.min(1.0, 3.5 / atrPct));
     }
     return { side: 'buy', qty: ctx.cash / ctx.price * 0.99 * scale };
   }
