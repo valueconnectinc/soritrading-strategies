@@ -3,7 +3,7 @@
   "name": "BTC 1D Long-Horizon Momentum Hysteresis",
   "kind": "custom",
   "verified": {
-    "backtestId": 15551,
+    "backtestId": 15554,
     "return": 771.36,
     "mdd": 46.01,
     "trades": 9,
