@@ -1,49 +1,44 @@
 /*
  * @coinsori-strategy v1
- * name: 1D Multi-Asset Momentum Volume-Confirmed
+ * name: Liquidation Capitulation Reversal 4H
  * ex: binance
- * syms: BTCUSDT, ETHUSDT, SOLUSDT
- * interval: 1d
+ * syms: BTCUSDT
+ * interval: 4h
  * cash: 10000
  *
- * Why this strategy: the champion momentum core is validated, but it enters
- * on price alone — some breakouts are fake (low participation) and get
- * chopped. This version only enters when volume confirms the move (daily
- * volume above 1.3x the 20-day average), so entries happen on real
- * participation. Tested at 1D where prior volume tests were on 4H only.
- * When it buys and sells: buy BTC/ETH/SOL when 90d momentum > +20%, price
- * above the 200-day average, the Fed is not hiking, AND today's volume is at
- * least 1.3x the 20-day average volume. Sell when momentum fades below +5%
- * or price breaks the 200-day.
- * When it does NOT work: in a low-volume grind (steady rally on shrinking
- * volume) it never enters and misses the whole move; volume spikes also
- * happen at capitulation bottoms, which this trend strategy does not trade.
+ * Why this strategy: a spike in long liquidations means leverage longs were
+ * force-sold into falling prices — often the last sellers of a local bottom.
+ * Buying that capitulation and selling the bounce is a sentiment reversal,
+ * a completely different family from the 1D momentum champion.
+ * When it buys and sells: buy when the last 24 bars (4 days) of liquidation
+ * flow are > 2.5x the previous 24 bars. Sell at +8% take-profit, -4% stop,
+ * or after 48 bars (8 days). Half of equity per trade.
+ * When it does NOT work: in a prolonged bear market every capitulation is a
+ * falling knife and the bounce never comes — this loses there, hard.
  */
 function onUpdate(ctx) {
-  const sma200 = ctx.sma(200, 1);
-  if (sma200 == null) return null;
-  const closes = ctx.closes;
-  if (closes.length < 91) return null;
-  const prevClose = closes[closes.length - 2];
-  const base = closes[closes.length - 91];
-  if (base == null || base <= 0) return null;
-  const roc90 = (prevClose / base - 1) * 100;
+  const cur = ctx.binanceLiqs(24);
+  const prev48 = ctx.binanceLiqs(48);
+  if (cur == null || prev48 == null) return null;
+  const prev = prev48 - cur;
+  const pos = ctx.position;
+  const st = ctx.state || {};
+  const px = ctx.price;
 
-  const vol = ctx.vol;
-  const avgVol = ctx.avgVol(20);
-  if (vol == null || avgVol == null) return null;
-
-  const fedNow = ctx.data('macro_fed_funds');
-  const fedLag = ctx.data('fed_lag30');
-  const hiking = (fedNow != null && fedLag != null) ? (fedNow > fedLag) : false;
-
-  const pos = ctx.pos(ctx.sym);
-
-  if (pos > 0 && (roc90 < 5 || prevClose < sma200)) {
-    return { side: 'sell', qty: pos };
+  if (pos > 0) {
+    const entry = st.entry || ctx.entryPx || px;
+    const pnl = px / entry - 1;
+    // TP 8% / stop -4% / time exit 48 bars — all tuned to a short bounce
+    if (pnl >= 0.08 || pnl <= -0.04 || (ctx.i - (st.bar || ctx.i)) >= 48) {
+      return { side: 'sell', qty: pos };
+    }
+    return null;
   }
-  if (pos === 0 && roc90 > 20 && prevClose > sma200 && !hiking && vol > avgVol * 1.3) {
-    return { side: 'buy', qty: ctx.cash / ctx.price * 0.33 };
+
+  // 2.5x spike over the previous 4 days = capitulation
+  if (prev > 0 && cur > prev * 2.5) {
+    ctx.state = { entry: px, bar: ctx.i };
+    return { side: 'buy', qty: ctx.cash / px * 0.5 };
   }
   return null;
 }
