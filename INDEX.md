@@ -11,7 +11,7 @@ Every figure comes from the last verifying backtest at publish time. These are p
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
-|  | [3198](strategies/3198/) | BTC 1D Momentum Hysteresis + Wide Stop | +129.06% | +174.32% | +68.64% | 308 | 2026-10-08 |
+|  | [3198](strategies/3198/) | BTC 1D Momentum Hysteresis + Wide Stop | +131.28% | +320.57% | +23.22% | 41 | 2026-10-08 |
 |  | [3197](strategies/3197/) | BTC 1D Momentum Hysteresis + Trailing Stop | +30.60% | +174.32% | +70.57% | 568 | 2026-10-08 |
 |  | [3196](strategies/3196/) | ETH 1D Long-Horizon Momentum Hysteresis | +49.84% | +94.76% | +16.44% | 5 | 2026-10-08 |
 |  | [3195](strategies/3195/) | BTC 1D RSI2 Extreme-Oversold Bounce | -5.12% | +729.43% | +48.56% | 254 | 2026-10-08 |
