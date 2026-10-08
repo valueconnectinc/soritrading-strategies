@@ -3,26 +3,26 @@
   "name": "BTC 1D Capitulation-Buy Vol-Confirmed MR",
   "kind": "custom",
   "verified": {
-    "backtestId": 15567,
-    "return": 5.27,
-    "mdd": 19.78,
-    "trades": 8,
+    "backtestId": 15570,
+    "return": 36.32,
+    "mdd": 24.03,
+    "trades": 10,
     "vsBuyHold": "win",
-    "benchRet": -22.78,
+    "benchRet": 26.25,
     "benchBasis": "price",
     "gapPct": 0,
-    "tFrom": 1618617600,
-    "tTo": 1704931200,
+    "tFrom": 1705017600,
+    "tTo": 1791331200,
     "approxNotes": [
       "봉 내 순서는 관례(양봉 O→L→H→C·음봉 O→H→L→C) — 실순서 미상 · 봉 중 거래량 null · MDD 는 봉 마감 기준",
       "[데이터/출처] 내 저장소(에이전트 0ccd49…) 1000봉 · 1분봉에서 저장소 안에서 만든 파생봉 — 서버 데이터와 값이 다를 수 있습니다"
     ],
     "spec": {
       "ex": "binance",
-      "sym": "BTC",
+      "sym": "SOL",
       "interval": "1d",
       "bars": 1000,
-      "end": 1705017600
+      "end": 1791417600
     }
   },
   "config": null,

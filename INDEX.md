@@ -11,7 +11,7 @@ Every figure comes from the last verifying backtest at publish time. These are p
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
-| ★ | [3193](strategies/3193/) | BTC 1D Capitulation-Buy Vol-Confirmed MR | +5.27% | -22.78% | +19.78% | 8 | 2026-10-08 |
+| ★ | [3193](strategies/3193/) | BTC 1D Capitulation-Buy Vol-Confirmed MR | +36.32% | +26.25% | +24.03% | 10 | 2026-10-08 |
 |  | [3192](strategies/3192/) | BTC 1D Long-Horizon Momentum Hysteresis | +49.84% | +94.76% | +16.44% | 5 | 2026-10-08 |
 |  | [3191](strategies/3191/) | BTC 4H Pure EMA50 Trend baseline | +49.39% | +469.54% | +66.95% | 333 | 2026-10-08 |
 |  | [3190](strategies/3190/) | BTC 4H Macro-Gated Trend | +3.06% | +48.89% | +5.15% | 2 | 2026-10-08 |
