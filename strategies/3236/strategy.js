@@ -8,27 +8,13 @@ function onUpdate(ctx) {
   if (base == null || base <= 0) return null;
   const roc90 = (prevClose / base - 1) * 100;
 
-  // ATR-based volatility scaling. atr14 as % of price; scale = ratio of current
-  // vol to its 90-day average. High ratio -> smaller position.
+  // Absolute vol target: full size when daily ATR% <= 4%, scale down linearly
+  // to 0.3 at ATR% >= 8%. Independent of own-history average.
   const atr = ctx.atr(14, 1);
   let scale = 1;
   if (atr != null && prevClose > 0) {
-    const atrPct = atr / prevClose;
-    // rolling average of atrPct over last 90 closed bars
-    const atrSeries = [];
-    for (let k = 1; k <= 90 && k < closes.length - 1; k++) {
-      const a = ctx.atr(14, k);
-      const c = closes[closes.length - 1 - k];
-      if (a != null && c > 0) atrSeries.push(a / c);
-    }
-    if (atrSeries.length >= 30) {
-      const mean = atrSeries.reduce((s, v) => s + v, 0) / atrSeries.length;
-      if (mean > 0) {
-        const ratio = atrPct / mean;
-        // vol-target: full size at ratio<=1, scale down linearly to 0.3 at ratio>=2
-        scale = Math.max(0.3, Math.min(1, 2 - ratio));
-      }
-    }
+    const atrPct = atr / prevClose * 100;
+    if (atrPct > 4) scale = Math.max(0.3, Math.min(1, (8 - atrPct) / 4));
   }
 
   const fedNow = ctx.data('macro_fed_funds_rate');
