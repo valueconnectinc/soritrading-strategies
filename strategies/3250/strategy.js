@@ -34,6 +34,7 @@ function onUpdate(ctx) {
   } else if (typeof raw === 'number') {
     liqSum = raw;
   } else {
+    ctx.log('liqs shape', typeof raw, Array.isArray(raw) ? raw.slice(0,2) : raw);
     return null; // liquidation feed unavailable -> stay flat
   }
 
@@ -62,6 +63,7 @@ function onUpdate(ctx) {
   if (liqSum <= 0) return null;
   if (px >= ema50) return null; // only buy dips below the 50-EMA trend line
 
+  ctx.log('entry liqSum', liqSum, 'liqEma', st.liqEma, 'px', px, 'ema50', ema50);
   const qty = (ctx.cash / px) * 0.99;
   return { side: 'buy', qty };
 }
