@@ -10,8 +10,8 @@
  * rate-of-change entry with a 200-day trend gate only buys strong established trends,
  * and hysteresis (separate, lower exit threshold) avoids the whipsaw that breaks fast
  * trend systems on daily data.
- * When it buys and sells: Buy when the 90-day price change is above +15% AND price is
- * above its 200-day average. Sell when the 90-day change falls below +3% or price drops
+ * When it buys and sells: Buy when the 90-day price change is above +20% AND price is
+ * above its 200-day average. Sell when the 90-day change falls below +5% or price drops
  * below the 200-day average.
  * When it does NOT work: In a long sideways/choppy market the slow signals whipsaw at
  * low frequency; in a fast V-reversal the 200-day gate exits late and gives back profit.
@@ -26,10 +26,10 @@ function onUpdate(ctx) {
   if (base == null || base <= 0) return null;
   const roc90 = (prevClose / base - 1) * 100; // 90-day rate of change in %
 
-  if (ctx.position > 0 && (roc90 < 3 || prevClose < sma200)) {
+  if (ctx.position > 0 && (roc90 < 5 || prevClose < sma200)) {
     return { side: 'sell', qty: ctx.position };
   }
-  if (ctx.position === 0 && roc90 > 15 && prevClose > sma200) {
+  if (ctx.position === 0 && roc90 > 20 && prevClose > sma200) {
     return { side: 'buy', qty: ctx.cash / ctx.price * 0.99 };
   }
   return null;
