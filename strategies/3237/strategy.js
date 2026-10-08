@@ -1,42 +1,44 @@
 /*
  * @coinsori-strategy v1
- * name: SOL 4H EMA Trend + ATR Size
+ * name: ETH 1D Oversold-Bounce (Mean Reversion)
  * ex: binance
- * syms: SOL
- * interval: 4h
+ * syms: ETHUSDT
+ * interval: 1d
  * cash: 10000
  *
- * Why this strategy: In strong crypto uptrends, price tends to ride the 50-EMA while pullbacks to it get bought. Betting that a clean trend-following signal on 4H captures sustained moves.
- * When it buys and sells: Buys when the fast EMA crosses above the slow EMA and price is above the 200-EMA (trend filter). Sells when the fast EMA crosses back below the slow EMA (trend over). Position size scales down as volatility rises so a single crash doesn't wipe the account.
- * When it does NOT work: In choppy sideways markets the EMA cross whipsaws between buys and sells, paying fees each time. It also lags sharp reversals, so a sudden top gives back gains before the exit triggers.
+ * Why this strategy: in crypto, sharp sell-offs inside a bull market tend to
+ * bounce back toward the mean. This bets on that bounce — the opposite of the
+ * trend-following work done earlier in this project.
+ * When it buys and sells: buys when the 14-day RSI is oversold (<30) AND price
+ * is still above the 200-day average (bull regime only — avoids catching falling
+ * knives in bear markets). Sells when RSI recovers above 55 (bounce done) or if
+ * price falls 2x ATR below entry (bounce failed, cut the loss).
+ * When it does NOT work: in a prolonged bear market it stays mostly in cash
+ * (good) but the few trades it takes can still lose; in a slow grind-down where
+ * RSI stays under 30 for weeks it can buy too early repeatedly.
  */
 function onUpdate(ctx) {
-  const fast = ctx.ema(20, 1);
-  const slow = ctx.ema(50, 1);
-  const trend = ctx.ema(200, 1);
-  const f2 = ctx.ema(20, 2);
-  const s2 = ctx.ema(50, 2);
-  const atr = ctx.atr(14, 1);
-  if (fast == null || slow == null || trend == null || f2 == null || s2 == null || atr == null) return null;
+  const rsi = ctx.rsi(14, 1);
+  const sma200 = ctx.sma(200, 1);
+  if (rsi == null || sma200 == null) return null;
+
+  const pos = ctx.position;
   const price = ctx.price;
 
-  // Scale position down as ATR grows: use 2% of cash as risk per unit of ATR.
-  const riskPerTrade = 0.02 * ctx.cash;
-  const qty = riskPerTrade / atr;
-
-  // Trend filter: only trade when price is above the long EMA (bull regime).
-  const inUptrend = price > trend;
-
-  if (ctx.position === 0) {
-    if (inUptrend && s2 <= f2 && slow < fast) {
-      return { side: 'buy', qty };
+  if (pos > 0) {
+    const atr = ctx.atr(14, 1);
+    if (atr == null) return null;
+    // exit: bounce completed (RSI back above 55) or stop hit (2x ATR below entry)
+    const stopPx = ctx.entryPx - 2 * atr;
+    if (rsi > 55 || price < stopPx) {
+      return { side: 'sell', qty: pos };
     }
     return null;
   }
 
-  // Exit when the fast EMA crosses back below the slow EMA.
-  if (s2 >= f2 && slow > fast) {
-    return { side: 'sell', qty: ctx.position };
+  // buy oversold bounce only in a bull regime
+  if (rsi < 30 && price > sma200) {
+    return { side: 'buy', qty: ctx.cash / ctx.price * 0.99 };
   }
   return null;
 }

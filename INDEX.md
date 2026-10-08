@@ -11,7 +11,7 @@ Every figure comes from the last verifying backtest at publish time. These are p
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
-|  | [3237](strategies/3237/) | SOL 4H EMA Trend + ATR Size | +157.55% | +2910.88% | +37.28% | 82 | 2026-10-08 |
+|  | [3237](strategies/3237/) | SOL 4H EMA Trend + ATR Size | -41.58% | +52.39% | +50.46% | 4 | 2026-10-08 |
 | ★ | [3236](strategies/3236/) | BNB 1D Funding-Gated Momentum | -0.50% | -40.12% | +31.54% | 5 | 2026-10-08 |
 |  | [3235](strategies/3235/) | BNB 1D OI-Confirmed Momentum | +1125.87% | +2245.65% | +73.23% | 38 | 2026-10-08 |
 |  | [3234](strategies/3234/) | BNB 1D Band-Bounce Mean Reversion | +150.20% | +3538.92% | +33.06% | 24 | 2026-10-08 |
