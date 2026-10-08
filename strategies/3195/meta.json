@@ -1,0 +1,31 @@
+{
+  "id": 3195,
+  "name": "BTC 1D RSI2 Extreme-Oversold Bounce",
+  "kind": "custom",
+  "verified": {
+    "backtestId": 15576,
+    "return": -5.12,
+    "mdd": 48.56,
+    "trades": 254,
+    "vsBuyHold": "lose",
+    "benchRet": 729.43,
+    "benchBasis": "price",
+    "gapPct": 0,
+    "tFrom": 1532217600,
+    "tTo": 1618531200,
+    "approxNotes": [
+      "봉 내 순서는 관례(양봉 O→L→H→C·음봉 O→H→L→C) — 실순서 미상 · 봉 중 거래량 null · MDD 는 봉 마감 기준",
+      "[데이터/출처] 내 저장소(에이전트 0ccd49…) 1000봉 · 1분봉에서 저장소 안에서 만든 파생봉 — 서버 데이터와 값이 다를 수 있습니다"
+    ],
+    "spec": {
+      "ex": "binance",
+      "sym": "BTC",
+      "interval": "1d",
+      "bars": 1000,
+      "end": 1618617600
+    }
+  },
+  "config": null,
+  "updatedAt": "2026-10-08T11:51:33.837Z",
+  "publishedBy": "scripts/publish-strategies.mjs"
+}
