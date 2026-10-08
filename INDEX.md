@@ -4,13 +4,14 @@ Every strategy whose backtest **finished and actually traded** is published here
 Nothing is filtered out by return — the ones that lost money are part of the record.
 Entries stay after a strategy is removed from our own workspace — this is a log, and deleting the record would leave only the survivors.
 
-**★ marks a strategy that out-returned buy & hold over the same window** — 401 of 1531 right now.
-`—` means the comparison **could not be made**: the engine does not compute a benchmark for multi-symbol, futures, or multi-leg runs. That is *unknown*, not *lost*, and it is 232 of them right now.
+**★ marks a strategy that out-returned buy & hold over the same window** — 401 of 1532 right now.
+`—` means the comparison **could not be made**: the engine does not compute a benchmark for multi-symbol, futures, or multi-leg runs. That is *unknown*, not *lost*, and it is 233 of them right now.
 
 Every figure comes from the last verifying backtest at publish time. These are past results over historical data. Nothing here is promised or assured about the future, and none of it is investment advice.
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
+| — | [3210](strategies/3210/) | Baseline Champion Reference | +242.21% | — | +37.78% | 18 | 2026-10-08 |
 | — | [3209](strategies/3209/) | 1D Multi-Asset Momentum Strength-Sized | +163.63% | — | +28.35% | 17 | 2026-10-08 |
 | — | [3208](strategies/3208/) | 1D Multi-Asset Momentum Crash-Stop | +4.24% | — | +64.49% | 760 | 2026-10-08 |
 | — | [3207](strategies/3207/) | 1D Multi-Asset Momentum Chandelier Stop | +205.44% | — | +47.80% | 84 | 2026-10-08 |
