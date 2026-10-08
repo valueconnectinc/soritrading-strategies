@@ -3,10 +3,10 @@
   "name": "SOL 4H Squeeze Breakout",
   "kind": "custom",
   "verified": {
-    "backtestId": 15723,
-    "return": -31.17,
-    "mdd": 63.77,
-    "trades": 94,
+    "backtestId": 15726,
+    "return": -27.73,
+    "mdd": 61.6,
+    "trades": 104,
     "vsBuyHold": "lose",
     "benchRet": -21.92,
     "benchBasis": "price",
@@ -26,6 +26,6 @@
     }
   },
   "config": null,
-  "updatedAt": "2026-10-08T19:01:13.200Z",
+  "updatedAt": "2026-10-08T19:05:24.495Z",
   "publishedBy": "scripts/publish-strategies.mjs"
 }

@@ -13,10 +13,11 @@
  * When it buys and sells: buys when a closed bar closes above the highest close
  * of the PRIOR 20 bars (breakout bar excluded), the band was in a squeeze just
  * before, AND price is above its 200-bar average (uptrend only). Sells when a
- * closed bar closes below the lowest close of the prior 20 bars.
+ * closed bar closes below the lowest close of the prior 20 bars OR below the
+ * 200-bar average (trend break).
  * When it does NOT work: in a slow grind that never squeezes (few trades), and in
- * chop where every squeeze breaks out and immediately reverses — the 20-bar-low
- * exit gives back part of the move. Single symbol = no diversification.
+ * chop where every squeeze breaks out and immediately reverses — the exits still
+ * give back part of the move. Single symbol = no diversification.
  */
 function onUpdate(ctx) {
   const closes = ctx.closes;
@@ -56,7 +57,7 @@ function onUpdate(ctx) {
   const squeeze = curW < avgW * 0.9;
 
   const pos = ctx.position;
-  if (pos > 0 && prev < ll) {
+  if (pos > 0 && (prev < ll || prev < sma200)) {
     return { side: 'sell', qty: pos };
   }
   if (pos === 0 && prev > hh && squeeze && prev > sma200) {
