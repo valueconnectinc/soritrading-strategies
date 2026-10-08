@@ -11,7 +11,7 @@ Every figure comes from the last verifying backtest at publish time. These are p
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
-| — | [3227](strategies/3227/) | Momentum Rotation 4H | +29.29% | — | +53.61% | 4 | 2026-10-08 |
+| — | [3227](strategies/3227/) | Momentum Rotation 4H | -99.99% | — | +99.99% | 2856 | 2026-10-08 |
 |  | [3226](strategies/3226/) | RSI Mean Reversion Bounce 4H | -9.13% | +32.42% | +17.42% | 60 | 2026-10-08 |
 |  | [3224](strategies/3224/) | Uptrend Pullback Reversion (BTC 1D) | +30.88% | +320.57% | +22.00% | 36 | 2026-10-08 |
 |  | [3222](strategies/3222/) | AI 전략 | +165.83% | +174.31% | +30.70% | 15 | 2026-10-08 |
