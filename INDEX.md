@@ -11,7 +11,7 @@ Every figure comes from the last verifying backtest at publish time. These are p
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
-|  | [3230](strategies/3230/) | SOL 4H Squeeze Breakout | -60.15% | -21.92% | +83.47% | 164 | 2026-10-08 |
+|  | [3230](strategies/3230/) | SOL 4H Squeeze Breakout | -31.17% | -21.92% | +63.77% | 94 | 2026-10-08 |
 |  | [3229](strategies/3229/) | XRP 1D Dip-Buy RSI2 | -86.21% | +73.96% | +90.12% | 76 | 2026-10-08 |
 |  | [3228](strategies/3228/) | XRP 4H Squeeze Breakout | -22.01% | +260.54% | +53.25% | 166 | 2026-10-08 |
 | — | [3227](strategies/3227/) | Momentum Rotation 4H | -99.99% | — | +99.99% | 2856 | 2026-10-08 |
