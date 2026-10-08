@@ -11,7 +11,7 @@ Every figure comes from the last verifying backtest at publish time. These are p
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
-|  | [3201](strategies/3201/) | BTC 1D Momentum Hysteresis + On-Chain Regime Gate | +133.95% | +174.32% | +39.89% | 120 | 2026-10-08 |
+|  | [3201](strategies/3201/) | BTC 1D Momentum Hysteresis + On-Chain Regime Gate | +28.46% | +320.57% | +17.32% | 64 | 2026-10-08 |
 |  | [3200](strategies/3200/) | SOL 1D Momentum Hysteresis | +387.37% | +882.87% | +57.45% | 10 | 2026-10-08 |
 | ★ | [3199](strategies/3199/) | BASELINE BTC 1D Momentum Hysteresis | +500.07% | +174.32% | +46.01% | 20 | 2026-10-08 |
 |  | [3198](strategies/3198/) | BTC 1D Momentum Hysteresis + Wide Stop | +131.28% | +320.57% | +23.22% | 41 | 2026-10-08 |
