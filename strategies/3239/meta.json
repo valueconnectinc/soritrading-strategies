@@ -3,12 +3,12 @@
   "name": "SOL 4H Keltner Mean Reversion",
   "kind": "custom",
   "verified": {
-    "backtestId": 15811,
-    "return": -19.18,
-    "mdd": 40.97,
-    "trades": 34,
+    "backtestId": 15815,
+    "return": 46.87,
+    "mdd": 23.5,
+    "trades": 38,
     "vsBuyHold": "lose",
-    "benchRet": 202.54,
+    "benchRet": 77.53,
     "benchBasis": "price",
     "gapPct": 0,
     "tFrom": 1661889600,
@@ -19,7 +19,7 @@
     ],
     "spec": {
       "ex": "binance",
-      "sym": "SOL",
+      "sym": "XRP",
       "interval": "4h",
       "bars": 3000,
       "end": 1705089600

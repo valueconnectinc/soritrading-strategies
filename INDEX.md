@@ -11,7 +11,7 @@ Every figure comes from the last verifying backtest at publish time. These are p
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
-|  | [3239](strategies/3239/) | SOL 4H Keltner Mean Reversion | -19.18% | +202.54% | +40.97% | 34 | 2026-10-08 |
+|  | [3239](strategies/3239/) | SOL 4H Keltner Mean Reversion | +46.87% | +77.53% | +23.50% | 38 | 2026-10-08 |
 |  | [3237](strategies/3237/) | SOL 4H EMA Trend + ATR Size | +5.28% | +12.96% | +29.31% | 12 | 2026-10-08 |
 | ★ | [3236](strategies/3236/) | BNB 1D Funding-Gated Momentum | -0.50% | -40.12% | +31.54% | 5 | 2026-10-08 |
 |  | [3235](strategies/3235/) | BNB 1D OI-Confirmed Momentum | +1125.87% | +2245.65% | +73.23% | 38 | 2026-10-08 |
