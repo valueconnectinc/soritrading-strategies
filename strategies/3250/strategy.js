@@ -1,34 +1,25 @@
 /*
  * @coinsori-strategy v1
- * name: BTC 1D Keltner MR + Fear-Greed Gate
+ * name: BTC 1D Keltner MR Base (no gate)
  * ex: binance
  * syms: BTC
  * interval: 1d
  * cash: 10000
  *
- * Why this strategy:
- * Combines two ideas: the validated Keltner mean-reversion recipe (buy oversold,
- * sell at mid-band) and the user's own fear-greed index as a sentiment gate.
- * The gate blocks MR entries when greed is extreme (index >= 70) — those dips
- * rarely revert because the crowd is still buying.
- * When it buys and sells:
- * Buys when the previous close pierced below the Keltner lower band (EMA20 - 2.5xATR)
- * with RSI<40 AND fear-greed index below 70. Sells when price returns to the mid-band
- * (EMA20). 2-bar cooldown between trades.
- * When it does NOT work:
- * In strong one-directional moves price hugs the lower band and never reverts — lags
- * buy-and-hold in sustained bull melt-ups. The sentiment gate does not rescue a
- * prolonged bear. 1d data from 2018 (fear-greed index range) limits the test window.
+ * Why this strategy: Control group to measure whether the fear-greed gate adds value
+ * to the validated Keltner MR recipe on BTC 1d. Identical logic except no sentiment gate.
+ * When it buys and sells: Buys when previous close pierced below Keltner lower band
+ * (EMA20 - 2.5ATR) with RSI<40. Sells at mid-band EMA20. 2-bar cooldown.
+ * When it does NOT work: Same as the recipe — strong one-directional moves.
  */
 function onUpdate(ctx) {
   const ema = ctx.ema(20, 1);
   const atr = ctx.atr(14, 1);
   const rsi = ctx.rsi(14, 1);
   const price = ctx.price;
-  const fg = ctx.data('fear_greed');
-  if (ema == null || atr == null || rsi == null || price == null || fg == null) return null;
+  if (ema == null || atr == null || rsi == null || price == null) return null;
 
-  const lower = ema - 2.5 * atr; // validated recipe band width
+  const lower = ema - 2.5 * atr;
 
   ctx.watch([
     { side: 'buy', price: lower, note: 'Keltner lower band' },
@@ -47,7 +38,7 @@ function onUpdate(ctx) {
 
   const rsiPrev = ctx.rsi(14, 2);
   if (rsiPrev == null) return null;
-  if (rsi < 40 && ctx.closes[ctx.closes.length - 2] <= lower && fg < 70) {
+  if (rsi < 40 && ctx.closes[ctx.closes.length - 2] <= lower) {
     return { side: 'buy', qty: ctx.cash / price * 0.95 };
   }
   return null;
