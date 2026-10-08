@@ -3,16 +3,16 @@
   "name": "BTC 1D Fear-Greed Contrarian",
   "kind": "custom",
   "verified": {
-    "backtestId": 15854,
-    "return": -36.05,
-    "mdd": 60.74,
-    "trades": 8,
+    "backtestId": 15857,
+    "return": -12.01,
+    "mdd": 42.59,
+    "trades": 12,
     "vsBuyHold": "lose",
-    "benchRet": -22.78,
+    "benchRet": 94.76,
     "benchBasis": "price",
     "gapPct": 0,
-    "tFrom": 1618617600,
-    "tTo": 1704931200,
+    "tFrom": 1705017600,
+    "tTo": 1791331200,
     "approxNotes": [
       "봉 내 순서는 관례(양봉 O→L→H→C·음봉 O→H→L→C) — 실순서 미상 · 봉 중 거래량 null · MDD 는 봉 마감 기준",
       "[PIT] ctx.data 는 행의 시각(ts) 기준으로 골랐습니다 — 그 행이 DB 에 실제로 들어온 시각은 보지 않으므로, 늦게 적재되거나 나중에 고쳐진 값이 있으면 미래 정보가 섞였을 수 있습니다(event-only)",
@@ -23,7 +23,7 @@
       "sym": "BTC",
       "interval": "1d",
       "bars": 1000,
-      "end": 1705017600
+      "end": 1791417600
     }
   },
   "config": null,
