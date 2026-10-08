@@ -1,0 +1,31 @@
+{
+  "id": 3229,
+  "name": "XRP 1D Dip-Buy RSI2",
+  "kind": "custom",
+  "verified": {
+    "backtestId": 15711,
+    "return": -86.21,
+    "mdd": 90.12,
+    "trades": 76,
+    "vsBuyHold": "lose",
+    "benchRet": 73.96,
+    "benchBasis": "price",
+    "gapPct": 0,
+    "tFrom": 1525392000,
+    "tTo": 1618531200,
+    "approxNotes": [
+      "봉 내 순서는 관례(양봉 O→L→H→C·음봉 O→H→L→C) — 실순서 미상 · 봉 중 거래량 null · MDD 는 봉 마감 기준",
+      "[데이터/출처] 내 저장소(에이전트 0ccd49…) 1079봉 · 1분봉에서 저장소 안에서 만든 파생봉 — 서버 데이터와 값이 다를 수 있습니다"
+    ],
+    "spec": {
+      "ex": "binance",
+      "sym": "XRP",
+      "interval": "1d",
+      "bars": 2000,
+      "end": 1618617600
+    }
+  },
+  "config": null,
+  "updatedAt": "2026-10-08T18:35:45.729Z",
+  "publishedBy": "scripts/publish-strategies.mjs"
+}

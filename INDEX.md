@@ -4,13 +4,14 @@ Every strategy whose backtest **finished and actually traded** is published here
 Nothing is filtered out by return — the ones that lost money are part of the record.
 Entries stay after a strategy is removed from our own workspace — this is a log, and deleting the record would leave only the survivors.
 
-**★ marks a strategy that out-returned buy & hold over the same window** — 402 of 1546 right now.
+**★ marks a strategy that out-returned buy & hold over the same window** — 402 of 1547 right now.
 `—` means the comparison **could not be made**: the engine does not compute a benchmark for multi-symbol, futures, or multi-leg runs. That is *unknown*, not *lost*, and it is 236 of them right now.
 
 Every figure comes from the last verifying backtest at publish time. These are past results over historical data. Nothing here is promised or assured about the future, and none of it is investment advice.
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
+|  | [3229](strategies/3229/) | XRP 1D Dip-Buy RSI2 | -86.21% | +73.96% | +90.12% | 76 | 2026-10-08 |
 |  | [3228](strategies/3228/) | XRP 4H Squeeze Breakout | -22.01% | +260.54% | +53.25% | 166 | 2026-10-08 |
 | — | [3227](strategies/3227/) | Momentum Rotation 4H | -99.99% | — | +99.99% | 2856 | 2026-10-08 |
 |  | [3226](strategies/3226/) | RSI Mean Reversion Bounce 4H | -9.13% | +32.42% | +17.42% | 60 | 2026-10-08 |
