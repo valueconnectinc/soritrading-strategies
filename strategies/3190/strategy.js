@@ -6,20 +6,17 @@
  * interval: 4h
  * cash: 10000
  *
- * Why this strategy: crypto rallies happen when the US dollar weakens (risk-on) and price
- * trend is up. Filtering longs by a falling DXY avoids buying into USD-strength bear regimes,
- * which is exactly where unfiltered breakouts get chopped up (as seen in 2024-26).
- * When it buys and sells: Buy when price is above its 50-EMA, the 50-EMA is above the 200-EMA,
- * and DXY is below its own recent average. Sell when price drops back below the 50-EMA or the
- * 50/200 alignment breaks.
- * When it does NOT work: In a strong risk-on rally where DXY is also rising (liquidity-driven
- * melt-up), the DXY gate keeps us out and we miss gains. Also in flat chop with no trend the
- * EMA cross whipsaws.
+ * Why this strategy: crypto rallies happen when the US dollar is not spiking (risk-on).
+ * A 50-EMA trend catches the move, while a DXY filter blocks entries only during sharp
+ * USD-strength episodes (e.g. Fed-hike panics) that crush crypto even in an uptrend.
+ * When it buys and sells: Buy when price is above its 50-EMA and DXY is not more than 3%
+ * above its own recent average. Sell when price drops back below the 50-EMA.
+ * When it does NOT work: In a liquidity-driven melt-up where DXY also rises, the gate
+ * keeps us out and we miss gains. In flat chop the 50-EMA cross whipsaws.
  */
 function onUpdate(ctx) {
   const ema50 = ctx.ema(50, 1);
-  const ema200 = ctx.ema(200, 1);
-  if (ema50 == null || ema200 == null) return null;
+  if (ema50 == null) return null;
   const closes = ctx.closes;
   if (closes.length < 2) return null;
   const prevClose = closes[closes.length - 2];
@@ -32,21 +29,20 @@ function onUpdate(ctx) {
     st.dxyHist.push(dxyNow);
     if (st.dxyHist.length > 100) st.dxyHist.shift();
   }
-  // Gate active only once we have 20 DXY readings; risk-on = DXY below its own average
+  // Gate blocks only when DXY is sharply above its own average (>3%) — loose enough to
+  // let normal USD strength through, tight enough to skip spike regimes.
   let riskOn = true;
   if (st.dxyHist.length >= 20) {
     let sum = 0;
     for (let i = 0; i < st.dxyHist.length; i++) sum += st.dxyHist[i];
     const avg = sum / st.dxyHist.length;
-    riskOn = dxyNow != null && dxyNow < avg * 1.005; // 0.5% tolerance avoids noise flips
+    riskOn = dxyNow == null || dxyNow < avg * 1.03;
   }
 
-  const uptrend = prevClose > ema50 && ema50 > ema200;
-
-  if (ctx.position > 0 && (prevClose < ema50 || ema50 < ema200)) {
+  if (ctx.position > 0 && prevClose < ema50) {
     return { side: 'sell', qty: ctx.position };
   }
-  if (ctx.position === 0 && uptrend && riskOn) {
+  if (ctx.position === 0 && prevClose > ema50 && riskOn) {
     return { side: 'buy', qty: ctx.cash / ctx.price * 0.99 };
   }
   return null;
