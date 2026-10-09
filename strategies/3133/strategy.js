@@ -26,6 +26,10 @@
  *  2. Peak per symbol. ctx.state is ONE object for the whole run (all 5 symbols share it), so the old
  *     `ctx.state.peak` let one symbol's high drive another symbol's trailing stop. Now ctx.state.peak[sym].
  *  Trading decisions are otherwise unchanged — re-run the backtest anyway (the peak fix changes exits).
+ *
+ * Change (2026-10-09): ctx.watch lines carry `trigger` ('below' = price falls to it, 'above' = rises to it)
+ *  so the run card can tell "met" correctly — the trail stop sits BELOW price and must not read as met.
+ *  Display only: no trading decision changed (agent 1.273.0+ passes it through; older agents ignore it).
  */
  
 // Declare watch lines for this symbol's tick. Agents before 1.229 have no ctx.watch — skip quietly there.
@@ -67,10 +71,10 @@ function onUpdate(ctx) {
       declare(ctx, []);
       return { side: 'sell', qty: pos };
     }
-    // Two exits are armed: the trail below and the EMA20 snap-back above.
+    // Two exits are armed: the trail below (fires when price FALLS to it) and the EMA20 snap-back above (fires when price RISES to it).
     declare(ctx, [
-      { side: 'sell', price: trailStop, qty: pos, note: '트레일 스탑 — 고점 −2.5 ATR' },
-      { side: 'sell', price: ema20, qty: pos, note: 'EMA20 복귀 — 반등 청산' },
+      { side: 'sell', price: trailStop, trigger: 'below', qty: pos, note: '트레일 스탑 — 고점 −2.5 ATR' },
+      { side: 'sell', price: ema20, trigger: 'above', qty: pos, note: 'EMA20 복귀 — 반등 청산' },
     ]);
     return null;
   }
@@ -102,14 +106,14 @@ function onUpdate(ctx) {
     return { side: 'buy', qty: qty };
   }
  
-  // Flat inside an uptrend: both entry lines, with the size each would buy at that price.
+  // Flat inside an uptrend: both entry lines (both fire when price FALLS to them), with the size each would buy at that price.
   const wait = [];
   if (lowerBand > 0) {
-    wait.push({ side: 'buy', price: lowerBand, qty: (ctx.cash / lowerBand) * 0.20,
+    wait.push({ side: 'buy', price: lowerBand, trigger: 'below', qty: (ctx.cash / lowerBand) * 0.20,
       note: 'BB(20,2.5) 하단 + RSI<30 (지금 ' + rsi.toFixed(0) + ')' });
   }
   if (keltnerLow > 0) {
-    wait.push({ side: 'buy', price: keltnerLow, qty: Math.min(0.025 * ctx.cash / atr, (ctx.cash / keltnerLow) * 0.20),
+    wait.push({ side: 'buy', price: keltnerLow, trigger: 'below', qty: Math.min(0.025 * ctx.cash / atr, (ctx.cash / keltnerLow) * 0.20),
       note: '켈트너 하단 + RSI<40 (지금 ' + rsi.toFixed(0) + ')' });
   }
   declare(ctx, wait);

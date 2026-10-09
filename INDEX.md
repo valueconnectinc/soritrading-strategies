@@ -11,6 +11,7 @@ Every figure comes from the last verifying backtest at publish time. These are p
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
+| — | [3133](strategies/3133/) | Multi-Asset Defensive MR Basket 5-Asset | +123.76% | — | +17.71% | 271 | 2026-10-09 |
 |  | [3269](strategies/3269/) | Donchian Breakout Trend | +35.46% | +90.80% | +28.25% | 13 | 2026-10-09 |
 |  | [3267](strategies/3267/) | BTC Fear-Greed Contrarian | +475.06% | +854.07% | +44.23% | 14 | 2026-10-09 |
 |  | [3266](strategies/3266/) | BTC Bollinger Mean-Reversion | -24.99% | +72.57% | +45.87% | 12 | 2026-10-09 |
@@ -106,7 +107,6 @@ Every figure comes from the last verifying backtest at publish time. These are p
 |  | [3141](strategies/3141/) | BTC 4H Trend-Gated Keltner Mean-Reversion | +18.46% | +38.04% | +9.05% | 46 | 2026-10-05 |
 |  | [3140](strategies/3140/) | BTC 4H Keltner MR with Hard Stop | -18.05% | +38.04% | +18.73% | 32 | 2026-10-05 |
 |  | [3139](strategies/3139/) | XRP 4H Trend-Gated Keltner Mean-Reversion | +17.06% | +255.56% | +10.38% | 10 | 2026-10-05 |
-| — | [3133](strategies/3133/) | Multi-Asset Defensive MR Basket 5-Asset | +122.61% | — | +17.71% | 270 | 2026-10-05 |
 |  | [3134](strategies/3134/) | AI 전략 | +101.19% | +409.78% | +16.51% | 40 | 2026-10-04 |
 |  | [3132](strategies/3132/) | BTC 4H Trend-Gated Keltner MR SMA100 | +24.49% | +409.78% | +16.51% | 12 | 2026-10-04 |
 |  | [3131](strategies/3131/) | BTC 4H Trend-Gated Keltner MR | +101.19% | +409.78% | +16.51% | 40 | 2026-10-04 |
