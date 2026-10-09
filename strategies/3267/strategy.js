@@ -25,20 +25,25 @@ function onUpdate(ctx) {
   const price = ctx.price;
   const pos = ctx.position;
 
+  // debug: log every 20th bar
+  if (ctx.i % 20 === 0) {
+    ctx.log('i=' + ctx.i + ' price=' + price.toFixed(0) + ' s200=' + sma200.toFixed(0) + ' s50=' + sma50.toFixed(0) + ' pos=' + pos);
+  }
+
   if (pos > 0) {
-    // hard stop: -25% from entry caps a single losing trade
     if (ctx.entryPx != null && price <= ctx.entryPx * 0.75) {
+      ctx.log('SELL stop @' + ctx.i);
       return { side: 'sell', qty: pos };
     }
-    // trailing exit: trend broken when price falls below its 50-day average
     if (price < sma50) {
+      ctx.log('SELL trend @' + ctx.i);
       return { side: 'sell', qty: pos };
     }
     return null;
   }
 
-  // enter only when a confirmed uptrend is in place
   if (price > sma200) {
+    ctx.log('BUY @' + ctx.i);
     return { side: 'buy', qty: ctx.cash / price * 0.99 };
   }
   return null;

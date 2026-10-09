@@ -3,7 +3,7 @@
   "name": "BTC Fear-Greed Contrarian",
   "kind": "custom",
   "verified": {
-    "backtestId": 16122,
+    "backtestId": 16123,
     "return": -98.49,
     "mdd": 98.86,
     "trades": 1059,
@@ -27,6 +27,6 @@
     }
   },
   "config": null,
-  "updatedAt": "2026-10-09T21:27:03.707Z",
+  "updatedAt": "2026-10-09T21:31:27.769Z",
   "publishedBy": "scripts/publish-strategies.mjs"
 }
