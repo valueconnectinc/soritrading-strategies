@@ -4,14 +4,14 @@ Every strategy whose backtest **finished and actually traded** is published here
 Nothing is filtered out by return — the ones that lost money are part of the record.
 Entries stay after a strategy is removed from our own workspace — this is a log, and deleting the record would leave only the survivors.
 
-**★ marks a strategy that out-returned buy & hold over the same window** — 406 of 1570 right now.
+**★ marks a strategy that out-returned buy & hold over the same window** — 407 of 1571 right now.
 `—` means the comparison **could not be made**: the engine does not compute a benchmark for multi-symbol, futures, or multi-leg runs. That is *unknown*, not *lost*, and it is 236 of them right now.
 
 Every figure comes from the last verifying backtest at publish time. These are past results over historical data. Nothing here is promised or assured about the future, and none of it is investment advice.
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
-|  | [3258](strategies/3258/) | 제미나이 전략 | -99.99% | +1823.58% | +99.99% | 3313 | 2026-10-09 |
+|  | [3258](strategies/3258/) | 제미나이 전략 | -15.58% | +15.26% | +23.54% | 104 | 2026-10-09 |
 |  | [3257](strategies/3257/) | btc_onchain_meanrev_1d | +21.32% | +45.60% | +22.63% | 20 | 2026-10-09 |
 |  | [3256](strategies/3256/) | btc_mean_reversion_1d | -25.98% | +1300.36% | +52.33% | 8 | 2026-10-09 |
 |  | [3250](strategies/3250/) | BTC 1D Keltner MR + Fear-Greed Gate | +9.27% | +307.75% | +2.46% | 4 | 2026-10-09 |
@@ -1581,3 +1581,4 @@ Every figure comes from the last verifying backtest at publish time. These are p
 | — | [383](strategies/383/) | RSI 기반 매매 전략 | +16.15% | — | +16.71% | 27 | 2026-09-09 |
 | — | [382](strategies/382/) | RSI와 SMA 기반 전략 | -19.02% | — | +23.82% | 4 | 2026-09-09 |
 | — | [381](strategies/381/) | 이동평균교차전략 | -21.82% | — | +36.09% | 70 | 2026-09-08 |
+| ★ | [371](strategies/371/) | BTC 업비트 돈치안 트렌드 스탑 | -1.72% | -25.75% | +5.46% | 4 | 2026-09-06 |
