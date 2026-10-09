@@ -106,7 +106,7 @@ function onUpdate(ctx) {
   if (high55 != null && strongBull && price > high55 && !(price > ema20 + 7 * atr && rsi > 75)) {
     st.entryType = 'trend';
     st.peak = price;
-    const qty = Math.min(0.012 * ctx.cash / atr, ctx.cash / price * 0.9); // slightly smaller: trend trades whipsaw more
+    const qty = Math.min(0.015 * ctx.cash / atr, ctx.cash / price * 0.9); // same risk as MR now: bull rides carry the return
     return { side: 'buy', qty };
   }
 
@@ -116,7 +116,7 @@ function onUpdate(ctx) {
   if (strongBull && price < ema20 && price > ema20 - 1.5 * atr && price > sma50 && rsi < 55) {
     st.entryType = 'dip';
     st.peak = price;
-    const qty = Math.min(0.012 * ctx.cash / atr, ctx.cash / price * 0.9);
+    const qty = Math.min(0.015 * ctx.cash / atr, ctx.cash / price * 0.9);
     return { side: 'buy', qty };
   }
 
