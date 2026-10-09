@@ -11,11 +11,11 @@ Every figure comes from the last verifying backtest at publish time. These are p
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
+| — | [3133](strategies/3133/) | Multi-Asset Defensive MR Basket 5-Asset | +123.76% | — | +17.71% | 271 | 2026-10-09 |
 |  | [3273](strategies/3273/) | BTC Fear-Greed Contrarian | -64.29% | -23.81% | +65.16% | 294 | 2026-10-09 |
 | — | [3272](strategies/3272/) | BTC Funding Contrarian | +180.35% | — | +25.62% | 10 | 2026-10-09 |
 | ★ | [3271](strategies/3271/) | BTC Mean Reversion RSI-BB | +20.61% | -23.81% | +8.76% | 4 | 2026-10-09 |
 | ★ | [3270](strategies/3270/) | EMA Pullback Continuation | -2.68% | -23.81% | +23.41% | 53 | 2026-10-09 |
-| — | [3133](strategies/3133/) | Multi-Asset Defensive MR Basket 5-Asset | +123.76% | — | +17.71% | 271 | 2026-10-09 |
 |  | [3269](strategies/3269/) | Donchian Breakout Trend | +35.46% | +90.80% | +28.25% | 13 | 2026-10-09 |
 |  | [3267](strategies/3267/) | BTC Fear-Greed Contrarian | +475.06% | +854.07% | +44.23% | 14 | 2026-10-09 |
 |  | [3266](strategies/3266/) | BTC Bollinger Mean-Reversion | -24.99% | +72.57% | +45.87% | 12 | 2026-10-09 |

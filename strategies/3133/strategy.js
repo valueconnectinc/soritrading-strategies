@@ -37,18 +37,24 @@
  *  RSI is ago=1 (closed bar): it does not change until the next daily close — marked closed:true.
  *  Also: ctx.watch is called directly (no feature check — the platform checks agent support at deploy).
  *  Display only again: no trading decision changed.
+ *
+ * Change (2026-10-10, later): the 200-day trend is shown as its slope in % (it was a bare true), and the note
+ *  names the band the line sits on ("BB(20,2.5) 하단(마감 봉)" — the band of the last closed bar). A symbol whose
+ *  200-day average is falling now still declares its two lines with the trend chip ✗ (it used to declare
+ *  nothing, so the card could not say why it was not waiting). Trading decisions are identical: the trend
+ *  test moved into the two entry conditions instead of an early return.
  */
- 
+
 // Declare watch lines for this symbol's tick (display only — the return value of onUpdate is what trades).
 function declare(ctx, list) {
   ctx.watch(list);
 }
- 
+
 function onUpdate(ctx) {
   const sym = ctx.sym;
   const price = ctx.price;
   if (!Number.isFinite(price) || price <= 0) { declare(ctx, []); return null; }
- 
+
   const bb = ctx.bb(20, 2.5, 1);
   const rsi = ctx.rsi(14, 1);
   const sma200 = ctx.sma(200, 1);
@@ -59,14 +65,14 @@ function onUpdate(ctx) {
     declare(ctx, []);   // warming up: nothing to wait for yet (not "unsupported")
     return null;
   }
- 
+
   const uptrend = sma200 > sma200prev;
   const lowerBand = bb.lower;
   const keltnerLow = ema20 - 2.5 * atr;
- 
+
   if (!ctx.state.peak || typeof ctx.state.peak !== 'object') ctx.state.peak = {};   // per-symbol peaks (see header §2)
   const peaks = ctx.state.peak;
- 
+
   const pos = ctx.pos(sym);
   if (pos > 0) {
     // Track the highest close since entry so the trail is anchored to THIS symbol's real peak.
@@ -85,15 +91,13 @@ function onUpdate(ctx) {
     ]);
     return null;
   }
- 
-  if (!uptrend) {
-    declare(ctx, []);   // 200-day average falling: this symbol is not waiting for anything
-    return null;
-  }
- 
-  const bollingerFlush = price < lowerBand && rsi < 30;
-  const keltnerPullback = price < keltnerLow && rsi < 40;
- 
+
+  //  Entries need ALL of: price below the band (live price vs. the band of the last CLOSED bar), RSI of the last
+  //  closed bar below the threshold, and a rising 200-day average. Same decisions as before — only the order changed
+  //  so a falling-trend symbol still DECLARES its lines (with the trend condition shown as ✗) instead of going silent.
+  const bollingerFlush = uptrend && price < lowerBand && rsi < 30;
+  const keltnerPullback = uptrend && price < keltnerLow && rsi < 40;
+
   if (bollingerFlush) {
     const qty = (ctx.cash / price) * 0.20;
     if (qty <= 0) { declare(ctx, []); return null; }
@@ -112,19 +116,22 @@ function onUpdate(ctx) {
     declare(ctx, []);
     return { side: 'buy', qty: qty };
   }
- 
-  // Flat inside an uptrend: both entry lines (both fire when price FALLS to them), with the size each would buy at that price.
-  //  conds = the non-price half of each rule, with the values THIS tick decided on (RSI of the last closed bar).
+
+  // Flat: both entry lines (both fire when price FALLS to them), with the size each would buy at that price.
+  //  The line's price IS the price part of the rule (the band of the last CLOSED bar — fixed until the daily close);
+  //  conds = the other parts, with the values THIS tick decided on, so the card shows which part is missing.
+  const slopePct = (sma200 / sma200prev - 1) * 100;   // closed bars (ago=1 vs ago=2) — changes only at the daily close
+  const trendCond = { label: '200일선 기울기 %', now: slopePct, op: '>', ref: 0, closed: true };
   const wait = [];
   if (lowerBand > 0) {
     wait.push({ side: 'buy', price: lowerBand, trigger: 'below', qty: (ctx.cash / lowerBand) * 0.20,
-      note: 'BB(20,2.5) 하단 + RSI<30',
-      conds: [{ label: 'RSI(14) 마감', now: rsi, op: '<', ref: 30, closed: true }, { label: '200일선 상승', ok: uptrend }] });
+      note: 'BB(20,2.5) 하단(마감 봉)',
+      conds: [{ label: 'RSI(14) 마감', now: rsi, op: '<', ref: 30, closed: true }, trendCond] });
   }
   if (keltnerLow > 0) {
     wait.push({ side: 'buy', price: keltnerLow, trigger: 'below', qty: Math.min(0.025 * ctx.cash / atr, (ctx.cash / keltnerLow) * 0.20),
-      note: '켈트너 하단 + RSI<40',
-      conds: [{ label: 'RSI(14) 마감', now: rsi, op: '<', ref: 40, closed: true }, { label: '200일선 상승', ok: uptrend }] });
+      note: '켈트너 하단(마감 봉)',
+      conds: [{ label: 'RSI(14) 마감', now: rsi, op: '<', ref: 40, closed: true }, trendCond] });
   }
   declare(ctx, wait);
   return null;
