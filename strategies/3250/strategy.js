@@ -18,8 +18,10 @@
  * an uptrend, not a crash, so price must still be above the 50-day average).
  * A flush trade sells on the snap-back to the middle band, a breakout trade
  * sells below the middle band, and a bull/dip trade sells on a trailing stop
- * that is 3xATR normally and 7xATR inside a strong bull regime, tightened to
- * 4xATR once the trade is up more than 4xATR so a real gain is protected.
+ * that is 3xATR normally and 7xATR inside a strong bull regime. If a bull/dip
+ * trade has peaked more than 2xATR above its entry and then falls back to the
+ * entry price, it is closed at break-even so a real gain is never turned into
+ * a loss (a floor, not a tighter trail — the wide stop still lets the trend run).
  * When it does NOT work: in a persistent downtrend it stays in cash, and in a
  * choppy sideways market above the 200-day average the bull sleeve can whipsaw.
  * It underperforms buy-and-hold in strong bull years that never pull back at
@@ -55,12 +57,15 @@ function onUpdate(ctx) {
     }
     if (et === 'trend' || et === 'dip') {
       st.peak = Math.max(st.peak == null ? price : st.peak, price);
-      let stopMult = strongBull ? 7 : 3; // 7xATR in a melt-up: wide while the trend establishes itself; 3xATR elsewhere keeps gains
-      // Profit-protection ratchet: once the trade is up more than 4xATR, the wide
-      // stop has done its job (letting the trend run) and now gives back too much,
-      // so trail at 4xATR to bank a real gain without stopping out on normal noise.
       const entry = st.entryPx != null ? st.entryPx : price;
-      if (strongBull && st.peak - entry > 4 * atr) stopMult = 4;
+      // Break-even floor: if the trade peaked a real amount (2xATR) above entry and
+      // has now fallen all the way back to entry, close at break-even. This is a
+      // loss-limiter, not a stop-tightener, so it never cuts a still-winning trade.
+      if (st.peak - entry > 2 * atr && price <= entry) {
+        st.cooldown = ctx.i + 2;
+        return { side: 'sell', qty: pos };
+      }
+      const stopMult = strongBull ? 7 : 3; // 7xATR in a melt-up: wide so pullbacks do not stop the trend out; 3xATR elsewhere keeps gains
       if (price < st.peak - stopMult * atr) {
         st.cooldown = ctx.i + 2;
         return { side: 'sell', qty: pos };
