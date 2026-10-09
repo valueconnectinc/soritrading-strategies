@@ -3,19 +3,19 @@
   "name": "Donchian Breakout Trend",
   "kind": "custom",
   "verified": {
-    "backtestId": 16136,
-    "return": 744.99,
-    "mdd": 36.4,
-    "trades": 11,
-    "vsBuyHold": "win",
-    "benchRet": 677.19,
+    "backtestId": 16137,
+    "return": 35.46,
+    "mdd": 28.25,
+    "trades": 13,
+    "vsBuyHold": "lose",
+    "benchRet": 90.8,
     "benchBasis": "price",
     "gapPct": 0,
-    "tFrom": 1532304000,
-    "tTo": 1618617600,
+    "tFrom": 1705104000,
+    "tTo": 1791417600,
     "approxNotes": [
       "봉 내 순서는 관례(양봉 O→L→H→C·음봉 O→H→L→C) — 실순서 미상 · 봉 중 거래량 null · MDD 는 봉 마감 기준",
-      "기간 종료 시 미청산 포지션 1종목 (총자산의 99.85%) — 이 수익률은 **평가액**을 포함합니다. 퇴출 수수료·거래세를 안 냈고, 마지막 봉 가격에 실제로 팔 수 있다는 보장도 없습니다(얇은 호가·상장폐지). exec.endLiquidate 로 마지막 봉 청산을 켤 수 있습니다",
+      "기간 종료 시 미청산 포지션 1종목 (총자산의 99.34%) — 이 수익률은 **평가액**을 포함합니다. 퇴출 수수료·거래세를 안 냈고, 마지막 봉 가격에 실제로 팔 수 있다는 보장도 없습니다(얇은 호가·상장폐지). exec.endLiquidate 로 마지막 봉 청산을 켤 수 있습니다",
       "[데이터/출처] 내 저장소(에이전트 0ccd49…) 1000봉 · 1분봉에서 저장소 안에서 만든 파생봉 — 서버 데이터와 값이 다를 수 있습니다"
     ],
     "spec": {
@@ -23,7 +23,7 @@
       "sym": "BTC",
       "interval": "1d",
       "bars": 1000,
-      "end": 1618704000
+      "end": 1791504000
     }
   },
   "config": null,
