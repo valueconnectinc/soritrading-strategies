@@ -4,13 +4,14 @@ Every strategy whose backtest **finished and actually traded** is published here
 Nothing is filtered out by return — the ones that lost money are part of the record.
 Entries stay after a strategy is removed from our own workspace — this is a log, and deleting the record would leave only the survivors.
 
-**★ marks a strategy that out-returned buy & hold over the same window** — 410 of 1582 right now.
-`—` means the comparison **could not be made**: the engine does not compute a benchmark for multi-symbol, futures, or multi-leg runs. That is *unknown*, not *lost*, and it is 236 of them right now.
+**★ marks a strategy that out-returned buy & hold over the same window** — 410 of 1583 right now.
+`—` means the comparison **could not be made**: the engine does not compute a benchmark for multi-symbol, futures, or multi-leg runs. That is *unknown*, not *lost*, and it is 237 of them right now.
 
 Every figure comes from the last verifying backtest at publish time. These are past results over historical data. Nothing here is promised or assured about the future, and none of it is investment advice.
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
+| — | [3272](strategies/3272/) | BTC Funding Contrarian | +75.82% | — | +12.71% | 2 | 2026-10-09 |
 | ★ | [3271](strategies/3271/) | BTC Mean Reversion RSI-BB | +20.61% | -23.81% | +8.76% | 4 | 2026-10-09 |
 | ★ | [3270](strategies/3270/) | EMA Pullback Continuation | -2.68% | -23.81% | +23.41% | 53 | 2026-10-09 |
 | — | [3133](strategies/3133/) | Multi-Asset Defensive MR Basket 5-Asset | +123.76% | — | +17.71% | 271 | 2026-10-09 |
