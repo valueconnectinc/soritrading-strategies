@@ -4,14 +4,14 @@ Every strategy whose backtest **finished and actually traded** is published here
 Nothing is filtered out by return — the ones that lost money are part of the record.
 Entries stay after a strategy is removed from our own workspace — this is a log, and deleting the record would leave only the survivors.
 
-**★ marks a strategy that out-returned buy & hold over the same window** — 406 of 1567 right now.
+**★ marks a strategy that out-returned buy & hold over the same window** — 407 of 1567 right now.
 `—` means the comparison **could not be made**: the engine does not compute a benchmark for multi-symbol, futures, or multi-leg runs. That is *unknown*, not *lost*, and it is 236 of them right now.
 
 Every figure comes from the last verifying backtest at publish time. These are past results over historical data. Nothing here is promised or assured about the future, and none of it is investment advice.
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
-|  | [3250](strategies/3250/) | BTC 1D Keltner MR + Fear-Greed Gate | -4.03% | +90.80% | +18.30% | 22 | 2026-10-09 |
+| ★ | [3250](strategies/3250/) | BTC 1D Keltner MR + Fear-Greed Gate | -13.56% | -23.81% | +18.94% | 30 | 2026-10-09 |
 |  | [3249](strategies/3249/) | BTC 1D Fear-Greed Contrarian | -12.01% | +94.76% | +42.59% | 12 | 2026-10-08 |
 | ★ | [3248](strategies/3248/) | AI 전략 | +24.06% | -40.46% | +34.00% | 62 | 2026-10-08 |
 |  | [3247](strategies/3247/) | AI 전략 | -63.90% | +260.68% | +64.71% | 122 | 2026-10-08 |
