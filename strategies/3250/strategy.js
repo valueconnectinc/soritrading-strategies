@@ -9,12 +9,12 @@
  * Why this strategy: Deep flushes to the lower Keltner band inside an uptrend
  * are usually bought back quickly (mean reversion), and low-volatility squeezes
  * that break out tend to keep trending (momentum). In a strong bull regime a
- * fresh 90-day high is bought and ridden with a wider trailing stop, because
+ * fresh 55-day high is bought and ridden with a wider trailing stop, because
  * melt-ups have bigger normal noise than mixed markets.
  * When it buys and sells: buys a flush to the lower band with RSI below 40, or
  * a squeeze breakout above the upper band, both only above the 200-day average
  * and with above-average volume; in a strong bull regime it also buys a fresh
- * 90-day high, or a shallow dip back to the 20-day EMA (a normal pullback in
+ * 55-day high, or a shallow dip back to the 20-day EMA (a normal pullback in
  * an uptrend, not a crash, so price must still be above the 50-day average).
  * A flush trade sells on the snap-back to the middle band, a breakout trade
  * sells below the middle band, and a bull/dip trade sells on a trailing stop
@@ -96,12 +96,13 @@ function onUpdate(ctx) {
     return { side: 'buy', qty };
   }
 
-  // Bull sleeve: strong regime only, buy a fresh 90-day high, ride with a wide trailing stop.
+  // Bull sleeve: strong regime only, buy a fresh 55-day high, ride with a wide trailing stop.
+  // 55 days instead of 90: still a real swing high but frequent enough to catch melt-ups.
   // Exhaustion cap: skip a high that is more than one stop-width (7xATR) above the 20-day EMA
   // AND has RSI above 75 — the combination means a blow-off top, not a normal extension. The
   // dip sleeve still catches the pullback, so the trend is not missed.
-  const high90 = ctx.high(90, 1);
-  if (high90 != null && strongBull && price > high90 && !(price > ema20 + 7 * atr && rsi > 75) && volOk) {
+  const high55 = ctx.high(55, 1);
+  if (high55 != null && strongBull && price > high55 && !(price > ema20 + 7 * atr && rsi > 75) && volOk) {
     st.entryType = 'trend';
     st.peak = price;
     const qty = Math.min(0.012 * ctx.cash / atr, ctx.cash / price * 0.9); // slightly smaller: trend trades whipsaw more
