@@ -3,10 +3,10 @@
   "name": "BTC 1D Keltner MR + Fear-Greed Gate",
   "kind": "custom",
   "verified": {
-    "backtestId": 15947,
-    "return": 0.37,
-    "mdd": 16.64,
-    "trades": 22,
+    "backtestId": 15951,
+    "return": 1.57,
+    "mdd": 16.56,
+    "trades": 20,
     "vsBuyHold": "lose",
     "benchRet": 90.8,
     "benchBasis": "price",
@@ -21,8 +21,7 @@
       "ex": "binance",
       "sym": "BTC",
       "interval": "1d",
-      "bars": 1000,
-      "end": 1791504000
+      "bars": 1000
     }
   },
   "config": null,
