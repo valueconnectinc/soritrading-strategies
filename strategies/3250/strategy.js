@@ -1,56 +1,65 @@
 /*
  * @coinsori-strategy v1
- * name: XRP 4H Keltner MR Trend-Gated Vol-Target
+ * name: Keltner MR Daily + DXY Filter
  * ex: binance
- * syms: XRPUSDT
- * interval: 4h
+ * syms: BTCUSDT, ETHUSDT, SOLUSDT
+ * interval: 1d
  * cash: 10000
  *
- * Why this strategy: oversold bounces in an uptrend are the validated edge in this
- * account. Adding a 200-bar trend gate and ATR-based position sizing targets the
- * family's known weakness — 22-49% drawdown from staying fully invested in
- * volatile alts.
- * When it buys and sells: buys when a closed bar closes below the lower Keltner
- * band (EMA20 - 2.5x ATR) AND RSI<40 AND price is above its 200-bar average.
- * Sells when price returns to the mid band or RSI recovers above 60. 2-bar
- * cooldown after each exit.
- * When it does NOT work: in a strong downtrend the trend gate keeps it out but the
- * gate also delays re-entry after a reversal; in chop the cooldown and tight RSI
- * thresholds cut trade frequency. Vol-target sizing means it can never match a
- * full-cash run's upside in a clean bull.
+ * Why this strategy: The ATR-adaptive Keltner mean-reversion recipe is the
+ * validated champion (positive across ~29/32 windows at 4h and ~13/14 at 1d).
+ * It buys deep flushes to the lower Keltner band and sells on the snap-back.
+ * This version adds a macro regime filter: it skips the buy when the US dollar
+ * index (DXY) is strengthening, because a rising dollar is typically risk-off
+ * for crypto and coincides with the worst drawdown periods.
+ * When it buys and sells: buys a flush to the lower Keltner band (EMA20 - 2.5x
+ * ATR) with RSI<40 while price is above the 200-day average AND the dollar is
+ * not strengthening; sells on the snap-back to the middle band (EMA20). A
+ * 2-bar cooldown prevents re-buying. Position is ATR-scaled.
+ * When it does NOT work: in a persistent downtrend below the 200-day average it
+ * stays idle, and it lags straight-line melt-ups (few deep flushes to catch).
+ * If DXY data is unavailable the filter is skipped (strategy behaves as pure
+ * Keltner MR).
  */
 function onUpdate(ctx) {
-  const closes = ctx.closes;
+  const pos = ctx.position;
   const price = ctx.price;
+  if (!Number.isFinite(price) || price <= 0) return null;
+
   const ema20 = ctx.ema(20, 1);
   const atr = ctx.atr(14, 1);
-  const rsi = ctx.rsi(14, 1);
   const sma200 = ctx.sma(200, 1);
-  if (ema20 == null || atr == null || rsi == null || sma200 == null) return null;
-  if (closes.length < 2) return null;
-  const prev = closes[closes.length - 2];
+  const rsi = ctx.rsi(14, 1);
+  if (ema20 == null || atr == null || sma200 == null || rsi == null || atr <= 0) return null;
 
   const lower = ema20 - 2.5 * atr;
-  const pos = ctx.position;
-  const cd = (ctx.state.cd || 0);
-  if (cd > 0) ctx.state.cd = cd - 1;
+  const st = ctx.state;
 
-  // EXIT: bounce back to mid band or RSI recovered; then 2-bar cooldown
   if (pos > 0) {
-    if (prev >= ema20 || rsi > 60) {
-      ctx.state.cd = 2;
+    if (price > ema20) {
+      st.cooldown = ctx.i + 2;
       return { side: 'sell', qty: pos };
     }
     return null;
   }
 
-  if (cd > 0) return null;
-  // ENTRY: below lower band + oversold + uptrend gate (no falling knives)
-  if (prev < lower && rsi < 40 && prev > sma200) {
-    // risk 2% of equity on a 2.5x ATR adverse move, capped at full cash
-    const qty = Math.min(ctx.cash * 0.02 / (2.5 * atr), ctx.cash / price * 0.99);
-    if (qty <= 0) return null;
-    return { side: 'buy', qty };
+  if (st.cooldown != null && ctx.i < st.cooldown) return null;
+
+  if (price > sma200 && price <= lower && rsi < 40) {
+    // DXY regime gate: skip buy if dollar strengthening. Missing/neutral = allow.
+    const dxy = ctx.macro('dxy');
+    let dollarRising = false;
+    if (dxy != null && Number.isFinite(dxy)) {
+      dollarRising = dxy > 100;
+    }
+    if (dollarRising) return null;
+
+    st.cooldown = null;
+    // ATR-scaled size: risk 1.5% of equity per trade, in coin units.
+    const riskEq = 0.015 * ctx.cash;
+    const qty = riskEq / atr;
+    const maxQty = ctx.cash / price * 0.9;
+    return { side: 'buy', qty: Math.min(qty, maxQty) };
   }
   return null;
 }
