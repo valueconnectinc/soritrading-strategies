@@ -3,25 +3,25 @@
   "name": "BTC 1D Keltner MR + Fear-Greed Gate",
   "kind": "custom",
   "verified": {
-    "backtestId": 16039,
-    "return": 36.16,
-    "mdd": 19.36,
-    "trades": 34,
+    "backtestId": 16042,
+    "return": 9.27,
+    "mdd": 2.46,
+    "trades": 4,
     "vsBuyHold": "lose",
-    "benchRet": 45.6,
+    "benchRet": 307.75,
     "benchBasis": "price",
     "gapPct": 0,
-    "tFrom": 1618704000,
+    "tFrom": 1661904000,
     "tTo": 1791417600,
     "approxNotes": [
       "봉 내 순서는 관례(양봉 O→L→H→C·음봉 O→H→L→C) — 실순서 미상 · 봉 중 거래량 null · MDD 는 봉 마감 기준",
-      "[데이터/출처] 내 저장소(에이전트 0ccd49…) 2000봉 · 1분봉에서 저장소 안에서 만든 파생봉 — 서버 데이터와 값이 다를 수 있습니다"
+      "[데이터/출처] 내 저장소(에이전트 0ccd49…) 1500봉 · 1분봉에서 저장소 안에서 만든 파생봉 — 서버 데이터와 값이 다를 수 있습니다"
     ],
     "spec": {
       "ex": "binance",
       "sym": "BTC",
       "interval": "1d",
-      "bars": 2000,
+      "bars": 1500,
       "end": 1791504000
     }
   },
