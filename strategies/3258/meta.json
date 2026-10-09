@@ -3,7 +3,7 @@
   "name": "제미나이 전략",
   "kind": "custom",
   "verified": {
-    "backtestId": 16075,
+    "backtestId": 16076,
     "return": -100,
     "mdd": 100,
     "trades": 8799,
@@ -27,6 +27,6 @@
     }
   },
   "config": null,
-  "updatedAt": "2026-10-09T17:53:22.888Z",
+  "updatedAt": "2026-10-09T17:55:28.419Z",
   "publishedBy": "scripts/publish-strategies.mjs"
 }
