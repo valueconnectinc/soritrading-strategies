@@ -57,7 +57,44 @@ function onUpdate(ctx) {
   if (st.cooldown != null && ctx.i < st.cooldown) return null;
 
   // Squeeze detection: current ATR well below its own 50-bar mean (low volatility).
-  if (st.squeeze == null) st.squeeze = {};
-  const squeeze = st.squeeze != null ? atr < 0.85 * st.squeeze.avg : false;
+  if (st.atrs == null) st.atrs = [];
+  st.atrs.push(atr);
+  if (st.atrs.length > 50) st.atrs.shift();
+  let atrAvg = null;
+  if (st.atrs.length >= 30) {
+    let s = 0;
+    for (let k = 0; k < st.atrs.length; k++) s += st.atrs[k];
+    atrAvg = s / st.atrs.length;
+  }
+  const squeeze = atrAvg != null && atr < 0.85 * atrAvg; // 0.85: vol notably below its own average
+
+  // Volume confirmation on the previous (closed) bar.
+  const volOk = ctx.volPrev != null && ctx.volPrev > ctx.avgVol(20);
+
+  if (price <= sma200) return null; // trend gate: only trade above the 200-day average
+
+  // Mean-reversion entry: deep flush to the lower band with weak momentum.
+  if (price <= lower && rsi < 40 && volOk) {
+    st.entryType = 'mr';
+    const qty = Math.min(0.015 * ctx.cash / atr, ctx.cash / price * 0.9); // risk 1.5% of equity per trade
+    return { side: 'buy', qty };
+  }
+
+  // Momentum entry: squeeze breakout above the upper band.
+  if (price > upper && squeeze && volOk) {
+    st.entryType = 'brk';
+    const qty = Math.min(0.015 * ctx.cash / atr, ctx.cash / price * 0.9);
+    return { side: 'buy', qty };
+  }
+
+  // Bull sleeve: strong regime only, buy a fresh 90-day high, ride until EMA20 flips.
+  const sma50 = ctx.sma(50, 1);
+  const high90 = ctx.high(90, 1);
+  if (sma50 != null && high90 != null && price > sma200 * 1.15 && sma50 > sma200 && price > high90 && volOk) {
+    st.entryType = 'trend';
+    const qty = Math.min(0.012 * ctx.cash / atr, ctx.cash / price * 0.9); // slightly smaller: trend trades whipsaw more
+    return { side: 'buy', qty };
+  }
+
   return null;
 }
