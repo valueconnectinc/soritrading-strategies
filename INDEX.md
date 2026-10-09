@@ -11,7 +11,7 @@ Every figure comes from the last verifying backtest at publish time. These are p
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
-|  | [3275](strategies/3275/) | Dip Mean Reversion | -40.16% | +1300.36% | +63.88% | 8 | 2026-10-09 |
+|  | [3275](strategies/3275/) | Dip Mean Reversion | +167.02% | +1300.36% | +15.10% | 236 | 2026-10-09 |
 | — | [3133](strategies/3133/) | Multi-Asset Defensive MR Basket 5-Asset | +123.76% | — | +17.71% | 271 | 2026-10-09 |
 |  | [3273](strategies/3273/) | BTC Fear-Greed Contrarian | -64.29% | -23.81% | +65.16% | 294 | 2026-10-09 |
 | — | [3272](strategies/3272/) | BTC Funding Contrarian | +180.35% | — | +25.62% | 10 | 2026-10-09 |
