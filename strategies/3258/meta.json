@@ -25,7 +25,15 @@
       "bars": 5000
     }
   },
-  "config": null,
-  "updatedAt": "2026-10-09T17:06:00.929Z",
+  "config": {
+    "ex": "binance",
+    "cash": 10000,
+    "syms": [
+      "BTC"
+    ],
+    "interval": "1h",
+    "marketType": "spot"
+  },
+  "updatedAt": "2026-10-09T17:11:45.733Z",
   "publishedBy": "scripts/publish-strategies.mjs"
 }
