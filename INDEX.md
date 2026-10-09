@@ -12,7 +12,7 @@ Every figure comes from the last verifying backtest at publish time. These are p
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
 |  | [3258](strategies/3258/) | 제미나이 전략 | -100.00% | +1820.38% | +100.00% | 8257 | 2026-10-09 |
-|  | [3261](strategies/3261/) | EMA Trend-Follow BTC 4h | -17.02% | +34.36% | +36.64% | 88 | 2026-10-09 |
+|  | [3261](strategies/3261/) | EMA Trend-Follow BTC 4h | -34.35% | +457.69% | +50.55% | 76 | 2026-10-09 |
 |  | [3260](strategies/3260/) | Donchian Breakout BTC 4h | -87.76% | +51.40% | +90.31% | 241 | 2026-10-09 |
 | ★ | [3259](strategies/3259/) | ETH 4H Volatility Squeeze Breakout | +13.60% | -27.91% | +10.28% | 28 | 2026-10-09 |
 |  | [3257](strategies/3257/) | btc_onchain_meanrev_1d | +21.32% | +45.60% | +22.63% | 20 | 2026-10-09 |
