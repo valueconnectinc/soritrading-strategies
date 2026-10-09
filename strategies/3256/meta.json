@@ -3,26 +3,26 @@
   "name": "btc_mean_reversion_1d",
   "kind": "custom",
   "verified": {
-    "backtestId": 16044,
-    "return": 18.75,
-    "mdd": 21.95,
-    "trades": 24,
+    "backtestId": 16046,
+    "return": -25.98,
+    "mdd": 52.33,
+    "trades": 8,
     "vsBuyHold": "lose",
-    "benchRet": 45.6,
+    "benchRet": 1300.36,
     "benchBasis": "price",
     "gapPct": 0,
-    "tFrom": 1618704000,
-    "tTo": 1791417600,
+    "tFrom": 1502928000,
+    "tTo": 1618617600,
     "approxNotes": [
       "봉 내 순서는 관례(양봉 O→L→H→C·음봉 O→H→L→C) — 실순서 미상 · 봉 중 거래량 null · MDD 는 봉 마감 기준",
-      "[데이터/출처] 내 저장소(에이전트 0ccd49…) 2000봉 · 1분봉에서 저장소 안에서 만든 파생봉 — 서버 데이터와 값이 다를 수 있습니다"
+      "[데이터/출처] 내 저장소(에이전트 0ccd49…) 1340봉 · 1분봉에서 저장소 안에서 만든 파생봉 — 서버 데이터와 값이 다를 수 있습니다"
     ],
     "spec": {
       "ex": "binance",
       "sym": "BTC",
       "interval": "1d",
       "bars": 2000,
-      "end": 1791504000
+      "end": 1618704000
     }
   },
   "config": null,
