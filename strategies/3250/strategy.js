@@ -97,11 +97,11 @@ function onUpdate(ctx) {
   }
 
   // Bull sleeve: strong regime only, buy a fresh 90-day high, ride with a wide trailing stop.
-  // Parabolicity cap: skip a high that is more than 7xATR above the 20-day EMA (one full
-  // stop-width beyond the mean = chasing an exhausted melt-up top). The dip sleeve below
-  // still catches the pullback, so the trend is not missed.
+  // Exhaustion cap: skip a high that is more than one stop-width (7xATR) above the 20-day EMA
+  // AND has RSI above 75 — the combination means a blow-off top, not a normal extension. The
+  // dip sleeve still catches the pullback, so the trend is not missed.
   const high90 = ctx.high(90, 1);
-  if (high90 != null && strongBull && price > high90 && price < ema20 + 7 * atr && volOk) {
+  if (high90 != null && strongBull && price > high90 && !(price > ema20 + 7 * atr && rsi > 75) && volOk) {
     st.entryType = 'trend';
     st.peak = price;
     const qty = Math.min(0.012 * ctx.cash / atr, ctx.cash / price * 0.9); // slightly smaller: trend trades whipsaw more
