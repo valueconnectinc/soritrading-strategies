@@ -1,6 +1,6 @@
 /*
  * @coinsori-strategy v1
- * name: BTC 1D Keltner Hybrid MR + Squeeze
+ * name: BTC 1D Hybrid MR + Squeeze + Bull Sleeve
  * ex: binance
  * syms: BTCUSDT
  * interval: 1d
@@ -9,17 +9,19 @@
  * Why this strategy: Deep flushes to the lower Keltner band inside an uptrend
  * are usually bought back quickly (mean reversion), and low-volatility squeezes
  * that break out tend to keep trending (momentum). This is the validated
- * champion recipe: it buys either a 2.5xATR flush below the 20-day average or a
- * breakout above it after a squeeze, and only while price is above its 200-day
- * average.
+ * champion recipe with one addition: in a strong bull regime (price well above
+ * the 200-day average and the 50-day above the 200-day) a fresh 90-day high is
+ * bought with an ATR trailing stop, so straight melt-ups are no longer missed.
  * When it buys and sells: buys a flush to the lower band with RSI below 40, or
  * a squeeze breakout above the upper band, both only above the 200-day average
- * and with above-average volume. A flush trade sells on the snap-back to the
- * middle band; a breakout trade sells when price falls back below the middle.
- * When it does NOT work: in a persistent downtrend it stays in cash, and it
- * lags straight-line melt-ups (few deep flushes to catch). It underperforms
- * buy-and-hold in strong bull years because it is often flat, and it pays fees
- * on every round trip. It is a defensive strategy, not a bull-market maximizer.
+ * and with above-average volume; in a strong bull regime it also buys a fresh
+ * 90-day high. A flush trade sells on the snap-back to the middle band, a
+ * breakout trade sells below the middle band, and a bull-sleeve trade sells on
+ * a 3xATR trailing stop from its peak.
+ * When it does NOT work: in a persistent downtrend it stays in cash, and in a
+ * choppy sideways market above the 200-day average the bull sleeve can whipsaw.
+ * It underperforms buy-and-hold in strong bull years that never pull back to
+ * the lower band, and it pays fees on every round trip. Defensive first.
  */
 function onUpdate(ctx) {
   const pos = ctx.position;
@@ -38,14 +40,21 @@ function onUpdate(ctx) {
   const st = ctx.state;
 
   if (pos > 0) {
-    const brk = st.entryType === 'brk';
-    if (brk && price < ema20) { // breakout trade: hold while above the middle band
+    const et = st.entryType;
+    if (et === 'mr' && price > ema20) { // flush trade: exit on snap-back to the middle band
       st.cooldown = ctx.i + 2;
       return { side: 'sell', qty: pos };
     }
-    if (!brk && price > ema20) { // flush trade: exit on snap-back to the middle band
+    if (et === 'brk' && price < ema20) { // breakout trade: hold while above the middle band
       st.cooldown = ctx.i + 2;
       return { side: 'sell', qty: pos };
+    }
+    if (et === 'trend') {
+      st.peak = Math.max(st.peak == null ? price : st.peak, price);
+      if (price < st.peak - 3 * atr) { // 3xATR trailing: keeps gains, loose enough to avoid noise
+        st.cooldown = ctx.i + 2;
+        return { side: 'sell', qty: pos };
+      }
     }
     return null;
   }
@@ -80,6 +89,16 @@ function onUpdate(ctx) {
   if (price > upper && squeeze && volOk) {
     st.entryType = 'brk';
     const qty = Math.min(0.015 * ctx.cash / atr, ctx.cash / price * 0.9);
+    return { side: 'buy', qty };
+  }
+
+  // Bull sleeve: strong regime only, buy a fresh 90-day high, ride with trailing stop.
+  const sma50 = ctx.sma(50, 1);
+  const high90 = ctx.high(90, 1);
+  if (sma50 != null && high90 != null && price > sma200 * 1.15 && sma50 > sma200 && price > high90 && volOk) {
+    st.entryType = 'trend';
+    st.peak = price;
+    const qty = Math.min(0.012 * ctx.cash / atr, ctx.cash / price * 0.9); // slightly smaller: trend trades whipsaw more
     return { side: 'buy', qty };
   }
 
