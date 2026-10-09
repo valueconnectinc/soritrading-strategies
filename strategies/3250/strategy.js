@@ -19,9 +19,11 @@
  * The trend and dip entries do NOT require above-average volume: in a melt-up
  * the continuation days after the breakout have normal volume, and requiring
  * it would skip most of the ride. A flush trade sells on the snap-back to the
- * middle band, a breakout trade sells below the middle band, and a bull/dip
- * trade sells on a trailing stop that is 3xATR normally and 7xATR inside a
- * strong bull regime.
+ * middle band, EXCEPT in a strong bull where it rides a 7xATR trailing stop
+ * (a flush in a melt-up usually keeps going, so selling at the middle band
+ * cuts the continuation short). A breakout trade sells below the middle band,
+ * and a bull/dip trade sells on a trailing stop that is 3xATR normally and
+ * 7xATR inside a strong bull regime.
  * When it does NOT work: in a persistent downtrend it stays in cash, and in a
  * choppy sideways market above the 200-day average the bull sleeve can whipsaw.
  * It underperforms buy-and-hold in strong bull years that never pull back at
@@ -47,9 +49,20 @@ function onUpdate(ctx) {
 
   if (pos > 0) {
     const et = st.entryType;
-    if (et === 'mr' && price > ema20) { // flush trade: exit on snap-back to the middle band
-      st.cooldown = ctx.i + 2;
-      return { side: 'sell', qty: pos };
+    if (et === 'mr') {
+      if (strongBull) {
+        // Melt-up flush usually continues: ride it on the same wide trail as trend/dip
+        // instead of selling at the middle band, to capture the continuation.
+        st.peak = Math.max(st.peak == null ? price : st.peak, price);
+        if (price < st.peak - 7 * atr) {
+          st.cooldown = ctx.i + 2;
+          return { side: 'sell', qty: pos };
+        }
+      } else if (price > ema20) { // flush trade in a normal regime: exit on snap-back to the middle band
+        st.cooldown = ctx.i + 2;
+        return { side: 'sell', qty: pos };
+      }
+      return null;
     }
     if (et === 'brk' && price < ema20) { // breakout trade: hold while above the middle band
       st.cooldown = ctx.i + 2;
@@ -57,7 +70,7 @@ function onUpdate(ctx) {
     }
     if (et === 'trend' || et === 'dip') {
       st.peak = Math.max(st.peak == null ? price : st.peak, price);
-      const stopMult = strongBull ? 7 : 3; // 7xATR in a melt-up: wider so pullbacks do not stop the trend out; 3xATR elsewhere keeps gains
+      const stopMult = et === 'trend' && strongBull ? 7 : 3; // 7xATR in a melt-up: wider so pullbacks do not stop the trend out; 3xATR elsewhere keeps gains
       if (price < st.peak - stopMult * atr) {
         st.cooldown = ctx.i + 2;
         return { side: 'sell', qty: pos };
