@@ -11,7 +11,7 @@ Every figure comes from the last verifying backtest at publish time. These are p
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
-|  | [3267](strategies/3267/) | BTC Fear-Greed Contrarian | -98.49% | +307.75% | +98.86% | 1059 | 2026-10-09 |
+|  | [3267](strategies/3267/) | BTC Fear-Greed Contrarian | -65.18% | +156.59% | +87.14% | 310 | 2026-10-09 |
 |  | [3266](strategies/3266/) | BTC Bollinger Mean-Reversion | -24.99% | +72.57% | +45.87% | 12 | 2026-10-09 |
 |  | [3265](strategies/3265/) | Fed-Gated Momentum Trend BTC 1D | +462.48% | +526.52% | +43.95% | 18 | 2026-10-09 |
 |  | [3263](strategies/3263/) | Volatility Squeeze Breakout | -3.50% | +187.96% | +55.48% | 68 | 2026-10-09 |

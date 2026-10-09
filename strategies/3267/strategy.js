@@ -18,33 +18,54 @@
  * gives back part of every pullback before it re-enters.
  */
 function onUpdate(ctx) {
-  const sma200 = ctx.sma(200, 1);
-  if (sma200 == null) return null;
-  const sma50 = ctx.sma(50, 1);
-  if (sma50 == null) return null;
-  const price = ctx.price;
-  const pos = ctx.position;
+  const closes = ctx.closes;
+  if (!closes || closes.length < 201) return null;
+  const price = closes[closes.length - 1];
+  if (!Number.isFinite(price) || price <= 0) return null;
 
-  // debug: log every 20th bar
-  if (ctx.i % 20 === 0) {
-    ctx.log('i=' + ctx.i + ' price=' + price.toFixed(0) + ' s200=' + sma200.toFixed(0) + ' s50=' + sma50.toFixed(0) + ' pos=' + pos);
-  }
+  // manual SMA over closed bars (ago=1 equivalent)
+  const sma200 = sma(closes, 200, 1);
+  const sma50 = sma(closes, 50, 1);
+  if (sma200 == null || sma50 == null) return null;
+
+  const pos = ctx.position || 0;
+
+  // cooldown: wait 3 bars after any order before acting again
+  const st = ctx.state;
+  let cd = st.cd || 0;
+  if (cd > 0) cd--;
+  ctx.state.cd = cd;
 
   if (pos > 0) {
+    if (cd > 0) return null;
     if (ctx.entryPx != null && price <= ctx.entryPx * 0.75) {
-      ctx.log('SELL stop @' + ctx.i);
+      ctx.state.cd = 3;
       return { side: 'sell', qty: pos };
     }
     if (price < sma50) {
-      ctx.log('SELL trend @' + ctx.i);
+      ctx.state.cd = 3;
       return { side: 'sell', qty: pos };
     }
     return null;
   }
 
+  if (cd > 0) return null;
   if (price > sma200) {
-    ctx.log('BUY @' + ctx.i);
-    return { side: 'buy', qty: ctx.cash / price * 0.99 };
+    ctx.state.cd = 3;
+    return { side: 'buy', qty: (ctx.cash / price) * 0.99 };
   }
   return null;
+}
+
+function sma(arr, n, ago) {
+  const end = arr.length - 1 - ago;
+  const start = end - n + 1;
+  if (start < 0) return null;
+  let sum = 0;
+  for (let k = start; k <= end; k++) {
+    const v = arr[k];
+    if (!Number.isFinite(v)) return null;
+    sum += v;
+  }
+  return sum / n;
 }
