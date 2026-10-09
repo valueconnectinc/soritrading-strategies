@@ -14,13 +14,15 @@
  * When it buys and sells: buys a flush to the lower band with RSI below 40, or
  * a squeeze breakout above the upper band, both only above the 200-day average
  * and with above-average volume; in a strong bull regime it also buys a fresh
- * 90-day high. A flush trade sells on the snap-back to the middle band, a
- * breakout trade sells below the middle band, and a bull-sleeve trade sells on
- * a trailing stop that is 3xATR normally and 5xATR inside a strong bull regime.
+ * 90-day high, or a shallow dip back to the 20-day EMA (a normal pullback in
+ * an uptrend, not a crash, so price must still be above the 50-day average).
+ * A flush trade sells on the snap-back to the middle band, a breakout trade
+ * sells below the middle band, and a bull/dip trade sells on a trailing stop
+ * that is 3xATR normally and 5xATR inside a strong bull regime.
  * When it does NOT work: in a persistent downtrend it stays in cash, and in a
  * choppy sideways market above the 200-day average the bull sleeve can whipsaw.
- * It underperforms buy-and-hold in strong bull years that never pull back to
- * the lower band, and it pays fees on every round trip. Defensive first.
+ * It underperforms buy-and-hold in strong bull years that never pull back at
+ * all, and it pays fees on every round trip. Defensive first.
  */
 function onUpdate(ctx) {
   const pos = ctx.position;
@@ -31,14 +33,14 @@ function onUpdate(ctx) {
   const ema20 = ctx.ema(20, 1);
   const atr = ctx.atr(14, 1);
   const sma200 = ctx.sma(200, 1);
+  const sma50 = ctx.sma(50, 1);
   const rsi = ctx.rsi(14, 1);
-  if (ema20 == null || atr == null || sma200 == null || rsi == null || atr <= 0) return null;
+  if (ema20 == null || atr == null || sma200 == null || sma50 == null || rsi == null || atr <= 0) return null;
 
   const lower = ema20 - 2.5 * atr; // 2.5xATR: deep enough to be a real flush, rare enough to avoid overtrading
   const upper = ema20 + 2.5 * atr;
   const st = ctx.state;
-  const sma50 = ctx.sma(50, 1);
-  const strongBull = sma50 != null && price > sma200 * 1.15 && sma50 > sma200; // regime flag used by both entry and stop width
+  const strongBull = price > sma200 * 1.15 && sma50 > sma200; // regime flag used by both entry and stop width
 
   if (pos > 0) {
     const et = st.entryType;
@@ -50,7 +52,7 @@ function onUpdate(ctx) {
       st.cooldown = ctx.i + 2;
       return { side: 'sell', qty: pos };
     }
-    if (et === 'trend') {
+    if (et === 'trend' || et === 'dip') {
       st.peak = Math.max(st.peak == null ? price : st.peak, price);
       const stopMult = strongBull ? 5 : 3; // 5xATR in a melt-up so normal noise does not stop us out; 3xATR elsewhere keeps gains
       if (price < st.peak - stopMult * atr) {
@@ -100,6 +102,16 @@ function onUpdate(ctx) {
     st.entryType = 'trend';
     st.peak = price;
     const qty = Math.min(0.012 * ctx.cash / atr, ctx.cash / price * 0.9); // slightly smaller: trend trades whipsaw more
+    return { side: 'buy', qty };
+  }
+
+  // Dip sleeve: in a strong bull, a shallow pullback to the 20-day EMA that
+  // keeps price above the 50-day average is a healthy entry; a dip below the
+  // 50-day average means the short-term trend is breaking, so we stay out.
+  if (strongBull && price < ema20 && price > ema20 - 1.5 * atr && price > sma50 && rsi < 55 && volOk) {
+    st.entryType = 'dip';
+    st.peak = price;
+    const qty = Math.min(0.012 * ctx.cash / atr, ctx.cash / price * 0.9);
     return { side: 'buy', qty };
   }
 
