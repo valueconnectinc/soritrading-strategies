@@ -1,6 +1,6 @@
 /*
  * @coinsori-strategy v1
- * name: BTC 1D Hybrid MR + Squeeze + Bull Sleeve (EMA20 exit)
+ * name: BTC 1D Hybrid MR + Squeeze + Bull Sleeve (adaptive stop)
  * ex: binance
  * syms: BTCUSDT
  * interval: 1d
@@ -9,13 +9,14 @@
  * Why this strategy: Deep flushes to the lower Keltner band inside an uptrend
  * are usually bought back quickly (mean reversion), and low-volatility squeezes
  * that break out tend to keep trending (momentum). In a strong bull regime a
- * fresh 90-day high is bought and held while price stays above the 20-day EMA,
- * so straight melt-ups are captured instead of being stopped out by noise.
+ * fresh 90-day high is bought and ridden with a wider trailing stop, because
+ * melt-ups have bigger normal noise than mixed markets.
  * When it buys and sells: buys a flush to the lower band with RSI below 40, or
  * a squeeze breakout above the upper band, both only above the 200-day average
  * and with above-average volume; in a strong bull regime it also buys a fresh
  * 90-day high. A flush trade sells on the snap-back to the middle band, a
- * breakout and a bull-sleeve trade sell below the middle band (EMA20).
+ * breakout trade sells below the middle band, and a bull-sleeve trade sells on
+ * a trailing stop that is 3xATR normally and 5xATR inside a strong bull regime.
  * When it does NOT work: in a persistent downtrend it stays in cash, and in a
  * choppy sideways market above the 200-day average the bull sleeve can whipsaw.
  * It underperforms buy-and-hold in strong bull years that never pull back to
@@ -36,6 +37,8 @@ function onUpdate(ctx) {
   const lower = ema20 - 2.5 * atr; // 2.5xATR: deep enough to be a real flush, rare enough to avoid overtrading
   const upper = ema20 + 2.5 * atr;
   const st = ctx.state;
+  const sma50 = ctx.sma(50, 1);
+  const strongBull = sma50 != null && price > sma200 * 1.15 && sma50 > sma200; // regime flag used by both entry and stop width
 
   if (pos > 0) {
     const et = st.entryType;
@@ -47,9 +50,13 @@ function onUpdate(ctx) {
       st.cooldown = ctx.i + 2;
       return { side: 'sell', qty: pos };
     }
-    if (et === 'trend' && price < ema20) { // bull sleeve: ride the melt-up until the 20-day trend flips
-      st.cooldown = ctx.i + 2;
-      return { side: 'sell', qty: pos };
+    if (et === 'trend') {
+      st.peak = Math.max(st.peak == null ? price : st.peak, price);
+      const stopMult = strongBull ? 5 : 3; // 5xATR in a melt-up so normal noise does not stop us out; 3xATR elsewhere keeps gains
+      if (price < st.peak - stopMult * atr) {
+        st.cooldown = ctx.i + 2;
+        return { side: 'sell', qty: pos };
+      }
     }
     return null;
   }
@@ -87,11 +94,11 @@ function onUpdate(ctx) {
     return { side: 'buy', qty };
   }
 
-  // Bull sleeve: strong regime only, buy a fresh 90-day high, ride until EMA20 flips.
-  const sma50 = ctx.sma(50, 1);
+  // Bull sleeve: strong regime only, buy a fresh 90-day high, ride with a wide trailing stop.
   const high90 = ctx.high(90, 1);
-  if (sma50 != null && high90 != null && price > sma200 * 1.15 && sma50 > sma200 && price > high90 && volOk) {
+  if (high90 != null && strongBull && price > high90 && volOk) {
     st.entryType = 'trend';
+    st.peak = price;
     const qty = Math.min(0.012 * ctx.cash / atr, ctx.cash / price * 0.9); // slightly smaller: trend trades whipsaw more
     return { side: 'buy', qty };
   }
