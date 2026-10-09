@@ -30,11 +30,18 @@
  * Change (2026-10-09): ctx.watch lines carry `trigger` ('below' = price falls to it, 'above' = rises to it)
  *  so the run card can tell "met" correctly — the trail stop sits BELOW price and must not read as met.
  *  Display only: no trading decision changed (agent 1.273.0+ passes it through; older agents ignore it).
+ *
+ * Change (2026-10-10): each entry line also lists its NON-price conditions (`conds`) with the exact values
+ *  this tick decided on — RSI(14) of the last CLOSED bar and the SMA200 slope. The run card now says
+ *  "price reached, RSI still 36 — not buying yet" instead of implying the 109 line is about to fill.
+ *  RSI is ago=1 (closed bar): it does not change until the next daily close — marked closed:true.
+ *  Also: ctx.watch is called directly (no feature check — the platform checks agent support at deploy).
+ *  Display only again: no trading decision changed.
  */
  
-// Declare watch lines for this symbol's tick. Agents before 1.229 have no ctx.watch — skip quietly there.
+// Declare watch lines for this symbol's tick (display only — the return value of onUpdate is what trades).
 function declare(ctx, list) {
-  if (typeof ctx.watch === 'function') ctx.watch(list);
+  ctx.watch(list);
 }
  
 function onUpdate(ctx) {
@@ -107,14 +114,17 @@ function onUpdate(ctx) {
   }
  
   // Flat inside an uptrend: both entry lines (both fire when price FALLS to them), with the size each would buy at that price.
+  //  conds = the non-price half of each rule, with the values THIS tick decided on (RSI of the last closed bar).
   const wait = [];
   if (lowerBand > 0) {
     wait.push({ side: 'buy', price: lowerBand, trigger: 'below', qty: (ctx.cash / lowerBand) * 0.20,
-      note: 'BB(20,2.5) 하단 + RSI<30 (지금 ' + rsi.toFixed(0) + ')' });
+      note: 'BB(20,2.5) 하단 + RSI<30',
+      conds: [{ label: 'RSI(14) 마감', now: rsi, op: '<', ref: 30, closed: true }, { label: '200일선 상승', ok: uptrend }] });
   }
   if (keltnerLow > 0) {
     wait.push({ side: 'buy', price: keltnerLow, trigger: 'below', qty: Math.min(0.025 * ctx.cash / atr, (ctx.cash / keltnerLow) * 0.20),
-      note: '켈트너 하단 + RSI<40 (지금 ' + rsi.toFixed(0) + ')' });
+      note: '켈트너 하단 + RSI<40',
+      conds: [{ label: 'RSI(14) 마감', now: rsi, op: '<', ref: 40, closed: true }, { label: '200일선 상승', ok: uptrend }] });
   }
   declare(ctx, wait);
   return null;
