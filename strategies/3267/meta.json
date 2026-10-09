@@ -3,27 +3,27 @@
   "name": "BTC Fear-Greed Contrarian",
   "kind": "custom",
   "verified": {
-    "backtestId": 16129,
-    "return": -7.24,
-    "mdd": 7.24,
-    "trades": 2,
+    "backtestId": 16134,
+    "return": 475.06,
+    "mdd": 44.23,
+    "trades": 14,
     "vsBuyHold": "lose",
-    "benchRet": 72.57,
+    "benchRet": 854.07,
     "benchBasis": "price",
     "gapPct": 0,
-    "tFrom": 1502928000,
-    "tTo": 1532217600,
+    "tFrom": 1597104000,
+    "tTo": 1661817600,
     "approxNotes": [
       "봉 내 순서는 관례(양봉 O→L→H→C·음봉 O→H→L→C) — 실순서 미상 · 봉 중 거래량 null · MDD 는 봉 마감 기준",
       "거래량은 봉 마감에만 확정 — 봉 중 평가에서 ctx.vol/volumes 가 null 이라 거래량 조건이 걸러졌을 수 있음(봉 중에도 쓰려면 ctx.volPrev·ctx.avgVol)",
-      "[데이터/출처] 내 저장소(에이전트 0ccd49…) 340봉 · 1분봉에서 저장소 안에서 만든 파생봉 — 서버 데이터와 값이 다를 수 있습니다"
+      "[데이터/출처] 내 저장소(에이전트 0ccd49…) 750봉 · 1분봉에서 저장소 안에서 만든 파생봉 — 서버 데이터와 값이 다를 수 있습니다"
     ],
     "spec": {
       "ex": "binance",
-      "sym": "BTC",
+      "sym": "SOL",
       "interval": "1d",
       "bars": 1500,
-      "end": 1532304000
+      "end": 1661904000
     }
   },
   "config": null,
