@@ -17,7 +17,7 @@
 function onUpdate(ctx) {
   const n = 55;          // Donchian channel length — classic turtle 55-day breakout
   const trend = 200;     // long-term trend filter — only take breakouts above it
-  const stopMult = 2.0;  // stop distance in ATR — wide enough to survive normal noise
+  const stopMult = 2.0;  // stop distance in ATR units — wide enough to survive normal noise
   const atrN = 14;
 
   const price = ctx.price;

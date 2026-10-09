@@ -11,7 +11,7 @@ Every figure comes from the last verifying backtest at publish time. These are p
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
-|  | [3269](strategies/3269/) | Donchian Breakout Trend | +35.46% | +90.80% | +28.25% | 13 | 2026-10-09 |
+|  | [3269](strategies/3269/) | Donchian Breakout Trend | -36.89% | -23.81% | +76.32% | 1 | 2026-10-09 |
 |  | [3267](strategies/3267/) | BTC Fear-Greed Contrarian | +475.06% | +854.07% | +44.23% | 14 | 2026-10-09 |
 |  | [3266](strategies/3266/) | BTC Bollinger Mean-Reversion | -24.99% | +72.57% | +45.87% | 12 | 2026-10-09 |
 |  | [3265](strategies/3265/) | Fed-Gated Momentum Trend BTC 1D | +462.48% | +526.52% | +43.95% | 18 | 2026-10-09 |
