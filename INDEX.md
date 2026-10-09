@@ -11,7 +11,7 @@ Every figure comes from the last verifying backtest at publish time. These are p
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
-|  | [3250](strategies/3250/) | BTC 1D Keltner MR + Fear-Greed Gate | +172.62% | +442.87% | +20.23% | 48 | 2026-10-09 |
+|  | [3250](strategies/3250/) | BTC 1D Keltner MR + Fear-Greed Gate | +31.52% | +45.60% | +16.56% | 34 | 2026-10-09 |
 |  | [3249](strategies/3249/) | BTC 1D Fear-Greed Contrarian | -12.01% | +94.76% | +42.59% | 12 | 2026-10-08 |
 | ★ | [3248](strategies/3248/) | AI 전략 | +24.06% | -40.46% | +34.00% | 62 | 2026-10-08 |
 |  | [3247](strategies/3247/) | AI 전략 | -63.90% | +260.68% | +64.71% | 122 | 2026-10-08 |
