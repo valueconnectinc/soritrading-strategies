@@ -8,18 +8,20 @@
  *
  * Why this strategy: BTC mean-reverts on daily timeframes — sharp drops to the lower Bollinger band
  * with oversold RSI tend to bounce. Betting on that bounce with a hard stop.
- * When it buys and sells: buys when price closes below the lower BB(20,2) AND RSI(14)<30.
- * Sells when price closes back above the middle band (SMA20), or RSI>60, or hits a 1.5xATR hard stop.
- * When it does NOT work: prolonged bear markets where every dip is met with more selling —
- * mean reversion catches falling knives. Also underperforms in strong one-way trends.
+ * When it buys and sells: buys when price closes below the lower BB(20,2), RSI(14)<30, AND price is
+ * still above the 200-day SMA (a pullback within an uptrend, not a falling knife). Sells when price
+ * closes back above the middle band (SMA20), or RSI>60, or hits a 1.5xATR hard stop.
+ * When it does NOT work: prolonged bear markets below the 200-day SMA (the trend filter keeps it in
+ * cash, so it simply misses, but never catches knives); strong one-way trends where dips keep falling.
  */
 function onUpdate(ctx) {
   const bb = ctx.bb(20, 2, 1);        // previous closed bar
   const rsi = ctx.rsi(14, 1);
   const atr = ctx.atr(14, 1);
   const mid = ctx.sma(20, 1);
+  const trend = ctx.sma(200, 1);      // long-term trend gate
   const prevClose = ctx.closes.at(-2);
-  if (bb == null || rsi == null || atr == null || mid == null || prevClose == null) return null;
+  if (bb == null || rsi == null || atr == null || mid == null || trend == null || prevClose == null) return null;
 
   const pos = ctx.position;
 
@@ -37,12 +39,11 @@ function onUpdate(ctx) {
     return null;
   }
 
-  // entry: closed bar below lower band AND oversold RSI — both must hold
-  if (prevClose < bb.lower && rsi < 30) {
-    const qty = ctx.cash / ctx.price * 0.99;   // full position, hard stop caps downside
-    ctx.watch([{ side: 'buy', price: bb.lower, trigger: 'below', note: 'BB lower touch', conds: [{ label: 'RSI(14) close', now: rsi, op: '<', ref: 30, closed: true }] }]);
+  // entry: pullback in an UPTREND (price above 200d SMA) — avoid catching falling knives
+  if (prevClose > trend && prevClose < bb.lower && rsi < 30) {
+    const qty = ctx.cash / ctx.price * 0.99;
+    ctx.watch([{ side: 'buy', price: bb.lower, trigger: 'below', note: 'BB lower in uptrend', conds: [{ label: 'RSI(14) close', now: rsi, op: '<', ref: 30, closed: true }, { label: 'Above 200d SMA', ok: true }] }]);
     return { side: 'buy', qty };
   }
-  ctx.watch([{ side: 'buy', price: bb.lower, trigger: 'below', note: 'BB lower touch', conds: [{ label: 'RSI(14) close', now: rsi, op: '<', ref: 30, closed: true }] }]);
   return null;
 }
