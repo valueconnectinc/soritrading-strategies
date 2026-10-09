@@ -1,33 +1,26 @@
 /*
  * @coinsori-strategy v1
- * name: BTC 1D Hybrid MR + Squeeze + Bull Sleeve (adaptive stop)
+ * name: BTC 1D Keltner MR + 50/200 Regime Gate
  * ex: binance
  * syms: BTCUSDT
  * interval: 1d
  * cash: 10000
  *
  * Why this strategy: Deep flushes to the lower Keltner band inside an uptrend
- * are usually bought back quickly (mean reversion), and low-volatility squeezes
- * that break out tend to keep trending (momentum). In a strong bull regime a
- * fresh 55-day high is bought and ridden with a wider trailing stop, because
- * melt-ups have bigger normal noise than mixed markets.
- * When it buys and sells: buys a flush to the lower band with RSI below 40, or
- * a squeeze breakout above the upper band, both only above the 200-day average
- * and with above-average volume; in a strong bull regime it also buys a fresh
- * 55-day high, or a shallow dip back to the 20-day EMA (a normal pullback in
- * an uptrend, not a crash, so price must still be above the 50-day average).
- * The trend and dip entries do NOT require above-average volume: in a melt-up
- * the continuation days after the breakout have normal volume, and requiring
- * it would skip most of the ride. A flush trade sells on the snap-back to the
- * middle band, EXCEPT in a strong bull where it rides a 7xATR trailing stop
- * (a flush in a melt-up usually keeps going, so selling at the middle band
- * cuts the continuation short). A breakout trade sells below the middle band,
- * and a bull/dip trade sells on a trailing stop that is 3xATR normally and
- * 7xATR inside a strong bull regime.
- * When it does NOT work: in a persistent downtrend it stays in cash, and in a
- * choppy sideways market above the 200-day average the bull sleeve can whipsaw.
- * It underperforms buy-and-hold in strong bull years that never pull back at
- * all, and it pays fees on every round trip. Defensive first.
+ * are usually bought back quickly (mean reversion). Requiring BOTH price above
+ * the 200-day average AND the 50-day average above the 200-day average (a
+ * golden-cross regime) filters out chop: it only buys flushes inside a
+ * confirmed uptrend, so whipsaw in sideways-above-200d markets is avoided.
+ * When it buys and sells: buys a flush to 2.5xATR below the 20-day EMA with
+ * RSI below 40 and above-average volume, only when the 50/200 regime is up;
+ * sells on the snap-back to the 20-day EMA or a hard 4xATR stop below entry.
+ * In a strong bull (price > 1.15x the 200-day average and 50-day above
+ * 200-day) it also buys a fresh 55-day high and rides it on a wide 7xATR
+ * trailing stop, because melt-ups have bigger normal noise than mixed markets.
+ * When it does NOT work: it stays in cash during bear markets and sideways
+ * markets above the 200-day average (the regime gate keeps it out), so it
+ * misses strong bull runs that never pull back. It also misses the first leg
+ * of a new uptrend before the 50-day average crosses above the 200-day.
  */
 function onUpdate(ctx) {
   const pos = ctx.position;
@@ -96,7 +89,10 @@ function onUpdate(ctx) {
   // Volume confirmation on the previous (closed) bar — used for MR and squeeze breakout.
   const volOk = ctx.volPrev != null && ctx.volPrev > ctx.avgVol(20);
 
-  if (price <= sma200) return null; // trend gate: only trade above the 200-day average
+  // REGIME GATE: only trade when the 200-bar trend agrees — price above the
+  // 200-day average AND the 50-day average above the 200-day. This is the
+  // golden-cross regime; it removes chop above the 200-day where MR whipsaws.
+  if (price <= sma200 || sma50 <= sma200) return null;
 
   // Mean-reversion entry: deep flush to the lower band with weak momentum.
   if (price <= lower && rsi < 40 && volOk) {
