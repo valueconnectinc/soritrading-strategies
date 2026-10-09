@@ -20,9 +20,8 @@
  * the continuation days after the breakout have normal volume, and requiring
  * it would skip most of the ride. A flush trade sells on the snap-back to the
  * middle band, a breakout trade sells below the middle band, and a bull/dip
- * trade sells when price closes back below the 50-day average (the short-term
- * trend that justified the trade is over) or on a trailing stop that is 3xATR
- * normally and 7xATR inside a strong bull regime.
+ * trade sells on a trailing stop that is 3xATR normally and 7xATR inside a
+ * strong bull regime.
  * When it does NOT work: in a persistent downtrend it stays in cash, and in a
  * choppy sideways market above the 200-day average the bull sleeve can whipsaw.
  * It underperforms buy-and-hold in strong bull years that never pull back at
@@ -58,12 +57,6 @@ function onUpdate(ctx) {
     }
     if (et === 'trend' || et === 'dip') {
       st.peak = Math.max(st.peak == null ? price : st.peak, price);
-      // Trend-break exit: a close back below the 50-day average means the uptrend
-      // that justified the trade is over — leave even if the wide stop has not hit.
-      if (price < sma50) {
-        st.cooldown = ctx.i + 2;
-        return { side: 'sell', qty: pos };
-      }
       const stopMult = strongBull ? 7 : 3; // 7xATR in a melt-up: wider so pullbacks do not stop the trend out; 3xATR elsewhere keeps gains
       if (price < st.peak - stopMult * atr) {
         st.cooldown = ctx.i + 2;
