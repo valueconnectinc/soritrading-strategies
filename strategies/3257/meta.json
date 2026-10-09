@@ -3,10 +3,10 @@
   "name": "btc_onchain_meanrev_1d",
   "kind": "custom",
   "verified": {
-    "backtestId": 16047,
-    "return": 24.6,
-    "mdd": 21.62,
-    "trades": 16,
+    "backtestId": 16048,
+    "return": -36.92,
+    "mdd": 44.26,
+    "trades": 26,
     "vsBuyHold": "lose",
     "benchRet": 45.6,
     "benchBasis": "price",
@@ -26,6 +26,6 @@
     }
   },
   "config": null,
-  "updatedAt": "2026-10-09T16:31:29.194Z",
+  "updatedAt": "2026-10-09T16:34:13.244Z",
   "publishedBy": "scripts/publish-strategies.mjs"
 }
