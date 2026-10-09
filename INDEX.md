@@ -11,8 +11,8 @@ Every figure comes from the last verifying backtest at publish time. These are p
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
-|  | [3257](strategies/3257/) | btc_onchain_meanrev_1d | +21.32% | +45.60% | +22.63% | 20 | 2026-10-09 |
 |  | [3258](strategies/3258/) | 제미나이 전략 | -99.99% | +1823.58% | +99.99% | 3313 | 2026-10-09 |
+|  | [3257](strategies/3257/) | btc_onchain_meanrev_1d | +21.32% | +45.60% | +22.63% | 20 | 2026-10-09 |
 |  | [3256](strategies/3256/) | btc_mean_reversion_1d | -25.98% | +1300.36% | +52.33% | 8 | 2026-10-09 |
 |  | [3250](strategies/3250/) | BTC 1D Keltner MR + Fear-Greed Gate | +9.27% | +307.75% | +2.46% | 4 | 2026-10-09 |
 |  | [3249](strategies/3249/) | BTC 1D Fear-Greed Contrarian | -12.01% | +94.76% | +42.59% | 12 | 2026-10-08 |
