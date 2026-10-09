@@ -16,9 +16,12 @@
  * and with above-average volume; in a strong bull regime it also buys a fresh
  * 55-day high, or a shallow dip back to the 20-day EMA (a normal pullback in
  * an uptrend, not a crash, so price must still be above the 50-day average).
- * A flush trade sells on the snap-back to the middle band, a breakout trade
- * sells below the middle band, and a bull/dip trade sells on a trailing stop
- * that is 3xATR normally and 7xATR inside a strong bull regime.
+ * The trend and dip entries do NOT require above-average volume: in a melt-up
+ * the continuation days after the breakout have normal volume, and requiring
+ * it would skip most of the ride. A flush trade sells on the snap-back to the
+ * middle band, a breakout trade sells below the middle band, and a bull/dip
+ * trade sells on a trailing stop that is 3xATR normally and 7xATR inside a
+ * strong bull regime.
  * When it does NOT work: in a persistent downtrend it stays in cash, and in a
  * choppy sideways market above the 200-day average the bull sleeve can whipsaw.
  * It underperforms buy-and-hold in strong bull years that never pull back at
@@ -77,7 +80,7 @@ function onUpdate(ctx) {
   }
   const squeeze = atrAvg != null && atr < 0.85 * atrAvg; // 0.85: vol notably below its own average
 
-  // Volume confirmation on the previous (closed) bar.
+  // Volume confirmation on the previous (closed) bar — used for MR and squeeze breakout.
   const volOk = ctx.volPrev != null && ctx.volPrev > ctx.avgVol(20);
 
   if (price <= sma200) return null; // trend gate: only trade above the 200-day average
@@ -97,12 +100,10 @@ function onUpdate(ctx) {
   }
 
   // Bull sleeve: strong regime only, buy a fresh 55-day high, ride with a wide trailing stop.
-  // 55 days instead of 90: still a real swing high but frequent enough to catch melt-ups.
-  // Exhaustion cap: skip a high that is more than one stop-width (7xATR) above the 20-day EMA
-  // AND has RSI above 75 — the combination means a blow-off top, not a normal extension. The
-  // dip sleeve still catches the pullback, so the trend is not missed.
+  // No volume requirement: in a melt-up the continuation days have normal volume, and a
+  // volume filter would skip most of the ride. Exhaustion cap still guards blow-off tops.
   const high55 = ctx.high(55, 1);
-  if (high55 != null && strongBull && price > high55 && !(price > ema20 + 7 * atr && rsi > 75) && volOk) {
+  if (high55 != null && strongBull && price > high55 && !(price > ema20 + 7 * atr && rsi > 75)) {
     st.entryType = 'trend';
     st.peak = price;
     const qty = Math.min(0.012 * ctx.cash / atr, ctx.cash / price * 0.9); // slightly smaller: trend trades whipsaw more
@@ -112,7 +113,7 @@ function onUpdate(ctx) {
   // Dip sleeve: in a strong bull, a shallow pullback to the 20-day EMA that
   // keeps price above the 50-day average is a healthy entry; a dip below the
   // 50-day average means the short-term trend is breaking, so we stay out.
-  if (strongBull && price < ema20 && price > ema20 - 1.5 * atr && price > sma50 && rsi < 55 && volOk) {
+  if (strongBull && price < ema20 && price > ema20 - 1.5 * atr && price > sma50 && rsi < 55) {
     st.entryType = 'dip';
     st.peak = price;
     const qty = Math.min(0.012 * ctx.cash / atr, ctx.cash / price * 0.9);
