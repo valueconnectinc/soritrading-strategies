@@ -18,7 +18,8 @@
  * an uptrend, not a crash, so price must still be above the 50-day average).
  * A flush trade sells on the snap-back to the middle band, a breakout trade
  * sells below the middle band, and a bull/dip trade sells on a trailing stop
- * that is 3xATR normally and 7xATR inside a strong bull regime.
+ * that is 3xATR normally and 7xATR inside a strong bull regime, tightened to
+ * 4xATR once the trade is up more than 4xATR so a real gain is protected.
  * When it does NOT work: in a persistent downtrend it stays in cash, and in a
  * choppy sideways market above the 200-day average the bull sleeve can whipsaw.
  * It underperforms buy-and-hold in strong bull years that never pull back at
@@ -54,7 +55,12 @@ function onUpdate(ctx) {
     }
     if (et === 'trend' || et === 'dip') {
       st.peak = Math.max(st.peak == null ? price : st.peak, price);
-      const stopMult = strongBull ? 7 : 3; // 7xATR in a melt-up: wider so pullbacks do not stop the trend out; 3xATR elsewhere keeps gains
+      let stopMult = strongBull ? 7 : 3; // 7xATR in a melt-up: wide while the trend establishes itself; 3xATR elsewhere keeps gains
+      // Profit-protection ratchet: once the trade is up more than 4xATR, the wide
+      // stop has done its job (letting the trend run) and now gives back too much,
+      // so trail at 4xATR to bank a real gain without stopping out on normal noise.
+      const entry = st.entryPx != null ? st.entryPx : price;
+      if (strongBull && st.peak - entry > 4 * atr) stopMult = 4;
       if (price < st.peak - stopMult * atr) {
         st.cooldown = ctx.i + 2;
         return { side: 'sell', qty: pos };
@@ -104,6 +110,7 @@ function onUpdate(ctx) {
   if (high90 != null && strongBull && price > high90 && !(price > ema20 + 7 * atr && rsi > 75) && volOk) {
     st.entryType = 'trend';
     st.peak = price;
+    st.entryPx = price;
     const qty = Math.min(0.012 * ctx.cash / atr, ctx.cash / price * 0.9); // slightly smaller: trend trades whipsaw more
     return { side: 'buy', qty };
   }
@@ -114,6 +121,7 @@ function onUpdate(ctx) {
   if (strongBull && price < ema20 && price > ema20 - 1.5 * atr && price > sma50 && rsi < 55 && volOk) {
     st.entryType = 'dip';
     st.peak = price;
+    st.entryPx = price;
     const qty = Math.min(0.012 * ctx.cash / atr, ctx.cash / price * 0.9);
     return { side: 'buy', qty };
   }
