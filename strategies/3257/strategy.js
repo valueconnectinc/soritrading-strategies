@@ -8,11 +8,11 @@
  *
  * Why this strategy: BTC pullbacks inside a healthy network-growth regime tend to bounce.
  * I use on-chain data (hashrate expanding = miners committed) as a fundamental regime
- * filter, and only fade oversold dips when the network is still growing. Once in a trade I
- * let winners run with a trailing stop so a strong uptrend isn't given back early.
+ * filter, and only fade oversold dips when the network is still growing. A hard stop
+ * below entry cuts losers quickly instead of holding a falling knife.
  * When it buys and sells: buys when RSI is oversold while hashrate is above its 30-day
- * average and price is above the 200-day average; sells when the trailing stop is hit or
- * RSI gets extremely overbought (a blow-off top).
+ * average and price is above the 200-day average; sells when RSI recovers to neutral or
+ * the hard stop is hit.
  * When it does NOT work: if hashrate falls (miner capitulation) or price breaks below the
  * 200-day average, the dip is not a bounce but a regime change — this loses in genuine
  * bear markets and during mining crackdowns.
@@ -34,20 +34,12 @@ function onUpdate(ctx) {
   const networkGrowing = hr > hrSma;
 
   if (ctx.position > 0) {
-    // Track the highest close since entry for the trailing stop.
-    const hi = ctx.state.trailHigh == null ? px : Math.max(ctx.state.trailHigh, px);
-    ctx.state.trailHigh = hi;
-
-    // Trailing stop: 3x ATR below the peak. Lets winners run in melt-ups,
-    // still locks in profit when the trend turns.
-    const stop = hi - 3 * atr;
-    if (px < stop) {
-      ctx.state.trailHigh = null;
+    // Hard stop: 2x ATR below entry — cuts a failed bounce fast.
+    if (px < ctx.entryPx - 2 * atr) {
       return { side: 'sell', qty: ctx.position };
     }
-    // Blow-off exit: RSI > 75 means euphoria, take profit before the reversal.
-    if (rsi > 75) {
-      ctx.state.trailHigh = null;
+    // Exit: RSI back to neutral = the panic bounce is done.
+    if (rsi >= 55) {
       return { side: 'sell', qty: ctx.position };
     }
     return null;
@@ -60,7 +52,6 @@ function onUpdate(ctx) {
 
   // Buy deep oversold panic: RSI < 30 and price below the 50-day mean.
   if (rsi < 30 && px < sma50) {
-    ctx.state.trailHigh = px;
     return { side: 'buy', qty: ctx.cash / px * 0.99 };
   }
   return null;
