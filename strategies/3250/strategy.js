@@ -1,68 +1,56 @@
 /*
  * @coinsori-strategy v1
- * name: BTC 4H Liquidation Capitulation Contrarian
+ * name: XRP 4H Keltner MR Trend-Gated Vol-Target
  * ex: binance
- * syms: BTC
+ * syms: XRPUSDT
  * interval: 4h
  * cash: 10000
  *
- * Why this strategy: Long-liquidation cascades mark short-term capitulation; price tends to revert
- * after the flush. We buy the flush on a dip and exit back to the mean.
- * When it buys and sells: Buy when a big long-liquidation spike happens while price is below its
- * 50-EMA (a dip). Sell when price returns to the 20-EMA or hits a 3xATR stop.
- * When it does NOT work: In sustained bear trends "capitulation" keeps happening — repeated buying
- * bleeds. Also quiet low-volatility markets produce no signals so it sits in cash.
+ * Why this strategy: oversold bounces in an uptrend are the validated edge in this
+ * account. Adding a 200-bar trend gate and ATR-based position sizing targets the
+ * family's known weakness — 22-49% drawdown from staying fully invested in
+ * volatile alts.
+ * When it buys and sells: buys when a closed bar closes below the lower Keltner
+ * band (EMA20 - 2.5x ATR) AND RSI<40 AND price is above its 200-bar average.
+ * Sells when price returns to the mid band or RSI recovers above 60. 2-bar
+ * cooldown after each exit.
+ * When it does NOT work: in a strong downtrend the trend gate keeps it out but the
+ * gate also delays re-entry after a reversal; in chop the cooldown and tight RSI
+ * thresholds cut trade frequency. Vol-target sizing means it can never match a
+ * full-cash run's upside in a clean bull.
  */
 function onUpdate(ctx) {
-  const px = ctx.price;
-  if (px == null) return null;
-
-  const st = ctx.state;
-  const raw = ctx.binanceLiqs(4);
-  if (st && !st.logged && raw != null) {
-    st.logged = true;
-    ctx.log('liqs raw sample:', Array.isArray(raw) ? JSON.stringify(raw.slice(0, 3)) : String(raw), 'typeof', typeof raw);
-  }
-  if (raw == null) return null;
-
-  let liqSum = 0;
-  if (Array.isArray(raw)) {
-    for (const r of raw) {
-      if (typeof r === 'number') liqSum += r;
-      else if (r && typeof r.value === 'number') liqSum += r.value;
-      else if (r && typeof r.qty === 'number') liqSum += r.qty;
-    }
-  } else if (typeof raw === 'number') {
-    liqSum = raw;
-  } else {
-    return null;
-  }
-
+  const closes = ctx.closes;
+  const price = ctx.price;
   const ema20 = ctx.ema(20, 1);
-  const ema50 = ctx.ema(50, 1);
   const atr = ctx.atr(14, 1);
-  if (ema20 == null || ema50 == null || atr == null) return null;
+  const rsi = ctx.rsi(14, 1);
+  const sma200 = ctx.sma(200, 1);
+  if (ema20 == null || atr == null || rsi == null || sma200 == null) return null;
+  if (closes.length < 2) return null;
+  const prev = closes[closes.length - 2];
 
-  if (st.liqEma == null) st.liqEma = liqSum;
-  else st.liqEma = st.liqEma * 0.95 + liqSum * 0.05;
-  const spike = st.liqEma > 0 && liqSum > 3 * st.liqEma;
+  const lower = ema20 - 2.5 * atr;
+  const pos = ctx.position;
+  const cd = (ctx.state.cd || 0);
+  if (cd > 0) ctx.state.cd = cd - 1;
 
-  if (ctx.position > 0) {
-    const stopPx = ctx.entryPx - 3 * atr;
-    ctx.watch([
-      { side: 'sell', price: ema20, note: 'revert to EMA20' },
-      { side: 'sell', price: stopPx, note: '3xATR stop' }
-    ]);
-    if (px < stopPx || px >= ema20) {
-      return { side: 'sell', qty: ctx.position };
+  // EXIT: bounce back to mid band or RSI recovered; then 2-bar cooldown
+  if (pos > 0) {
+    if (prev >= ema20 || rsi > 60) {
+      ctx.state.cd = 2;
+      return { side: 'sell', qty: pos };
     }
     return null;
   }
 
-  if (!spike) return null;
-  if (liqSum <= 0) return null;
-  if (px >= ema50) return null;
-
-  const qty = (ctx.cash / px) * 0.99;
-  return { side: 'buy', qty };
+  if (cd > 0) return null;
+  // ENTRY: below lower band + oversold + uptrend gate (no falling knives)
+  if (prev < lower && rsi < 40 && prev > sma200) {
+    // risk 2% of equity on a 2.5x ATR adverse move, capped at full cash
+    const qty = Math.min(ctx.cash * 0.02 / (2.5 * atr), ctx.cash / price * 0.99);
+    if (qty <= 0) return null;
+    return { side: 'buy', qty };
+  }
+  return null;
 }
