@@ -4,7 +4,7 @@ Every strategy whose backtest **finished and actually traded** is published here
 Nothing is filtered out by return — the ones that lost money are part of the record.
 Entries stay after a strategy is removed from our own workspace — this is a log, and deleting the record would leave only the survivors.
 
-**★ marks a strategy that out-returned buy & hold over the same window** — 407 of 1572 right now.
+**★ marks a strategy that out-returned buy & hold over the same window** — 408 of 1572 right now.
 `—` means the comparison **could not be made**: the engine does not compute a benchmark for multi-symbol, futures, or multi-leg runs. That is *unknown*, not *lost*, and it is 236 of them right now.
 
 Every figure comes from the last verifying backtest at publish time. These are past results over historical data. Nothing here is promised or assured about the future, and none of it is investment advice.
@@ -12,7 +12,7 @@ Every figure comes from the last verifying backtest at publish time. These are p
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
 |  | [3258](strategies/3258/) | 제미나이 전략 | -35.38% | +15.26% | +42.89% | 291 | 2026-10-09 |
-|  | [3259](strategies/3259/) | ETH 4H Volatility Squeeze Breakout | +33.24% | +1812.48% | +7.65% | 8 | 2026-10-09 |
+| ★ | [3259](strategies/3259/) | ETH 4H Volatility Squeeze Breakout | +13.60% | -27.91% | +10.28% | 28 | 2026-10-09 |
 |  | [3257](strategies/3257/) | btc_onchain_meanrev_1d | +21.32% | +45.60% | +22.63% | 20 | 2026-10-09 |
 |  | [3256](strategies/3256/) | btc_mean_reversion_1d | -25.98% | +1300.36% | +52.33% | 8 | 2026-10-09 |
 |  | [3250](strategies/3250/) | BTC 1D Keltner MR + Fear-Greed Gate | +9.27% | +307.75% | +2.46% | 4 | 2026-10-09 |
