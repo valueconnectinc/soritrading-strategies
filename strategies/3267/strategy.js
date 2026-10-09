@@ -1,45 +1,31 @@
 /*
  * @coinsori-strategy v1
- * name: BTC Fear-Greed Contrarian
+ * name: HashrateCapitulation
  * ex: binance
  * syms: BTC
  * interval: 1d
  * cash: 10000
  *
- * Why this strategy: Crypto crowds are systematically wrong at the extremes —
- * maximum fear marks good buying points and maximum greed marks good selling
- * points. This strategy trades the opposite of the crowd using the Fear & Greed
- * index as its only signal.
- * When it buys and sells: it buys when the Fear & Greed index is at or below 20
- * (extreme fear) and sells when it reaches 65 (greed), after 120 days, or if the
- * price falls 30% below entry (stop-loss).
- * When it does NOT work: it trades rarely, so it can sit in cash for months and
- * miss a strong bull run that never dips into extreme fear. In a slow grind higher
- * with no fear spikes it simply never buys.
+ * Why this strategy: Bitcoin miners capitulate (sell) when hashrate falls below its 30-day average; bottoms form and price recovers when hashrate turns back up.
+ * When it buys and sells: buys when hashrate crosses back above its 30-day average; sells when hashrate crosses below its 30-day average again.
+ * When it does NOT work: in prolonged bear markets hashrate can stay depressed for months, so the strategy sits in cash and misses the start of the next rally; it also does nothing if hashrate data is missing for a bar.
  */
 function onUpdate(ctx) {
-  const fg = ctx.data('fear_greed');
-  if (fg == null) return null; // sentiment data unavailable -> do nothing
+  const hr = ctx.data('hashrate');
+  const hrSma = ctx.data('hashrate_sma30');
+  if (hr == null || hrSma == null) return null;
 
-  if (ctx.position <= 0) {
-    // Buy only at extreme fear; skip if already holding.
-    if (fg <= 20) {
-      ctx.state.entryBar = ctx.i;
-      return { side:'buy', qty: ctx.cash / ctx.price * 0.95 };
-    }
-    return null;
+  const above = hr > hrSma;
+  const prev = ctx.state.prev; // 'above' | 'below' | undefined
+
+  let order = null;
+  if (prev === 'below' && above) {
+    // miner recovery confirmed — buy the bottom
+    order = { side: 'buy', qty: ctx.cash / ctx.price * 0.99 };
+  } else if (prev === 'above' && !above) {
+    // capitulation starting — get out
+    order = { side: 'sell', qty: ctx.position };
   }
-
-  // Track how long we have held in days (1d bars).
-  const entryBar = (ctx.state.entryBar == null) ? ctx.i : ctx.state.entryBar;
-  const heldBars = ctx.i - entryBar;
-
-  const stop = ctx.entryPx ? ctx.entryPx * 0.70 : 0; // -30% hard stop
-  ctx.watch([{ side:'sell', price: stop, trigger:'below', note:'stop -30%' }]);
-
-  if (fg >= 65 || heldBars >= 120 || (stop > 0 && ctx.price <= stop)) {
-    ctx.state.entryBar = null;
-    return { side:'sell', qty: ctx.position };
-  }
-  return null;
+  ctx.state.prev = above ? 'above' : 'below';
+  return order;
 }
