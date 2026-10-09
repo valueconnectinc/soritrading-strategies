@@ -11,7 +11,7 @@ Every figure comes from the last verifying backtest at publish time. These are p
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
-| — | [3272](strategies/3272/) | BTC Funding Contrarian | +75.82% | — | +12.71% | 2 | 2026-10-09 |
+| — | [3272](strategies/3272/) | BTC Funding Contrarian | +180.35% | — | +25.62% | 10 | 2026-10-09 |
 | ★ | [3271](strategies/3271/) | BTC Mean Reversion RSI-BB | +20.61% | -23.81% | +8.76% | 4 | 2026-10-09 |
 | ★ | [3270](strategies/3270/) | EMA Pullback Continuation | -2.68% | -23.81% | +23.41% | 53 | 2026-10-09 |
 | — | [3133](strategies/3133/) | Multi-Asset Defensive MR Basket 5-Asset | +123.76% | — | +17.71% | 271 | 2026-10-09 |
