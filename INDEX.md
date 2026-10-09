@@ -4,13 +4,14 @@ Every strategy whose backtest **finished and actually traded** is published here
 Nothing is filtered out by return — the ones that lost money are part of the record.
 Entries stay after a strategy is removed from our own workspace — this is a log, and deleting the record would leave only the survivors.
 
-**★ marks a strategy that out-returned buy & hold over the same window** — 408 of 1577 right now.
+**★ marks a strategy that out-returned buy & hold over the same window** — 408 of 1578 right now.
 `—` means the comparison **could not be made**: the engine does not compute a benchmark for multi-symbol, futures, or multi-leg runs. That is *unknown*, not *lost*, and it is 236 of them right now.
 
 Every figure comes from the last verifying backtest at publish time. These are past results over historical data. Nothing here is promised or assured about the future, and none of it is investment advice.
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
+|  | [3266](strategies/3266/) | BTC Bollinger Mean-Reversion | -24.99% | +72.57% | +45.87% | 12 | 2026-10-09 |
 |  | [3265](strategies/3265/) | Fed-Gated Momentum Trend BTC 1D | +462.48% | +526.52% | +43.95% | 18 | 2026-10-09 |
 |  | [3263](strategies/3263/) | Volatility Squeeze Breakout | -3.50% | +187.96% | +55.48% | 68 | 2026-10-09 |
 |  | [3262](strategies/3262/) | ETH Volatility Squeeze Breakout | -1.12% | +51.48% | +3.40% | 4 | 2026-10-09 |
