@@ -1,6 +1,6 @@
 /*
  * @coinsori-strategy v1
- * name: BTC 1D Hybrid MR + Squeeze + Bull Sleeve (adaptive stop)
+ * name: BTC 1D Hybrid MR + Squeeze + Bull Sleeve (MR stop)
  * ex: binance
  * syms: BTCUSDT
  * interval: 1d
@@ -14,9 +14,10 @@
  * When it buys and sells: buys a flush to the lower band with RSI below 40, or
  * a squeeze breakout above the upper band, both only above the 200-day average
  * and with above-average volume; in a strong bull regime it also buys a fresh
- * 90-day high. A flush trade sells on the snap-back to the middle band, a
- * breakout trade sells below the middle band, and a bull-sleeve trade sells on
- * a trailing stop that is 3xATR normally and 5xATR inside a strong bull regime.
+ * 90-day high. A flush trade sells on the snap-back to the middle band (or is
+ * cut if it falls 2xATR below entry), a breakout trade sells below the middle
+ * band, and a bull-sleeve trade sells on a trailing stop that is 3xATR normally
+ * and 5xATR inside a strong bull regime.
  * When it does NOT work: in a persistent downtrend it stays in cash, and in a
  * choppy sideways market above the 200-day average the bull sleeve can whipsaw.
  * It underperforms buy-and-hold in strong bull years that never pull back to
@@ -42,9 +43,17 @@ function onUpdate(ctx) {
 
   if (pos > 0) {
     const et = st.entryType;
-    if (et === 'mr' && price > ema20) { // flush trade: exit on snap-back to the middle band
-      st.cooldown = ctx.i + 2;
-      return { side: 'sell', qty: pos };
+    if (et === 'mr') {
+      // Protective stop: a flush that keeps falling 2xATR below entry is a failed
+      // MR setup — cut it instead of waiting for a snap-back that may not come.
+      if (st.mrStop != null && price < st.mrStop) {
+        st.cooldown = ctx.i + 6; // longer rest after a failed flush so we do not re-buy the same falling knife
+        return { side: 'sell', qty: pos };
+      }
+      if (price > ema20) { // flush trade: exit on snap-back to the middle band
+        st.cooldown = ctx.i + 2;
+        return { side: 'sell', qty: pos };
+      }
     }
     if (et === 'brk' && price < ema20) { // breakout trade: hold while above the middle band
       st.cooldown = ctx.i + 2;
@@ -83,6 +92,7 @@ function onUpdate(ctx) {
   // Mean-reversion entry: deep flush to the lower band with weak momentum.
   if (price <= lower && rsi < 40 && volOk) {
     st.entryType = 'mr';
+    st.mrStop = price - 2 * atr; // 2xATR: deep enough that normal bull flushes never hit it
     const qty = Math.min(0.015 * ctx.cash / atr, ctx.cash / price * 0.9); // risk 1.5% of equity per trade
     return { side: 'buy', qty };
   }
