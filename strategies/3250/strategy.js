@@ -9,16 +9,17 @@
  * Why this strategy: Deep flushes to the lower Keltner band inside an uptrend
  * are usually bought back quickly (mean reversion), and low-volatility squeezes
  * that break out tend to keep trending (momentum). In a strong bull regime a
- * fresh 90-day high is bought and ridden with a wider trailing stop, because
- * melt-ups have bigger normal noise than mixed markets.
+ * fresh 90-day high is bought and ridden with a trend exit, because melt-ups
+ * move further and have bigger normal noise than mixed markets.
  * When it buys and sells: buys a flush to the lower band with RSI below 40, or
  * a squeeze breakout above the upper band, both only above the 200-day average
  * and with above-average volume; in a strong bull regime it also buys a fresh
  * 90-day high, or a shallow dip back to the 20-day EMA (a normal pullback in
  * an uptrend, not a crash, so price must still be above the 50-day average).
  * A flush trade sells on the snap-back to the middle band, a breakout trade
- * sells below the middle band, and a bull/dip trade sells on a trailing stop
- * that is 3xATR normally and 5xATR inside a strong bull regime.
+ * sells below the middle band, and a bull/dip trade in a strong bull rides
+ * until price closes below the 20-day EMA (let winners run in a melt-up);
+ * outside a strong bull a bull/dip trade sells on a 3xATR trailing stop.
  * When it does NOT work: in a persistent downtrend it stays in cash, and in a
  * choppy sideways market above the 200-day average the bull sleeve can whipsaw.
  * It underperforms buy-and-hold in strong bull years that never pull back at
@@ -40,7 +41,7 @@ function onUpdate(ctx) {
   const lower = ema20 - 2.5 * atr; // 2.5xATR: deep enough to be a real flush, rare enough to avoid overtrading
   const upper = ema20 + 2.5 * atr;
   const st = ctx.state;
-  const strongBull = price > sma200 * 1.15 && sma50 > sma200; // regime flag used by both entry and stop width
+  const strongBull = price > sma200 * 1.15 && sma50 > sma200; // regime flag used by both entry and exit
 
   if (pos > 0) {
     const et = st.entryType;
@@ -53,6 +54,10 @@ function onUpdate(ctx) {
       return { side: 'sell', qty: pos };
     }
     if (et === 'trend' || et === 'dip') {
+      if (strongBull && price < ema20) { // melt-up trend exit: ride until the 20-day EMA breaks, lets winners run
+        st.cooldown = ctx.i + 2;
+        return { side: 'sell', qty: pos };
+      }
       st.peak = Math.max(st.peak == null ? price : st.peak, price);
       const stopMult = strongBull ? 5 : 3; // 5xATR in a melt-up so normal noise does not stop us out; 3xATR elsewhere keeps gains
       if (price < st.peak - stopMult * atr) {
@@ -96,7 +101,7 @@ function onUpdate(ctx) {
     return { side: 'buy', qty };
   }
 
-  // Bull sleeve: strong regime only, buy a fresh 90-day high, ride with a wide trailing stop.
+  // Bull sleeve: strong regime only, buy a fresh 90-day high, ride with a trend exit.
   const high90 = ctx.high(90, 1);
   if (high90 != null && strongBull && price > high90 && volOk) {
     st.entryType = 'trend';
