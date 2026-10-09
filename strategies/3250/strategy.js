@@ -1,6 +1,6 @@
 /*
  * @coinsori-strategy v1
- * name: BTC 1D Hybrid MR + Squeeze + Bull Sleeve (strong trend gate)
+ * name: BTC 1D Hybrid MR + Squeeze + Bull Sleeve (adaptive stop)
  * ex: binance
  * syms: BTCUSDT
  * interval: 1d
@@ -13,11 +13,10 @@
  * melt-ups have bigger normal noise than mixed markets.
  * When it buys and sells: buys a flush to the lower band with RSI below 40, or
  * a squeeze breakout above the upper band, both only above the 200-day average
- * with the 50-day above the 200-day and with above-average volume; in a strong
- * bull regime it also buys a fresh 90-day high. A flush trade sells on the
- * snap-back to the middle band, a breakout trade sells below the middle band,
- * and a bull-sleeve trade sells on a trailing stop that is 3xATR normally and
- * 5xATR inside a strong bull regime.
+ * and with above-average volume; in a strong bull regime it also buys a fresh
+ * 90-day high. A flush trade sells on the snap-back to the middle band, a
+ * breakout trade sells below the middle band, and a bull-sleeve trade sells on
+ * a trailing stop that is 3xATR normally and 5xATR inside a strong bull regime.
  * When it does NOT work: in a persistent downtrend it stays in cash, and in a
  * choppy sideways market above the 200-day average the bull sleeve can whipsaw.
  * It underperforms buy-and-hold in strong bull years that never pull back to
@@ -79,10 +78,7 @@ function onUpdate(ctx) {
   // Volume confirmation on the previous (closed) bar.
   const volOk = ctx.volPrev != null && ctx.volPrev > ctx.avgVol(20);
 
-  // Trend gate: only trade above the 200-day average AND with the 50-day above the
-  // 200-day (intermediate trend up). The 50>200 leg blocks entries after a market
-  // has rolled over while price is still above the 200-day — the 2025 failure mode.
-  if (price <= sma200 || (sma50 != null && sma50 <= sma200)) return null;
+  if (price <= sma200) return null; // trend gate: only trade above the 200-day average
 
   // Mean-reversion entry: deep flush to the lower band with weak momentum.
   if (price <= lower && rsi < 40 && volOk) {
