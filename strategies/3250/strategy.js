@@ -1,26 +1,25 @@
 /*
  * @coinsori-strategy v1
- * name: BTC 1D Hybrid MR + Squeeze + Bull Sleeve (adaptive stop)
+ * name: BTC 1D Hybrid MR + Squeeze + Bull Sleeve (pullback entry)
  * ex: binance
  * syms: BTCUSDT
  * interval: 1d
  * cash: 10000
  *
  * Why this strategy: Deep flushes to the lower Keltner band inside an uptrend
- * are usually bought back quickly (mean reversion), and low-volatility squeezes
- * that break out tend to keep trending (momentum). In a strong bull regime a
- * fresh 90-day high is bought and ridden with a wider trailing stop, because
- * melt-ups have bigger normal noise than mixed markets.
- * When it buys and sells: buys a flush to the lower band with RSI below 40, or
- * a squeeze breakout above the upper band, both only above the 200-day average
- * and with above-average volume; in a strong bull regime it also buys a fresh
- * 90-day high. A flush trade sells on the snap-back to the middle band, a
- * breakout trade sells below the middle band, and a bull-sleeve trade sells on
- * a trailing stop that is 3xATR normally and 5xATR inside a strong bull regime.
+ * are usually bought back quickly (mean reversion), low-volatility squeezes that
+ * break out tend to keep trending (momentum), and in a strong bull the pullback
+ * to the 20-day average is a reliable spot to join the trend (trend pullback).
+ * When it buys and sells: buys a flush to the lower band with RSI below 40, a
+ * squeeze breakout above the upper band, or (in a strong bull) a shallow dip
+ * back to the 20-day average or a fresh 90-day high, all above the 200-day
+ * average. A flush trade sells on the snap-back to the middle band, a breakout
+ * trade sells below the middle band, and a trend trade sells on a trailing stop
+ * that is 3xATR normally and 5xATR inside a strong bull regime.
  * When it does NOT work: in a persistent downtrend it stays in cash, and in a
- * choppy sideways market above the 200-day average the bull sleeve can whipsaw.
- * It underperforms buy-and-hold in strong bull years that never pull back to
- * the lower band, and it pays fees on every round trip. Defensive first.
+ * choppy sideways market above the 200-day average the trend entries can
+ * whipsaw. It underperforms buy-and-hold in strong bull years that never pull
+ * back to the lower band, and it pays fees on every round trip. Defensive first.
  */
 function onUpdate(ctx) {
   const pos = ctx.position;
@@ -87,6 +86,16 @@ function onUpdate(ctx) {
     return { side: 'buy', qty };
   }
 
+  // Trend pullback entry: strong bull only, buy a shallow dip back to the 20-day
+  // EMA. Melt-ups rarely reach the lower band, so this fills the gap where the MR
+  // entry can never fire; the wide 5xATR stop lets it ride the trend.
+  if (strongBull && price <= ema20 + 0.3 * atr && price > ema20 - 1.5 * atr) {
+    st.entryType = 'trend';
+    st.peak = price;
+    const qty = Math.min(0.012 * ctx.cash / atr, ctx.cash / price * 0.9); // slightly smaller: trend trades whipsaw more
+    return { side: 'buy', qty };
+  }
+
   // Momentum entry: squeeze breakout above the upper band.
   if (price > upper && squeeze && volOk) {
     st.entryType = 'brk';
@@ -99,7 +108,7 @@ function onUpdate(ctx) {
   if (high90 != null && strongBull && price > high90 && volOk) {
     st.entryType = 'trend';
     st.peak = price;
-    const qty = Math.min(0.012 * ctx.cash / atr, ctx.cash / price * 0.9); // slightly smaller: trend trades whipsaw more
+    const qty = Math.min(0.012 * ctx.cash / atr, ctx.cash / price * 0.9);
     return { side: 'buy', qty };
   }
 
