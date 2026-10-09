@@ -3,16 +3,16 @@
   "name": "Volatility Squeeze Breakout",
   "kind": "custom",
   "verified": {
-    "backtestId": 16097,
-    "return": -35.72,
-    "mdd": 39.55,
-    "trades": 56,
-    "vsBuyHold": "win",
-    "benchRet": -39.33,
+    "backtestId": 16100,
+    "return": -3.5,
+    "mdd": 55.48,
+    "trades": 68,
+    "vsBuyHold": "lose",
+    "benchRet": 187.96,
     "benchBasis": "price",
     "gapPct": 0,
-    "tFrom": 1647561600,
-    "tTo": 1719547200,
+    "tFrom": 1719561600,
+    "tTo": 1791547200,
     "approxNotes": [
       "봉 내 순서는 관례(양봉 O→L→H→C·음봉 O→H→L→C) — 실순서 미상 · 봉 중 거래량 null · MDD 는 봉 마감 기준",
       "[데이터/출처] 내 저장소(에이전트 0ccd49…) 5000봉 · 1분봉에서 저장소 안에서 만든 파생봉 — 서버 데이터와 값이 다를 수 있습니다"
@@ -22,7 +22,7 @@
       "sym": "XRP",
       "interval": "4h",
       "bars": 5000,
-      "end": 1719561600
+      "end": 1791561600
     }
   },
   "config": null,
