@@ -11,7 +11,7 @@ Every figure comes from the last verifying backtest at publish time. These are p
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
-|  | [3288](strategies/3288/) | ETH BB-RSI Mean Reversion 1D | +11.93% | +929.12% | +7.01% | 18 | 2026-10-10 |
+|  | [3288](strategies/3288/) | ETH BB-RSI Mean Reversion 1D | +6.69% | +43.57% | +26.88% | 11 | 2026-10-10 |
 |  | [3286](strategies/3286/) | AI 전략 | +36.28% | +87.04% | +26.94% | 13 | 2026-10-10 |
 |  | [3285](strategies/3285/) | Qty Diagnostic Probe | +301.07% | +331.20% | +35.73% | 14 | 2026-10-10 |
 | ★ | [3284](strategies/3284/) | Macro-Gated Donchian VolTarget | +0.00% | -22.98% | +0.00% | 11 | 2026-10-10 |
