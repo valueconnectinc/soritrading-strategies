@@ -1,22 +1,23 @@
 /*
  * @coinsori-strategy v1
- * name: DXY Macro-Regime Trend BTC 1D
+ * name: Liquidation-Cascade Contrarian BTC 4H
  * ex: binance
  * syms: BTCUSDT
- * interval: 1d
+ * interval: 4h
  * cash: 10000
  *
- * DIAGNOSTIC BUILD 2 — trades only when ctx.macro('dxy') is non-null.
- * If this trades, macro is available; if it never trades, macro is null.
+ * DIAGNOSTIC BUILD 3 — tests whether ctx.binanceLiqs(n) returns data.
+ * Trades only when liquidation data is non-null and non-empty.
  */
 function onUpdate(ctx) {
   const price = ctx.price;
   if (!Number.isFinite(price) || price <= 0) { ctx.watch([]); return null; }
 
-  const dxy = ctx.macro('dxy');
+  const liqs = ctx.binanceLiqs(48);
+  const avail = liqs != null && (Array.isArray(liqs) ? liqs.length > 0 : true);
 
-  // Trade ONLY if macro is available — proves availability by trading.
-  if (dxy == null || !Number.isFinite(dxy)) { ctx.watch([]); return null; }
+  // Trade only if liquidation data exists — proves availability by trading.
+  if (!avail) { ctx.watch([]); return null; }
 
   const sma100 = ctx.sma(100, 1);
   if (sma100 == null) { ctx.watch([]); return null; }
