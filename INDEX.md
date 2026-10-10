@@ -12,7 +12,7 @@ Every figure comes from the last verifying backtest at publish time. These are p
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
 |  | [3296](strategies/3296/) | DXY Macro-Regime Trend BTC 1D | -96.71% | +310.48% | +97.99% | 703 | 2026-10-10 |
-| — | [3300](strategies/3300/) | Fresh-Asset Keltner MR Basket 1D | +21.30% | — | +12.84% | 24 | 2026-10-10 |
+| — | [3300](strategies/3300/) | Fresh-Asset Keltner MR Basket 1D | +25.19% | — | +3.68% | 12 | 2026-10-10 |
 | ★ | [3299](strategies/3299/) | BTC Turtle Donchian 55/55 1D | +694.41% | +138.77% | +42.95% | 10 | 2026-10-10 |
 |  | [3298](strategies/3298/) | BTC Donchian Breakout Trend 1D | +25.25% | +310.48% | +38.63% | 23 | 2026-10-10 |
 |  | [3297](strategies/3297/) | ETH Donchian Breakout Trend 1D | +186.16% | +224.26% | +59.84% | 18 | 2026-10-10 |
