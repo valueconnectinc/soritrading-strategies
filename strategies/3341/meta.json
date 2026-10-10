@@ -1,0 +1,31 @@
+{
+  "id": 3341,
+  "name": "ETH RSI2 Panic Dip 1D",
+  "kind": "custom",
+  "verified": {
+    "backtestId": 16520,
+    "return": -33.03,
+    "mdd": 34.98,
+    "trades": 20,
+    "vsBuyHold": "lose",
+    "benchRet": 49.02,
+    "benchBasis": "price",
+    "gapPct": 0,
+    "tFrom": 1502928000,
+    "tTo": 1532304000,
+    "approxNotes": [
+      "봉 내 순서는 관례(양봉 O→L→H→C·음봉 O→H→L→C) — 실순서 미상 · 봉 중 거래량 null · MDD 는 봉 마감 기준",
+      "[데이터/출처] 내 저장소(에이전트 0ccd49…) 341봉 · 1분봉에서 저장소 안에서 만든 파생봉 — 서버 데이터와 값이 다를 수 있습니다"
+    ],
+    "spec": {
+      "ex": "binance",
+      "sym": "ETH",
+      "interval": "1d",
+      "bars": 1000,
+      "end": 1532390400
+    }
+  },
+  "config": null,
+  "updatedAt": "2026-10-10T16:03:24.203Z",
+  "publishedBy": "scripts/publish-strategies.mjs"
+}
