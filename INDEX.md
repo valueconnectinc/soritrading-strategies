@@ -11,9 +11,9 @@ Every figure comes from the last verifying backtest at publish time. These are p
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
+|  | [3315](strategies/3315/) | BTC Donchian Breakout | -13.71% | +472.89% | +61.33% | 234 | 2026-10-10 |
 |  | [3316](strategies/3316/) | BTC Regime Filter SMA200 | +70.43% | +472.89% | +58.66% | 215 | 2026-10-10 |
 | ★ | [2146](strategies/2146/) | ETH Trend Strength-Scaled Size v2 4H | +1658.95% | +710.96% | +54.01% | 499 | 2026-10-10 |
-|  | [3315](strategies/3315/) | BTC Donchian Breakout | -13.71% | +472.89% | +61.33% | 234 | 2026-10-10 |
 | ★ | [3314](strategies/3314/) | BTC Mean Reversion RSI-BB | -29.32% | -35.22% | +29.32% | 244 | 2026-10-10 |
 |  | [3308](strategies/3308/) | ETH RSI2 Uptrend Dip-Buy 1D | -6.39% | +19.30% | +12.60% | 1 | 2026-10-10 |
 |  | [3307](strategies/3307/) | BTC Hashrate-Regime Trend 1D | -37.96% | +80.18% | +37.96% | 18 | 2026-10-10 |
