@@ -4,13 +4,14 @@ Every strategy whose backtest **finished and actually traded** is published here
 Nothing is filtered out by return — the ones that lost money are part of the record.
 Entries stay after a strategy is removed from our own workspace — this is a log, and deleting the record would leave only the survivors.
 
-**★ marks a strategy that out-returned buy & hold over the same window** — 420 of 1635 right now.
+**★ marks a strategy that out-returned buy & hold over the same window** — 420 of 1636 right now.
 `—` means the comparison **could not be made**: the engine does not compute a benchmark for multi-symbol, futures, or multi-leg runs. That is *unknown*, not *lost*, and it is 246 of them right now.
 
 Every figure comes from the last verifying backtest at publish time. These are past results over historical data. Nothing here is promised or assured about the future, and none of it is investment advice.
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
+|  | [3350](strategies/3350/) | SOL Donchian Breakout Trend 1D | +1.23% | +301.73% | +78.06% | 38 | 2026-10-10 |
 | ★ | [3349](strategies/3349/) | SOL RSI2 Panic Dip Cooldown baseline 1D | +17.86% | -45.40% | +12.55% | 13 | 2026-10-10 |
 | ★ | [3348](strategies/3348/) | SOL RSI2 Panic Dip 1D | +17.86% | -25.59% | +12.55% | 13 | 2026-10-10 |
 |  | [3347](strategies/3347/) | BTC Trend Pullback 1D | -56.14% | -22.98% | +56.72% | 352 | 2026-10-10 |
