@@ -30,8 +30,8 @@ function onUpdate(ctx) {
   if (sma200 == null || h90 == null || l40 == null || atr == null || lastClose == null) return null;
 
   const equity = cash + pos * price;
-  const riskPct = 0.015;
-  const atrMult = 2.5;                 // wider vol stop so ordinary pullbacks don't stop us out
+  const riskPct = 0.05;                // bigger risk budget to see if the edge exists at all
+  const atrMult = 2.5;
 
   if (pos > 0) {
     const stopPx = ctx.state.stopPx;
