@@ -11,7 +11,7 @@ Every figure comes from the last verifying backtest at publish time. These are p
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
-|  | [3285](strategies/3285/) | Qty Diagnostic Probe | -95.53% | -22.98% | +97.99% | 1143 | 2026-10-10 |
+|  | [3285](strategies/3285/) | Qty Diagnostic Probe | +36.91% | +98.01% | +28.25% | 13 | 2026-10-10 |
 | ★ | [3284](strategies/3284/) | Macro-Gated Donchian VolTarget | +0.00% | -22.98% | +0.00% | 11 | 2026-10-10 |
 |  | [3283](strategies/3283/) | Donchian Breakout Trend + ATR Trail | -41.87% | +252.17% | +65.09% | 44 | 2026-10-10 |
 |  | [3282](strategies/3282/) | Trend-Continuation Pullback BTC 1D | -82.50% | +198.14% | +86.40% | 137 | 2026-10-10 |

@@ -1,30 +1,53 @@
 /*
  * @coinsori-strategy v1
- * name: Qty Diagnostic Probe
+ * name: Donchian Breakout Trend
  * ex: binance
  * syms: BTC
  * interval: 1d
  * cash: 10000
  *
- * Why this strategy: DIAGNOSTIC ONLY. Buys a fixed 0.5 BTC every bar and sells after
- * 5 bars, to reveal how the engine treats the qty field in orders.
- * When it buys and sells: Buys 0.5 BTC on every bar; sells after holding 5 bars.
- * When it does NOT work: Not a real strategy — probe only, ignore its returns.
+ * Why this strategy: In crypto, a strong breakout to a multi-month high tends to keep
+ * trending — the classic turtle breakout bet; we ride it with a wide stop.
+ * When it buys and sells: Buys when price breaks above the highest high of the last 55
+ * days while the 200-day trend is up. Sells when price closes back below the middle of the
+ * channel, or drops 2x ATR below the entry (hard stop).
+ * When it does NOT work: In long sideways ranges false breakouts trigger repeated small
+ * losses (whipsaw). Expect losses in chop; this is a trend-only strategy.
  */
 function onUpdate(ctx) {
-  const holdBars = 5;
-  const fixedQty = 0.5; // deliberately small, fixed quantity in coins
-  if (ctx.position === 0) {
-    return { side: 'buy', qty: fixedQty };
+  const n = 55;
+  const trend = 200;
+  const stopMult = 2.0;
+  const atrN = 14;
+
+  const price = ctx.price;
+  const pos = ctx.position;
+
+  const upper = ctx.high(n);
+  const lower = ctx.low(n);
+  const atr = ctx.atr(atrN);
+  const ema200 = ctx.ema(trend);
+  if (upper == null || lower == null || atr == null || ema200 == null) return null;
+
+  const prevUpper = ctx.high(n, 1);
+  if (prevUpper == null) return null;
+
+  if (pos === 0) {
+    ctx.watch([{ side: 'buy', price: prevUpper, trigger: 'above', note: '55d high breakout' }]);
+    if (price > prevUpper && price > ema200) {
+      return { side: 'buy', qty: ctx.cash / price * 0.99 };
+    }
+    return null;
   }
-  // count how long we've held using entryPx as a marker is unreliable; use price change
-  // instead: sell when current price differs from entry by any amount after 5 bars via
-  // a simple held-bar counter stored in state
-  const held = (ctx.state && ctx.state.held) || 0;
-  if (held >= holdBars) {
-    ctx.state = { held: 0 };
-    return { side: 'sell', qty: ctx.position };
-  }
-  ctx.state = { held: held + 1 };
+
+  const stopPx = ctx.entryPx - stopMult * atr;
+  const mid = (upper + lower) / 2;
+  const prevClose = ctx.closes.at(-2);
+  ctx.watch([
+    { side: 'sell', price: stopPx, trigger: 'below', note: 'ATR stop' },
+    { side: 'sell', price: mid, trigger: 'below', note: 'channel mid fail' }
+  ]);
+  if (price <= stopPx) return { side: 'sell', qty: pos };
+  if (prevClose != null && prevClose < mid) return { side: 'sell', qty: pos };
   return null;
 }
