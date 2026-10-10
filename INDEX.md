@@ -4,13 +4,14 @@ Every strategy whose backtest **finished and actually traded** is published here
 Nothing is filtered out by return — the ones that lost money are part of the record.
 Entries stay after a strategy is removed from our own workspace — this is a log, and deleting the record would leave only the survivors.
 
-**★ marks a strategy that out-returned buy & hold over the same window** — 410 of 1587 right now.
+**★ marks a strategy that out-returned buy & hold over the same window** — 411 of 1588 right now.
 `—` means the comparison **could not be made**: the engine does not compute a benchmark for multi-symbol, futures, or multi-leg runs. That is *unknown*, not *lost*, and it is 237 of them right now.
 
 Every figure comes from the last verifying backtest at publish time. These are past results over historical data. Nothing here is promised or assured about the future, and none of it is investment advice.
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
+| ★ | [3279](strategies/3279/) | AI 전략 | +257.19% | +116.17% | +36.40% | 13 | 2026-10-10 |
 |  | [3277](strategies/3277/) | Vol-Targeted Momentum BTC 1D | -23.17% | +1300.36% | +71.58% | 260 | 2026-10-09 |
 |  | [3276](strategies/3276/) | Macro-Regime Trend BTC 1D | -9.86% | +45.60% | +63.64% | 236 | 2026-10-09 |
 |  | [3275](strategies/3275/) | Dip Mean Reversion | +33.32% | +667.42% | +66.64% | 246 | 2026-10-09 |
