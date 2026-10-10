@@ -3,16 +3,16 @@
   "name": "BTC Fear&Greed Contrarian 4H",
   "kind": "custom",
   "verified": {
-    "backtestId": 16408,
-    "return": 27.05,
-    "mdd": 37.59,
-    "trades": 44,
+    "backtestId": 16411,
+    "return": -18.18,
+    "mdd": 22.46,
+    "trades": 12,
     "vsBuyHold": "lose",
-    "benchRet": 472.89,
+    "benchRet": 45.51,
     "benchBasis": "price",
     "gapPct": 0,
-    "tFrom": 1575619200,
-    "tTo": 1647619200,
+    "tFrom": 1647633600,
+    "tTo": 1719619200,
     "approxNotes": [
       "봉 내 순서는 관례(양봉 O→L→H→C·음봉 O→H→L→C) — 실순서 미상 · 봉 중 거래량 null · MDD 는 봉 마감 기준",
       "[PIT] ctx.data 는 행의 시각(ts) 기준으로 골랐습니다 — 그 행이 DB 에 실제로 들어온 시각은 보지 않으므로, 늦게 적재되거나 나중에 고쳐진 값이 있으면 미래 정보가 섞였을 수 있습니다(event-only)",
@@ -23,7 +23,7 @@
       "sym": "BTC",
       "interval": "4h",
       "bars": 5000,
-      "end": 1647633600
+      "end": 1719633600
     }
   },
   "config": null,

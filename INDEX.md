@@ -11,7 +11,7 @@ Every figure comes from the last verifying backtest at publish time. These are p
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
-|  | [3322](strategies/3322/) | BTC Fear&Greed Contrarian 4H | +27.05% | +472.89% | +37.59% | 44 | 2026-10-10 |
+|  | [3322](strategies/3322/) | BTC Fear&Greed Contrarian 4H | -18.18% | +45.51% | +22.46% | 12 | 2026-10-10 |
 | — | [3321](strategies/3321/) | BTC Macro DXY Regime Filter | +13.96% | — | +1.84% | 20 | 2026-10-10 |
 | — | [3320](strategies/3320/) | BTC Funding Contrarian 1D | +9.78% | — | +55.44% | 71 | 2026-10-10 |
 |  | [3319](strategies/3319/) | BTC On-Chain Network Pulse | -10.93% | +1210.36% | +70.90% | 212 | 2026-10-10 |
