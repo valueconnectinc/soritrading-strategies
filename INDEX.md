@@ -4,13 +4,14 @@ Every strategy whose backtest **finished and actually traded** is published here
 Nothing is filtered out by return — the ones that lost money are part of the record.
 Entries stay after a strategy is removed from our own workspace — this is a log, and deleting the record would leave only the survivors.
 
-**★ marks a strategy that out-returned buy & hold over the same window** — 413 of 1597 right now.
-`—` means the comparison **could not be made**: the engine does not compute a benchmark for multi-symbol, futures, or multi-leg runs. That is *unknown*, not *lost*, and it is 239 of them right now.
+**★ marks a strategy that out-returned buy & hold over the same window** — 413 of 1598 right now.
+`—` means the comparison **could not be made**: the engine does not compute a benchmark for multi-symbol, futures, or multi-leg runs. That is *unknown*, not *lost*, and it is 240 of them right now.
 
 Every figure comes from the last verifying backtest at publish time. These are past results over historical data. Nothing here is promised or assured about the future, and none of it is investment advice.
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
+| — | [3290](strategies/3290/) | BTC/ETH Relative-Value Rotation 4H | +347.26% | — | +9.17% | 661 | 2026-10-10 |
 | — | [3289](strategies/3289/) | Multi-Asset MR Basket 4H (champion recipe) | +53.12% | — | +4.10% | 166 | 2026-10-10 |
 |  | [3288](strategies/3288/) | ETH BB-RSI Mean Reversion 1D | +62.09% | +1786.66% | +44.44% | 62 | 2026-10-10 |
 |  | [3286](strategies/3286/) | AI 전략 | +36.28% | +87.04% | +26.94% | 13 | 2026-10-10 |
