@@ -14,7 +14,7 @@
  * band AND RSI(14) is oversold (<35) AND price is still above its 100-day average
  * (so we are not catching a confirmed bear). Sells when price returns to the
  * Bollinger middle (20-day SMA), when RSI recovers above 50, or on a hard 2x ATR
- * stop. Position is sized so the stop risks only ~3% of the account.
+ * stop. Full position size — mean reversion only pays when you commit.
  * When it does NOT work: In a real bear market the lower band keeps getting hit and
  * the "snap-back" never comes — the 100-day gate is too slow to save it. Also in
  * long quiet ranges the lower band is rarely touched, so it may sit idle for months.
@@ -41,10 +41,7 @@ function onUpdate(ctx) {
       conds: [{ label: 'RSI(14) < 35', now: rsi, op: '<', ref: 35, closed: true },
               { label: 'price > 100d SMA', ok: price > sma100 }] }]);
     if (touch && oversold && trendOk && atr > 0) {
-      // risk 3% of account on a 2x ATR stop — mean reversion can dip further before snapping back
-      const qty = Math.min((ctx.cash * 0.03) / (2 * atr), (ctx.cash / price) * 0.99);
-      if (qty <= 0) return null;
-      return { side: 'buy', qty: qty };
+      return { side: 'buy', qty: ctx.cash / price * 0.95 };
     }
     return null;
   }
