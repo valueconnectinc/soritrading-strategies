@@ -4,13 +4,14 @@ Every strategy whose backtest **finished and actually traded** is published here
 Nothing is filtered out by return — the ones that lost money are part of the record.
 Entries stay after a strategy is removed from our own workspace — this is a log, and deleting the record would leave only the survivors.
 
-**★ marks a strategy that out-returned buy & hold over the same window** — 422 of 1638 right now.
+**★ marks a strategy that out-returned buy & hold over the same window** — 422 of 1639 right now.
 `—` means the comparison **could not be made**: the engine does not compute a benchmark for multi-symbol, futures, or multi-leg runs. That is *unknown*, not *lost*, and it is 246 of them right now.
 
 Every figure comes from the last verifying backtest at publish time. These are past results over historical data. Nothing here is promised or assured about the future, and none of it is investment advice.
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
+|  | [3354](strategies/3354/) | SOL Regime-Switch Trend v2 1D | +198.66% | +1371.65% | +56.74% | 23 | 2026-10-10 |
 | ★ | [3353](strategies/3353/) | SOL Liqs API Probe 1D | +17.00% | -45.40% | +30.95% | 5 | 2026-10-10 |
 | ★ | [3351](strategies/3351/) | SOL Regime-Switch Trend 1D | +339.78% | +301.73% | +47.44% | 2 | 2026-10-10 |
 |  | [3350](strategies/3350/) | SOL Donchian Breakout Trend 1D | +1.23% | +301.73% | +78.06% | 38 | 2026-10-10 |
