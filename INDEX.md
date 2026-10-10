@@ -11,7 +11,7 @@ Every figure comes from the last verifying backtest at publish time. These are p
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
-| ★ | [3336](strategies/3336/) | BTC Donchian Breakout Trend 1D | -1.10% | -22.98% | +5.06% | 28 | 2026-10-10 |
+| ★ | [3336](strategies/3336/) | BTC Donchian Breakout Trend 1D | -1.93% | -22.98% | +4.83% | 20 | 2026-10-10 |
 |  | [3329](strategies/3329/) | BTC On-Chain Network Regime | -15.88% | -6.28% | +28.69% | 5 | 2026-10-10 |
 |  | [3333](strategies/3333/) | AI 전략 | +95.37% | +568.67% | +15.96% | 221 | 2026-10-10 |
 |  | [3331](strategies/3331/) | BTC EMA Trend ATR Trail 4H | -6.00% | +35.75% | +17.01% | 60 | 2026-10-10 |

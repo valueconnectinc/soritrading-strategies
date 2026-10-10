@@ -3,10 +3,10 @@
   "name": "BTC Donchian Breakout Trend 1D",
   "kind": "custom",
   "verified": {
-    "backtestId": 16485,
-    "return": -1.1,
-    "mdd": 5.06,
-    "trades": 28,
+    "backtestId": 16492,
+    "return": -1.93,
+    "mdd": 4.83,
+    "trades": 20,
     "vsBuyHold": "win",
     "benchRet": -22.98,
     "benchBasis": "price",
@@ -26,6 +26,6 @@
     }
   },
   "config": null,
-  "updatedAt": "2026-10-10T15:28:27.334Z",
+  "updatedAt": "2026-10-10T15:30:17.013Z",
   "publishedBy": "scripts/publish-strategies.mjs"
 }
