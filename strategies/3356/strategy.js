@@ -11,14 +11,15 @@
  * that comes out of a squeeze, and only in an uptrend, buys the start of a trend instead of
  * chasing it. This is a different edge from the RSI2 panic-dip champion: it catches the
  * momentum side, not the capitulation side. A 2.5 ATR trailing stop lets winners run while
- * capping how much of a peak is given back.
+ * capping how much of a peak is given back, and a hard stop limits the loss on any single
+ * fakeout.
  * When it buys and sells: Buys when the daily close rises above the 20-day upper Bollinger
  * band AND the band width two days earlier was in the bottom 30% of its 100-day history
  * (a squeeze) AND price is above the 200-day average. Sells when price falls 2.5 ATR below
- * the highest close since entry (trailing stop). Stays in cash otherwise.
- * When it does NOT work: In a choppy sideways market breakouts fake out and the trailing
- * stop takes small losses repeatedly. In a strong bull it can still give back part of a
- * move before the stop triggers. No data before Aug 2020.
+ * the highest close since entry (trailing stop) or falls 1.5 ATR below entry (hard stop).
+ * When it does NOT work: In a choppy sideways market breakouts fake out and the stops take
+ * small losses repeatedly. In a strong bull it can still give back part of a move before the
+ * stop triggers. No data before Aug 2020.
  */
 function onUpdate(ctx) {
   const price = ctx.price;
@@ -47,11 +48,13 @@ function onUpdate(ctx) {
 
   if (pos > 0) {
     if (st.peak == null || lastClose > st.peak) st.peak = lastClose;
-    // 2.5 ATR trailing stop: wide enough to survive normal bull pullbacks, tight enough to
-    // cap a crash. ATR scales with volatility so the stop adapts to the market.
+    // 2.5 ATR trailing stop rides trends; the 1.5 ATR hard stop below entry caps any single
+    // fakeout loss. ATR scales with volatility so both adapt to the market.
     const trail = st.peak - 2.5 * atr;
-    ctx.watch([{ side: 'sell', price: trail, trigger: 'below', note: 'ATR trail' }]);
-    if (price <= trail) return { side: 'sell', qty: pos };
+    const hardStop = (st.entryPx || price) - 1.5 * atr;
+    const stop = Math.max(trail, hardStop);
+    ctx.watch([{ side: 'sell', price: stop, trigger: 'below', note: 'ATR stop' }]);
+    if (price <= stop) return { side: 'sell', qty: pos };
     return null;
   }
 
@@ -59,6 +62,7 @@ function onUpdate(ctx) {
   // ago in the bottom 30% of its 100-bar history), and only above the 200-day average so we
   // never buy breakdowns in a bear market.
   if (lastClose > bb.upper && pct <= 0.30 && lastClose > sma200) {
+    st.entryPx = price;
     st.peak = lastClose;
     const qty = (ctx.cash / price) * 0.9;
     return { side: 'buy', qty: qty };
