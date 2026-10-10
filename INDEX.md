@@ -11,7 +11,7 @@ Every figure comes from the last verifying backtest at publish time. These are p
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
-|  | [3343](strategies/3343/) | SOL Keltner Mean Reversion 4H | -76.78% | +1136.68% | +80.32% | 126 | 2026-10-10 |
+|  | [3343](strategies/3343/) | SOL Keltner Mean Reversion 4H | +31.65% | +942.85% | +2.41% | 8 | 2026-10-10 |
 |  | [3341](strategies/3341/) | ETH RSI2 Panic Dip 1D | -33.03% | +49.02% | +34.98% | 20 | 2026-10-10 |
 |  | [3340](strategies/3340/) | BTC Panic Dip + Network Health 1D | -11.29% | +80.18% | +13.04% | 2 | 2026-10-10 |
 |  | [3339](strategies/3339/) | BTC Network Adoption Trend 1D | -35.99% | +80.18% | +35.99% | 8 | 2026-10-10 |
