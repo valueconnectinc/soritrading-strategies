@@ -4,13 +4,15 @@ Every strategy whose backtest **finished and actually traded** is published here
 Nothing is filtered out by return — the ones that lost money are part of the record.
 Entries stay after a strategy is removed from our own workspace — this is a log, and deleting the record would leave only the survivors.
 
-**★ marks a strategy that out-returned buy & hold over the same window** — 417 of 1613 right now.
+**★ marks a strategy that out-returned buy & hold over the same window** — 418 of 1614 right now.
 `—` means the comparison **could not be made**: the engine does not compute a benchmark for multi-symbol, futures, or multi-leg runs. That is *unknown*, not *lost*, and it is 244 of them right now.
 
 Every figure comes from the last verifying backtest at publish time. These are past results over historical data. Nothing here is promised or assured about the future, and none of it is investment advice.
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
+| ★ | [2146](strategies/2146/) | ETH Trend Strength-Scaled Size v2 4H | +1658.95% | +710.96% | +54.01% | 499 | 2026-10-10 |
+|  | [3315](strategies/3315/) | BTC Donchian Breakout | -13.71% | +472.89% | +61.33% | 234 | 2026-10-10 |
 | ★ | [3314](strategies/3314/) | BTC Mean Reversion RSI-BB | -29.32% | -35.22% | +29.32% | 244 | 2026-10-10 |
 |  | [3308](strategies/3308/) | ETH RSI2 Uptrend Dip-Buy 1D | -6.39% | +19.30% | +12.60% | 1 | 2026-10-10 |
 |  | [3307](strategies/3307/) | BTC Hashrate-Regime Trend 1D | -37.96% | +80.18% | +37.96% | 18 | 2026-10-10 |
@@ -967,7 +969,6 @@ Every figure comes from the last verifying backtest at publish time. These are p
 |  | [2154](strategies/2154/) | ETH 1H Volatility Breakout | +30.52% | +39.94% | +34.95% | 1 | 2026-09-20 |
 |  | [2153](strategies/2153/) | ETH 1H Mean Reversion Oversold Bounce | -23.29% | -6.12% | +27.73% | 86 | 2026-09-20 |
 |  | [2142](strategies/2142/) | ETH Slow Trend Ride + Volume Filter 4H | +493.35% | +1436.34% | +30.47% | 52 | 2026-09-20 |
-|  | [2146](strategies/2146/) | ETH Trend Strength-Scaled Size v2 4H | +789.61% | +1436.34% | +32.71% | 110 | 2026-09-20 |
 |  | [2150](strategies/2150/) | BTC On-chain Network Growth 1D | -0.36% | +52.01% | +28.96% | 4 | 2026-09-20 |
 | ★ | [2149](strategies/2149/) | BTC Trend Strength-Scaled Size 4H | +45.97% | -41.14% | +59.67% | 128 | 2026-09-20 |
 |  | [2145](strategies/2145/) | ETH Trend Strength-Scaled Size 4H | +789.61% | +1436.34% | +32.71% | 110 | 2026-09-20 |
