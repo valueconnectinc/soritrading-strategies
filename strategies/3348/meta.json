@@ -3,7 +3,7 @@
   "name": "SOL RSI2 Panic Dip 1D",
   "kind": "custom",
   "verified": {
-    "backtestId": 16567,
+    "backtestId": 16571,
     "return": 44.4,
     "mdd": 6.81,
     "trades": 26,
