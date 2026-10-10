@@ -3,7 +3,7 @@
   "name": "DXY Macro-Regime Trend BTC 1D",
   "kind": "custom",
   "verified": {
-    "backtestId": 16298,
+    "backtestId": 16299,
     "return": -96.71,
     "mdd": 97.99,
     "trades": 703,
@@ -27,6 +27,6 @@
     }
   },
   "config": null,
-  "updatedAt": "2026-10-10T04:04:35.683Z",
+  "updatedAt": "2026-10-10T04:06:57.075Z",
   "publishedBy": "scripts/publish-strategies.mjs"
 }
