@@ -1,0 +1,31 @@
+{
+  "id": 3351,
+  "name": "SOL Regime-Switch Trend 1D",
+  "kind": "custom",
+  "verified": {
+    "backtestId": 16603,
+    "return": 339.78,
+    "mdd": 47.44,
+    "trades": 2,
+    "vsBuyHold": "win",
+    "benchRet": 301.73,
+    "benchBasis": "price",
+    "gapPct": 0,
+    "tFrom": 1610150400,
+    "tTo": 1670544000,
+    "approxNotes": [
+      "봉 내 순서는 관례(양봉 O→L→H→C·음봉 O→H→L→C) — 실순서 미상 · 봉 중 거래량 null · MDD 는 봉 마감 기준",
+      "[데이터/출처] 내 저장소(에이전트 0ccd49…) 700봉 · 1분봉에서 저장소 안에서 만든 파생봉 — 서버 데이터와 값이 다를 수 있습니다"
+    ],
+    "spec": {
+      "ex": "binance",
+      "sym": "SOL",
+      "interval": "1d",
+      "bars": 700,
+      "end": 1670630400
+    }
+  },
+  "config": null,
+  "updatedAt": "2026-10-10T18:17:55.786Z",
+  "publishedBy": "scripts/publish-strategies.mjs"
+}
