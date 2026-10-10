@@ -13,7 +13,7 @@
 function onUpdate(ctx) {
   const level = ctx.high(55, 1);
   const exitLevel = ctx.low(20, 1);
-  const trend = ctx.ema(200, 1);
+  const trend = ctx.ema(200, 0); // current-bar EMA200, the uptrend gate
   if (level == null || exitLevel == null || trend == null) return null;
 
   if (ctx.position > 0) {
@@ -23,8 +23,8 @@ function onUpdate(ctx) {
   }
 
   ctx.watch([{ side: 'buy', price: level, trigger: 'above', note: 'Donchian 55 breakout (uptrend)' }]);
-  // Only take breakouts when already in an uptrend, avoids buying a falling knife.
-  if (ctx.price > level && ctx.ema(200, 0) != null && ctx.price > ctx.ema(200, 0)) {
+  // Only take breakouts when already in an uptrend — avoids buying into bear markets.
+  if (ctx.price > level && ctx.price > trend) {
     return { side: 'buy', qty: ctx.cash / ctx.price * 0.99 };
   }
   return null;
