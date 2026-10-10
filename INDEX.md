@@ -4,13 +4,14 @@ Every strategy whose backtest **finished and actually traded** is published here
 Nothing is filtered out by return — the ones that lost money are part of the record.
 Entries stay after a strategy is removed from our own workspace — this is a log, and deleting the record would leave only the survivors.
 
-**★ marks a strategy that out-returned buy & hold over the same window** — 418 of 1615 right now.
+**★ marks a strategy that out-returned buy & hold over the same window** — 418 of 1616 right now.
 `—` means the comparison **could not be made**: the engine does not compute a benchmark for multi-symbol, futures, or multi-leg runs. That is *unknown*, not *lost*, and it is 244 of them right now.
 
 Every figure comes from the last verifying backtest at publish time. These are past results over historical data. Nothing here is promised or assured about the future, and none of it is investment advice.
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
+|  | [3317](strategies/3317/) | BTC Donchian Breakout 4h | -51.84% | -9.98% | +59.52% | 110 | 2026-10-10 |
 |  | [3315](strategies/3315/) | BTC Donchian Breakout | -13.71% | +472.89% | +61.33% | 234 | 2026-10-10 |
 |  | [3316](strategies/3316/) | BTC Regime Filter SMA200 | +70.43% | +472.89% | +58.66% | 215 | 2026-10-10 |
 | ★ | [2146](strategies/2146/) | ETH Trend Strength-Scaled Size v2 4H | +1658.95% | +710.96% | +54.01% | 499 | 2026-10-10 |
