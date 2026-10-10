@@ -6,9 +6,9 @@
  * interval: 1d
  * cash: 10000
  *
- * Why this strategy: An extreme RSI(2) oversold reading with a real capitulation (price 10%+ below the 50-day high) marks a panic, but panics that keep closing red often keep falling. Waiting for the bar after the panic to close GREEN confirms that buyers stepped in before we risk capital — we buy the turn, not the falling knife.
- * When it buys and sells: Buys when RSI(2) closes below 10, price is above the 200-day average, at least 10% below its 50-day high, AND the current bar closes green. Sells after 5 days, when RSI turns overbought, or on an 8% stop. After ANY exit it waits 10 days before buying again.
- * When it does NOT work: In a grinding bear market price can keep falling after a capitulation; in a fast single-day V-recovery the green-bar confirmation may enter one bar late at a higher price. No data before Aug 2020.
+ * Why this strategy: An extreme RSI(2) oversold reading with a real capitulation (price 10%+ below the 50-day high) marks a panic, but panics that keep closing lower often keep falling. Waiting for the bar after the panic to close ABOVE the panic close confirms a bounce has started — we buy the turn, not the falling knife.
+ * When it buys and sells: Buys when RSI(2) closes below 10, price is above the 200-day average, at least 10% below its 50-day high, AND the following bar closes above the panic bar's close. Sells after 5 days, when RSI turns overbought, or on an 8% stop. After ANY exit it waits 10 days before buying again.
+ * When it does NOT work: In a grinding bear market price can keep falling after a capitulation; in a fast single-day V-recovery the confirmation may enter one bar late at a higher price. No data before Aug 2020.
  */
 
 function onUpdate(ctx) {
@@ -25,11 +25,11 @@ function onUpdate(ctx) {
     if (st.cooldownUntil != null && ctx.i < st.cooldownUntil) return null;
     const high50 = ctx.high(50, 1);
     if (high50 == null) return null;
-    const c = ctx.candle;
     // Capitulation depth: price >=10% below the 50-day high = genuine panic.
-    // Reversal confirmation: the bar after the panic closes GREEN — buyers stepped
-    // in. A panic that keeps closing red often keeps falling to the stop.
-    if (rsi < 10 && price > trend && price <= high50 * 0.90 && c.close > c.open) {
+    // Reversal confirmation: the bar after the panic closes ABOVE the panic close
+    // — buyers stepped in. A panic that keeps closing lower usually keeps falling.
+    const prevClose = ctx.closes.at(-2);  // close of the panic bar
+    if (rsi < 10 && price > trend && price <= high50 * 0.90 && price > prevClose) {
       st.entryBar = ctx.i;
       ctx.watch([{ side: 'sell', price: price * 0.92, trigger: 'below', note: '8% stop' }]);
       return { side: 'buy', qty: ctx.cash / price * 0.9 };
