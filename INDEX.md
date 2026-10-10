@@ -11,7 +11,7 @@ Every figure comes from the last verifying backtest at publish time. These are p
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
-|  | [3349](strategies/3349/) | SOL RSI2 Panic Dip Cooldown baseline 1D | -6.57% | +301.73% | +16.29% | 23 | 2026-10-10 |
+|  | [3349](strategies/3349/) | SOL RSI2 Panic Dip Cooldown baseline 1D | -19.76% | +301.73% | +23.07% | 18 | 2026-10-10 |
 | ★ | [3348](strategies/3348/) | SOL RSI2 Panic Dip 1D | +17.86% | -25.59% | +12.55% | 13 | 2026-10-10 |
 |  | [3347](strategies/3347/) | BTC Trend Pullback 1D | -56.14% | -22.98% | +56.72% | 352 | 2026-10-10 |
 |  | [3346](strategies/3346/) | BTC Drawdown-High MR 1D | +39.46% | +568.67% | +18.61% | 22 | 2026-10-10 |
