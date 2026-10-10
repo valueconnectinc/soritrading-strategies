@@ -7,22 +7,23 @@
  * cash: 10000
  *
  * Why this strategy: In crypto, sharp drops to a volatility-scaled lower band (EMA20 minus 2.5 ATR)
- * with a weak RSI are usually bought back to the middle of the channel. The ATR scaling makes the
- * band adapt to how violent the market is right now.
- * When it buys and sells: Buys when price closes below the lower band AND RSI(14) is under 40.
- * Sells when price recovers to the middle band (EMA20), or on a hard stop one band-width below
- * entry. Waits 2 bars after each exit before re-entering to avoid churn.
- * When it does NOT work: In a sustained crash price can keep falling below the band and the stop
- * takes the loss (the stop is what caps it). In a flat market there are few band touches. It is a
- * long-only mean-reversion, so it cannot profit from falling markets.
+ * with a weak RSI are usually bought back to the middle of the channel — but only inside an
+ * uptrend. The SMA200 gate keeps it out of bear markets where the reversion never comes.
+ * When it buys and sells: Buys when price closes below the lower band AND RSI(14) is under 40 AND
+ * price is above the 200-period average. Sells when price recovers to the middle band (EMA20), or
+ * on a hard stop one band-width below entry. Waits 2 bars after each exit before re-entering.
+ * When it does NOT work: In a sustained crash the trend gate keeps it mostly out, and the stop caps
+ * the rare entry that fails. In a flat market there are few band touches. It is long-only, so it
+ * cannot profit from falling markets.
  */
 function onUpdate(ctx) {
   const ema20 = ctx.ema(20, 1);     // closed-bar mid-band
   const atr = ctx.atr(14, 1);       // closed-bar volatility
   const rsi = ctx.rsi(14, 1);       // closed-bar RSI
+  const sma200 = ctx.sma(200, 1);   // closed-bar trend gate
   const lastClose = ctx.closes.at(-2);
   const price = ctx.price;
-  if (ema20 == null || atr == null || rsi == null || lastClose == null || price == null) return null;
+  if (ema20 == null || atr == null || rsi == null || sma200 == null || lastClose == null || price == null) return null;
 
   const st = ctx.state;
   const pos = ctx.position;
@@ -44,8 +45,8 @@ function onUpdate(ctx) {
   if (st.lastExit != null && ctx.i - st.lastExit < 2) return null;
 
   const lowerBand = ema20 - 2.5 * atr;
-  // entry: close below the volatility-scaled lower band with RSI weak
-  if (lastClose <= lowerBand && rsi < 40) {
+  // entry: close below the volatility-scaled lower band, weak RSI, and an uptrend
+  if (lastClose <= lowerBand && rsi < 40 && lastClose > sma200) {
     st.entryBar = ctx.i;
     st.stopPx = price - 2.5 * atr;
     ctx.watch([{ side: 'sell', price: ema20, trigger: 'above', note: 'mid-band exit' },
