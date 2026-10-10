@@ -7,17 +7,18 @@
  * cash: 10000
  *
  * Why this strategy: The validated champion recipe (defensive mean reversion on a
- * basket of 5 assets) ported to 4h. The ledger shows this family works even better
- * on 4h — buying local panics inside a rising 200-bar trend with small per-leg
- * risk keeps drawdown low while capturing snap-backs.
+ * basket of 5 assets) ported to 4h. The ledger shows this family works on 4h —
+ * buying local panics inside a rising long-term trend with small per-leg risk keeps
+ * drawdown low while capturing snap-backs.
  * When it buys and sells: On each asset, buy when price closes below the lower
  * Bollinger (20, 2.5) with RSI<30, or below the Keltner low (EMA20 - 2.5*ATR) with
- * RSI<40, only when the 200-bar average is rising. Sell via an ATR-trailing stop
+ * RSI<40, only when the 1200-bar average is rising (~200 days on 4h — the same
+ * regime horizon the validated 1d champion uses). Sell via an ATR-trailing stop
  * (2.5 ATR below the highest close since entry) or when price closes back above the
  * 20-bar EMA. Each leg sized to 20% of equity, risk per leg capped.
- * When it does NOT work: In a broad coordinated crypto bear all rising-trend gates
- * stay flat (capital safe, little upside); a single straight-line melt-up lags
- * buy-and-hold of that asset. The trail can whipsaw an early volatile recovery.
+ * When it does NOT work: In a broad decline spanning more than ~200 days the trend
+ * gate stays off and the strategy sits in cash (safe but no upside); a single
+ * straight-line melt-up lags buy-and-hold. The trail can whipsaw an early recovery.
  */
 function onUpdate(ctx) {
   const sym = ctx.sym;
@@ -26,16 +27,16 @@ function onUpdate(ctx) {
 
   const bb = ctx.bb(20, 2.5, 1);
   const rsi = ctx.rsi(14, 1);
-  const sma200 = ctx.sma(200, 1);
-  const sma200prev = ctx.sma(200, 2);
+  const sma1200 = ctx.sma(1200, 1);
+  const sma1200prev = ctx.sma(1200, 2);
   const ema20 = ctx.ema(20, 1);
   const atr = ctx.atr(14, 1);
-  if (bb == null || rsi == null || sma200 == null || sma200prev == null || ema20 == null || atr == null || atr <= 0) {
+  if (bb == null || rsi == null || sma1200 == null || sma1200prev == null || ema20 == null || atr == null || atr <= 0) {
     ctx.watch([]);
     return null;
   }
 
-  const uptrend = sma200 > sma200prev;
+  const uptrend = sma1200 > sma1200prev;
   const lowerBand = bb.lower;
   const keltnerLow = ema20 - 2.5 * atr;
 
@@ -81,8 +82,8 @@ function onUpdate(ctx) {
     return { side: 'buy', qty: qty };
   }
 
-  const slopePct = (sma200 / sma200prev - 1) * 100;
-  const trendCond = { label: '200-bar slope %', now: slopePct, op: '>', ref: 0, closed: true };
+  const slopePct = (sma1200 / sma1200prev - 1) * 100;
+  const trendCond = { label: '1200-bar slope %', now: slopePct, op: '>', ref: 0, closed: true };
   const wait = [];
   if (lowerBand > 0) {
     wait.push({ side: 'buy', price: lowerBand, trigger: 'below', qty: (ctx.cash / lowerBand) * 0.20,
