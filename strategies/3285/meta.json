@@ -3,11 +3,11 @@
   "name": "Qty Diagnostic Probe",
   "kind": "custom",
   "verified": {
-    "backtestId": 16227,
-    "return": 566.52,
-    "mdd": 35.85,
+    "backtestId": 16229,
+    "return": 301.07,
+    "mdd": 35.73,
     "trades": 14,
-    "vsBuyHold": "win",
+    "vsBuyHold": "lose",
     "benchRet": 331.2,
     "benchBasis": "price",
     "gapPct": 0,
@@ -26,6 +26,6 @@
     }
   },
   "config": null,
-  "updatedAt": "2026-10-10T01:05:20.429Z",
+  "updatedAt": "2026-10-10T01:16:10.731Z",
   "publishedBy": "scripts/publish-strategies.mjs"
 }
