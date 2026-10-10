@@ -1,17 +1,15 @@
 /*
- * @name Fresh-Asset Keltner MR Basket 1D
- * @description 5-asset 1d Keltner mean-reversion basket on symbols the 4h
- * champion does not cover (SOL, XRP, BNB, LINK, AVAX) — same validated recipe,
- * different timeframe and asset set.
- * @ex binance
- * @syms SOLUSDT, XRPUSDT, BNBUSDT, LINKUSDT, AVAXUSDT
- * @interval 1d
- * @cash 10000
+ * @coinsori-strategy v1
+ * name: Fresh-Asset Keltner MR Basket 1D (10-asset)
+ * ex: binance
+ * syms: SOLUSDT, XRPUSDT, BNBUSDT, LINKUSDT, AVAXUSDT, ETHUSDT, DOGEUSDT, ADAUSDT, DOTUSDT, LTCUSDT
+ * interval: 1d
+ * cash: 10000
  *
  * Why this strategy: The validated Keltner mean-reversion recipe (buy local
  * panics inside a rising long-term trend, small per-leg risk) is the only
- * family that has held up in this data. This applies it on a 1-day horizon to
- * a different set of crypto assets, spreading the edge across more symbols.
+ * family that has held up in this data. This widens it to 10 liquid crypto
+ * assets on a 1-day horizon so the edge is spread across more symbols.
  * When it buys and sells: On each asset, buy when price closes below the
  * Keltner low (EMA20 - 2.5*ATR) with RSI(14)<40, only while price is above its
  * 200-day SMA. Sell when price closes back above the 20-day EMA. 2-day cooldown
