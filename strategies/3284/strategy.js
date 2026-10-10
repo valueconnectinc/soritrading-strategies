@@ -17,11 +17,11 @@
  * stop the chop from churning. Trend-only — expect losses in ranges.
  */
 function onUpdate(ctx) {
-  const n = 55;          // Donchian channel — classic turtle 55-day breakout
-  const trend = 200;     // long-term trend filter
-  const stopMult = 2.0;  // stop distance in ATR units
+  const n = 55;
+  const trend = 200;
+  const stopMult = 2.0;
   const atrN = 14;
-  const riskPct = 0.01;  // risk 1% of account per trade — survive any regime
+  const riskPct = 0.01;
 
   const price = ctx.price;
   const pos = ctx.position;
@@ -39,10 +39,10 @@ function onUpdate(ctx) {
     if (price > prevUpper && price > ema200) {
       // vol-target sizing: qty so a stopMult*ATR adverse move = riskPct of cash
       const riskPerCoin = stopMult * atr;
-      if (riskPerCoin <= 0) return null;
-      const qty = (ctx.cash * riskPct) / riskPerCoin;
-      if (qty <= 0) return null;
+      const qty = riskPerCoin > 0 ? (ctx.cash * riskPct) / riskPerCoin : 0;
       const maxQty = ctx.cash / price * 0.99;
+      ctx.log('DIAG price=', price, 'atr=', atr, 'riskPerCoin=', riskPerCoin, 'qty=', qty, 'maxQty=', maxQty);
+      if (qty <= 0) return null;
       return { side: 'buy', qty: Math.min(qty, maxQty) };
     }
     return null;

@@ -3,7 +3,7 @@
   "name": "Macro-Gated Donchian VolTarget",
   "kind": "custom",
   "verified": {
-    "backtestId": 16213,
+    "backtestId": 16214,
     "return": 9.45,
     "mdd": 5.08,
     "trades": 11,
@@ -27,6 +27,6 @@
     }
   },
   "config": null,
-  "updatedAt": "2026-10-10T00:47:51.720Z",
+  "updatedAt": "2026-10-10T00:51:32.216Z",
   "publishedBy": "scripts/publish-strategies.mjs"
 }
