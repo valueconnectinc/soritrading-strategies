@@ -8,13 +8,13 @@
  *
  * Why this strategy: Cross-asset mean reversion in the BTC/ETH ratio. When one
  * asset is historically cheap vs the other (ratio z-score far below its 200-bar
- * mean), it tends to snap back — a different edge than per-asset mean reversion
- * and backed by a ledger result of +347% on one 4h window, 3/3 positive.
+ * mean), it tends to snap back — a different edge than per-asset mean reversion.
  * When it buys and sells: buys the cheap side of the ratio when z < -1.5 AND that
- * asset is above its 200-SMA (trend gate: never catch a falling knife in a bear).
- * Sells when the ratio crosses back above its mean, or when price falls 2.5 ATR
- * below entry (hard stop caps the months-underwater risk). 25% leg share, 3-bar
- * cooldown.
+ * asset is in a genuine uptrend (price above a RISING 200-SMA — a falling SMA200
+ * means the market is still in a downtrend even if price bounced above it, and
+ * the cheap leg keeps falling there). Sells when the ratio crosses back above its
+ * mean, or when price falls 2.5 ATR below entry (hard stop caps the months-
+ * underwater risk). 25% leg share, 3-bar cooldown.
  * When it does NOT work: the ratio can trend for months (altseason or BTC
  * dominance rally), so a mis-timed buy sits underwater until the stop or the mean
  * crossing. In a broad bear both legs' trend gates stay off (capital safe, no
@@ -70,11 +70,13 @@ function onUpdate(ctx) {
     return null;
   }
 
-  // Trend gate: only buy the cheap side if it is above its own 200-SMA (no falling knives).
+  // Trend gate: price above a RISING 200-SMA. A rising SMA excludes bear-market
+  // rallies where the cheap ratio leg keeps falling despite price > SMA.
   const sma200 = ctx.sma(200, 1);
-  const trendOk = sma200 != null && price > sma200;
+  const sma200prev = ctx.sma(200, 2);
+  const trendOk = sma200 != null && sma200prev != null && price > sma200 && sma200 > sma200prev;
 
-  // Entry: this symbol 1.5 SD cheap vs peer, in an uptrend, and not in cooldown.
+  // Entry: this symbol 1.5 SD cheap vs peer, in a genuine uptrend, not in cooldown.
   const cheap = z < -1.5 && trendOk && ctx.state.cd[sym] === 0;
   if (cheap) {
     const maxQty = (ctx.cash / price) * 0.25;
@@ -86,6 +88,6 @@ function onUpdate(ctx) {
 
   ctx.watch([{ side: 'buy', price: mean * otherPrice, trigger: 'below', note: 'ratio z<-1.5',
     conds: [{ label: 'ratio z-score', now: +z.toFixed(2), op: '<', ref: -1.5, closed: true },
-            { label: 'price > 200SMA', ok: trendOk }] }]);
+            { label: 'price>SMA200 & SMA rising', ok: trendOk }] }]);
   return null;
 }

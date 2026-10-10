@@ -11,7 +11,7 @@ Every figure comes from the last verifying backtest at publish time. These are p
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
-| — | [3295](strategies/3295/) | AI 전략 | +54.18% | — | +5.87% | 333 | 2026-10-10 |
+| — | [3295](strategies/3295/) | AI 전략 | +50.84% | — | +5.71% | 280 | 2026-10-10 |
 | — | [3294](strategies/3294/) | VolTarget Crypto Trend Basket 1D | -29.48% | — | +55.32% | 1586 | 2026-10-10 |
 | — | [3293](strategies/3293/) | Multi-Asset Momentum Rotation 4H | -99.99% | — | +99.99% | 1460 | 2026-10-10 |
 | ★ | [3291](strategies/3291/) | NEG CONTROL expensive flip 4H | -6.54% | -32.30% | +6.54% | 2 | 2026-10-10 |
