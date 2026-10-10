@@ -11,7 +11,7 @@ Every figure comes from the last verifying backtest at publish time. These are p
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
-|  | [3345](strategies/3345/) | BTC Fear-Greed Contrarian 1D | +32.58% | +568.67% | +6.86% | 6 | 2026-10-10 |
+|  | [3345](strategies/3345/) | BTC Fear-Greed Contrarian 1D | -5.20% | +98.01% | +13.37% | 2 | 2026-10-10 |
 |  | [3343](strategies/3343/) | SOL Keltner Mean Reversion 4H | +5.73% | +1136.68% | +17.39% | 20 | 2026-10-10 |
 |  | [3341](strategies/3341/) | ETH RSI2 Panic Dip 1D | -33.03% | +49.02% | +34.98% | 20 | 2026-10-10 |
 |  | [3340](strategies/3340/) | BTC Panic Dip + Network Health 1D | -11.29% | +80.18% | +13.04% | 2 | 2026-10-10 |
