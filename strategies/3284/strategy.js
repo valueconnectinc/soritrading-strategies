@@ -21,7 +21,7 @@ function onUpdate(ctx) {
   const trend = 200;
   const stopMult = 2.0;
   const atrN = 14;
-  const riskPct = 0.01;
+  const riskPct = 0.01;  // risk 1% of account per trade
 
   const price = ctx.price;
   const pos = ctx.position;
@@ -37,18 +37,17 @@ function onUpdate(ctx) {
   if (pos === 0) {
     ctx.watch([{ side: 'buy', price: prevUpper, trigger: 'above', note: '55d high breakout' }]);
     if (price > prevUpper && price > ema200) {
-      // vol-target sizing: qty so a stopMult*ATR adverse move = riskPct of cash
-      const riskPerCoin = stopMult * atr;
-      const qty = riskPerCoin > 0 ? (ctx.cash * riskPct) / riskPerCoin : 0;
-      const maxQty = ctx.cash / price * 0.99;
-      ctx.log('DIAG price=', price, 'atr=', atr, 'riskPerCoin=', riskPerCoin, 'qty=', qty, 'maxQty=', maxQty);
+      // riskPerCoin in dollars = stop distance as fraction of price * price
+      const riskPerCoinUsd = stopMult * atr * price;
+      const qty = riskPerCoinUsd > 0 ? (ctx.cash * riskPct) / riskPerCoinUsd : 0;
       if (qty <= 0) return null;
+      const maxQty = ctx.cash / price * 0.99;
       return { side: 'buy', qty: Math.min(qty, maxQty) };
     }
     return null;
   }
 
-  const stopPx = ctx.entryPx - stopMult * atr;
+  const stopPx = ctx.entryPx - stopMult * atr * ctx.entryPx; // ATR is a fraction
   const mid = (upper + lower) / 2;
   const prevClose = ctx.closes.at(-2);
   ctx.watch([
