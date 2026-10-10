@@ -11,7 +11,7 @@ Every figure comes from the last verifying backtest at publish time. These are p
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
-|  | [3297](strategies/3297/) | ETH Donchian Breakout Trend 1D | +2.76% | +56.84% | +38.52% | 24 | 2026-10-10 |
+|  | [3297](strategies/3297/) | ETH Donchian Breakout Trend 1D | +186.16% | +224.26% | +59.84% | 18 | 2026-10-10 |
 |  | [3296](strategies/3296/) | DXY Macro-Regime Trend BTC 1D | -96.71% | +310.48% | +97.99% | 703 | 2026-10-10 |
 | — | [3295](strategies/3295/) | AI 전략 | +48.79% | — | +5.87% | 303 | 2026-10-10 |
 | — | [3294](strategies/3294/) | VolTarget Crypto Trend Basket 1D | -29.48% | — | +55.32% | 1586 | 2026-10-10 |
