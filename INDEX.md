@@ -11,7 +11,7 @@ Every figure comes from the last verifying backtest at publish time. These are p
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
-| — | [3321](strategies/3321/) | BTC Macro DXY Regime Filter | +6.29% | — | +1.06% | 6 | 2026-10-10 |
+| — | [3321](strategies/3321/) | BTC Macro DXY Regime Filter | +13.96% | — | +1.84% | 20 | 2026-10-10 |
 | — | [3320](strategies/3320/) | BTC Funding Contrarian 1D | +9.78% | — | +55.44% | 71 | 2026-10-10 |
 |  | [3319](strategies/3319/) | BTC On-Chain Network Pulse | -10.93% | +1210.36% | +70.90% | 212 | 2026-10-10 |
 | ★ | [2146](strategies/2146/) | ETH Trend Strength-Scaled Size v2 4H | -4.78% | -44.82% | +37.74% | 54 | 2026-10-10 |

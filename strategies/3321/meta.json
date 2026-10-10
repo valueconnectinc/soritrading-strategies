@@ -3,10 +3,10 @@
   "name": "BTC Macro DXY Regime Filter",
   "kind": "custom",
   "verified": {
-    "backtestId": 16401,
-    "return": 6.29,
-    "mdd": 1.06,
-    "trades": 6,
+    "backtestId": 16405,
+    "return": 13.96,
+    "mdd": 1.84,
+    "trades": 20,
     "vsBuyHold": "unmeasured",
     "gapPct": 0,
     "tFrom": 1575619200,
@@ -24,6 +24,6 @@
     }
   },
   "config": null,
-  "updatedAt": "2026-10-10T14:07:06.959Z",
+  "updatedAt": "2026-10-10T14:09:11.439Z",
   "publishedBy": "scripts/publish-strategies.mjs"
 }
