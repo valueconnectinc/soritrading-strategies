@@ -4,13 +4,14 @@ Every strategy whose backtest **finished and actually traded** is published here
 Nothing is filtered out by return — the ones that lost money are part of the record.
 Entries stay after a strategy is removed from our own workspace — this is a log, and deleting the record would leave only the survivors.
 
-**★ marks a strategy that out-returned buy & hold over the same window** — 418 of 1622 right now.
+**★ marks a strategy that out-returned buy & hold over the same window** — 418 of 1623 right now.
 `—` means the comparison **could not be made**: the engine does not compute a benchmark for multi-symbol, futures, or multi-leg runs. That is *unknown*, not *lost*, and it is 246 of them right now.
 
 Every figure comes from the last verifying backtest at publish time. These are past results over historical data. Nothing here is promised or assured about the future, and none of it is investment advice.
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
+|  | [3329](strategies/3329/) | BTC On-Chain Network Regime | -15.88% | -6.28% | +28.69% | 5 | 2026-10-10 |
 |  | [3326](strategies/3326/) | BTC Fed Policy Regime 4H | +246.88% | +472.89% | +45.68% | 44 | 2026-10-10 |
 |  | [3322](strategies/3322/) | BTC Fear&Greed Contrarian 4H | -18.18% | +45.51% | +22.46% | 12 | 2026-10-10 |
 | — | [3321](strategies/3321/) | BTC Macro DXY Regime Filter | +13.96% | — | +1.84% | 20 | 2026-10-10 |
