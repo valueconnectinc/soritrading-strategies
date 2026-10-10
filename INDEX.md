@@ -11,7 +11,7 @@ Every figure comes from the last verifying backtest at publish time. These are p
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
-|  | [3357](strategies/3357/) | SOL Trend-Pullback MR 1D | -42.41% | +1371.65% | +43.24% | 20 | 2026-10-10 |
+|  | [3357](strategies/3357/) | SOL Trend-Pullback MR 1D | -15.01% | +301.73% | +32.47% | 6 | 2026-10-10 |
 |  | [3356](strategies/3356/) | SOL Volatility Squeeze Breakout 1D | +15.64% | +301.73% | +18.03% | 2 | 2026-10-10 |
 | ★ | [3355](strategies/3355/) | AI 전략 | +5.03% | -45.40% | +38.01% | 7 | 2026-10-10 |
 |  | [3354](strategies/3354/) | SOL Regime-Switch Trend v2 1D | +168.53% | +1371.65% | +69.48% | 35 | 2026-10-10 |

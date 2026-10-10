@@ -1,59 +1,54 @@
 /*
  * @coinsori-strategy v1
- * name: SOL Trend-Pullback Mean Reversion 1D
+ * name: SOL Fear-Greed Contrarian 1D
  * ex: binance
  * syms: SOLUSDT
  * interval: 1d
  * cash: 10000
  *
- * Why this strategy: In a confirmed uptrend (price above the 200-day average), normal
- * pullbacks to the 20-day average are buying opportunities — the trend resumes more often
- * than it breaks. This is the shallow-dip version of the RSI2 panic-dip champion: it buys
- * the common mild pullback instead of waiting for a deep capitulation, so it participates
- * in bull markets more often. Same proven risk structure (short hold, hard stop, cooldown)
- * keeps drawdowns small.
- * When it buys and sells: Buys when the daily close is above the 200-day average, has pulled
- * back below the 20-day average, and RSI(14) is below 40 (a real dip, not a breakdown).
- * Sells after 8 days, when RSI(14) turns overbought above 65, or on an 8% stop. Then waits
- * 5 days before buying again.
- * When it does NOT work: In a choppy sideways market price keeps touching the 20-day line
- * and every touch is a small loss. In a fast crash the 8% stop is not tight enough. No data
- * before Aug 2020.
+ * Why this strategy: The Crypto Fear & Greed Index is a crowd-sentiment gauge (0=extreme
+ * fear, 100=extreme greed). Crypto has historically rewarded buying panic and trimming
+ * euphoria. This uses the sentiment index as the signal — a different data source than the
+ * price-only RSI2 champion — and only buys inside an uptrend so we do not catch falling knives
+ * in a bear market.
+ * When it buys and sells: Buys when the Fear & Greed Index is at or below 20 (extreme fear)
+ * while price is above the 200-day average. Sells when the index reaches 80 (extreme greed),
+ * price falls 12% below entry, or after 60 days. Waits 10 days after any exit before buying again.
+ * When it does NOT work: Sentiment can stay fearful for months in a grinding bear even above a
+ * trend line — the trend gate limits entries but not a slow bleed. The index is BTC-driven, so
+ * SOL-specific rallies can exit early on greed readings. No SOL data before Aug 2020.
  */
 function onUpdate(ctx) {
   const price = ctx.price;
+  const fg = ctx.data('fear_greed');
+  const sma200 = ctx.sma(200, 1);
   if (!Number.isFinite(price) || price <= 0) return null;
+  if (fg == null || sma200 == null) return null;   // data gap or warm-up: do nothing
+
   const st = ctx.state;
   const pos = ctx.position;
 
-  const rsi = ctx.rsi(14, 1);
-  const ema20 = ctx.ema(20, 1);
-  const sma200 = ctx.sma(200, 1);
-  const lastClose = ctx.closes.at(-2);
-  if (rsi == null || ema20 == null || sma200 == null || lastClose == null) return null;
-
-  if (pos > 0) {
-    const entry = st.entryPx || price;
-    const held = ctx.i - (st.entryBar || ctx.i);
-    const rsiNow = ctx.rsi(14, 0);
-    const stop = entry * 0.92;
-    ctx.watch([{ side: 'sell', price: stop, trigger: 'below', note: '8% stop' }]);
-    // Exit on stop, overbought, or time limit — mean reversion decays fast, so don't hold.
-    if (price <= stop || rsiNow > 65 || held >= 8) {
-      st.cooldownUntil = ctx.i + 5;   // 5-day pause avoids re-buying the same dip repeatedly
-      return { side: 'sell', qty: pos };
+  if (pos <= 0) {
+    if (st.cooldownUntil != null && ctx.i < st.cooldownUntil) return null;
+    // Extreme fear + uptrend: buy panic, but only when the long-term trend is still up
+    // (keeps us out of 2022-style bear markets where fear persists for months).
+    if (fg <= 20 && price > sma200) {
+      st.entryBar = ctx.i;
+      st.entryPx = price;
+      ctx.watch([{ side: 'sell', price: price * 0.88, trigger: 'below', note: '12% stop' }]);
+      return { side: 'buy', qty: (ctx.cash / price) * 0.95 };
     }
     return null;
   }
 
-  if (st.cooldownUntil != null && ctx.i < st.cooldownUntil) return null;
-  // Buy only in a confirmed uptrend (above 200-day), after a pullback to/below the 20-day
-  // average, and only when RSI(14) < 40 (a genuine dip, not a breakdown).
-  if (lastClose > sma200 && lastClose < ema20 && rsi < 40) {
-    st.entryPx = price;
-    st.entryBar = ctx.i;
-    ctx.watch([{ side: 'sell', price: price * 0.92, trigger: 'below', note: '8% stop' }]);
-    return { side: 'buy', qty: ctx.cash / price * 0.9 };
+  const entry = st.entryPx || price;
+  const barsHeld = ctx.i - (st.entryBar || ctx.i);
+  const stopped = price <= entry * 0.88;
+  ctx.watch([{ side: 'sell', price: entry * 0.88, trigger: 'below', note: '12% stop' }]);
+  // Exit on extreme greed (contrarian take-profit), the 12% stop, or a 60-day time limit.
+  if (fg >= 80 || stopped || barsHeld >= 60) {
+    st.cooldownUntil = ctx.i + 10;
+    return { side: 'sell', qty: pos };
   }
   return null;
 }
