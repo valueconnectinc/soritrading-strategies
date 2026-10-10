@@ -3,7 +3,7 @@
   "name": "ETH Trend Strength-Scaled Size v2 4H",
   "kind": "custom",
   "verified": {
-    "backtestId": 16387,
+    "backtestId": 16388,
     "return": -4.78,
     "mdd": 37.74,
     "trades": 54,
@@ -25,6 +25,6 @@
     }
   },
   "config": null,
-  "updatedAt": "2026-10-10T13:18:48.188Z",
+  "updatedAt": "2026-10-10T13:19:52.547Z",
   "publishedBy": "scripts/publish-strategies.mjs"
 }
