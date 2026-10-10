@@ -1,66 +1,59 @@
 /*
  * @coinsori-strategy v1
- * name: Trend-Continuation Pullback BTC 1D
+ * name: Donchian Breakout Trend + ATR Trail
  * ex: binance
  * syms: BTC
  * interval: 1d
  * cash: 10000
  *
- * Why this strategy: In a confirmed long-term uptrend, short dips that bounce back off
- * the 20-day average tend to resume the trend — we buy the dip that reclaims the EMA20
- * instead of chasing new highs (the opposite entry logic of the Donchian breakout champion).
- * When it buys and sells: Buys when the last closed bar dipped below the 20-day average
- * and the price then climbs back above it, while the 200-day average is rising and RSI is
- * not overbought. Sells when price closes below the 50-day average (trend broken) or drops
- * 3x ATR below entry (hard stop).
- * When it does NOT work: In choppy sideways markets the 20-day average gets crossed back
- * and forth and the strategy whipsaws; in a sharp bear market the 200-day gate keeps it
- * flat for long stretches (safe, but no upside). A single violent crash can gap through
- * the stop before it fills.
+ * Why this strategy: A strong breakout to a multi-month high tends to keep trending in
+ * crypto (classic turtle breakout bet). Unlike the previous version that sold at the
+ * channel mid (capping winners), this version trails the stop below the highest close
+ * since entry so winners run further in bulls while reversals are still cut.
+ * When it buys and sells: Buys when price breaks above the highest high of the last 55
+ * days while the 200-day trend is up. Sells when price drops 2.5x ATR below the highest
+ * close since entry (trailing stop) or 2x ATR below entry (hard stop).
+ * When it does NOT work: In long sideways ranges false breakouts trigger repeated small
+ * losses (whipsaw). A sudden crash can gap through the trail. Expect losses in chop;
+ * this is a trend-only strategy.
  */
 function onUpdate(ctx) {
+  const n = 55;          // Donchian channel length — classic turtle 55-day breakout
+  const trend = 200;     // long-term trend filter — only take breakouts above it
+  const trailMult = 2.5; // trailing stop distance in ATR units below highest close since entry
+  const stopMult = 2.0;  // hard stop distance in ATR units below entry
+  const atrN = 14;
+
   const price = ctx.price;
   const pos = ctx.position;
 
-  const ema20 = ctx.ema(20, 1);          // short-term trend reference (last closed bar)
-  const ema50 = ctx.ema(50, 1);          // trend-break exit reference (last closed bar)
-  const sma200 = ctx.sma(200, 1);        // long-term regime gate
-  const sma200prev = ctx.sma(200, 2);    // to check the 200-day slope
-  const rsi = ctx.rsi(14, 1);
-  const atr = ctx.atr(14, 1);
-  if (ema20 == null || ema50 == null || sma200 == null || sma200prev == null || rsi == null || atr == null) return null;
+  const upper = ctx.high(n);
+  const lower = ctx.low(n);
+  const atr = ctx.atr(atrN);
+  const ema200 = ctx.ema(trend);
+  if (upper == null || lower == null || atr == null || ema200 == null) return null;
 
-  const prevClose = ctx.closes.at(-2);   // last CLOSED bar
-  if (prevClose == null) return null;
-
-  const uptrend = sma200 > sma200prev;   // 200-day average must be rising
+  const prevUpper = ctx.high(n, 1); // Donchian high of the last CLOSED bar
+  if (prevUpper == null) return null;
 
   if (pos === 0) {
-    // Entry: last closed bar was BELOW the 20-day average (a dip), price now back above it.
-    const dipped = prevClose < ema20;
-    const reclaimed = price > ema20;
-    const notOverbought = rsi < 70;      // avoid chasing a vertical spike
-    ctx.watch([{
-      side: 'buy', price: ema20, trigger: 'above', note: 'EMA20 reclaim after dip',
-      conds: [
-        { label: '200d avg rising', ok: uptrend },
-        { label: 'prev close below EMA20', ok: dipped },
-        { label: 'RSI(14) closed', now: rsi, op: '<', ref: 70, closed: true }
-      ]
-    }]);
-    if (uptrend && dipped && reclaimed && notOverbought) {
+    ctx.watch([{ side: 'buy', price: prevUpper, trigger: 'above', note: '55d high breakout' }]);
+    if (price > prevUpper && price > ema200) {
       return { side: 'buy', qty: ctx.cash / price * 0.99 };
     }
     return null;
   }
 
-  // Exits: hard stop (3x ATR below entry) and trend break (close below 50-day average).
-  const stopPx = ctx.entryPx - 3 * atr;
-  ctx.watch([
-    { side: 'sell', price: stopPx, trigger: 'below', note: '3x ATR hard stop' },
-    { side: 'sell', price: ema50, trigger: 'below', note: '50d trend break' }
-  ]);
-  if (price <= stopPx) return { side: 'sell', qty: pos };
-  if (price < ema50) return { side: 'sell', qty: pos };
+  // Track the highest close since entry so the trail is anchored to the real peak.
+  const peak = ctx.state.peak != null ? Math.max(ctx.state.peak, price) : price;
+  ctx.state.peak = peak;
+  const trailStop = peak - trailMult * atr; // 2.5 ATR below the peak = let winners run
+  const hardStop = ctx.entryPx - stopMult * atr; // 2 ATR below entry = never let a winner turn into a loss
+  const stopPx = Math.max(trailStop, hardStop);  // the tighter of the two
+  ctx.watch([{ side: 'sell', price: stopPx, trigger: 'below', note: 'trail/hard stop' }]);
+  if (price <= stopPx) {
+    ctx.state.peak = null;
+    return { side: 'sell', qty: pos };
+  }
   return null;
 }
