@@ -7,12 +7,13 @@
  * cash: 10000
  *
  * Why this strategy: In a strong-trend asset like SOL the only reliable long-term signal is
- * the regime itself. Being fully invested while price stays above its 200-day average and
- * fully in cash when it breaks below is a simple, low-turnover way to ride bull markets and
- * step aside in bear markets — no breakout whipsaw, no short-term noise.
- * When it buys and sells: Buys when the daily close rises above the 200-day average. Sells
- * (to cash) when the daily close falls below the 200-day average. A hard 25% stop caps a
- * single bad entry.
+ * the regime itself. Being fully invested while price stays above a RISING 200-day average
+ * and fully in cash when it breaks below is a simple, low-turnover way to ride bull markets
+ * and step aside in bear markets — no breakout whipsaw, no short-term noise.
+ * When it buys and sells: Buys when the daily close rises above the 200-day average AND that
+ * average is still rising (higher than 20 days ago) — re-entering above a falling 200-day is
+ * buying into a downtrend and caused most of the whipsaw trades. Sells (to cash) when the
+ * daily close falls below the 200-day average. A hard 25% stop caps a single bad entry.
  * When it does NOT work: It gives back a large part of every peak before the 200-day line
  * confirms a top, and it re-enters late after a bottom. In a long sideways market it
  * whipsaws around the line and bleeds fees. No data before Aug 2020.
@@ -21,9 +22,10 @@ function onUpdate(ctx) {
   const price = ctx.price;
   if (!Number.isFinite(price) || price <= 0) return null;
 
-  const sma200 = ctx.sma(200, 1);   // 200-day average of the last CLOSED bar
+  const sma200 = ctx.sma(200, 1);    // 200-day average of the last CLOSED bar
+  const sma200Prev = ctx.sma(200, 21); // same average 20 bars earlier -> regime slope
   const lastClose = ctx.closes.at(-2);
-  if (sma200 == null || lastClose == null) return null;
+  if (sma200 == null || sma200Prev == null || lastClose == null) return null;
 
   const st = ctx.state;
   const pos = ctx.position;
@@ -41,8 +43,10 @@ function onUpdate(ctx) {
     return null;
   }
 
-  // Enter when the daily close rises above the 200-day average
-  if (lastClose > sma200) {
+  // Enter when the daily close is above the 200-day average AND the 200-day is rising.
+  // The slope filter is the anti-whipsaw rule: buying above a falling 200-day means the
+  // long-term trend is still down, and those re-entries were the 27-trade bleed in 2022-24.
+  if (lastClose > sma200 && sma200 > sma200Prev) {
     st.entryPx = price;
     const qty = (ctx.cash / price) * 0.9;
     return { side: 'buy', qty: qty };
