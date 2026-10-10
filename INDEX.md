@@ -4,13 +4,14 @@ Every strategy whose backtest **finished and actually traded** is published here
 Nothing is filtered out by return — the ones that lost money are part of the record.
 Entries stay after a strategy is removed from our own workspace — this is a log, and deleting the record would leave only the survivors.
 
-**★ marks a strategy that out-returned buy & hold over the same window** — 418 of 1629 right now.
+**★ marks a strategy that out-returned buy & hold over the same window** — 418 of 1630 right now.
 `—` means the comparison **could not be made**: the engine does not compute a benchmark for multi-symbol, futures, or multi-leg runs. That is *unknown*, not *lost*, and it is 246 of them right now.
 
 Every figure comes from the last verifying backtest at publish time. These are past results over historical data. Nothing here is promised or assured about the future, and none of it is investment advice.
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
+|  | [3343](strategies/3343/) | SOL Keltner Mean Reversion 4H | -76.23% | -37.40% | +85.03% | 96 | 2026-10-10 |
 |  | [3341](strategies/3341/) | ETH RSI2 Panic Dip 1D | -33.03% | +49.02% | +34.98% | 20 | 2026-10-10 |
 |  | [3340](strategies/3340/) | BTC Panic Dip + Network Health 1D | -11.29% | +80.18% | +13.04% | 2 | 2026-10-10 |
 |  | [3339](strategies/3339/) | BTC Network Adoption Trend 1D | -35.99% | +80.18% | +35.99% | 8 | 2026-10-10 |
