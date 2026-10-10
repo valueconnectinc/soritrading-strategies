@@ -1,14 +1,14 @@
 /*
  * @coinsori-strategy v1
- * name: Fresh-Asset Keltner MR Basket 1D (10-asset)
+ * name: Fresh-Asset Keltner MR Basket 1D (8-asset)
  * ex: binance
- * syms: SOLUSDT, XRPUSDT, BNBUSDT, LINKUSDT, AVAXUSDT, ETHUSDT, DOGEUSDT, ADAUSDT, DOTUSDT, LTCUSDT
+ * syms: SOLUSDT, XRPUSDT, BNBUSDT, LINKUSDT, AVAXUSDT, ETHUSDT, DOGEUSDT, ADAUSDT
  * interval: 1d
  * cash: 10000
  *
  * Why this strategy: The validated Keltner mean-reversion recipe (buy local
  * panics inside a rising long-term trend, small per-leg risk) is the only
- * family that has held up in this data. This widens it to 10 liquid crypto
+ * family that has held up in this data. This widens it to 8 liquid crypto
  * assets on a 1-day horizon so the edge is spread across more symbols.
  * When it buys and sells: On each asset, buy when price closes below the
  * Keltner low (EMA20 - 2.5*ATR) with RSI(14)<40, only while price is above its
