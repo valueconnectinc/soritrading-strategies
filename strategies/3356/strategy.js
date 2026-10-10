@@ -16,7 +16,7 @@
  * When it buys and sells: Buys when the daily close rises above the 20-day upper Bollinger
  * band AND the band width two days earlier was in the bottom 30% of its 100-day history
  * (a squeeze) AND price is above the 200-day average. Sells when price falls 2.5 ATR below
- * the highest close since entry (trailing stop) or falls 1.5 ATR below entry (hard stop).
+ * the highest close since entry (trailing stop) or falls 1.0 ATR below entry (hard stop).
  * When it does NOT work: In a choppy sideways market breakouts fake out and the stops take
  * small losses repeatedly. In a strong bull it can still give back part of a move before the
  * stop triggers. No data before Aug 2020.
@@ -48,10 +48,10 @@ function onUpdate(ctx) {
 
   if (pos > 0) {
     if (st.peak == null || lastClose > st.peak) st.peak = lastClose;
-    // 2.5 ATR trailing stop rides trends; the 1.5 ATR hard stop below entry caps any single
-    // fakeout loss. ATR scales with volatility so both adapt to the market.
+    // 2.5 ATR trailing stop rides trends; the 1.0 ATR hard stop below entry caps any single
+    // fakeout loss (never risk more than ~1 day's range on a trade).
     const trail = st.peak - 2.5 * atr;
-    const hardStop = (st.entryPx || price) - 1.5 * atr;
+    const hardStop = (st.entryPx || price) - 1.0 * atr;
     const stop = Math.max(trail, hardStop);
     ctx.watch([{ side: 'sell', price: stop, trigger: 'below', note: 'ATR stop' }]);
     if (price <= stop) return { side: 'sell', qty: pos };
