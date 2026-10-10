@@ -11,7 +11,7 @@ Every figure comes from the last verifying backtest at publish time. These are p
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
-|  | [3339](strategies/3339/) | BTC Network Adoption Trend 1D | +92.13% | +568.67% | +70.94% | 202 | 2026-10-10 |
+|  | [3339](strategies/3339/) | BTC Network Adoption Trend 1D | -35.99% | +80.18% | +35.99% | 8 | 2026-10-10 |
 |  | [3336](strategies/3336/) | BTC Donchian Breakout Trend 1D | +5.44% | +568.67% | +22.95% | 38 | 2026-10-10 |
 |  | [3329](strategies/3329/) | BTC On-Chain Network Regime | -15.88% | -6.28% | +28.69% | 5 | 2026-10-10 |
 |  | [3333](strategies/3333/) | AI 전략 | +95.37% | +568.67% | +15.96% | 221 | 2026-10-10 |
