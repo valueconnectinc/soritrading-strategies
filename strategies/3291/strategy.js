@@ -1,59 +1,53 @@
 /*
  * @coinsori-strategy v1
- * name: NEGATIVE CONTROL (expensive flip) 4H
+ * name: ADA Donchian 55/30 Breakout 1D
  * ex: binance
- * syms: BTCUSDT, ETHUSDT
- * interval: 4h
+ * syms: ADAUSDT
+ * interval: 1d
  * cash: 10000
  *
- * Why this strategy: Negative control for the pairs relative-value idea. It is
- * the exact inverse entry — buys the EXPENSIVE asset (z > +1.5). If the cheap
- * logic is real, this control should lose or underperform.
- * When it buys and sells: buys when ratio z > +1.5, sells when ratio crosses
- * below its mean. Same sizing and cooldown.
- * When it does NOT work: if it makes money, the pairs edge is an artifact.
+ * Why this strategy: Donchian channel breakout on ADA 1d was the one trend-following
+ * setup the experiment ledger marked promising (all other trend attempts failed).
+ * It rides sustained up-moves and cuts losses when the 30-day low breaks.
+ * When it buys and sells: Buys when price closes above the highest high of the last
+ * 55 bars. Sells when price closes below the lowest low of the last 30 bars, or on a
+ * hard 2.5x ATR stop. Each position sized so a 2.5x ATR adverse move costs ~4% of equity.
+ * When it does NOT work: In long sideways chop the 55-bar breakout whipsaws and the
+ * 30-bar exit gives back most gains. In a slow grind-down the 55-bar high is never
+ * reached, so it stays flat and misses nothing (but also earns nothing).
  */
 function onUpdate(ctx) {
-  const sym = ctx.sym;
   const price = ctx.price;
   if (!Number.isFinite(price) || price <= 0) { ctx.watch([]); return null; }
-  const other = (ctx.syms || [sym]).find(s => s !== sym);
-  if (!other) { ctx.watch([]); return null; }
-  const m = ctx.market(other);
-  const otherPrice = m && m.price ? m.price : null;
-  if (!Number.isFinite(otherPrice) || otherPrice <= 0) { ctx.watch([]); return null; }
-  const ratio = price / otherPrice;
 
-  if (!ctx.state.hist) ctx.state.hist = {};
-  if (!ctx.state.hist[sym]) ctx.state.hist[sym] = [];
-  const arr = ctx.state.hist[sym];
-  arr.push(ratio);
-  if (arr.length > 201) arr.shift();
-  if (arr.length < 201) { ctx.watch([]); return null; }
-  const closed = arr.slice(0, -1);
-  const mean = closed.reduce((a, b) => a + b, 0) / closed.length;
-  const sd = Math.sqrt(closed.reduce((a, b) => a + (b - mean) * (b - mean), 0) / closed.length);
-  if (sd <= 0) { ctx.watch([]); return null; }
-  const z = (ratio - mean) / sd;
+  // Closed-bar Donchian levels: highest high of last 55 bars, lowest low of last 30 bars.
+  const hi55 = ctx.high(55, 1);
+  const lo30 = ctx.low(30, 1);
+  const atr = ctx.atr(14, 1);
+  if (hi55 == null || lo30 == null || atr == null || atr <= 0) { ctx.watch([]); return null; }
 
-  if (!ctx.state.cd) ctx.state.cd = {};
-  if (ctx.state.cd[sym] == null) ctx.state.cd[sym] = 0;
-  if (ctx.state.cd[sym] > 0) ctx.state.cd[sym]--;
-
-  const pos = ctx.pos(sym);
+  const pos = ctx.position;
   if (pos > 0) {
-    if (ratio < mean) { ctx.state.cd[sym] = 3; ctx.watch([]); return { side: 'sell', qty: pos }; }
-    ctx.watch([{ side: 'sell', price: mean * otherPrice, trigger: 'below', qty: pos, note: 'ratio mean' }]);
+    const stopPx = ctx.entryPx - 2.5 * atr;
+    ctx.watch([
+      { side: 'sell', price: lo30, trigger: 'below', qty: pos, note: '30d Donchian exit' },
+      { side: 'sell', price: stopPx, trigger: 'below', qty: pos, note: '2.5x ATR hard stop' }
+    ]);
+    if (price < lo30 || price <= stopPx) return { side: 'sell', qty: pos };
     return null;
   }
-  const expensive = z > 1.5 && ctx.state.cd[sym] === 0;
-  if (expensive) {
-    const maxQty = (ctx.cash / price) * 0.25;
-    if (maxQty <= 0) { ctx.watch([]); return null; }
-    ctx.state.cd[sym] = 3;
-    ctx.watch([]);
-    return { side: 'buy', qty: maxQty };
+
+  // Entry on a 55-bar high breakout (closed bar), risk 4% of equity on a 2.5x ATR stop.
+  if (price > hi55) {
+    const riskPerCoin = 2.5 * atr;
+    let qty = (ctx.cash * 0.04) / riskPerCoin;
+    const maxQty = (ctx.cash / price) * 0.99;
+    qty = Math.min(qty, maxQty);
+    if (qty <= 0) { ctx.watch([]); return null; }
+    ctx.watch([{ side: 'buy', price: hi55, trigger: 'above', note: '55d Donchian breakout' }]);
+    return { side: 'buy', qty: qty };
   }
-  ctx.watch([]);
+
+  ctx.watch([{ side: 'buy', price: hi55, trigger: 'above', note: '55d Donchian breakout' }]);
   return null;
 }
