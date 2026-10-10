@@ -11,7 +11,7 @@ Every figure comes from the last verifying backtest at publish time. These are p
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
-| — | [3291](strategies/3291/) | NEG CONTROL expensive flip 4H | -80.55% | — | +80.65% | 795 | 2026-10-10 |
+| — | [3291](strategies/3291/) | NEG CONTROL expensive flip 4H | -91.16% | — | +91.21% | 771 | 2026-10-10 |
 | — | [3290](strategies/3290/) | BTC/ETH Relative-Value Rotation 4H | +347.26% | — | +9.17% | 661 | 2026-10-10 |
 | — | [3289](strategies/3289/) | Multi-Asset MR Basket 4H (champion recipe) | +53.12% | — | +4.10% | 166 | 2026-10-10 |
 |  | [3288](strategies/3288/) | ETH BB-RSI Mean Reversion 1D | +62.09% | +1786.66% | +44.44% | 62 | 2026-10-10 |
