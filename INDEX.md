@@ -11,7 +11,7 @@ Every figure comes from the last verifying backtest at publish time. These are p
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
-|  | [3348](strategies/3348/) | SOL RSI2 Panic Dip 1D | +73.76% | +301.73% | +21.27% | 90 | 2026-10-10 |
+|  | [3348](strategies/3348/) | SOL RSI2 Panic Dip 1D | +44.40% | +301.73% | +6.81% | 26 | 2026-10-10 |
 |  | [3347](strategies/3347/) | BTC Trend Pullback 1D | -56.14% | -22.98% | +56.72% | 352 | 2026-10-10 |
 |  | [3346](strategies/3346/) | BTC Drawdown-High MR 1D | +39.46% | +568.67% | +18.61% | 22 | 2026-10-10 |
 |  | [3345](strategies/3345/) | BTC Fear-Greed Contrarian 1D | -5.20% | +98.01% | +13.37% | 2 | 2026-10-10 |

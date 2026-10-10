@@ -3,10 +3,10 @@
   "name": "SOL RSI2 Panic Dip 1D",
   "kind": "custom",
   "verified": {
-    "backtestId": 16565,
-    "return": 73.76,
-    "mdd": 21.27,
-    "trades": 90,
+    "backtestId": 16567,
+    "return": 44.4,
+    "mdd": 6.81,
+    "trades": 26,
     "vsBuyHold": "lose",
     "benchRet": 301.73,
     "benchBasis": "price",
@@ -26,6 +26,6 @@
     }
   },
   "config": null,
-  "updatedAt": "2026-10-10T17:03:44.832Z",
+  "updatedAt": "2026-10-10T17:07:35.481Z",
   "publishedBy": "scripts/publish-strategies.mjs"
 }

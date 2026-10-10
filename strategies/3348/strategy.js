@@ -7,8 +7,8 @@
  * cash: 10000
  *
  * Why this strategy: Same validated rule as the BTC RSI2 Panic Dip applied to SOL — a higher-beta asset with bigger panic dips and bigger bounces. In an uptrend, extreme oversold (2-period RSI) marks a panic that is usually bought back.
- * When it buys and sells: Buys when the 2-period RSI drops below 10 while price is above the 200-day average; sells after 5 days, when RSI turns overbought, or on an 8% stop. After a stop-out it waits 10 days before buying again.
- * When it does NOT work: In a real bear market price keeps falling after the panic dip; repeated stop-outs are the main loss source, so the cooldown skips re-entry into a still-falling market. No data before Aug 2020.
+ * When it buys and sells: Buys when the 2-period RSI drops below 10 while price is above the 200-day average; sells after 5 days, when RSI turns overbought, or on an 8% stop. After ANY exit it waits 10 days before buying again.
+ * When it does NOT work: In a real bear market price keeps falling after the panic dip; the cooldown skips re-entry into a still-falling market but also misses the first sharp bounce of a V-recovery. No data before Aug 2020.
  */
 
 function onUpdate(ctx) {
@@ -20,8 +20,8 @@ function onUpdate(ctx) {
   const st = ctx.state;
 
   if (ctx.position <= 0) {
-    // After a stop-out, wait out a cooldown: the panic thesis failed, so re-entering
-    // the next dip into a still-falling market just bleeds another 8% stop-out.
+    // Panic dips come in clusters; re-entering every dip in a row is overtrading and
+    // bleeds fees. Take only the first dip after a 10-day cooldown from any exit.
     if (st.cooldownUntil != null && ctx.i < st.cooldownUntil) return null;
     // Buy extreme panic only inside an uptrend (price above the 200-day average)
     if (rsi < 10 && price > trend) {
@@ -39,7 +39,7 @@ function onUpdate(ctx) {
   ctx.watch([{ side: 'sell', price: entry * 0.92, trigger: 'below', note: '8% stop' }]);
   // Exit on stop, overbought, or a 5-day time limit (mean reversion decays fast)
   if (stopped || rsiNow > 70 || barsHeld >= 5) {
-    if (stopped) st.cooldownUntil = ctx.i + 10;  // ~2 weeks before risking capital again
+    st.cooldownUntil = ctx.i + 10;  // ~2 weeks before risking capital again
     return { side: 'sell', qty: ctx.position };
   }
   return null;
