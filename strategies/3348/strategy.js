@@ -1,14 +1,14 @@
 /*
  * @coinsori-strategy v1
- * name: SOL RSI2 Panic Dip Cooldown 1D
+ * name: SOL RSI2 Panic Dip Capitulation 1D
  * ex: binance
  * syms: SOLUSDT
  * interval: 1d
  * cash: 10000
  *
- * Why this strategy: Same validated rule as the BTC RSI2 Panic Dip applied to SOL — a higher-beta asset with bigger panic dips and bigger bounces. In an uptrend, extreme oversold (2-period RSI) marks a panic that is usually bought back.
- * When it buys and sells: Buys when the 2-period RSI drops below 10 while price is above the 200-day average; sells after 5 days, when RSI turns overbought, or on an 8% stop. After ANY exit it waits 10 days before buying again.
- * When it does NOT work: In a real bear market price keeps falling after the panic dip; the cooldown skips re-entry into a still-falling market but also misses the first sharp bounce of a V-recovery. No data before Aug 2020.
+ * Why this strategy: Same validated RSI2 panic-dip rule as 3348, plus a capitulation-depth requirement. An extreme oversold reading only counts when price has actually fallen hard from its recent high, so we buy genuine panics instead of shallow dips in a weak market.
+ * When it buys and sells: Buys when the 2-period RSI drops below 10, price is above the 200-day average, AND price is at least 10% below its 50-day high. Sells after 5 days, when RSI turns overbought, or on an 8% stop. After ANY exit it waits 10 days before buying again.
+ * When it does NOT work: In a grinding bear market price can keep falling after a capitulation; in a fast V-recovery it may enter one bar late. No data before Aug 2020.
  */
 
 function onUpdate(ctx) {
@@ -23,8 +23,11 @@ function onUpdate(ctx) {
     // Panic dips come in clusters; re-entering every dip in a row is overtrading and
     // bleeds fees. Take only the first dip after a 10-day cooldown from any exit.
     if (st.cooldownUntil != null && ctx.i < st.cooldownUntil) return null;
-    // Buy extreme panic only inside an uptrend (price above the 200-day average)
-    if (rsi < 10 && price > trend) {
+    // Capitulation depth: RSI2<10 alone fires on shallow dips in weak markets.
+    // Requiring price >=10% below the 50-day high ensures we only buy genuine panics.
+    const high50 = ctx.high(50, 1);
+    if (high50 == null) return null;
+    if (rsi < 10 && price > trend && price <= high50 * 0.90) {
       st.entryBar = ctx.i;
       ctx.watch([{ side: 'sell', price: price * 0.92, trigger: 'below', note: '8% stop' }]);
       return { side: 'buy', qty: ctx.cash / price * 0.9 };
