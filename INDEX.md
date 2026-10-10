@@ -11,7 +11,7 @@ Every figure comes from the last verifying backtest at publish time. These are p
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
-|  | [3354](strategies/3354/) | SOL Regime-Switch Trend v2 1D | +198.66% | +1371.65% | +56.74% | 23 | 2026-10-10 |
+|  | [3354](strategies/3354/) | SOL Regime-Switch Trend v2 1D | +168.53% | +1371.65% | +69.48% | 35 | 2026-10-10 |
 | ★ | [3353](strategies/3353/) | SOL Liqs API Probe 1D | +17.00% | -45.40% | +30.95% | 5 | 2026-10-10 |
 | ★ | [3351](strategies/3351/) | SOL Regime-Switch Trend 1D | +339.78% | +301.73% | +47.44% | 2 | 2026-10-10 |
 |  | [3350](strategies/3350/) | SOL Donchian Breakout Trend 1D | +1.23% | +301.73% | +78.06% | 38 | 2026-10-10 |
