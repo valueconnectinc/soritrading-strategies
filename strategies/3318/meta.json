@@ -3,10 +3,10 @@
   "name": "BTC Donchian Breakout 4h",
   "kind": "custom",
   "verified": {
-    "backtestId": 16384,
-    "return": -29.1,
-    "mdd": 66.8,
-    "trades": 140,
+    "backtestId": 16386,
+    "return": 119.37,
+    "mdd": 61.82,
+    "trades": 56,
     "vsBuyHold": "lose",
     "benchRet": 1175.91,
     "benchBasis": "price",
@@ -26,6 +26,6 @@
     }
   },
   "config": null,
-  "updatedAt": "2026-10-10T13:13:53.199Z",
+  "updatedAt": "2026-10-10T13:17:11.851Z",
   "publishedBy": "scripts/publish-strategies.mjs"
 }
