@@ -7,7 +7,7 @@
  * cash: 10000
  *
  * Why this strategy: Same validated rule as the BTC RSI2 Panic Dip applied to SOL — a higher-beta asset with bigger panic dips and bigger bounces. In an uptrend, extreme oversold (2-period RSI) marks a panic that is usually bought back.
- * When it buys and sells: Buys when the 2-period RSI drops below 10 while price is above the 200-day average; sells after 5 days, when RSI turns overbought, or on an 8% stop. After ANY exit it waits 5 days before buying again.
+ * When it buys and sells: Buys when the 2-period RSI drops below 10 while price is above the 200-day average; sells after 5 days, when RSI turns overbought, or on an 8% stop. After ANY exit it waits 15 days before buying again.
  * When it does NOT work: In a real bear market price keeps falling after the panic dip; the cooldown skips re-entry into a still-falling market but also misses the first sharp bounce of a V-recovery. No data before Aug 2020.
  */
 
@@ -21,7 +21,7 @@ function onUpdate(ctx) {
 
   if (ctx.position <= 0) {
     // Panic dips come in clusters; re-entering every dip in a row is overtrading and
-    // bleeds fees. Take only the first dip after a 5-day cooldown from any exit.
+    // bleeds fees. Take only the first dip after a 15-day cooldown from any exit.
     if (st.cooldownUntil != null && ctx.i < st.cooldownUntil) return null;
     // Buy extreme panic only inside an uptrend (price above the 200-day average)
     if (rsi < 10 && price > trend) {
@@ -39,7 +39,7 @@ function onUpdate(ctx) {
   ctx.watch([{ side: 'sell', price: entry * 0.92, trigger: 'below', note: '8% stop' }]);
   // Exit on stop, overbought, or a 5-day time limit (mean reversion decays fast)
   if (stopped || rsiNow > 70 || barsHeld >= 5) {
-    st.cooldownUntil = ctx.i + 5;
+    st.cooldownUntil = ctx.i + 15;
     return { side: 'sell', qty: ctx.position };
   }
   return null;
