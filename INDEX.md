@@ -4,13 +4,14 @@ Every strategy whose backtest **finished and actually traded** is published here
 Nothing is filtered out by return — the ones that lost money are part of the record.
 Entries stay after a strategy is removed from our own workspace — this is a log, and deleting the record would leave only the survivors.
 
-**★ marks a strategy that out-returned buy & hold over the same window** — 418 of 1625 right now.
+**★ marks a strategy that out-returned buy & hold over the same window** — 419 of 1626 right now.
 `—` means the comparison **could not be made**: the engine does not compute a benchmark for multi-symbol, futures, or multi-leg runs. That is *unknown*, not *lost*, and it is 246 of them right now.
 
 Every figure comes from the last verifying backtest at publish time. These are past results over historical data. Nothing here is promised or assured about the future, and none of it is investment advice.
 
 | | ID | Name | Return | Buy & hold | MDD | Trades | Updated |
 |:-:|---:|---|---:|---:|---:|---:|---|
+| ★ | [3336](strategies/3336/) | BTC Donchian Breakout Trend 1D | -1.10% | -22.98% | +5.06% | 28 | 2026-10-10 |
 |  | [3329](strategies/3329/) | BTC On-Chain Network Regime | -15.88% | -6.28% | +28.69% | 5 | 2026-10-10 |
 |  | [3333](strategies/3333/) | AI 전략 | +95.37% | +568.67% | +15.96% | 221 | 2026-10-10 |
 |  | [3331](strategies/3331/) | BTC EMA Trend ATR Trail 4H | -6.00% | +35.75% | +17.01% | 60 | 2026-10-10 |
