@@ -3,10 +3,10 @@
   "name": "Multi-Asset MR Basket 4H (champion recipe)",
   "kind": "custom",
   "verified": {
-    "backtestId": 16264,
-    "return": 10.52,
-    "mdd": 12.52,
-    "trades": 518,
+    "backtestId": 16267,
+    "return": 53.12,
+    "mdd": 4.1,
+    "trades": 166,
     "vsBuyHold": "unmeasured",
     "gapPct": 0,
     "tFrom": 1647590400,
@@ -25,6 +25,6 @@
     }
   },
   "config": null,
-  "updatedAt": "2026-10-10T02:18:58.906Z",
+  "updatedAt": "2026-10-10T02:22:14.799Z",
   "publishedBy": "scripts/publish-strategies.mjs"
 }
