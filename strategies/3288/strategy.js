@@ -1,23 +1,23 @@
 /*
  * @coinsori-strategy v1
- * name: ETH BB-RSI Mean Reversion 1D
+ * name: ETH BB-RSI Mean Reversion 4H
  * ex: binance
  * syms: ETHUSDT
- * interval: 1d
+ * interval: 4h
  * cash: 10000
  *
  * Why this strategy: Mean reversion — sharp drops to the Bollinger lower band with
  * an oversold RSI are usually overreactions, and ETH tends to snap back toward its
- * average. We buy the panic, not the trend, so this is the opposite of the BTC
- * trend-following champion and diversifies the book.
- * When it buys and sells: Buys when ETH closes below its 20-day Bollinger lower
- * band AND RSI(14) is oversold (<35) AND price is still above its 100-day average
- * (so we are not catching a confirmed bear). Sells when price returns to the
- * Bollinger middle (20-day SMA), when RSI recovers above 50, or on a hard 2x ATR
- * stop. Full position size — mean reversion only pays when you commit.
- * When it does NOT work: In a real bear market the lower band keeps getting hit and
- * the "snap-back" never comes — the 100-day gate is too slow to save it. Also in
- * long quiet ranges the lower band is rarely touched, so it may sit idle for months.
+ * average. On 4h this fires far more often than on 1d and catches local panics
+ * instead of waiting months for a daily flush. The 200-bar SMA gate (≈33 days on
+ * 4h) keeps us out of confirmed bear regimes.
+ * When it buys and sells: Buys when price closes below the 20-bar Bollinger lower
+ * band AND RSI(14) is oversold (<30) AND price is above its 200-bar SMA. Sells
+ * when price returns to the Bollinger middle, RSI recovers above 50, or on a hard
+ * 2x ATR stop. Full position — mean reversion only pays when you commit.
+ * When it does NOT work: In a sustained downtrend the lower band keeps getting hit
+ * and the "snap-back" never comes; the 200-bar gate lags the breakdown. Also
+ * whipsaws in choppy ranges cause repeated small losses.
  */
 function onUpdate(ctx) {
   const price = ctx.price;
@@ -28,18 +28,18 @@ function onUpdate(ctx) {
   const bb = ctx.bb(20, 2, 1);
   const rsi = ctx.rsi(14, 1);
   const atr = ctx.atr(14, 1);
-  const sma100 = ctx.sma(100, 1);
-  if (bb == null || rsi == null || atr == null || sma100 == null) return null;
+  const sma200 = ctx.sma(200, 1);
+  if (bb == null || rsi == null || atr == null || sma200 == null) return null;
   if (bb.lower == null || bb.mid == null) return null;
 
   const touch = price < bb.lower;
-  const oversold = rsi < 35;
-  const trendOk = price > sma100;
+  const oversold = rsi < 30;
+  const trendOk = price > sma200;
 
   if (pos === 0) {
     ctx.watch([{ side: 'buy', price: bb.lower, trigger: 'below', note: 'BB lower touch',
-      conds: [{ label: 'RSI(14) < 35', now: rsi, op: '<', ref: 35, closed: true },
-              { label: 'price > 100d SMA', ok: price > sma100 }] }]);
+      conds: [{ label: 'RSI(14) < 30', now: rsi, op: '<', ref: 30, closed: true },
+              { label: 'price > 200 SMA', ok: price > sma200 }] }]);
     if (touch && oversold && trendOk && atr > 0) {
       return { side: 'buy', qty: ctx.cash / price * 0.95 };
     }
