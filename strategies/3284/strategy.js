@@ -8,7 +8,7 @@
  *
  * Why this strategy: The classic 55-day Donchian breakout rides crypto trends, but
  * fixed full-size entries can ruin the account in a volatile regime. We keep the
- * breakout edge but size every position so a 2x ATR stop risks only 1% of the
+ * breakout edge but size every position so a 2x ATR stop risks only 4% of the
  * account — high volatility automatically shrinks position size. Survives any regime.
  * When it buys and sells: Buys on a 55-day high breakout when the 200-day trend is up.
  * Sells on a 2x ATR stop or when price closes back below the channel middle.
@@ -21,7 +21,7 @@ function onUpdate(ctx) {
   const trend = 200;
   const stopMult = 2.0;
   const atrN = 14;
-  const riskPct = 0.01;  // risk 1% of account per trade
+  const riskPct = 0.04;  // risk 4% of account per trade
 
   const price = ctx.price;
   const pos = ctx.position;
@@ -37,7 +37,7 @@ function onUpdate(ctx) {
   if (pos === 0) {
     ctx.watch([{ side: 'buy', price: prevUpper, trigger: 'above', note: '55d high breakout' }]);
     if (price > prevUpper && price > ema200) {
-      // riskPerCoin in dollars = stop distance as fraction of price * price
+      // ATR is a fraction of price, so risk per coin in dollars = stopMult*atr*price
       const riskPerCoinUsd = stopMult * atr * price;
       const qty = riskPerCoinUsd > 0 ? (ctx.cash * riskPct) / riskPerCoinUsd : 0;
       if (qty <= 0) return null;
