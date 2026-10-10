@@ -3,12 +3,12 @@
   "name": "SOL Trend-Pullback MR 1D",
   "kind": "custom",
   "verified": {
-    "backtestId": 16639,
-    "return": -8.77,
-    "mdd": 27.03,
-    "trades": 6,
-    "vsBuyHold": "lose",
-    "benchRet": 301.73,
+    "backtestId": 16641,
+    "return": -8.55,
+    "mdd": 14.63,
+    "trades": 4,
+    "vsBuyHold": "win",
+    "benchRet": -57.27,
     "benchBasis": "price",
     "gapPct": 0,
     "tFrom": 1610150400,
@@ -20,7 +20,7 @@
     ],
     "spec": {
       "ex": "binance",
-      "sym": "SOL",
+      "sym": "BTC",
       "interval": "1d",
       "bars": 700,
       "end": 1670630400
